@@ -1,0 +1,864 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProfiensiPengetahuan {
+  SANGAT_BAIK
+  BAIK
+  TIDAK_PERNAH
+}
+
+enum Jenjang {
+  TIDAK_TAMAT_SD
+  SD
+  SMP
+  SMA
+  D3
+  S1
+  S2
+  S3
+}
+
+enum StatusPerkawinan {
+  Lajang
+  Menikah
+  Cerai
+}
+
+enum StatusKeikutsertaan {
+  Peserta
+  Panitia
+  Pembicara
+}
+
+enum KeteranganMataKuliah {
+  Transfer_SKS
+  Perolehan_SKS
+}
+
+enum JenisKelamin {
+  PRIA
+  WANITA
+}
+
+enum JenisOrtu {
+  AYAH
+  IBU
+  KAKEK
+  NENEK
+}
+
+enum StatusPekerjaan {
+  PegawaiTetap
+  PegawaiHonorer
+  Pns
+  Lainnya
+}
+
+enum SistemKuliah {
+  RPL
+  REGULER
+}
+
+model Alamat {
+  AlamatId      String          @id @default(uuid()) @map("alamat_id")
+  DesaId        String          @map("desa_id")
+  Alamat        String          @map("alamat")
+  KodePos       String          @map("kode_pos")
+  Desa          Desa            @relation(fields: [DesaId], references: [DesaId], onDelete: Cascade)
+  InstitusiLama InstitusiLama[]
+  University    University[]
+  User          User[]
+
+  @@map("alamat")
+}
+
+model Asesor {
+  AsesorId         String             @id @default(uuid()) @map("asesor_id")
+  TipeAsesorId     String             @map("tipe_asesor_id")
+  UserId           String             @map("user_id")
+  CreatedAt        DateTime?          @map("created_at")
+  UpdatedAt        DateTime?          @map("updated_at")
+  DeletedAt        DateTime?          @map("deleted_at")
+  TipeAsesor       TipeAsesor         @relation(fields: [TipeAsesorId], references: [TipeAsesorId], onDelete: Cascade)
+  AsesorAkademik   AsesorAkademik[]
+  AsesorPraktisi   AsesorPraktisi[]
+  AssesorMahasiswa AssesorMahasiswa[]
+
+  @@map("asesor")
+}
+
+model AsesorAkademik {
+  AsesorAkademikId                  String                              @id @default(uuid()) @map("asesor_akademik_id")
+  AsesorId                          String                              @map("asesor_id")
+  Pangkat                           String                              @map("pangkat")
+  JabatanFungsionalAkademik         String                              @map("jabatan_fungsional_akademik")
+  NipNidn                           String                              @map("nip_nidn")
+  NamaPerguruanTinggi               String                              @map("nama_perguruan_tinggi")
+  AlamatPerguruanTinggi             String?                             @map("alamat_perguruan_tinggi")
+  PendidikanTerakhirBidangKeilmuan  String?                             @map("pendidikan_terakhir_bidang_keilmuan")
+  CreatedAt                         DateTime?                           @map("created_at")
+  UpdatedAt                         DateTime?                           @map("updated_at")
+  DeletedAt                         DateTime?                           @map("deleted_at")
+  Asesor                            Asesor                              @relation(fields: [AsesorId], references: [AsesorId], onDelete: Cascade)
+  AsesorAkademikKeanggotaanAsosiasi AsesorAkademikKeanggotaanAsosiasi[]
+
+  @@map("asesor_akademik")
+}
+
+model AsesorAkademikKeanggotaanAsosiasi {
+  AsesorAkademikKeanggotaanAsosiasiId String         @id @default(uuid()) @map("asesor_akademik_keanggotaan_asosiasi_id")
+  AsesorAkademikId                    String         @map("asesor_akademik_id")
+  NamaAsosiasi                        String         @map("nama_asosiasi")
+  NomorKeanggotaan                    String         @map("nomor_keanggotaan")
+  CreatedAt                           DateTime?      @map("created_at")
+  UpdatedAt                           DateTime?      @map("updated_at")
+  AsesorAkademik                      AsesorAkademik @relation(fields: [AsesorAkademikId], references: [AsesorAkademikId], onDelete: Cascade)
+
+  @@map("asesor_akademik_keanggotaan_asosiasi")
+}
+
+model AsesorPraktisi {
+  AsesorPraktisiId String    @id @default(uuid()) @map("asesor_praktisi_id")
+  AsesorId         String    @map("asesor_id")
+  NamaAsosiasi     String    @map("nama_asosiasi")
+  NomorKeanggotaan String    @map("nomor_keanggotaan")
+  Jabatan          String    @map("jabatan")
+  AlamatKantor     String?   @map("alamat_kantor")
+  NamaInstansi     String    @map("nama_instansi")
+  JabatanInstansi  String    @map("jabatan_instansi")
+  BidangKeahlian   String    @map("bidang_keahlian")
+  CreatedAt        DateTime? @map("created_at")
+  UpdatedAt        DateTime? @map("updated_at")
+  DeletedAt        DateTime? @map("deleted_at")
+  Asesor           Asesor    @relation(fields: [AsesorId], references: [AsesorId], onDelete: Cascade)
+
+  @@map("asesor_praktisi")
+}
+
+model AssesorMahasiswa {
+  AssesorMahasiswaId String            @id @default(uuid()) @map("assesor_mahasiswa_id")
+  MahasiswaId        String            @map("mahasiswa_id")
+  AsesorId           String            @map("asesor_id")
+  Urutan             Int               @map("urutan")
+  Confirmation       Boolean           @default(false) @map("confirmation")
+  CreatedAt          DateTime?         @map("created_at")
+  UpdatedAt          DateTime?         @map("updated_at")
+  Asesor             Asesor            @relation(fields: [AsesorId], references: [AsesorId], onDelete: Cascade)
+  Mahasiswa          Mahasiswa         @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+  SkRektorAssesor    SkRektorAssesor[]
+
+  @@map("assesor_mahasiswa")
+}
+
+model BuktiForm {
+  BuktiFormId           String                  @id @default(uuid()) @map("bukti_form_id")
+  MahasiswaId           String                  @map("mahasiswa_id")
+  JenisDokumenId        String                  @map("jenis_dokumen_id")
+  NamaFile              String                  @map("nama_file")
+  NamaDokumen           String                  @map("nama_dokumen")
+  CreatedAt             DateTime?               @map("created_at")
+  UpdatedAt             DateTime?               @map("updated_at")
+  Mahasiswa             Mahasiswa               @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+  JenisDokumen          JenisDokumen            @relation(fields: [JenisDokumenId], references: [JenisDokumenId], onDelete: Cascade)
+  BuktiFormEvaluasiDiri BuktiFormEvaluasiDiri[]
+
+  @@map("bukti_form")
+}
+
+model BuktiFormEvaluasiDiri {
+  BuktiFormId    String       @map("bukti_form_id")
+  EvaluasiDiriId String       @map("evaluasi_diri_id")
+  BuktiForm      BuktiForm    @relation(fields: [BuktiFormId], references: [BuktiFormId], onDelete: Cascade)
+  EvaluasiDiri   EvaluasiDiri @relation(fields: [EvaluasiDiriId], references: [EvaluasiDiriId], onDelete: Cascade)
+
+  @@id([BuktiFormId, EvaluasiDiriId])
+  @@map("bukti_form_evaluasi_diri")
+}
+
+model CapaianPembelajaran {
+  CapaianPembelajaranId String         @id @default(uuid()) @map("capaian_pembelajaran_id")
+  MataKuliahId          String         @map("mata_kuliah_id")
+  Nama                  String         @map("nama")
+  Urutan                Int            @map("urutan")
+  Active                Boolean        @default(false) @map("active")
+  CreatedAt             DateTime?      @map("created_at")
+  UpdatedAt             DateTime?      @map("updated_at")
+  DeletedAt             DateTime?      @map("deleted_at")
+  MataKuliah            MataKuliah     @relation(fields: [MataKuliahId], references: [MataKuliahId], onDelete: Cascade)
+  EvaluasiDiri          EvaluasiDiri[]
+
+  @@map("capaian_pembelajaran")
+}
+
+model Country {
+  CountryId String     @id @default(uuid()) @map("country_id")
+  Nama      String     @map("nama")
+  Provinsi  Provinsi[]
+
+  @@map("country")
+}
+
+model DaftarUlang {
+  DaftarUlangId      String       @id @default(uuid()) @map("daftar_ulang_id")
+  MahasiswaId        String       @map("mahasiswa_id")
+  ProgramStudiId     String       @map("program_studi_id")
+  Nim                String?      @map("nim")
+  JenjangKkniDituju  String?      @map("jenjang_kkni_dituju")
+  KipK               Boolean      @default(false) @map("kip_k")
+  Aktif              Boolean      @default(false) @map("aktif")
+  MengisiBiodata     Boolean      @default(false) @map("mengisi_biodata")
+  Finalisasi         Boolean      @default(false) @map("finalisasi")
+  TanggalDaftar      DateTime?    @map("tanggal_daftar")
+  TanggalDaftarUlang DateTime?    @map("tanggal_daftar_ulang")
+  CreatedAt          DateTime?    @map("created_at")
+  UpdatedAt          DateTime?    @map("updated_at")
+  Mahasiswa          Mahasiswa    @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+  ProgramStudi       ProgramStudi @relation(fields: [ProgramStudiId], references: [ProgramStudiId], onDelete: Cascade)
+
+  @@map("daftar_ulang")
+}
+
+model Desa {
+  DesaId      String    @id @default(uuid()) @map("desa_id")
+  KecamatanId String    @map("kecamatan_id")
+  Nama        String    @map("nama")
+  Kecamatan   Kecamatan @relation(fields: [KecamatanId], references: [KecamatanId], onDelete: Cascade)
+  Alamat      Alamat[]
+
+  @@map("desa")
+}
+
+model EvaluasiDiri {
+  EvaluasiDiriId        String                  @id @default(uuid()) @map("evaluasi_diri_id")
+  MataKuliahMahasiswaId String                  @map("mata_kuliah_mahasiswa_id")
+  CapaianPembelajaranId String                  @map("capaian_pembelajaran_id")
+  ProfiensiPengetahuan  ProfiensiPengetahuan    @default(TIDAK_PERNAH) @map("profiensi_pengetahuan")
+  TanggalPengesahan     DateTime?               @map("tanggal_pengesahan")
+  CreatedAt             DateTime?               @map("created_at")
+  UpdatedAt             DateTime?               @map("updated_at")
+  MataKuliahMahasiswa   MataKuliahMahasiswa     @relation(fields: [MataKuliahMahasiswaId], references: [MataKuliahMahasiswaId], onDelete: Cascade)
+  CapaianPembelajaran   CapaianPembelajaran     @relation(fields: [CapaianPembelajaranId], references: [CapaianPembelajaranId], onDelete: Cascade)
+  BuktiFormEvaluasiDiri BuktiFormEvaluasiDiri[]
+  HasilAssesmen         HasilAssesmen[]
+
+  @@map("evaluasi_diri")
+}
+
+model HasilAssesmen {
+  HasilAssesmenId String         @id @default(uuid()) @map("hasil_assesmen_id")
+  EvaluasiDiriId  String         @map("evaluasi_diri_id")
+  Valid           Boolean        @default(false) @map("valid")
+  Autentik        Boolean        @default(false) @map("autentik")
+  Terkini         Boolean        @default(false) @map("terkini")
+  Memadai         Boolean        @default(false) @map("memadai")
+  Assesmen        String?        @map("assesmen")
+  Nilai           Float          @default(0) @map("nilai")
+  Diakui          Boolean        @default(false) @map("diakui")
+  TanggalAssesmen DateTime?      @map("tanggal_assesmen")
+  CreatedAt       DateTime?      @map("created_at")
+  UpdatedAt       DateTime?      @map("updated_at")
+  EvaluasiDiri    EvaluasiDiri   @relation(fields: [EvaluasiDiriId], references: [EvaluasiDiriId], onDelete: Cascade)
+  SkorAssesmen    SkorAssesmen[]
+
+  @@map("hasil_assesmen")
+}
+
+model InformasiKependudukan {
+  InformasiKependudukanId String    @id @default(uuid()) @map("informasi_kependudukan_id")
+  MahasiswaId             String    @map("mahasiswa_id")
+  NoKk                    String    @map("no_kk")
+  NoNik                   String    @map("no_nik")
+  Suku                    String    @map("suku")
+  CreatedAt               DateTime? @map("created_at")
+  UpdatedAt               DateTime? @map("updated_at")
+  Mahasiswa               Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("informasi_kependudukan")
+}
+
+model InstitusiLama {
+  InstitusiLamaId String    @id @default(uuid()) @map("institusi_lama_id")
+  MahasiswaId     String    @map("mahasiswa_id")
+  AlamatId        String    @map("alamat_id")
+  Jenjang         Jenjang   @default(TIDAK_TAMAT_SD) @map("jenjang")
+  JenisInstitusi  String    @map("jenis_institusi")
+  NamaInstitusi   String    @map("nama_institusi")
+  Jurusan         String    @map("jurusan")
+  Nisn            String    @map("nisn")
+  Npsn            String    @map("npsn")
+  TahunLulus      Int       @map("tahun_lulus")
+  NilaiLulusan    Float     @map("nilai_lulusan")
+  CreatedAt       DateTime? @map("created_at")
+  UpdatedAt       DateTime? @map("updated_at")
+  Mahasiswa       Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+  Alamat          Alamat    @relation(fields: [AlamatId], references: [AlamatId], onDelete: Cascade)
+
+  @@map("institusi_lama")
+}
+
+model JenisDokumen {
+  JenisDokumenId String      @id @default(uuid()) @map("jenis_dokumen_id")
+  Jenis          String      @map("jenis")
+  NomorDokumen   Int         @map("nomor_dokumen")
+  Keterangan     String?     @map("keterangan")
+  BuktiForm      BuktiForm[]
+
+  @@map("jenis_dokumen")
+}
+
+model Kabupaten {
+  KabupatenId String      @id @default(uuid()) @map("kabupaten_id")
+  ProvinsiId  String      @map("provinsi_id")
+  Nama        String      @map("nama")
+  Provinsi    Provinsi    @relation(fields: [ProvinsiId], references: [ProvinsiId], onDelete: Cascade)
+  Kecamatan   Kecamatan[]
+
+  @@map("kabupaten")
+}
+
+model Kecamatan {
+  KecamatanId String    @id @default(uuid()) @map("kecamatan_id")
+  KabupatenId String    @map("kabupaten_id")
+  Nama        String    @map("nama")
+  Kabupaten   Kabupaten @relation(fields: [KabupatenId], references: [KabupatenId], onDelete: Cascade)
+  Desa        Desa[]
+
+  @@map("kecamatan")
+}
+
+model Mahasiswa {
+  MahasiswaId                    String                           @id @default(uuid()) @map("mahasiswa_id")
+  UserId                         String                           @map("user_id")
+  StatusPerkawinan               StatusPerkawinan                 @default(Lajang) @map("status_perkawinan")
+  CreatedAt                      DateTime?                        @map("created_at")
+  UpdatedAt                      DateTime?                        @map("updated_at")
+  User                           User                             @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
+  AssesorMahasiswa               AssesorMahasiswa[]
+  BuktiForm                      BuktiForm[]
+  DaftarUlang                    DaftarUlang[]
+  InformasiKependudukan          InformasiKependudukan[]
+  InstitusiLama                  InstitusiLama[]
+  MahasiswaKonferensi            MahasiswaKonferensi[]
+  MahasiswaOrganisasiProfesi     MahasiswaOrganisasiProfesi[]
+  MahasiswaPelatihanProfessional MahasiswaPelatihanProfessional[]
+  MahasiswaPendidikan            MahasiswaPendidikan[]
+  MahasiswaPiagam                MahasiswaPiagam[]
+  MahasiswaRiwayatPekerjaan      MahasiswaRiwayatPekerjaan[]
+  MataKuliahMahasiswa            MataKuliahMahasiswa[]
+  OrangTua                       OrangTua[]
+  PekerjaanMahasiswa             PekerjaanMahasiswa[]
+  Pendaftaran                    Pendaftaran[]
+  Pesantren                      Pesantren[]
+  SanggahanAssesmen              SanggahanAssesmen[]
+  SkRektorMahasiswa              SkRektorMahasiswa[]
+
+  @@map("mahasiswa")
+}
+
+model MahasiswaKonferensi {
+  MahasiswaKonferensiId String              @id @default(uuid()) @map("mahasiswa_konferensi_id")
+  MahasiswaId           String              @map("mahasiswa_id")
+  Tahun                 Int                 @map("tahun")
+  JudulSeminar          String              @map("judul_seminar")
+  Penyelenggara         String              @map("penyelenggara")
+  StatusKeikutsertaan   StatusKeikutsertaan @default(Peserta) @map("status_keikutsertaan")
+  CreatedAt             DateTime?           @map("created_at")
+  UpdatedAt             DateTime?           @map("updated_at")
+  Mahasiswa             Mahasiswa           @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("mahasiswa_konferensi")
+}
+
+model MahasiswaOrganisasiProfesi {
+  MahasiswaOrganisasiProfesiId String    @id @default(uuid()) @map("mahasiswa_organisasi_profesi_id")
+  MahasiswaId                  String    @map("mahasiswa_id")
+  Tahun                        Int       @map("tahun")
+  NamaOrganisasi               String    @map("nama_organisasi")
+  JenjangAnggotaJabatan        String    @map("jenjang_anggota_jabatan")
+  CreatedAt                    DateTime? @map("created_at")
+  UpdatedAt                    DateTime? @map("updated_at")
+  Mahasiswa                    Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("mahasiswa_organisasi_profesi")
+}
+
+model MahasiswaPelatihanProfessional {
+  MahasiswaPelatihanProfessionalId String    @id @default(uuid()) @map("mahasiswa_pelatihan_professional_id")
+  MahasiswaId                      String    @map("mahasiswa_id")
+  NamaPelatihan                    String    @map("nama_pelatihan")
+  Penyelenggara                    String    @map("penyelenggara")
+  Mulai                            DateTime  @map("mulai")
+  Selesai                          DateTime? @map("selesai")
+  CreatedAt                        DateTime? @map("created_at")
+  UpdatedAt                        DateTime? @map("updated_at")
+  Mahasiswa                        Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("mahasiswa_pelatihan_professional")
+}
+
+model MahasiswaPendidikan {
+  MahasiswaPendidikanId String    @id @default(uuid()) @map("mahasiswa_pendidikan_id")
+  MahasiswaId           String    @map("mahasiswa_id")
+  NamaSekolah           String    @map("nama_sekolah")
+  TahunLulus            Int       @map("tahun_lulus")
+  Jurusan               String    @map("jurusan")
+  CreatedAt             DateTime? @map("created_at")
+  UpdatedAt             DateTime? @map("updated_at")
+  Mahasiswa             Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("mahasiswa_pendidikan")
+}
+
+model MahasiswaPiagam {
+  MahasiswaPiagamId  String    @id @default(uuid()) @map("mahasiswa_piagam_id")
+  MahasiswaId        String    @map("mahasiswa_id")
+  BentukPenghargaan  String    @map("bentuk_penghargaan")
+  PemberiPenghargaan String    @map("pemberi_penghargaan")
+  CreatedAt          DateTime? @map("created_at")
+  UpdatedAt          DateTime? @map("updated_at")
+  Mahasiswa          Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("mahasiswa_piagam")
+}
+
+model MahasiswaRiwayatPekerjaan {
+  MahasiswaRiwayatPekerjaanId String    @id @default(uuid()) @map("mahasiswa_riwayat_pekerjaan_id")
+  MahasiswaId                 String    @map("mahasiswa_id")
+  Nama                        String    @map("nama")
+  PosisiJabatan               String    @map("posisi_jabatan")
+  Alamat                      String?   @map("alamat")
+  UraianTugas                 String?   @map("uraian_tugas")
+  MulaiBekerja                DateTime  @map("mulai_bekerja")
+  SelesaiBekerja              DateTime? @map("selesai_bekerja")
+  CreatedAt                   DateTime? @map("created_at")
+  UpdatedAt                   DateTime? @map("updated_at")
+  Mahasiswa                   Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("mahasiswa_riwayat_pekerjaan")
+}
+
+model MataKuliah {
+  MataKuliahId        String                @id @default(uuid()) @map("mata_kuliah_id")
+  ProgramStudiId      String                @map("program_studi_id")
+  Kode                String                @map("kode")
+  Nama                String                @map("nama")
+  Sks                 Int                   @map("sks")
+  Semester            String?               @map("semester")
+  Silabus             String?               @map("silabus")
+  CreatedAt           DateTime?             @map("created_at")
+  UpdatedAt           DateTime?             @map("updated_at")
+  DeletedAt           DateTime?             @map("deleted_at")
+  ProgramStudi        ProgramStudi          @relation(fields: [ProgramStudiId], references: [ProgramStudiId], onDelete: Cascade)
+  CapaianPembelajaran CapaianPembelajaran[]
+  MataKuliahMahasiswa MataKuliahMahasiswa[]
+
+  @@map("mata_kuliah")
+}
+
+model MataKuliahMahasiswa {
+  MataKuliahMahasiswaId String                @id @default(uuid()) @map("mata_kuliah_mahasiswa_id")
+  MahasiswaId           String                @map("mahasiswa_id")
+  MataKuliahId          String                @map("mata_kuliah_id")
+  Rpl                   Boolean               @default(false) @map("rpl")
+  Keterangan            KeteranganMataKuliah? @map("keterangan")
+  CreatedAt             DateTime?             @map("created_at")
+  UpdatedAt             DateTime?             @map("updated_at")
+  Mahasiswa             Mahasiswa             @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+  MataKuliah            MataKuliah            @relation(fields: [MataKuliahId], references: [MataKuliahId], onDelete: Cascade)
+  EvaluasiDiri          EvaluasiDiri[]
+  SanggahanAssesmenMk   SanggahanAssesmenMk[]
+
+  @@map("mata_kuliah_mahasiswa")
+}
+
+model UserHasPermissions {
+  PermissionId String @map("permission_id")
+  UserId       String @map("user_id")
+
+  Permission Permission @relation(fields: [PermissionId], references: [PermissionId], onDelete: Cascade)
+  User       User       @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
+
+  @@id([PermissionId, UserId])
+  @@map("user_has_permissions")
+}
+
+model UserHasRoles {
+  RoleId String @map("role_id")
+  UserId String @map("user_id")
+
+  Role Role @relation(fields: [RoleId], references: [RoleId], onDelete: Cascade)
+  User User @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
+
+  @@id([RoleId, UserId])
+  @@map("user_has_roles")
+}
+
+model OrangTua {
+  OrangTuaId  String    @id @default(uuid()) @map("orang_tua_id")
+  MahasiswaId String    @map("mahasiswa_id")
+  Nama        String    @map("nama")
+  Pekerjaan   String?   @map("pekerjaan")
+  JenisOrtu   JenisOrtu @map("jenis_ortu")
+  Penghasilan Float     @map("penghasilan")
+  Email       String    @map("email")
+  NomorHp     String    @map("nomor_hp")
+  CreatedAt   DateTime? @map("created_at")
+  UpdatedAt   DateTime? @map("updated_at")
+  Mahasiswa   Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("orang_tua")
+}
+
+model PasswordResetTokens {
+  Email     String    @id @map("email")
+  Token     String    @map("token")
+  CreatedAt DateTime? @map("created_at")
+
+  @@map("password_reset_tokens")
+}
+
+model PekerjaanMahasiswa {
+  PekerjaanMahasiswaId   String          @id @default(uuid()) @map("pekerjaan_mahasiswa_id")
+  MahasiswaId            String          @map("mahasiswa_id")
+  AlamatId               String          @map("alamat_id")
+  InstitusiTempatBekerja String          @map("institusi_tempat_bekerja")
+  Jabatan                String          @map("jabatan")
+  StatusPekerjaan        StatusPekerjaan @default(Lainnya) @map("status_pekerjaan")
+  CreatedAt              DateTime?       @map("created_at")
+  UpdatedAt              DateTime?       @map("updated_at")
+  Mahasiswa              Mahasiswa       @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("pekerjaan_mahasiswa")
+}
+
+model Pendaftaran {
+  PendaftaranId    String       @id @default(uuid()) @map("pendaftaran_id")
+  MahasiswaId      String       @map("mahasiswa_id")
+  KodePendaftar    String       @map("kode_pendaftar")
+  NoUjian          String       @map("no_ujian")
+  Periode          String       @map("periode")
+  Gelombang        String       @map("gelombang")
+  SistemKuliah     SistemKuliah @default(REGULER) @map("sistem_kuliah")
+  JalurPendaftaran String       @map("jalur_pendaftaran")
+  CreatedAt        DateTime?    @map("created_at")
+  UpdatedAt        DateTime?    @map("updated_at")
+  Mahasiswa        Mahasiswa    @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("pendaftaran")
+}
+
+model Permission {
+  PermissionId       String               @id @default(uuid()) @map("permission_id")
+  Name               String               @map("name")
+  GuardName          String               @map("guard_name")
+  CreatedAt          DateTime?            @map("created_at")
+  UpdatedAt          DateTime?            @map("updated_at")
+  UserHasPermissions UserHasPermissions[]
+  RoleHasPermissions RoleHasPermissions[]
+
+  @@unique([Name, GuardName])
+  @@map("permissions")
+}
+
+model Pesantren {
+  PesantrenId   String    @id @default(uuid()) @map("pesantren_id")
+  MahasiswaId   String    @map("mahasiswa_id")
+  NamaPesantren String    @map("nama_pesantren")
+  LamaPesantren String    @map("lama_pesantren")
+  CreatedAt     DateTime? @map("created_at")
+  UpdatedAt     DateTime? @map("updated_at")
+  Mahasiswa     Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@map("pesantren")
+}
+
+model ProgramStudi {
+  ProgramStudiId String        @id @default(uuid()) @map("program_studi_id")
+  UniversityId   String        @map("university_id")
+  Nama           String        @map("nama")
+  Jenjang        String?       @map("jenjang")
+  Akreditasi     String        @map("akreditasi")
+  CreatedAt      DateTime?     @map("created_at")
+  UpdatedAt      DateTime?     @map("updated_at")
+  DeletedAt      DateTime?     @map("deleted_at")
+  University     University    @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+  DaftarUlang    DaftarUlang[]
+  MataKuliah     MataKuliah[]
+
+  @@map("program_studi")
+}
+
+model Provinsi {
+  ProvinsiId String      @id @default(uuid()) @map("provinsi_id")
+  CountryId  String      @map("country_id")
+  Nama       String      @map("nama")
+  Country    Country     @relation(fields: [CountryId], references: [CountryId], onDelete: Cascade)
+  Kabupaten  Kabupaten[]
+
+  @@map("provinsi")
+}
+
+model RoleHasPermissions {
+  PermissionId String @map("permission_id")
+  RoleId       String @map("role_id")
+
+  Permission Permission @relation(fields: [PermissionId], references: [PermissionId], onDelete: Cascade)
+  Role       Role       @relation(fields: [RoleId], references: [RoleId], onDelete: Cascade)
+
+  @@id([PermissionId, RoleId])
+  @@map("role_has_permissions")
+}
+
+model Role {
+  RoleId             String               @id @default(uuid()) @map("role_id")
+  Name               String               @map("name")
+  GuardName          String               @map("guard_name")
+  Icon               String?              @map("icon")
+  CreatedAt          DateTime?            @map("created_at")
+  UpdatedAt          DateTime?            @map("updated_at")
+  UserHasRoles       UserHasRoles[]
+  RoleHasPermissions RoleHasPermissions[]
+
+  @@unique([Name, GuardName])
+  @@map("roles")
+}
+
+model SanggahanAssesmen {
+  SanggahanAssesmenId    String                   @id @default(uuid()) @map("sanggahan_assesmen_id")
+  MahasiswaId            String                   @map("mahasiswa_id")
+  ProsesBanding          Boolean                  @default(false) @map("proses_banding")
+  DiskusiBanding         Boolean                  @default(false) @map("diskusi_banding")
+  CreatedAt              DateTime?                @map("created_at")
+  UpdatedAt              DateTime?                @map("updated_at")
+  Mahasiswa              Mahasiswa                @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+  SanggahanAssesmenMk    SanggahanAssesmenMk[]
+  SanggahanAssesmenPihak SanggahanAssesmenPihak[]
+
+  @@map("sanggahan_assesmen")
+}
+
+model SanggahanAssesmenMk {
+  SanggahanAssesmenMkId String              @id @default(uuid()) @map("sanggahan_assesmen_mk_id")
+  SanggahanAssesmenId   String              @map("sanggahan_assesmen_id")
+  MataKuliahMahasiswaId String              @map("mata_kuliah_mahasiswa_id")
+  Keterangan            String?             @map("keterangan")
+  CreatedAt             DateTime?           @map("created_at")
+  UpdatedAt             DateTime?           @map("updated_at")
+  SanggahanAssesmen     SanggahanAssesmen   @relation(fields: [SanggahanAssesmenId], references: [SanggahanAssesmenId], onDelete: Cascade)
+  MataKuliahMahasiswa   MataKuliahMahasiswa @relation(fields: [MataKuliahMahasiswaId], references: [MataKuliahMahasiswaId], onDelete: Cascade)
+
+  @@map("sanggahan_assesmen_mk")
+}
+
+model SanggahanAssesmenPihak {
+  SanggahanAssesmenPihakId String            @id @default(uuid()) @map("sanggahan_assesmen_pihak_id")
+  SanggahanAssesmenId      String            @map("sanggahan_assesmen_id")
+  NamaPihak                String            @map("nama_pihak")
+  JabatanPihak             String?           @map("jabatan_pihak")
+  InstansiPihak            String?           @map("instansi_pihak")
+  CreatedAt                DateTime?         @map("created_at")
+  UpdatedAt                DateTime?         @map("updated_at")
+  SanggahanAssesmen        SanggahanAssesmen @relation(fields: [SanggahanAssesmenId], references: [SanggahanAssesmenId], onDelete: Cascade)
+
+  @@map("sanggahan_assesmen_pihak")
+}
+
+model SkRektor {
+  SkRektorId        String              @id @default(uuid()) @map("sk_rektor_id")
+  NamaSk            String              @map("nama_sk")
+  TahunSk           Int                 @default(2025) @map("tahun_sk")
+  NomorSk           String              @map("nomor_sk")
+  NamaFile          String              @map("nama_file")
+  NamaDokumen       String              @map("nama_dokumen")
+  CreatedAt         DateTime?           @map("created_at")
+  UpdatedAt         DateTime?           @map("updated_at")
+  SkRektorAssesor   SkRektorAssesor[]
+  SkRektorMahasiswa SkRektorMahasiswa[]
+
+  @@map("sk_rektor")
+}
+
+model SkRektorAssesor {
+  SkRektorId         String @map("sk_rektor_id")
+  AssesorMahasiswaId String @map("assesor_mahasiswa_id")
+
+  SkRektor         SkRektor         @relation(fields: [SkRektorId], references: [SkRektorId], onDelete: Cascade)
+  AssesorMahasiswa AssesorMahasiswa @relation(fields: [AssesorMahasiswaId], references: [AssesorMahasiswaId], onDelete: Cascade)
+
+  @@id([SkRektorId, AssesorMahasiswaId])
+  @@map("sk_rektor_assesor")
+}
+
+model SkRektorMahasiswa {
+  SkRektorId  String @map("sk_rektor_id")
+  MahasiswaId String @map("mahasiswa_id")
+
+  SkRektor  SkRektor  @relation(fields: [SkRektorId], references: [SkRektorId], onDelete: Cascade)
+  Mahasiswa Mahasiswa @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+
+  @@id([SkRektorId, MahasiswaId])
+  @@map("sk_rektor_mahasiswa")
+}
+
+model SkorAssesmen {
+  SkorAssesmenId  String        @id @default(uuid()) @map("skor_assesmen_id")
+  HasilAssesmenId String        @map("hasil_assesmen_id")
+  Portofolio      Float         @default(0) @map("portofolio")
+  Tulis           Float         @default(0) @map("tulis")
+  Wawancara       Float         @default(0) @map("wawancara")
+  Demo            Float         @default(0) @map("demo")
+  SkorRataRata    Float         @default(0) @map("skor_rata_rata")
+  NilaiHuruf      String?       @map("nilai_huruf")
+  CreatedAt       DateTime?     @map("created_at")
+  UpdatedAt       DateTime?     @map("updated_at")
+  HasilAssesmen   HasilAssesmen @relation(fields: [HasilAssesmenId], references: [HasilAssesmenId], onDelete: Cascade)
+
+  @@map("skor_assesmen")
+}
+
+model StatusMahasiswaAssesment {
+  StatusMahasiswaAssesmentId      String                            @id @default(uuid()) @map("status_mahasiswa_assesment_id")
+  NamaStatus                      String                            @map("nama_status")
+  Icon                            String                            @map("icon")
+  Urutan                          Int                               @map("urutan")
+  Keterangan                      String?                           @map("keterangan")
+  StatusMahasiswaAssesmentHistory StatusMahasiswaAssesmentHistory[]
+
+  @@map("status_mahasiswa_assesment")
+}
+
+model StatusMahasiswaAssesmentHistory {
+  StatusMahasiswaAssesmentHistoryId String                   @id @default(uuid()) @map("status_mahasiswa_assesment_history_id")
+  StatusMahasiswaAssesmentId        String                   @map("status_mahasiswa_assesment_id")
+  DaftarUlangId                     String                   @map("daftar_ulang_id")
+  Tanggal                           DateTime?                @map("tanggal")
+  Keterangan                        String?                  @map("keterangan")
+  StatusMahasiswaAssesment          StatusMahasiswaAssesment @relation(fields: [StatusMahasiswaAssesmentId], references: [StatusMahasiswaAssesmentId], onDelete: Cascade)
+
+  @@map("status_mahasiswa_assesment_history")
+}
+
+model TipeAsesor {
+  TipeAsesorId String    @id @default(uuid()) @map("tipe_asesor_id")
+  Nama         String    @map("nama")
+  Icon         String?   @map("icon")
+  Deskripsi    String?   @map("deskripsi")
+  CreatedAt    DateTime? @map("created_at")
+  UpdatedAt    DateTime? @map("updated_at")
+  DeletedAt    DateTime? @map("deleted_at")
+  Asesor       Asesor[]
+
+  @@map("tipe_asesor")
+}
+
+model University {
+  UniversityId          String                  @id @default(uuid()) @map("university_id")
+  AlamatId              String                  @map("alamat_id")
+  Nama                  String                  @map("nama")
+  Akreditasi            String                  @map("akreditasi")
+  CreatedAt             DateTime?               @map("created_at")
+  UpdatedAt             DateTime?               @map("updated_at")
+  DeletedAt             DateTime?               @map("deleted_at")
+  Alamat                Alamat                  @relation(fields: [AlamatId], references: [AlamatId], onDelete: Cascade)
+  ProgramStudi          ProgramStudi[]
+  UniversityJabatan     UniversityJabatan[]
+  UniversitySosialMedia UniversitySosialMedia[]
+  UniversityInformasi   UniversityInformasi[]
+
+  @@map("university")
+}
+
+model UniversitySosialMedia {
+  UniversitySosialMediaId String     @id @default(uuid()) @map("university_sosial_media_id")
+  UniversityId            String     @map("university_id")
+  Nama                    String     @map("nama")
+  Username                String?    @map("username")
+  Icon                    String?    @map("icon")
+  University              University @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+}
+
+model UniversityInformasi {
+  UniversityInformasiId String     @id @default(uuid()) @map("university_informasi_id")
+  UniversityId          String     @map("university_id")
+  Nama                  String     @map("nama")
+  Informasi             String?    @map("informasi")
+  University            University @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+}
+
+model UniversityJabatan {
+  UniversityJabatanId    String                   @id @default(uuid()) @map("university_jabatan_id")
+  UniversityId           String                   @map("university_id")
+  Nama                   String                   @map("nama")
+  Keterangan             String?                  @map("keterangan")
+  CreatedAt              DateTime?                @map("created_at")
+  UpdatedAt              DateTime?                @map("updated_at")
+  DeletedAt              DateTime?                @map("deleted_at")
+  University             University               @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+  UniversityJabatanOrang UniversityJabatanOrang[]
+
+  @@map("university_jabatan")
+}
+
+model UniversityJabatanOrang {
+  UniversityJabatanOrangId String            @id @default(uuid()) @map("university_jabatan_orang_id")
+  UniversityJabatanId      String            @map("university_jabatan_id")
+  Nama                     String            @map("nama")
+  Keterangan               String?           @map("keterangan")
+  CreatedAt                DateTime?         @map("created_at")
+  UpdatedAt                DateTime?         @map("updated_at")
+  DeletedAt                DateTime?         @map("deleted_at")
+  UniversityJabatan        UniversityJabatan @relation(fields: [UniversityJabatanId], references: [UniversityJabatanId], onDelete: Cascade)
+
+  @@map("university_jabatan_orang")
+}
+
+model User {
+  UserId             String               @id @default(uuid()) @map("user_id")
+  AlamatId           String               @map("alamat_id")
+  Nama               String               @map("nama")
+  Email              String               @unique @map("email")
+  EmailVerifiedAt    DateTime?            @map("email_verified_at")
+  TempatLahir        String?              @map("tempat_lahir")
+  TanggalLahir       DateTime?            @map("tanggal_lahir")
+  JenisKelamin       JenisKelamin         @default(PRIA) @map("jenis_kelamin")
+  PendidikanTerakhir Jenjang              @default(TIDAK_TAMAT_SD) @map("pendidikan_terakhir")
+  Avatar             String?              @map("avatar")
+  Agama              String?              @map("agama")
+  Telepon            String?              @map("telepon")
+  NomorWa            String?              @map("nomor_wa")
+  NomorHp            String?              @map("nomor_hp")
+  RememberToken      String?              @map("remember_token")
+  CreatedAt          DateTime?            @map("created_at")
+  UpdatedAt          DateTime?            @map("updated_at")
+  DeletedAt          DateTime?            @map("deleted_at")
+  Alamat             Alamat               @relation(fields: [AlamatId], references: [AlamatId], onDelete: Cascade)
+  Mahasiswa          Mahasiswa[]
+  UserHasPermissions UserHasPermissions[]
+  UserHasRoles       UserHasRoles[]
+  Userlogin          Userlogin[]
+
+  @@map("user")
+}
+
+model Userlogin {
+  UserloginId String @id @default(uuid()) @map("userlogin_id")
+  UserId      String @map("user_id")
+  Username    String @map("username")
+  Password    String @map("password")
+  User        User   @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
+
+  @@map("userlogin")
+}
