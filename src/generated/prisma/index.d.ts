@@ -69829,6 +69829,7 @@ export namespace Prisma {
     UserId: string | null
     Username: string | null
     Password: string | null
+    Credential: string | null
   }
 
   export type UserloginMaxAggregateOutputType = {
@@ -69836,6 +69837,7 @@ export namespace Prisma {
     UserId: string | null
     Username: string | null
     Password: string | null
+    Credential: string | null
   }
 
   export type UserloginCountAggregateOutputType = {
@@ -69843,6 +69845,7 @@ export namespace Prisma {
     UserId: number
     Username: number
     Password: number
+    Credential: number
     _all: number
   }
 
@@ -69852,6 +69855,7 @@ export namespace Prisma {
     UserId?: true
     Username?: true
     Password?: true
+    Credential?: true
   }
 
   export type UserloginMaxAggregateInputType = {
@@ -69859,6 +69863,7 @@ export namespace Prisma {
     UserId?: true
     Username?: true
     Password?: true
+    Credential?: true
   }
 
   export type UserloginCountAggregateInputType = {
@@ -69866,6 +69871,7 @@ export namespace Prisma {
     UserId?: true
     Username?: true
     Password?: true
+    Credential?: true
     _all?: true
   }
 
@@ -69946,6 +69952,7 @@ export namespace Prisma {
     UserId: string
     Username: string
     Password: string
+    Credential: string
     _count: UserloginCountAggregateOutputType | null
     _min: UserloginMinAggregateOutputType | null
     _max: UserloginMaxAggregateOutputType | null
@@ -69970,6 +69977,7 @@ export namespace Prisma {
     UserId?: boolean
     Username?: boolean
     Password?: boolean
+    Credential?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userlogin"]>
 
@@ -69978,6 +69986,7 @@ export namespace Prisma {
     UserId?: boolean
     Username?: boolean
     Password?: boolean
+    Credential?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userlogin"]>
 
@@ -69986,6 +69995,7 @@ export namespace Prisma {
     UserId?: boolean
     Username?: boolean
     Password?: boolean
+    Credential?: boolean
     User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userlogin"]>
 
@@ -69994,9 +70004,10 @@ export namespace Prisma {
     UserId?: boolean
     Username?: boolean
     Password?: boolean
+    Credential?: boolean
   }
 
-  export type UserloginOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"UserloginId" | "UserId" | "Username" | "Password", ExtArgs["result"]["userlogin"]>
+  export type UserloginOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"UserloginId" | "UserId" | "Username" | "Password" | "Credential", ExtArgs["result"]["userlogin"]>
   export type UserloginInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -70017,6 +70028,7 @@ export namespace Prisma {
       UserId: string
       Username: string
       Password: string
+      Credential: string
     }, ExtArgs["result"]["userlogin"]>
     composites: {}
   }
@@ -70445,6 +70457,7 @@ export namespace Prisma {
     readonly UserId: FieldRef<"Userlogin", 'String'>
     readonly Username: FieldRef<"Userlogin", 'String'>
     readonly Password: FieldRef<"Userlogin", 'String'>
+    readonly Credential: FieldRef<"Userlogin", 'String'>
   }
     
 
@@ -71582,7 +71595,8 @@ export namespace Prisma {
     UserloginId: 'UserloginId',
     UserId: 'UserId',
     Username: 'Username',
-    Password: 'Password'
+    Password: 'Password',
+    Credential: 'Credential'
   };
 
   export type UserloginScalarFieldEnum = (typeof UserloginScalarFieldEnum)[keyof typeof UserloginScalarFieldEnum]
@@ -75577,6 +75591,7 @@ export namespace Prisma {
     UserId?: StringFilter<"Userlogin"> | string
     Username?: StringFilter<"Userlogin"> | string
     Password?: StringFilter<"Userlogin"> | string
+    Credential?: StringFilter<"Userlogin"> | string
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -75585,6 +75600,7 @@ export namespace Prisma {
     UserId?: SortOrder
     Username?: SortOrder
     Password?: SortOrder
+    Credential?: SortOrder
     User?: UserOrderByWithRelationInput
   }
 
@@ -75596,6 +75612,7 @@ export namespace Prisma {
     UserId?: StringFilter<"Userlogin"> | string
     Username?: StringFilter<"Userlogin"> | string
     Password?: StringFilter<"Userlogin"> | string
+    Credential?: StringFilter<"Userlogin"> | string
     User?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "UserloginId">
 
@@ -75604,6 +75621,7 @@ export namespace Prisma {
     UserId?: SortOrder
     Username?: SortOrder
     Password?: SortOrder
+    Credential?: SortOrder
     _count?: UserloginCountOrderByAggregateInput
     _max?: UserloginMaxOrderByAggregateInput
     _min?: UserloginMinOrderByAggregateInput
@@ -75617,6 +75635,7 @@ export namespace Prisma {
     UserId?: StringWithAggregatesFilter<"Userlogin"> | string
     Username?: StringWithAggregatesFilter<"Userlogin"> | string
     Password?: StringWithAggregatesFilter<"Userlogin"> | string
+    Credential?: StringWithAggregatesFilter<"Userlogin"> | string
   }
 
   export type AlamatCreateInput = {
@@ -79575,6 +79594,7 @@ export namespace Prisma {
     UserloginId?: string
     Username: string
     Password: string
+    Credential: string
     User: UserCreateNestedOneWithoutUserloginInput
   }
 
@@ -79583,12 +79603,14 @@ export namespace Prisma {
     UserId: string
     Username: string
     Password: string
+    Credential: string
   }
 
   export type UserloginUpdateInput = {
     UserloginId?: StringFieldUpdateOperationsInput | string
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
+    Credential?: StringFieldUpdateOperationsInput | string
     User?: UserUpdateOneRequiredWithoutUserloginNestedInput
   }
 
@@ -79597,6 +79619,7 @@ export namespace Prisma {
     UserId?: StringFieldUpdateOperationsInput | string
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
+    Credential?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserloginCreateManyInput = {
@@ -79604,12 +79627,14 @@ export namespace Prisma {
     UserId: string
     Username: string
     Password: string
+    Credential: string
   }
 
   export type UserloginUpdateManyMutationInput = {
     UserloginId?: StringFieldUpdateOperationsInput | string
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
+    Credential?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserloginUncheckedUpdateManyInput = {
@@ -79617,6 +79642,7 @@ export namespace Prisma {
     UserId?: StringFieldUpdateOperationsInput | string
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
+    Credential?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -82355,6 +82381,7 @@ export namespace Prisma {
     UserId?: SortOrder
     Username?: SortOrder
     Password?: SortOrder
+    Credential?: SortOrder
   }
 
   export type UserloginMaxOrderByAggregateInput = {
@@ -82362,6 +82389,7 @@ export namespace Prisma {
     UserId?: SortOrder
     Username?: SortOrder
     Password?: SortOrder
+    Credential?: SortOrder
   }
 
   export type UserloginMinOrderByAggregateInput = {
@@ -82369,6 +82397,7 @@ export namespace Prisma {
     UserId?: SortOrder
     Username?: SortOrder
     Password?: SortOrder
+    Credential?: SortOrder
   }
 
   export type DesaCreateNestedOneWithoutAlamatInput = {
@@ -94259,12 +94288,14 @@ export namespace Prisma {
     UserloginId?: string
     Username: string
     Password: string
+    Credential: string
   }
 
   export type UserloginUncheckedCreateWithoutUserInput = {
     UserloginId?: string
     Username: string
     Password: string
+    Credential: string
   }
 
   export type UserloginCreateOrConnectWithoutUserInput = {
@@ -94389,6 +94420,7 @@ export namespace Prisma {
     UserId?: StringFilter<"Userlogin"> | string
     Username?: StringFilter<"Userlogin"> | string
     Password?: StringFilter<"Userlogin"> | string
+    Credential?: StringFilter<"Userlogin"> | string
   }
 
   export type UserCreateWithoutUserloginInput = {
@@ -96634,6 +96666,7 @@ export namespace Prisma {
     UserloginId?: string
     Username: string
     Password: string
+    Credential: string
   }
 
   export type MahasiswaUpdateWithoutUserInput = {
@@ -96721,18 +96754,21 @@ export namespace Prisma {
     UserloginId?: StringFieldUpdateOperationsInput | string
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
+    Credential?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserloginUncheckedUpdateWithoutUserInput = {
     UserloginId?: StringFieldUpdateOperationsInput | string
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
+    Credential?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserloginUncheckedUpdateManyWithoutUserInput = {
     UserloginId?: StringFieldUpdateOperationsInput | string
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
+    Credential?: StringFieldUpdateOperationsInput | string
   }
 
 

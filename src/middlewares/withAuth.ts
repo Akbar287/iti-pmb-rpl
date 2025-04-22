@@ -12,15 +12,17 @@ export default function withAuth(
 
         if(isProtected) {
             const token = await getToken({
-                req, secret: process.env.NEXTAUTH_SECRET
+                req, secret: process.env.NEXTAUTH_SECRET,
+                cookieName: "pmb-iti.session-token"
             });
+
             if(!token) {
                 const url = new URL("/login", req.url);
                 url.searchParams.set("callbackUrl", encodeURI(req.url));
                 return NextResponse.redirect(url);
             }
         }
-        console.log(isProtected)
+        
         return middleware(req, next);
     }
 }

@@ -80,7 +80,7 @@ export function NavUser({
                             <Avatar className="h-8 w-8 rounded-lg">
                                 <AvatarImage
                                     src={
-                                        '/api/protected/avatar/' +
+                                        '/api/protected/avatar?avatar=' +
                                         (user.avatar ?? 'default.png')
                                     }
                                     alt={user.nama ?? 'Nama'}
@@ -111,7 +111,7 @@ export function NavUser({
                                 <Avatar className="h-8 w-8 rounded-lg">
                                     <AvatarImage
                                         src={
-                                            '/api/protected/avatar/' +
+                                            '/api/protected/avatar?avatar=' +
                                             user.avatar
                                         }
                                         alt={user.nama ?? 'Nama'}

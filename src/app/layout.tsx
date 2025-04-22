@@ -7,6 +7,7 @@ import './globals.css'
 import { getSession } from '@/provider/api'
 import LayoutAuth from '@/components/layout/layout-auth'
 import LayoutNoauth from '@/components/layout/layout-noauth'
+import QueryProviders from '@/provider/query-providers'
 
 const spectralSans = Spectral({
     variable: '--font-spectral',
@@ -135,20 +136,22 @@ export default async function RootLayout({
             <body
                 className={`${spectralSans.variable} ${SonoMono.variable} ${poppins.variable} antialiased`}
             >
-                <Providers session={session}>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                    >
-                        {session !== null ? (
-                            <LayoutAuth>{children}</LayoutAuth>
-                        ) : (
-                            <LayoutNoauth>{children}</LayoutNoauth>
-                        )}
-                        <Toaster />
-                    </ThemeProvider>
-                </Providers>
+                <QueryProviders>
+                    <Providers session={session}>
+                        <ThemeProvider
+                            attribute="class"
+                            defaultTheme="system"
+                            enableSystem
+                        >
+                            {session !== null ? (
+                                <LayoutAuth>{children}</LayoutAuth>
+                            ) : (
+                                <LayoutNoauth>{children}</LayoutNoauth>
+                            )}
+                            <Toaster />
+                        </ThemeProvider>
+                    </Providers>
+                </QueryProviders>
             </body>
         </html>
     )

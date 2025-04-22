@@ -858,6 +858,7 @@ model Userlogin {
   UserId      String @map("user_id")
   Username    String @map("username")
   Password    String @map("password")
+  Credential  String @map("credential")
   User        User   @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
 
   @@map("userlogin")
