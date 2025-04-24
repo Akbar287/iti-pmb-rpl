@@ -173,7 +173,7 @@ exports.Prisma.AsesorPraktisiScalarFieldEnum = {
 
 exports.Prisma.AssesorMahasiswaScalarFieldEnum = {
   AssesorMahasiswaId: 'AssesorMahasiswaId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   AsesorId: 'AsesorId',
   Urutan: 'Urutan',
   Confirmation: 'Confirmation',
@@ -183,7 +183,7 @@ exports.Prisma.AssesorMahasiswaScalarFieldEnum = {
 
 exports.Prisma.BuktiFormScalarFieldEnum = {
   BuktiFormId: 'BuktiFormId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   JenisDokumenId: 'JenisDokumenId',
   NamaFile: 'NamaFile',
   NamaDokumen: 'NamaDokumen',
@@ -214,7 +214,7 @@ exports.Prisma.CountryScalarFieldEnum = {
 
 exports.Prisma.DaftarUlangScalarFieldEnum = {
   DaftarUlangId: 'DaftarUlangId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   ProgramStudiId: 'ProgramStudiId',
   Nim: 'Nim',
   JenjangKkniDituju: 'JenjangKkniDituju',
@@ -261,7 +261,7 @@ exports.Prisma.HasilAssesmenScalarFieldEnum = {
 
 exports.Prisma.InformasiKependudukanScalarFieldEnum = {
   InformasiKependudukanId: 'InformasiKependudukanId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   NoKk: 'NoKk',
   NoNik: 'NoNik',
   Suku: 'Suku',
@@ -271,7 +271,7 @@ exports.Prisma.InformasiKependudukanScalarFieldEnum = {
 
 exports.Prisma.InstitusiLamaScalarFieldEnum = {
   InstitusiLamaId: 'InstitusiLamaId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   AlamatId: 'AlamatId',
   Jenjang: 'Jenjang',
   JenisInstitusi: 'JenisInstitusi',
@@ -314,7 +314,7 @@ exports.Prisma.MahasiswaScalarFieldEnum = {
 
 exports.Prisma.MahasiswaKonferensiScalarFieldEnum = {
   MahasiswaKonferensiId: 'MahasiswaKonferensiId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   Tahun: 'Tahun',
   JudulSeminar: 'JudulSeminar',
   Penyelenggara: 'Penyelenggara',
@@ -325,7 +325,7 @@ exports.Prisma.MahasiswaKonferensiScalarFieldEnum = {
 
 exports.Prisma.MahasiswaOrganisasiProfesiScalarFieldEnum = {
   MahasiswaOrganisasiProfesiId: 'MahasiswaOrganisasiProfesiId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   Tahun: 'Tahun',
   NamaOrganisasi: 'NamaOrganisasi',
   JenjangAnggotaJabatan: 'JenjangAnggotaJabatan',
@@ -335,7 +335,7 @@ exports.Prisma.MahasiswaOrganisasiProfesiScalarFieldEnum = {
 
 exports.Prisma.MahasiswaPelatihanProfessionalScalarFieldEnum = {
   MahasiswaPelatihanProfessionalId: 'MahasiswaPelatihanProfessionalId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   NamaPelatihan: 'NamaPelatihan',
   Penyelenggara: 'Penyelenggara',
   Mulai: 'Mulai',
@@ -346,7 +346,7 @@ exports.Prisma.MahasiswaPelatihanProfessionalScalarFieldEnum = {
 
 exports.Prisma.MahasiswaPendidikanScalarFieldEnum = {
   MahasiswaPendidikanId: 'MahasiswaPendidikanId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   NamaSekolah: 'NamaSekolah',
   TahunLulus: 'TahunLulus',
   Jurusan: 'Jurusan',
@@ -356,7 +356,7 @@ exports.Prisma.MahasiswaPendidikanScalarFieldEnum = {
 
 exports.Prisma.MahasiswaPiagamScalarFieldEnum = {
   MahasiswaPiagamId: 'MahasiswaPiagamId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   BentukPenghargaan: 'BentukPenghargaan',
   PemberiPenghargaan: 'PemberiPenghargaan',
   CreatedAt: 'CreatedAt',
@@ -365,7 +365,7 @@ exports.Prisma.MahasiswaPiagamScalarFieldEnum = {
 
 exports.Prisma.MahasiswaRiwayatPekerjaanScalarFieldEnum = {
   MahasiswaRiwayatPekerjaanId: 'MahasiswaRiwayatPekerjaanId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   Nama: 'Nama',
   PosisiJabatan: 'PosisiJabatan',
   Alamat: 'Alamat',
@@ -391,7 +391,7 @@ exports.Prisma.MataKuliahScalarFieldEnum = {
 
 exports.Prisma.MataKuliahMahasiswaScalarFieldEnum = {
   MataKuliahMahasiswaId: 'MataKuliahMahasiswaId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   MataKuliahId: 'MataKuliahId',
   Rpl: 'Rpl',
   Keterangan: 'Keterangan',
@@ -411,7 +411,7 @@ exports.Prisma.UserHasRolesScalarFieldEnum = {
 
 exports.Prisma.OrangTuaScalarFieldEnum = {
   OrangTuaId: 'OrangTuaId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   Nama: 'Nama',
   Pekerjaan: 'Pekerjaan',
   JenisOrtu: 'JenisOrtu',
@@ -430,7 +430,7 @@ exports.Prisma.PasswordResetTokensScalarFieldEnum = {
 
 exports.Prisma.PekerjaanMahasiswaScalarFieldEnum = {
   PekerjaanMahasiswaId: 'PekerjaanMahasiswaId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   AlamatId: 'AlamatId',
   InstitusiTempatBekerja: 'InstitusiTempatBekerja',
   Jabatan: 'Jabatan',
@@ -462,7 +462,7 @@ exports.Prisma.PermissionScalarFieldEnum = {
 
 exports.Prisma.PesantrenScalarFieldEnum = {
   PesantrenId: 'PesantrenId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   NamaPesantren: 'NamaPesantren',
   LamaPesantren: 'LamaPesantren',
   CreatedAt: 'CreatedAt',
@@ -502,7 +502,7 @@ exports.Prisma.RoleScalarFieldEnum = {
 
 exports.Prisma.SanggahanAssesmenScalarFieldEnum = {
   SanggahanAssesmenId: 'SanggahanAssesmenId',
-  MahasiswaId: 'MahasiswaId',
+  PendaftaranId: 'PendaftaranId',
   ProsesBanding: 'ProsesBanding',
   DiskusiBanding: 'DiskusiBanding',
   CreatedAt: 'CreatedAt',
@@ -546,7 +546,7 @@ exports.Prisma.SkRektorAssesorScalarFieldEnum = {
 
 exports.Prisma.SkRektorMahasiswaScalarFieldEnum = {
   SkRektorId: 'SkRektorId',
-  MahasiswaId: 'MahasiswaId'
+  PendaftaranId: 'PendaftaranId'
 };
 
 exports.Prisma.SkorAssesmenScalarFieldEnum = {

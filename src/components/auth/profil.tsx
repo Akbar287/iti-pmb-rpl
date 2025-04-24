@@ -52,7 +52,6 @@ import {
 import { Textarea } from '../ui/textarea'
 import { Label } from '../ui/label'
 import { toast } from 'sonner'
-import { useSession } from 'next-auth/react'
 import {
     getDesaByKecamatanId,
     getKabupatenByProvinsiId,
@@ -86,8 +85,6 @@ const Profil = ({
     kecamatanDataServer,
     desaDataServer,
 }: IProfil) => {
-    const { update } = useSession()
-
     const [countryData, setCountryData] =
         React.useState<Country[]>(countryDataServer)
     const [provinsiData, setProvinsiData] =
@@ -185,7 +182,6 @@ const Profil = ({
             if (!res.ok) throw new Error('Upload failed')
 
             await res.json()
-            await update()
             setImageFile(null)
             setProfilePicture(null)
             toast('Upload Gambar Berhasil')

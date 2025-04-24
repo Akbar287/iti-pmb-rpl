@@ -73,7 +73,7 @@ export async function getProvinsi(): Promise<Provinsi[]> {
     return res.json()
 }
 
-export async function getProvinsiId(provinsiId: string): Promise<Provinsi[]> {
+export async function getProvinsiId(provinsiId: string): Promise<Provinsi> {
     const res = await fetch(
         `${BASE_URL}/api/protected/area/provinsi?id=${provinsiId}`
     )
@@ -144,9 +144,7 @@ export async function getKabupaten(): Promise<Kabupaten[]> {
     return res.json()
 }
 
-export async function getKabupatenId(
-    kabupatenId: string
-): Promise<Kabupaten[]> {
+export async function getKabupatenId(kabupatenId: string): Promise<Kabupaten> {
     const res = await fetch(
         `${BASE_URL}/api/protected/area/kabupaten?id=${kabupatenId}`
     )
@@ -216,9 +214,7 @@ export async function getKecamatan(): Promise<Kecamatan[]> {
     return res.json()
 }
 
-export async function getKecamatanId(
-    kecamatanId: string
-): Promise<Kecamatan[]> {
+export async function getKecamatanId(kecamatanId: string): Promise<Kecamatan> {
     const res = await fetch(
         `${BASE_URL}/api/protected/area/kecamatan?id=${kecamatanId}`
     )
@@ -288,7 +284,7 @@ export async function getDesa(): Promise<Desa[]> {
     return res.json()
 }
 
-export async function getDesaId(desaId: string): Promise<Desa[]> {
+export async function getDesaId(desaId: string): Promise<Desa> {
     const res = await fetch(`${BASE_URL}/api/protected/area/desa?id=${desaId}`)
     if (!res.ok) throw new Error('Failed to fetch desa')
     return res.json()

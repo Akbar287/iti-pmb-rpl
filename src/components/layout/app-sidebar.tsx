@@ -19,15 +19,18 @@ import { Role } from '@/generated/prisma'
 import { toast } from 'sonner'
 import { MenuProps } from '@/types/types'
 import useCountStore from '@/stores/MenuStore'
+import { useRouter } from 'next/navigation'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const router = useRouter()
     const { data: session } = useSession()
     const getMenuByRole = useCountStore((state) => state.getMenuByRole)
     const [selectedRole, setSelectedRole] = React.useState<Role | null>(null)
     const [selectedMenu, setSelectedMenu] = React.useState<MenuProps[] | null>(
         null
     )
-    const changeRole = (role: Role) => {
+    const changeRole = async (role: Role) => {
+        router.push('/')
         setSelectedRole(role)
         setSelectedMenu(getMenuByRole(role))
         localStorage.setItem('pmb.iti.role', JSON.stringify(role))
