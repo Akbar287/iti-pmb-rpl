@@ -285,7 +285,7 @@ const InstitusiLama = ({
                 {!selectableMahasiswa ? (
                     <></>
                 ) : loadingAwal ? (
-                    <Skeleton className="w-full h-56" />
+                    <Skeleton className="w-full mt-2 h-56" />
                 ) : (
                     <div className="my-2 w-full gap-3 grid grid-cols-1">
                         {data.length === 0 ? (

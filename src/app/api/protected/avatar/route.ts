@@ -1,4 +1,3 @@
-import { PrismaClient } from '@/generated/prisma'
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
@@ -8,9 +7,9 @@ import mime from 'mime'
 import { v4 as uuidv4 } from 'uuid'
 import { getSession } from '@/provider/api'
 import { useSession } from 'next-auth/react'
+import { prisma } from '@/lib/prisma'
 
 const app = new Hono().basePath('/api/protected/avatar')
-const prisma = new PrismaClient()
 
 app.use('*', withApiAuth)
 

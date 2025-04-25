@@ -1,10 +1,10 @@
-import { PrismaClient, Provinsi } from '@/generated/prisma';
+import { Provinsi } from '@/generated/prisma';
+import { prisma } from '@/lib/prisma';
 import { withApiAuth } from '@/middlewares/api-auth';
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 
 const app = new Hono().basePath('/api/protected/area/provinsi')
-const prisma = new PrismaClient();
 
 app.use('*', withApiAuth); 
 

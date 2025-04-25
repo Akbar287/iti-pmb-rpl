@@ -1,10 +1,9 @@
 import PendidikanMahasiswa from '@/components/kelengkapan-dokumen/PendidikanMahasiswa'
-import { PrismaClient } from '@/generated/prisma'
+import { prisma } from '@/lib/prisma'
 import { getSession } from '@/provider/api'
 import React from 'react'
 
 const Page = async () => {
-    const prisma = new PrismaClient()
     const session = await getSession()
 
     const dataMahasiswa = await prisma.mahasiswa.findMany({

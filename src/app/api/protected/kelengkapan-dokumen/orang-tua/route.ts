@@ -1,10 +1,10 @@
-import { OrangTua, PrismaClient } from '@/generated/prisma'
+import { OrangTua } from '@/generated/prisma'
+import { prisma } from '@/lib/prisma'
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 
 const app = new Hono().basePath('/api/protected/kelengkapan-dokumen/orang-tua')
-const prisma = new PrismaClient()
 
 app.use('*', withApiAuth)
 

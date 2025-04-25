@@ -7,6 +7,7 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
+import { NumericFormat } from 'react-number-format'
 import {
     Select,
     SelectContent,
@@ -17,7 +18,8 @@ import {
     SelectValue,
 } from '../ui/select'
 import {
-    MahasiswaOrganisasiProfesi,
+    JenisOrtu,
+    OrangTua as OrangTuaType,
     StatusPerkawinan,
 } from '@/generated/prisma'
 import { Button } from '../ui/button'
@@ -55,17 +57,17 @@ import {
 } from '../ui/table'
 import { Skeleton } from '../ui/skeleton'
 import {
-    deleteMahasiswaOrganisasiProfesi,
-    getMahasiswaOrganisasiProfesiByPendaftaranId,
-    setMahasiswaOrganisasiProfesi,
-    updateMahasiswaOrganisasiProfesi,
-} from '@/services/KelengkapanDokumen/OrganisasiProfesiService'
+    OrangTuaFormValidation,
+    OrangTuaSkemaValidation,
+} from '@/validation/OrangTuaValidation'
 import {
-    MahasiswaOrganisasiProfesiFormValidation,
-    MahasiswaOrganisasiProfesiSkemaValidation,
-} from '@/validation/OrganisasiProfesiValidation'
+    deleteOrangTua,
+    getOrangTuaByPendaftaranId,
+    setOrangTua,
+    updateOrangTua,
+} from '@/services/KelengkapanDokumen/OrangTuaService'
 
-const OrganisasiProfesi = ({
+const OrangTua = ({
     dataMahasiswa,
 }: {
     dataMahasiswa: {
@@ -81,56 +83,58 @@ const OrganisasiProfesi = ({
 }) => {
     const [selectableMahasiswa, setSelectableMahasiswa] =
         React.useState<string>('')
-    const [data, setData] = React.useState<MahasiswaOrganisasiProfesi[]>([])
+    const [data, setData] = React.useState<OrangTuaType[]>([])
     const [loading, setLoading] = React.useState<boolean>(false)
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [titleDialog, setTitleDialog] = React.useState<string>('')
-    const form = useForm<MahasiswaOrganisasiProfesiFormValidation>({
-        resolver: zodResolver(MahasiswaOrganisasiProfesiSkemaValidation),
+    const form = useForm<OrangTuaFormValidation>({
+        resolver: zodResolver(OrangTuaSkemaValidation),
         defaultValues: {
             PendaftaranId: '',
-            MahasiswaOrganisasiProfesiId: '',
-            Tahun: 2000,
-            NamaOrganisasi: '',
-            JenjangAnggotaJabatan: '',
+            Nama: '',
+            Pekerjaan: '',
+            JenisOrtu: JenisOrtu.AYAH,
+            Penghasilan: '',
+            Email: '',
+            NomorHp: '',
         },
     })
 
     React.useEffect(() => {
         setLoadingAwal(true)
-        getMahasiswaOrganisasiProfesiByPendaftaranId(selectableMahasiswa)
+        getOrangTuaByPendaftaranId(selectableMahasiswa)
             .then((res) => {
                 setData(res)
                 setLoadingAwal(false)
             })
-            .catch((err) => {
+            .catch((res) => {
                 setLoadingAwal(false)
             })
     }, [selectableMahasiswa])
 
     const tambahData = () => {
         form.reset()
-        setTitleDialog('Tambah Data Riwayat Organisasi Profesi')
+        setTitleDialog('Tambah Data Orang Tua')
         setOpenDialog(true)
     }
 
-    const ubahData = (e: MahasiswaOrganisasiProfesi) => {
-        form.setValue('NamaOrganisasi', e.NamaOrganisasi)
+    const ubahData = (e: OrangTuaType) => {
+        form.setValue('Nama', e.Nama)
         form.setValue('PendaftaranId', e.PendaftaranId)
-        form.setValue(
-            'MahasiswaOrganisasiProfesiId',
-            e.MahasiswaOrganisasiProfesiId
-        )
-        form.setValue('JenjangAnggotaJabatan', e.JenjangAnggotaJabatan)
-        form.setValue('Tahun', e.Tahun)
-        setTitleDialog('Ubah Data Riwayat Organisasi Profesi')
+        form.setValue('OrangTuaId', e.OrangTuaId)
+        form.setValue('Email', e.Email)
+        form.setValue('JenisOrtu', e.JenisOrtu)
+        form.setValue('NomorHp', e.NomorHp)
+        form.setValue('Pekerjaan', e.Pekerjaan || '')
+        form.setValue('Penghasilan', String(e.Penghasilan))
+        setTitleDialog('Ubah Data Orang Tua')
         setOpenDialog(true)
     }
 
-    const hapusData = (e: MahasiswaOrganisasiProfesi) => {
+    const hapusData = (e: OrangTuaType) => {
         Swal.fire({
-            title: 'Ingin Hapus ' + e.NamaOrganisasi + ' ?',
+            title: 'Ingin Hapus ' + e.Nama + ' ?',
             text: 'Aksi ini tidak dapat di undo',
             icon: 'warning',
             showCancelButton: true,
@@ -139,16 +143,8 @@ const OrganisasiProfesi = ({
             confirmButtonText: 'Ya, Hapus!',
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteMahasiswaOrganisasiProfesi(
-                    e.MahasiswaOrganisasiProfesiId
-                ).then(() => {
-                    setData(
-                        data.filter(
-                            (r) =>
-                                r.MahasiswaOrganisasiProfesiId !==
-                                e.MahasiswaOrganisasiProfesiId
-                        )
-                    )
+                deleteOrangTua(e.OrangTuaId).then(() => {
+                    setData(data.filter((r) => r.OrangTuaId !== e.OrangTuaId))
                     Swal.fire({
                         title: 'Terhapus!',
                         text: 'Data sudah dihapus.',
@@ -159,45 +155,51 @@ const OrganisasiProfesi = ({
         })
     }
 
-    const onSubmit = async (
-        dataSubmit: MahasiswaOrganisasiProfesiFormValidation
-    ) => {
+    const onSubmit = async (dataSubmit: OrangTuaFormValidation) => {
         setLoading(true)
-        if (titleDialog === 'Tambah Data Riwayat Organisasi Profesi') {
-            setMahasiswaOrganisasiProfesi({
+        if (titleDialog === 'Tambah Data Orang Tua') {
+            setOrangTua({
                 PendaftaranId: selectableMahasiswa,
-                MahasiswaOrganisasiProfesiId:
-                    dataSubmit.MahasiswaOrganisasiProfesiId,
-                NamaOrganisasi: dataSubmit.NamaOrganisasi,
-                Tahun: dataSubmit.Tahun,
-                JenjangAnggotaJabatan: dataSubmit.JenjangAnggotaJabatan,
+                OrangTuaId: '',
+                Nama: dataSubmit.Nama,
+                Pekerjaan:
+                    dataSubmit.Pekerjaan === undefined
+                        ? null
+                        : dataSubmit.Pekerjaan,
+                JenisOrtu: dataSubmit.JenisOrtu as JenisOrtu,
+                NomorHp: dataSubmit.NomorHp,
+                Penghasilan: Number(dataSubmit.Penghasilan),
+                Email: dataSubmit.Email,
                 CreatedAt: null,
                 UpdatedAt: null,
             }).then((res) => {
                 setData([...data, res])
-                toast('Data Riwayat Organisasi Profesi Disimpan')
+                toast('Data Orang Tua Disimpan')
                 setOpenDialog(false)
                 form.reset()
                 setLoading(false)
             })
         } else {
-            updateMahasiswaOrganisasiProfesi({
-                PendaftaranId: dataSubmit.PendaftaranId,
-                MahasiswaOrganisasiProfesiId:
-                    dataSubmit.MahasiswaOrganisasiProfesiId,
-                NamaOrganisasi: dataSubmit.NamaOrganisasi,
-                Tahun: dataSubmit.Tahun,
-                JenjangAnggotaJabatan: dataSubmit.JenjangAnggotaJabatan,
+            updateOrangTua({
+                PendaftaranId: selectableMahasiswa,
+                OrangTuaId: dataSubmit.OrangTuaId ?? '',
+                Nama: dataSubmit.Nama,
+                Pekerjaan:
+                    dataSubmit.Pekerjaan === undefined
+                        ? null
+                        : dataSubmit.Pekerjaan,
+                JenisOrtu: dataSubmit.JenisOrtu as JenisOrtu,
+                NomorHp: dataSubmit.NomorHp,
+                Penghasilan: Number(dataSubmit.Penghasilan),
+                Email: dataSubmit.Email,
                 CreatedAt: null,
                 UpdatedAt: null,
             }).then((res) => {
                 let idx = data.findIndex(
-                    (r) =>
-                        r.MahasiswaOrganisasiProfesiId ==
-                        dataSubmit.MahasiswaOrganisasiProfesiId
+                    (r) => r.OrangTuaId == dataSubmit.OrangTuaId
                 )
                 setData(replaceItemAtIndex(data, idx, res))
-                toast('Data Riwayat Organisasi Profesi Diubah')
+                toast('Data Orang Tua Diubah')
                 setLoading(false)
                 form.reset()
                 setOpenDialog(false)
@@ -208,11 +210,9 @@ const OrganisasiProfesi = ({
         <Card>
             <CardHeader>
                 <CardTitle>
-                    <h1 className="text-2xl">Riwayat Organisasi Profesi</h1>
+                    <h1 className="text-2xl">Orang Tua Mahasiswa</h1>
                 </CardTitle>
-                <CardDescription>
-                    Catat Riwayat Organisasi Profesi Anda
-                </CardDescription>
+                <CardDescription>Catat Orang Tua Anda</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="my-2 w-full">
@@ -250,11 +250,10 @@ const OrganisasiProfesi = ({
                             onClick={() => tambahData()}
                         >
                             <PlusCircle />
-                            Buat Baru
+                            Buat Data Baru
                         </Button>
                     )}
                 </div>
-
                 {!selectableMahasiswa ? (
                     <></>
                 ) : loadingAwal ? (
@@ -263,31 +262,31 @@ const OrganisasiProfesi = ({
                     <Table className="mt-5">
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Nama Sekolah</TableHead>
-                                <TableHead>Tahun Lulus</TableHead>
-                                <TableHead>Jurusan</TableHead>
+                                <TableHead>Nama</TableHead>
+                                <TableHead>Jenis Ortu</TableHead>
+                                <TableHead>Pekerjaan</TableHead>
+                                <TableHead>Penghasilan</TableHead>
+                                <TableHead>Nomor HP</TableHead>
+                                <TableHead>Email</TableHead>
                                 <TableHead>Aksi</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {data.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={4}>
-                                        Tidak ada Data
+                                    <TableCell colSpan={7}>
+                                        Tidak Ada Data
                                     </TableCell>
                                 </TableRow>
                             ) : (
                                 data.map((row) => (
-                                    <TableRow
-                                        key={row.MahasiswaOrganisasiProfesiId}
-                                    >
-                                        <TableCell>
-                                            {row.NamaOrganisasi}
-                                        </TableCell>
-                                        <TableCell>{row.Tahun}</TableCell>
-                                        <TableCell>
-                                            {row.JenjangAnggotaJabatan}
-                                        </TableCell>
+                                    <TableRow key={row.OrangTuaId}>
+                                        <TableCell>{row.Nama}</TableCell>
+                                        <TableCell>{row.JenisOrtu}</TableCell>
+                                        <TableCell>{row.Pekerjaan}</TableCell>
+                                        <TableCell>{row.Penghasilan}</TableCell>
+                                        <TableCell>{row.NomorHp}</TableCell>
+                                        <TableCell>{row.Email}</TableCell>
                                         <TableCell>
                                             <Button
                                                 className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
@@ -314,7 +313,7 @@ const OrganisasiProfesi = ({
                     </Table>
                 )}
             </CardContent>
-            <DialogOrganisasiProfesi
+            <DialogOrangTua
                 openDialog={openDialog}
                 onSubmit={onSubmit}
                 setOpenDialog={setOpenDialog}
@@ -326,9 +325,9 @@ const OrganisasiProfesi = ({
     )
 }
 
-export default OrganisasiProfesi
+export default OrangTua
 
-function DialogOrganisasiProfesi({
+function DialogOrangTua({
     openDialog,
     onSubmit,
     setOpenDialog,
@@ -336,12 +335,12 @@ function DialogOrganisasiProfesi({
     form,
     loading,
 }: {
-    onSubmit: (dataSubmit: MahasiswaOrganisasiProfesiFormValidation) => void
+    onSubmit: (dataSubmit: OrangTuaFormValidation) => void
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     title: string
     loading: boolean
-    form: UseFormReturn<MahasiswaOrganisasiProfesiFormValidation>
+    form: UseFormReturn<OrangTuaFormValidation>
 }) {
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -358,12 +357,10 @@ function DialogOrganisasiProfesi({
                             <div className="grid grid-cols-1 gap-4 py-4">
                                 <FormField
                                     control={form.control}
-                                    name="NamaOrganisasi"
+                                    name="Nama"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>
-                                                Nama Organisasi
-                                            </FormLabel>
+                                            <FormLabel>Nama</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     readOnly={loading}
@@ -371,7 +368,7 @@ function DialogOrganisasiProfesi({
                                                 />
                                             </FormControl>
                                             <FormDescription>
-                                                Nama Organisasi Anda
+                                                Nama Orang Tua Anda
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -379,26 +376,117 @@ function DialogOrganisasiProfesi({
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="Tahun"
+                                    name="JenisOrtu"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Tahun </FormLabel>
+                                            <FormLabel>
+                                                Jenis Orang Tua{' '}
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Select
+                                                    disabled={loading}
+                                                    value={field.value ?? ''}
+                                                    onValueChange={
+                                                        field.onChange
+                                                    }
+                                                >
+                                                    <SelectTrigger className="w-full">
+                                                        <SelectValue placeholder="Pilih Jenis Orang Tua" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel>
+                                                                Orang Tua
+                                                            </SelectLabel>
+                                                            <SelectItem
+                                                                value={
+                                                                    JenisOrtu.AYAH
+                                                                }
+                                                            >
+                                                                AYAH
+                                                            </SelectItem>
+                                                            <SelectItem
+                                                                value={
+                                                                    JenisOrtu.IBU
+                                                                }
+                                                            >
+                                                                IBU
+                                                            </SelectItem>
+                                                            <SelectItem
+                                                                value={
+                                                                    JenisOrtu.KAKEK
+                                                                }
+                                                            >
+                                                                KAKEK
+                                                            </SelectItem>
+                                                            <SelectItem
+                                                                value={
+                                                                    JenisOrtu.NENEK
+                                                                }
+                                                            >
+                                                                NENEK
+                                                            </SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormDescription>
+                                                Jenis Orang Tua ?
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="Pekerjaan"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Pekerjaan</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     readOnly={loading}
-                                                    value={field.value ?? ''}
-                                                    onChange={(e) =>
-                                                        field.onChange(
-                                                            Number(
-                                                                e.target.value
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                Pekerjaan Orang Tua Anda
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="Penghasilan"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Penghasilan</FormLabel>
+                                            <FormControl>
+                                                <NumericFormat
+                                                    thousandSeparator=","
+                                                    decimalSeparator="."
+                                                    decimalScale={2}
+                                                    fixedDecimalScale
+                                                    allowNegative={false}
+                                                    prefix="Rp "
+                                                    className="input col-span-3 w-full rounded-md border px-3 py-2 text-sm shadow-sm"
+                                                    value={field.value}
+                                                    onValueChange={(values) => {
+                                                        form.setValue(
+                                                            'Penghasilan',
+                                                            String(
+                                                                values.floatValue ??
+                                                                    0
                                                             )
                                                         )
-                                                    }
+                                                    }}
+                                                    disabled={loading}
                                                 />
                                             </FormControl>
                                             <FormDescription>
-                                                Masuk Organisasi Tahun ?
-                                                (Contoh: 2021)
+                                                Penghasilan Orang Tua Anda
+                                                (contoh: Rp 1,000.00)
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>
@@ -406,12 +494,10 @@ function DialogOrganisasiProfesi({
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="JenjangAnggotaJabatan"
+                                    name="Email"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>
-                                                Jenjang Anggota Jabatan
-                                            </FormLabel>
+                                            <FormLabel>Email</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     readOnly={loading}
@@ -419,8 +505,26 @@ function DialogOrganisasiProfesi({
                                                 />
                                             </FormControl>
                                             <FormDescription>
-                                                Jenjang Anggota Jabatan Anda di
-                                                sekolah ini
+                                                Email Orang Tua Anda
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="NomorHp"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Nomor HP</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    readOnly={loading}
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                Nomor HP Orang Tua Anda
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>

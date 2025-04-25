@@ -1,12 +1,11 @@
-import { PrismaClient } from '@/generated/prisma'
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { getSession } from '@/provider/api'
 import bcrypt from "bcrypt"
+import { prisma } from '@/lib/prisma'
 
 const app = new Hono().basePath('/api/protected/profile/password')
-const prisma = new PrismaClient()
 
 app.use('*', withApiAuth); 
 

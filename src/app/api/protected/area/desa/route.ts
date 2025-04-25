@@ -1,10 +1,10 @@
-import { PrismaClient, Desa } from '@/generated/prisma';
+import { Desa } from '@/generated/prisma';
+import { prisma } from '@/lib/prisma';
 import { withApiAuth } from '@/middlewares/api-auth';
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 
 const app = new Hono().basePath('/api/protected/area/desa')
-const prisma = new PrismaClient();
 
 app.use('*', withApiAuth); 
 

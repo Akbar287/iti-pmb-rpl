@@ -56,41 +56,41 @@ export const metadata: Metadata = {
         'Kuliah Teknik Informatika',
         'Kuliah Teknik Komputer',
     ],
-    openGraph: {
-        title: 'Institut Teknologi Indonesia - The Technology-based Entrepreneur University',
-        description:
-            'Institut Teknologi Indonesia - Kuliah Online dan Offline, kuliah kelas karyawan (RPL) dan reguler, Kuliah Teknik- Biaya dicicil sampai lulus',
-        url: 'https://www.iti.ac.id',
-        siteName: 'Institut Teknologi Indonesia',
-        images: [
-            {
-                url: '/icon/Logo-ITI-oke-1.png',
-                width: 1200,
-                height: 630,
-                secureUrl: '/icon/Logo-ITI-oke-1.png',
-                type: 'image/png',
-                alt: 'Institut Teknologi Indonesia',
-            },
-        ],
-        locale: 'id_ID',
-        type: 'website',
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Institut Teknologi Indonesia - The Technology-based Entrepreneur University',
-        description:
-            'Institut Teknologi Indonesia - Kuliah Online dan Offline, kuliah kelas karyawan (RPL) dan reguler, Kuliah Teknik- Biaya dicicil sampai lulus',
-        images: [
-            {
-                url: '/icon/Logo-ITI-oke-1.png',
-                width: 1200,
-                height: 630,
-                alt: 'Institut Teknologi Indonesia',
-            },
-        ],
-        site: '@itindonesia',
-        creator: '@itindonesia',
-    },
+    // openGraph: {
+    //     title: 'Institut Teknologi Indonesia - The Technology-based Entrepreneur University',
+    //     description:
+    //         'Institut Teknologi Indonesia - Kuliah Online dan Offline, kuliah kelas karyawan (RPL) dan reguler, Kuliah Teknik- Biaya dicicil sampai lulus',
+    //     url: 'https://www.iti.ac.id',
+    //     siteName: 'Institut Teknologi Indonesia',
+    //     images: [
+    //         {
+    //             url: '/icon/Logo-ITI-oke-1.png',
+    //             width: 1200,
+    //             height: 630,
+    //             secureUrl: '/icon/Logo-ITI-oke-1.png',
+    //             type: 'image/png',
+    //             alt: 'Institut Teknologi Indonesia',
+    //         },
+    //     ],
+    //     locale: 'id_ID',
+    //     type: 'website',
+    // },
+    // twitter: {
+    //     card: 'summary_large_image',
+    //     title: 'Institut Teknologi Indonesia - The Technology-based Entrepreneur University',
+    //     description:
+    //         'Institut Teknologi Indonesia - Kuliah Online dan Offline, kuliah kelas karyawan (RPL) dan reguler, Kuliah Teknik- Biaya dicicil sampai lulus',
+    //     images: [
+    //         {
+    //             url: '/icon/Logo-ITI-oke-1.png',
+    //             width: 1200,
+    //             height: 630,
+    //             alt: 'Institut Teknologi Indonesia',
+    //         },
+    //     ],
+    //     site: '@itindonesia',
+    //     creator: '@itindonesia',
+    // },
     robots: {
         index: true,
         follow: true,
