@@ -8,8 +8,8 @@ export const BuktiFormSkemaValidation = z.object({
         .refine((file) => file instanceof File, {
             message: 'File wajib diunggah',
         })
-        .refine((file) => file?.size <= 5 * 1024 * 1024, {
-            message: 'Ukuran file maksimal 5MB',
+        .refine((file) => file?.size <= 10 * 1024 * 1024, {
+            message: 'Ukuran file maksimal 10MB',
         })
         .refine((file) => ['application/pdf'].includes(file?.type), {
             message: 'File harus berupa PDF',

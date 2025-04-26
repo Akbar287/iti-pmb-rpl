@@ -24,7 +24,7 @@ export async function getInformasiKependudukanId(
 
 export async function getInformasiKependudukanByPendaftaranId(
     pendaftaranId: string
-): Promise<InformasiKependudukan[]> {
+): Promise<InformasiKependudukan> {
     const res = await fetch(
         `${BASE_URL}/api/protected/kelengkapan-dokumen/informasi-kependudukan?pendaftaranId=${pendaftaranId}`
     )

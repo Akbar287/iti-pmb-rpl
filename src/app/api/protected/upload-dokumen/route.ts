@@ -136,6 +136,7 @@ app.get('/', async (c) => {
     }
 })
 app.post('/', async (c) => {
+    console.dir(c.body)
     const body = await c.req.parseBody()
     
     const file = body.files
@@ -145,6 +146,20 @@ app.post('/', async (c) => {
     if (!file || !(file instanceof File)) {
         return c.json(
             { status: 'error', message: 'File is required', data: [] },
+            { status: 400 }
+        )
+    }
+
+    if (!JenisDokumenId) {
+        return c.json(
+            { status: 'error', message: 'Jenis Dokumen Perlu diisi', data: [] },
+            { status: 400 }
+        )
+    }
+    
+    if (!PendaftaranId) {
+        return c.json(
+            { status: 'error', message: 'Id Pendaftaran Perlu diisi', data: [] },
             { status: 400 }
         )
     }
@@ -208,12 +223,39 @@ app.post('/', async (c) => {
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
         },
-    })
+        select: {
+            JenisDokumenId: true,
+            BuktiFormId: true,
+            PendaftaranId: true,
+            NamaFile: true,
+            NamaDokumen: true,
+            CreatedAt: true,
+            UpdatedAt: true,
+            JenisDokumen: {
+                select: {
+                    Jenis: true,
+                    NomorDokumen: true,
+                    Keterangan: true,
+                }
+            }
+        }
+    });
 
     return c.json({
         status: 'success',
         message: 'File uploaded successfully',
-        data: data,
+        data: {
+            JenisDokumenId: data.JenisDokumenId,
+            Jenis: data.JenisDokumen.Jenis,
+            NomorDokumen: data.JenisDokumen.NomorDokumen,
+            BuktiFormId: data.BuktiFormId,
+            Keterangan: data.JenisDokumen.Keterangan,
+            PendaftaranId: data.PendaftaranId,
+            NamaFile: data.NamaFile,
+            NamaDokumen: data.NamaDokumen,
+            CreatedAt: data.CreatedAt,
+            UpdatedAt: data.UpdatedAt,
+        },
     })
 })
 
@@ -230,12 +272,6 @@ app.delete('/', async (c) => {
         },
     })
 
-    await prisma.buktiForm.delete({
-        where: {
-            BuktiFormId: id,
-        },
-    })
-
     const avatarDir = path.join(process.cwd(), 'uploads', 'files')
 
     if (file !== null) {
@@ -248,6 +284,13 @@ app.delete('/', async (c) => {
             }
         }
     }
+    
+    await prisma.buktiForm.delete({
+        where: {
+            BuktiFormId: id,
+        },
+    })
+
 
     return c.json({
         status: 'ok',

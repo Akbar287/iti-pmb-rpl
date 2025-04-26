@@ -196,6 +196,16 @@ const menu: MenuStoreProps[] = [
                 title: 'Kejuaraan Piagam',
                 url: '/kelengkapan-informasi/kejuaraan-piagam',
             },
+            {
+                namaRole: ['Mahasiswa'],
+                title: 'Pesantren',
+                url: '/kelengkapan-informasi/pesantren',
+            },
+            {
+                namaRole: ['Mahasiswa'],
+                title: 'Kependudukan',
+                url: '/kelengkapan-informasi/informasi-kependudukan',
+            },
         ],
     },
     {

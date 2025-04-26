@@ -1,7 +1,7 @@
 import React from 'react'
 import { getSession } from '@/provider/api'
 import { prisma } from '@/lib/prisma'
-import EvaluasiMandiri from '@/components/evaluasi-mandiri/EvaluasiMandiri'
+import PesantrenComponent from '@/components/kelengkapan-dokumen/PesantrenComponent'
 
 const Page = async () => {
     const session = await getSession()
@@ -24,7 +24,7 @@ const Page = async () => {
         },
     })
 
-    return <EvaluasiMandiri dataMahasiswa={dataMahasiswa} />
+    return <PesantrenComponent dataMahasiswa={dataMahasiswa} />
 }
 
 export default Page

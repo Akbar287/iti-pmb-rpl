@@ -14,7 +14,7 @@ app.get('/', async (c) => {
 
     let data = null;
     if(pendaftaranId) {
-        data = await prisma.informasiKependudukan.findMany({
+        data = await prisma.informasiKependudukan.findFirst({
             where: {
                 PendaftaranId: pendaftaranId
             }

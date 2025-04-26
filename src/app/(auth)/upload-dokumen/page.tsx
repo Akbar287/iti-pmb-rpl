@@ -29,7 +29,7 @@ const Page = async () => {
     return (
         <UploadDokumen
             dataMahasiswa={dataMahasiswa}
-            jenisDokumen={jenisDokumen}
+            jenisDokumenServer={jenisDokumen}
         />
     )
 }
