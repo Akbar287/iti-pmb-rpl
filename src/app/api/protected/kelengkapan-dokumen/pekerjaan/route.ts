@@ -28,7 +28,12 @@ app.get('/', async (c) => {
 
 app.post('/', async (c) => {
     const body: PekerjaanMahasiswa = await c.req.json()
-
+    
+    // const alamat = await prisma.alamat.create({
+    //     data: {
+    //         Alamat: 
+    //     }
+    // })
     const data = await prisma.pekerjaanMahasiswa.create({
         data: {
             PendaftaranId: body.PendaftaranId,

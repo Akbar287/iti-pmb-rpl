@@ -1,10 +1,9 @@
 import React from 'react'
-import { PrismaClient } from '@/generated/prisma'
 import { getSession } from '@/provider/api'
 import OrganisasiProfesi from '@/components/kelengkapan-dokumen/OrganisasiProfesi'
+import { prisma } from '@/lib/prisma'
 
 const Page = async () => {
-    const prisma = new PrismaClient()
     const session = await getSession()
 
     const dataMahasiswa = await prisma.mahasiswa.findMany({

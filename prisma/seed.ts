@@ -2613,7 +2613,8 @@ async function main() {
                           data: {
                             UserId: resss.UserId,
                             Username: ud.Username,
-                            Password: ud.Password
+                            Password: ud.Password,
+                            Credential: "credential"
                           }
                         }).then(() => {
                           console.log("Berhasil Seed User: " + ud.Nama)

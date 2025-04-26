@@ -1,9 +1,8 @@
 import React from 'react'
-import { PrismaClient } from '@/generated/prisma'
 import { getSession } from 'next-auth/react'
 import OrangTua from '@/components/kelengkapan-dokumen/OrangTua'
+import { prisma } from '@/lib/prisma'
 const Page = async () => {
-    const prisma = new PrismaClient()
     const session = await getSession()
 
     const dataMahasiswa = await prisma.mahasiswa.findMany({

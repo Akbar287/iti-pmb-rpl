@@ -3,11 +3,13 @@ import { Spectral, Sono, Poppins } from 'next/font/google'
 import { ThemeProvider } from '@/provider/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import Providers from '../provider/auth-providers'
+import 'nprogress/nprogress.css'
 import './globals.css'
 import { getSession } from '@/provider/api'
 import LayoutAuth from '@/components/layout/layout-auth'
 import LayoutNoauth from '@/components/layout/layout-noauth'
 import QueryProviders from '@/provider/query-providers'
+import { RouteProgress } from '@/lib/router-progress'
 
 const spectralSans = Spectral({
     variable: '--font-spectral',
@@ -136,6 +138,7 @@ export default async function RootLayout({
             <body
                 className={`${spectralSans.variable} ${SonoMono.variable} ${poppins.variable} antialiased`}
             >
+                <RouteProgress />
                 <QueryProviders>
                     <Providers session={session}>
                         <ThemeProvider

@@ -34095,13 +34095,24 @@ export namespace Prisma {
 
   export type AggregateMahasiswaPiagam = {
     _count: MahasiswaPiagamCountAggregateOutputType | null
+    _avg: MahasiswaPiagamAvgAggregateOutputType | null
+    _sum: MahasiswaPiagamSumAggregateOutputType | null
     _min: MahasiswaPiagamMinAggregateOutputType | null
     _max: MahasiswaPiagamMaxAggregateOutputType | null
+  }
+
+  export type MahasiswaPiagamAvgAggregateOutputType = {
+    Tahun: number | null
+  }
+
+  export type MahasiswaPiagamSumAggregateOutputType = {
+    Tahun: number | null
   }
 
   export type MahasiswaPiagamMinAggregateOutputType = {
     MahasiswaPiagamId: string | null
     PendaftaranId: string | null
+    Tahun: number | null
     BentukPenghargaan: string | null
     PemberiPenghargaan: string | null
     CreatedAt: Date | null
@@ -34111,6 +34122,7 @@ export namespace Prisma {
   export type MahasiswaPiagamMaxAggregateOutputType = {
     MahasiswaPiagamId: string | null
     PendaftaranId: string | null
+    Tahun: number | null
     BentukPenghargaan: string | null
     PemberiPenghargaan: string | null
     CreatedAt: Date | null
@@ -34120,6 +34132,7 @@ export namespace Prisma {
   export type MahasiswaPiagamCountAggregateOutputType = {
     MahasiswaPiagamId: number
     PendaftaranId: number
+    Tahun: number
     BentukPenghargaan: number
     PemberiPenghargaan: number
     CreatedAt: number
@@ -34128,9 +34141,18 @@ export namespace Prisma {
   }
 
 
+  export type MahasiswaPiagamAvgAggregateInputType = {
+    Tahun?: true
+  }
+
+  export type MahasiswaPiagamSumAggregateInputType = {
+    Tahun?: true
+  }
+
   export type MahasiswaPiagamMinAggregateInputType = {
     MahasiswaPiagamId?: true
     PendaftaranId?: true
+    Tahun?: true
     BentukPenghargaan?: true
     PemberiPenghargaan?: true
     CreatedAt?: true
@@ -34140,6 +34162,7 @@ export namespace Prisma {
   export type MahasiswaPiagamMaxAggregateInputType = {
     MahasiswaPiagamId?: true
     PendaftaranId?: true
+    Tahun?: true
     BentukPenghargaan?: true
     PemberiPenghargaan?: true
     CreatedAt?: true
@@ -34149,6 +34172,7 @@ export namespace Prisma {
   export type MahasiswaPiagamCountAggregateInputType = {
     MahasiswaPiagamId?: true
     PendaftaranId?: true
+    Tahun?: true
     BentukPenghargaan?: true
     PemberiPenghargaan?: true
     CreatedAt?: true
@@ -34194,6 +34218,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: MahasiswaPiagamAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MahasiswaPiagamSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: MahasiswaPiagamMinAggregateInputType
@@ -34224,6 +34260,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: MahasiswaPiagamCountAggregateInputType | true
+    _avg?: MahasiswaPiagamAvgAggregateInputType
+    _sum?: MahasiswaPiagamSumAggregateInputType
     _min?: MahasiswaPiagamMinAggregateInputType
     _max?: MahasiswaPiagamMaxAggregateInputType
   }
@@ -34231,11 +34269,14 @@ export namespace Prisma {
   export type MahasiswaPiagamGroupByOutputType = {
     MahasiswaPiagamId: string
     PendaftaranId: string
+    Tahun: number
     BentukPenghargaan: string
     PemberiPenghargaan: string
     CreatedAt: Date | null
     UpdatedAt: Date | null
     _count: MahasiswaPiagamCountAggregateOutputType | null
+    _avg: MahasiswaPiagamAvgAggregateOutputType | null
+    _sum: MahasiswaPiagamSumAggregateOutputType | null
     _min: MahasiswaPiagamMinAggregateOutputType | null
     _max: MahasiswaPiagamMaxAggregateOutputType | null
   }
@@ -34257,6 +34298,7 @@ export namespace Prisma {
   export type MahasiswaPiagamSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     MahasiswaPiagamId?: boolean
     PendaftaranId?: boolean
+    Tahun?: boolean
     BentukPenghargaan?: boolean
     PemberiPenghargaan?: boolean
     CreatedAt?: boolean
@@ -34267,6 +34309,7 @@ export namespace Prisma {
   export type MahasiswaPiagamSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     MahasiswaPiagamId?: boolean
     PendaftaranId?: boolean
+    Tahun?: boolean
     BentukPenghargaan?: boolean
     PemberiPenghargaan?: boolean
     CreatedAt?: boolean
@@ -34277,6 +34320,7 @@ export namespace Prisma {
   export type MahasiswaPiagamSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     MahasiswaPiagamId?: boolean
     PendaftaranId?: boolean
+    Tahun?: boolean
     BentukPenghargaan?: boolean
     PemberiPenghargaan?: boolean
     CreatedAt?: boolean
@@ -34287,13 +34331,14 @@ export namespace Prisma {
   export type MahasiswaPiagamSelectScalar = {
     MahasiswaPiagamId?: boolean
     PendaftaranId?: boolean
+    Tahun?: boolean
     BentukPenghargaan?: boolean
     PemberiPenghargaan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type MahasiswaPiagamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"MahasiswaPiagamId" | "PendaftaranId" | "BentukPenghargaan" | "PemberiPenghargaan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["mahasiswaPiagam"]>
+  export type MahasiswaPiagamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"MahasiswaPiagamId" | "PendaftaranId" | "Tahun" | "BentukPenghargaan" | "PemberiPenghargaan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["mahasiswaPiagam"]>
   export type MahasiswaPiagamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
   }
@@ -34312,6 +34357,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       MahasiswaPiagamId: string
       PendaftaranId: string
+      Tahun: number
       BentukPenghargaan: string
       PemberiPenghargaan: string
       CreatedAt: Date | null
@@ -34742,6 +34788,7 @@ export namespace Prisma {
   interface MahasiswaPiagamFieldRefs {
     readonly MahasiswaPiagamId: FieldRef<"MahasiswaPiagam", 'String'>
     readonly PendaftaranId: FieldRef<"MahasiswaPiagam", 'String'>
+    readonly Tahun: FieldRef<"MahasiswaPiagam", 'Int'>
     readonly BentukPenghargaan: FieldRef<"MahasiswaPiagam", 'String'>
     readonly PemberiPenghargaan: FieldRef<"MahasiswaPiagam", 'String'>
     readonly CreatedAt: FieldRef<"MahasiswaPiagam", 'DateTime'>
@@ -71222,6 +71269,7 @@ export namespace Prisma {
   export const MahasiswaPiagamScalarFieldEnum: {
     MahasiswaPiagamId: 'MahasiswaPiagamId',
     PendaftaranId: 'PendaftaranId',
+    Tahun: 'Tahun',
     BentukPenghargaan: 'BentukPenghargaan',
     PemberiPenghargaan: 'PemberiPenghargaan',
     CreatedAt: 'CreatedAt',
@@ -73484,6 +73532,7 @@ export namespace Prisma {
     NOT?: MahasiswaPiagamWhereInput | MahasiswaPiagamWhereInput[]
     MahasiswaPiagamId?: StringFilter<"MahasiswaPiagam"> | string
     PendaftaranId?: StringFilter<"MahasiswaPiagam"> | string
+    Tahun?: IntFilter<"MahasiswaPiagam"> | number
     BentukPenghargaan?: StringFilter<"MahasiswaPiagam"> | string
     PemberiPenghargaan?: StringFilter<"MahasiswaPiagam"> | string
     CreatedAt?: DateTimeNullableFilter<"MahasiswaPiagam"> | Date | string | null
@@ -73494,6 +73543,7 @@ export namespace Prisma {
   export type MahasiswaPiagamOrderByWithRelationInput = {
     MahasiswaPiagamId?: SortOrder
     PendaftaranId?: SortOrder
+    Tahun?: SortOrder
     BentukPenghargaan?: SortOrder
     PemberiPenghargaan?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
@@ -73507,6 +73557,7 @@ export namespace Prisma {
     OR?: MahasiswaPiagamWhereInput[]
     NOT?: MahasiswaPiagamWhereInput | MahasiswaPiagamWhereInput[]
     PendaftaranId?: StringFilter<"MahasiswaPiagam"> | string
+    Tahun?: IntFilter<"MahasiswaPiagam"> | number
     BentukPenghargaan?: StringFilter<"MahasiswaPiagam"> | string
     PemberiPenghargaan?: StringFilter<"MahasiswaPiagam"> | string
     CreatedAt?: DateTimeNullableFilter<"MahasiswaPiagam"> | Date | string | null
@@ -73517,13 +73568,16 @@ export namespace Prisma {
   export type MahasiswaPiagamOrderByWithAggregationInput = {
     MahasiswaPiagamId?: SortOrder
     PendaftaranId?: SortOrder
+    Tahun?: SortOrder
     BentukPenghargaan?: SortOrder
     PemberiPenghargaan?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     _count?: MahasiswaPiagamCountOrderByAggregateInput
+    _avg?: MahasiswaPiagamAvgOrderByAggregateInput
     _max?: MahasiswaPiagamMaxOrderByAggregateInput
     _min?: MahasiswaPiagamMinOrderByAggregateInput
+    _sum?: MahasiswaPiagamSumOrderByAggregateInput
   }
 
   export type MahasiswaPiagamScalarWhereWithAggregatesInput = {
@@ -73532,6 +73586,7 @@ export namespace Prisma {
     NOT?: MahasiswaPiagamScalarWhereWithAggregatesInput | MahasiswaPiagamScalarWhereWithAggregatesInput[]
     MahasiswaPiagamId?: StringWithAggregatesFilter<"MahasiswaPiagam"> | string
     PendaftaranId?: StringWithAggregatesFilter<"MahasiswaPiagam"> | string
+    Tahun?: IntWithAggregatesFilter<"MahasiswaPiagam"> | number
     BentukPenghargaan?: StringWithAggregatesFilter<"MahasiswaPiagam"> | string
     PemberiPenghargaan?: StringWithAggregatesFilter<"MahasiswaPiagam"> | string
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"MahasiswaPiagam"> | Date | string | null
@@ -77372,6 +77427,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamCreateInput = {
     MahasiswaPiagamId?: string
+    Tahun: number
     BentukPenghargaan: string
     PemberiPenghargaan: string
     CreatedAt?: Date | string | null
@@ -77382,6 +77438,7 @@ export namespace Prisma {
   export type MahasiswaPiagamUncheckedCreateInput = {
     MahasiswaPiagamId?: string
     PendaftaranId: string
+    Tahun: number
     BentukPenghargaan: string
     PemberiPenghargaan: string
     CreatedAt?: Date | string | null
@@ -77390,6 +77447,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamUpdateInput = {
     MahasiswaPiagamId?: StringFieldUpdateOperationsInput | string
+    Tahun?: IntFieldUpdateOperationsInput | number
     BentukPenghargaan?: StringFieldUpdateOperationsInput | string
     PemberiPenghargaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77400,6 +77458,7 @@ export namespace Prisma {
   export type MahasiswaPiagamUncheckedUpdateInput = {
     MahasiswaPiagamId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
+    Tahun?: IntFieldUpdateOperationsInput | number
     BentukPenghargaan?: StringFieldUpdateOperationsInput | string
     PemberiPenghargaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77409,6 +77468,7 @@ export namespace Prisma {
   export type MahasiswaPiagamCreateManyInput = {
     MahasiswaPiagamId?: string
     PendaftaranId: string
+    Tahun: number
     BentukPenghargaan: string
     PemberiPenghargaan: string
     CreatedAt?: Date | string | null
@@ -77417,6 +77477,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamUpdateManyMutationInput = {
     MahasiswaPiagamId?: StringFieldUpdateOperationsInput | string
+    Tahun?: IntFieldUpdateOperationsInput | number
     BentukPenghargaan?: StringFieldUpdateOperationsInput | string
     PemberiPenghargaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77426,6 +77487,7 @@ export namespace Prisma {
   export type MahasiswaPiagamUncheckedUpdateManyInput = {
     MahasiswaPiagamId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
+    Tahun?: IntFieldUpdateOperationsInput | number
     BentukPenghargaan?: StringFieldUpdateOperationsInput | string
     PemberiPenghargaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -80975,15 +81037,21 @@ export namespace Prisma {
   export type MahasiswaPiagamCountOrderByAggregateInput = {
     MahasiswaPiagamId?: SortOrder
     PendaftaranId?: SortOrder
+    Tahun?: SortOrder
     BentukPenghargaan?: SortOrder
     PemberiPenghargaan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
 
+  export type MahasiswaPiagamAvgOrderByAggregateInput = {
+    Tahun?: SortOrder
+  }
+
   export type MahasiswaPiagamMaxOrderByAggregateInput = {
     MahasiswaPiagamId?: SortOrder
     PendaftaranId?: SortOrder
+    Tahun?: SortOrder
     BentukPenghargaan?: SortOrder
     PemberiPenghargaan?: SortOrder
     CreatedAt?: SortOrder
@@ -80993,10 +81061,15 @@ export namespace Prisma {
   export type MahasiswaPiagamMinOrderByAggregateInput = {
     MahasiswaPiagamId?: SortOrder
     PendaftaranId?: SortOrder
+    Tahun?: SortOrder
     BentukPenghargaan?: SortOrder
     PemberiPenghargaan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+  }
+
+  export type MahasiswaPiagamSumOrderByAggregateInput = {
+    Tahun?: SortOrder
   }
 
   export type MahasiswaRiwayatPekerjaanCountOrderByAggregateInput = {
@@ -91439,6 +91512,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamCreateWithoutPendaftaranInput = {
     MahasiswaPiagamId?: string
+    Tahun: number
     BentukPenghargaan: string
     PemberiPenghargaan: string
     CreatedAt?: Date | string | null
@@ -91447,6 +91521,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamUncheckedCreateWithoutPendaftaranInput = {
     MahasiswaPiagamId?: string
+    Tahun: number
     BentukPenghargaan: string
     PemberiPenghargaan: string
     CreatedAt?: Date | string | null
@@ -91946,6 +92021,7 @@ export namespace Prisma {
     NOT?: MahasiswaPiagamScalarWhereInput | MahasiswaPiagamScalarWhereInput[]
     MahasiswaPiagamId?: StringFilter<"MahasiswaPiagam"> | string
     PendaftaranId?: StringFilter<"MahasiswaPiagam"> | string
+    Tahun?: IntFilter<"MahasiswaPiagam"> | number
     BentukPenghargaan?: StringFilter<"MahasiswaPiagam"> | string
     PemberiPenghargaan?: StringFilter<"MahasiswaPiagam"> | string
     CreatedAt?: DateTimeNullableFilter<"MahasiswaPiagam"> | Date | string | null
@@ -95801,6 +95877,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamCreateManyPendaftaranInput = {
     MahasiswaPiagamId?: string
+    Tahun: number
     BentukPenghargaan: string
     PemberiPenghargaan: string
     CreatedAt?: Date | string | null
@@ -96161,6 +96238,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamUpdateWithoutPendaftaranInput = {
     MahasiswaPiagamId?: StringFieldUpdateOperationsInput | string
+    Tahun?: IntFieldUpdateOperationsInput | number
     BentukPenghargaan?: StringFieldUpdateOperationsInput | string
     PemberiPenghargaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -96169,6 +96247,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamUncheckedUpdateWithoutPendaftaranInput = {
     MahasiswaPiagamId?: StringFieldUpdateOperationsInput | string
+    Tahun?: IntFieldUpdateOperationsInput | number
     BentukPenghargaan?: StringFieldUpdateOperationsInput | string
     PemberiPenghargaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -96177,6 +96256,7 @@ export namespace Prisma {
 
   export type MahasiswaPiagamUncheckedUpdateManyWithoutPendaftaranInput = {
     MahasiswaPiagamId?: StringFieldUpdateOperationsInput | string
+    Tahun?: IntFieldUpdateOperationsInput | number
     BentukPenghargaan?: StringFieldUpdateOperationsInput | string
     PemberiPenghargaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

@@ -408,6 +408,7 @@ model MahasiswaPendidikan {
 model MahasiswaPiagam {
   MahasiswaPiagamId  String      @id @default(uuid()) @map("mahasiswa_piagam_id")
   PendaftaranId      String      @map("pendaftaran_id")
+  Tahun              Int         @map("tahun")
   BentukPenghargaan  String      @map("bentuk_penghargaan")
   PemberiPenghargaan String      @map("pemberi_penghargaan")
   CreatedAt          DateTime?   @map("created_at")

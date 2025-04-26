@@ -34,6 +34,7 @@ app.post('/', async (c) => {
             PendaftaranId: body.PendaftaranId,
             BentukPenghargaan: body.BentukPenghargaan,
             PemberiPenghargaan: body.PemberiPenghargaan,
+            Tahun: body.Tahun,
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
         }
@@ -50,6 +51,7 @@ app.put('/', async (c) => {
             PendaftaranId: body.PendaftaranId,
             BentukPenghargaan: body.BentukPenghargaan,
             PemberiPenghargaan: body.PemberiPenghargaan,
+            Tahun: body.Tahun,
             UpdatedAt: new Date(),
         },
         where: {

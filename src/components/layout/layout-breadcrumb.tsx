@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import React from 'react'
 
 export default function LayoutBreadcrumb() {
     const toTitleCase = (str: string) =>
@@ -17,6 +18,11 @@ export default function LayoutBreadcrumb() {
     const pathname = usePathname()
 
     const pathSegments = pathname.split('/').filter((seg) => seg)
+    const [isClient, setIsClient] = React.useState(false)
+
+    React.useEffect(() => {
+        setIsClient(true)
+    }, [])
 
     const breadcrumbs = [
         <BreadcrumbItem key="home">
@@ -50,9 +56,11 @@ export default function LayoutBreadcrumb() {
         }),
     ]
 
-    return (
+    return isClient ? (
         <Breadcrumb>
             <BreadcrumbList>{breadcrumbs}</BreadcrumbList>
         </Breadcrumb>
+    ) : (
+        <></>
     )
 }

@@ -144,6 +144,16 @@
   }
 }
 
+#nprogress .bar {
+  background: oklch(0.685 0.231 38.2);
+  height: 5px;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #e11d48 !important;
+  border-left-color: #e11d48 !important;
+}
+
 .grad-text {
   background: linear-gradient(92deg, oklch(0.685 0.231 38.2) 0%, #D4AF37 100%);
   -webkit-background-clip: text;

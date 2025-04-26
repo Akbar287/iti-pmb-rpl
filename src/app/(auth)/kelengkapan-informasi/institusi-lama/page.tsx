@@ -1,10 +1,9 @@
 import InstitusiLama from '@/components/kelengkapan-dokumen/InstitusiLama'
-import { PrismaClient } from '@/generated/prisma'
+import { prisma } from '@/lib/prisma'
 import { getSession } from 'next-auth/react'
 import React from 'react'
 
 const Page = async () => {
-    const prisma = new PrismaClient()
     const session = await getSession()
 
     const countryData = await prisma.country.findMany()

@@ -357,6 +357,7 @@ exports.Prisma.MahasiswaPendidikanScalarFieldEnum = {
 exports.Prisma.MahasiswaPiagamScalarFieldEnum = {
   MahasiswaPiagamId: 'MahasiswaPiagamId',
   PendaftaranId: 'PendaftaranId',
+  Tahun: 'Tahun',
   BentukPenghargaan: 'BentukPenghargaan',
   PemberiPenghargaan: 'PemberiPenghargaan',
   CreatedAt: 'CreatedAt',
