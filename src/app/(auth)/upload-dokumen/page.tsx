@@ -1,10 +1,17 @@
 import React from 'react'
-import { getSession } from '@/provider/api'
+import { authOptions } from '@/provider/api'
 import { prisma } from '@/lib/prisma'
 import UploadDokumen from '@/components/upload-dokumen/UploadDokumen'
+import { getServerSession } from 'next-auth'
+
+export const revalidate = 60
 
 const Page = async () => {
-    const session = await getSession()
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        throw new Error('Unauthorized')
+    }
 
     const dataMahasiswa = await prisma.mahasiswa.findMany({
         select: {

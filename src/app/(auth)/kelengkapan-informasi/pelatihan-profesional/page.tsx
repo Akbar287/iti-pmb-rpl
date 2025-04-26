@@ -1,10 +1,17 @@
 import React from 'react'
-import { getSession } from 'next-auth/react'
 import { prisma } from '@/lib/prisma'
 import PelatihanProfesional from '@/components/kelengkapan-dokumen/PelatihanProfesional'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/provider/api'
+
+export const revalidate = 60
 
 const Page = async () => {
-    const session = await getSession()
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        throw new Error('Unauthorized')
+    }
 
     const dataMahasiswa = await prisma.mahasiswa.findMany({
         select: {

@@ -1,10 +1,17 @@
 import PendidikanMahasiswa from '@/components/kelengkapan-dokumen/PendidikanMahasiswa'
 import { prisma } from '@/lib/prisma'
-import { getSession } from '@/provider/api'
+import { authOptions } from '@/provider/api'
+import { getServerSession } from 'next-auth'
 import React from 'react'
 
+export const revalidate = 60
+
 const Page = async () => {
-    const session = await getSession()
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        throw new Error('Unauthorized')
+    }
 
     const dataMahasiswa = await prisma.mahasiswa.findMany({
         select: {

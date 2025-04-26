@@ -1,12 +1,24 @@
 import InstitusiLama from '@/components/kelengkapan-dokumen/InstitusiLama'
 import { prisma } from '@/lib/prisma'
-import { getSession } from 'next-auth/react'
+import { authOptions } from '@/provider/api'
+import { getServerSession } from 'next-auth'
 import React from 'react'
 
-const Page = async () => {
-    const session = await getSession()
+export const revalidate = 60
 
-    const countryData = await prisma.country.findMany()
+const Page = async () => {
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        throw new Error('Unauthorized')
+    }
+
+    const countryData = await prisma.country.findMany({
+        select: {
+            CountryId: true,
+            Nama: true,
+        },
+    })
 
     const dataMahasiswa = await prisma.mahasiswa.findMany({
         select: {
@@ -22,7 +34,7 @@ const Page = async () => {
             },
         },
         where: {
-            UserId: session?.user.id,
+            UserId: session.user.id,
         },
     })
 
