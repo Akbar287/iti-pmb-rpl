@@ -326,6 +326,18 @@ export const Jenjang: {
 export type Jenjang = (typeof Jenjang)[keyof typeof Jenjang]
 
 
+export const StatusMataKuliahMahasiswa: {
+  DRAFT: 'DRAFT',
+  EVALUASI_MANDIRI: 'EVALUASI_MANDIRI',
+  DALAM_ASESSMEN: 'DALAM_ASESSMEN',
+  DISANGGAH: 'DISANGGAH',
+  PERLU_DIREVISI: 'PERLU_DIREVISI',
+  SELESAI: 'SELESAI'
+};
+
+export type StatusMataKuliahMahasiswa = (typeof StatusMataKuliahMahasiswa)[keyof typeof StatusMataKuliahMahasiswa]
+
+
 export const StatusPerkawinan: {
   Lajang: 'Lajang',
   Menikah: 'Menikah',
@@ -396,6 +408,10 @@ export const ProfiensiPengetahuan: typeof $Enums.ProfiensiPengetahuan
 export type Jenjang = $Enums.Jenjang
 
 export const Jenjang: typeof $Enums.Jenjang
+
+export type StatusMataKuliahMahasiswa = $Enums.StatusMataKuliahMahasiswa
+
+export const StatusMataKuliahMahasiswa: typeof $Enums.StatusMataKuliahMahasiswa
 
 export type StatusPerkawinan = $Enums.StatusPerkawinan
 
@@ -37561,6 +37577,7 @@ export namespace Prisma {
     MataKuliahId: string | null
     Rpl: boolean | null
     Keterangan: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -37571,6 +37588,7 @@ export namespace Prisma {
     MataKuliahId: string | null
     Rpl: boolean | null
     Keterangan: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -37581,6 +37599,7 @@ export namespace Prisma {
     MataKuliahId: number
     Rpl: number
     Keterangan: number
+    StatusMataKuliahMahasiswa: number
     CreatedAt: number
     UpdatedAt: number
     _all: number
@@ -37593,6 +37612,7 @@ export namespace Prisma {
     MataKuliahId?: true
     Rpl?: true
     Keterangan?: true
+    StatusMataKuliahMahasiswa?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -37603,6 +37623,7 @@ export namespace Prisma {
     MataKuliahId?: true
     Rpl?: true
     Keterangan?: true
+    StatusMataKuliahMahasiswa?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -37613,6 +37634,7 @@ export namespace Prisma {
     MataKuliahId?: true
     Rpl?: true
     Keterangan?: true
+    StatusMataKuliahMahasiswa?: true
     CreatedAt?: true
     UpdatedAt?: true
     _all?: true
@@ -37696,6 +37718,7 @@ export namespace Prisma {
     MataKuliahId: string
     Rpl: boolean
     Keterangan: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
     _count: MataKuliahMahasiswaCountAggregateOutputType | null
@@ -37723,6 +37746,7 @@ export namespace Prisma {
     MataKuliahId?: boolean
     Rpl?: boolean
     Keterangan?: boolean
+    StatusMataKuliahMahasiswa?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
@@ -37738,6 +37762,7 @@ export namespace Prisma {
     MataKuliahId?: boolean
     Rpl?: boolean
     Keterangan?: boolean
+    StatusMataKuliahMahasiswa?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
@@ -37750,6 +37775,7 @@ export namespace Prisma {
     MataKuliahId?: boolean
     Rpl?: boolean
     Keterangan?: boolean
+    StatusMataKuliahMahasiswa?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
@@ -37762,11 +37788,12 @@ export namespace Prisma {
     MataKuliahId?: boolean
     Rpl?: boolean
     Keterangan?: boolean
+    StatusMataKuliahMahasiswa?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type MataKuliahMahasiswaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"MataKuliahMahasiswaId" | "PendaftaranId" | "MataKuliahId" | "Rpl" | "Keterangan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["mataKuliahMahasiswa"]>
+  export type MataKuliahMahasiswaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"MataKuliahMahasiswaId" | "PendaftaranId" | "MataKuliahId" | "Rpl" | "Keterangan" | "StatusMataKuliahMahasiswa" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["mataKuliahMahasiswa"]>
   export type MataKuliahMahasiswaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
     MataKuliah?: boolean | MataKuliahDefaultArgs<ExtArgs>
@@ -37797,6 +37824,7 @@ export namespace Prisma {
       MataKuliahId: string
       Rpl: boolean
       Keterangan: $Enums.KeteranganMataKuliah | null
+      StatusMataKuliahMahasiswa: $Enums.StatusMataKuliahMahasiswa | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
     }, ExtArgs["result"]["mataKuliahMahasiswa"]>
@@ -38231,6 +38259,7 @@ export namespace Prisma {
     readonly MataKuliahId: FieldRef<"MataKuliahMahasiswa", 'String'>
     readonly Rpl: FieldRef<"MataKuliahMahasiswa", 'Boolean'>
     readonly Keterangan: FieldRef<"MataKuliahMahasiswa", 'KeteranganMataKuliah'>
+    readonly StatusMataKuliahMahasiswa: FieldRef<"MataKuliahMahasiswa", 'StatusMataKuliahMahasiswa'>
     readonly CreatedAt: FieldRef<"MataKuliahMahasiswa", 'DateTime'>
     readonly UpdatedAt: FieldRef<"MataKuliahMahasiswa", 'DateTime'>
   }
@@ -71317,6 +71346,7 @@ export namespace Prisma {
     MataKuliahId: 'MataKuliahId',
     Rpl: 'Rpl',
     Keterangan: 'Keterangan',
+    StatusMataKuliahMahasiswa: 'StatusMataKuliahMahasiswa',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
   };
@@ -71833,6 +71863,20 @@ export namespace Prisma {
    * Reference to a field of type 'KeteranganMataKuliah[]'
    */
   export type ListEnumKeteranganMataKuliahFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KeteranganMataKuliah[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'StatusMataKuliahMahasiswa'
+   */
+  export type EnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusMataKuliahMahasiswa'>
+    
+
+
+  /**
+   * Reference to a field of type 'StatusMataKuliahMahasiswa[]'
+   */
+  export type ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StatusMataKuliahMahasiswa[]'>
     
 
 
@@ -73770,6 +73814,7 @@ export namespace Prisma {
     MataKuliahId?: StringFilter<"MataKuliahMahasiswa"> | string
     Rpl?: BoolFilter<"MataKuliahMahasiswa"> | boolean
     Keterangan?: EnumKeteranganMataKuliahNullableFilter<"MataKuliahMahasiswa"> | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: EnumStatusMataKuliahMahasiswaNullableFilter<"MataKuliahMahasiswa"> | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: DateTimeNullableFilter<"MataKuliahMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"MataKuliahMahasiswa"> | Date | string | null
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
@@ -73784,6 +73829,7 @@ export namespace Prisma {
     MataKuliahId?: SortOrder
     Rpl?: SortOrder
     Keterangan?: SortOrderInput | SortOrder
+    StatusMataKuliahMahasiswa?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     Pendaftaran?: PendaftaranOrderByWithRelationInput
@@ -73794,6 +73840,7 @@ export namespace Prisma {
 
   export type MataKuliahMahasiswaWhereUniqueInput = Prisma.AtLeast<{
     MataKuliahMahasiswaId?: string
+    PendaftaranId_MataKuliahId?: MataKuliahMahasiswaPendaftaranIdMataKuliahIdCompoundUniqueInput
     AND?: MataKuliahMahasiswaWhereInput | MataKuliahMahasiswaWhereInput[]
     OR?: MataKuliahMahasiswaWhereInput[]
     NOT?: MataKuliahMahasiswaWhereInput | MataKuliahMahasiswaWhereInput[]
@@ -73801,13 +73848,14 @@ export namespace Prisma {
     MataKuliahId?: StringFilter<"MataKuliahMahasiswa"> | string
     Rpl?: BoolFilter<"MataKuliahMahasiswa"> | boolean
     Keterangan?: EnumKeteranganMataKuliahNullableFilter<"MataKuliahMahasiswa"> | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: EnumStatusMataKuliahMahasiswaNullableFilter<"MataKuliahMahasiswa"> | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: DateTimeNullableFilter<"MataKuliahMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"MataKuliahMahasiswa"> | Date | string | null
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
     MataKuliah?: XOR<MataKuliahScalarRelationFilter, MataKuliahWhereInput>
     EvaluasiDiri?: EvaluasiDiriListRelationFilter
     SanggahanAssesmenMk?: SanggahanAssesmenMkListRelationFilter
-  }, "MataKuliahMahasiswaId">
+  }, "MataKuliahMahasiswaId" | "PendaftaranId_MataKuliahId">
 
   export type MataKuliahMahasiswaOrderByWithAggregationInput = {
     MataKuliahMahasiswaId?: SortOrder
@@ -73815,6 +73863,7 @@ export namespace Prisma {
     MataKuliahId?: SortOrder
     Rpl?: SortOrder
     Keterangan?: SortOrderInput | SortOrder
+    StatusMataKuliahMahasiswa?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     _count?: MataKuliahMahasiswaCountOrderByAggregateInput
@@ -73831,6 +73880,7 @@ export namespace Prisma {
     MataKuliahId?: StringWithAggregatesFilter<"MataKuliahMahasiswa"> | string
     Rpl?: BoolWithAggregatesFilter<"MataKuliahMahasiswa"> | boolean
     Keterangan?: EnumKeteranganMataKuliahNullableWithAggregatesFilter<"MataKuliahMahasiswa"> | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: EnumStatusMataKuliahMahasiswaNullableWithAggregatesFilter<"MataKuliahMahasiswa"> | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"MataKuliahMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"MataKuliahMahasiswa"> | Date | string | null
   }
@@ -77686,6 +77736,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
@@ -77700,6 +77751,7 @@ export namespace Prisma {
     MataKuliahId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
@@ -77710,6 +77762,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
@@ -77724,6 +77777,7 @@ export namespace Prisma {
     MataKuliahId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
@@ -77736,6 +77790,7 @@ export namespace Prisma {
     MataKuliahId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -77744,6 +77799,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -77754,6 +77810,7 @@ export namespace Prisma {
     MataKuliahId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -81185,6 +81242,13 @@ export namespace Prisma {
     not?: NestedEnumKeteranganMataKuliahNullableFilter<$PrismaModel> | $Enums.KeteranganMataKuliah | null
   }
 
+  export type EnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatusMataKuliahMahasiswa | EnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel> | $Enums.StatusMataKuliahMahasiswa | null
+  }
+
   export type SanggahanAssesmenMkListRelationFilter = {
     every?: SanggahanAssesmenMkWhereInput
     some?: SanggahanAssesmenMkWhereInput
@@ -81195,12 +81259,18 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type MataKuliahMahasiswaPendaftaranIdMataKuliahIdCompoundUniqueInput = {
+    PendaftaranId: string
+    MataKuliahId: string
+  }
+
   export type MataKuliahMahasiswaCountOrderByAggregateInput = {
     MataKuliahMahasiswaId?: SortOrder
     PendaftaranId?: SortOrder
     MataKuliahId?: SortOrder
     Rpl?: SortOrder
     Keterangan?: SortOrder
+    StatusMataKuliahMahasiswa?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -81211,6 +81281,7 @@ export namespace Prisma {
     MataKuliahId?: SortOrder
     Rpl?: SortOrder
     Keterangan?: SortOrder
+    StatusMataKuliahMahasiswa?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -81221,6 +81292,7 @@ export namespace Prisma {
     MataKuliahId?: SortOrder
     Rpl?: SortOrder
     Keterangan?: SortOrder
+    StatusMataKuliahMahasiswa?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -81233,6 +81305,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumKeteranganMataKuliahNullableFilter<$PrismaModel>
     _max?: NestedEnumKeteranganMataKuliahNullableFilter<$PrismaModel>
+  }
+
+  export type EnumStatusMataKuliahMahasiswaNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatusMataKuliahMahasiswa | EnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumStatusMataKuliahMahasiswaNullableWithAggregatesFilter<$PrismaModel> | $Enums.StatusMataKuliahMahasiswa | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel>
+    _max?: NestedEnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel>
   }
 
   export type PermissionScalarRelationFilter = {
@@ -83914,6 +83996,10 @@ export namespace Prisma {
     set?: $Enums.KeteranganMataKuliah | null
   }
 
+  export type NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput = {
+    set?: $Enums.StatusMataKuliahMahasiswa | null
+  }
+
   export type PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput = {
     create?: XOR<PendaftaranCreateWithoutMataKuliahMahasiswaInput, PendaftaranUncheckedCreateWithoutMataKuliahMahasiswaInput>
     connectOrCreate?: PendaftaranCreateOrConnectWithoutMataKuliahMahasiswaInput
@@ -86311,6 +86397,13 @@ export namespace Prisma {
     not?: NestedEnumKeteranganMataKuliahNullableFilter<$PrismaModel> | $Enums.KeteranganMataKuliah | null
   }
 
+  export type NestedEnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatusMataKuliahMahasiswa | EnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel> | $Enums.StatusMataKuliahMahasiswa | null
+  }
+
   export type NestedEnumKeteranganMataKuliahNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.KeteranganMataKuliah | EnumKeteranganMataKuliahFieldRefInput<$PrismaModel> | null
     in?: $Enums.KeteranganMataKuliah[] | ListEnumKeteranganMataKuliahFieldRefInput<$PrismaModel> | null
@@ -86319,6 +86412,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumKeteranganMataKuliahNullableFilter<$PrismaModel>
     _max?: NestedEnumKeteranganMataKuliahNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumStatusMataKuliahMahasiswaNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StatusMataKuliahMahasiswa | EnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    in?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.StatusMataKuliahMahasiswa[] | ListEnumStatusMataKuliahMahasiswaFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumStatusMataKuliahMahasiswaNullableWithAggregatesFilter<$PrismaModel> | $Enums.StatusMataKuliahMahasiswa | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel>
+    _max?: NestedEnumStatusMataKuliahMahasiswaNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumJenisOrtuFilter<$PrismaModel = never> = {
@@ -88213,6 +88316,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
@@ -88226,6 +88330,7 @@ export namespace Prisma {
     MataKuliahId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
@@ -88336,6 +88441,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
@@ -88349,6 +88455,7 @@ export namespace Prisma {
     MataKuliahId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
@@ -90181,6 +90288,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
@@ -90193,6 +90301,7 @@ export namespace Prisma {
     PendaftaranId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
@@ -90299,6 +90408,7 @@ export namespace Prisma {
     MataKuliahId?: StringFilter<"MataKuliahMahasiswa"> | string
     Rpl?: BoolFilter<"MataKuliahMahasiswa"> | boolean
     Keterangan?: EnumKeteranganMataKuliahNullableFilter<"MataKuliahMahasiswa"> | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: EnumStatusMataKuliahMahasiswaNullableFilter<"MataKuliahMahasiswa"> | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: DateTimeNullableFilter<"MataKuliahMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"MataKuliahMahasiswa"> | Date | string | null
   }
@@ -91576,6 +91686,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
@@ -91588,6 +91699,7 @@ export namespace Prisma {
     MataKuliahId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
@@ -93155,6 +93267,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
@@ -93168,6 +93281,7 @@ export namespace Prisma {
     MataKuliahId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
@@ -93224,6 +93338,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
@@ -93237,6 +93352,7 @@ export namespace Prisma {
     MataKuliahId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
@@ -95641,6 +95757,7 @@ export namespace Prisma {
     PendaftaranId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -95681,6 +95798,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
@@ -95693,6 +95811,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
@@ -95704,6 +95823,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -95901,6 +96021,7 @@ export namespace Prisma {
     MataKuliahId: string
     Rpl?: boolean
     Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -96303,6 +96424,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
@@ -96315,6 +96437,7 @@ export namespace Prisma {
     MataKuliahId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
@@ -96326,6 +96449,7 @@ export namespace Prisma {
     MataKuliahId?: StringFieldUpdateOperationsInput | string
     Rpl?: BoolFieldUpdateOperationsInput | boolean
     Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }

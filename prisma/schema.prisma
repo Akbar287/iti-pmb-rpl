@@ -31,6 +31,15 @@ enum Jenjang {
   S3
 }
 
+enum StatusMataKuliahMahasiswa {
+  DRAFT
+  EVALUASI_MANDIRI
+  DALAM_ASESSMEN
+  DISANGGAH
+  PERLU_DIREVISI
+  SELESAI
+}
+
 enum StatusPerkawinan {
   Lajang
   Menikah
@@ -453,18 +462,20 @@ model MataKuliah {
 }
 
 model MataKuliahMahasiswa {
-  MataKuliahMahasiswaId String                @id @default(uuid()) @map("mata_kuliah_mahasiswa_id")
-  PendaftaranId         String                @map("pendaftaran_id")
-  MataKuliahId          String                @map("mata_kuliah_id")
-  Rpl                   Boolean               @default(false) @map("rpl")
-  Keterangan            KeteranganMataKuliah? @map("keterangan")
-  CreatedAt             DateTime?             @map("created_at")
-  UpdatedAt             DateTime?             @map("updated_at")
-  Pendaftaran           Pendaftaran           @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
-  MataKuliah            MataKuliah            @relation(fields: [MataKuliahId], references: [MataKuliahId], onDelete: Cascade)
-  EvaluasiDiri          EvaluasiDiri[]
-  SanggahanAssesmenMk   SanggahanAssesmenMk[]
+  MataKuliahMahasiswaId     String                     @id @default(uuid()) @map("mata_kuliah_mahasiswa_id")
+  PendaftaranId             String                     @map("pendaftaran_id")
+  MataKuliahId              String                     @map("mata_kuliah_id")
+  Rpl                       Boolean                    @default(false) @map("rpl")
+  Keterangan                KeteranganMataKuliah?      @map("keterangan")
+  StatusMataKuliahMahasiswa StatusMataKuliahMahasiswa? @map("status_mata_kuliah_mahasiswa")
+  CreatedAt                 DateTime?                  @map("created_at")
+  UpdatedAt                 DateTime?                  @map("updated_at")
+  Pendaftaran               Pendaftaran                @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
+  MataKuliah                MataKuliah                 @relation(fields: [MataKuliahId], references: [MataKuliahId], onDelete: Cascade)
+  EvaluasiDiri              EvaluasiDiri[]
+  SanggahanAssesmenMk       SanggahanAssesmenMk[]
 
+  @@unique([PendaftaranId, MataKuliahId])
   @@map("mata_kuliah_mahasiswa")
 }
 

@@ -396,6 +396,7 @@ exports.Prisma.MataKuliahMahasiswaScalarFieldEnum = {
   MataKuliahId: 'MataKuliahId',
   Rpl: 'Rpl',
   Keterangan: 'Keterangan',
+  StatusMataKuliahMahasiswa: 'StatusMataKuliahMahasiswa',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
 };
@@ -709,6 +710,15 @@ exports.StatusKeikutsertaan = exports.$Enums.StatusKeikutsertaan = {
 exports.KeteranganMataKuliah = exports.$Enums.KeteranganMataKuliah = {
   Transfer_SKS: 'Transfer_SKS',
   Perolehan_SKS: 'Perolehan_SKS'
+};
+
+exports.StatusMataKuliahMahasiswa = exports.$Enums.StatusMataKuliahMahasiswa = {
+  DRAFT: 'DRAFT',
+  EVALUASI_MANDIRI: 'EVALUASI_MANDIRI',
+  DALAM_ASESSMEN: 'DALAM_ASESSMEN',
+  DISANGGAH: 'DISANGGAH',
+  PERLU_DIREVISI: 'PERLU_DIREVISI',
+  SELESAI: 'SELESAI'
 };
 
 exports.JenisOrtu = exports.$Enums.JenisOrtu = {
