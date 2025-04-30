@@ -151,7 +151,12 @@ export default async function RootLayout({
                             ) : (
                                 <LayoutNoauth>{children}</LayoutNoauth>
                             )}
-                            <Toaster />
+                            <Toaster
+                                position="bottom-center"
+                                toastOptions={{
+                                    duration: 3000,
+                                }}
+                            />
                         </ThemeProvider>
                     </Providers>
                 </QueryProviders>

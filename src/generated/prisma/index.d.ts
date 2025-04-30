@@ -72787,6 +72787,7 @@ export namespace Prisma {
 
   export type EvaluasiDiriWhereUniqueInput = Prisma.AtLeast<{
     EvaluasiDiriId?: string
+    MataKuliahMahasiswaId_CapaianPembelajaranId?: EvaluasiDiriMataKuliahMahasiswaIdCapaianPembelajaranIdCompoundUniqueInput
     AND?: EvaluasiDiriWhereInput | EvaluasiDiriWhereInput[]
     OR?: EvaluasiDiriWhereInput[]
     NOT?: EvaluasiDiriWhereInput | EvaluasiDiriWhereInput[]
@@ -72800,7 +72801,7 @@ export namespace Prisma {
     CapaianPembelajaran?: XOR<CapaianPembelajaranScalarRelationFilter, CapaianPembelajaranWhereInput>
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriListRelationFilter
     HasilAssesmen?: HasilAssesmenListRelationFilter
-  }, "EvaluasiDiriId">
+  }, "EvaluasiDiriId" | "MataKuliahMahasiswaId_CapaianPembelajaranId">
 
   export type EvaluasiDiriOrderByWithAggregationInput = {
     EvaluasiDiriId?: SortOrder
@@ -80496,6 +80497,11 @@ export namespace Prisma {
 
   export type HasilAssesmenOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type EvaluasiDiriMataKuliahMahasiswaIdCapaianPembelajaranIdCompoundUniqueInput = {
+    MataKuliahMahasiswaId: string
+    CapaianPembelajaranId: string
   }
 
   export type EvaluasiDiriCountOrderByAggregateInput = {

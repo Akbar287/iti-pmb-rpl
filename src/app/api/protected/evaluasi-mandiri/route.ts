@@ -26,10 +26,20 @@ app.get('/', async (c) => {
             Rpl: true,
             StatusMataKuliahMahasiswa: true,
             Keterangan: true,
+            _count: {
+                select: {
+                    EvaluasiDiri: true,
+                },
+            },
         },
         where: {
             PendaftaranId: id,
         },
+    })
+
+    let temp = 0
+    pilihMataKuliah.forEach((pm) => {
+        temp += pm._count.EvaluasiDiri
     })
 
     const data = await prisma.daftarUlang.findFirst({
@@ -89,6 +99,7 @@ app.get('/', async (c) => {
         PendaftaranId: data?.PendaftaranId || '',
         Nim: data?.Nim || '',
         PilihMataKuliah: pilihMataKuliah.length,
+        EvaluasiDiriMataKuliah: temp || 0,
         JenjangKkniDituju: data?.JenjangKkniDituju || '',
         KipK: data?.KipK || false,
         Aktif: data?.Aktif || false,
@@ -144,45 +155,110 @@ app.post('/', async (c) => {
         },
     })
 
-    const bodyMap = new Map(
-        body.map((item) => [item.MataKuliahId, item.Keterangan])
+    // Jika MK RPL Saja (hanya mk RPL maka gunakan yang bawah ini)
+    const allMkRplInDb = await prisma.mataKuliahMahasiswa.findMany({
+        where: {
+            PendaftaranId: id,
+        },
+        select: {
+            MataKuliahMahasiswaId: true,
+            MataKuliahId: true,
+        },
+    })
+
+    const temp: string[] = []
+
+    allMkRplInDb.forEach((itemX) => {
+        const isInY = body.some(
+            (itemY) => itemY.MataKuliahId === itemX.MataKuliahId
+        )
+        if (!isInY) {
+            temp.push(itemX.MataKuliahMahasiswaId)
+        }
+    })
+
+    await Promise.all(
+        temp.map((t) =>
+            prisma.mataKuliahMahasiswa.delete({
+                where: {
+                    MataKuliahMahasiswaId: t,
+                },
+            })
+        )
     )
 
     const allMataKuliah = mk?.ProgramStudi.MataKuliah ?? []
 
-    for (const mk1 of allMataKuliah) {
-        const keterangan = bodyMap.get(mk1.MataKuliahId)
-        const isRpl = bodyMap.has(mk1.MataKuliahId)
+    for (const b of body) {
+        const match = allMataKuliah.find(
+            (a) => a.MataKuliahId === b.MataKuliahId
+        )
+        if (!match) continue
 
         await prisma.mataKuliahMahasiswa.upsert({
             where: {
                 PendaftaranId_MataKuliahId: {
                     PendaftaranId: id,
-                    MataKuliahId: mk1.MataKuliahId,
+                    MataKuliahId: b.MataKuliahId,
                 },
+            },
+            update: {
+                Rpl: true,
+                Keterangan: b.Keterangan,
+                StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa.DRAFT,
+                UpdatedAt: new Date(),
             },
             create: {
                 PendaftaranId: id,
-                MataKuliahId: mk1.MataKuliahId,
-                Rpl: isRpl,
-                Keterangan: isRpl ? keterangan : null,
+                MataKuliahId: b.MataKuliahId,
+                Rpl: true,
+                Keterangan: b.Keterangan,
                 StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa.DRAFT,
                 CreatedAt: new Date(),
-                UpdatedAt: new Date(),
-            },
-            update: {
-                Rpl: isRpl,
-                Keterangan: isRpl ? keterangan : null,
-                StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa.DRAFT,
                 UpdatedAt: new Date(),
             },
         })
     }
 
+    // Jika Semua MK (Tidak hanya RPL maka gunakan yang bawah)
+    // const bodyMap = new Map(
+    //     body.map((item) => [item.MataKuliahId, item.Keterangan])
+    // )
+
+    // const allMataKuliah = mk?.ProgramStudi.MataKuliah ?? []
+    // for (const mk1 of allMataKuliah) {
+    //     const keterangan = bodyMap.get(mk1.MataKuliahId)
+    //     const isRpl = bodyMap.has(mk1.MataKuliahId)
+
+    //     await prisma.mataKuliahMahasiswa.upsert({
+    //         where: {
+    //             PendaftaranId_MataKuliahId: {
+    //                 PendaftaranId: id,
+    //                 MataKuliahId: mk1.MataKuliahId,
+    //             },
+    //         },
+    //         create: {
+    //             PendaftaranId: id,
+    //             MataKuliahId: mk1.MataKuliahId,
+    //             Rpl: isRpl,
+    //             Keterangan: isRpl ? keterangan : null,
+    //             StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa.DRAFT,
+    //             CreatedAt: new Date(),
+    //             UpdatedAt: new Date(),
+    //         },
+    //         update: {
+    //             Rpl: isRpl,
+    //             Keterangan: isRpl ? keterangan : null,
+    //             StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa.DRAFT,
+    //             UpdatedAt: new Date(),
+    //         },
+    //     })
+    // }
+
     const response = await prisma.mataKuliahMahasiswa.findMany({
         where: {
-            PendaftaranId: id
-        }
+            PendaftaranId: id,
+        },
     })
 
     return c.json(response, 200)

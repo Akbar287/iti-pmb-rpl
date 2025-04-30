@@ -1,13 +1,83 @@
 import {
     KeteranganMataKuliah,
+    ProfiensiPengetahuan,
     StatusMataKuliahMahasiswa,
 } from '@/generated/prisma'
+
+export type MataKuliahMahasiswaCapaianPembelajaranTypes = {
+    MataKuliahMahasiswaId: string
+    PendaftaranId: string
+    MataKuliahId: string
+    Rpl: boolean
+    StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa | null
+    Keterangan: KeteranganMataKuliah | null
+    ProgramStudiId: string
+    Kode: string
+    Nama: string
+    Sks: number
+    Semester: string | null
+    Silabus: string | null
+    CapaianPembelajaran: {
+        CapaianPembelajaranId: string
+        MataKuliahId: string
+        Nama: string
+        Urutan: number
+        Active: boolean
+        EvaluasiDiri: {
+            EvaluasiDiriId: string
+            MataKuliahMahasiswaId: string
+            ProfiensiPengetahuan: ProfiensiPengetahuan
+            TanggalPengesahan: Date | null
+            CreatedAt: Date | null
+            UpdatedAt: Date | null
+            BuktiForm: {
+                Jenis: string
+                NomorDokumen: number
+                BuktiFormId: string
+                PendaftaranId: string
+                JenisDokumenId: string
+                NamaFile: string
+                NamaDokumen: string
+            }[]
+        } | null
+    }[]
+}[]
+
+export const MataKuliahMahasiswaCapaianPembelajaranValues: MataKuliahMahasiswaCapaianPembelajaranTypes =
+    []
+
+export interface RequestSetEvaluasiDiri {
+    PendaftaranId: string
+    MataKuliahMahasiswaId: string
+    CapaianPembelajaranId: string
+    ProfiensiPengetahuan: ProfiensiPengetahuan
+    TanggalPengesahan: Date | null
+    BuktiForm: string[]
+}
+export interface ResponseSetEvaluasiDiri {
+    EvaluasiDiriId: string
+    MataKuliahMahasiswaId: string
+    ProfiensiPengetahuan: ProfiensiPengetahuan
+    TanggalPengesahan: Date | null
+    CreatedAt: Date | null
+    UpdatedAt: Date | null
+    BuktiForm: {
+        Jenis: string
+        NomorDokumen: number
+        BuktiFormId: string
+        PendaftaranId: string
+        JenisDokumenId: string
+        NamaFile: string
+        NamaDokumen: string
+    }[]
+}
 
 export interface DaftarUlangProdiType {
     DaftarUlangId: string
     PendaftaranId: string
     Nim: string | null
     PilihMataKuliah: number
+    EvaluasiDiriMataKuliah: number
     JenjangKkniDituju: string | null
     KipK: boolean
     Aktif: boolean
@@ -48,6 +118,7 @@ export const DaftarUlangProdiValue: DaftarUlangProdiType = {
     KipK: false,
     Aktif: false,
     PilihMataKuliah: 0,
+    EvaluasiDiriMataKuliah: 0,
     MengisiBiodata: false,
     Finalisasi: false,
     TanggalDaftar: null,

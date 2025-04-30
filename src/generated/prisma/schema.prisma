@@ -263,6 +263,7 @@ model EvaluasiDiri {
   BuktiFormEvaluasiDiri BuktiFormEvaluasiDiri[]
   HasilAssesmen         HasilAssesmen[]
 
+  @@unique([MataKuliahMahasiswaId, CapaianPembelajaranId])
   @@map("evaluasi_diri")
 }
 

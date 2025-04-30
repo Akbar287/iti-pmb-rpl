@@ -55,6 +55,7 @@ import {
 } from '../ui/dialog'
 import { Checkbox } from '../ui/checkbox'
 import { replaceItemAtIndex } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 const EvaluasiMandiri = ({
     dataMahasiswa,
@@ -70,6 +71,7 @@ const EvaluasiMandiri = ({
         }[]
     }[]
 }) => {
+    const router = useRouter()
     const [selectableMahasiswa, setSelectableMahasiswa] =
         React.useState<string>('')
     const [dataDaftarUlang, setDataDaftarUlang] =
@@ -79,13 +81,21 @@ const EvaluasiMandiri = ({
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
 
+    const startEvaluating = () => {
+        router.push('/evaluasi-mandiri/' + selectableMahasiswa)
+    }
+
     const updateMataKuliahMahasiswa = () => {
         setLoading(true)
         setMataKuliahMahasiswa(selectableMahasiswa, form)
             .then((res) => {
                 setDataDaftarUlang(
                     dataDaftarUlang
-                        ? { ...dataDaftarUlang, MataKuliahMahasiswa: res }
+                        ? {
+                              ...dataDaftarUlang,
+                              MataKuliahMahasiswa: res,
+                              PilihMataKuliah: res.length,
+                          }
                         : null
                 )
                 toast('Data Mata Kuliah sudah disimpan')
@@ -197,6 +207,23 @@ const EvaluasiMandiri = ({
                                     </TableRow>
                                 </TableBody>
                             </Table>
+                            {dataDaftarUlang?.PilihMataKuliah !== 0 ? (
+                                <Alert className="mb-3">
+                                    <BookCheck className="h-4 w-4" />
+                                    <AlertTitle>Evaluasi Mandiri</AlertTitle>
+                                    <AlertDescription>
+                                        Terdapat{' '}
+                                        {
+                                            dataDaftarUlang?.EvaluasiDiriMataKuliah
+                                        }{' '}
+                                        dari {dataDaftarUlang?.PilihMataKuliah}{' '}
+                                        Terselesaikan. Segera Selesaikan agar
+                                        dapat di assessmen oleh asessor.
+                                    </AlertDescription>
+                                </Alert>
+                            ) : (
+                                <></>
+                            )}
                             <Alert>
                                 <ComputerIcon className="h-4 w-4" />
                                 <AlertTitle>Pemberitahuan</AlertTitle>
@@ -239,7 +266,9 @@ const EvaluasiMandiri = ({
                                     <Button
                                         className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                                         type="button"
-                                        onClick={() => {}}
+                                        onClick={() => {
+                                            startEvaluating()
+                                        }}
                                     >
                                         Mulai Evaluasi
                                         <ArrowRightIcon />
