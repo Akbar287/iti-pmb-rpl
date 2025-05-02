@@ -816,11 +816,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:Akbar287@localhost:5432/rpl_pmb?schema=public"
+        "value": null
       }
     }
   },

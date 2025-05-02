@@ -3,14 +3,8 @@ import { SidebarProvider } from '@/components/ui/sidebar'
 import { prisma } from '@/lib/prisma'
 import { MataKuliahMahasiswaCapaianPembelajaranTypes } from '@/types/DaftarUlangProdi'
 
-interface PageProps {
-    params: {
-        id: string
-    }
-}
-
-const Page = async ({ params }: PageProps) => {
-    const id = params.id
+export default async ({ params }: { params: Promise<{ id: string }> }) => {
+    const { id } = await params
     const data = await prisma.pendaftaran.findFirst({
         where: {
             PendaftaranId: id,
@@ -190,5 +184,3 @@ const Page = async ({ params }: PageProps) => {
         </SidebarProvider>
     )
 }
-
-export default Page
