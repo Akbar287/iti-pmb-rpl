@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -22,10 +22,8 @@ import {
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
@@ -59,9 +57,7 @@ type UserTable = {
     Username: string
     Nama: string
     Email: string
-    // Avatar: string | null
     NomorWa: string | null
-    // NomorHp: string | null
     Role: string | null
 }
 
@@ -91,7 +87,7 @@ export function UserDataTable() {
         hasNext: false,
         hasPrevious: false,
     })
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = React.useState('')
     const [loading, setLoading] = React.useState<boolean>(false)
 
     React.useEffect(() => {
@@ -133,34 +129,10 @@ export function UserDataTable() {
             })
     }, [paginationState.page, search, paginationState.limit])
 
-    const [users, setUsers] = useState<UserTable[]>([])
+    const [users, setUsers] = React.useState<UserTable[]>([])
     const [selectedUser, setSelectedUser] = React.useState<UserTable>()
 
     const columns: ColumnDef<UserTable>[] = [
-        {
-            id: 'select',
-            header: ({ table }) => (
-                <Checkbox
-                    checked={
-                        table.getIsAllPageRowsSelected() ||
-                        (table.getIsSomePageRowsSelected() && 'indeterminate')
-                    }
-                    onCheckedChange={(value) =>
-                        table.toggleAllPageRowsSelected(!!value)
-                    }
-                    aria-label="Select all"
-                />
-            ),
-            cell: ({ row }) => (
-                <Checkbox
-                    checked={row.getIsSelected()}
-                    onCheckedChange={(value) => row.toggleSelected(!!value)}
-                    aria-label="Select row"
-                />
-            ),
-            enableSorting: false,
-            enableHiding: false,
-        },
         {
             accessorKey: 'Username',
             header: 'Username',
@@ -262,20 +234,6 @@ export function UserDataTable() {
                     onChange={(event) => setSearch(event.target.value)}
                     className="max-w-sm"
                 />
-                {/* <Input
-                    placeholder="Filter emails..."
-                    value={
-                        (table
-                            .getColumn('Email')
-                            ?.getFilterValue() as string) ?? ''
-                    }
-                    onChange={(event) =>
-                        table
-                            .getColumn('Email')
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                /> */}
                 <div className="w-full justify-end flex">
                     <Select
                         value={String(paginationState.limit)}
@@ -301,32 +259,6 @@ export function UserDataTable() {
                         </SelectContent>
                     </Select>
                 </div>
-                {/* <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="ml-auto">
-                            Columns <ChevronDown />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        {table
-                            .getAllColumns()
-                            .filter((column) => column.getCanHide())
-                            .map((column) => {
-                                return (
-                                    <DropdownMenuCheckboxItem
-                                        key={column.id}
-                                        className="capitalize"
-                                        checked={column.getIsVisible()}
-                                        onCheckedChange={(value) =>
-                                            column.toggleVisibility(!!value)
-                                        }
-                                    >
-                                        {column.id}
-                                    </DropdownMenuCheckboxItem>
-                                )
-                            })}
-                    </DropdownMenuContent>
-                </DropdownMenu> */}
             </div>
             {loading ? (
                 <div className="space-y-2">
@@ -399,27 +331,17 @@ export function UserDataTable() {
             )}
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} of{' '}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
+                    Menampilkan{' '}
+                    {paginationState.page * paginationState.limit -
+                        paginationState.limit +
+                        1}{' '}
+                    -{' '}
+                    {paginationState.totalElement <
+                    paginationState.page * paginationState.limit
+                        ? paginationState.totalElement
+                        : paginationState.page * paginationState.limit}{' '}
+                    dari {paginationState.totalElement} Data.
                 </div>
-                {/* <div className="space-x-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}
-                    >
-                        Previous
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}
-                    >
-                        Next
-                    </Button>
-                </div> */}
                 <div className="flex items-center space-x-2 mt-4">
                     <Button
                         variant="outline"

@@ -194,7 +194,14 @@ app.get('/', async (c) => {
 
         return c.json<{data: UserResponseByIdType[], page: number, limit: number, totalElement: number, totalPage: number, isFirst: boolean, isLast: boolean, hasNext: boolean, hasPrevious: boolean  }>({page: page, limit: limit, data: res, totalElement: total, totalPage: Math.ceil(total / limit), isFirst: page === 1, isLast: page === Math.ceil(total / limit) || Math.ceil(total / limit) === 0, hasNext: page < Math.ceil(total / limit), hasPrevious: page > 1 })
     }
-  })
-  
-  export const GET = handle(app)
+})
+
+app.post('/', async (c) => {
+  const jenis = c.req.query('jenis')
+
+  if (jenis === 'assign-role') {}
+  if (jenis === 'set-user') {}
+})
+
+export const GET = handle(app)
   

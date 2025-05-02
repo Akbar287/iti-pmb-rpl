@@ -479,7 +479,9 @@ const EvaluasiMandiriId = ({
                 <SidebarContent>
                     <SidebarGroup className="px-0">
                         <SidebarGroupContent>
-                            {data[index].CapaianPembelajaran.map((cp) => (
+                            {data[index].CapaianPembelajaran.sort(
+                                (a, b) => a.Urutan - b.Urutan
+                            ).map((cp) => (
                                 <a
                                     href="#"
                                     onClick={() => {
