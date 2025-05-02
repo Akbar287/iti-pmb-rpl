@@ -269,7 +269,9 @@ const InstitusiLama = ({
                     </Select>
                 </div>
                 <div>
-                    {selectableMahasiswa && data.length === 0 ? (
+                    {selectableMahasiswa &&
+                    !loadingAwal &&
+                    data.length === 0 ? (
                         <Button
                             className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                             type="button"
