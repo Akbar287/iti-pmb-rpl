@@ -162,7 +162,7 @@ const EvaluasiMandiri = ({
                 <div>
                     {!selectableMahasiswa ? (
                         <></>
-                    ) : loadingAwal && dataDaftarUlang === null ? (
+                    ) : loadingAwal || loading || dataDaftarUlang === null ? (
                         <Skeleton className="w-full h-32" />
                     ) : (
                         <>

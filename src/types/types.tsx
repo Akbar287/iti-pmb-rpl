@@ -25,3 +25,12 @@ export interface SubMenuProps {
     title: string
     url: string
 }
+
+export type UserTable = {
+    UserId: string
+    Username: string
+    Nama: string
+    Email: string
+    NomorWa: string | null
+    Role: string | null
+}

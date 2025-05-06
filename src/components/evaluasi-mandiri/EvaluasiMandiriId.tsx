@@ -7,6 +7,7 @@ import {
     InfoIcon,
     ListIcon,
     PenLine,
+    Timer,
     X,
 } from 'lucide-react'
 import {
@@ -59,7 +60,6 @@ const EvaluasiMandiriId = ({
         NamaDokumen: string
     }[]
 }) => {
-    console.dir(dataServer)
     const [data, setData] = React.useState(dataServer)
     const [index, setIndex] = React.useState<number>(0)
     const [activeCapaian, setActiveCapaian] = React.useState<string | null>(
@@ -99,6 +99,10 @@ const EvaluasiMandiriId = ({
                     : data[index + 1].CapaianPembelajaran[0]
                           .CapaianPembelajaranId || null
             )
+            setForm({
+                ProfiensiPengetahuan: ProfiensiPengetahuan.TIDAK_PERNAH,
+                BuktiForm: [],
+            })
         }
     }
     const beforeActiveItem = () => {
@@ -110,10 +114,15 @@ const EvaluasiMandiriId = ({
                     : data[index - 1].CapaianPembelajaran[0]
                           .CapaianPembelajaranId || null
             )
+            setForm({
+                ProfiensiPengetahuan: ProfiensiPengetahuan.TIDAK_PERNAH,
+                BuktiForm: [],
+            })
         }
     }
     const saveEval = () => {
         if (activeCapaian) {
+            setLoading(true)
             setEvaluasiDiri({
                 PendaftaranId: data[index].PendaftaranId,
                 CapaianPembelajaranId: activeCapaian,
@@ -144,8 +153,10 @@ const EvaluasiMandiriId = ({
                         })
                     )
                     toast('Berhasil Menyimpan Evaluasi Diri.')
+                    setLoading(false)
                 })
                 .catch((err) => {
+                    setLoading(false)
                     toast('Terjadi Kesalahan. Mohon cek Koneksi Internet Anda')
                 })
         }
@@ -221,6 +232,7 @@ const EvaluasiMandiriId = ({
                                         <input
                                             type="radio"
                                             name="cardOption"
+                                            disabled={loading}
                                             value={
                                                 ProfiensiPengetahuan.TIDAK_PERNAH
                                             }
@@ -253,6 +265,7 @@ const EvaluasiMandiriId = ({
                                             type="radio"
                                             name="cardOption"
                                             value={ProfiensiPengetahuan.BAIK}
+                                            disabled={loading}
                                             checked={
                                                 form.ProfiensiPengetahuan ===
                                                 ProfiensiPengetahuan.BAIK
@@ -281,6 +294,7 @@ const EvaluasiMandiriId = ({
                                         <input
                                             type="radio"
                                             name="cardOption"
+                                            disabled={loading}
                                             value={
                                                 ProfiensiPengetahuan.SANGAT_BAIK
                                             }
@@ -418,11 +432,19 @@ const EvaluasiMandiriId = ({
                                 className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                                 type="button"
                                 size={'lg'}
-                                disabled={!activeCapaian && !index}
+                                disabled={(!activeCapaian && !index) || loading}
                                 onClick={() => saveEval()}
                             >
-                                <PenLine />
-                                Simpan
+                                {loading ? (
+                                    <>
+                                        <Timer /> Loading
+                                    </>
+                                ) : (
+                                    <>
+                                        <PenLine />
+                                        Simpan{' '}
+                                    </>
+                                )}
                             </Button>
                         </CardContent>
                     </Card>
@@ -485,23 +507,29 @@ const EvaluasiMandiriId = ({
                                 <a
                                     href="#"
                                     onClick={() => {
-                                        setActiveCapaian(
-                                            cp.CapaianPembelajaranId
-                                        )
-                                        setForm({
-                                            ProfiensiPengetahuan:
-                                                cp.EvaluasiDiri
-                                                    ?.ProfiensiPengetahuan ||
-                                                ProfiensiPengetahuan.TIDAK_PERNAH,
-                                            BuktiForm:
-                                                cp.EvaluasiDiri?.BuktiForm?.map(
-                                                    (bf) =>
-                                                        String(bf.BuktiFormId)
-                                                ) || [],
-                                        })
+                                        if (!loading) {
+                                            setActiveCapaian(
+                                                cp.CapaianPembelajaranId
+                                            )
+                                            setForm({
+                                                ProfiensiPengetahuan:
+                                                    cp.EvaluasiDiri
+                                                        ?.ProfiensiPengetahuan ||
+                                                    ProfiensiPengetahuan.TIDAK_PERNAH,
+                                                BuktiForm:
+                                                    cp.EvaluasiDiri?.BuktiForm?.map(
+                                                        (bf) =>
+                                                            String(
+                                                                bf.BuktiFormId
+                                                            )
+                                                    ) || [],
+                                            })
+                                        }
                                     }}
                                     key={cp.CapaianPembelajaranId}
-                                    className="flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                    className={`${
+                                        loading && 'cursor-not-allowed'
+                                    } flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
                                 >
                                     <div className="flex w-full items-center gap-2">
                                         <span>Urutan #{cp.Urutan}</span>{' '}
@@ -536,6 +564,7 @@ const EvaluasiMandiriId = ({
                 index={index}
                 setIndex={setIndex}
                 setActiveCapaian={setActiveCapaian}
+                setForm={setForm}
             />
         </React.Fragment>
     )
@@ -551,6 +580,7 @@ function DialogMataKuliahMahasiswaRpl({
     index,
     setActiveCapaian,
     setIndex,
+    setForm,
 }: {
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
@@ -559,6 +589,12 @@ function DialogMataKuliahMahasiswaRpl({
     index: number
     setIndex: React.Dispatch<React.SetStateAction<number>>
     setActiveCapaian: React.Dispatch<React.SetStateAction<string | null>>
+    setForm: React.Dispatch<
+        React.SetStateAction<{
+            ProfiensiPengetahuan: ProfiensiPengetahuan
+            BuktiForm: string[]
+        }>
+    >
 }) {
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -594,6 +630,11 @@ function DialogMataKuliahMahasiswaRpl({
                                                               .CapaianPembelajaranId ||
                                                               null
                                                 )
+                                                setForm({
+                                                    ProfiensiPengetahuan:
+                                                        ProfiensiPengetahuan.TIDAK_PERNAH,
+                                                    BuktiForm: [],
+                                                })
                                             }
                                             setOpenDialog(false)
                                         }}

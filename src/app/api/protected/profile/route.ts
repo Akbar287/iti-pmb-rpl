@@ -21,6 +21,8 @@ app.put('/', async (c) => {
                 }
             },
             AlamatId: true
+        }, where: {
+            UserId: session?.user.id
         }
     })
     const body: UserCreateFormValidation = await c.req.json()

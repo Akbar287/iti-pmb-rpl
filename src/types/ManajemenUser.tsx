@@ -55,7 +55,7 @@ export type UserResponsesType = {
 
 export interface RequestCreateUserType {
     Username: string
-    Password: string
+    Password: string | null
     Nama: string
     Email: string
     TempatLahir: string | null
@@ -70,5 +70,8 @@ export interface RequestCreateUserType {
     Alamat: string
     KodePos: string
     DesaId: string
-    Role: []
+    Role: {
+        RoleId: string
+        Name: string
+    }[]
 }
