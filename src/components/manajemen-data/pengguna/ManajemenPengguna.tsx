@@ -106,6 +106,7 @@ import { format } from 'date-fns'
 import { Calendar } from '@/components/ui/calendar'
 import {
     getDesaByKecamatanId,
+    getDesaId,
     getKabupatenByProvinsiId,
     getKecamatanByKabupatenId,
     getProvinsiByCountryId,
@@ -247,14 +248,17 @@ export function UserDataTable({
                             .catch((err) =>
                                 toast('Terjadi Kesalahan, Error: ' + err)
                             )
+                        await getDesaId(res?.Alamat?.DesaId)
+                            .then((res) => {})
+                            .catch((err) => {})
+                        form.setValue('CountryId', res.Alamat.CountryId)
+                        form.setValue('ProvinsiId', res.Alamat.ProvinsiId)
+                        form.setValue('KabupatenId', res.Alamat.KabupatenId)
+                        form.setValue('KecamatanId', res.Alamat.KecamatanId)
+                        form.setValue('DesaId', res.Alamat.DesaId)
+                        form.setValue('Alamat', res.Alamat.Alamat)
+                        form.setValue('KodePos', res.Alamat.KodePos)
                     }
-                    form.setValue('CountryId', res.Alamat?.CountryId || '')
-                    form.setValue('ProvinsiId', res?.Alamat?.ProvinsiId || '')
-                    form.setValue('KabupatenId', res?.Alamat?.KabupatenId || '')
-                    form.setValue('KecamatanId', res?.Alamat?.KecamatanId || '')
-                    form.setValue('DesaId', res?.Alamat?.DesaId || '')
-                    form.setValue('Alamat', res?.Alamat?.Alamat || '')
-                    form.setValue('KodePos', res?.Alamat?.KodePos || '')
                     form.setValue('Nama', res.Nama || '')
                     form.setValue('Email', res.Email || '')
                     form.setValue('Username', res.Username || '')
@@ -1627,7 +1631,7 @@ export function SheetManageData({
                                                                     loading
                                                                 }
                                                                 value={
-                                                                    field.value ??
+                                                                    field.value ||
                                                                     ''
                                                                 }
                                                                 onValueChange={

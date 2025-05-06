@@ -32,12 +32,12 @@ export const UserCreateSkemaValidation = z.object({
         .nonempty('tidak boleh kosong')
         .min(8, 'Minimal Username 8 Karakter')
         .max(16, 'Maksimal 16 Karakter'),
-    CountryId: z.string(),
-    ProvinsiId: z.string(),
-    KabupatenId: z.string(),
-    KecamatanId: z.string(),
-    DesaId: z.string(),
-    Alamat: z.string(),
+    CountryId: z.string().nonempty('tidak boleh kosong'),
+    ProvinsiId: z.string().nonempty('tidak boleh kosong'),
+    KabupatenId: z.string().nonempty('tidak boleh kosong'),
+    KecamatanId: z.string().nonempty('tidak boleh kosong'),
+    DesaId: z.string().nonempty('tidak boleh kosong'),
+    Alamat: z.string().nonempty('tidak boleh kosong'),
     KodePos: z
         .string()
         .min(5, 'Minimal 5 Karakter')
