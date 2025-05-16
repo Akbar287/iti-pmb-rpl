@@ -1,11 +1,10 @@
+import JenisDokumen from '@/components/manajemen-pembelajaran/JenisDokumenComponent'
+import { prisma } from '@/lib/prisma'
 import React from 'react'
 
-const Page = () => {
-    return (
-        <div>
-            <h1>Manajemen Pembelajaran - Jenis Dokumen</h1>
-        </div>
-    )
+const Page = async () => {
+    const JenisDokumenServer = await prisma.jenisDokumen.findMany()
+    return <JenisDokumen JenisDokumenServer={JenisDokumenServer} />
 }
 
 export default Page

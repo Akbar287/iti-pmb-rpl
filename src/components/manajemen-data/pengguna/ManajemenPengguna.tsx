@@ -382,11 +382,9 @@ export function UserDataTable({
             })
                 .then((res) => {
                     toast('Data Pengguna berhasil ditambah')
-                    let idx = users.findIndex(
-                        (u) => u.Username === form.getValues('Username')
-                    )
-                    setUsers(
-                        replaceItemAtIndex(users, idx, {
+                    setUsers([
+                        ...users,
+                        {
                             UserId: res?.UserId || '',
                             Username: res?.Username || '',
                             Nama: res?.Nama || '',
@@ -395,8 +393,8 @@ export function UserDataTable({
                             Role: res?.Role
                                 ? res.Role.map((r) => r.NamaRole).join(', ')
                                 : null,
-                        })
-                    )
+                        },
+                    ])
                     setLoading(false)
                     setOpenDialogUser(false)
                 })
@@ -576,7 +574,10 @@ export function UserDataTable({
                 <Input
                     placeholder="Filter Username"
                     value={search}
-                    onChange={(event) => setSearch(event.target.value)}
+                    onChange={(event) => {
+                        setPaginationState({ ...paginationState, page: 1 })
+                        setSearch(event.target.value)
+                    }}
                     className="max-w-sm"
                 />
                 <div className="w-full justify-end flex">
@@ -783,7 +784,6 @@ export function SheetManageData({
     openDialogUser,
     setOpenDialogUser,
     selectedUser,
-
     loadingAssignRole,
     onSubmit,
     loading,
@@ -806,7 +806,6 @@ export function SheetManageData({
     selectedUser: UserTable | undefined
     loadingAssignRole: boolean
     loading: boolean
-
     onSubmit: (data: UserCreateFormValidation) => void
     form: UseFormReturn<UserCreateFormValidation>
     setSelectedUser: React.Dispatch<React.SetStateAction<UserTable | undefined>>
