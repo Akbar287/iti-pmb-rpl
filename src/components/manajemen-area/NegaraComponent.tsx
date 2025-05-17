@@ -1,16 +1,5 @@
 'use client'
-import { JenisDokumen } from '@/generated/prisma'
-import { replaceItemAtIndex, truncateText } from '@/lib/utils'
-import {
-    updateJenisDokumen,
-    setJenisDokumen as createJenisDokumenService,
-    getJenisDokumenPagination,
-    deleteJenisDokumen,
-} from '@/services/ManajemenPembelajaran/JenisDokumenService'
-import {
-    JenisDokumenFormValidation,
-    JenisDokumenSkemaValidation,
-} from '@/validation/JenisDokumenValidation'
+import { replaceItemAtIndex } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     ColumnDef,
@@ -79,10 +68,20 @@ import {
     FormLabel,
     FormMessage,
 } from '../ui/form'
-import { Textarea } from '../ui/textarea'
+import { Country } from '@/generated/prisma'
+import {
+    CountryFormSkemaValidation,
+    CountryFormValidation,
+} from '@/validation/AreaFormValidation'
+import {
+    deleteCountry,
+    getCountryPagination,
+    setCountry,
+    updateCountry,
+} from '@/services/AreaServices'
 
-const JenisDokumenComponent = () => {
-    const [jenisDokumen, setJenisDokumen] = React.useState<JenisDokumen[]>([])
+const NegaraComponent = () => {
+    const [dataCountry, setDataCountry] = React.useState<Country[]>([])
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -111,54 +110,47 @@ const JenisDokumenComponent = () => {
     const [titleDialog, setTitleDialog] = React.useState<string>('')
     const [loading, setLoading] = React.useState<boolean>(false)
 
-    const form = useForm<JenisDokumenFormValidation>({
-        resolver: zodResolver(JenisDokumenSkemaValidation),
+    const form = useForm<CountryFormValidation>({
+        resolver: zodResolver(CountryFormSkemaValidation),
         defaultValues: {
-            Jenis: '',
-            NomorDokumen: '0',
-            Keterangan: '',
+            CountryId: '',
+            Nama: '',
         },
     })
-    const onSubmit = async (data: JenisDokumenFormValidation) => {
+    const onSubmit = async (data: CountryFormValidation) => {
         setLoading(true)
 
-        if (titleDialog === 'Ubah Jenis Dokumen') {
-            await updateJenisDokumen({
-                Jenis: data.Jenis,
-                NomorDokumen: parseInt(data.NomorDokumen),
-                Keterangan:
-                    data.Keterangan === undefined ? '' : data.Keterangan,
-                JenisDokumenId: data.JenisDokumenId || '',
+        if (titleDialog === 'Ubah Negara') {
+            await updateCountry({
+                CountryId: data.CountryId,
+                Nama: data.Nama,
             })
                 .then((res) => {
-                    toast('Data Jenis Dokumen berhasil diubah')
-                    let idx = jenisDokumen.findIndex(
-                        (r) => r.JenisDokumenId === data.JenisDokumenId
+                    toast('Data Negara berhasil diubah')
+                    let idx = dataCountry.findIndex(
+                        (r) => r.CountryId === data.CountryId
                     )
-                    setJenisDokumen(replaceItemAtIndex(jenisDokumen, idx, res))
+                    setDataCountry(replaceItemAtIndex(dataCountry, idx, res))
                     setOpenDialog(false)
                     setLoading(false)
                 })
                 .catch((err) => {
-                    toast('Data Jenis Dokumen gagal diubah. Error: ' + err)
+                    toast('Data Negara gagal diubah. Error: ' + err)
                     setLoading(false)
                 })
         } else {
-            await createJenisDokumenService({
-                Jenis: data.Jenis,
-                NomorDokumen: parseInt(data.NomorDokumen),
-                Keterangan:
-                    data.Keterangan === undefined ? '' : data.Keterangan,
-                JenisDokumenId: data.JenisDokumenId || '',
+            await setCountry({
+                CountryId: '',
+                Nama: data.Nama,
             })
                 .then((res) => {
-                    toast('Data Jenis Dokumen berhasil ditambah')
-                    setJenisDokumen([...jenisDokumen, res])
+                    toast('Data Negara berhasil ditambah')
+                    setDataCountry([...dataCountry, res])
                     setLoading(false)
                     setOpenDialog(false)
                 })
                 .catch((err) => {
-                    toast('Data Jenis Dokumen gagal ditambah. Error: ' + err)
+                    toast('Data Negara gagal ditambah. Error: ' + err)
                     setLoading(false)
                 })
         }
@@ -166,13 +158,13 @@ const JenisDokumenComponent = () => {
 
     React.useEffect(() => {
         setLoading(true)
-        getJenisDokumenPagination(
+        getCountryPagination(
             paginationState.page,
             paginationState.limit,
             search
         )
             .then((res) => {
-                setJenisDokumen(res.data)
+                setDataCountry(res.data)
                 setLoading(false)
                 setPaginationState({
                     page: res.page,
@@ -192,20 +184,18 @@ const JenisDokumenComponent = () => {
 
     const buatData = () => {
         form.reset()
-        setTitleDialog('Tambah Jenis Dokumen')
+        setTitleDialog('Tambah Negara')
         setOpenDialog(true)
     }
-    const ubahData = (jd: JenisDokumen) => {
-        form.setValue('Jenis', jd.Jenis)
-        form.setValue('NomorDokumen', String(jd.NomorDokumen))
-        form.setValue('Keterangan', jd.Keterangan || '')
-        form.setValue('JenisDokumenId', jd.JenisDokumenId)
-        setTitleDialog('Ubah Jenis Dokumen')
+    const ubahData = (jd: Country) => {
+        form.setValue('CountryId', jd.CountryId)
+        form.setValue('Nama', String(jd.Nama))
+        setTitleDialog('Ubah Negara')
         setOpenDialog(true)
     }
-    const hapusData = (jd: JenisDokumen) => {
+    const hapusData = (jd: Country) => {
         Swal.fire({
-            title: 'Ingin Hapus ' + jd.Jenis + ' ?',
+            title: 'Ingin Hapus ' + jd.Nama + ' ?',
             text: 'Aksi ini tidak dapat di undo',
             icon: 'warning',
             showCancelButton: true,
@@ -214,11 +204,9 @@ const JenisDokumenComponent = () => {
             confirmButtonText: 'Ya, Hapus!',
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteJenisDokumen(jd.JenisDokumenId).then(() => {
-                    setJenisDokumen(
-                        jenisDokumen.filter(
-                            (r) => r.JenisDokumenId !== jd.JenisDokumenId
-                        )
+                deleteCountry(jd.CountryId).then(() => {
+                    setDataCountry(
+                        dataCountry.filter((r) => r.CountryId !== jd.CountryId)
                     )
                     Swal.fire({
                         title: 'Terhapus!',
@@ -230,28 +218,12 @@ const JenisDokumenComponent = () => {
         })
     }
 
-    const columns: ColumnDef<JenisDokumen>[] = [
+    const columns: ColumnDef<Country>[] = [
         {
-            accessorKey: 'NomorDokumen',
-            header: 'Nomor Dokumen',
+            accessorKey: 'Nama',
+            header: 'Nama',
             cell: ({ row }) => (
-                <div className="capitalize">{row.getValue('NomorDokumen')}</div>
-            ),
-        },
-        {
-            accessorKey: 'Jenis',
-            header: 'Jenis',
-            cell: ({ row }) => (
-                <div className="capitalize">{row.getValue('Jenis')}</div>
-            ),
-        },
-        {
-            accessorKey: 'Keterangan',
-            header: 'Keterangan',
-            cell: ({ row }) => (
-                <div className="capitalize">
-                    {truncateText(row.getValue('Keterangan'), 35)}
-                </div>
+                <div className="capitalize">{row.getValue('Nama')}</div>
             ),
         },
         {
@@ -271,12 +243,10 @@ const JenisDokumenComponent = () => {
                             <DropdownMenuLabel>Aksi</DropdownMenuLabel>
                             <DropdownMenuItem
                                 onClick={() =>
-                                    navigator.clipboard.writeText(
-                                        jd.JenisDokumenId
-                                    )
+                                    navigator.clipboard.writeText(jd.CountryId)
                                 }
                             >
-                                Copy User ID
+                                Copy Negara ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => ubahData(jd)}>
@@ -293,7 +263,7 @@ const JenisDokumenComponent = () => {
     ]
 
     const table = useReactTable({
-        data: jenisDokumen,
+        data: dataCountry,
         columns,
         manualPagination: true,
         onColumnFiltersChange: setColumnFilters,
@@ -315,10 +285,7 @@ const JenisDokumenComponent = () => {
                 <Input
                     placeholder="Cari Data ..."
                     value={search}
-                    onChange={(event) => {
-                        setSearch(event.target.value)
-                        setPaginationState({ ...paginationState, page: 1 })
-                    }}
+                    onChange={(event) => setSearch(event.target.value)}
                     className="max-w-sm"
                 />
                 <div className="w-full justify-end flex">
@@ -331,7 +298,6 @@ const JenisDokumenComponent = () => {
                             setPaginationState({
                                 ...paginationState,
                                 limit: Number(value),
-                                page: 1,
                             })
                         }
                     >
@@ -500,7 +466,7 @@ const JenisDokumenComponent = () => {
     )
 }
 
-export default JenisDokumenComponent
+export default NegaraComponent
 
 export function SheetManageData({
     openDialog,
@@ -513,8 +479,8 @@ export function SheetManageData({
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
-    onSubmit: (data: JenisDokumenFormValidation) => void
-    form: UseFormReturn<JenisDokumenFormValidation>
+    onSubmit: (data: CountryFormValidation) => void
+    form: UseFormReturn<CountryFormValidation>
     titleDialog: string
 }) {
     return (
@@ -529,7 +495,7 @@ export function SheetManageData({
                             <SheetHeader>
                                 <SheetTitle>{titleDialog}</SheetTitle>
                                 <SheetDescription>
-                                    Manage Data untuk {form.getValues('Jenis')}
+                                    Manage Data untuk {form.getValues('Nama')}
                                 </SheetDescription>
                             </SheetHeader>
                             <div className="w-full grid grid-cols-1 gap-3 px-4">
@@ -537,32 +503,10 @@ export function SheetManageData({
                                     <div className="grid grid-cols-1 gap-3">
                                         <FormField
                                             control={form.control}
-                                            name="NomorDokumen"
+                                            name="Nama"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>
-                                                        Nomor Dokumen
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            type="number"
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Nomor Dokumen
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="Jenis"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Jenis</FormLabel>
+                                                    <FormLabel>Nama</FormLabel>
                                                     <FormControl>
                                                         <Input
                                                             readOnly={loading}
@@ -570,29 +514,7 @@ export function SheetManageData({
                                                         />
                                                     </FormControl>
                                                     <FormDescription>
-                                                        Jenis
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="Keterangan"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Keterangan
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Textarea
-                                                            disabled={loading}
-                                                            {...field}
-                                                            placeholder="Alamat Anda."
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Keterangan
+                                                        Nama
                                                     </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>

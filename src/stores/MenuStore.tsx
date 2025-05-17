@@ -48,13 +48,41 @@ const menu: MenuStoreProps[] = [
             },
             {
                 namaRole: ['Admin', 'PMB'],
-                title: 'Area',
-                url: '/manajemen-data/area',
+                title: 'Status',
+                url: '/manajemen-data/status',
+            },
+        ],
+    },
+    {
+        namaRole: ['Admin', 'PMB'],
+        title: 'Manajemen Area',
+        url: '/manajemen-area',
+        icon: Database,
+        items: [
+            {
+                namaRole: ['Admin', 'PMB'],
+                title: 'Negara',
+                url: '/manajemen-area/negara',
             },
             {
                 namaRole: ['Admin', 'PMB'],
-                title: 'Status',
-                url: '/manajemen-data/status',
+                title: 'Provinsi',
+                url: '/manajemen-area/provinsi',
+            },
+            {
+                namaRole: ['Admin', 'PMB'],
+                title: 'Kabupaten',
+                url: '/manajemen-area/kabupaten',
+            },
+            {
+                namaRole: ['Admin', 'PMB'],
+                title: 'Kecamatan',
+                url: '/manajemen-area/kecamatan',
+            },
+            {
+                namaRole: ['Admin', 'PMB'],
+                title: 'Desa',
+                url: '/manajemen-area/desa',
             },
         ],
     },

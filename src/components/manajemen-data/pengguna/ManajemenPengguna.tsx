@@ -590,6 +590,7 @@ export function UserDataTable({
                             setPaginationState({
                                 ...paginationState,
                                 limit: Number(value),
+                                page: 1,
                             })
                         }
                     >
