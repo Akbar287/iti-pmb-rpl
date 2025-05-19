@@ -1,4 +1,9 @@
-import { Alamat, University } from '@/generated/prisma'
+import {
+    Alamat,
+    University,
+    UniversityJabatan,
+    UniversityJabatanOrang,
+} from '@/generated/prisma'
 
 export interface InstitusiRequestType {
     University: University
@@ -26,3 +31,13 @@ export interface InstitusiResponseType {
     CountryId: string
     NamaCountry: string
 }
+
+export interface JabatanInstitusiRequestType {
+    Jabatan: UniversityJabatan
+    Orang: UniversityJabatanOrang
+}
+
+export type JabatanInstitusiResponseType = {
+    Jabatan: UniversityJabatan
+    Orang: UniversityJabatanOrang[]
+}[]

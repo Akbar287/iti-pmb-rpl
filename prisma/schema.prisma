@@ -801,6 +801,8 @@ model UniversitySosialMedia {
   Username                String?    @map("username")
   Icon                    String?    @map("icon")
   University              University @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+
+  // @@map("university_sosial_media")
 }
 
 model UniversityInformasi {
@@ -809,6 +811,8 @@ model UniversityInformasi {
   Nama                  String     @map("nama")
   Informasi             String?    @map("informasi")
   University            University @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+
+  // @@map("university_informasi")
 }
 
 model UniversityJabatan {
