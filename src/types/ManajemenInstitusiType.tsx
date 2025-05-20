@@ -31,13 +31,3 @@ export interface InstitusiResponseType {
     CountryId: string
     NamaCountry: string
 }
-
-export interface JabatanInstitusiRequestType {
-    Jabatan: UniversityJabatan
-    Orang: UniversityJabatanOrang
-}
-
-export type JabatanInstitusiResponseType = {
-    Jabatan: UniversityJabatan
-    Orang: UniversityJabatanOrang[]
-}[]
