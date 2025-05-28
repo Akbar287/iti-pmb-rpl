@@ -71,6 +71,7 @@ import {
     setFile,
 } from '@/services/UploadDokumenService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
+import { truncateText } from '@/lib/utils'
 
 const UploadDokumen = ({
     dataMahasiswa,
@@ -285,7 +286,9 @@ const UploadDokumen = ({
                                             {row.NomorDokumen}
                                         </TableCell>
                                         <TableCell>{row.Jenis}</TableCell>
-                                        <TableCell>{row.NamaDokumen}</TableCell>
+                                        <TableCell>
+                                            {truncateText(row.NamaDokumen, 35)}
+                                        </TableCell>
                                         <TableCell>
                                             <Button
                                                 className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "

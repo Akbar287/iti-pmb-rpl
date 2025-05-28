@@ -91,7 +91,7 @@ app.put('/', async (c) => {
             UpdatedAt: new Date(),
         },
         where: {
-            UniversityJabatanOrangId: body.UniversityJabatanId,
+            UniversityJabatanOrangId: body.UniversityJabatanOrangId,
         },
     })
     if (!data) {

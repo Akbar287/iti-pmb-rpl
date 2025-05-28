@@ -24350,7 +24350,7 @@ export namespace Prisma {
   export type InstitusiLamaGroupByOutputType = {
     InstitusiLamaId: string
     PendaftaranId: string
-    AlamatId: string
+    AlamatId: string | null
     Jenjang: $Enums.Jenjang
     JenisInstitusi: string
     NamaInstitusi: string
@@ -24397,7 +24397,7 @@ export namespace Prisma {
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    Alamat?: boolean | AlamatDefaultArgs<ExtArgs>
+    Alamat?: boolean | InstitusiLama$AlamatArgs<ExtArgs>
   }, ExtArgs["result"]["institusiLama"]>
 
   export type InstitusiLamaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -24415,7 +24415,7 @@ export namespace Prisma {
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    Alamat?: boolean | AlamatDefaultArgs<ExtArgs>
+    Alamat?: boolean | InstitusiLama$AlamatArgs<ExtArgs>
   }, ExtArgs["result"]["institusiLama"]>
 
   export type InstitusiLamaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -24433,7 +24433,7 @@ export namespace Prisma {
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    Alamat?: boolean | AlamatDefaultArgs<ExtArgs>
+    Alamat?: boolean | InstitusiLama$AlamatArgs<ExtArgs>
   }, ExtArgs["result"]["institusiLama"]>
 
   export type InstitusiLamaSelectScalar = {
@@ -24455,27 +24455,27 @@ export namespace Prisma {
   export type InstitusiLamaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"InstitusiLamaId" | "PendaftaranId" | "AlamatId" | "Jenjang" | "JenisInstitusi" | "NamaInstitusi" | "Jurusan" | "Nisn" | "Npsn" | "TahunLulus" | "NilaiLulusan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["institusiLama"]>
   export type InstitusiLamaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    Alamat?: boolean | AlamatDefaultArgs<ExtArgs>
+    Alamat?: boolean | InstitusiLama$AlamatArgs<ExtArgs>
   }
   export type InstitusiLamaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    Alamat?: boolean | AlamatDefaultArgs<ExtArgs>
+    Alamat?: boolean | InstitusiLama$AlamatArgs<ExtArgs>
   }
   export type InstitusiLamaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    Alamat?: boolean | AlamatDefaultArgs<ExtArgs>
+    Alamat?: boolean | InstitusiLama$AlamatArgs<ExtArgs>
   }
 
   export type $InstitusiLamaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "InstitusiLama"
     objects: {
       Pendaftaran: Prisma.$PendaftaranPayload<ExtArgs>
-      Alamat: Prisma.$AlamatPayload<ExtArgs>
+      Alamat: Prisma.$AlamatPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       InstitusiLamaId: string
       PendaftaranId: string
-      AlamatId: string
+      AlamatId: string | null
       Jenjang: $Enums.Jenjang
       JenisInstitusi: string
       NamaInstitusi: string
@@ -24881,7 +24881,7 @@ export namespace Prisma {
   export interface Prisma__InstitusiLamaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Pendaftaran<T extends PendaftaranDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PendaftaranDefaultArgs<ExtArgs>>): Prisma__PendaftaranClient<$Result.GetResult<Prisma.$PendaftaranPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    Alamat<T extends AlamatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AlamatDefaultArgs<ExtArgs>>): Prisma__AlamatClient<$Result.GetResult<Prisma.$AlamatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Alamat<T extends InstitusiLama$AlamatArgs<ExtArgs> = {}>(args?: Subset<T, InstitusiLama$AlamatArgs<ExtArgs>>): Prisma__AlamatClient<$Result.GetResult<Prisma.$AlamatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -25317,6 +25317,25 @@ export namespace Prisma {
      * Limit how many InstitusiLamas to delete.
      */
     limit?: number
+  }
+
+  /**
+   * InstitusiLama.Alamat
+   */
+  export type InstitusiLama$AlamatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Alamat
+     */
+    select?: AlamatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Alamat
+     */
+    omit?: AlamatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlamatInclude<ExtArgs> | null
+    where?: AlamatWhereInput
   }
 
   /**
@@ -72995,7 +73014,7 @@ export namespace Prisma {
     NOT?: InstitusiLamaWhereInput | InstitusiLamaWhereInput[]
     InstitusiLamaId?: StringFilter<"InstitusiLama"> | string
     PendaftaranId?: StringFilter<"InstitusiLama"> | string
-    AlamatId?: StringFilter<"InstitusiLama"> | string
+    AlamatId?: StringNullableFilter<"InstitusiLama"> | string | null
     Jenjang?: EnumJenjangFilter<"InstitusiLama"> | $Enums.Jenjang
     JenisInstitusi?: StringFilter<"InstitusiLama"> | string
     NamaInstitusi?: StringFilter<"InstitusiLama"> | string
@@ -73007,13 +73026,13 @@ export namespace Prisma {
     CreatedAt?: DateTimeNullableFilter<"InstitusiLama"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"InstitusiLama"> | Date | string | null
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
-    Alamat?: XOR<AlamatScalarRelationFilter, AlamatWhereInput>
+    Alamat?: XOR<AlamatNullableScalarRelationFilter, AlamatWhereInput> | null
   }
 
   export type InstitusiLamaOrderByWithRelationInput = {
     InstitusiLamaId?: SortOrder
     PendaftaranId?: SortOrder
-    AlamatId?: SortOrder
+    AlamatId?: SortOrderInput | SortOrder
     Jenjang?: SortOrder
     JenisInstitusi?: SortOrder
     NamaInstitusi?: SortOrder
@@ -73034,7 +73053,7 @@ export namespace Prisma {
     OR?: InstitusiLamaWhereInput[]
     NOT?: InstitusiLamaWhereInput | InstitusiLamaWhereInput[]
     PendaftaranId?: StringFilter<"InstitusiLama"> | string
-    AlamatId?: StringFilter<"InstitusiLama"> | string
+    AlamatId?: StringNullableFilter<"InstitusiLama"> | string | null
     Jenjang?: EnumJenjangFilter<"InstitusiLama"> | $Enums.Jenjang
     JenisInstitusi?: StringFilter<"InstitusiLama"> | string
     NamaInstitusi?: StringFilter<"InstitusiLama"> | string
@@ -73046,13 +73065,13 @@ export namespace Prisma {
     CreatedAt?: DateTimeNullableFilter<"InstitusiLama"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"InstitusiLama"> | Date | string | null
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
-    Alamat?: XOR<AlamatScalarRelationFilter, AlamatWhereInput>
+    Alamat?: XOR<AlamatNullableScalarRelationFilter, AlamatWhereInput> | null
   }, "InstitusiLamaId">
 
   export type InstitusiLamaOrderByWithAggregationInput = {
     InstitusiLamaId?: SortOrder
     PendaftaranId?: SortOrder
-    AlamatId?: SortOrder
+    AlamatId?: SortOrderInput | SortOrder
     Jenjang?: SortOrder
     JenisInstitusi?: SortOrder
     NamaInstitusi?: SortOrder
@@ -73076,7 +73095,7 @@ export namespace Prisma {
     NOT?: InstitusiLamaScalarWhereWithAggregatesInput | InstitusiLamaScalarWhereWithAggregatesInput[]
     InstitusiLamaId?: StringWithAggregatesFilter<"InstitusiLama"> | string
     PendaftaranId?: StringWithAggregatesFilter<"InstitusiLama"> | string
-    AlamatId?: StringWithAggregatesFilter<"InstitusiLama"> | string
+    AlamatId?: StringNullableWithAggregatesFilter<"InstitusiLama"> | string | null
     Jenjang?: EnumJenjangWithAggregatesFilter<"InstitusiLama"> | $Enums.Jenjang
     JenisInstitusi?: StringWithAggregatesFilter<"InstitusiLama"> | string
     NamaInstitusi?: StringWithAggregatesFilter<"InstitusiLama"> | string
@@ -76887,13 +76906,13 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutInstitusiLamaInput
-    Alamat: AlamatCreateNestedOneWithoutInstitusiLamaInput
+    Alamat?: AlamatCreateNestedOneWithoutInstitusiLamaInput
   }
 
   export type InstitusiLamaUncheckedCreateInput = {
     InstitusiLamaId?: string
     PendaftaranId: string
-    AlamatId: string
+    AlamatId?: string | null
     Jenjang?: $Enums.Jenjang
     JenisInstitusi: string
     NamaInstitusi: string
@@ -76919,13 +76938,13 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutInstitusiLamaNestedInput
-    Alamat?: AlamatUpdateOneRequiredWithoutInstitusiLamaNestedInput
+    Alamat?: AlamatUpdateOneWithoutInstitusiLamaNestedInput
   }
 
   export type InstitusiLamaUncheckedUpdateInput = {
     InstitusiLamaId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
-    AlamatId?: StringFieldUpdateOperationsInput | string
+    AlamatId?: NullableStringFieldUpdateOperationsInput | string | null
     Jenjang?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
     JenisInstitusi?: StringFieldUpdateOperationsInput | string
     NamaInstitusi?: StringFieldUpdateOperationsInput | string
@@ -76941,7 +76960,7 @@ export namespace Prisma {
   export type InstitusiLamaCreateManyInput = {
     InstitusiLamaId?: string
     PendaftaranId: string
-    AlamatId: string
+    AlamatId?: string | null
     Jenjang?: $Enums.Jenjang
     JenisInstitusi: string
     NamaInstitusi: string
@@ -76971,7 +76990,7 @@ export namespace Prisma {
   export type InstitusiLamaUncheckedUpdateManyInput = {
     InstitusiLamaId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
-    AlamatId?: StringFieldUpdateOperationsInput | string
+    AlamatId?: NullableStringFieldUpdateOperationsInput | string | null
     Jenjang?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
     JenisInstitusi?: StringFieldUpdateOperationsInput | string
     NamaInstitusi?: StringFieldUpdateOperationsInput | string
@@ -80671,9 +80690,9 @@ export namespace Prisma {
     not?: NestedEnumJenjangFilter<$PrismaModel> | $Enums.Jenjang
   }
 
-  export type AlamatScalarRelationFilter = {
-    is?: AlamatWhereInput
-    isNot?: AlamatWhereInput
+  export type AlamatNullableScalarRelationFilter = {
+    is?: AlamatWhereInput | null
+    isNot?: AlamatWhereInput | null
   }
 
   export type InstitusiLamaCountOrderByAggregateInput = {
@@ -82276,6 +82295,11 @@ export namespace Prisma {
     DeletedAt?: SortOrder
   }
 
+  export type AlamatScalarRelationFilter = {
+    is?: AlamatWhereInput
+    isNot?: AlamatWhereInput
+  }
+
   export type ProgramStudiListRelationFilter = {
     every?: ProgramStudiWhereInput
     some?: ProgramStudiWhereInput
@@ -83546,10 +83570,12 @@ export namespace Prisma {
     update?: XOR<XOR<PendaftaranUpdateToOneWithWhereWithoutInstitusiLamaInput, PendaftaranUpdateWithoutInstitusiLamaInput>, PendaftaranUncheckedUpdateWithoutInstitusiLamaInput>
   }
 
-  export type AlamatUpdateOneRequiredWithoutInstitusiLamaNestedInput = {
+  export type AlamatUpdateOneWithoutInstitusiLamaNestedInput = {
     create?: XOR<AlamatCreateWithoutInstitusiLamaInput, AlamatUncheckedCreateWithoutInstitusiLamaInput>
     connectOrCreate?: AlamatCreateOrConnectWithoutInstitusiLamaInput
     upsert?: AlamatUpsertWithoutInstitusiLamaInput
+    disconnect?: AlamatWhereInput | boolean
+    delete?: AlamatWhereInput | boolean
     connect?: AlamatWhereUniqueInput
     update?: XOR<XOR<AlamatUpdateToOneWithWhereWithoutInstitusiLamaInput, AlamatUpdateWithoutInstitusiLamaInput>, AlamatUncheckedUpdateWithoutInstitusiLamaInput>
   }
@@ -86694,7 +86720,7 @@ export namespace Prisma {
     NOT?: InstitusiLamaScalarWhereInput | InstitusiLamaScalarWhereInput[]
     InstitusiLamaId?: StringFilter<"InstitusiLama"> | string
     PendaftaranId?: StringFilter<"InstitusiLama"> | string
-    AlamatId?: StringFilter<"InstitusiLama"> | string
+    AlamatId?: StringNullableFilter<"InstitusiLama"> | string | null
     Jenjang?: EnumJenjangFilter<"InstitusiLama"> | $Enums.Jenjang
     JenisInstitusi?: StringFilter<"InstitusiLama"> | string
     NamaInstitusi?: StringFilter<"InstitusiLama"> | string
@@ -91482,12 +91508,12 @@ export namespace Prisma {
     NilaiLulusan: number
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    Alamat: AlamatCreateNestedOneWithoutInstitusiLamaInput
+    Alamat?: AlamatCreateNestedOneWithoutInstitusiLamaInput
   }
 
   export type InstitusiLamaUncheckedCreateWithoutPendaftaranInput = {
     InstitusiLamaId?: string
-    AlamatId: string
+    AlamatId?: string | null
     Jenjang?: $Enums.Jenjang
     JenisInstitusi: string
     NamaInstitusi: string
@@ -95950,7 +95976,7 @@ export namespace Prisma {
 
   export type InstitusiLamaCreateManyPendaftaranInput = {
     InstitusiLamaId?: string
-    AlamatId: string
+    AlamatId?: string | null
     Jenjang?: $Enums.Jenjang
     JenisInstitusi: string
     NamaInstitusi: string
@@ -96216,12 +96242,12 @@ export namespace Prisma {
     NilaiLulusan?: FloatFieldUpdateOperationsInput | number
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Alamat?: AlamatUpdateOneRequiredWithoutInstitusiLamaNestedInput
+    Alamat?: AlamatUpdateOneWithoutInstitusiLamaNestedInput
   }
 
   export type InstitusiLamaUncheckedUpdateWithoutPendaftaranInput = {
     InstitusiLamaId?: StringFieldUpdateOperationsInput | string
-    AlamatId?: StringFieldUpdateOperationsInput | string
+    AlamatId?: NullableStringFieldUpdateOperationsInput | string | null
     Jenjang?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
     JenisInstitusi?: StringFieldUpdateOperationsInput | string
     NamaInstitusi?: StringFieldUpdateOperationsInput | string
@@ -96236,7 +96262,7 @@ export namespace Prisma {
 
   export type InstitusiLamaUncheckedUpdateManyWithoutPendaftaranInput = {
     InstitusiLamaId?: StringFieldUpdateOperationsInput | string
-    AlamatId?: StringFieldUpdateOperationsInput | string
+    AlamatId?: NullableStringFieldUpdateOperationsInput | string | null
     Jenjang?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
     JenisInstitusi?: StringFieldUpdateOperationsInput | string
     NamaInstitusi?: StringFieldUpdateOperationsInput | string

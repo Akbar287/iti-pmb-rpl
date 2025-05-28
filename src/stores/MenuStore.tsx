@@ -47,9 +47,14 @@ const menu: MenuStoreProps[] = [
                 url: '/manajemen-data/pengguna',
             },
             {
-                namaRole: ['Admin', 'PMB'],
+                namaRole: ['Admin'],
                 title: 'Status',
                 url: '/manajemen-data/status',
+            },
+            {
+                namaRole: ['PMB'],
+                title: 'Data Mahasiswa',
+                url: '/manajemen-data/mahasiswa',
             },
         ],
     },
@@ -101,6 +106,11 @@ const menu: MenuStoreProps[] = [
                 namaRole: ['Admin'],
                 title: 'Jabatan',
                 url: '/manajemen-institusi/jabatan',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Jabatan Orang',
+                url: '/manajemen-institusi/jabatan-orang',
             },
             {
                 namaRole: ['Admin'],

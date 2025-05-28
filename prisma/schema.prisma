@@ -302,7 +302,7 @@ model InformasiKependudukan {
 model InstitusiLama {
   InstitusiLamaId String      @id @default(uuid()) @map("institusi_lama_id")
   PendaftaranId   String      @map("pendaftaran_id")
-  AlamatId        String      @map("alamat_id")
+  AlamatId        String?     @map("alamat_id")
   Jenjang         Jenjang     @default(TIDAK_TAMAT_SD) @map("jenjang")
   JenisInstitusi  String      @map("jenis_institusi")
   NamaInstitusi   String      @map("nama_institusi")
@@ -314,7 +314,7 @@ model InstitusiLama {
   CreatedAt       DateTime?   @map("created_at")
   UpdatedAt       DateTime?   @map("updated_at")
   Pendaftaran     Pendaftaran @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
-  Alamat          Alamat      @relation(fields: [AlamatId], references: [AlamatId], onDelete: Cascade)
+  Alamat          Alamat?     @relation(fields: [AlamatId], references: [AlamatId], onDelete: Cascade)
 
   @@map("institusi_lama")
 }

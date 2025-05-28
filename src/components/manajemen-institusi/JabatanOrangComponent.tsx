@@ -68,7 +68,7 @@ import {
     FormLabel,
     FormMessage,
 } from '../ui/form'
-import { University, UniversitySosialMedia } from '@/generated/prisma'
+import { UniversityJabatanOrang } from '@/generated/prisma'
 import {
     Card,
     CardContent,
@@ -77,27 +77,44 @@ import {
     CardTitle,
 } from '../ui/card'
 import {
-    UniversitySosialMediaFormSkemaValidation,
-    UniversitySosialMediaFormValidation,
+    UniversityJabatanOrangFormSkemaValidation,
+    UniversityJabatanOrangFormValidation,
 } from '@/validation/InstitusiValidation'
 import {
-    deleteInstitusiSosialMedia,
-    getInstitusiSosialMediaPagination,
-    setInstitusiSosialMedia,
-    updateInstitusiSosialMedia,
-} from '@/services/ManajemenInstitusi/SosialMediaServices'
+    deleteInstitusiJabatanOrang,
+    getInstitusiJabatanOrangPagination,
+    setInstitusiJabatanOrang,
+    updateInstitusiJabatanOrang,
+} from '@/services/ManajemenInstitusi/JabatanOrangServices'
 
-const SosialMediaComponent = ({
+const JabatanOrangComponent = ({
     universityData,
 }: {
-    universityData: University[]
+    universityData: {
+        Nama: string
+        UniversityId: string
+        Akreditasi: string
+        UniversityJabatan: {
+            Nama: string
+            UniversityJabatanId: string
+            Keterangan: string | null
+        }[]
+    }[]
 }) => {
-    const [dataSosialMedia, setDataSosialMedia] = React.useState<
-        UniversitySosialMedia[]
+    const [dataJabatanOrang, setDataJabatanOrang] = React.useState<
+        UniversityJabatanOrang[]
     >([])
-    const [selectedData, setselectedData] = React.useState<University | null>(
-        null
-    )
+    const [selectedData, setselectedData] = React.useState<{
+        UniversityId: string
+        NamaUniverstity: string
+        UniversityJabatanId: string
+        NamaUniversityJabatan: string
+    }>({
+        UniversityId: '',
+        NamaUniverstity: '',
+        UniversityJabatanId: '',
+        NamaUniversityJabatan: '',
+    })
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -126,60 +143,69 @@ const SosialMediaComponent = ({
     const [titleDialog, setTitleDialog] = React.useState<string>('')
     const [loading, setLoading] = React.useState<boolean>(false)
 
-    const form = useForm<UniversitySosialMediaFormValidation>({
-        resolver: zodResolver(UniversitySosialMediaFormSkemaValidation),
+    const form = useForm<UniversityJabatanOrangFormValidation>({
+        resolver: zodResolver(UniversityJabatanOrangFormSkemaValidation),
         defaultValues: {
-            UniversityId: '',
+            UniversityJabatanOrangId: '',
+            UniversityJabatanId: '',
             Nama: '',
-            UniversitySosialMediaId: '',
-            Username: '',
-            Icon: '',
+            Keterangan: '',
         },
     })
-    const onSubmit = async (data: UniversitySosialMediaFormValidation) => {
+    const onSubmit = async (data: UniversityJabatanOrangFormValidation) => {
         setLoading(true)
 
-        if (titleDialog === 'Ubah Sosial Media') {
-            await updateInstitusiSosialMedia({
-                UniversitySosialMediaId: data.UniversitySosialMediaId,
-                UniversityId: data.UniversityId,
+        if (titleDialog === 'Ubah Jabatan Institusi Orang') {
+            await updateInstitusiJabatanOrang({
+                UniversityJabatanOrangId: data.UniversityJabatanOrangId,
+                UniversityJabatanId: data.UniversityJabatanId,
                 Nama: data.Nama,
-                Username: data.Username,
-                Icon: data.Icon,
+                Keterangan: data.Keterangan,
+                CreatedAt: null,
+                UpdatedAt: null,
+                DeletedAt: null,
             })
                 .then((res) => {
-                    toast('Data Sosial Media berhasil diubah')
-                    let idx = dataSosialMedia.findIndex(
+                    toast('Data Jabatan Institusi Orang berhasil diubah')
+                    let idx = dataJabatanOrang.findIndex(
                         (r) =>
-                            r.UniversitySosialMediaId ===
-                            data.UniversitySosialMediaId
+                            r.UniversityJabatanOrangId ===
+                            data.UniversityJabatanOrangId
                     )
-                    setDataSosialMedia(
-                        replaceItemAtIndex(dataSosialMedia, idx, res)
+                    setDataJabatanOrang(
+                        replaceItemAtIndex(dataJabatanOrang, idx, res)
                     )
                     setOpenDialog(false)
                     setLoading(false)
                 })
                 .catch((err) => {
-                    toast('Data Sosial Media gagal diubah. Error: ' + err)
+                    toast(
+                        'Data Jabatan Institusi Orang gagal diubah. Error: ' +
+                            err
+                    )
                     setLoading(false)
                 })
         } else {
-            await setInstitusiSosialMedia({
-                UniversitySosialMediaId: data.UniversitySosialMediaId,
-                UniversityId: selectedData?.UniversityId || '',
+            await setInstitusiJabatanOrang({
+                UniversityJabatanOrangId: '',
+                UniversityJabatanId: selectedData.UniversityJabatanId,
                 Nama: data.Nama,
-                Username: data.Username,
-                Icon: data.Icon,
+                Keterangan: data.Keterangan,
+                CreatedAt: null,
+                UpdatedAt: null,
+                DeletedAt: null,
             })
                 .then((res) => {
-                    toast('Data Sosial Media berhasil ditambah')
-                    setDataSosialMedia([...dataSosialMedia, res])
+                    toast('Data Jabatan Institusi Orang berhasil ditambah')
+                    setDataJabatanOrang([...dataJabatanOrang, res])
                     setLoading(false)
                     setOpenDialog(false)
                 })
                 .catch((err) => {
-                    toast('Data Sosial Media gagal ditambah. Error: ' + err)
+                    toast(
+                        'Data Jabatan Institusi Orang gagal ditambah. Error: ' +
+                            err
+                    )
                     setLoading(false)
                 })
         }
@@ -187,13 +213,13 @@ const SosialMediaComponent = ({
 
     React.useEffect(() => {
         setLoading(true)
-        getInstitusiSosialMediaPagination(
+        getInstitusiJabatanOrangPagination(
             paginationState.page,
             paginationState.limit,
             search
         )
             .then((res) => {
-                setDataSosialMedia(res.data)
+                setDataJabatanOrang(res.data)
                 setLoading(false)
                 setPaginationState({
                     page: res.page,
@@ -213,25 +239,26 @@ const SosialMediaComponent = ({
 
     const buatData = () => {
         form.reset()
-        form.setValue('UniversityId', selectedData?.UniversityId || '')
-        setTitleDialog('Tambah Sosial Media')
+        form.setValue(
+            'UniversityJabatanId',
+            selectedData?.UniversityJabatanId || ''
+        )
+        setTitleDialog('Tambah Jabatan Institusi Orang')
         setOpenDialog(true)
     }
-    const ubahData = (jd: UniversitySosialMedia) => {
+    const ubahData = (jd: UniversityJabatanOrang) => {
         form.reset()
         form.setValue('Nama', String(jd.Nama))
-        form.setValue('UniversityId', String(jd.UniversityId))
         form.setValue(
-            'UniversitySosialMediaId',
-            String(jd.UniversitySosialMediaId)
+            'UniversityJabatanOrangId',
+            String(jd.UniversityJabatanOrangId)
         )
-        form.setValue('Username', String(jd.Username))
-        form.setValue('Icon', String(jd.Icon))
-
-        setTitleDialog('Ubah Sosial Media')
+        form.setValue('UniversityJabatanId', String(jd.UniversityJabatanId))
+        form.setValue('Keterangan', String(jd.Keterangan))
+        setTitleDialog('Ubah Jabatan Institusi Orang')
         setOpenDialog(true)
     }
-    const hapusData = (jd: UniversitySosialMedia) => {
+    const hapusData = (jd: UniversityJabatanOrang) => {
         Swal.fire({
             title: 'Ingin Hapus ' + jd.Nama + ' ?',
             text: 'Aksi ini tidak dapat di undo',
@@ -242,13 +269,13 @@ const SosialMediaComponent = ({
             confirmButtonText: 'Ya, Hapus!',
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteInstitusiSosialMedia(jd.UniversitySosialMediaId).then(
+                deleteInstitusiJabatanOrang(jd.UniversityJabatanOrangId).then(
                     () => {
-                        setDataSosialMedia(
-                            dataSosialMedia.filter(
+                        setDataJabatanOrang(
+                            dataJabatanOrang.filter(
                                 (r) =>
-                                    r.UniversitySosialMediaId !==
-                                    jd.UniversitySosialMediaId
+                                    r.UniversityJabatanOrangId !==
+                                    jd.UniversityJabatanOrangId
                             )
                         )
                         Swal.fire({
@@ -262,18 +289,7 @@ const SosialMediaComponent = ({
         })
     }
 
-    const columns: ColumnDef<UniversitySosialMedia>[] = [
-        {
-            accessorKey: 'Icon',
-            header: 'Ikon',
-            cell: ({ row }) => (
-                <div
-                    className="inline-block w-10 h-10 rounded-full overflow-hidden text-white "
-                    title={row.getValue('Nama')}
-                    dangerouslySetInnerHTML={{ __html: row.getValue('Icon') }}
-                />
-            ),
-        },
+    const columns: ColumnDef<UniversityJabatanOrang>[] = [
         {
             accessorKey: 'Nama',
             header: 'Nama',
@@ -282,10 +298,10 @@ const SosialMediaComponent = ({
             ),
         },
         {
-            accessorKey: 'Username',
-            header: 'Username',
+            accessorKey: 'Keterangan',
+            header: 'Keterangan',
             cell: ({ row }) => (
-                <div className="capitalize">{row.getValue('Username')}</div>
+                <div className="capitalize">{row.getValue('Keterangan')}</div>
             ),
         },
         {
@@ -306,11 +322,11 @@ const SosialMediaComponent = ({
                             <DropdownMenuItem
                                 onClick={() =>
                                     navigator.clipboard.writeText(
-                                        jd.UniversitySosialMediaId
+                                        jd.UniversityJabatanId
                                     )
                                 }
                             >
-                                Copy Sosial Media ID
+                                Copy Universitas Jabatan ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => ubahData(jd)}>
@@ -327,7 +343,7 @@ const SosialMediaComponent = ({
     ]
 
     const table = useReactTable({
-        data: dataSosialMedia,
+        data: dataJabatanOrang,
         columns,
         manualPagination: true,
         onColumnFiltersChange: setColumnFilters,
@@ -348,9 +364,9 @@ const SosialMediaComponent = ({
             <Card className="bg-gray-50 shadow-md dark:bg-gray-800">
                 <CardHeader>
                     <CardTitle>
-                        <h1 className="text-2xl">Sosial Media Institusi</h1>
+                        <h1 className="text-2xl">Institusi Jabatan Orang</h1>
                     </CardTitle>
-                    <CardDescription>Sosial Media Institusi</CardDescription>
+                    <CardDescription>Institusi Jabatan Orang</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -359,11 +375,15 @@ const SosialMediaComponent = ({
                             <Select
                                 value={selectedData?.UniversityId}
                                 onValueChange={(e) => {
-                                    setselectedData(
-                                        universityData.find(
-                                            (x) => x.UniversityId === e
-                                        ) || null
+                                    let temp = universityData.find(
+                                        (x) => x.UniversityId === e
                                     )
+                                    setselectedData({
+                                        UniversityId: e,
+                                        NamaUniverstity: temp?.Nama || '',
+                                        UniversityJabatanId: '',
+                                        NamaUniversityJabatan: '',
+                                    })
                                 }}
                             >
                                 <SelectTrigger className="w-full">
@@ -386,10 +406,60 @@ const SosialMediaComponent = ({
                                 </SelectContent>
                             </Select>
                         </div>
+                        <div className="w-full">
+                            <h1>Pilih Jabatan</h1>
+                            <Select
+                                value={selectedData?.UniversityJabatanId}
+                                disabled={selectedData?.UniversityId === ''}
+                                onValueChange={(e) => {
+                                    let temp = universityData
+                                        .find(
+                                            (x) =>
+                                                x.UniversityId ===
+                                                selectedData?.UniversityId
+                                        )
+                                        ?.UniversityJabatan.find(
+                                            (y) => y.UniversityJabatanId === e
+                                        )
+                                    setselectedData({
+                                        UniversityId: selectedData.UniversityId,
+                                        NamaUniverstity:
+                                            selectedData.NamaUniverstity,
+                                        UniversityJabatanId: e,
+                                        NamaUniversityJabatan: temp?.Nama || '',
+                                    })
+                                }}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Pilih Jabatan" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Pilih Jabatan</SelectLabel>
+                                        {universityData
+                                            .find(
+                                                (x) =>
+                                                    x.UniversityId ===
+                                                    selectedData.UniversityId
+                                            )
+                                            ?.UniversityJabatan.map((m) => (
+                                                <SelectItem
+                                                    key={m.UniversityJabatanId}
+                                                    value={
+                                                        m.UniversityJabatanId
+                                                    }
+                                                >
+                                                    {m.Nama}
+                                                </SelectItem>
+                                            ))}
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                 </CardContent>
             </Card>
-            {selectedData && (
+            {selectedData.UniversityJabatanId !== '' && (
                 <>
                     <div className="flex items-center py-4">
                         <Input
@@ -634,7 +704,7 @@ const SosialMediaComponent = ({
     )
 }
 
-export default SosialMediaComponent
+export default JabatanOrangComponent
 
 export function SheetManageData({
     openDialog,
@@ -648,18 +718,15 @@ export function SheetManageData({
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
-    onSubmit: (data: UniversitySosialMediaFormValidation) => void
-    form: UseFormReturn<UniversitySosialMediaFormValidation>
+    onSubmit: (data: UniversityJabatanOrangFormValidation) => void
+    form: UseFormReturn<UniversityJabatanOrangFormValidation>
     titleDialog: string
     selectedData: {
         UniversityId: string
-        Nama: string
-        AlamatId: string
-        Akreditasi: string
-        CreatedAt: Date | null
-        UpdatedAt: Date | null
-        DeletedAt: Date | null
-    } | null
+        NamaUniverstity: string
+        UniversityJabatanId: string
+        NamaUniversityJabatan: string
+    }
 }) {
     return (
         <div className="grid grid-cols-2 gap-2">
@@ -681,8 +748,8 @@ export function SheetManageData({
                                     <div className="grid grid-cols-1 gap-3">
                                         <FormField
                                             control={form.control}
-                                            name="UniversityId"
-                                            render={({ field }) => (
+                                            name="UniversityJabatanId"
+                                            render={({}) => (
                                                 <FormItem>
                                                     <FormLabel>
                                                         Nama Institusi
@@ -691,12 +758,35 @@ export function SheetManageData({
                                                         <Input
                                                             readOnly
                                                             value={
-                                                                selectedData?.Nama
+                                                                selectedData?.NamaUniverstity
                                                             }
                                                         />
                                                     </FormControl>
                                                     <FormDescription>
                                                         Nama Institusi
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="UniversityJabatanId"
+                                            render={({}) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Nama Jabatan
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            readOnly
+                                                            value={
+                                                                selectedData?.NamaUniversityJabatan
+                                                            }
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Nama Jabatan
                                                     </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>
@@ -708,7 +798,7 @@ export function SheetManageData({
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>
-                                                        Nama Media Sosial
+                                                        Nama Orang
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
@@ -717,7 +807,7 @@ export function SheetManageData({
                                                         />
                                                     </FormControl>
                                                     <FormDescription>
-                                                        Nama Media Sosial
+                                                        Nama Orang
                                                     </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>
@@ -725,11 +815,11 @@ export function SheetManageData({
                                         />
                                         <FormField
                                             control={form.control}
-                                            name="Username"
+                                            name="Keterangan"
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>
-                                                        Username
+                                                        Keterangan
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
@@ -742,31 +832,7 @@ export function SheetManageData({
                                                         />
                                                     </FormControl>
                                                     <FormDescription>
-                                                        Username
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="Icon"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Ikon</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            {...field}
-                                                            value={
-                                                                field.value ||
-                                                                ''
-                                                            }
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Tempelkan SVG Ikon
-                                                        disini
+                                                        Keterangan
                                                     </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>

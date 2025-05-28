@@ -23,7 +23,7 @@ export type UniversityFormValidation = z.infer<
     typeof UniversityFormSkemaValidation
 >
 
-const UniversityJabatanFormSkemaValidation = z.object({
+export const UniversityJabatanFormSkemaValidation = z.object({
     UniversityJabatanId: z.string(),
     UniversityId: z.string(),
     Nama: z.string(),
@@ -39,9 +39,6 @@ export const UniversityJabatanOrangFormSkemaValidation = z.object({
     UniversityJabatanId: z.string(),
     Nama: z.string(),
     Keterangan: z.string().nullable(),
-    CreatedAt: z.date().nullable(),
-    UpdatedAt: z.date().nullable(),
-    DeletedAt: z.date().nullable(),
 })
 
 export type UniversityJabatanOrangFormValidation = z.infer<
