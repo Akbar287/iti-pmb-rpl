@@ -75,14 +75,14 @@ app.get('/', async (c) => {
         return c.json(data.map(d => ({
             InstitusiLamaId:d.InstitusiLamaId,
             PendaftaranId:d.PendaftaranId, 
-            AlamatId: d.Alamat.AlamatId,
-            CountryId:d.Alamat.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId, 
-            ProvinsiId:d.Alamat.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ,
-            KabupatenId:d.Alamat.Desa.Kecamatan.Kabupaten.KabupatenId ,
-            KecamatanId:d.Alamat.Desa.Kecamatan.KecamatanId ,
-            DesaId:d.Alamat.Desa.DesaId ,
-            KodePos:d.Alamat.KodePos ,
-            Alamat:d.Alamat.Alamat ,
+            AlamatId: d.Alamat?.AlamatId,
+            CountryId:d.Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId, 
+            ProvinsiId:d.Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ,
+            KabupatenId:d.Alamat?.Desa.Kecamatan.Kabupaten.KabupatenId ,
+            KecamatanId:d.Alamat?.Desa.Kecamatan.KecamatanId ,
+            DesaId:d.Alamat?.Desa.DesaId ,
+            KodePos:d.Alamat?.KodePos ,
+            Alamat:d.Alamat?.Alamat ,
             Jenjang:d.Jenjang ,
             JenisInstitusi:d.JenisInstitusi ,
             NamaInstitusi:d.NamaInstitusi ,
@@ -155,14 +155,14 @@ app.get('/', async (c) => {
             return c.json({
                 InstitusiLamaId:data?.InstitusiLamaId,
                 PendaftaranId:data?.PendaftaranId, 
-                AlamatId: data?.Alamat.AlamatId,
-                CountryId:data?.Alamat.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId, 
-                ProvinsiId:data?.Alamat.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ,
-                KabupatenId:data?.Alamat.Desa.Kecamatan.Kabupaten.KabupatenId ,
-                KecamatanId:data?.Alamat.Desa.Kecamatan.KecamatanId ,
-                DesaId:data?.Alamat.Desa.DesaId ,
-                KodePos:data?.Alamat.KodePos ,
-                Alamat:data?.Alamat.Alamat ,
+                AlamatId: data?.Alamat?.AlamatId,
+                CountryId:data?.Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId, 
+                ProvinsiId:data?.Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ,
+                KabupatenId:data?.Alamat?.Desa.Kecamatan.Kabupaten.KabupatenId ,
+                KecamatanId:data?.Alamat?.Desa.Kecamatan.KecamatanId ,
+                DesaId:data?.Alamat?.Desa.DesaId ,
+                KodePos:data?.Alamat?.KodePos ,
+                Alamat:data?.Alamat?.Alamat ,
                 Jenjang:data?.Jenjang ,
                 JenisInstitusi:data?.JenisInstitusi ,
                 NamaInstitusi:data?.NamaInstitusi ,
@@ -233,14 +233,14 @@ app.get('/', async (c) => {
             return c.json(data.map(d => ({
                 InstitusiLamaId:d.InstitusiLamaId,
                 PendaftaranId:d.PendaftaranId, 
-                AlamatId: d.Alamat.AlamatId,
-                CountryId:d.Alamat.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId, 
-                ProvinsiId:d.Alamat.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ,
-                KabupatenId:d.Alamat.Desa.Kecamatan.Kabupaten.KabupatenId ,
-                KecamatanId:d.Alamat.Desa.Kecamatan.KecamatanId ,
-                DesaId:d.Alamat.Desa.DesaId ,
-                KodePos:d.Alamat.KodePos ,
-                Alamat:d.Alamat.Alamat ,
+                AlamatId: d.Alamat?.AlamatId,
+                CountryId:d.Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId, 
+                ProvinsiId:d.Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ,
+                KabupatenId:d.Alamat?.Desa.Kecamatan.Kabupaten.KabupatenId ,
+                KecamatanId:d.Alamat?.Desa.Kecamatan.KecamatanId ,
+                DesaId:d.Alamat?.Desa.DesaId ,
+                KodePos:d.Alamat?.KodePos ,
+                Alamat:d.Alamat?.Alamat ,
                 Jenjang:d.Jenjang ,
                 JenisInstitusi:d.JenisInstitusi ,
                 NamaInstitusi:d.NamaInstitusi ,
@@ -376,7 +376,7 @@ app.delete('/', async (c) => {
     })
 
     await prisma.alamat.delete({
-        where: {AlamatId: alamatId?.AlamatId}
+        where: {AlamatId: alamatId?.AlamatId ?? undefined}
     })
 
     return c.json([])
