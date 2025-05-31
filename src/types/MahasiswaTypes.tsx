@@ -101,6 +101,16 @@ export type CalonMahasiswaRplRequestResponseDTO = {
         Npsn: string
         TahunLulus: number
         NilaiLulusan: number
+        AlamatInstitusi: {
+            AlamatId: string
+            Alamat: string
+            KodePos: string
+            DesaId: string
+            KecamatanId: string
+            KabupatenId: string
+            ProvinsiId: string
+            CountryId: string
+        }
     }
 }
 

@@ -20,10 +20,9 @@ const getEnumValues = <T extends Record<string, string>>(
     return values as [string, ...string[]]
 }
 
-// ProgramStudi Schema
 const ProgramStudiSchema = z.object({
-    ProgramStudiId: z.string().min(1, 'ProgramStudiId is required'),
-    UniversityId: z.string().min(1, 'UniversityId is required'),
+    ProgramStudiId: z.string(),
+    UniversityId: z.string(),
     NamaProgramStudi: z.string().min(1, 'Nama Program Studi is required'),
     JenjangProgramStudi: z
         .enum(getEnumValues(Jenjang))
@@ -35,29 +34,22 @@ const ProgramStudiSchema = z.object({
         .min(1, 'Akreditasi Program Studi is required'),
 })
 
-// Alamat Schema
 const AlamatSchema = z.object({
-    AlamatId: z.string().min(1, 'AlamatId is required'),
+    AlamatId: z.string(),
     Alamat: z.string().min(1, 'Alamat is required'),
     KodePos: z
         .string()
         .min(1, 'Kode Pos is required')
         .regex(/^\d{5}$/, 'Kode Pos tidak valid'),
     DesaId: z.string().min(1, 'DesaId is required'),
-    NamaDesa: z.string().min(1, 'Nama Desa is required'),
     KecamatanId: z.string().min(1, 'KecamatanId is required'),
-    NamaKecamatan: z.string().min(1, 'Nama Kecamatan is required'),
     KabupatenId: z.string().min(1, 'KabupatenId is required'),
-    NamaKabupaten: z.string().min(1, 'Nama Kabupaten is required'),
     ProvinsiId: z.string().min(1, 'ProvinsiId is required'),
-    NamaProvinsi: z.string().min(1, 'Nama Provinsi is required'),
     CountryId: z.string().min(1, 'CountryId is required'),
-    NamaCountry: z.string().min(1, 'Nama Country is required'),
 })
 
-// User Schema
 const UserSchema = z.object({
-    UserId: z.string().min(1, 'UserId is required'),
+    UserId: z.string(),
     Nama: z.string().min(1, 'Nama is required'),
     Email: z.string().email('Email tidak valid'),
     TempatLahir: z.string().min(1, 'Tempat Lahir is required'),
@@ -79,7 +71,6 @@ const UserSchema = z.object({
         .refine((val) => val !== null, {
             message: 'Pendidikan Terakhir is required',
         }),
-    Avatar: z.string().url('URL Avatar tidak valid').or(z.literal('')), // Allow empty string if avatar is optional
     Agama: z.string().min(1, 'Agama is required'),
     Telepon: z
         .string()
@@ -95,10 +86,9 @@ const UserSchema = z.object({
         .regex(/^\+?[0-9\s-()]+$/, 'Nomor HP tidak valid'),
 })
 
-// Pendaftaran Schema
 const PendaftaranSchema = z.object({
-    PendaftaranId: z.string().min(1, 'PendaftaranId is required'),
-    MahasiswaId: z.string().min(1, 'MahasiswaId is required'),
+    PendaftaranId: z.string(),
+    MahasiswaId: z.string(),
     KodePendaftar: z.string().min(1, 'Kode Pendaftar is required'),
     NoUjian: z.string().min(1, 'No Ujian is required'),
     Periode: z.string().min(1, 'Periode is required'),
@@ -112,9 +102,8 @@ const PendaftaranSchema = z.object({
     JalurPendaftaran: z.string().min(1, 'Jalur Pendaftaran is required'),
 })
 
-// DaftarUlang Schema
 const DaftarUlangSchema = z.object({
-    DaftarUlangId: z.string().min(1, 'DaftarUlangId is required'),
+    DaftarUlangId: z.string(),
     Nim: z.string().min(1, 'NIM is required'),
     JenjangKkniDituju: z.string().min(1, 'Jenjang KKNI Dituju is required'),
     KipK: z.boolean(),
@@ -125,9 +114,8 @@ const DaftarUlangSchema = z.object({
     TanggalDaftarUlang: z.date().nullable(),
 })
 
-// OrangTua Schema
 const OrangTuaSchema = z.object({
-    OrangTuaId: z.string().min(1, 'OrangTuaId is required'),
+    OrangTuaId: z.string(),
     NamaOrangTua: z.string().min(1, 'Nama Orang Tua is required'),
     PekerjaanOrangTua: z.string().min(1, 'Pekerjaan Orang Tua is required'),
     JenisOrtu: z
@@ -147,11 +135,8 @@ const OrangTuaSchema = z.object({
         .regex(/^\+?[0-9\s-()]+$/, 'Nomor HP Orang Tua tidak valid'),
 })
 
-// InformasiKependudukan Schema
 const InformasiKependudukanSchema = z.object({
-    InformasiKependudukanId: z
-        .string()
-        .min(1, 'InformasiKependudukanId is required'),
+    InformasiKependudukanId: z.string(),
     NoKk: z
         .string()
         .min(1, 'No KK is required')
@@ -160,10 +145,9 @@ const InformasiKependudukanSchema = z.object({
         .string()
         .min(1, 'No NIK is required')
         .regex(/^\d{16}$/, 'No NIK tidak valid, harus 16 digit'),
-    Suku: z.string().min(1, 'Suku is required'),
+    Suku: z.string(),
 })
 
-// PekerjaanMahasiswa Schema
 const PekerjaanMahasiswaSchema = z.object({
     InstitusiTempatBekerja: z
         .string()
@@ -177,16 +161,14 @@ const PekerjaanMahasiswaSchema = z.object({
         }),
 })
 
-// Pesantren Schema
 const PesantrenSchema = z.object({
-    PesantrenId: z.string().min(1, 'PesantrenId is required'),
-    NamaPesantren: z.string().min(1, 'Nama Pesantren is required'),
-    LamaPesantren: z.string().min(1, 'Lama Pesantren is required'), // Could be z.number() if it's always numeric
+    PesantrenId: z.string(),
+    NamaPesantren: z.string(),
+    LamaPesantren: z.string(),
 })
 
-// InstitusiLama Schema
 const InstitusiLamaSchema = z.object({
-    InstitusiLamaId: z.string().min(1, 'InstitusiLamaId is required'),
+    InstitusiLamaId: z.string(),
     Jenjang: z
         .enum(getEnumValues(Jenjang))
         .nullable()
@@ -208,15 +190,29 @@ const InstitusiLamaSchema = z.object({
         .min(1900, 'Tahun lulus tidak valid')
         .max(new Date().getFullYear(), 'Tahun lulus tidak boleh di masa depan'),
     NilaiLulusan: z
-        .number()
+        .string()
         .min(0, 'Nilai tidak boleh negatif')
-        .max(100, 'Nilai maksimal 100'), // Assuming scale 0-100
+        .max(100, 'Nilai maksimal 100'),
+    AlamatInstitusiLama: z
+        .object({
+            AlamatId: z.string(),
+            Alamat: z.string().min(1, 'Alamat is required'),
+            KodePos: z
+                .string()
+                .min(1, 'Kode Pos is required')
+                .regex(/^\d{5}$/, 'Kode Pos tidak valid'),
+            DesaId: z.string().min(1, 'DesaId is required'),
+            KecamatanId: z.string().min(1, 'KecamatanId is required'),
+            KabupatenId: z.string().min(1, 'KabupatenId is required'),
+            ProvinsiId: z.string().min(1, 'ProvinsiId is required'),
+            CountryId: z.string().min(1, 'CountryId is required'),
+        })
+        .optional(),
 })
 
-// CalonMahasiswaFormValidation Schema (Main Schema)
 export const CalonMahasiswaSchemaValidation = z.object({
-    programStudi: ProgramStudiSchema, // Assuming it's a single object, not an array
-    alamat: AlamatSchema, // Assuming it's a single object, not an array
+    programStudi: ProgramStudiSchema,
+    alamat: AlamatSchema,
     user: UserSchema,
     pendaftaran: PendaftaranSchema,
     daftarUlang: DaftarUlangSchema,
@@ -226,16 +222,13 @@ export const CalonMahasiswaSchemaValidation = z.object({
         .refine((val) => val !== null, {
             message: 'Status Perkawinan is required',
         }),
-    orangTua: z
-        .array(OrangTuaSchema)
-        .min(1, 'Minimal satu data orang tua diperlukan'),
+    orangTua: z.array(OrangTuaSchema).optional(),
     informasiKependudukan: InformasiKependudukanSchema,
-    pekerjaanMahasiswa: z.array(PekerjaanMahasiswaSchema).optional(), // Optional if mahasiswa might not be working
-    pesantren: PesantrenSchema.optional(), // Optional if not all students attended pesantren
-    institusiLama: InstitusiLamaSchema, // Assuming it's a single object for the last institution
+    pekerjaanMahasiswa: z.array(PekerjaanMahasiswaSchema).optional(),
+    pesantren: PesantrenSchema.optional(),
+    institusiLama: InstitusiLamaSchema,
 })
 
-// To infer the TypeScript type from the schema
 export type CalonMahasiswaFormValidation = z.infer<
     typeof CalonMahasiswaSchemaValidation
 >

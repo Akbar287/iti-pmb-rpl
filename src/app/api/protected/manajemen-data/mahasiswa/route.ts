@@ -75,6 +75,11 @@ app.get('/', async (c) => {
                         Npsn: true,
                         TahunLulus: true,
                         NilaiLulusan: true,
+                        Alamat: {
+                            select: {
+                                AlamatId: true, Alamat: true, KodePos: true, Desa: {select: {DesaId: true, Kecamatan: {select: {KecamatanId: true, Kabupaten: {select: {KabupatenId: true, Provinsi: {select: {ProvinsiId: true, Country: {select: {CountryId: true}}}}}}}}}}
+                            }
+                        }
                     },
                 },
                 OrangTua: {
@@ -297,6 +302,16 @@ app.get('/', async (c) => {
                 Npsn: data?.InstitusiLama?.[0].Npsn ?? '',
                 TahunLulus: data?.InstitusiLama?.[0].TahunLulus ?? 0,
                 NilaiLulusan: data?.InstitusiLama?.[0].NilaiLulusan ?? 0,
+                AlamatInstitusi: {
+                        AlamatId: data?.InstitusiLama?.[0].Alamat?.AlamatId ?? '',
+                        Alamat: data?.InstitusiLama?.[0].Alamat?.Alamat ?? '',
+                        KodePos: data?.InstitusiLama?.[0].Alamat?.KodePos ?? '',
+                        DesaId: data?.InstitusiLama?.[0].Alamat?.Desa.DesaId ?? '',
+                        KecamatanId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.KecamatanId ?? '',
+                        KabupatenId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.KabupatenId ?? '',
+                        ProvinsiId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ?? '',
+                        CountryId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId ?? '',
+                }
             },
         }
         return c.json<CalonMahasiswaRplRequestResponseDTO>(response, 200)
@@ -504,8 +519,7 @@ app.post('/', async (c) => {
             KodePendaftar: body.Pendaftaran.KodePendaftar,
             NoUjian: body.Pendaftaran.NoUjian,
             JalurPendaftaran: body.Pendaftaran.JalurPendaftaran,
-            Nim: body.DaftarUlang.Nim,
-            TanggalLahir: body.User.TanggalLahir,
+            Nim: body.DaftarUlang.Nim
         })
 
         await prisma.userlogin.create({
@@ -594,12 +608,17 @@ app.post('/', async (c) => {
             })),
         })
 
-        // InstitusiLama
-        const alamatInstitusiLama = null
+        const alamatInstitusi = await prisma.alamat.create({
+            data: {
+                Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
+                KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
+                DesaId: body.InstitusiLama.AlamatInstitusi.DesaId
+            }
+        })
         await prisma.institusiLama.create({
             data: {
                 PendaftaranId: pendaftaran.PendaftaranId,
-                AlamatId: null,
+                AlamatId: (alamatInstitusi !== null) ? alamatInstitusi.AlamatId : alamat.AlamatId,
                 Jenjang: body.InstitusiLama.Jenjang,
                 JenisInstitusi: body.InstitusiLama.JenisInstitusi,
                 NamaInstitusi: body.InstitusiLama.NamaInstitusi,
@@ -778,9 +797,31 @@ app.put('/', async (c) => {
         })
     })
 
+    let alamatInstitusi = null;
+    if(body.Alamat.AlamatId === body.InstitusiLama.AlamatInstitusi.AlamatId) {
+        alamatInstitusi = await prisma.alamat.create({
+                data: {
+                    Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
+                    KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
+                    DesaId: body.InstitusiLama.AlamatInstitusi.DesaId
+                }, 
+            })
+    } else {
+        alamatInstitusi = await prisma.alamat.update({
+                data: {
+                    Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
+                    KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
+                    DesaId: body.InstitusiLama.AlamatInstitusi.DesaId
+                }, 
+                where: {
+                    AlamatId: body.InstitusiLama.AlamatInstitusi.AlamatId
+                }
+            })
+    }
+
     await prisma.institusiLama.update({
         data: {
-            AlamatId: null,
+            AlamatId: alamatInstitusi.AlamatId,
             Jenjang: body.InstitusiLama.Jenjang,
             JenisInstitusi: body.InstitusiLama.JenisInstitusi,
             NamaInstitusi: body.InstitusiLama.NamaInstitusi,
@@ -844,7 +885,7 @@ app.delete('/', async (c) => {
     const idForAll = await prisma.pendaftaran.findFirst({select: {
         DaftarUlang: {select: {DaftarUlangId: true}},
         OrangTua: {select: {OrangTuaId: true}},
-        InstitusiLama: {select: {InstitusiLamaId: true}},
+        InstitusiLama: {select: {InstitusiLamaId: true, Alamat: {select: {AlamatId: true}}}},
         Pesantren: {select: {PesantrenId: true}},
         InformasiKependudukan: {select: {InformasiKependudukanId: true}},
         Mahasiswa: {select: {MahasiswaId: true, User: {select: {UserId: true}}}}
@@ -880,6 +921,14 @@ app.delete('/', async (c) => {
                 InstitusiLamaId: { in: idForAll.InstitusiLama.map(item => item.InstitusiLamaId) },
             },
         })
+
+        await prisma.alamat.deleteMany({
+            where: {
+                AlamatId: {
+                    in: idForAll.InstitusiLama.map(il => il.Alamat?.AlamatId).filter((id): id is string => Boolean(id))
+                }
+            }
+        })
         
         await prisma.informasiKependudukan.deleteMany({
             where: {
@@ -914,20 +963,16 @@ function generateShortStrongPassword(data: {
     NoUjian: string
     JalurPendaftaran: string
     Nim: string
-    TanggalLahir: Date | null
 }) {
-    const { KodePendaftar, NoUjian, JalurPendaftaran, Nim, TanggalLahir } = data
+    const { KodePendaftar, NoUjian, JalurPendaftaran, Nim } = data
 
     // Ambil 2 karakter dari beberapa field
     const part1 = KodePendaftar.slice(-2) // e.g. "01"
     const part2 = NoUjian.slice(-2) // e.g. "56"
     const part3 = JalurPendaftaran.charAt(0).toUpperCase() // e.g. "R"
     const part4 = Nim.slice(-2) // e.g. "34"
-    const part5 = TanggalLahir
-        ? TanggalLahir.getDate().toString().padStart(2, '0').slice(0, 1)
-        : '0' // e.g. "1"
 
-    const base = `${part1}${part2}${part3}${part4}${part5}` // contoh: "0156R341"
+    const base = `${part1}${part2}${part3}${part4}`
 
     // Acak susunannya biar lebih aman
     const shuffled = base

@@ -128,16 +128,22 @@ const ManajemenMahasiswaComponent = ({
         }[]
     }[]
 }) => {
-    const [dataCountry, setDataCountry] =
-        React.useState<Country[]>(countryDataServer)
     const [dataProvinsi, setDataProvinsi] = React.useState<Provinsi[]>([])
     const [dataKabupaten, setDataKabupaten] = React.useState<Kabupaten[]>([])
     const [dataKecamatan, setDataKecamatan] = React.useState<Kecamatan[]>([])
     const [dataDesa, setDataDesa] = React.useState<Desa[]>([])
+    const [dataProvinsiInstitusiLama, setDataProvinsiInstitusiLama] =
+        React.useState<Provinsi[]>([])
+    const [dataKabupatenInstitusiLama, setDataKabupatenInstitusiLama] =
+        React.useState<Kabupaten[]>([])
+    const [dataKecamatanInstitusiLama, setDataKecamatanInstitusiLama] =
+        React.useState<Kecamatan[]>([])
+    const [dataDesaInstitusiLama, setDataDesaInstitusiLama] = React.useState<
+        Desa[]
+    >([])
     const [dataCalonMahasiswa, setDataCalonMahasiswa] = React.useState<
         CalonMahasiswaRplPage[]
     >([])
-
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -180,25 +186,19 @@ const ManajemenMahasiswaComponent = ({
                 Alamat: '',
                 KodePos: '',
                 DesaId: '',
-                NamaDesa: '',
                 KecamatanId: '',
-                NamaKecamatan: '',
                 KabupatenId: '',
-                NamaKabupaten: '',
                 ProvinsiId: '',
-                NamaProvinsi: '',
                 CountryId: '',
-                NamaCountry: '',
             },
             user: {
                 UserId: '',
                 Nama: '',
                 Email: '',
                 TempatLahir: '',
-                TanggalLahir: new Date(), // For z.coerce.date().nullable()
-                JenisKelamin: Object.values(JenisKelamin)[0] || '', // Default to first enum value, or handle if enum could be empty
+                TanggalLahir: new Date(),
+                JenisKelamin: Object.values(JenisKelamin)[0] || '',
                 PendidikanTerakhir: Object.values(Jenjang)[0] || '',
-                Avatar: '', // For .or(z.literal("")).optional() - can be '' or undefined
                 Agama: '',
                 Telepon: '',
                 NomorWa: '',
@@ -226,17 +226,7 @@ const ManajemenMahasiswaComponent = ({
                 TanggalDaftarUlang: null,
             },
             statusPerkawinan: Object.values(StatusPerkawinan)[0] || '',
-            orangTua: [
-                {
-                    OrangTuaId: '',
-                    NamaOrangTua: '',
-                    PekerjaanOrangTua: '',
-                    JenisOrtu: Object.values(JenisOrtu)[0] || '',
-                    PenghasilanOrangTua: 0,
-                    EmailOrangTua: '',
-                    NomorHpOrangTua: '',
-                },
-            ],
+            orangTua: [],
             informasiKependudukan: {
                 InformasiKependudukanId: '',
                 NoKk: '',
@@ -258,112 +248,147 @@ const ManajemenMahasiswaComponent = ({
                 Nisn: '',
                 Npsn: '',
                 TahunLulus: new Date().getFullYear(),
-                NilaiLulusan: 0,
+                NilaiLulusan: '0',
+                AlamatInstitusiLama: {
+                    AlamatId: '',
+                    Alamat: '',
+                    KodePos: '',
+                    DesaId: '',
+                    KecamatanId: '',
+                    KabupatenId: '',
+                    ProvinsiId: '',
+                    CountryId: '',
+                },
             },
         },
     })
     const onSubmit = async (data: CalonMahasiswaFormValidation) => {
         setLoading(true)
-
         if (titleDialog === 'Ubah Calon Mahasiswa') {
             await updateCalonMahasiswa({
                 ProgramStudi: {
-                    ProgramStudiId: '',
-                    UniversityId: '',
-                    NamaProgramStudi: '',
-                    JenjangProgramStudi: '',
-                    AkreditasiProgramStudi: '',
+                    ProgramStudiId: data.programStudi.ProgramStudiId,
+                    UniversityId: data.programStudi.UniversityId,
+                    NamaProgramStudi: data.programStudi.NamaProgramStudi,
+                    JenjangProgramStudi: data.programStudi.JenjangProgramStudi,
+                    AkreditasiProgramStudi:
+                        data.programStudi.AkreditasiProgramStudi,
                 },
                 Alamat: {
-                    AlamatId: 'string',
-                    Alamat: 'string',
-                    KodePos: 'string',
-                    DesaId: 'string',
-                    NamaDesa: 'string',
-                    KecamatanId: 'string',
-                    NamaKecamatan: 'string',
-                    KabupatenId: 'string',
-                    NamaKabupaten: 'string',
-                    ProvinsiId: 'string',
-                    NamaProvinsi: 'string',
-                    CountryId: 'string',
-                    NamaCountry: 'string',
+                    AlamatId: data.alamat.AlamatId,
+                    Alamat: data.alamat.Alamat,
+                    KodePos: data.alamat.KodePos,
+                    DesaId: data.alamat.DesaId,
+                    NamaDesa: selectedData.NamaDesa,
+                    KecamatanId: data.alamat.KecamatanId,
+                    NamaKecamatan: selectedData.NamaKecamatan,
+                    KabupatenId: data.alamat.KabupatenId,
+                    NamaKabupaten: selectedData.NamaKabupaten,
+                    ProvinsiId: data.alamat.ProvinsiId,
+                    NamaProvinsi: selectedData.NamaProvinsi,
+                    CountryId: data.alamat.CountryId,
+                    NamaCountry: selectedData.NamaCountry,
                 },
                 User: {
-                    UserId: 'string',
-                    Nama: 'string',
-                    Email: 'string',
-                    TempatLahir: 'string',
-                    TanggalLahir: new Date(),
-                    JenisKelamin: JenisKelamin.PRIA,
-                    PendidikanTerakhir: Jenjang.D3,
-                    Avatar: 'string',
-                    Agama: 'string',
-                    Telepon: 'string',
-                    NomorWa: 'string',
-                    NomorHp: 'string',
+                    UserId: data.user.UserId,
+                    Nama: data.user.Nama,
+                    Email: data.user.Email,
+                    TempatLahir: data.user.TempatLahir,
+                    TanggalLahir: data.user.TanggalLahir,
+                    JenisKelamin: data.user.JenisKelamin as JenisKelamin,
+                    PendidikanTerakhir: data.user.PendidikanTerakhir as Jenjang,
+                    Avatar: '',
+                    Agama: data.user.Agama,
+                    Telepon: data.user.Telepon,
+                    NomorWa: data.user.NomorWa,
+                    NomorHp: data.user.NomorHp,
                 },
                 Pendaftaran: {
-                    PendaftaranId: 'string',
-                    MahasiswaId: 'string',
-                    KodePendaftar: 'string',
-                    NoUjian: 'string',
-                    Periode: 'string',
-                    Gelombang: 'string',
-                    SistemKuliah: SistemKuliah.RPL,
-                    JalurPendaftaran: 'string',
+                    PendaftaranId: data.pendaftaran.PendaftaranId,
+                    MahasiswaId: data.pendaftaran.MahasiswaId,
+                    KodePendaftar: data.pendaftaran.KodePendaftar,
+                    NoUjian: data.pendaftaran.NoUjian,
+                    Periode: data.pendaftaran.Periode,
+                    Gelombang: data.pendaftaran.Gelombang,
+                    SistemKuliah: data.pendaftaran.SistemKuliah as SistemKuliah,
+                    JalurPendaftaran: data.pendaftaran.JalurPendaftaran,
                 },
                 DaftarUlang: {
-                    DaftarUlangId: 'string',
-                    Nim: 'string',
-                    JenjangKkniDituju: 'string',
-                    KipK: false,
-                    Aktif: false,
-                    MengisiBiodata: false,
-                    Finalisasi: false,
-                    TanggalDaftar: new Date(),
-                    TanggalDaftarUlang: new Date(),
+                    DaftarUlangId: data.daftarUlang.DaftarUlangId,
+                    Nim: data.daftarUlang.Nim,
+                    JenjangKkniDituju: data.daftarUlang.JenjangKkniDituju,
+                    KipK: data.daftarUlang.KipK,
+                    Aktif: data.daftarUlang.Aktif,
+                    MengisiBiodata: data.daftarUlang.MengisiBiodata,
+                    Finalisasi: data.daftarUlang.Finalisasi,
+                    TanggalDaftar: data.daftarUlang.TanggalDaftar,
+                    TanggalDaftarUlang: data.daftarUlang.TanggalDaftarUlang,
                 },
-                StatusPerkawinan: StatusPerkawinan.Cerai,
-                OrangTua: [
-                    {
-                        OrangTuaId: 'string',
-                        NamaOrangTua: 'string',
-                        PekerjaanOrangTua: 'string',
-                        JenisOrtu: JenisOrtu.AYAH,
-                        PenghasilanOrangTua: 0,
-                        EmailOrangTua: 'string',
-                        NomorHpOrangTua: 'string',
-                    },
-                ],
+                StatusPerkawinan: data.statusPerkawinan as StatusPerkawinan,
+                OrangTua: (data.orangTua ?? []).map((ot) => ({
+                    OrangTuaId: ot.OrangTuaId,
+                    NamaOrangTua: ot.NamaOrangTua,
+                    PekerjaanOrangTua: ot.PekerjaanOrangTua,
+                    JenisOrtu: ot.JenisOrtu as JenisOrtu,
+                    PenghasilanOrangTua: ot.PenghasilanOrangTua,
+                    EmailOrangTua: ot.EmailOrangTua,
+                    NomorHpOrangTua: ot.NomorHpOrangTua,
+                })),
                 InformasiKependudukan: {
-                    InformasiKependudukanId: 'string',
-                    NoKk: 'string',
-                    NoNik: 'string',
-                    Suku: 'string',
+                    InformasiKependudukanId:
+                        data.informasiKependudukan.InformasiKependudukanId,
+                    NoKk: data.informasiKependudukan.NoKk,
+                    NoNik: data.informasiKependudukan.NoNik,
+                    Suku: data.informasiKependudukan.Suku,
                 },
-                PekerjaanMahasiswa: [
-                    {
-                        InstitusiTempatBekerja: 'string',
-                        Jabatan: 'string',
-                        StatusPekerjaan: StatusPekerjaan.Lainnya,
-                    },
-                ],
+                PekerjaanMahasiswa: (data.pekerjaanMahasiswa ?? []).map(
+                    (pm) => ({
+                        InstitusiTempatBekerja: pm.InstitusiTempatBekerja,
+                        Jabatan: pm.Jabatan,
+                        StatusPekerjaan: pm.StatusPekerjaan as StatusPekerjaan,
+                    })
+                ),
                 Pesantren: {
-                    PesantrenId: 'string',
-                    NamaPesantren: 'string',
-                    LamaPesantren: 'string',
+                    PesantrenId: data.pesantren?.PesantrenId ?? '',
+                    NamaPesantren: data.pesantren?.NamaPesantren ?? '',
+                    LamaPesantren: data.pesantren?.LamaPesantren ?? '',
                 },
                 InstitusiLama: {
-                    InstitusiLamaId: 'string',
-                    Jenjang: Jenjang.D3,
-                    JenisInstitusi: 'string',
-                    NamaInstitusi: 'string',
-                    Jurusan: 'string',
-                    Nisn: 'string',
-                    Npsn: 'string',
-                    TahunLulus: 0,
-                    NilaiLulusan: 0,
+                    InstitusiLamaId: data.institusiLama.InstitusiLamaId,
+                    Jenjang: data.institusiLama.Jenjang as Jenjang,
+                    JenisInstitusi: data.institusiLama.JenisInstitusi,
+                    NamaInstitusi: data.institusiLama.NamaInstitusi,
+                    Jurusan: data.institusiLama.Jurusan,
+                    Nisn: data.institusiLama.Nisn,
+                    Npsn: data.institusiLama.Npsn,
+                    TahunLulus: data.institusiLama.TahunLulus,
+                    NilaiLulusan: Number(data.institusiLama.NilaiLulusan),
+                    AlamatInstitusi: {
+                        AlamatId:
+                            data.institusiLama.AlamatInstitusiLama?.AlamatId ??
+                            '',
+                        Alamat:
+                            data.institusiLama.AlamatInstitusiLama?.Alamat ??
+                            '',
+                        KodePos:
+                            data.institusiLama.AlamatInstitusiLama?.KodePos ??
+                            '',
+                        DesaId:
+                            data.institusiLama.AlamatInstitusiLama?.DesaId ??
+                            '',
+                        KecamatanId:
+                            data.institusiLama.AlamatInstitusiLama
+                                ?.KecamatanId ?? '',
+                        KabupatenId:
+                            data.institusiLama.AlamatInstitusiLama
+                                ?.KabupatenId ?? '',
+                        ProvinsiId:
+                            data.institusiLama.AlamatInstitusiLama
+                                ?.ProvinsiId ?? '',
+                        CountryId:
+                            data.institusiLama.AlamatInstitusiLama?.CountryId ??
+                            '',
+                    },
                 },
             })
                 .then((res) => {
@@ -387,100 +412,123 @@ const ManajemenMahasiswaComponent = ({
                 ProgramStudi: {
                     ProgramStudiId: '',
                     UniversityId: '',
-                    NamaProgramStudi: '',
-                    JenjangProgramStudi: '',
-                    AkreditasiProgramStudi: '',
+                    NamaProgramStudi: data.programStudi.NamaProgramStudi,
+                    JenjangProgramStudi: data.programStudi.JenjangProgramStudi,
+                    AkreditasiProgramStudi:
+                        data.programStudi.AkreditasiProgramStudi,
                 },
                 Alamat: {
-                    AlamatId: 'string',
-                    Alamat: 'string',
-                    KodePos: 'string',
-                    DesaId: 'string',
-                    NamaDesa: 'string',
-                    KecamatanId: 'string',
-                    NamaKecamatan: 'string',
-                    KabupatenId: 'string',
-                    NamaKabupaten: 'string',
-                    ProvinsiId: 'string',
-                    NamaProvinsi: 'string',
-                    CountryId: 'string',
-                    NamaCountry: 'string',
+                    AlamatId: '',
+                    Alamat: data.alamat.Alamat,
+                    KodePos: data.alamat.KodePos,
+                    DesaId: data.alamat.DesaId,
+                    NamaDesa: selectedData.NamaDesa,
+                    KecamatanId: data.alamat.KecamatanId,
+                    NamaKecamatan: selectedData.NamaKecamatan,
+                    KabupatenId: data.alamat.KabupatenId,
+                    NamaKabupaten: selectedData.NamaKabupaten,
+                    ProvinsiId: data.alamat.ProvinsiId,
+                    NamaProvinsi: selectedData.NamaProvinsi,
+                    CountryId: data.alamat.CountryId,
+                    NamaCountry: selectedData.NamaCountry,
                 },
                 User: {
-                    UserId: 'string',
-                    Nama: 'string',
-                    Email: 'string',
-                    TempatLahir: 'string',
-                    TanggalLahir: new Date(),
-                    JenisKelamin: JenisKelamin.PRIA,
-                    PendidikanTerakhir: Jenjang.D3,
-                    Avatar: 'string',
-                    Agama: 'string',
-                    Telepon: 'string',
-                    NomorWa: 'string',
-                    NomorHp: 'string',
+                    UserId: '',
+                    Nama: data.user.Nama,
+                    Email: data.user.Email,
+                    TempatLahir: data.user.TempatLahir,
+                    TanggalLahir: data.user.TanggalLahir,
+                    JenisKelamin: data.user.JenisKelamin as JenisKelamin,
+                    PendidikanTerakhir: data.user.PendidikanTerakhir as Jenjang,
+                    Avatar: '',
+                    Agama: data.user.Agama,
+                    Telepon: data.user.Telepon,
+                    NomorWa: data.user.NomorWa,
+                    NomorHp: data.user.NomorHp,
                 },
                 Pendaftaran: {
-                    PendaftaranId: 'string',
-                    MahasiswaId: 'string',
-                    KodePendaftar: 'string',
-                    NoUjian: 'string',
-                    Periode: 'string',
-                    Gelombang: 'string',
-                    SistemKuliah: SistemKuliah.RPL,
-                    JalurPendaftaran: 'string',
+                    PendaftaranId: '',
+                    MahasiswaId: '',
+                    KodePendaftar: data.pendaftaran.KodePendaftar,
+                    NoUjian: data.pendaftaran.NoUjian,
+                    Periode: data.pendaftaran.Periode,
+                    Gelombang: data.pendaftaran.Gelombang,
+                    SistemKuliah: data.pendaftaran.SistemKuliah as SistemKuliah,
+                    JalurPendaftaran: data.pendaftaran.JalurPendaftaran,
                 },
                 DaftarUlang: {
-                    DaftarUlangId: 'string',
-                    Nim: 'string',
-                    JenjangKkniDituju: 'string',
-                    KipK: false,
-                    Aktif: false,
-                    MengisiBiodata: false,
-                    Finalisasi: false,
-                    TanggalDaftar: new Date(),
-                    TanggalDaftarUlang: new Date(),
+                    DaftarUlangId: '',
+                    Nim: data.daftarUlang.Nim,
+                    JenjangKkniDituju: data.daftarUlang.JenjangKkniDituju,
+                    KipK: data.daftarUlang.KipK,
+                    Aktif: data.daftarUlang.Aktif,
+                    MengisiBiodata: data.daftarUlang.MengisiBiodata,
+                    Finalisasi: data.daftarUlang.Finalisasi,
+                    TanggalDaftar: data.daftarUlang.TanggalDaftar,
+                    TanggalDaftarUlang: data.daftarUlang.TanggalDaftarUlang,
                 },
-                StatusPerkawinan: StatusPerkawinan.Cerai,
-                OrangTua: [
-                    {
-                        OrangTuaId: 'string',
-                        NamaOrangTua: 'string',
-                        PekerjaanOrangTua: 'string',
-                        JenisOrtu: JenisOrtu.AYAH,
-                        PenghasilanOrangTua: 0,
-                        EmailOrangTua: 'string',
-                        NomorHpOrangTua: 'string',
-                    },
-                ],
+                StatusPerkawinan: data.statusPerkawinan as StatusPerkawinan,
+                OrangTua: (data.orangTua ?? []).map((ot) => ({
+                    OrangTuaId: '',
+                    NamaOrangTua: ot.NamaOrangTua,
+                    PekerjaanOrangTua: ot.PekerjaanOrangTua,
+                    JenisOrtu: ot.JenisOrtu as JenisOrtu,
+                    PenghasilanOrangTua: ot.PenghasilanOrangTua,
+                    EmailOrangTua: ot.EmailOrangTua,
+                    NomorHpOrangTua: ot.NomorHpOrangTua,
+                })),
                 InformasiKependudukan: {
-                    InformasiKependudukanId: 'string',
-                    NoKk: 'string',
-                    NoNik: 'string',
-                    Suku: 'string',
+                    InformasiKependudukanId: '',
+                    NoKk: data.informasiKependudukan.NoKk,
+                    NoNik: data.informasiKependudukan.NoNik,
+                    Suku: data.informasiKependudukan.Suku,
                 },
-                PekerjaanMahasiswa: [
-                    {
-                        InstitusiTempatBekerja: 'string',
-                        Jabatan: 'string',
-                        StatusPekerjaan: StatusPekerjaan.Lainnya,
-                    },
-                ],
+                PekerjaanMahasiswa: (data.pekerjaanMahasiswa ?? []).map(
+                    (pm) => ({
+                        InstitusiTempatBekerja: pm.InstitusiTempatBekerja,
+                        Jabatan: pm.Jabatan,
+                        StatusPekerjaan: pm.StatusPekerjaan as StatusPekerjaan,
+                    })
+                ),
                 Pesantren: {
-                    PesantrenId: 'string',
-                    NamaPesantren: 'string',
-                    LamaPesantren: 'string',
+                    PesantrenId: '',
+                    NamaPesantren: data.pesantren?.NamaPesantren ?? '',
+                    LamaPesantren: data.pesantren?.LamaPesantren ?? '',
                 },
                 InstitusiLama: {
-                    InstitusiLamaId: 'string',
-                    Jenjang: Jenjang.D3,
-                    JenisInstitusi: 'string',
-                    NamaInstitusi: 'string',
-                    Jurusan: 'string',
-                    Nisn: 'string',
-                    Npsn: 'string',
-                    TahunLulus: 0,
-                    NilaiLulusan: 0,
+                    InstitusiLamaId: '',
+                    Jenjang: data.institusiLama.Jenjang as Jenjang,
+                    JenisInstitusi: data.institusiLama.JenisInstitusi,
+                    NamaInstitusi: data.institusiLama.NamaInstitusi,
+                    Jurusan: data.institusiLama.Jurusan,
+                    Nisn: data.institusiLama.Nisn,
+                    Npsn: data.institusiLama.Npsn,
+                    TahunLulus: data.institusiLama.TahunLulus,
+                    NilaiLulusan: Number(data.institusiLama.NilaiLulusan),
+                    AlamatInstitusi: {
+                        AlamatId: '',
+                        Alamat:
+                            data.institusiLama.AlamatInstitusiLama?.Alamat ??
+                            '',
+                        KodePos:
+                            data.institusiLama.AlamatInstitusiLama?.KodePos ??
+                            '',
+                        DesaId:
+                            data.institusiLama.AlamatInstitusiLama?.DesaId ??
+                            '',
+                        KecamatanId:
+                            data.institusiLama.AlamatInstitusiLama
+                                ?.KecamatanId ?? '',
+                        KabupatenId:
+                            data.institusiLama.AlamatInstitusiLama
+                                ?.KabupatenId ?? '',
+                        ProvinsiId:
+                            data.institusiLama.AlamatInstitusiLama
+                                ?.ProvinsiId ?? '',
+                        CountryId:
+                            data.institusiLama.AlamatInstitusiLama?.CountryId ??
+                            '',
+                    },
                 },
             })
                 .then((res) => {
@@ -522,6 +570,11 @@ const ManajemenMahasiswaComponent = ({
     }, [paginationState.page, search, paginationState.limit])
     const [selectedData, setSelectedData] = React.useState({
         UniversityId: '',
+        NamaCountry: '',
+        NamaProvinsi: '',
+        NamaKabupaten: '',
+        NamaKecamatan: '',
+        NamaDesa: '',
     })
     const buatData = () => {
         form.reset()
@@ -534,7 +587,14 @@ const ManajemenMahasiswaComponent = ({
         setOpenDialog(true)
         const res: CalonMahasiswaRplRequestResponseDTO =
             await getKodePendaftarId(jd.KodePendaftar)
-        setSelectedData({ UniversityId: res.ProgramStudi.UniversityId })
+        setSelectedData({
+            UniversityId: res.ProgramStudi.UniversityId,
+            NamaCountry: res.Alamat.NamaCountry,
+            NamaProvinsi: res.Alamat.NamaProvinsi,
+            NamaKabupaten: res.Alamat.NamaKabupaten,
+            NamaKecamatan: res.Alamat.NamaKecamatan,
+            NamaDesa: res.Alamat.NamaDesa,
+        })
         await getProvinsiByCountryId(res.Alamat?.CountryId)
             .then((res) => {
                 setDataProvinsi(res)
@@ -555,6 +615,37 @@ const ManajemenMahasiswaComponent = ({
                 setDataDesa(res)
             })
             .catch((err) => toast('Terjadi Kesalahan, Error: ' + err))
+
+        if (res.InstitusiLama.AlamatInstitusi) {
+            await getProvinsiByCountryId(
+                res.InstitusiLama.AlamatInstitusi?.CountryId
+            )
+                .then((res) => {
+                    setDataProvinsiInstitusiLama(res)
+                })
+                .catch((err) => toast('Terjadi Kesalahan, Error: ' + err))
+            await getKabupatenByProvinsiId(
+                res?.InstitusiLama.AlamatInstitusi?.ProvinsiId
+            )
+                .then((res) => {
+                    setDataKabupatenInstitusiLama(res)
+                })
+                .catch((err) => toast('Terjadi Kesalahan, Error: ' + err))
+            await getKecamatanByKabupatenId(
+                res?.InstitusiLama.AlamatInstitusi?.KabupatenId
+            )
+                .then((res) => {
+                    setDataKecamatanInstitusiLama(res)
+                })
+                .catch((err) => toast('Terjadi Kesalahan, Error: ' + err))
+            await getDesaByKecamatanId(
+                res?.InstitusiLama.AlamatInstitusi?.KecamatanId
+            )
+                .then((res) => {
+                    setDataDesaInstitusiLama(res)
+                })
+                .catch((err) => toast('Terjadi Kesalahan, Error: ' + err))
+        }
         form.setValue('alamat', res.Alamat)
         form.setValue('pesantren', res.Pesantren)
         form.setValue('pendaftaran', {
@@ -567,16 +658,28 @@ const ManajemenMahasiswaComponent = ({
             SistemKuliah: res.Pendaftaran.SistemKuliah,
             JalurPendaftaran: res.Pendaftaran.JalurPendaftaran,
         })
-        form.setValue('daftarUlang', res.DaftarUlang)
+        form.setValue('daftarUlang', {
+            ...res.DaftarUlang,
+            TanggalDaftar:
+                res.DaftarUlang.TanggalDaftar !== null
+                    ? new Date(res.DaftarUlang.TanggalDaftar)
+                    : new Date(),
+            TanggalDaftarUlang:
+                res.DaftarUlang.TanggalDaftarUlang !== null
+                    ? new Date(res.DaftarUlang.TanggalDaftarUlang)
+                    : new Date(),
+        })
         form.setValue('user', {
             UserId: res.User.UserId,
             Nama: res.User.Nama,
             Email: res.User.Email,
             TempatLahir: res.User.TempatLahir,
-            TanggalLahir: res.User.TanggalLahir || new Date(),
+            TanggalLahir:
+                res.User.TanggalLahir !== null
+                    ? new Date(res.User.TanggalLahir)
+                    : new Date(),
             JenisKelamin: res.User.JenisKelamin,
             PendidikanTerakhir: res.User.PendidikanTerakhir,
-            Avatar: res.User.Avatar,
             Agama: res.User.Agama,
             Telepon: res.User.Telepon,
             NomorWa: res.User.NomorWa,
@@ -594,7 +697,20 @@ const ManajemenMahasiswaComponent = ({
         form.setValue('orangTua', res.OrangTua)
         form.setValue('informasiKependudukan', res.InformasiKependudukan)
         form.setValue('pekerjaanMahasiswa', res.PekerjaanMahasiswa)
-        form.setValue('institusiLama', res.InstitusiLama)
+        form.setValue('institusiLama', {
+            ...res.InstitusiLama,
+            AlamatInstitusiLama: {
+                AlamatId: res.InstitusiLama.AlamatInstitusi.AlamatId,
+                Alamat: res.InstitusiLama.AlamatInstitusi.Alamat,
+                KodePos: res.InstitusiLama.AlamatInstitusi.KodePos,
+                DesaId: res.InstitusiLama.AlamatInstitusi.DesaId,
+                KecamatanId: res.InstitusiLama.AlamatInstitusi.KecamatanId,
+                KabupatenId: res.InstitusiLama.AlamatInstitusi.KabupatenId,
+                ProvinsiId: res.InstitusiLama.AlamatInstitusi.ProvinsiId,
+                CountryId: res.InstitusiLama.AlamatInstitusi.CountryId,
+            },
+            NilaiLulusan: res.InstitusiLama.NilaiLulusan.toString(),
+        })
         setLoading(false)
     }
     const hapusData = (jd: CalonMahasiswaRplPage) => {
@@ -940,7 +1056,7 @@ const ManajemenMahasiswaComponent = ({
                 form={form}
                 titleDialog={titleDialog}
                 universityDataServer={universityDataServer}
-                dataCountry={dataCountry}
+                countryDataServer={countryDataServer}
                 dataProvinsi={dataProvinsi}
                 setDataProvinsi={setDataProvinsi}
                 dataKabupaten={dataKabupaten}
@@ -951,6 +1067,14 @@ const ManajemenMahasiswaComponent = ({
                 setDataDesa={setDataDesa}
                 selectedData={selectedData}
                 setSelectedData={setSelectedData}
+                dataProvinsiInstitusiLama={dataProvinsiInstitusiLama}
+                setDataProvinsiInstitusiLama={setDataProvinsiInstitusiLama}
+                dataKabupatenInstitusiLama={dataKabupatenInstitusiLama}
+                setDataKabupatenInstitusiLama={setDataKabupatenInstitusiLama}
+                dataKecamatanInstitusiLama={dataKecamatanInstitusiLama}
+                setDataKecamatanInstitusiLama={setDataKecamatanInstitusiLama}
+                dataDesaInstitusiLama={dataDesaInstitusiLama}
+                setDataDesaInstitusiLama={setDataDesaInstitusiLama}
             />
         </div>
     )
@@ -966,7 +1090,7 @@ export function SheetManageData({
     form,
     titleDialog,
     universityDataServer,
-    dataCountry,
+    countryDataServer,
     dataProvinsi,
     setDataProvinsi,
     dataKabupaten,
@@ -977,16 +1101,40 @@ export function SheetManageData({
     setDataDesa,
     selectedData,
     setSelectedData,
+    dataProvinsiInstitusiLama,
+    setDataProvinsiInstitusiLama,
+    dataKabupatenInstitusiLama,
+    setDataKabupatenInstitusiLama,
+    dataKecamatanInstitusiLama,
+    setDataKecamatanInstitusiLama,
+    dataDesaInstitusiLama,
+    setDataDesaInstitusiLama,
 }: {
-    selectedData: any
-    setSelectedData: React.Dispatch<React.SetStateAction<any>>
+    selectedData: {
+        UniversityId: string
+        NamaCountry: string
+        NamaProvinsi: string
+        NamaKabupaten: string
+        NamaKecamatan: string
+        NamaDesa: string
+    }
+    setSelectedData: React.Dispatch<
+        React.SetStateAction<{
+            UniversityId: string
+            NamaCountry: string
+            NamaProvinsi: string
+            NamaKabupaten: string
+            NamaKecamatan: string
+            NamaDesa: string
+        }>
+    >
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
     onSubmit: (data: CalonMahasiswaFormValidation) => void
     form: UseFormReturn<CalonMahasiswaFormValidation>
     titleDialog: string
-    dataCountry: Country[]
+    countryDataServer: Country[]
     dataProvinsi: Provinsi[]
     setDataProvinsi: React.Dispatch<React.SetStateAction<Provinsi[]>>
     dataKabupaten: Kabupaten[]
@@ -995,6 +1143,20 @@ export function SheetManageData({
     setDataKecamatan: React.Dispatch<React.SetStateAction<Kecamatan[]>>
     dataDesa: Desa[]
     setDataDesa: React.Dispatch<React.SetStateAction<Desa[]>>
+    dataProvinsiInstitusiLama: Provinsi[]
+    setDataProvinsiInstitusiLama: React.Dispatch<
+        React.SetStateAction<Provinsi[]>
+    >
+    dataKabupatenInstitusiLama: Kabupaten[]
+    setDataKabupatenInstitusiLama: React.Dispatch<
+        React.SetStateAction<Kabupaten[]>
+    >
+    dataKecamatanInstitusiLama: Kecamatan[]
+    setDataKecamatanInstitusiLama: React.Dispatch<
+        React.SetStateAction<Kecamatan[]>
+    >
+    dataDesaInstitusiLama: Desa[]
+    setDataDesaInstitusiLama: React.Dispatch<React.SetStateAction<Desa[]>>
     universityDataServer: {
         Nama: string
         UniversityId: string
@@ -1023,7 +1185,11 @@ export function SheetManageData({
                         </div>
                     ) : (
                         <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <form
+                                onSubmit={form.handleSubmit(onSubmit, (err) => {
+                                    console.dir(err)
+                                })}
+                            >
                                 <SheetHeader>
                                     <SheetTitle>{titleDialog}</SheetTitle>
                                     <SheetDescription>
@@ -1752,6 +1918,25 @@ export function SheetManageData({
                                                                     setDataDesa(
                                                                         []
                                                                     )
+                                                                    let country =
+                                                                        countryDataServer.find(
+                                                                            (
+                                                                                x
+                                                                            ) =>
+                                                                                x.CountryId ===
+                                                                                value
+                                                                        )
+                                                                    if (
+                                                                        country
+                                                                    ) {
+                                                                        setSelectedData(
+                                                                            {
+                                                                                ...selectedData,
+                                                                                NamaCountry:
+                                                                                    country.Nama,
+                                                                            }
+                                                                        )
+                                                                    }
                                                                     field.onChange(
                                                                         value
                                                                     )
@@ -1787,7 +1972,7 @@ export function SheetManageData({
                                                                     <SelectValue placeholder="Pilih Negara" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    {dataCountry.map(
+                                                                    {countryDataServer.map(
                                                                         (c) => (
                                                                             <SelectItem
                                                                                 value={
@@ -1837,6 +2022,23 @@ export function SheetManageData({
                                                                     field.onChange(
                                                                         value
                                                                     )
+                                                                    let data =
+                                                                        dataProvinsi.find(
+                                                                            (
+                                                                                x
+                                                                            ) =>
+                                                                                x.ProvinsiId ===
+                                                                                value
+                                                                        )
+                                                                    if (data) {
+                                                                        setSelectedData(
+                                                                            {
+                                                                                ...selectedData,
+                                                                                NamaProvinsi:
+                                                                                    data.Nama,
+                                                                            }
+                                                                        )
+                                                                    }
                                                                     setDataKecamatan(
                                                                         []
                                                                     )
@@ -1921,6 +2123,23 @@ export function SheetManageData({
                                                                     field.onChange(
                                                                         value
                                                                     )
+                                                                    let data =
+                                                                        dataKabupaten.find(
+                                                                            (
+                                                                                x
+                                                                            ) =>
+                                                                                x.KabupatenId ===
+                                                                                value
+                                                                        )
+                                                                    if (data) {
+                                                                        setSelectedData(
+                                                                            {
+                                                                                ...selectedData,
+                                                                                NamaKabupaten:
+                                                                                    data.Nama,
+                                                                            }
+                                                                        )
+                                                                    }
                                                                     setDataDesa(
                                                                         []
                                                                     )
@@ -1998,6 +2217,23 @@ export function SheetManageData({
                                                                     field.onChange(
                                                                         value
                                                                     )
+                                                                    let data =
+                                                                        dataKecamatan.find(
+                                                                            (
+                                                                                x
+                                                                            ) =>
+                                                                                x.KecamatanId ===
+                                                                                value
+                                                                        )
+                                                                    if (data) {
+                                                                        setSelectedData(
+                                                                            {
+                                                                                ...selectedData,
+                                                                                NamaKecamatan:
+                                                                                    data.Nama,
+                                                                            }
+                                                                        )
+                                                                    }
                                                                     form.setValue(
                                                                         'alamat.DesaId',
                                                                         ''
@@ -2062,9 +2298,30 @@ export function SheetManageData({
                                                                     field.value ??
                                                                     ''
                                                                 }
-                                                                onValueChange={
-                                                                    field.onChange
-                                                                }
+                                                                onValueChange={(
+                                                                    val
+                                                                ) => {
+                                                                    let data =
+                                                                        dataDesa.find(
+                                                                            (
+                                                                                x
+                                                                            ) =>
+                                                                                x.DesaId ===
+                                                                                val
+                                                                        )
+                                                                    if (data) {
+                                                                        setSelectedData(
+                                                                            {
+                                                                                ...selectedData,
+                                                                                NamaDesa:
+                                                                                    data.Nama,
+                                                                            }
+                                                                        )
+                                                                    }
+                                                                    field.onChange(
+                                                                        val
+                                                                    )
+                                                                }}
                                                             >
                                                                 <SelectTrigger className="w-full">
                                                                     <SelectValue placeholder="Pilih Desa" />
@@ -2733,14 +2990,78 @@ export function SheetManageData({
                                                                             Pilih
                                                                             Jenjang
                                                                         </SelectLabel>
-                                                                        <SelectItem value={Jenjang.TIDAK_TAMAT_SD}>{Jenjang.TIDAK_TAMAT_SD}</SelectItem>
-                                                                        <SelectItem value={Jenjang.SD}>{Jenjang.SD}</SelectItem>
-                                                                        <SelectItem value={Jenjang.SMP}>{Jenjang.SMP}</SelectItem>
-                                                                        <SelectItem value={Jenjang.SMA}>{Jenjang.SMA}</SelectItem>
-                                                                        <SelectItem value={Jenjang.D3}>{Jenjang.D3}</SelectItem>
-                                                                        <SelectItem value={Jenjang.S1}>{Jenjang.S1}</SelectItem>
-                                                                        <SelectItem value={Jenjang.S2}>{Jenjang.S2}</SelectItem>
-                                                                        <SelectItem value={Jenjang.S3}>{Jenjang.S3}</SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.TIDAK_TAMAT_SD
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.TIDAK_TAMAT_SD
+                                                                            }
+                                                                        </SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.SD
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.SD
+                                                                            }
+                                                                        </SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.SMP
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.SMP
+                                                                            }
+                                                                        </SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.SMA
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.SMA
+                                                                            }
+                                                                        </SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.D3
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.D3
+                                                                            }
+                                                                        </SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.S1
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.S1
+                                                                            }
+                                                                        </SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.S2
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.S2
+                                                                            }
+                                                                        </SelectItem>
+                                                                        <SelectItem
+                                                                            value={
+                                                                                Jenjang.S3
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                Jenjang.S3
+                                                                            }
+                                                                        </SelectItem>
                                                                     </SelectGroup>
                                                                 </SelectContent>
                                                             </Select>
@@ -2798,6 +3119,553 @@ export function SheetManageData({
                                                             Jurusan
                                                             Sekolah/Institusi
                                                             Sebelumnya
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.Nisn"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Nomor Induk Siswa
+                                                            Nasional
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={
+                                                                    loading
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Nomor Induk Siswa
+                                                            Nasional
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.Npsn"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Nomor Pokok Sekolah
+                                                            Nasional
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={
+                                                                    loading
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Nomor Pokok Sekolah
+                                                            Nasional Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.NilaiLulusan"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Nilai Lulusan UN
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={
+                                                                    loading
+                                                                }
+                                                                value={
+                                                                    field.value
+                                                                }
+                                                                onChange={(
+                                                                    val
+                                                                ) =>
+                                                                    field.onChange(
+                                                                        val
+                                                                    )
+                                                                }
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Nilai Lulusan UN
+                                                            Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.TahunLulus"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Tahun Lulus
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={
+                                                                    loading
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Tahun Lulus Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.AlamatInstitusiLama.CountryId"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Negara
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                disabled={
+                                                                    loading
+                                                                }
+                                                                value={
+                                                                    field.value ??
+                                                                    ''
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) => {
+                                                                    setDataKabupatenInstitusiLama(
+                                                                        []
+                                                                    )
+                                                                    setDataKecamatanInstitusiLama(
+                                                                        []
+                                                                    )
+                                                                    setDataDesaInstitusiLama(
+                                                                        []
+                                                                    )
+                                                                    field.onChange(
+                                                                        value
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.ProvinsiId',
+                                                                        ''
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.KabupatenId',
+                                                                        ''
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.KecamatanId',
+                                                                        ''
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.DesaId',
+                                                                        ''
+                                                                    )
+                                                                    getProvinsiByCountryId(
+                                                                        form.watch(
+                                                                            'institusiLama.AlamatInstitusiLama.CountryId'
+                                                                        ) || ''
+                                                                    ).then(
+                                                                        (res) =>
+                                                                            setDataProvinsiInstitusiLama(
+                                                                                res
+                                                                            )
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Negara" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {countryDataServer.map(
+                                                                        (c) => (
+                                                                            <SelectItem
+                                                                                value={
+                                                                                    c.CountryId
+                                                                                }
+                                                                                key={
+                                                                                    c.CountryId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    c.Nama
+                                                                                }
+                                                                            </SelectItem>
+                                                                        )
+                                                                    )}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Pilih Negara
+                                                            Sekolah/Institusi
+                                                            Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.AlamatInstitusiLama.ProvinsiId"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Provinsi
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                disabled={
+                                                                    loading
+                                                                }
+                                                                value={
+                                                                    field.value ??
+                                                                    ''
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) => {
+                                                                    field.onChange(
+                                                                        value
+                                                                    )
+                                                                    setDataKecamatanInstitusiLama(
+                                                                        []
+                                                                    )
+                                                                    setDataDesaInstitusiLama(
+                                                                        []
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.KabupatenId',
+                                                                        ''
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.KecamatanId',
+                                                                        ''
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.DesaId',
+                                                                        ''
+                                                                    )
+                                                                    getKabupatenByProvinsiId(
+                                                                        form.watch(
+                                                                            'institusiLama.AlamatInstitusiLama.ProvinsiId'
+                                                                        ) || ''
+                                                                    ).then(
+                                                                        (res) =>
+                                                                            setDataKabupatenInstitusiLama(
+                                                                                res
+                                                                            )
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Provinsi" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {dataProvinsiInstitusiLama.map(
+                                                                        (p) => (
+                                                                            <SelectItem
+                                                                                value={
+                                                                                    p.ProvinsiId
+                                                                                }
+                                                                                key={
+                                                                                    p.ProvinsiId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    p.Nama
+                                                                                }
+                                                                            </SelectItem>
+                                                                        )
+                                                                    )}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Pilih Provinsi
+                                                            Sekolah/Institusi
+                                                            Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.AlamatInstitusiLama.KabupatenId"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Kabupaten
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                disabled={
+                                                                    loading
+                                                                }
+                                                                value={
+                                                                    field.value ??
+                                                                    ''
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) => {
+                                                                    field.onChange(
+                                                                        value
+                                                                    )
+                                                                    setDataDesaInstitusiLama(
+                                                                        []
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.KecamatanId',
+                                                                        ''
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.DesaId',
+                                                                        ''
+                                                                    )
+                                                                    getKecamatanByKabupatenId(
+                                                                        form.watch(
+                                                                            'institusiLama.AlamatInstitusiLama.KabupatenId'
+                                                                        ) || ''
+                                                                    ).then(
+                                                                        (res) =>
+                                                                            setDataKecamatanInstitusiLama(
+                                                                                res
+                                                                            )
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Kabupaten" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {dataKabupatenInstitusiLama.map(
+                                                                        (p) => (
+                                                                            <SelectItem
+                                                                                value={
+                                                                                    p.KabupatenId
+                                                                                }
+                                                                                key={
+                                                                                    p.KabupatenId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    p.Nama
+                                                                                }
+                                                                            </SelectItem>
+                                                                        )
+                                                                    )}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Pilih Kabupaten
+                                                            Sekolah/Institusi
+                                                            Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.AlamatInstitusiLama.KecamatanId"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Kecamatan
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                disabled={
+                                                                    loading
+                                                                }
+                                                                value={
+                                                                    field.value ??
+                                                                    ''
+                                                                }
+                                                                onValueChange={(
+                                                                    value
+                                                                ) => {
+                                                                    field.onChange(
+                                                                        value
+                                                                    )
+                                                                    form.setValue(
+                                                                        'institusiLama.AlamatInstitusiLama.DesaId',
+                                                                        ''
+                                                                    )
+                                                                    getDesaByKecamatanId(
+                                                                        form.watch(
+                                                                            'institusiLama.AlamatInstitusiLama.KecamatanId'
+                                                                        ) || ''
+                                                                    ).then(
+                                                                        (res) =>
+                                                                            setDataDesaInstitusiLama(
+                                                                                res
+                                                                            )
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Kecamatan" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {dataKecamatanInstitusiLama.map(
+                                                                        (p) => (
+                                                                            <SelectItem
+                                                                                value={
+                                                                                    p.KecamatanId
+                                                                                }
+                                                                                key={
+                                                                                    p.KecamatanId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    p.Nama
+                                                                                }
+                                                                            </SelectItem>
+                                                                        )
+                                                                    )}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Pilih Kecamatan
+                                                            Sekolah/Institusi
+                                                            Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.AlamatInstitusiLama.DesaId"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Desa
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                disabled={
+                                                                    loading
+                                                                }
+                                                                value={
+                                                                    field.value ??
+                                                                    ''
+                                                                }
+                                                                onValueChange={(
+                                                                    val
+                                                                ) => {
+                                                                    field.onChange(
+                                                                        val
+                                                                    )
+                                                                }}
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Desa" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    {dataDesaInstitusiLama.map(
+                                                                        (p) => (
+                                                                            <SelectItem
+                                                                                value={
+                                                                                    p.DesaId
+                                                                                }
+                                                                                key={
+                                                                                    p.DesaId
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    p.Nama
+                                                                                }
+                                                                            </SelectItem>
+                                                                        )
+                                                                    )}
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Pilih Desa
+                                                            Sekolah/Institusi
+                                                            Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.AlamatInstitusiLama.Alamat"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Alamat
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Textarea
+                                                                disabled={
+                                                                    loading
+                                                                }
+                                                                {...field}
+                                                                placeholder="Alamat Anda."
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Masukan Alamat
+                                                            Lengkap
+                                                            Sekolah/Institusi
+                                                            Anda
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name="institusiLama.AlamatInstitusiLama.KodePos"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Kode Pos
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={
+                                                                    loading
+                                                                }
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Kode Pos
+                                                            Sekolah/Institusi
+                                                            Anda
                                                         </FormDescription>
                                                         <FormMessage />
                                                     </FormItem>
