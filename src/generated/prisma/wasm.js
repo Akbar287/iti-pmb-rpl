@@ -411,6 +411,11 @@ exports.Prisma.UserHasRolesScalarFieldEnum = {
   UserId: 'UserId'
 };
 
+exports.Prisma.AsesorProgramStudiScalarFieldEnum = {
+  AsesorId: 'AsesorId',
+  ProgramStudiId: 'ProgramStudiId'
+};
+
 exports.Prisma.OrangTuaScalarFieldEnum = {
   OrangTuaId: 'OrangTuaId',
   PendaftaranId: 'PendaftaranId',
@@ -776,6 +781,7 @@ exports.Prisma.ModelName = {
   MataKuliahMahasiswa: 'MataKuliahMahasiswa',
   UserHasPermissions: 'UserHasPermissions',
   UserHasRoles: 'UserHasRoles',
+  AsesorProgramStudi: 'AsesorProgramStudi',
   OrangTua: 'OrangTua',
   PasswordResetTokens: 'PasswordResetTokens',
   PekerjaanMahasiswa: 'PekerjaanMahasiswa',

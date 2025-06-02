@@ -8,6 +8,7 @@ import {
     StatusPerkawinan,
 } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
+import bcrypt from "bcrypt"
 import {
     CalonMahasiswaRplPage,
     CalonMahasiswaRplRequestResponseDTO,
@@ -526,7 +527,7 @@ app.post('/', async (c) => {
             data: {
                 UserId: user.UserId,
                 Username: dataUsername,
-                Password: dataUsername,
+                Password: await bcrypt.hash(dataUsername, await bcrypt.genSalt(10)),
                 Credential: 'credential',
             },
         })
@@ -670,6 +671,10 @@ app.post('/', async (c) => {
             Gelombang: pendaftaran.Gelombang,
             NamaProdi: body.ProgramStudi.NamaProgramStudi,
         }
+
+        // Kirim Ke Notifikasi Wa Mahasiswa ; 
+        // Username dan Password adalah sama;
+        // dataUsername
 
         return c.json<CalonMahasiswaRplPage>(response)
     } else {

@@ -164,6 +164,11 @@ export type UserHasPermissions = $Result.DefaultSelection<Prisma.$UserHasPermiss
  */
 export type UserHasRoles = $Result.DefaultSelection<Prisma.$UserHasRolesPayload>
 /**
+ * Model AsesorProgramStudi
+ * 
+ */
+export type AsesorProgramStudi = $Result.DefaultSelection<Prisma.$AsesorProgramStudiPayload>
+/**
  * Model OrangTua
  * 
  */
@@ -865,6 +870,16 @@ export class PrismaClient<
     * ```
     */
   get userHasRoles(): Prisma.UserHasRolesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.asesorProgramStudi`: Exposes CRUD operations for the **AsesorProgramStudi** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AsesorProgramStudis
+    * const asesorProgramStudis = await prisma.asesorProgramStudi.findMany()
+    * ```
+    */
+  get asesorProgramStudi(): Prisma.AsesorProgramStudiDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.orangTua`: Exposes CRUD operations for the **OrangTua** model.
@@ -1605,6 +1620,7 @@ export namespace Prisma {
     MataKuliahMahasiswa: 'MataKuliahMahasiswa',
     UserHasPermissions: 'UserHasPermissions',
     UserHasRoles: 'UserHasRoles',
+    AsesorProgramStudi: 'AsesorProgramStudi',
     OrangTua: 'OrangTua',
     PasswordResetTokens: 'PasswordResetTokens',
     PekerjaanMahasiswa: 'PekerjaanMahasiswa',
@@ -1650,7 +1666,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin"
+      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3874,6 +3890,80 @@ export namespace Prisma {
           }
         }
       }
+      AsesorProgramStudi: {
+        payload: Prisma.$AsesorProgramStudiPayload<ExtArgs>
+        fields: Prisma.AsesorProgramStudiFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AsesorProgramStudiFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AsesorProgramStudiFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>
+          }
+          findFirst: {
+            args: Prisma.AsesorProgramStudiFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AsesorProgramStudiFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>
+          }
+          findMany: {
+            args: Prisma.AsesorProgramStudiFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>[]
+          }
+          create: {
+            args: Prisma.AsesorProgramStudiCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>
+          }
+          createMany: {
+            args: Prisma.AsesorProgramStudiCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AsesorProgramStudiCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>[]
+          }
+          delete: {
+            args: Prisma.AsesorProgramStudiDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>
+          }
+          update: {
+            args: Prisma.AsesorProgramStudiUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>
+          }
+          deleteMany: {
+            args: Prisma.AsesorProgramStudiDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AsesorProgramStudiUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AsesorProgramStudiUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>[]
+          }
+          upsert: {
+            args: Prisma.AsesorProgramStudiUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AsesorProgramStudiPayload>
+          }
+          aggregate: {
+            args: Prisma.AsesorProgramStudiAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAsesorProgramStudi>
+          }
+          groupBy: {
+            args: Prisma.AsesorProgramStudiGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AsesorProgramStudiGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AsesorProgramStudiCountArgs<ExtArgs>
+            result: $Utils.Optional<AsesorProgramStudiCountAggregateOutputType> | number
+          }
+        }
+      }
       OrangTua: {
         payload: Prisma.$OrangTuaPayload<ExtArgs>
         fields: Prisma.OrangTuaFieldRefs
@@ -5986,6 +6076,7 @@ export namespace Prisma {
     mataKuliahMahasiswa?: MataKuliahMahasiswaOmit
     userHasPermissions?: UserHasPermissionsOmit
     userHasRoles?: UserHasRolesOmit
+    asesorProgramStudi?: AsesorProgramStudiOmit
     orangTua?: OrangTuaOmit
     passwordResetTokens?: PasswordResetTokensOmit
     pekerjaanMahasiswa?: PekerjaanMahasiswaOmit
@@ -6159,12 +6250,14 @@ export namespace Prisma {
     AsesorAkademik: number
     AsesorPraktisi: number
     AssesorMahasiswa: number
+    AsesorProgramStudi: number
   }
 
   export type AsesorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     AsesorAkademik?: boolean | AsesorCountOutputTypeCountAsesorAkademikArgs
     AsesorPraktisi?: boolean | AsesorCountOutputTypeCountAsesorPraktisiArgs
     AssesorMahasiswa?: boolean | AsesorCountOutputTypeCountAssesorMahasiswaArgs
+    AsesorProgramStudi?: boolean | AsesorCountOutputTypeCountAsesorProgramStudiArgs
   }
 
   // Custom InputTypes
@@ -6197,6 +6290,13 @@ export namespace Prisma {
    */
   export type AsesorCountOutputTypeCountAssesorMahasiswaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AssesorMahasiswaWhereInput
+  }
+
+  /**
+   * AsesorCountOutputType without action
+   */
+  export type AsesorCountOutputTypeCountAsesorProgramStudiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AsesorProgramStudiWhereInput
   }
 
 
@@ -6883,11 +6983,13 @@ export namespace Prisma {
   export type ProgramStudiCountOutputType = {
     DaftarUlang: number
     MataKuliah: number
+    AsesorProgramStudi: number
   }
 
   export type ProgramStudiCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     DaftarUlang?: boolean | ProgramStudiCountOutputTypeCountDaftarUlangArgs
     MataKuliah?: boolean | ProgramStudiCountOutputTypeCountMataKuliahArgs
+    AsesorProgramStudi?: boolean | ProgramStudiCountOutputTypeCountAsesorProgramStudiArgs
   }
 
   // Custom InputTypes
@@ -6913,6 +7015,13 @@ export namespace Prisma {
    */
   export type ProgramStudiCountOutputTypeCountMataKuliahArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MataKuliahWhereInput
+  }
+
+  /**
+   * ProgramStudiCountOutputType without action
+   */
+  export type ProgramStudiCountOutputTypeCountAsesorProgramStudiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AsesorProgramStudiWhereInput
   }
 
 
@@ -7227,6 +7336,7 @@ export namespace Prisma {
     UserHasPermissions: number
     UserHasRoles: number
     Userlogin: number
+    Asesor: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7234,6 +7344,7 @@ export namespace Prisma {
     UserHasPermissions?: boolean | UserCountOutputTypeCountUserHasPermissionsArgs
     UserHasRoles?: boolean | UserCountOutputTypeCountUserHasRolesArgs
     Userlogin?: boolean | UserCountOutputTypeCountUserloginArgs
+    Asesor?: boolean | UserCountOutputTypeCountAsesorArgs
   }
 
   // Custom InputTypes
@@ -7273,6 +7384,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountUserloginArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserloginWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAsesorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AsesorWhereInput
   }
 
 
@@ -8584,9 +8702,11 @@ export namespace Prisma {
     UpdatedAt?: boolean
     DeletedAt?: boolean
     TipeAsesor?: boolean | TipeAsesorDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
     AsesorAkademik?: boolean | Asesor$AsesorAkademikArgs<ExtArgs>
     AsesorPraktisi?: boolean | Asesor$AsesorPraktisiArgs<ExtArgs>
     AssesorMahasiswa?: boolean | Asesor$AssesorMahasiswaArgs<ExtArgs>
+    AsesorProgramStudi?: boolean | Asesor$AsesorProgramStudiArgs<ExtArgs>
     _count?: boolean | AsesorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["asesor"]>
 
@@ -8598,6 +8718,7 @@ export namespace Prisma {
     UpdatedAt?: boolean
     DeletedAt?: boolean
     TipeAsesor?: boolean | TipeAsesorDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["asesor"]>
 
   export type AsesorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8608,6 +8729,7 @@ export namespace Prisma {
     UpdatedAt?: boolean
     DeletedAt?: boolean
     TipeAsesor?: boolean | TipeAsesorDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["asesor"]>
 
   export type AsesorSelectScalar = {
@@ -8622,25 +8744,31 @@ export namespace Prisma {
   export type AsesorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"AsesorId" | "TipeAsesorId" | "UserId" | "CreatedAt" | "UpdatedAt" | "DeletedAt", ExtArgs["result"]["asesor"]>
   export type AsesorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TipeAsesor?: boolean | TipeAsesorDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
     AsesorAkademik?: boolean | Asesor$AsesorAkademikArgs<ExtArgs>
     AsesorPraktisi?: boolean | Asesor$AsesorPraktisiArgs<ExtArgs>
     AssesorMahasiswa?: boolean | Asesor$AssesorMahasiswaArgs<ExtArgs>
+    AsesorProgramStudi?: boolean | Asesor$AsesorProgramStudiArgs<ExtArgs>
     _count?: boolean | AsesorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AsesorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TipeAsesor?: boolean | TipeAsesorDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type AsesorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TipeAsesor?: boolean | TipeAsesorDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $AsesorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Asesor"
     objects: {
       TipeAsesor: Prisma.$TipeAsesorPayload<ExtArgs>
+      User: Prisma.$UserPayload<ExtArgs>
       AsesorAkademik: Prisma.$AsesorAkademikPayload<ExtArgs>[]
       AsesorPraktisi: Prisma.$AsesorPraktisiPayload<ExtArgs>[]
       AssesorMahasiswa: Prisma.$AssesorMahasiswaPayload<ExtArgs>[]
+      AsesorProgramStudi: Prisma.$AsesorProgramStudiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       AsesorId: string
@@ -9044,9 +9172,11 @@ export namespace Prisma {
   export interface Prisma__AsesorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     TipeAsesor<T extends TipeAsesorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TipeAsesorDefaultArgs<ExtArgs>>): Prisma__TipeAsesorClient<$Result.GetResult<Prisma.$TipeAsesorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     AsesorAkademik<T extends Asesor$AsesorAkademikArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$AsesorAkademikArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorAkademikPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     AsesorPraktisi<T extends Asesor$AsesorPraktisiArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$AsesorPraktisiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorPraktisiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     AssesorMahasiswa<T extends Asesor$AssesorMahasiswaArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$AssesorMahasiswaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssesorMahasiswaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    AsesorProgramStudi<T extends Asesor$AsesorProgramStudiArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$AsesorProgramStudiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9547,6 +9677,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AssesorMahasiswaScalarFieldEnum | AssesorMahasiswaScalarFieldEnum[]
+  }
+
+  /**
+   * Asesor.AsesorProgramStudi
+   */
+  export type Asesor$AsesorProgramStudiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    where?: AsesorProgramStudiWhereInput
+    orderBy?: AsesorProgramStudiOrderByWithRelationInput | AsesorProgramStudiOrderByWithRelationInput[]
+    cursor?: AsesorProgramStudiWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AsesorProgramStudiScalarFieldEnum | AsesorProgramStudiScalarFieldEnum[]
   }
 
   /**
@@ -40798,6 +40952,1033 @@ export namespace Prisma {
 
 
   /**
+   * Model AsesorProgramStudi
+   */
+
+  export type AggregateAsesorProgramStudi = {
+    _count: AsesorProgramStudiCountAggregateOutputType | null
+    _min: AsesorProgramStudiMinAggregateOutputType | null
+    _max: AsesorProgramStudiMaxAggregateOutputType | null
+  }
+
+  export type AsesorProgramStudiMinAggregateOutputType = {
+    AsesorId: string | null
+    ProgramStudiId: string | null
+  }
+
+  export type AsesorProgramStudiMaxAggregateOutputType = {
+    AsesorId: string | null
+    ProgramStudiId: string | null
+  }
+
+  export type AsesorProgramStudiCountAggregateOutputType = {
+    AsesorId: number
+    ProgramStudiId: number
+    _all: number
+  }
+
+
+  export type AsesorProgramStudiMinAggregateInputType = {
+    AsesorId?: true
+    ProgramStudiId?: true
+  }
+
+  export type AsesorProgramStudiMaxAggregateInputType = {
+    AsesorId?: true
+    ProgramStudiId?: true
+  }
+
+  export type AsesorProgramStudiCountAggregateInputType = {
+    AsesorId?: true
+    ProgramStudiId?: true
+    _all?: true
+  }
+
+  export type AsesorProgramStudiAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AsesorProgramStudi to aggregate.
+     */
+    where?: AsesorProgramStudiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsesorProgramStudis to fetch.
+     */
+    orderBy?: AsesorProgramStudiOrderByWithRelationInput | AsesorProgramStudiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AsesorProgramStudiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsesorProgramStudis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsesorProgramStudis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AsesorProgramStudis
+    **/
+    _count?: true | AsesorProgramStudiCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AsesorProgramStudiMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AsesorProgramStudiMaxAggregateInputType
+  }
+
+  export type GetAsesorProgramStudiAggregateType<T extends AsesorProgramStudiAggregateArgs> = {
+        [P in keyof T & keyof AggregateAsesorProgramStudi]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAsesorProgramStudi[P]>
+      : GetScalarType<T[P], AggregateAsesorProgramStudi[P]>
+  }
+
+
+
+
+  export type AsesorProgramStudiGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AsesorProgramStudiWhereInput
+    orderBy?: AsesorProgramStudiOrderByWithAggregationInput | AsesorProgramStudiOrderByWithAggregationInput[]
+    by: AsesorProgramStudiScalarFieldEnum[] | AsesorProgramStudiScalarFieldEnum
+    having?: AsesorProgramStudiScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AsesorProgramStudiCountAggregateInputType | true
+    _min?: AsesorProgramStudiMinAggregateInputType
+    _max?: AsesorProgramStudiMaxAggregateInputType
+  }
+
+  export type AsesorProgramStudiGroupByOutputType = {
+    AsesorId: string
+    ProgramStudiId: string
+    _count: AsesorProgramStudiCountAggregateOutputType | null
+    _min: AsesorProgramStudiMinAggregateOutputType | null
+    _max: AsesorProgramStudiMaxAggregateOutputType | null
+  }
+
+  type GetAsesorProgramStudiGroupByPayload<T extends AsesorProgramStudiGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AsesorProgramStudiGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AsesorProgramStudiGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AsesorProgramStudiGroupByOutputType[P]>
+            : GetScalarType<T[P], AsesorProgramStudiGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AsesorProgramStudiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    AsesorId?: boolean
+    ProgramStudiId?: boolean
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
+    ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asesorProgramStudi"]>
+
+  export type AsesorProgramStudiSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    AsesorId?: boolean
+    ProgramStudiId?: boolean
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
+    ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asesorProgramStudi"]>
+
+  export type AsesorProgramStudiSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    AsesorId?: boolean
+    ProgramStudiId?: boolean
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
+    ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["asesorProgramStudi"]>
+
+  export type AsesorProgramStudiSelectScalar = {
+    AsesorId?: boolean
+    ProgramStudiId?: boolean
+  }
+
+  export type AsesorProgramStudiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"AsesorId" | "ProgramStudiId", ExtArgs["result"]["asesorProgramStudi"]>
+  export type AsesorProgramStudiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
+    ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+  }
+  export type AsesorProgramStudiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
+    ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+  }
+  export type AsesorProgramStudiIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
+    ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+  }
+
+  export type $AsesorProgramStudiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AsesorProgramStudi"
+    objects: {
+      Asesor: Prisma.$AsesorPayload<ExtArgs>
+      ProgramStudi: Prisma.$ProgramStudiPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      AsesorId: string
+      ProgramStudiId: string
+    }, ExtArgs["result"]["asesorProgramStudi"]>
+    composites: {}
+  }
+
+  type AsesorProgramStudiGetPayload<S extends boolean | null | undefined | AsesorProgramStudiDefaultArgs> = $Result.GetResult<Prisma.$AsesorProgramStudiPayload, S>
+
+  type AsesorProgramStudiCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AsesorProgramStudiFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AsesorProgramStudiCountAggregateInputType | true
+    }
+
+  export interface AsesorProgramStudiDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AsesorProgramStudi'], meta: { name: 'AsesorProgramStudi' } }
+    /**
+     * Find zero or one AsesorProgramStudi that matches the filter.
+     * @param {AsesorProgramStudiFindUniqueArgs} args - Arguments to find a AsesorProgramStudi
+     * @example
+     * // Get one AsesorProgramStudi
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AsesorProgramStudiFindUniqueArgs>(args: SelectSubset<T, AsesorProgramStudiFindUniqueArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AsesorProgramStudi that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AsesorProgramStudiFindUniqueOrThrowArgs} args - Arguments to find a AsesorProgramStudi
+     * @example
+     * // Get one AsesorProgramStudi
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AsesorProgramStudiFindUniqueOrThrowArgs>(args: SelectSubset<T, AsesorProgramStudiFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AsesorProgramStudi that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsesorProgramStudiFindFirstArgs} args - Arguments to find a AsesorProgramStudi
+     * @example
+     * // Get one AsesorProgramStudi
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AsesorProgramStudiFindFirstArgs>(args?: SelectSubset<T, AsesorProgramStudiFindFirstArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AsesorProgramStudi that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsesorProgramStudiFindFirstOrThrowArgs} args - Arguments to find a AsesorProgramStudi
+     * @example
+     * // Get one AsesorProgramStudi
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AsesorProgramStudiFindFirstOrThrowArgs>(args?: SelectSubset<T, AsesorProgramStudiFindFirstOrThrowArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AsesorProgramStudis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsesorProgramStudiFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AsesorProgramStudis
+     * const asesorProgramStudis = await prisma.asesorProgramStudi.findMany()
+     * 
+     * // Get first 10 AsesorProgramStudis
+     * const asesorProgramStudis = await prisma.asesorProgramStudi.findMany({ take: 10 })
+     * 
+     * // Only select the `AsesorId`
+     * const asesorProgramStudiWithAsesorIdOnly = await prisma.asesorProgramStudi.findMany({ select: { AsesorId: true } })
+     * 
+     */
+    findMany<T extends AsesorProgramStudiFindManyArgs>(args?: SelectSubset<T, AsesorProgramStudiFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AsesorProgramStudi.
+     * @param {AsesorProgramStudiCreateArgs} args - Arguments to create a AsesorProgramStudi.
+     * @example
+     * // Create one AsesorProgramStudi
+     * const AsesorProgramStudi = await prisma.asesorProgramStudi.create({
+     *   data: {
+     *     // ... data to create a AsesorProgramStudi
+     *   }
+     * })
+     * 
+     */
+    create<T extends AsesorProgramStudiCreateArgs>(args: SelectSubset<T, AsesorProgramStudiCreateArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AsesorProgramStudis.
+     * @param {AsesorProgramStudiCreateManyArgs} args - Arguments to create many AsesorProgramStudis.
+     * @example
+     * // Create many AsesorProgramStudis
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AsesorProgramStudiCreateManyArgs>(args?: SelectSubset<T, AsesorProgramStudiCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AsesorProgramStudis and returns the data saved in the database.
+     * @param {AsesorProgramStudiCreateManyAndReturnArgs} args - Arguments to create many AsesorProgramStudis.
+     * @example
+     * // Create many AsesorProgramStudis
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AsesorProgramStudis and only return the `AsesorId`
+     * const asesorProgramStudiWithAsesorIdOnly = await prisma.asesorProgramStudi.createManyAndReturn({
+     *   select: { AsesorId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AsesorProgramStudiCreateManyAndReturnArgs>(args?: SelectSubset<T, AsesorProgramStudiCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AsesorProgramStudi.
+     * @param {AsesorProgramStudiDeleteArgs} args - Arguments to delete one AsesorProgramStudi.
+     * @example
+     * // Delete one AsesorProgramStudi
+     * const AsesorProgramStudi = await prisma.asesorProgramStudi.delete({
+     *   where: {
+     *     // ... filter to delete one AsesorProgramStudi
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AsesorProgramStudiDeleteArgs>(args: SelectSubset<T, AsesorProgramStudiDeleteArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AsesorProgramStudi.
+     * @param {AsesorProgramStudiUpdateArgs} args - Arguments to update one AsesorProgramStudi.
+     * @example
+     * // Update one AsesorProgramStudi
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AsesorProgramStudiUpdateArgs>(args: SelectSubset<T, AsesorProgramStudiUpdateArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AsesorProgramStudis.
+     * @param {AsesorProgramStudiDeleteManyArgs} args - Arguments to filter AsesorProgramStudis to delete.
+     * @example
+     * // Delete a few AsesorProgramStudis
+     * const { count } = await prisma.asesorProgramStudi.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AsesorProgramStudiDeleteManyArgs>(args?: SelectSubset<T, AsesorProgramStudiDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AsesorProgramStudis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsesorProgramStudiUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AsesorProgramStudis
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AsesorProgramStudiUpdateManyArgs>(args: SelectSubset<T, AsesorProgramStudiUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AsesorProgramStudis and returns the data updated in the database.
+     * @param {AsesorProgramStudiUpdateManyAndReturnArgs} args - Arguments to update many AsesorProgramStudis.
+     * @example
+     * // Update many AsesorProgramStudis
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AsesorProgramStudis and only return the `AsesorId`
+     * const asesorProgramStudiWithAsesorIdOnly = await prisma.asesorProgramStudi.updateManyAndReturn({
+     *   select: { AsesorId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AsesorProgramStudiUpdateManyAndReturnArgs>(args: SelectSubset<T, AsesorProgramStudiUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AsesorProgramStudi.
+     * @param {AsesorProgramStudiUpsertArgs} args - Arguments to update or create a AsesorProgramStudi.
+     * @example
+     * // Update or create a AsesorProgramStudi
+     * const asesorProgramStudi = await prisma.asesorProgramStudi.upsert({
+     *   create: {
+     *     // ... data to create a AsesorProgramStudi
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AsesorProgramStudi we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AsesorProgramStudiUpsertArgs>(args: SelectSubset<T, AsesorProgramStudiUpsertArgs<ExtArgs>>): Prisma__AsesorProgramStudiClient<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AsesorProgramStudis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsesorProgramStudiCountArgs} args - Arguments to filter AsesorProgramStudis to count.
+     * @example
+     * // Count the number of AsesorProgramStudis
+     * const count = await prisma.asesorProgramStudi.count({
+     *   where: {
+     *     // ... the filter for the AsesorProgramStudis we want to count
+     *   }
+     * })
+    **/
+    count<T extends AsesorProgramStudiCountArgs>(
+      args?: Subset<T, AsesorProgramStudiCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AsesorProgramStudiCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AsesorProgramStudi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsesorProgramStudiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AsesorProgramStudiAggregateArgs>(args: Subset<T, AsesorProgramStudiAggregateArgs>): Prisma.PrismaPromise<GetAsesorProgramStudiAggregateType<T>>
+
+    /**
+     * Group by AsesorProgramStudi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AsesorProgramStudiGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AsesorProgramStudiGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AsesorProgramStudiGroupByArgs['orderBy'] }
+        : { orderBy?: AsesorProgramStudiGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AsesorProgramStudiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAsesorProgramStudiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AsesorProgramStudi model
+   */
+  readonly fields: AsesorProgramStudiFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AsesorProgramStudi.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AsesorProgramStudiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Asesor<T extends AsesorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AsesorDefaultArgs<ExtArgs>>): Prisma__AsesorClient<$Result.GetResult<Prisma.$AsesorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    ProgramStudi<T extends ProgramStudiDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProgramStudiDefaultArgs<ExtArgs>>): Prisma__ProgramStudiClient<$Result.GetResult<Prisma.$ProgramStudiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AsesorProgramStudi model
+   */
+  interface AsesorProgramStudiFieldRefs {
+    readonly AsesorId: FieldRef<"AsesorProgramStudi", 'String'>
+    readonly ProgramStudiId: FieldRef<"AsesorProgramStudi", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AsesorProgramStudi findUnique
+   */
+  export type AsesorProgramStudiFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * Filter, which AsesorProgramStudi to fetch.
+     */
+    where: AsesorProgramStudiWhereUniqueInput
+  }
+
+  /**
+   * AsesorProgramStudi findUniqueOrThrow
+   */
+  export type AsesorProgramStudiFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * Filter, which AsesorProgramStudi to fetch.
+     */
+    where: AsesorProgramStudiWhereUniqueInput
+  }
+
+  /**
+   * AsesorProgramStudi findFirst
+   */
+  export type AsesorProgramStudiFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * Filter, which AsesorProgramStudi to fetch.
+     */
+    where?: AsesorProgramStudiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsesorProgramStudis to fetch.
+     */
+    orderBy?: AsesorProgramStudiOrderByWithRelationInput | AsesorProgramStudiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AsesorProgramStudis.
+     */
+    cursor?: AsesorProgramStudiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsesorProgramStudis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsesorProgramStudis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsesorProgramStudis.
+     */
+    distinct?: AsesorProgramStudiScalarFieldEnum | AsesorProgramStudiScalarFieldEnum[]
+  }
+
+  /**
+   * AsesorProgramStudi findFirstOrThrow
+   */
+  export type AsesorProgramStudiFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * Filter, which AsesorProgramStudi to fetch.
+     */
+    where?: AsesorProgramStudiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsesorProgramStudis to fetch.
+     */
+    orderBy?: AsesorProgramStudiOrderByWithRelationInput | AsesorProgramStudiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AsesorProgramStudis.
+     */
+    cursor?: AsesorProgramStudiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsesorProgramStudis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsesorProgramStudis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsesorProgramStudis.
+     */
+    distinct?: AsesorProgramStudiScalarFieldEnum | AsesorProgramStudiScalarFieldEnum[]
+  }
+
+  /**
+   * AsesorProgramStudi findMany
+   */
+  export type AsesorProgramStudiFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * Filter, which AsesorProgramStudis to fetch.
+     */
+    where?: AsesorProgramStudiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AsesorProgramStudis to fetch.
+     */
+    orderBy?: AsesorProgramStudiOrderByWithRelationInput | AsesorProgramStudiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AsesorProgramStudis.
+     */
+    cursor?: AsesorProgramStudiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AsesorProgramStudis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AsesorProgramStudis.
+     */
+    skip?: number
+    distinct?: AsesorProgramStudiScalarFieldEnum | AsesorProgramStudiScalarFieldEnum[]
+  }
+
+  /**
+   * AsesorProgramStudi create
+   */
+  export type AsesorProgramStudiCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AsesorProgramStudi.
+     */
+    data: XOR<AsesorProgramStudiCreateInput, AsesorProgramStudiUncheckedCreateInput>
+  }
+
+  /**
+   * AsesorProgramStudi createMany
+   */
+  export type AsesorProgramStudiCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AsesorProgramStudis.
+     */
+    data: AsesorProgramStudiCreateManyInput | AsesorProgramStudiCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AsesorProgramStudi createManyAndReturn
+   */
+  export type AsesorProgramStudiCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * The data used to create many AsesorProgramStudis.
+     */
+    data: AsesorProgramStudiCreateManyInput | AsesorProgramStudiCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AsesorProgramStudi update
+   */
+  export type AsesorProgramStudiUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AsesorProgramStudi.
+     */
+    data: XOR<AsesorProgramStudiUpdateInput, AsesorProgramStudiUncheckedUpdateInput>
+    /**
+     * Choose, which AsesorProgramStudi to update.
+     */
+    where: AsesorProgramStudiWhereUniqueInput
+  }
+
+  /**
+   * AsesorProgramStudi updateMany
+   */
+  export type AsesorProgramStudiUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AsesorProgramStudis.
+     */
+    data: XOR<AsesorProgramStudiUpdateManyMutationInput, AsesorProgramStudiUncheckedUpdateManyInput>
+    /**
+     * Filter which AsesorProgramStudis to update
+     */
+    where?: AsesorProgramStudiWhereInput
+    /**
+     * Limit how many AsesorProgramStudis to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AsesorProgramStudi updateManyAndReturn
+   */
+  export type AsesorProgramStudiUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * The data used to update AsesorProgramStudis.
+     */
+    data: XOR<AsesorProgramStudiUpdateManyMutationInput, AsesorProgramStudiUncheckedUpdateManyInput>
+    /**
+     * Filter which AsesorProgramStudis to update
+     */
+    where?: AsesorProgramStudiWhereInput
+    /**
+     * Limit how many AsesorProgramStudis to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AsesorProgramStudi upsert
+   */
+  export type AsesorProgramStudiUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AsesorProgramStudi to update in case it exists.
+     */
+    where: AsesorProgramStudiWhereUniqueInput
+    /**
+     * In case the AsesorProgramStudi found by the `where` argument doesn't exist, create a new AsesorProgramStudi with this data.
+     */
+    create: XOR<AsesorProgramStudiCreateInput, AsesorProgramStudiUncheckedCreateInput>
+    /**
+     * In case the AsesorProgramStudi was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AsesorProgramStudiUpdateInput, AsesorProgramStudiUncheckedUpdateInput>
+  }
+
+  /**
+   * AsesorProgramStudi delete
+   */
+  export type AsesorProgramStudiDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    /**
+     * Filter which AsesorProgramStudi to delete.
+     */
+    where: AsesorProgramStudiWhereUniqueInput
+  }
+
+  /**
+   * AsesorProgramStudi deleteMany
+   */
+  export type AsesorProgramStudiDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AsesorProgramStudis to delete
+     */
+    where?: AsesorProgramStudiWhereInput
+    /**
+     * Limit how many AsesorProgramStudis to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AsesorProgramStudi without action
+   */
+  export type AsesorProgramStudiDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model OrangTua
    */
 
@@ -47981,6 +49162,7 @@ export namespace Prisma {
     University?: boolean | UniversityDefaultArgs<ExtArgs>
     DaftarUlang?: boolean | ProgramStudi$DaftarUlangArgs<ExtArgs>
     MataKuliah?: boolean | ProgramStudi$MataKuliahArgs<ExtArgs>
+    AsesorProgramStudi?: boolean | ProgramStudi$AsesorProgramStudiArgs<ExtArgs>
     _count?: boolean | ProgramStudiCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["programStudi"]>
 
@@ -48024,6 +49206,7 @@ export namespace Prisma {
     University?: boolean | UniversityDefaultArgs<ExtArgs>
     DaftarUlang?: boolean | ProgramStudi$DaftarUlangArgs<ExtArgs>
     MataKuliah?: boolean | ProgramStudi$MataKuliahArgs<ExtArgs>
+    AsesorProgramStudi?: boolean | ProgramStudi$AsesorProgramStudiArgs<ExtArgs>
     _count?: boolean | ProgramStudiCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProgramStudiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -48039,6 +49222,7 @@ export namespace Prisma {
       University: Prisma.$UniversityPayload<ExtArgs>
       DaftarUlang: Prisma.$DaftarUlangPayload<ExtArgs>[]
       MataKuliah: Prisma.$MataKuliahPayload<ExtArgs>[]
+      AsesorProgramStudi: Prisma.$AsesorProgramStudiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       ProgramStudiId: string
@@ -48446,6 +49630,7 @@ export namespace Prisma {
     University<T extends UniversityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UniversityDefaultArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     DaftarUlang<T extends ProgramStudi$DaftarUlangArgs<ExtArgs> = {}>(args?: Subset<T, ProgramStudi$DaftarUlangArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DaftarUlangPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     MataKuliah<T extends ProgramStudi$MataKuliahArgs<ExtArgs> = {}>(args?: Subset<T, ProgramStudi$MataKuliahArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MataKuliahPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    AsesorProgramStudi<T extends ProgramStudi$AsesorProgramStudiArgs<ExtArgs> = {}>(args?: Subset<T, ProgramStudi$AsesorProgramStudiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -48924,6 +50109,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MataKuliahScalarFieldEnum | MataKuliahScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramStudi.AsesorProgramStudi
+   */
+  export type ProgramStudi$AsesorProgramStudiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AsesorProgramStudi
+     */
+    select?: AsesorProgramStudiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AsesorProgramStudi
+     */
+    omit?: AsesorProgramStudiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorProgramStudiInclude<ExtArgs> | null
+    where?: AsesorProgramStudiWhereInput
+    orderBy?: AsesorProgramStudiOrderByWithRelationInput | AsesorProgramStudiOrderByWithRelationInput[]
+    cursor?: AsesorProgramStudiWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AsesorProgramStudiScalarFieldEnum | AsesorProgramStudiScalarFieldEnum[]
   }
 
   /**
@@ -68865,6 +70074,7 @@ export namespace Prisma {
     UserHasPermissions?: boolean | User$UserHasPermissionsArgs<ExtArgs>
     UserHasRoles?: boolean | User$UserHasRolesArgs<ExtArgs>
     Userlogin?: boolean | User$UserloginArgs<ExtArgs>
+    Asesor?: boolean | User$AsesorArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -68940,6 +70150,7 @@ export namespace Prisma {
     UserHasPermissions?: boolean | User$UserHasPermissionsArgs<ExtArgs>
     UserHasRoles?: boolean | User$UserHasRolesArgs<ExtArgs>
     Userlogin?: boolean | User$UserloginArgs<ExtArgs>
+    Asesor?: boolean | User$AsesorArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -68957,6 +70168,7 @@ export namespace Prisma {
       UserHasPermissions: Prisma.$UserHasPermissionsPayload<ExtArgs>[]
       UserHasRoles: Prisma.$UserHasRolesPayload<ExtArgs>[]
       Userlogin: Prisma.$UserloginPayload<ExtArgs>[]
+      Asesor: Prisma.$AsesorPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       UserId: string
@@ -69376,6 +70588,7 @@ export namespace Prisma {
     UserHasPermissions<T extends User$UserHasPermissionsArgs<ExtArgs> = {}>(args?: Subset<T, User$UserHasPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserHasPermissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     UserHasRoles<T extends User$UserHasRolesArgs<ExtArgs> = {}>(args?: Subset<T, User$UserHasRolesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserHasRolesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Userlogin<T extends User$UserloginArgs<ExtArgs> = {}>(args?: Subset<T, User$UserloginArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserloginPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Asesor<T extends User$AsesorArgs<ExtArgs> = {}>(args?: Subset<T, User$AsesorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -69912,6 +71125,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserloginScalarFieldEnum | UserloginScalarFieldEnum[]
+  }
+
+  /**
+   * User.Asesor
+   */
+  export type User$AsesorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Asesor
+     */
+    select?: AsesorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Asesor
+     */
+    omit?: AsesorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AsesorInclude<ExtArgs> | null
+    where?: AsesorWhereInput
+    orderBy?: AsesorOrderByWithRelationInput | AsesorOrderByWithRelationInput[]
+    cursor?: AsesorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AsesorScalarFieldEnum | AsesorScalarFieldEnum[]
   }
 
   /**
@@ -71389,6 +72626,14 @@ export namespace Prisma {
   export type UserHasRolesScalarFieldEnum = (typeof UserHasRolesScalarFieldEnum)[keyof typeof UserHasRolesScalarFieldEnum]
 
 
+  export const AsesorProgramStudiScalarFieldEnum: {
+    AsesorId: 'AsesorId',
+    ProgramStudiId: 'ProgramStudiId'
+  };
+
+  export type AsesorProgramStudiScalarFieldEnum = (typeof AsesorProgramStudiScalarFieldEnum)[keyof typeof AsesorProgramStudiScalarFieldEnum]
+
+
   export const OrangTuaScalarFieldEnum: {
     OrangTuaId: 'OrangTuaId',
     PendaftaranId: 'PendaftaranId',
@@ -72028,9 +73273,11 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"Asesor"> | Date | string | null
     DeletedAt?: DateTimeNullableFilter<"Asesor"> | Date | string | null
     TipeAsesor?: XOR<TipeAsesorScalarRelationFilter, TipeAsesorWhereInput>
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
     AsesorAkademik?: AsesorAkademikListRelationFilter
     AsesorPraktisi?: AsesorPraktisiListRelationFilter
     AssesorMahasiswa?: AssesorMahasiswaListRelationFilter
+    AsesorProgramStudi?: AsesorProgramStudiListRelationFilter
   }
 
   export type AsesorOrderByWithRelationInput = {
@@ -72041,9 +73288,11 @@ export namespace Prisma {
     UpdatedAt?: SortOrderInput | SortOrder
     DeletedAt?: SortOrderInput | SortOrder
     TipeAsesor?: TipeAsesorOrderByWithRelationInput
+    User?: UserOrderByWithRelationInput
     AsesorAkademik?: AsesorAkademikOrderByRelationAggregateInput
     AsesorPraktisi?: AsesorPraktisiOrderByRelationAggregateInput
     AssesorMahasiswa?: AssesorMahasiswaOrderByRelationAggregateInput
+    AsesorProgramStudi?: AsesorProgramStudiOrderByRelationAggregateInput
   }
 
   export type AsesorWhereUniqueInput = Prisma.AtLeast<{
@@ -72057,9 +73306,11 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"Asesor"> | Date | string | null
     DeletedAt?: DateTimeNullableFilter<"Asesor"> | Date | string | null
     TipeAsesor?: XOR<TipeAsesorScalarRelationFilter, TipeAsesorWhereInput>
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
     AsesorAkademik?: AsesorAkademikListRelationFilter
     AsesorPraktisi?: AsesorPraktisiListRelationFilter
     AssesorMahasiswa?: AssesorMahasiswaListRelationFilter
+    AsesorProgramStudi?: AsesorProgramStudiListRelationFilter
   }, "AsesorId">
 
   export type AsesorOrderByWithAggregationInput = {
@@ -73993,6 +75244,50 @@ export namespace Prisma {
     UserId?: StringWithAggregatesFilter<"UserHasRoles"> | string
   }
 
+  export type AsesorProgramStudiWhereInput = {
+    AND?: AsesorProgramStudiWhereInput | AsesorProgramStudiWhereInput[]
+    OR?: AsesorProgramStudiWhereInput[]
+    NOT?: AsesorProgramStudiWhereInput | AsesorProgramStudiWhereInput[]
+    AsesorId?: StringFilter<"AsesorProgramStudi"> | string
+    ProgramStudiId?: StringFilter<"AsesorProgramStudi"> | string
+    Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
+    ProgramStudi?: XOR<ProgramStudiScalarRelationFilter, ProgramStudiWhereInput>
+  }
+
+  export type AsesorProgramStudiOrderByWithRelationInput = {
+    AsesorId?: SortOrder
+    ProgramStudiId?: SortOrder
+    Asesor?: AsesorOrderByWithRelationInput
+    ProgramStudi?: ProgramStudiOrderByWithRelationInput
+  }
+
+  export type AsesorProgramStudiWhereUniqueInput = Prisma.AtLeast<{
+    AsesorId_ProgramStudiId?: AsesorProgramStudiAsesorIdProgramStudiIdCompoundUniqueInput
+    AND?: AsesorProgramStudiWhereInput | AsesorProgramStudiWhereInput[]
+    OR?: AsesorProgramStudiWhereInput[]
+    NOT?: AsesorProgramStudiWhereInput | AsesorProgramStudiWhereInput[]
+    AsesorId?: StringFilter<"AsesorProgramStudi"> | string
+    ProgramStudiId?: StringFilter<"AsesorProgramStudi"> | string
+    Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
+    ProgramStudi?: XOR<ProgramStudiScalarRelationFilter, ProgramStudiWhereInput>
+  }, "AsesorId_ProgramStudiId">
+
+  export type AsesorProgramStudiOrderByWithAggregationInput = {
+    AsesorId?: SortOrder
+    ProgramStudiId?: SortOrder
+    _count?: AsesorProgramStudiCountOrderByAggregateInput
+    _max?: AsesorProgramStudiMaxOrderByAggregateInput
+    _min?: AsesorProgramStudiMinOrderByAggregateInput
+  }
+
+  export type AsesorProgramStudiScalarWhereWithAggregatesInput = {
+    AND?: AsesorProgramStudiScalarWhereWithAggregatesInput | AsesorProgramStudiScalarWhereWithAggregatesInput[]
+    OR?: AsesorProgramStudiScalarWhereWithAggregatesInput[]
+    NOT?: AsesorProgramStudiScalarWhereWithAggregatesInput | AsesorProgramStudiScalarWhereWithAggregatesInput[]
+    AsesorId?: StringWithAggregatesFilter<"AsesorProgramStudi"> | string
+    ProgramStudiId?: StringWithAggregatesFilter<"AsesorProgramStudi"> | string
+  }
+
   export type OrangTuaWhereInput = {
     AND?: OrangTuaWhereInput | OrangTuaWhereInput[]
     OR?: OrangTuaWhereInput[]
@@ -74452,6 +75747,7 @@ export namespace Prisma {
     University?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
     DaftarUlang?: DaftarUlangListRelationFilter
     MataKuliah?: MataKuliahListRelationFilter
+    AsesorProgramStudi?: AsesorProgramStudiListRelationFilter
   }
 
   export type ProgramStudiOrderByWithRelationInput = {
@@ -74466,6 +75762,7 @@ export namespace Prisma {
     University?: UniversityOrderByWithRelationInput
     DaftarUlang?: DaftarUlangOrderByRelationAggregateInput
     MataKuliah?: MataKuliahOrderByRelationAggregateInput
+    AsesorProgramStudi?: AsesorProgramStudiOrderByRelationAggregateInput
   }
 
   export type ProgramStudiWhereUniqueInput = Prisma.AtLeast<{
@@ -74483,6 +75780,7 @@ export namespace Prisma {
     University?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
     DaftarUlang?: DaftarUlangListRelationFilter
     MataKuliah?: MataKuliahListRelationFilter
+    AsesorProgramStudi?: AsesorProgramStudiListRelationFilter
   }, "ProgramStudiId">
 
   export type ProgramStudiOrderByWithAggregationInput = {
@@ -75627,6 +76925,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsListRelationFilter
     UserHasRoles?: UserHasRolesListRelationFilter
     Userlogin?: UserloginListRelationFilter
+    Asesor?: AsesorListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -75653,6 +76952,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsOrderByRelationAggregateInput
     UserHasRoles?: UserHasRolesOrderByRelationAggregateInput
     Userlogin?: UserloginOrderByRelationAggregateInput
+    Asesor?: AsesorOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -75682,6 +76982,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsListRelationFilter
     UserHasRoles?: UserHasRolesListRelationFilter
     Userlogin?: UserloginListRelationFilter
+    Asesor?: AsesorListRelationFilter
   }, "UserId" | "Email">
 
   export type UserOrderByWithAggregationInput = {
@@ -75849,14 +77150,15 @@ export namespace Prisma {
 
   export type AsesorCreateInput = {
     AsesorId?: string
-    UserId: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     DeletedAt?: Date | string | null
     TipeAsesor: TipeAsesorCreateNestedOneWithoutAsesorInput
+    User: UserCreateNestedOneWithoutAsesorInput
     AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateInput = {
@@ -75869,18 +77171,20 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUpdateInput = {
     AsesorId?: StringFieldUpdateOperationsInput | string
-    UserId?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeAsesor?: TipeAsesorUpdateOneRequiredWithoutAsesorNestedInput
+    User?: UserUpdateOneRequiredWithoutAsesorNestedInput
     AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateInput = {
@@ -75893,6 +77197,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorCreateManyInput = {
@@ -75906,7 +77211,6 @@ export namespace Prisma {
 
   export type AsesorUpdateManyMutationInput = {
     AsesorId?: StringFieldUpdateOperationsInput | string
-    UserId?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -77903,6 +79207,40 @@ export namespace Prisma {
     UserId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type AsesorProgramStudiCreateInput = {
+    Asesor: AsesorCreateNestedOneWithoutAsesorProgramStudiInput
+    ProgramStudi: ProgramStudiCreateNestedOneWithoutAsesorProgramStudiInput
+  }
+
+  export type AsesorProgramStudiUncheckedCreateInput = {
+    AsesorId: string
+    ProgramStudiId: string
+  }
+
+  export type AsesorProgramStudiUpdateInput = {
+    Asesor?: AsesorUpdateOneRequiredWithoutAsesorProgramStudiNestedInput
+    ProgramStudi?: ProgramStudiUpdateOneRequiredWithoutAsesorProgramStudiNestedInput
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    ProgramStudiId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AsesorProgramStudiCreateManyInput = {
+    AsesorId: string
+    ProgramStudiId: string
+  }
+
+  export type AsesorProgramStudiUpdateManyMutationInput = {
+
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateManyInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    ProgramStudiId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type OrangTuaCreateInput = {
     OrangTuaId?: string
     Nama: string
@@ -78406,6 +79744,7 @@ export namespace Prisma {
     University: UniversityCreateNestedOneWithoutProgramStudiInput
     DaftarUlang?: DaftarUlangCreateNestedManyWithoutProgramStudiInput
     MataKuliah?: MataKuliahCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiUncheckedCreateInput = {
@@ -78419,6 +79758,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     DaftarUlang?: DaftarUlangUncheckedCreateNestedManyWithoutProgramStudiInput
     MataKuliah?: MataKuliahUncheckedCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiUpdateInput = {
@@ -78432,6 +79772,7 @@ export namespace Prisma {
     University?: UniversityUpdateOneRequiredWithoutProgramStudiNestedInput
     DaftarUlang?: DaftarUlangUpdateManyWithoutProgramStudiNestedInput
     MataKuliah?: MataKuliahUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type ProgramStudiUncheckedUpdateInput = {
@@ -78445,6 +79786,7 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DaftarUlang?: DaftarUlangUncheckedUpdateManyWithoutProgramStudiNestedInput
     MataKuliah?: MataKuliahUncheckedUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type ProgramStudiCreateManyInput = {
@@ -79614,6 +80956,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
+    Asesor?: AsesorCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -79639,6 +80982,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUncheckedCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
+    Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -79664,6 +81008,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -79689,6 +81034,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUncheckedUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -79913,6 +81259,11 @@ export namespace Prisma {
     isNot?: TipeAsesorWhereInput
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
   export type AsesorAkademikListRelationFilter = {
     every?: AsesorAkademikWhereInput
     some?: AsesorAkademikWhereInput
@@ -79931,6 +81282,12 @@ export namespace Prisma {
     none?: AssesorMahasiswaWhereInput
   }
 
+  export type AsesorProgramStudiListRelationFilter = {
+    every?: AsesorProgramStudiWhereInput
+    some?: AsesorProgramStudiWhereInput
+    none?: AsesorProgramStudiWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -79945,6 +81302,10 @@ export namespace Prisma {
   }
 
   export type AssesorMahasiswaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AsesorProgramStudiOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -80875,11 +82236,6 @@ export namespace Prisma {
     not?: NestedEnumStatusPerkawinanFilter<$PrismaModel> | $Enums.StatusPerkawinan
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
   export type PendaftaranListRelationFilter = {
     every?: PendaftaranWhereInput
     some?: PendaftaranWhereInput
@@ -81390,6 +82746,26 @@ export namespace Prisma {
   export type UserHasRolesMinOrderByAggregateInput = {
     RoleId?: SortOrder
     UserId?: SortOrder
+  }
+
+  export type AsesorProgramStudiAsesorIdProgramStudiIdCompoundUniqueInput = {
+    AsesorId: string
+    ProgramStudiId: string
+  }
+
+  export type AsesorProgramStudiCountOrderByAggregateInput = {
+    AsesorId?: SortOrder
+    ProgramStudiId?: SortOrder
+  }
+
+  export type AsesorProgramStudiMaxOrderByAggregateInput = {
+    AsesorId?: SortOrder
+    ProgramStudiId?: SortOrder
+  }
+
+  export type AsesorProgramStudiMinOrderByAggregateInput = {
+    AsesorId?: SortOrder
+    ProgramStudiId?: SortOrder
   }
 
   export type EnumJenisOrtuFilter<$PrismaModel = never> = {
@@ -82764,6 +84140,12 @@ export namespace Prisma {
     connect?: TipeAsesorWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutAsesorInput = {
+    create?: XOR<UserCreateWithoutAsesorInput, UserUncheckedCreateWithoutAsesorInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAsesorInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type AsesorAkademikCreateNestedManyWithoutAsesorInput = {
     create?: XOR<AsesorAkademikCreateWithoutAsesorInput, AsesorAkademikUncheckedCreateWithoutAsesorInput> | AsesorAkademikCreateWithoutAsesorInput[] | AsesorAkademikUncheckedCreateWithoutAsesorInput[]
     connectOrCreate?: AsesorAkademikCreateOrConnectWithoutAsesorInput | AsesorAkademikCreateOrConnectWithoutAsesorInput[]
@@ -82783,6 +84165,13 @@ export namespace Prisma {
     connectOrCreate?: AssesorMahasiswaCreateOrConnectWithoutAsesorInput | AssesorMahasiswaCreateOrConnectWithoutAsesorInput[]
     createMany?: AssesorMahasiswaCreateManyAsesorInputEnvelope
     connect?: AssesorMahasiswaWhereUniqueInput | AssesorMahasiswaWhereUniqueInput[]
+  }
+
+  export type AsesorProgramStudiCreateNestedManyWithoutAsesorInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutAsesorInput, AsesorProgramStudiUncheckedCreateWithoutAsesorInput> | AsesorProgramStudiCreateWithoutAsesorInput[] | AsesorProgramStudiUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutAsesorInput | AsesorProgramStudiCreateOrConnectWithoutAsesorInput[]
+    createMany?: AsesorProgramStudiCreateManyAsesorInputEnvelope
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
   }
 
   export type AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput = {
@@ -82806,6 +84195,13 @@ export namespace Prisma {
     connect?: AssesorMahasiswaWhereUniqueInput | AssesorMahasiswaWhereUniqueInput[]
   }
 
+  export type AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutAsesorInput, AsesorProgramStudiUncheckedCreateWithoutAsesorInput> | AsesorProgramStudiCreateWithoutAsesorInput[] | AsesorProgramStudiUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutAsesorInput | AsesorProgramStudiCreateOrConnectWithoutAsesorInput[]
+    createMany?: AsesorProgramStudiCreateManyAsesorInputEnvelope
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -82816,6 +84212,14 @@ export namespace Prisma {
     upsert?: TipeAsesorUpsertWithoutAsesorInput
     connect?: TipeAsesorWhereUniqueInput
     update?: XOR<XOR<TipeAsesorUpdateToOneWithWhereWithoutAsesorInput, TipeAsesorUpdateWithoutAsesorInput>, TipeAsesorUncheckedUpdateWithoutAsesorInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutAsesorNestedInput = {
+    create?: XOR<UserCreateWithoutAsesorInput, UserUncheckedCreateWithoutAsesorInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAsesorInput
+    upsert?: UserUpsertWithoutAsesorInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAsesorInput, UserUpdateWithoutAsesorInput>, UserUncheckedUpdateWithoutAsesorInput>
   }
 
   export type AsesorAkademikUpdateManyWithoutAsesorNestedInput = {
@@ -82860,6 +84264,20 @@ export namespace Prisma {
     deleteMany?: AssesorMahasiswaScalarWhereInput | AssesorMahasiswaScalarWhereInput[]
   }
 
+  export type AsesorProgramStudiUpdateManyWithoutAsesorNestedInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutAsesorInput, AsesorProgramStudiUncheckedCreateWithoutAsesorInput> | AsesorProgramStudiCreateWithoutAsesorInput[] | AsesorProgramStudiUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutAsesorInput | AsesorProgramStudiCreateOrConnectWithoutAsesorInput[]
+    upsert?: AsesorProgramStudiUpsertWithWhereUniqueWithoutAsesorInput | AsesorProgramStudiUpsertWithWhereUniqueWithoutAsesorInput[]
+    createMany?: AsesorProgramStudiCreateManyAsesorInputEnvelope
+    set?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    disconnect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    delete?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    update?: AsesorProgramStudiUpdateWithWhereUniqueWithoutAsesorInput | AsesorProgramStudiUpdateWithWhereUniqueWithoutAsesorInput[]
+    updateMany?: AsesorProgramStudiUpdateManyWithWhereWithoutAsesorInput | AsesorProgramStudiUpdateManyWithWhereWithoutAsesorInput[]
+    deleteMany?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
+  }
+
   export type AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput = {
     create?: XOR<AsesorAkademikCreateWithoutAsesorInput, AsesorAkademikUncheckedCreateWithoutAsesorInput> | AsesorAkademikCreateWithoutAsesorInput[] | AsesorAkademikUncheckedCreateWithoutAsesorInput[]
     connectOrCreate?: AsesorAkademikCreateOrConnectWithoutAsesorInput | AsesorAkademikCreateOrConnectWithoutAsesorInput[]
@@ -82900,6 +84318,20 @@ export namespace Prisma {
     update?: AssesorMahasiswaUpdateWithWhereUniqueWithoutAsesorInput | AssesorMahasiswaUpdateWithWhereUniqueWithoutAsesorInput[]
     updateMany?: AssesorMahasiswaUpdateManyWithWhereWithoutAsesorInput | AssesorMahasiswaUpdateManyWithWhereWithoutAsesorInput[]
     deleteMany?: AssesorMahasiswaScalarWhereInput | AssesorMahasiswaScalarWhereInput[]
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutAsesorInput, AsesorProgramStudiUncheckedCreateWithoutAsesorInput> | AsesorProgramStudiCreateWithoutAsesorInput[] | AsesorProgramStudiUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutAsesorInput | AsesorProgramStudiCreateOrConnectWithoutAsesorInput[]
+    upsert?: AsesorProgramStudiUpsertWithWhereUniqueWithoutAsesorInput | AsesorProgramStudiUpsertWithWhereUniqueWithoutAsesorInput[]
+    createMany?: AsesorProgramStudiCreateManyAsesorInputEnvelope
+    set?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    disconnect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    delete?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    update?: AsesorProgramStudiUpdateWithWhereUniqueWithoutAsesorInput | AsesorProgramStudiUpdateWithWhereUniqueWithoutAsesorInput[]
+    updateMany?: AsesorProgramStudiUpdateManyWithWhereWithoutAsesorInput | AsesorProgramStudiUpdateManyWithWhereWithoutAsesorInput[]
+    deleteMany?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
   }
 
   export type AsesorCreateNestedOneWithoutAsesorAkademikInput = {
@@ -84160,6 +85592,34 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserHasRolesInput, UserUpdateWithoutUserHasRolesInput>, UserUncheckedUpdateWithoutUserHasRolesInput>
   }
 
+  export type AsesorCreateNestedOneWithoutAsesorProgramStudiInput = {
+    create?: XOR<AsesorCreateWithoutAsesorProgramStudiInput, AsesorUncheckedCreateWithoutAsesorProgramStudiInput>
+    connectOrCreate?: AsesorCreateOrConnectWithoutAsesorProgramStudiInput
+    connect?: AsesorWhereUniqueInput
+  }
+
+  export type ProgramStudiCreateNestedOneWithoutAsesorProgramStudiInput = {
+    create?: XOR<ProgramStudiCreateWithoutAsesorProgramStudiInput, ProgramStudiUncheckedCreateWithoutAsesorProgramStudiInput>
+    connectOrCreate?: ProgramStudiCreateOrConnectWithoutAsesorProgramStudiInput
+    connect?: ProgramStudiWhereUniqueInput
+  }
+
+  export type AsesorUpdateOneRequiredWithoutAsesorProgramStudiNestedInput = {
+    create?: XOR<AsesorCreateWithoutAsesorProgramStudiInput, AsesorUncheckedCreateWithoutAsesorProgramStudiInput>
+    connectOrCreate?: AsesorCreateOrConnectWithoutAsesorProgramStudiInput
+    upsert?: AsesorUpsertWithoutAsesorProgramStudiInput
+    connect?: AsesorWhereUniqueInput
+    update?: XOR<XOR<AsesorUpdateToOneWithWhereWithoutAsesorProgramStudiInput, AsesorUpdateWithoutAsesorProgramStudiInput>, AsesorUncheckedUpdateWithoutAsesorProgramStudiInput>
+  }
+
+  export type ProgramStudiUpdateOneRequiredWithoutAsesorProgramStudiNestedInput = {
+    create?: XOR<ProgramStudiCreateWithoutAsesorProgramStudiInput, ProgramStudiUncheckedCreateWithoutAsesorProgramStudiInput>
+    connectOrCreate?: ProgramStudiCreateOrConnectWithoutAsesorProgramStudiInput
+    upsert?: ProgramStudiUpsertWithoutAsesorProgramStudiInput
+    connect?: ProgramStudiWhereUniqueInput
+    update?: XOR<XOR<ProgramStudiUpdateToOneWithWhereWithoutAsesorProgramStudiInput, ProgramStudiUpdateWithoutAsesorProgramStudiInput>, ProgramStudiUncheckedUpdateWithoutAsesorProgramStudiInput>
+  }
+
   export type PendaftaranCreateNestedOneWithoutOrangTuaInput = {
     create?: XOR<PendaftaranCreateWithoutOrangTuaInput, PendaftaranUncheckedCreateWithoutOrangTuaInput>
     connectOrCreate?: PendaftaranCreateOrConnectWithoutOrangTuaInput
@@ -85046,6 +86506,13 @@ export namespace Prisma {
     connect?: MataKuliahWhereUniqueInput | MataKuliahWhereUniqueInput[]
   }
 
+  export type AsesorProgramStudiCreateNestedManyWithoutProgramStudiInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutProgramStudiInput, AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput> | AsesorProgramStudiCreateWithoutProgramStudiInput[] | AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput | AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput[]
+    createMany?: AsesorProgramStudiCreateManyProgramStudiInputEnvelope
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+  }
+
   export type DaftarUlangUncheckedCreateNestedManyWithoutProgramStudiInput = {
     create?: XOR<DaftarUlangCreateWithoutProgramStudiInput, DaftarUlangUncheckedCreateWithoutProgramStudiInput> | DaftarUlangCreateWithoutProgramStudiInput[] | DaftarUlangUncheckedCreateWithoutProgramStudiInput[]
     connectOrCreate?: DaftarUlangCreateOrConnectWithoutProgramStudiInput | DaftarUlangCreateOrConnectWithoutProgramStudiInput[]
@@ -85058,6 +86525,13 @@ export namespace Prisma {
     connectOrCreate?: MataKuliahCreateOrConnectWithoutProgramStudiInput | MataKuliahCreateOrConnectWithoutProgramStudiInput[]
     createMany?: MataKuliahCreateManyProgramStudiInputEnvelope
     connect?: MataKuliahWhereUniqueInput | MataKuliahWhereUniqueInput[]
+  }
+
+  export type AsesorProgramStudiUncheckedCreateNestedManyWithoutProgramStudiInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutProgramStudiInput, AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput> | AsesorProgramStudiCreateWithoutProgramStudiInput[] | AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput | AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput[]
+    createMany?: AsesorProgramStudiCreateManyProgramStudiInputEnvelope
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
   }
 
   export type UniversityUpdateOneRequiredWithoutProgramStudiNestedInput = {
@@ -85096,6 +86570,20 @@ export namespace Prisma {
     deleteMany?: MataKuliahScalarWhereInput | MataKuliahScalarWhereInput[]
   }
 
+  export type AsesorProgramStudiUpdateManyWithoutProgramStudiNestedInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutProgramStudiInput, AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput> | AsesorProgramStudiCreateWithoutProgramStudiInput[] | AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput | AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput[]
+    upsert?: AsesorProgramStudiUpsertWithWhereUniqueWithoutProgramStudiInput | AsesorProgramStudiUpsertWithWhereUniqueWithoutProgramStudiInput[]
+    createMany?: AsesorProgramStudiCreateManyProgramStudiInputEnvelope
+    set?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    disconnect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    delete?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    update?: AsesorProgramStudiUpdateWithWhereUniqueWithoutProgramStudiInput | AsesorProgramStudiUpdateWithWhereUniqueWithoutProgramStudiInput[]
+    updateMany?: AsesorProgramStudiUpdateManyWithWhereWithoutProgramStudiInput | AsesorProgramStudiUpdateManyWithWhereWithoutProgramStudiInput[]
+    deleteMany?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
+  }
+
   export type DaftarUlangUncheckedUpdateManyWithoutProgramStudiNestedInput = {
     create?: XOR<DaftarUlangCreateWithoutProgramStudiInput, DaftarUlangUncheckedCreateWithoutProgramStudiInput> | DaftarUlangCreateWithoutProgramStudiInput[] | DaftarUlangUncheckedCreateWithoutProgramStudiInput[]
     connectOrCreate?: DaftarUlangCreateOrConnectWithoutProgramStudiInput | DaftarUlangCreateOrConnectWithoutProgramStudiInput[]
@@ -85122,6 +86610,20 @@ export namespace Prisma {
     update?: MataKuliahUpdateWithWhereUniqueWithoutProgramStudiInput | MataKuliahUpdateWithWhereUniqueWithoutProgramStudiInput[]
     updateMany?: MataKuliahUpdateManyWithWhereWithoutProgramStudiInput | MataKuliahUpdateManyWithWhereWithoutProgramStudiInput[]
     deleteMany?: MataKuliahScalarWhereInput | MataKuliahScalarWhereInput[]
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiNestedInput = {
+    create?: XOR<AsesorProgramStudiCreateWithoutProgramStudiInput, AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput> | AsesorProgramStudiCreateWithoutProgramStudiInput[] | AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput[]
+    connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput | AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput[]
+    upsert?: AsesorProgramStudiUpsertWithWhereUniqueWithoutProgramStudiInput | AsesorProgramStudiUpsertWithWhereUniqueWithoutProgramStudiInput[]
+    createMany?: AsesorProgramStudiCreateManyProgramStudiInputEnvelope
+    set?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    disconnect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    delete?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+    update?: AsesorProgramStudiUpdateWithWhereUniqueWithoutProgramStudiInput | AsesorProgramStudiUpdateWithWhereUniqueWithoutProgramStudiInput[]
+    updateMany?: AsesorProgramStudiUpdateManyWithWhereWithoutProgramStudiInput | AsesorProgramStudiUpdateManyWithWhereWithoutProgramStudiInput[]
+    deleteMany?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
   }
 
   export type CountryCreateNestedOneWithoutProvinsiInput = {
@@ -85998,6 +87500,13 @@ export namespace Prisma {
     connect?: UserloginWhereUniqueInput | UserloginWhereUniqueInput[]
   }
 
+  export type AsesorCreateNestedManyWithoutUserInput = {
+    create?: XOR<AsesorCreateWithoutUserInput, AsesorUncheckedCreateWithoutUserInput> | AsesorCreateWithoutUserInput[] | AsesorUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AsesorCreateOrConnectWithoutUserInput | AsesorCreateOrConnectWithoutUserInput[]
+    createMany?: AsesorCreateManyUserInputEnvelope
+    connect?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+  }
+
   export type MahasiswaUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<MahasiswaCreateWithoutUserInput, MahasiswaUncheckedCreateWithoutUserInput> | MahasiswaCreateWithoutUserInput[] | MahasiswaUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MahasiswaCreateOrConnectWithoutUserInput | MahasiswaCreateOrConnectWithoutUserInput[]
@@ -86024,6 +87533,13 @@ export namespace Prisma {
     connectOrCreate?: UserloginCreateOrConnectWithoutUserInput | UserloginCreateOrConnectWithoutUserInput[]
     createMany?: UserloginCreateManyUserInputEnvelope
     connect?: UserloginWhereUniqueInput | UserloginWhereUniqueInput[]
+  }
+
+  export type AsesorUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AsesorCreateWithoutUserInput, AsesorUncheckedCreateWithoutUserInput> | AsesorCreateWithoutUserInput[] | AsesorUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AsesorCreateOrConnectWithoutUserInput | AsesorCreateOrConnectWithoutUserInput[]
+    createMany?: AsesorCreateManyUserInputEnvelope
+    connect?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
   }
 
   export type EnumJenisKelaminFieldUpdateOperationsInput = {
@@ -86094,6 +87610,20 @@ export namespace Prisma {
     deleteMany?: UserloginScalarWhereInput | UserloginScalarWhereInput[]
   }
 
+  export type AsesorUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AsesorCreateWithoutUserInput, AsesorUncheckedCreateWithoutUserInput> | AsesorCreateWithoutUserInput[] | AsesorUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AsesorCreateOrConnectWithoutUserInput | AsesorCreateOrConnectWithoutUserInput[]
+    upsert?: AsesorUpsertWithWhereUniqueWithoutUserInput | AsesorUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AsesorCreateManyUserInputEnvelope
+    set?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    disconnect?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    delete?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    connect?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    update?: AsesorUpdateWithWhereUniqueWithoutUserInput | AsesorUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AsesorUpdateManyWithWhereWithoutUserInput | AsesorUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AsesorScalarWhereInput | AsesorScalarWhereInput[]
+  }
+
   export type MahasiswaUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<MahasiswaCreateWithoutUserInput, MahasiswaUncheckedCreateWithoutUserInput> | MahasiswaCreateWithoutUserInput[] | MahasiswaUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MahasiswaCreateOrConnectWithoutUserInput | MahasiswaCreateOrConnectWithoutUserInput[]
@@ -86148,6 +87678,20 @@ export namespace Prisma {
     update?: UserloginUpdateWithWhereUniqueWithoutUserInput | UserloginUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserloginUpdateManyWithWhereWithoutUserInput | UserloginUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserloginScalarWhereInput | UserloginScalarWhereInput[]
+  }
+
+  export type AsesorUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AsesorCreateWithoutUserInput, AsesorUncheckedCreateWithoutUserInput> | AsesorCreateWithoutUserInput[] | AsesorUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AsesorCreateOrConnectWithoutUserInput | AsesorCreateOrConnectWithoutUserInput[]
+    upsert?: AsesorUpsertWithWhereUniqueWithoutUserInput | AsesorUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AsesorCreateManyUserInputEnvelope
+    set?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    disconnect?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    delete?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    connect?: AsesorWhereUniqueInput | AsesorWhereUniqueInput[]
+    update?: AsesorUpdateWithWhereUniqueWithoutUserInput | AsesorUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AsesorUpdateManyWithWhereWithoutUserInput | AsesorUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AsesorScalarWhereInput | AsesorScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutUserloginInput = {
@@ -86639,6 +88183,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
+    Asesor?: AsesorCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAlamatInput = {
@@ -86663,6 +88208,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUncheckedCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
+    Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAlamatInput = {
@@ -86827,6 +88373,61 @@ export namespace Prisma {
     create: XOR<TipeAsesorCreateWithoutAsesorInput, TipeAsesorUncheckedCreateWithoutAsesorInput>
   }
 
+  export type UserCreateWithoutAsesorInput = {
+    UserId?: string
+    Nama: string
+    Email: string
+    EmailVerifiedAt?: Date | string | null
+    TempatLahir?: string | null
+    TanggalLahir?: Date | string | null
+    JenisKelamin?: $Enums.JenisKelamin
+    PendidikanTerakhir?: $Enums.Jenjang
+    Avatar?: string | null
+    Agama?: string | null
+    Telepon?: string | null
+    NomorWa?: string | null
+    NomorHp?: string | null
+    RememberToken?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    Alamat: AlamatCreateNestedOneWithoutUserInput
+    Mahasiswa?: MahasiswaCreateNestedManyWithoutUserInput
+    UserHasPermissions?: UserHasPermissionsCreateNestedManyWithoutUserInput
+    UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
+    Userlogin?: UserloginCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAsesorInput = {
+    UserId?: string
+    AlamatId: string
+    Nama: string
+    Email: string
+    EmailVerifiedAt?: Date | string | null
+    TempatLahir?: string | null
+    TanggalLahir?: Date | string | null
+    JenisKelamin?: $Enums.JenisKelamin
+    PendidikanTerakhir?: $Enums.Jenjang
+    Avatar?: string | null
+    Agama?: string | null
+    Telepon?: string | null
+    NomorWa?: string | null
+    NomorHp?: string | null
+    RememberToken?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    Mahasiswa?: MahasiswaUncheckedCreateNestedManyWithoutUserInput
+    UserHasPermissions?: UserHasPermissionsUncheckedCreateNestedManyWithoutUserInput
+    UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
+    Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAsesorInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAsesorInput, UserUncheckedCreateWithoutAsesorInput>
+  }
+
   export type AsesorAkademikCreateWithoutAsesorInput = {
     AsesorAkademikId?: string
     Pangkat: string
@@ -86933,6 +88534,24 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AsesorProgramStudiCreateWithoutAsesorInput = {
+    ProgramStudi: ProgramStudiCreateNestedOneWithoutAsesorProgramStudiInput
+  }
+
+  export type AsesorProgramStudiUncheckedCreateWithoutAsesorInput = {
+    ProgramStudiId: string
+  }
+
+  export type AsesorProgramStudiCreateOrConnectWithoutAsesorInput = {
+    where: AsesorProgramStudiWhereUniqueInput
+    create: XOR<AsesorProgramStudiCreateWithoutAsesorInput, AsesorProgramStudiUncheckedCreateWithoutAsesorInput>
+  }
+
+  export type AsesorProgramStudiCreateManyAsesorInputEnvelope = {
+    data: AsesorProgramStudiCreateManyAsesorInput | AsesorProgramStudiCreateManyAsesorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TipeAsesorUpsertWithoutAsesorInput = {
     update: XOR<TipeAsesorUpdateWithoutAsesorInput, TipeAsesorUncheckedUpdateWithoutAsesorInput>
     create: XOR<TipeAsesorCreateWithoutAsesorInput, TipeAsesorUncheckedCreateWithoutAsesorInput>
@@ -86962,6 +88581,67 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserUpsertWithoutAsesorInput = {
+    update: XOR<UserUpdateWithoutAsesorInput, UserUncheckedUpdateWithoutAsesorInput>
+    create: XOR<UserCreateWithoutAsesorInput, UserUncheckedCreateWithoutAsesorInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAsesorInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAsesorInput, UserUncheckedUpdateWithoutAsesorInput>
+  }
+
+  export type UserUpdateWithoutAsesorInput = {
+    UserId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Email?: StringFieldUpdateOperationsInput | string
+    EmailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TempatLahir?: NullableStringFieldUpdateOperationsInput | string | null
+    TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
+    PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Agama?: NullableStringFieldUpdateOperationsInput | string | null
+    Telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    RememberToken?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Alamat?: AlamatUpdateOneRequiredWithoutUserNestedInput
+    Mahasiswa?: MahasiswaUpdateManyWithoutUserNestedInput
+    UserHasPermissions?: UserHasPermissionsUpdateManyWithoutUserNestedInput
+    UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
+    Userlogin?: UserloginUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAsesorInput = {
+    UserId?: StringFieldUpdateOperationsInput | string
+    AlamatId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Email?: StringFieldUpdateOperationsInput | string
+    EmailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TempatLahir?: NullableStringFieldUpdateOperationsInput | string | null
+    TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
+    PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Agama?: NullableStringFieldUpdateOperationsInput | string | null
+    Telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    RememberToken?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Mahasiswa?: MahasiswaUncheckedUpdateManyWithoutUserNestedInput
+    UserHasPermissions?: UserHasPermissionsUncheckedUpdateManyWithoutUserNestedInput
+    UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
+    Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AsesorAkademikUpsertWithWhereUniqueWithoutAsesorInput = {
@@ -87060,15 +88740,40 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
   }
 
+  export type AsesorProgramStudiUpsertWithWhereUniqueWithoutAsesorInput = {
+    where: AsesorProgramStudiWhereUniqueInput
+    update: XOR<AsesorProgramStudiUpdateWithoutAsesorInput, AsesorProgramStudiUncheckedUpdateWithoutAsesorInput>
+    create: XOR<AsesorProgramStudiCreateWithoutAsesorInput, AsesorProgramStudiUncheckedCreateWithoutAsesorInput>
+  }
+
+  export type AsesorProgramStudiUpdateWithWhereUniqueWithoutAsesorInput = {
+    where: AsesorProgramStudiWhereUniqueInput
+    data: XOR<AsesorProgramStudiUpdateWithoutAsesorInput, AsesorProgramStudiUncheckedUpdateWithoutAsesorInput>
+  }
+
+  export type AsesorProgramStudiUpdateManyWithWhereWithoutAsesorInput = {
+    where: AsesorProgramStudiScalarWhereInput
+    data: XOR<AsesorProgramStudiUpdateManyMutationInput, AsesorProgramStudiUncheckedUpdateManyWithoutAsesorInput>
+  }
+
+  export type AsesorProgramStudiScalarWhereInput = {
+    AND?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
+    OR?: AsesorProgramStudiScalarWhereInput[]
+    NOT?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
+    AsesorId?: StringFilter<"AsesorProgramStudi"> | string
+    ProgramStudiId?: StringFilter<"AsesorProgramStudi"> | string
+  }
+
   export type AsesorCreateWithoutAsesorAkademikInput = {
     AsesorId?: string
-    UserId: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     DeletedAt?: Date | string | null
     TipeAsesor: TipeAsesorCreateNestedOneWithoutAsesorInput
+    User: UserCreateNestedOneWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutAsesorAkademikInput = {
@@ -87080,6 +88785,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutAsesorAkademikInput = {
@@ -87126,13 +88832,14 @@ export namespace Prisma {
 
   export type AsesorUpdateWithoutAsesorAkademikInput = {
     AsesorId?: StringFieldUpdateOperationsInput | string
-    UserId?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeAsesor?: TipeAsesorUpdateOneRequiredWithoutAsesorNestedInput
+    User?: UserUpdateOneRequiredWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutAsesorAkademikInput = {
@@ -87144,6 +88851,7 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorAkademikKeanggotaanAsosiasiUpsertWithWhereUniqueWithoutAsesorAkademikInput = {
@@ -87248,13 +88956,14 @@ export namespace Prisma {
 
   export type AsesorCreateWithoutAsesorPraktisiInput = {
     AsesorId?: string
-    UserId: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     DeletedAt?: Date | string | null
     TipeAsesor: TipeAsesorCreateNestedOneWithoutAsesorInput
+    User: UserCreateNestedOneWithoutAsesorInput
     AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutAsesorPraktisiInput = {
@@ -87266,6 +88975,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutAsesorPraktisiInput = {
@@ -87286,13 +88996,14 @@ export namespace Prisma {
 
   export type AsesorUpdateWithoutAsesorPraktisiInput = {
     AsesorId?: StringFieldUpdateOperationsInput | string
-    UserId?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeAsesor?: TipeAsesorUpdateOneRequiredWithoutAsesorNestedInput
+    User?: UserUpdateOneRequiredWithoutAsesorNestedInput
     AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutAsesorPraktisiInput = {
@@ -87304,17 +89015,19 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorCreateWithoutAssesorMahasiswaInput = {
     AsesorId?: string
-    UserId: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     DeletedAt?: Date | string | null
     TipeAsesor: TipeAsesorCreateNestedOneWithoutAsesorInput
+    User: UserCreateNestedOneWithoutAsesorInput
     AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutAssesorMahasiswaInput = {
@@ -87326,6 +89039,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutAssesorMahasiswaInput = {
@@ -87427,13 +89141,14 @@ export namespace Prisma {
 
   export type AsesorUpdateWithoutAssesorMahasiswaInput = {
     AsesorId?: StringFieldUpdateOperationsInput | string
-    UserId?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeAsesor?: TipeAsesorUpdateOneRequiredWithoutAsesorNestedInput
+    User?: UserUpdateOneRequiredWithoutAsesorNestedInput
     AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutAssesorMahasiswaInput = {
@@ -87445,6 +89160,7 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type PendaftaranUpsertWithoutAssesorMahasiswaInput = {
@@ -88127,6 +89843,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     University: UniversityCreateNestedOneWithoutProgramStudiInput
     MataKuliah?: MataKuliahCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiUncheckedCreateWithoutDaftarUlangInput = {
@@ -88139,6 +89856,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     DeletedAt?: Date | string | null
     MataKuliah?: MataKuliahUncheckedCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiCreateOrConnectWithoutDaftarUlangInput = {
@@ -88236,6 +89954,7 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     University?: UniversityUpdateOneRequiredWithoutProgramStudiNestedInput
     MataKuliah?: MataKuliahUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type ProgramStudiUncheckedUpdateWithoutDaftarUlangInput = {
@@ -88248,6 +89967,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     MataKuliah?: MataKuliahUncheckedUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type KecamatanCreateWithoutDesaInput = {
@@ -89273,6 +90993,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
+    Asesor?: AsesorCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMahasiswaInput = {
@@ -89297,6 +91018,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUncheckedCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
+    Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMahasiswaInput = {
@@ -89405,6 +91127,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMahasiswaInput = {
@@ -89429,6 +91152,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUncheckedUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PendaftaranUpsertWithWhereUniqueWithoutMahasiswaInput = {
@@ -90265,6 +91989,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     University: UniversityCreateNestedOneWithoutProgramStudiInput
     DaftarUlang?: DaftarUlangCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiUncheckedCreateWithoutMataKuliahInput = {
@@ -90277,6 +92002,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     DeletedAt?: Date | string | null
     DaftarUlang?: DaftarUlangUncheckedCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiCreateOrConnectWithoutMataKuliahInput = {
@@ -90371,6 +92097,7 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     University?: UniversityUpdateOneRequiredWithoutProgramStudiNestedInput
     DaftarUlang?: DaftarUlangUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type ProgramStudiUncheckedUpdateWithoutMataKuliahInput = {
@@ -90383,6 +92110,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DaftarUlang?: DaftarUlangUncheckedUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type CapaianPembelajaranUpsertWithWhereUniqueWithoutMataKuliahInput = {
@@ -90796,6 +92524,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
+    Asesor?: AsesorCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserHasPermissionsInput = {
@@ -90820,6 +92549,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUncheckedCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
+    Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserHasPermissionsInput = {
@@ -90889,6 +92619,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserHasPermissionsInput = {
@@ -90913,6 +92644,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUncheckedUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RoleCreateWithoutUserHasRolesInput = {
@@ -90962,6 +92694,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaCreateNestedManyWithoutUserInput
     UserHasPermissions?: UserHasPermissionsCreateNestedManyWithoutUserInput
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
+    Asesor?: AsesorCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserHasRolesInput = {
@@ -90986,6 +92719,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUncheckedCreateNestedManyWithoutUserInput
     UserHasPermissions?: UserHasPermissionsUncheckedCreateNestedManyWithoutUserInput
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
+    Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserHasRolesInput = {
@@ -91057,6 +92791,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUpdateManyWithoutUserNestedInput
     UserHasPermissions?: UserHasPermissionsUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserHasRolesInput = {
@@ -91081,6 +92816,139 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUncheckedUpdateManyWithoutUserNestedInput
     UserHasPermissions?: UserHasPermissionsUncheckedUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type AsesorCreateWithoutAsesorProgramStudiInput = {
+    AsesorId?: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    TipeAsesor: TipeAsesorCreateNestedOneWithoutAsesorInput
+    User: UserCreateNestedOneWithoutAsesorInput
+    AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
+    AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
+    AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+  }
+
+  export type AsesorUncheckedCreateWithoutAsesorProgramStudiInput = {
+    AsesorId?: string
+    TipeAsesorId: string
+    UserId: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+  }
+
+  export type AsesorCreateOrConnectWithoutAsesorProgramStudiInput = {
+    where: AsesorWhereUniqueInput
+    create: XOR<AsesorCreateWithoutAsesorProgramStudiInput, AsesorUncheckedCreateWithoutAsesorProgramStudiInput>
+  }
+
+  export type ProgramStudiCreateWithoutAsesorProgramStudiInput = {
+    ProgramStudiId?: string
+    Nama: string
+    Jenjang?: string | null
+    Akreditasi: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    University: UniversityCreateNestedOneWithoutProgramStudiInput
+    DaftarUlang?: DaftarUlangCreateNestedManyWithoutProgramStudiInput
+    MataKuliah?: MataKuliahCreateNestedManyWithoutProgramStudiInput
+  }
+
+  export type ProgramStudiUncheckedCreateWithoutAsesorProgramStudiInput = {
+    ProgramStudiId?: string
+    UniversityId: string
+    Nama: string
+    Jenjang?: string | null
+    Akreditasi: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    DaftarUlang?: DaftarUlangUncheckedCreateNestedManyWithoutProgramStudiInput
+    MataKuliah?: MataKuliahUncheckedCreateNestedManyWithoutProgramStudiInput
+  }
+
+  export type ProgramStudiCreateOrConnectWithoutAsesorProgramStudiInput = {
+    where: ProgramStudiWhereUniqueInput
+    create: XOR<ProgramStudiCreateWithoutAsesorProgramStudiInput, ProgramStudiUncheckedCreateWithoutAsesorProgramStudiInput>
+  }
+
+  export type AsesorUpsertWithoutAsesorProgramStudiInput = {
+    update: XOR<AsesorUpdateWithoutAsesorProgramStudiInput, AsesorUncheckedUpdateWithoutAsesorProgramStudiInput>
+    create: XOR<AsesorCreateWithoutAsesorProgramStudiInput, AsesorUncheckedCreateWithoutAsesorProgramStudiInput>
+    where?: AsesorWhereInput
+  }
+
+  export type AsesorUpdateToOneWithWhereWithoutAsesorProgramStudiInput = {
+    where?: AsesorWhereInput
+    data: XOR<AsesorUpdateWithoutAsesorProgramStudiInput, AsesorUncheckedUpdateWithoutAsesorProgramStudiInput>
+  }
+
+  export type AsesorUpdateWithoutAsesorProgramStudiInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TipeAsesor?: TipeAsesorUpdateOneRequiredWithoutAsesorNestedInput
+    User?: UserUpdateOneRequiredWithoutAsesorNestedInput
+    AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
+    AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
+    AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+  }
+
+  export type AsesorUncheckedUpdateWithoutAsesorProgramStudiInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    TipeAsesorId?: StringFieldUpdateOperationsInput | string
+    UserId?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+  }
+
+  export type ProgramStudiUpsertWithoutAsesorProgramStudiInput = {
+    update: XOR<ProgramStudiUpdateWithoutAsesorProgramStudiInput, ProgramStudiUncheckedUpdateWithoutAsesorProgramStudiInput>
+    create: XOR<ProgramStudiCreateWithoutAsesorProgramStudiInput, ProgramStudiUncheckedCreateWithoutAsesorProgramStudiInput>
+    where?: ProgramStudiWhereInput
+  }
+
+  export type ProgramStudiUpdateToOneWithWhereWithoutAsesorProgramStudiInput = {
+    where?: ProgramStudiWhereInput
+    data: XOR<ProgramStudiUpdateWithoutAsesorProgramStudiInput, ProgramStudiUncheckedUpdateWithoutAsesorProgramStudiInput>
+  }
+
+  export type ProgramStudiUpdateWithoutAsesorProgramStudiInput = {
+    ProgramStudiId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jenjang?: NullableStringFieldUpdateOperationsInput | string | null
+    Akreditasi?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    University?: UniversityUpdateOneRequiredWithoutProgramStudiNestedInput
+    DaftarUlang?: DaftarUlangUpdateManyWithoutProgramStudiNestedInput
+    MataKuliah?: MataKuliahUpdateManyWithoutProgramStudiNestedInput
+  }
+
+  export type ProgramStudiUncheckedUpdateWithoutAsesorProgramStudiInput = {
+    ProgramStudiId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jenjang?: NullableStringFieldUpdateOperationsInput | string | null
+    Akreditasi?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DaftarUlang?: DaftarUlangUncheckedUpdateManyWithoutProgramStudiNestedInput
+    MataKuliah?: MataKuliahUncheckedUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type PendaftaranCreateWithoutOrangTuaInput = {
@@ -92687,6 +94555,24 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AsesorProgramStudiCreateWithoutProgramStudiInput = {
+    Asesor: AsesorCreateNestedOneWithoutAsesorProgramStudiInput
+  }
+
+  export type AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput = {
+    AsesorId: string
+  }
+
+  export type AsesorProgramStudiCreateOrConnectWithoutProgramStudiInput = {
+    where: AsesorProgramStudiWhereUniqueInput
+    create: XOR<AsesorProgramStudiCreateWithoutProgramStudiInput, AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput>
+  }
+
+  export type AsesorProgramStudiCreateManyProgramStudiInputEnvelope = {
+    data: AsesorProgramStudiCreateManyProgramStudiInput | AsesorProgramStudiCreateManyProgramStudiInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UniversityUpsertWithoutProgramStudiInput = {
     update: XOR<UniversityUpdateWithoutProgramStudiInput, UniversityUncheckedUpdateWithoutProgramStudiInput>
     create: XOR<UniversityCreateWithoutProgramStudiInput, UniversityUncheckedCreateWithoutProgramStudiInput>
@@ -92770,6 +94656,22 @@ export namespace Prisma {
     CreatedAt?: DateTimeNullableFilter<"MataKuliah"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"MataKuliah"> | Date | string | null
     DeletedAt?: DateTimeNullableFilter<"MataKuliah"> | Date | string | null
+  }
+
+  export type AsesorProgramStudiUpsertWithWhereUniqueWithoutProgramStudiInput = {
+    where: AsesorProgramStudiWhereUniqueInput
+    update: XOR<AsesorProgramStudiUpdateWithoutProgramStudiInput, AsesorProgramStudiUncheckedUpdateWithoutProgramStudiInput>
+    create: XOR<AsesorProgramStudiCreateWithoutProgramStudiInput, AsesorProgramStudiUncheckedCreateWithoutProgramStudiInput>
+  }
+
+  export type AsesorProgramStudiUpdateWithWhereUniqueWithoutProgramStudiInput = {
+    where: AsesorProgramStudiWhereUniqueInput
+    data: XOR<AsesorProgramStudiUpdateWithoutProgramStudiInput, AsesorProgramStudiUncheckedUpdateWithoutProgramStudiInput>
+  }
+
+  export type AsesorProgramStudiUpdateManyWithWhereWithoutProgramStudiInput = {
+    where: AsesorProgramStudiScalarWhereInput
+    data: XOR<AsesorProgramStudiUpdateManyMutationInput, AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiInput>
   }
 
   export type CountryCreateWithoutProvinsiInput = {
@@ -94007,13 +95909,14 @@ export namespace Prisma {
 
   export type AsesorCreateWithoutTipeAsesorInput = {
     AsesorId?: string
-    UserId: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     DeletedAt?: Date | string | null
+    User: UserCreateNestedOneWithoutAsesorInput
     AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutTipeAsesorInput = {
@@ -94025,6 +95928,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutTipeAsesorInput = {
@@ -94098,6 +96002,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     DaftarUlang?: DaftarUlangCreateNestedManyWithoutProgramStudiInput
     MataKuliah?: MataKuliahCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiUncheckedCreateWithoutUniversityInput = {
@@ -94110,6 +96015,7 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
     DaftarUlang?: DaftarUlangUncheckedCreateNestedManyWithoutProgramStudiInput
     MataKuliah?: MataKuliahUncheckedCreateNestedManyWithoutProgramStudiInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutProgramStudiInput
   }
 
   export type ProgramStudiCreateOrConnectWithoutUniversityInput = {
@@ -94765,6 +96671,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AsesorCreateWithoutUserInput = {
+    AsesorId?: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    TipeAsesor: TipeAsesorCreateNestedOneWithoutAsesorInput
+    AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
+    AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
+    AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
+  }
+
+  export type AsesorUncheckedCreateWithoutUserInput = {
+    AsesorId?: string
+    TipeAsesorId: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
+  }
+
+  export type AsesorCreateOrConnectWithoutUserInput = {
+    where: AsesorWhereUniqueInput
+    create: XOR<AsesorCreateWithoutUserInput, AsesorUncheckedCreateWithoutUserInput>
+  }
+
+  export type AsesorCreateManyUserInputEnvelope = {
+    data: AsesorCreateManyUserInput | AsesorCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AlamatUpsertWithoutUserInput = {
     update: XOR<AlamatUpdateWithoutUserInput, AlamatUncheckedUpdateWithoutUserInput>
     create: XOR<AlamatCreateWithoutUserInput, AlamatUncheckedCreateWithoutUserInput>
@@ -94880,6 +96820,22 @@ export namespace Prisma {
     Credential?: StringFilter<"Userlogin"> | string
   }
 
+  export type AsesorUpsertWithWhereUniqueWithoutUserInput = {
+    where: AsesorWhereUniqueInput
+    update: XOR<AsesorUpdateWithoutUserInput, AsesorUncheckedUpdateWithoutUserInput>
+    create: XOR<AsesorCreateWithoutUserInput, AsesorUncheckedCreateWithoutUserInput>
+  }
+
+  export type AsesorUpdateWithWhereUniqueWithoutUserInput = {
+    where: AsesorWhereUniqueInput
+    data: XOR<AsesorUpdateWithoutUserInput, AsesorUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AsesorUpdateManyWithWhereWithoutUserInput = {
+    where: AsesorScalarWhereInput
+    data: XOR<AsesorUpdateManyMutationInput, AsesorUncheckedUpdateManyWithoutUserInput>
+  }
+
   export type UserCreateWithoutUserloginInput = {
     UserId?: string
     Nama: string
@@ -94902,6 +96858,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaCreateNestedManyWithoutUserInput
     UserHasPermissions?: UserHasPermissionsCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
+    Asesor?: AsesorCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserloginInput = {
@@ -94926,6 +96883,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUncheckedCreateNestedManyWithoutUserInput
     UserHasPermissions?: UserHasPermissionsUncheckedCreateNestedManyWithoutUserInput
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
+    Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserloginInput = {
@@ -94966,6 +96924,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUpdateManyWithoutUserNestedInput
     UserHasPermissions?: UserHasPermissionsUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserloginInput = {
@@ -94990,6 +96949,7 @@ export namespace Prisma {
     Mahasiswa?: MahasiswaUncheckedUpdateManyWithoutUserNestedInput
     UserHasPermissions?: UserHasPermissionsUncheckedUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type InstitusiLamaCreateManyAlamatInput = {
@@ -95138,6 +97098,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlamatInput = {
@@ -95162,6 +97123,7 @@ export namespace Prisma {
     UserHasPermissions?: UserHasPermissionsUncheckedUpdateManyWithoutUserNestedInput
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutAlamatInput = {
@@ -95218,6 +97180,10 @@ export namespace Prisma {
     Confirmation?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+  }
+
+  export type AsesorProgramStudiCreateManyAsesorInput = {
+    ProgramStudiId: string
   }
 
   export type AsesorAkademikUpdateWithoutAsesorInput = {
@@ -95330,6 +97296,18 @@ export namespace Prisma {
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AsesorProgramStudiUpdateWithoutAsesorInput = {
+    ProgramStudi?: ProgramStudiUpdateOneRequiredWithoutAsesorProgramStudiNestedInput
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateWithoutAsesorInput = {
+    ProgramStudiId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateManyWithoutAsesorInput = {
+    ProgramStudiId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AsesorAkademikKeanggotaanAsosiasiCreateManyAsesorAkademikInput = {
@@ -96675,6 +98653,10 @@ export namespace Prisma {
     DeletedAt?: Date | string | null
   }
 
+  export type AsesorProgramStudiCreateManyProgramStudiInput = {
+    AsesorId: string
+  }
+
   export type DaftarUlangUpdateWithoutProgramStudiInput = {
     DaftarUlangId?: StringFieldUpdateOperationsInput | string
     Nim?: NullableStringFieldUpdateOperationsInput | string | null
@@ -96758,6 +98740,18 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AsesorProgramStudiUpdateWithoutProgramStudiInput = {
+    Asesor?: AsesorUpdateOneRequiredWithoutAsesorProgramStudiNestedInput
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateWithoutProgramStudiInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type KabupatenCreateManyProvinsiInput = {
@@ -96952,13 +98946,14 @@ export namespace Prisma {
 
   export type AsesorUpdateWithoutTipeAsesorInput = {
     AsesorId?: StringFieldUpdateOperationsInput | string
-    UserId?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    User?: UserUpdateOneRequiredWithoutAsesorNestedInput
     AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutTipeAsesorInput = {
@@ -96970,6 +98965,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateManyWithoutTipeAsesorInput = {
@@ -97022,6 +99018,7 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DaftarUlang?: DaftarUlangUpdateManyWithoutProgramStudiNestedInput
     MataKuliah?: MataKuliahUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type ProgramStudiUncheckedUpdateWithoutUniversityInput = {
@@ -97034,6 +99031,7 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DaftarUlang?: DaftarUlangUncheckedUpdateManyWithoutProgramStudiNestedInput
     MataKuliah?: MataKuliahUncheckedUpdateManyWithoutProgramStudiNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiNestedInput
   }
 
   export type ProgramStudiUncheckedUpdateManyWithoutUniversityInput = {
@@ -97172,6 +99170,14 @@ export namespace Prisma {
     Credential: string
   }
 
+  export type AsesorCreateManyUserInput = {
+    AsesorId?: string
+    TipeAsesorId: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+  }
+
   export type MahasiswaUpdateWithoutUserInput = {
     MahasiswaId?: StringFieldUpdateOperationsInput | string
     StatusPerkawinan?: EnumStatusPerkawinanFieldUpdateOperationsInput | $Enums.StatusPerkawinan
@@ -97238,6 +99244,38 @@ export namespace Prisma {
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
     Credential?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AsesorUpdateWithoutUserInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TipeAsesor?: TipeAsesorUpdateOneRequiredWithoutAsesorNestedInput
+    AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
+    AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
+    AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+  }
+
+  export type AsesorUncheckedUpdateWithoutUserInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    TipeAsesorId?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
+  }
+
+  export type AsesorUncheckedUpdateManyWithoutUserInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    TipeAsesorId?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

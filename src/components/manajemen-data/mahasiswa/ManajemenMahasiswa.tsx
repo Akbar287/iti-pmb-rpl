@@ -739,7 +739,13 @@ const ManajemenMahasiswaComponent = ({
             }
         })
     }
-    const openWindowUploadExcel = () => {}
+    const openWindowUploadExcel = () => {
+        Swal.fire({
+            title: 'Upload By Excel',
+            icon: 'info',
+            text: 'Sedang Dibuat...',
+        })
+    }
     const columns: ColumnDef<CalonMahasiswaRplPage>[] = [
         {
             accessorKey: 'KodePendaftar',
@@ -1174,6 +1180,8 @@ export function SheetManageData({
                 <SheetContent
                     side="right"
                     className="w-screen h-screen max-w-full overflow-scroll"
+                    onEscapeKeyDown={(event) => event.preventDefault()}
+                    onPointerDownOutside={(event) => event.preventDefault()}
                 >
                     {loading ? (
                         <div className="flex justify-center mt-3 flex-col">

@@ -95,16 +95,18 @@ model Alamat {
 }
 
 model Asesor {
-  AsesorId         String             @id @default(uuid()) @map("asesor_id")
-  TipeAsesorId     String             @map("tipe_asesor_id")
-  UserId           String             @map("user_id")
-  CreatedAt        DateTime?          @map("created_at")
-  UpdatedAt        DateTime?          @map("updated_at")
-  DeletedAt        DateTime?          @map("deleted_at")
-  TipeAsesor       TipeAsesor         @relation(fields: [TipeAsesorId], references: [TipeAsesorId], onDelete: Cascade)
-  AsesorAkademik   AsesorAkademik[]
-  AsesorPraktisi   AsesorPraktisi[]
-  AssesorMahasiswa AssesorMahasiswa[]
+  AsesorId           String               @id @default(uuid()) @map("asesor_id")
+  TipeAsesorId       String               @map("tipe_asesor_id")
+  UserId             String               @map("user_id")
+  CreatedAt          DateTime?            @map("created_at")
+  UpdatedAt          DateTime?            @map("updated_at")
+  DeletedAt          DateTime?            @map("deleted_at")
+  TipeAsesor         TipeAsesor           @relation(fields: [TipeAsesorId], references: [TipeAsesorId], onDelete: Cascade)
+  User               User                 @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
+  AsesorAkademik     AsesorAkademik[]
+  AsesorPraktisi     AsesorPraktisi[]
+  AssesorMahasiswa   AssesorMahasiswa[]
+  AsesorProgramStudi AsesorProgramStudi[]
 
   @@map("asesor")
 }
@@ -502,6 +504,17 @@ model UserHasRoles {
   @@map("user_has_roles")
 }
 
+model AsesorProgramStudi {
+  AsesorId       String @map("asesor_id")
+  ProgramStudiId String @map("program_studi_id")
+
+  Asesor       Asesor       @relation(fields: [AsesorId], references: [AsesorId], onDelete: Cascade)
+  ProgramStudi ProgramStudi @relation(fields: [ProgramStudiId], references: [ProgramStudiId], onDelete: Cascade)
+
+  @@id([AsesorId, ProgramStudiId])
+  @@map("asesor_program_studi")
+}
+
 model OrangTua {
   OrangTuaId    String      @id @default(uuid()) @map("orang_tua_id")
   PendaftaranId String      @map("pendaftaran_id")
@@ -599,17 +612,18 @@ model Pesantren {
 }
 
 model ProgramStudi {
-  ProgramStudiId String        @id @default(uuid()) @map("program_studi_id")
-  UniversityId   String        @map("university_id")
-  Nama           String        @map("nama")
-  Jenjang        String?       @map("jenjang")
-  Akreditasi     String        @map("akreditasi")
-  CreatedAt      DateTime?     @map("created_at")
-  UpdatedAt      DateTime?     @map("updated_at")
-  DeletedAt      DateTime?     @map("deleted_at")
-  University     University    @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
-  DaftarUlang    DaftarUlang[]
-  MataKuliah     MataKuliah[]
+  ProgramStudiId     String               @id @default(uuid()) @map("program_studi_id")
+  UniversityId       String               @map("university_id")
+  Nama               String               @map("nama")
+  Jenjang            String?              @map("jenjang")
+  Akreditasi         String               @map("akreditasi")
+  CreatedAt          DateTime?            @map("created_at")
+  UpdatedAt          DateTime?            @map("updated_at")
+  DeletedAt          DateTime?            @map("deleted_at")
+  University         University           @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+  DaftarUlang        DaftarUlang[]
+  MataKuliah         MataKuliah[]
+  AsesorProgramStudi AsesorProgramStudi[]
 
   @@map("program_studi")
 }
@@ -866,6 +880,7 @@ model User {
   UserHasPermissions UserHasPermissions[]
   UserHasRoles       UserHasRoles[]
   Userlogin          Userlogin[]
+  Asesor             Asesor[]
 
   @@map("user")
 }

@@ -56,6 +56,11 @@ const menu: MenuStoreProps[] = [
                 title: 'Data Mahasiswa',
                 url: '/manajemen-data/mahasiswa',
             },
+            {
+                namaRole: ['Kaprodi'],
+                title: 'Data Asesor',
+                url: '/manajemen-data/asesor',
+            },
         ],
     },
     {
