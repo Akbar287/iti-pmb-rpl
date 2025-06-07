@@ -72,59 +72,83 @@ const UserSchema = z.object({
 })
 
 export const TipeAsesorSchema = z.object({
-    TipeAsesorId: z.string().min(1, 'TipeAsesorId tidak boleh kosong'),
+    TipeAsesorId: z.string(),
     Nama: z.string().min(1, 'Nama tidak boleh kosong'),
-    Icon: z.string().min(1, 'Icon tidak boleh kosong'),
-    Deskripsi: z.string().min(1, 'Deskripsi tidak boleh kosong'),
+    Icon: z.string().nullable(),
+    Deskripsi: z.string().nullable(),
 })
 
 export const AsesorAkademikKeanggotaanAsosiasiSchema = z.object({
-    AsesorAkademikKeanggotaanAsosiasiId: z
-        .string()
-        .min(1, 'ID Keanggotaan Asosiasi tidak boleh kosong'),
-    AsesorAkademikId: z.string().min(1, 'AsesorAkademikId tidak boleh kosong'),
+    AsesorAkademikKeanggotaanAsosiasiId: z.string(),
+    AsesorAkademikId: z.string(),
     NamaAsosiasi: z.string().min(1, 'Nama Asosiasi tidak boleh kosong'),
     NomorKeanggotaan: z.string().min(1, 'Nomor Keanggotaan tidak boleh kosong'),
 })
 
 export const AsesorAkademikSchema = z.object({
-    AsesorAkademikId: z.string().min(1, 'AsesorAkademikId tidak boleh kosong'),
-    Pangkat: z.string().min(1, 'Pangkat tidak boleh kosong'),
-    JabatanFungsionalAkademik: z
-        .string()
-        .min(1, 'Jabatan Fungsional Akademik tidak boleh kosong'),
-    NipNidn: z.string().min(1, 'NIP/NIDN tidak boleh kosong'),
-    NamaPerguruanTinggi: z
-        .string()
-        .min(1, 'Nama Perguruan Tinggi tidak boleh kosong'),
+    AsesorAkademikId: z.string(),
+    Pangkat: z.string(),
+    JabatanFungsionalAkademik: z.string(),
+    NipNidn: z.string(),
+    NamaPerguruanTinggi: z.string(),
     AlamatPerguruanTinggi: z.string().nullable(),
     PendidikanTerakhirBidangKeilmuan: z.string().nullable(),
-    AsesorAkademikKeanggotaanAsosiasi: z.array(
-        AsesorAkademikKeanggotaanAsosiasiSchema
-    ),
+    AsesorAkademikKeanggotaanAsosiasi: z
+        .array(AsesorAkademikKeanggotaanAsosiasiSchema)
+        .nullable(),
 })
 
 export const AsesorPraktisiSchema = z.object({
-    AsesorPraktisiId: z.string().min(1, 'AsesorPraktisiId tidak boleh kosong'),
-    AsesorId: z.string().min(1, 'AsesorId tidak boleh kosong'),
-    NamaAsosiasi: z.string().min(1, 'Nama Asosiasi tidak boleh kosong'),
-    NomorKeanggotaan: z.string().min(1, 'Nomor Keanggotaan tidak boleh kosong'),
-    Jabatan: z.string().min(1, 'Jabatan tidak boleh kosong'),
+    AsesorPraktisiId: z.string(),
+    AsesorId: z.string(),
+    NamaAsosiasi: z.string(),
+    NomorKeanggotaan: z.string(),
+    Jabatan: z.string(),
     AlamatKantor: z.string().nullable(),
-    NamaInstansi: z.string().min(1, 'Nama Instansi tidak boleh kosong'),
-    JabatanInstansi: z.string().min(1, 'Jabatan Instansi tidak boleh kosong'),
-    BidangKeahlian: z.string().min(1, 'Bidang Keahlian tidak boleh kosong'),
+    NamaInstansi: z.string(),
+    JabatanInstansi: z.string(),
+    BidangKeahlian: z.string(),
 })
 
-export const AsesorSchemaValidation = z.object({
-    programStudi: z.array(ProgramStudiSchema).nullable(),
-    alamat: AlamatSchema,
-    user: UserSchema,
-    asesorId: z.string(),
-    username: z.string().min(1, 'Username Wajib diisi'),
-    tipeAsesor: TipeAsesorSchema,
-    asesorAkademik: AsesorAkademikSchema.nullable(),
-    asesorPraktisi: AsesorPraktisiSchema.nullable(),
-})
+export const AsesorSchemaValidation = z
+    .object({
+        programStudi: z.array(ProgramStudiSchema).nullable(),
+        alamat: AlamatSchema,
+        user: UserSchema,
+        asesorId: z.string(),
+        username: z.string().min(1, 'Username Wajib diisi'),
+        tipeAsesor: TipeAsesorSchema,
+        asesorAkademik: AsesorAkademikSchema.nullable(),
+        asesorPraktisi: AsesorPraktisiSchema.nullable(),
+    })
+    .superRefine((data, ctx) => {
+        // Condition 1: If TipeAsesor is 'Asesor Akademik'
+        if (data.tipeAsesor.Nama === 'Asesor Akademik') {
+            // Check if asesorAkademik data is provided. If not, add an error.
+            if (!data.asesorAkademik) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    // Path to the field that will receive the error
+                    path: ['asesorAkademik'],
+                    // Error message
+                    message: 'Detail Asesor Akademik wajib diisi.',
+                })
+            }
+        }
+
+        // Condition 2: If TipeAsesor is 'Asesor Praktisi'
+        if (data.tipeAsesor.Nama === 'Asesor Praktisi') {
+            // Check if asesorPraktisi data is provided. If not, add an error.
+            if (!data.asesorPraktisi) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    // Path to the field that will receive the error
+                    path: ['asesorPraktisi'],
+                    // Error message
+                    message: 'Detail Asesor Praktisi wajib diisi.',
+                })
+            }
+        }
+    })
 
 export type AsesorFormValidation = z.infer<typeof AsesorSchemaValidation>

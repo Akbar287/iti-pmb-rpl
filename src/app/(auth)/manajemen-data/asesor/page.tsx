@@ -17,12 +17,22 @@ const Index = async () => {
         },
     })
 
+    const tipeAsesorDataServer = await prisma.tipeAsesor.findMany({
+        select: {
+            TipeAsesorId: true,
+            Nama: true,
+            Icon: true,
+            Deskripsi: true,
+        },
+    })
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Asesor</h1>
             <ManajemenDataAsesor
                 countryDataServer={countryDataServer}
                 universitasDataServer={universitasDataServer}
+                tipeAsesorDataServer={tipeAsesorDataServer}
             />
         </div>
     )

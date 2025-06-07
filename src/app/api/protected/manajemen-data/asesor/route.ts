@@ -201,7 +201,7 @@ app.get('/', async (c) => {
                 NamaAsosiasi: data?.AsesorPraktisi[0].NamaAsosiasi || '',
                 NomorKeanggotaan: data?.AsesorPraktisi[0].NomorKeanggotaan || '',
                 Jabatan: data?.AsesorPraktisi[0].Jabatan || '',
-                AlamatKantor: null,
+                AlamatKantor: data?.AsesorPraktisi[0].AlamatKantor || '',
                 NamaInstansi: data?.AsesorPraktisi[0].NamaInstansi || '',
                 JabatanInstansi: data?.AsesorPraktisi[0].JabatanInstansi || '',
                 BidangKeahlian: data?.AsesorPraktisi[0].BidangKeahlian || '',
@@ -418,6 +418,38 @@ app.post('/', async (c) => {
             skipDuplicates: true
         })
 
+        if (body.AsesorAkademik && body.AsesorAkademik.NamaPerguruanTinggi !== '') {
+            await prisma.asesorAkademik.create({
+                data: {
+                    AsesorId: asesor.AsesorId,
+                    Pangkat: body.AsesorAkademik.Pangkat,
+                    JabatanFungsionalAkademik: body.AsesorAkademik.JabatanFungsionalAkademik,
+                    NipNidn: body.AsesorAkademik.NipNidn,
+                    NamaPerguruanTinggi: body.AsesorAkademik.NamaPerguruanTinggi,
+                    AlamatPerguruanTinggi: body.AsesorAkademik.AlamatPerguruanTinggi,
+                    PendidikanTerakhirBidangKeilmuan: body.AsesorAkademik.PendidikanTerakhirBidangKeilmuan,
+                    CreatedAt: new Date(),
+                    UpdatedAt: new Date()
+                }
+            })
+        }
+        if (body.AsesorPraktisi && body.AsesorPraktisi.NamaAsosiasi !== '') {
+            await prisma.asesorPraktisi.create({
+                data: {
+                    AsesorId: asesor.AsesorId,
+                    NamaAsosiasi: body.AsesorPraktisi.NamaAsosiasi,
+                    NomorKeanggotaan: body.AsesorPraktisi.NomorKeanggotaan,
+                    Jabatan: body.AsesorPraktisi.Jabatan,
+                    AlamatKantor: body.AsesorPraktisi.AlamatKantor,
+                    NamaInstansi: body.AsesorPraktisi.NamaInstansi,
+                    JabatanInstansi: body.AsesorPraktisi.JabatanInstansi,
+                    BidangKeahlian: body.AsesorPraktisi.BidangKeahlian,
+                    CreatedAt: new Date(),
+                    UpdatedAt: new Date()
+                }
+            })
+        }
+
         const response: AsesorPage = {
             UserId: user.UserId,
             AsesorId: asesor.AsesorId,
@@ -480,11 +512,14 @@ app.put('/', async (c) => {
         },
     })
 
-        const asesor = await prisma.asesor.create({
+        const asesor = await prisma.asesor.update({
             data: {
                 TipeAsesorId: body.TipeAsesor.TipeAsesorId,
                 UserId: user.UserId
-            }
+            },
+            where: {
+                AsesorId: body.AsesorId,
+            },
         })
 
         await prisma.asesorProgramStudi.deleteMany({
@@ -502,6 +537,90 @@ app.put('/', async (c) => {
             data: temp,
             skipDuplicates: true
         })
+
+        if(body.AsesorAkademik) {
+            if(body.AsesorAkademik.AsesorAkademikId !== '') {
+                await prisma.asesorAkademik.update({
+                    data: {
+                        Pangkat: body.AsesorAkademik.Pangkat,
+                        JabatanFungsionalAkademik: body.AsesorAkademik.JabatanFungsionalAkademik,
+                        NipNidn: body.AsesorAkademik.NipNidn,
+                        NamaPerguruanTinggi: body.AsesorAkademik.NamaPerguruanTinggi,
+                        AlamatPerguruanTinggi: body.AsesorAkademik.AlamatPerguruanTinggi,
+                        PendidikanTerakhirBidangKeilmuan: body.AsesorAkademik.AlamatPerguruanTinggi,
+                        UpdatedAt: new Date()
+                    }, 
+                    where: {
+                        AsesorAkademikId: body.AsesorAkademik.AsesorAkademikId
+                    }
+                })
+            } else if (body.AsesorAkademik.NamaPerguruanTinggi !== '' && body.AsesorAkademik.AsesorAkademikId === '') {
+                let temp = await prisma.asesorPraktisi.findFirst({select: {AsesorPraktisiId: true}, where: {AsesorId: asesor.AsesorId}})
+                if(temp) {
+                    await prisma.asesorPraktisi.delete({
+                        where: {
+                            AsesorPraktisiId: temp.AsesorPraktisiId
+                        }})
+                }
+
+                await prisma.asesorAkademik.create({
+                    data: {
+                        AsesorId: asesor.AsesorId,
+                        Pangkat: body.AsesorAkademik.Pangkat,
+                        JabatanFungsionalAkademik: body.AsesorAkademik.JabatanFungsionalAkademik,
+                        NipNidn: body.AsesorAkademik.NipNidn,
+                        NamaPerguruanTinggi: body.AsesorAkademik.NamaPerguruanTinggi,
+                        AlamatPerguruanTinggi: body.AsesorAkademik.AlamatPerguruanTinggi,
+                        PendidikanTerakhirBidangKeilmuan: body.AsesorAkademik.AlamatPerguruanTinggi,
+                        CreatedAt: new Date(),
+                        UpdatedAt: new Date()
+                    }
+                })
+            }
+        }
+
+        if(body.AsesorPraktisi) {
+            if(body.AsesorPraktisi.AsesorPraktisiId !== '') {
+                await prisma.asesorPraktisi.update({
+                    data: {
+                        NamaAsosiasi: body.AsesorPraktisi.NamaAsosiasi,
+                        NomorKeanggotaan: body.AsesorPraktisi.NomorKeanggotaan,
+                        Jabatan: body.AsesorPraktisi.Jabatan,
+                        AlamatKantor: body.AsesorPraktisi.AlamatKantor,
+                        NamaInstansi: body.AsesorPraktisi.NamaInstansi,
+                        JabatanInstansi: body.AsesorPraktisi.JabatanInstansi,
+                        BidangKeahlian: body.AsesorPraktisi.BidangKeahlian,
+                        UpdatedAt: new Date()
+                    }, 
+                    where: {
+                        AsesorPraktisiId: body.AsesorPraktisi.AsesorPraktisiId
+                    }
+                })
+            } else if (body.AsesorPraktisi.NamaAsosiasi !== '' && body.AsesorPraktisi.AsesorPraktisiId === '') {
+                let temp = await prisma.asesorAkademik.findFirst({select: {AsesorAkademikId: true}, where: {AsesorId: asesor.AsesorId}})
+                if(temp) {
+                    await prisma.asesorAkademik.delete({
+                        where: {
+                            AsesorAkademikId: temp.AsesorAkademikId
+                        }})
+                }
+
+                await prisma.asesorPraktisi.create({
+                    data: {
+                        AsesorId: asesor.AsesorId,
+                        NamaAsosiasi: body.AsesorPraktisi.NamaAsosiasi,
+                        NomorKeanggotaan: body.AsesorPraktisi.NomorKeanggotaan,
+                        Jabatan: body.AsesorPraktisi.Jabatan,
+                        AlamatKantor: body.AsesorPraktisi.AlamatKantor,
+                        NamaInstansi: body.AsesorPraktisi.NamaInstansi,
+                        JabatanInstansi: body.AsesorPraktisi.JabatanInstansi,
+                        BidangKeahlian: body.AsesorPraktisi.BidangKeahlian,
+                        CreatedAt: new Date(),
+                        UpdatedAt: new Date()
+                    }
+                })
+            }
+        }
 
         const response: AsesorPage = {
             UserId: user.UserId,

@@ -223,21 +223,22 @@ model Country {
 }
 
 model DaftarUlang {
-  DaftarUlangId      String       @id @default(uuid()) @map("daftar_ulang_id")
-  PendaftaranId      String       @map("pendaftaran_id")
-  ProgramStudiId     String       @map("program_studi_id")
-  Nim                String?      @map("nim")
-  JenjangKkniDituju  String?      @map("jenjang_kkni_dituju")
-  KipK               Boolean      @default(false) @map("kip_k")
-  Aktif              Boolean      @default(false) @map("aktif")
-  MengisiBiodata     Boolean      @default(false) @map("mengisi_biodata")
-  Finalisasi         Boolean      @default(false) @map("finalisasi")
-  TanggalDaftar      DateTime?    @map("tanggal_daftar")
-  TanggalDaftarUlang DateTime?    @map("tanggal_daftar_ulang")
-  CreatedAt          DateTime?    @map("created_at")
-  UpdatedAt          DateTime?    @map("updated_at")
-  Pendaftaran        Pendaftaran  @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
-  ProgramStudi       ProgramStudi @relation(fields: [ProgramStudiId], references: [ProgramStudiId], onDelete: Cascade)
+  DaftarUlangId                   String                            @id @default(uuid()) @map("daftar_ulang_id")
+  PendaftaranId                   String                            @map("pendaftaran_id")
+  ProgramStudiId                  String                            @map("program_studi_id")
+  Nim                             String?                           @map("nim")
+  JenjangKkniDituju               String?                           @map("jenjang_kkni_dituju")
+  KipK                            Boolean                           @default(false) @map("kip_k")
+  Aktif                           Boolean                           @default(false) @map("aktif")
+  MengisiBiodata                  Boolean                           @default(false) @map("mengisi_biodata")
+  Finalisasi                      Boolean                           @default(false) @map("finalisasi")
+  TanggalDaftar                   DateTime?                         @map("tanggal_daftar")
+  TanggalDaftarUlang              DateTime?                         @map("tanggal_daftar_ulang")
+  CreatedAt                       DateTime?                         @map("created_at")
+  UpdatedAt                       DateTime?                         @map("updated_at")
+  Pendaftaran                     Pendaftaran                       @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
+  ProgramStudi                    ProgramStudi                      @relation(fields: [ProgramStudiId], references: [ProgramStudiId], onDelete: Cascade)
+  StatusMahasiswaAssesmentHistory StatusMahasiswaAssesmentHistory[]
 
   @@map("daftar_ulang")
 }
@@ -774,6 +775,7 @@ model StatusMahasiswaAssesmentHistory {
   Tanggal                           DateTime?                @map("tanggal")
   Keterangan                        String?                  @map("keterangan")
   StatusMahasiswaAssesment          StatusMahasiswaAssesment @relation(fields: [StatusMahasiswaAssesmentId], references: [StatusMahasiswaAssesmentId], onDelete: Cascade)
+  DaftarUlang                       DaftarUlang              @relation(fields: [DaftarUlangId], references: [DaftarUlangId], onDelete: Cascade)
 
   @@map("status_mahasiswa_assesment_history")
 }

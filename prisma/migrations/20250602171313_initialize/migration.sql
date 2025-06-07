@@ -5,6 +5,9 @@ CREATE TYPE "ProfiensiPengetahuan" AS ENUM ('SANGAT_BAIK', 'BAIK', 'TIDAK_PERNAH
 CREATE TYPE "Jenjang" AS ENUM ('TIDAK_TAMAT_SD', 'SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3');
 
 -- CreateEnum
+CREATE TYPE "StatusMataKuliahMahasiswa" AS ENUM ('DRAFT', 'EVALUASI_MANDIRI', 'DALAM_ASESSMEN', 'DISANGGAH', 'PERLU_DIREVISI', 'SELESAI');
+
+-- CreateEnum
 CREATE TYPE "StatusPerkawinan" AS ENUM ('Lajang', 'Menikah', 'Cerai');
 
 -- CreateEnum
@@ -97,7 +100,7 @@ CREATE TABLE "asesor_praktisi" (
 -- CreateTable
 CREATE TABLE "assesor_mahasiswa" (
     "assesor_mahasiswa_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "asesor_id" TEXT NOT NULL,
     "urutan" INTEGER NOT NULL,
     "confirmation" BOOLEAN NOT NULL DEFAULT false,
@@ -110,7 +113,7 @@ CREATE TABLE "assesor_mahasiswa" (
 -- CreateTable
 CREATE TABLE "bukti_form" (
     "bukti_form_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "jenis_dokumen_id" TEXT NOT NULL,
     "nama_file" TEXT NOT NULL,
     "nama_dokumen" TEXT NOT NULL,
@@ -153,7 +156,7 @@ CREATE TABLE "country" (
 -- CreateTable
 CREATE TABLE "daftar_ulang" (
     "daftar_ulang_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "program_studi_id" TEXT NOT NULL,
     "nim" TEXT,
     "jenjang_kkni_dituju" TEXT,
@@ -212,7 +215,7 @@ CREATE TABLE "hasil_assesmen" (
 -- CreateTable
 CREATE TABLE "informasi_kependudukan" (
     "informasi_kependudukan_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "no_kk" TEXT NOT NULL,
     "no_nik" TEXT NOT NULL,
     "suku" TEXT NOT NULL,
@@ -225,8 +228,8 @@ CREATE TABLE "informasi_kependudukan" (
 -- CreateTable
 CREATE TABLE "institusi_lama" (
     "institusi_lama_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
-    "alamat_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
+    "alamat_id" TEXT,
     "jenjang" "Jenjang" NOT NULL DEFAULT 'TIDAK_TAMAT_SD',
     "jenis_institusi" TEXT NOT NULL,
     "nama_institusi" TEXT NOT NULL,
@@ -283,7 +286,7 @@ CREATE TABLE "mahasiswa" (
 -- CreateTable
 CREATE TABLE "mahasiswa_konferensi" (
     "mahasiswa_konferensi_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "tahun" INTEGER NOT NULL,
     "judul_seminar" TEXT NOT NULL,
     "penyelenggara" TEXT NOT NULL,
@@ -297,7 +300,7 @@ CREATE TABLE "mahasiswa_konferensi" (
 -- CreateTable
 CREATE TABLE "mahasiswa_organisasi_profesi" (
     "mahasiswa_organisasi_profesi_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "tahun" INTEGER NOT NULL,
     "nama_organisasi" TEXT NOT NULL,
     "jenjang_anggota_jabatan" TEXT NOT NULL,
@@ -310,7 +313,7 @@ CREATE TABLE "mahasiswa_organisasi_profesi" (
 -- CreateTable
 CREATE TABLE "mahasiswa_pelatihan_professional" (
     "mahasiswa_pelatihan_professional_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "nama_pelatihan" TEXT NOT NULL,
     "penyelenggara" TEXT NOT NULL,
     "mulai" TIMESTAMP(3) NOT NULL,
@@ -324,7 +327,7 @@ CREATE TABLE "mahasiswa_pelatihan_professional" (
 -- CreateTable
 CREATE TABLE "mahasiswa_pendidikan" (
     "mahasiswa_pendidikan_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "nama_sekolah" TEXT NOT NULL,
     "tahun_lulus" INTEGER NOT NULL,
     "jurusan" TEXT NOT NULL,
@@ -337,7 +340,8 @@ CREATE TABLE "mahasiswa_pendidikan" (
 -- CreateTable
 CREATE TABLE "mahasiswa_piagam" (
     "mahasiswa_piagam_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
+    "tahun" INTEGER NOT NULL,
     "bentuk_penghargaan" TEXT NOT NULL,
     "pemberi_penghargaan" TEXT NOT NULL,
     "created_at" TIMESTAMP(3),
@@ -349,7 +353,7 @@ CREATE TABLE "mahasiswa_piagam" (
 -- CreateTable
 CREATE TABLE "mahasiswa_riwayat_pekerjaan" (
     "mahasiswa_riwayat_pekerjaan_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "nama" TEXT NOT NULL,
     "posisi_jabatan" TEXT NOT NULL,
     "alamat" TEXT,
@@ -369,7 +373,7 @@ CREATE TABLE "mata_kuliah" (
     "kode" TEXT NOT NULL,
     "nama" TEXT NOT NULL,
     "sks" INTEGER NOT NULL,
-    "semester" TEXT NOT NULL,
+    "semester" TEXT,
     "silabus" TEXT,
     "created_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
@@ -381,10 +385,11 @@ CREATE TABLE "mata_kuliah" (
 -- CreateTable
 CREATE TABLE "mata_kuliah_mahasiswa" (
     "mata_kuliah_mahasiswa_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "mata_kuliah_id" TEXT NOT NULL,
     "rpl" BOOLEAN NOT NULL DEFAULT false,
     "keterangan" "KeteranganMataKuliah",
+    "status_mata_kuliah_mahasiswa" "StatusMataKuliahMahasiswa",
     "created_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
 
@@ -408,9 +413,17 @@ CREATE TABLE "user_has_roles" (
 );
 
 -- CreateTable
+CREATE TABLE "asesor_program_studi" (
+    "asesor_id" TEXT NOT NULL,
+    "program_studi_id" TEXT NOT NULL,
+
+    CONSTRAINT "asesor_program_studi_pkey" PRIMARY KEY ("asesor_id","program_studi_id")
+);
+
+-- CreateTable
 CREATE TABLE "orang_tua" (
     "orang_tua_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "nama" TEXT NOT NULL,
     "pekerjaan" TEXT,
     "jenis_ortu" "JenisOrtu" NOT NULL,
@@ -435,7 +448,7 @@ CREATE TABLE "password_reset_tokens" (
 -- CreateTable
 CREATE TABLE "pekerjaan_mahasiswa" (
     "pekerjaan_mahasiswa_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "alamat_id" TEXT NOT NULL,
     "institusi_tempat_bekerja" TEXT NOT NULL,
     "jabatan" TEXT NOT NULL,
@@ -476,7 +489,7 @@ CREATE TABLE "permissions" (
 -- CreateTable
 CREATE TABLE "pesantren" (
     "pesantren_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "nama_pesantren" TEXT NOT NULL,
     "lama_pesantren" TEXT NOT NULL,
     "created_at" TIMESTAMP(3),
@@ -521,6 +534,7 @@ CREATE TABLE "roles" (
     "role_id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "guard_name" TEXT NOT NULL,
+    "icon" TEXT,
     "created_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
 
@@ -530,7 +544,7 @@ CREATE TABLE "roles" (
 -- CreateTable
 CREATE TABLE "sanggahan_assesmen" (
     "sanggahan_assesmen_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
     "proses_banding" BOOLEAN NOT NULL DEFAULT false,
     "diskusi_banding" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3),
@@ -589,9 +603,9 @@ CREATE TABLE "sk_rektor_assesor" (
 -- CreateTable
 CREATE TABLE "sk_rektor_mahasiswa" (
     "sk_rektor_id" TEXT NOT NULL,
-    "mahasiswa_id" TEXT NOT NULL,
+    "pendaftaran_id" TEXT NOT NULL,
 
-    CONSTRAINT "sk_rektor_mahasiswa_pkey" PRIMARY KEY ("sk_rektor_id","mahasiswa_id")
+    CONSTRAINT "sk_rektor_mahasiswa_pkey" PRIMARY KEY ("sk_rektor_id","pendaftaran_id")
 );
 
 -- CreateTable
@@ -659,6 +673,27 @@ CREATE TABLE "university" (
 );
 
 -- CreateTable
+CREATE TABLE "UniversitySosialMedia" (
+    "university_sosial_media_id" TEXT NOT NULL,
+    "university_id" TEXT NOT NULL,
+    "nama" TEXT NOT NULL,
+    "username" TEXT,
+    "icon" TEXT,
+
+    CONSTRAINT "UniversitySosialMedia_pkey" PRIMARY KEY ("university_sosial_media_id")
+);
+
+-- CreateTable
+CREATE TABLE "UniversityInformasi" (
+    "university_informasi_id" TEXT NOT NULL,
+    "university_id" TEXT NOT NULL,
+    "nama" TEXT NOT NULL,
+    "informasi" TEXT,
+
+    CONSTRAINT "UniversityInformasi_pkey" PRIMARY KEY ("university_informasi_id")
+);
+
+-- CreateTable
 CREATE TABLE "university_jabatan" (
     "university_jabatan_id" TEXT NOT NULL,
     "university_id" TEXT NOT NULL,
@@ -714,9 +749,16 @@ CREATE TABLE "userlogin" (
     "user_id" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "credential" TEXT NOT NULL,
 
     CONSTRAINT "userlogin_pkey" PRIMARY KEY ("userlogin_id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "evaluasi_diri_mata_kuliah_mahasiswa_id_capaian_pembelajaran_key" ON "evaluasi_diri"("mata_kuliah_mahasiswa_id", "capaian_pembelajaran_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "mata_kuliah_mahasiswa_pendaftaran_id_mata_kuliah_id_key" ON "mata_kuliah_mahasiswa"("pendaftaran_id", "mata_kuliah_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "permissions_name_guard_name_key" ON "permissions"("name", "guard_name");
@@ -734,6 +776,9 @@ ALTER TABLE "alamat" ADD CONSTRAINT "alamat_desa_id_fkey" FOREIGN KEY ("desa_id"
 ALTER TABLE "asesor" ADD CONSTRAINT "asesor_tipe_asesor_id_fkey" FOREIGN KEY ("tipe_asesor_id") REFERENCES "tipe_asesor"("tipe_asesor_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "asesor" ADD CONSTRAINT "asesor_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "asesor_akademik" ADD CONSTRAINT "asesor_akademik_asesor_id_fkey" FOREIGN KEY ("asesor_id") REFERENCES "asesor"("asesor_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -746,10 +791,10 @@ ALTER TABLE "asesor_praktisi" ADD CONSTRAINT "asesor_praktisi_asesor_id_fkey" FO
 ALTER TABLE "assesor_mahasiswa" ADD CONSTRAINT "assesor_mahasiswa_asesor_id_fkey" FOREIGN KEY ("asesor_id") REFERENCES "asesor"("asesor_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "assesor_mahasiswa" ADD CONSTRAINT "assesor_mahasiswa_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "assesor_mahasiswa" ADD CONSTRAINT "assesor_mahasiswa_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "bukti_form" ADD CONSTRAINT "bukti_form_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "bukti_form" ADD CONSTRAINT "bukti_form_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "bukti_form" ADD CONSTRAINT "bukti_form_jenis_dokumen_id_fkey" FOREIGN KEY ("jenis_dokumen_id") REFERENCES "jenis_dokumen"("jenis_dokumen_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -764,7 +809,7 @@ ALTER TABLE "bukti_form_evaluasi_diri" ADD CONSTRAINT "bukti_form_evaluasi_diri_
 ALTER TABLE "capaian_pembelajaran" ADD CONSTRAINT "capaian_pembelajaran_mata_kuliah_id_fkey" FOREIGN KEY ("mata_kuliah_id") REFERENCES "mata_kuliah"("mata_kuliah_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "daftar_ulang" ADD CONSTRAINT "daftar_ulang_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "daftar_ulang" ADD CONSTRAINT "daftar_ulang_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "daftar_ulang" ADD CONSTRAINT "daftar_ulang_program_studi_id_fkey" FOREIGN KEY ("program_studi_id") REFERENCES "program_studi"("program_studi_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -782,10 +827,10 @@ ALTER TABLE "evaluasi_diri" ADD CONSTRAINT "evaluasi_diri_capaian_pembelajaran_i
 ALTER TABLE "hasil_assesmen" ADD CONSTRAINT "hasil_assesmen_evaluasi_diri_id_fkey" FOREIGN KEY ("evaluasi_diri_id") REFERENCES "evaluasi_diri"("evaluasi_diri_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "informasi_kependudukan" ADD CONSTRAINT "informasi_kependudukan_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "informasi_kependudukan" ADD CONSTRAINT "informasi_kependudukan_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "institusi_lama" ADD CONSTRAINT "institusi_lama_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "institusi_lama" ADD CONSTRAINT "institusi_lama_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "institusi_lama" ADD CONSTRAINT "institusi_lama_alamat_id_fkey" FOREIGN KEY ("alamat_id") REFERENCES "alamat"("alamat_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -800,28 +845,28 @@ ALTER TABLE "kecamatan" ADD CONSTRAINT "kecamatan_kabupaten_id_fkey" FOREIGN KEY
 ALTER TABLE "mahasiswa" ADD CONSTRAINT "mahasiswa_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "mahasiswa_konferensi" ADD CONSTRAINT "mahasiswa_konferensi_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "mahasiswa_konferensi" ADD CONSTRAINT "mahasiswa_konferensi_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "mahasiswa_organisasi_profesi" ADD CONSTRAINT "mahasiswa_organisasi_profesi_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "mahasiswa_organisasi_profesi" ADD CONSTRAINT "mahasiswa_organisasi_profesi_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "mahasiswa_pelatihan_professional" ADD CONSTRAINT "mahasiswa_pelatihan_professional_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "mahasiswa_pelatihan_professional" ADD CONSTRAINT "mahasiswa_pelatihan_professional_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "mahasiswa_pendidikan" ADD CONSTRAINT "mahasiswa_pendidikan_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "mahasiswa_pendidikan" ADD CONSTRAINT "mahasiswa_pendidikan_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "mahasiswa_piagam" ADD CONSTRAINT "mahasiswa_piagam_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "mahasiswa_piagam" ADD CONSTRAINT "mahasiswa_piagam_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "mahasiswa_riwayat_pekerjaan" ADD CONSTRAINT "mahasiswa_riwayat_pekerjaan_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "mahasiswa_riwayat_pekerjaan" ADD CONSTRAINT "mahasiswa_riwayat_pekerjaan_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "mata_kuliah" ADD CONSTRAINT "mata_kuliah_program_studi_id_fkey" FOREIGN KEY ("program_studi_id") REFERENCES "program_studi"("program_studi_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "mata_kuliah_mahasiswa" ADD CONSTRAINT "mata_kuliah_mahasiswa_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "mata_kuliah_mahasiswa" ADD CONSTRAINT "mata_kuliah_mahasiswa_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "mata_kuliah_mahasiswa" ADD CONSTRAINT "mata_kuliah_mahasiswa_mata_kuliah_id_fkey" FOREIGN KEY ("mata_kuliah_id") REFERENCES "mata_kuliah"("mata_kuliah_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -839,16 +884,22 @@ ALTER TABLE "user_has_roles" ADD CONSTRAINT "user_has_roles_role_id_fkey" FOREIG
 ALTER TABLE "user_has_roles" ADD CONSTRAINT "user_has_roles_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "orang_tua" ADD CONSTRAINT "orang_tua_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "asesor_program_studi" ADD CONSTRAINT "asesor_program_studi_asesor_id_fkey" FOREIGN KEY ("asesor_id") REFERENCES "asesor"("asesor_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "pekerjaan_mahasiswa" ADD CONSTRAINT "pekerjaan_mahasiswa_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "asesor_program_studi" ADD CONSTRAINT "asesor_program_studi_program_studi_id_fkey" FOREIGN KEY ("program_studi_id") REFERENCES "program_studi"("program_studi_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "orang_tua" ADD CONSTRAINT "orang_tua_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "pekerjaan_mahasiswa" ADD CONSTRAINT "pekerjaan_mahasiswa_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "pendaftaran" ADD CONSTRAINT "pendaftaran_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "pesantren" ADD CONSTRAINT "pesantren_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "pesantren" ADD CONSTRAINT "pesantren_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "program_studi" ADD CONSTRAINT "program_studi_university_id_fkey" FOREIGN KEY ("university_id") REFERENCES "university"("university_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -863,7 +914,7 @@ ALTER TABLE "role_has_permissions" ADD CONSTRAINT "role_has_permissions_permissi
 ALTER TABLE "role_has_permissions" ADD CONSTRAINT "role_has_permissions_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "roles"("role_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "sanggahan_assesmen" ADD CONSTRAINT "sanggahan_assesmen_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "sanggahan_assesmen" ADD CONSTRAINT "sanggahan_assesmen_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "sanggahan_assesmen_mk" ADD CONSTRAINT "sanggahan_assesmen_mk_sanggahan_assesmen_id_fkey" FOREIGN KEY ("sanggahan_assesmen_id") REFERENCES "sanggahan_assesmen"("sanggahan_assesmen_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -884,7 +935,7 @@ ALTER TABLE "sk_rektor_assesor" ADD CONSTRAINT "sk_rektor_assesor_assesor_mahasi
 ALTER TABLE "sk_rektor_mahasiswa" ADD CONSTRAINT "sk_rektor_mahasiswa_sk_rektor_id_fkey" FOREIGN KEY ("sk_rektor_id") REFERENCES "sk_rektor"("sk_rektor_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "sk_rektor_mahasiswa" ADD CONSTRAINT "sk_rektor_mahasiswa_mahasiswa_id_fkey" FOREIGN KEY ("mahasiswa_id") REFERENCES "mahasiswa"("mahasiswa_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "sk_rektor_mahasiswa" ADD CONSTRAINT "sk_rektor_mahasiswa_pendaftaran_id_fkey" FOREIGN KEY ("pendaftaran_id") REFERENCES "pendaftaran"("pendaftaran_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "skor_assesmen" ADD CONSTRAINT "skor_assesmen_hasil_assesmen_id_fkey" FOREIGN KEY ("hasil_assesmen_id") REFERENCES "hasil_assesmen"("hasil_assesmen_id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -894,6 +945,12 @@ ALTER TABLE "status_mahasiswa_assesment_history" ADD CONSTRAINT "status_mahasisw
 
 -- AddForeignKey
 ALTER TABLE "university" ADD CONSTRAINT "university_alamat_id_fkey" FOREIGN KEY ("alamat_id") REFERENCES "alamat"("alamat_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UniversitySosialMedia" ADD CONSTRAINT "UniversitySosialMedia_university_id_fkey" FOREIGN KEY ("university_id") REFERENCES "university"("university_id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UniversityInformasi" ADD CONSTRAINT "UniversityInformasi_university_id_fkey" FOREIGN KEY ("university_id") REFERENCES "university"("university_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "university_jabatan" ADD CONSTRAINT "university_jabatan_university_id_fkey" FOREIGN KEY ("university_id") REFERENCES "university"("university_id") ON DELETE CASCADE ON UPDATE CASCADE;

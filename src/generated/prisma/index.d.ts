@@ -6456,6 +6456,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type DaftarUlangCountOutputType
+   */
+
+  export type DaftarUlangCountOutputType = {
+    StatusMahasiswaAssesmentHistory: number
+  }
+
+  export type DaftarUlangCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    StatusMahasiswaAssesmentHistory?: boolean | DaftarUlangCountOutputTypeCountStatusMahasiswaAssesmentHistoryArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DaftarUlangCountOutputType without action
+   */
+  export type DaftarUlangCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DaftarUlangCountOutputType
+     */
+    select?: DaftarUlangCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DaftarUlangCountOutputType without action
+   */
+  export type DaftarUlangCountOutputTypeCountStatusMahasiswaAssesmentHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StatusMahasiswaAssesmentHistoryWhereInput
+  }
+
+
+  /**
    * Count Type DesaCountOutputType
    */
 
@@ -18835,6 +18866,8 @@ export namespace Prisma {
     UpdatedAt?: boolean
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
     ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+    StatusMahasiswaAssesmentHistory?: boolean | DaftarUlang$StatusMahasiswaAssesmentHistoryArgs<ExtArgs>
+    _count?: boolean | DaftarUlangCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["daftarUlang"]>
 
   export type DaftarUlangSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -18893,6 +18926,8 @@ export namespace Prisma {
   export type DaftarUlangInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
     ProgramStudi?: boolean | ProgramStudiDefaultArgs<ExtArgs>
+    StatusMahasiswaAssesmentHistory?: boolean | DaftarUlang$StatusMahasiswaAssesmentHistoryArgs<ExtArgs>
+    _count?: boolean | DaftarUlangCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DaftarUlangIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
@@ -18908,6 +18943,7 @@ export namespace Prisma {
     objects: {
       Pendaftaran: Prisma.$PendaftaranPayload<ExtArgs>
       ProgramStudi: Prisma.$ProgramStudiPayload<ExtArgs>
+      StatusMahasiswaAssesmentHistory: Prisma.$StatusMahasiswaAssesmentHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       DaftarUlangId: string
@@ -19319,6 +19355,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Pendaftaran<T extends PendaftaranDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PendaftaranDefaultArgs<ExtArgs>>): Prisma__PendaftaranClient<$Result.GetResult<Prisma.$PendaftaranPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     ProgramStudi<T extends ProgramStudiDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProgramStudiDefaultArgs<ExtArgs>>): Prisma__ProgramStudiClient<$Result.GetResult<Prisma.$ProgramStudiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    StatusMahasiswaAssesmentHistory<T extends DaftarUlang$StatusMahasiswaAssesmentHistoryArgs<ExtArgs> = {}>(args?: Subset<T, DaftarUlang$StatusMahasiswaAssesmentHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StatusMahasiswaAssesmentHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19754,6 +19791,30 @@ export namespace Prisma {
      * Limit how many DaftarUlangs to delete.
      */
     limit?: number
+  }
+
+  /**
+   * DaftarUlang.StatusMahasiswaAssesmentHistory
+   */
+  export type DaftarUlang$StatusMahasiswaAssesmentHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StatusMahasiswaAssesmentHistory
+     */
+    select?: StatusMahasiswaAssesmentHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StatusMahasiswaAssesmentHistory
+     */
+    omit?: StatusMahasiswaAssesmentHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StatusMahasiswaAssesmentHistoryInclude<ExtArgs> | null
+    where?: StatusMahasiswaAssesmentHistoryWhereInput
+    orderBy?: StatusMahasiswaAssesmentHistoryOrderByWithRelationInput | StatusMahasiswaAssesmentHistoryOrderByWithRelationInput[]
+    cursor?: StatusMahasiswaAssesmentHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StatusMahasiswaAssesmentHistoryScalarFieldEnum | StatusMahasiswaAssesmentHistoryScalarFieldEnum[]
   }
 
   /**
@@ -62313,6 +62374,7 @@ export namespace Prisma {
     Tanggal?: boolean
     Keterangan?: boolean
     StatusMahasiswaAssesment?: boolean | StatusMahasiswaAssesmentDefaultArgs<ExtArgs>
+    DaftarUlang?: boolean | DaftarUlangDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["statusMahasiswaAssesmentHistory"]>
 
   export type StatusMahasiswaAssesmentHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -62322,6 +62384,7 @@ export namespace Prisma {
     Tanggal?: boolean
     Keterangan?: boolean
     StatusMahasiswaAssesment?: boolean | StatusMahasiswaAssesmentDefaultArgs<ExtArgs>
+    DaftarUlang?: boolean | DaftarUlangDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["statusMahasiswaAssesmentHistory"]>
 
   export type StatusMahasiswaAssesmentHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -62331,6 +62394,7 @@ export namespace Prisma {
     Tanggal?: boolean
     Keterangan?: boolean
     StatusMahasiswaAssesment?: boolean | StatusMahasiswaAssesmentDefaultArgs<ExtArgs>
+    DaftarUlang?: boolean | DaftarUlangDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["statusMahasiswaAssesmentHistory"]>
 
   export type StatusMahasiswaAssesmentHistorySelectScalar = {
@@ -62344,18 +62408,22 @@ export namespace Prisma {
   export type StatusMahasiswaAssesmentHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"StatusMahasiswaAssesmentHistoryId" | "StatusMahasiswaAssesmentId" | "DaftarUlangId" | "Tanggal" | "Keterangan", ExtArgs["result"]["statusMahasiswaAssesmentHistory"]>
   export type StatusMahasiswaAssesmentHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     StatusMahasiswaAssesment?: boolean | StatusMahasiswaAssesmentDefaultArgs<ExtArgs>
+    DaftarUlang?: boolean | DaftarUlangDefaultArgs<ExtArgs>
   }
   export type StatusMahasiswaAssesmentHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     StatusMahasiswaAssesment?: boolean | StatusMahasiswaAssesmentDefaultArgs<ExtArgs>
+    DaftarUlang?: boolean | DaftarUlangDefaultArgs<ExtArgs>
   }
   export type StatusMahasiswaAssesmentHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     StatusMahasiswaAssesment?: boolean | StatusMahasiswaAssesmentDefaultArgs<ExtArgs>
+    DaftarUlang?: boolean | DaftarUlangDefaultArgs<ExtArgs>
   }
 
   export type $StatusMahasiswaAssesmentHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "StatusMahasiswaAssesmentHistory"
     objects: {
       StatusMahasiswaAssesment: Prisma.$StatusMahasiswaAssesmentPayload<ExtArgs>
+      DaftarUlang: Prisma.$DaftarUlangPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       StatusMahasiswaAssesmentHistoryId: string
@@ -62758,6 +62826,7 @@ export namespace Prisma {
   export interface Prisma__StatusMahasiswaAssesmentHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     StatusMahasiswaAssesment<T extends StatusMahasiswaAssesmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StatusMahasiswaAssesmentDefaultArgs<ExtArgs>>): Prisma__StatusMahasiswaAssesmentClient<$Result.GetResult<Prisma.$StatusMahasiswaAssesmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    DaftarUlang<T extends DaftarUlangDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DaftarUlangDefaultArgs<ExtArgs>>): Prisma__DaftarUlangClient<$Result.GetResult<Prisma.$DaftarUlangPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -73897,6 +73966,7 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"DaftarUlang"> | Date | string | null
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
     ProgramStudi?: XOR<ProgramStudiScalarRelationFilter, ProgramStudiWhereInput>
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryListRelationFilter
   }
 
   export type DaftarUlangOrderByWithRelationInput = {
@@ -73915,6 +73985,7 @@ export namespace Prisma {
     UpdatedAt?: SortOrderInput | SortOrder
     Pendaftaran?: PendaftaranOrderByWithRelationInput
     ProgramStudi?: ProgramStudiOrderByWithRelationInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryOrderByRelationAggregateInput
   }
 
   export type DaftarUlangWhereUniqueInput = Prisma.AtLeast<{
@@ -73936,6 +74007,7 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"DaftarUlang"> | Date | string | null
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
     ProgramStudi?: XOR<ProgramStudiScalarRelationFilter, ProgramStudiWhereInput>
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryListRelationFilter
   }, "DaftarUlangId">
 
   export type DaftarUlangOrderByWithAggregationInput = {
@@ -76473,6 +76545,7 @@ export namespace Prisma {
     Tanggal?: DateTimeNullableFilter<"StatusMahasiswaAssesmentHistory"> | Date | string | null
     Keterangan?: StringNullableFilter<"StatusMahasiswaAssesmentHistory"> | string | null
     StatusMahasiswaAssesment?: XOR<StatusMahasiswaAssesmentScalarRelationFilter, StatusMahasiswaAssesmentWhereInput>
+    DaftarUlang?: XOR<DaftarUlangScalarRelationFilter, DaftarUlangWhereInput>
   }
 
   export type StatusMahasiswaAssesmentHistoryOrderByWithRelationInput = {
@@ -76482,6 +76555,7 @@ export namespace Prisma {
     Tanggal?: SortOrderInput | SortOrder
     Keterangan?: SortOrderInput | SortOrder
     StatusMahasiswaAssesment?: StatusMahasiswaAssesmentOrderByWithRelationInput
+    DaftarUlang?: DaftarUlangOrderByWithRelationInput
   }
 
   export type StatusMahasiswaAssesmentHistoryWhereUniqueInput = Prisma.AtLeast<{
@@ -76494,6 +76568,7 @@ export namespace Prisma {
     Tanggal?: DateTimeNullableFilter<"StatusMahasiswaAssesmentHistory"> | Date | string | null
     Keterangan?: StringNullableFilter<"StatusMahasiswaAssesmentHistory"> | string | null
     StatusMahasiswaAssesment?: XOR<StatusMahasiswaAssesmentScalarRelationFilter, StatusMahasiswaAssesmentWhereInput>
+    DaftarUlang?: XOR<DaftarUlangScalarRelationFilter, DaftarUlangWhereInput>
   }, "StatusMahasiswaAssesmentHistoryId">
 
   export type StatusMahasiswaAssesmentHistoryOrderByWithAggregationInput = {
@@ -77803,6 +77878,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutDaftarUlangInput
     ProgramStudi: ProgramStudiCreateNestedOneWithoutDaftarUlangInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutDaftarUlangInput
   }
 
   export type DaftarUlangUncheckedCreateInput = {
@@ -77819,6 +77895,7 @@ export namespace Prisma {
     TanggalDaftarUlang?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutDaftarUlangInput
   }
 
   export type DaftarUlangUpdateInput = {
@@ -77835,6 +77912,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutDaftarUlangNestedInput
     ProgramStudi?: ProgramStudiUpdateOneRequiredWithoutDaftarUlangNestedInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutDaftarUlangNestedInput
   }
 
   export type DaftarUlangUncheckedUpdateInput = {
@@ -77851,6 +77929,7 @@ export namespace Prisma {
     TanggalDaftarUlang?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutDaftarUlangNestedInput
   }
 
   export type DaftarUlangCreateManyInput = {
@@ -80476,10 +80555,10 @@ export namespace Prisma {
 
   export type StatusMahasiswaAssesmentHistoryCreateInput = {
     StatusMahasiswaAssesmentHistoryId?: string
-    DaftarUlangId: string
     Tanggal?: Date | string | null
     Keterangan?: string | null
     StatusMahasiswaAssesment: StatusMahasiswaAssesmentCreateNestedOneWithoutStatusMahasiswaAssesmentHistoryInput
+    DaftarUlang: DaftarUlangCreateNestedOneWithoutStatusMahasiswaAssesmentHistoryInput
   }
 
   export type StatusMahasiswaAssesmentHistoryUncheckedCreateInput = {
@@ -80492,10 +80571,10 @@ export namespace Prisma {
 
   export type StatusMahasiswaAssesmentHistoryUpdateInput = {
     StatusMahasiswaAssesmentHistoryId?: StringFieldUpdateOperationsInput | string
-    DaftarUlangId?: StringFieldUpdateOperationsInput | string
     Tanggal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
     StatusMahasiswaAssesment?: StatusMahasiswaAssesmentUpdateOneRequiredWithoutStatusMahasiswaAssesmentHistoryNestedInput
+    DaftarUlang?: DaftarUlangUpdateOneRequiredWithoutStatusMahasiswaAssesmentHistoryNestedInput
   }
 
   export type StatusMahasiswaAssesmentHistoryUncheckedUpdateInput = {
@@ -80516,7 +80595,6 @@ export namespace Prisma {
 
   export type StatusMahasiswaAssesmentHistoryUpdateManyMutationInput = {
     StatusMahasiswaAssesmentHistoryId?: StringFieldUpdateOperationsInput | string
-    DaftarUlangId?: StringFieldUpdateOperationsInput | string
     Tanggal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -81769,6 +81847,16 @@ export namespace Prisma {
   export type ProgramStudiScalarRelationFilter = {
     is?: ProgramStudiWhereInput
     isNot?: ProgramStudiWhereInput
+  }
+
+  export type StatusMahasiswaAssesmentHistoryListRelationFilter = {
+    every?: StatusMahasiswaAssesmentHistoryWhereInput
+    some?: StatusMahasiswaAssesmentHistoryWhereInput
+    none?: StatusMahasiswaAssesmentHistoryWhereInput
+  }
+
+  export type StatusMahasiswaAssesmentHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type DaftarUlangCountOrderByAggregateInput = {
@@ -83560,16 +83648,6 @@ export namespace Prisma {
     SkorRataRata?: SortOrder
   }
 
-  export type StatusMahasiswaAssesmentHistoryListRelationFilter = {
-    every?: StatusMahasiswaAssesmentHistoryWhereInput
-    some?: StatusMahasiswaAssesmentHistoryWhereInput
-    none?: StatusMahasiswaAssesmentHistoryWhereInput
-  }
-
-  export type StatusMahasiswaAssesmentHistoryOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type StatusMahasiswaAssesmentCountOrderByAggregateInput = {
     StatusMahasiswaAssesmentId?: SortOrder
     NamaStatus?: SortOrder
@@ -83605,6 +83683,11 @@ export namespace Prisma {
   export type StatusMahasiswaAssesmentScalarRelationFilter = {
     is?: StatusMahasiswaAssesmentWhereInput
     isNot?: StatusMahasiswaAssesmentWhereInput
+  }
+
+  export type DaftarUlangScalarRelationFilter = {
+    is?: DaftarUlangWhereInput
+    isNot?: DaftarUlangWhereInput
   }
 
   export type StatusMahasiswaAssesmentHistoryCountOrderByAggregateInput = {
@@ -84712,6 +84795,20 @@ export namespace Prisma {
     connect?: ProgramStudiWhereUniqueInput
   }
 
+  export type StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutDaftarUlangInput = {
+    create?: XOR<StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput> | StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput[] | StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput[]
+    connectOrCreate?: StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput[]
+    createMany?: StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInputEnvelope
+    connect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutDaftarUlangInput = {
+    create?: XOR<StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput> | StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput[] | StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput[]
+    connectOrCreate?: StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput[]
+    createMany?: StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInputEnvelope
+    connect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+  }
+
   export type PendaftaranUpdateOneRequiredWithoutDaftarUlangNestedInput = {
     create?: XOR<PendaftaranCreateWithoutDaftarUlangInput, PendaftaranUncheckedCreateWithoutDaftarUlangInput>
     connectOrCreate?: PendaftaranCreateOrConnectWithoutDaftarUlangInput
@@ -84726,6 +84823,34 @@ export namespace Prisma {
     upsert?: ProgramStudiUpsertWithoutDaftarUlangInput
     connect?: ProgramStudiWhereUniqueInput
     update?: XOR<XOR<ProgramStudiUpdateToOneWithWhereWithoutDaftarUlangInput, ProgramStudiUpdateWithoutDaftarUlangInput>, ProgramStudiUncheckedUpdateWithoutDaftarUlangInput>
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUpdateManyWithoutDaftarUlangNestedInput = {
+    create?: XOR<StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput> | StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput[] | StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput[]
+    connectOrCreate?: StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput[]
+    upsert?: StatusMahasiswaAssesmentHistoryUpsertWithWhereUniqueWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryUpsertWithWhereUniqueWithoutDaftarUlangInput[]
+    createMany?: StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInputEnvelope
+    set?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    disconnect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    delete?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    connect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    update?: StatusMahasiswaAssesmentHistoryUpdateWithWhereUniqueWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryUpdateWithWhereUniqueWithoutDaftarUlangInput[]
+    updateMany?: StatusMahasiswaAssesmentHistoryUpdateManyWithWhereWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryUpdateManyWithWhereWithoutDaftarUlangInput[]
+    deleteMany?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutDaftarUlangNestedInput = {
+    create?: XOR<StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput> | StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput[] | StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput[]
+    connectOrCreate?: StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput[]
+    upsert?: StatusMahasiswaAssesmentHistoryUpsertWithWhereUniqueWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryUpsertWithWhereUniqueWithoutDaftarUlangInput[]
+    createMany?: StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInputEnvelope
+    set?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    disconnect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    delete?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    connect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+    update?: StatusMahasiswaAssesmentHistoryUpdateWithWhereUniqueWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryUpdateWithWhereUniqueWithoutDaftarUlangInput[]
+    updateMany?: StatusMahasiswaAssesmentHistoryUpdateManyWithWhereWithoutDaftarUlangInput | StatusMahasiswaAssesmentHistoryUpdateManyWithWhereWithoutDaftarUlangInput[]
+    deleteMany?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
   }
 
   export type KecamatanCreateNestedOneWithoutDesaInput = {
@@ -87136,12 +87261,26 @@ export namespace Prisma {
     connect?: StatusMahasiswaAssesmentWhereUniqueInput
   }
 
+  export type DaftarUlangCreateNestedOneWithoutStatusMahasiswaAssesmentHistoryInput = {
+    create?: XOR<DaftarUlangCreateWithoutStatusMahasiswaAssesmentHistoryInput, DaftarUlangUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput>
+    connectOrCreate?: DaftarUlangCreateOrConnectWithoutStatusMahasiswaAssesmentHistoryInput
+    connect?: DaftarUlangWhereUniqueInput
+  }
+
   export type StatusMahasiswaAssesmentUpdateOneRequiredWithoutStatusMahasiswaAssesmentHistoryNestedInput = {
     create?: XOR<StatusMahasiswaAssesmentCreateWithoutStatusMahasiswaAssesmentHistoryInput, StatusMahasiswaAssesmentUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput>
     connectOrCreate?: StatusMahasiswaAssesmentCreateOrConnectWithoutStatusMahasiswaAssesmentHistoryInput
     upsert?: StatusMahasiswaAssesmentUpsertWithoutStatusMahasiswaAssesmentHistoryInput
     connect?: StatusMahasiswaAssesmentWhereUniqueInput
     update?: XOR<XOR<StatusMahasiswaAssesmentUpdateToOneWithWhereWithoutStatusMahasiswaAssesmentHistoryInput, StatusMahasiswaAssesmentUpdateWithoutStatusMahasiswaAssesmentHistoryInput>, StatusMahasiswaAssesmentUncheckedUpdateWithoutStatusMahasiswaAssesmentHistoryInput>
+  }
+
+  export type DaftarUlangUpdateOneRequiredWithoutStatusMahasiswaAssesmentHistoryNestedInput = {
+    create?: XOR<DaftarUlangCreateWithoutStatusMahasiswaAssesmentHistoryInput, DaftarUlangUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput>
+    connectOrCreate?: DaftarUlangCreateOrConnectWithoutStatusMahasiswaAssesmentHistoryInput
+    upsert?: DaftarUlangUpsertWithoutStatusMahasiswaAssesmentHistoryInput
+    connect?: DaftarUlangWhereUniqueInput
+    update?: XOR<XOR<DaftarUlangUpdateToOneWithWhereWithoutStatusMahasiswaAssesmentHistoryInput, DaftarUlangUpdateWithoutStatusMahasiswaAssesmentHistoryInput>, DaftarUlangUncheckedUpdateWithoutStatusMahasiswaAssesmentHistoryInput>
   }
 
   export type AsesorCreateNestedManyWithoutTipeAsesorInput = {
@@ -89864,6 +90003,30 @@ export namespace Prisma {
     create: XOR<ProgramStudiCreateWithoutDaftarUlangInput, ProgramStudiUncheckedCreateWithoutDaftarUlangInput>
   }
 
+  export type StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput = {
+    StatusMahasiswaAssesmentHistoryId?: string
+    Tanggal?: Date | string | null
+    Keterangan?: string | null
+    StatusMahasiswaAssesment: StatusMahasiswaAssesmentCreateNestedOneWithoutStatusMahasiswaAssesmentHistoryInput
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput = {
+    StatusMahasiswaAssesmentHistoryId?: string
+    StatusMahasiswaAssesmentId: string
+    Tanggal?: Date | string | null
+    Keterangan?: string | null
+  }
+
+  export type StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutDaftarUlangInput = {
+    where: StatusMahasiswaAssesmentHistoryWhereUniqueInput
+    create: XOR<StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput>
+  }
+
+  export type StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInputEnvelope = {
+    data: StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInput | StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PendaftaranUpsertWithoutDaftarUlangInput = {
     update: XOR<PendaftaranUpdateWithoutDaftarUlangInput, PendaftaranUncheckedUpdateWithoutDaftarUlangInput>
     create: XOR<PendaftaranCreateWithoutDaftarUlangInput, PendaftaranUncheckedCreateWithoutDaftarUlangInput>
@@ -89968,6 +90131,33 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     MataKuliah?: MataKuliahUncheckedUpdateManyWithoutProgramStudiNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutProgramStudiNestedInput
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUpsertWithWhereUniqueWithoutDaftarUlangInput = {
+    where: StatusMahasiswaAssesmentHistoryWhereUniqueInput
+    update: XOR<StatusMahasiswaAssesmentHistoryUpdateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedUpdateWithoutDaftarUlangInput>
+    create: XOR<StatusMahasiswaAssesmentHistoryCreateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutDaftarUlangInput>
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUpdateWithWhereUniqueWithoutDaftarUlangInput = {
+    where: StatusMahasiswaAssesmentHistoryWhereUniqueInput
+    data: XOR<StatusMahasiswaAssesmentHistoryUpdateWithoutDaftarUlangInput, StatusMahasiswaAssesmentHistoryUncheckedUpdateWithoutDaftarUlangInput>
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUpdateManyWithWhereWithoutDaftarUlangInput = {
+    where: StatusMahasiswaAssesmentHistoryScalarWhereInput
+    data: XOR<StatusMahasiswaAssesmentHistoryUpdateManyMutationInput, StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutDaftarUlangInput>
+  }
+
+  export type StatusMahasiswaAssesmentHistoryScalarWhereInput = {
+    AND?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
+    OR?: StatusMahasiswaAssesmentHistoryScalarWhereInput[]
+    NOT?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
+    StatusMahasiswaAssesmentHistoryId?: StringFilter<"StatusMahasiswaAssesmentHistory"> | string
+    StatusMahasiswaAssesmentId?: StringFilter<"StatusMahasiswaAssesmentHistory"> | string
+    DaftarUlangId?: StringFilter<"StatusMahasiswaAssesmentHistory"> | string
+    Tanggal?: DateTimeNullableFilter<"StatusMahasiswaAssesmentHistory"> | Date | string | null
+    Keterangan?: StringNullableFilter<"StatusMahasiswaAssesmentHistory"> | string | null
   }
 
   export type KecamatanCreateWithoutDesaInput = {
@@ -93309,6 +93499,7 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     ProgramStudi: ProgramStudiCreateNestedOneWithoutDaftarUlangInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutDaftarUlangInput
   }
 
   export type DaftarUlangUncheckedCreateWithoutPendaftaranInput = {
@@ -93324,6 +93515,7 @@ export namespace Prisma {
     TanggalDaftarUlang?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutDaftarUlangInput
   }
 
   export type DaftarUlangCreateOrConnectWithoutPendaftaranInput = {
@@ -94490,6 +94682,7 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutDaftarUlangInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutDaftarUlangInput
   }
 
   export type DaftarUlangUncheckedCreateWithoutProgramStudiInput = {
@@ -94505,6 +94698,7 @@ export namespace Prisma {
     TanggalDaftarUlang?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutDaftarUlangInput
   }
 
   export type DaftarUlangCreateOrConnectWithoutProgramStudiInput = {
@@ -95810,9 +96004,9 @@ export namespace Prisma {
 
   export type StatusMahasiswaAssesmentHistoryCreateWithoutStatusMahasiswaAssesmentInput = {
     StatusMahasiswaAssesmentHistoryId?: string
-    DaftarUlangId: string
     Tanggal?: Date | string | null
     Keterangan?: string | null
+    DaftarUlang: DaftarUlangCreateNestedOneWithoutStatusMahasiswaAssesmentHistoryInput
   }
 
   export type StatusMahasiswaAssesmentHistoryUncheckedCreateWithoutStatusMahasiswaAssesmentInput = {
@@ -95848,17 +96042,6 @@ export namespace Prisma {
     data: XOR<StatusMahasiswaAssesmentHistoryUpdateManyMutationInput, StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutStatusMahasiswaAssesmentInput>
   }
 
-  export type StatusMahasiswaAssesmentHistoryScalarWhereInput = {
-    AND?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
-    OR?: StatusMahasiswaAssesmentHistoryScalarWhereInput[]
-    NOT?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
-    StatusMahasiswaAssesmentHistoryId?: StringFilter<"StatusMahasiswaAssesmentHistory"> | string
-    StatusMahasiswaAssesmentId?: StringFilter<"StatusMahasiswaAssesmentHistory"> | string
-    DaftarUlangId?: StringFilter<"StatusMahasiswaAssesmentHistory"> | string
-    Tanggal?: DateTimeNullableFilter<"StatusMahasiswaAssesmentHistory"> | Date | string | null
-    Keterangan?: StringNullableFilter<"StatusMahasiswaAssesmentHistory"> | string | null
-  }
-
   export type StatusMahasiswaAssesmentCreateWithoutStatusMahasiswaAssesmentHistoryInput = {
     StatusMahasiswaAssesmentId?: string
     NamaStatus: string
@@ -95878,6 +96061,43 @@ export namespace Prisma {
   export type StatusMahasiswaAssesmentCreateOrConnectWithoutStatusMahasiswaAssesmentHistoryInput = {
     where: StatusMahasiswaAssesmentWhereUniqueInput
     create: XOR<StatusMahasiswaAssesmentCreateWithoutStatusMahasiswaAssesmentHistoryInput, StatusMahasiswaAssesmentUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput>
+  }
+
+  export type DaftarUlangCreateWithoutStatusMahasiswaAssesmentHistoryInput = {
+    DaftarUlangId?: string
+    Nim?: string | null
+    JenjangKkniDituju?: string | null
+    KipK?: boolean
+    Aktif?: boolean
+    MengisiBiodata?: boolean
+    Finalisasi?: boolean
+    TanggalDaftar?: Date | string | null
+    TanggalDaftarUlang?: Date | string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Pendaftaran: PendaftaranCreateNestedOneWithoutDaftarUlangInput
+    ProgramStudi: ProgramStudiCreateNestedOneWithoutDaftarUlangInput
+  }
+
+  export type DaftarUlangUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput = {
+    DaftarUlangId?: string
+    PendaftaranId: string
+    ProgramStudiId: string
+    Nim?: string | null
+    JenjangKkniDituju?: string | null
+    KipK?: boolean
+    Aktif?: boolean
+    MengisiBiodata?: boolean
+    Finalisasi?: boolean
+    TanggalDaftar?: Date | string | null
+    TanggalDaftarUlang?: Date | string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+  }
+
+  export type DaftarUlangCreateOrConnectWithoutStatusMahasiswaAssesmentHistoryInput = {
+    where: DaftarUlangWhereUniqueInput
+    create: XOR<DaftarUlangCreateWithoutStatusMahasiswaAssesmentHistoryInput, DaftarUlangUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput>
   }
 
   export type StatusMahasiswaAssesmentUpsertWithoutStatusMahasiswaAssesmentHistoryInput = {
@@ -95905,6 +96125,49 @@ export namespace Prisma {
     Icon?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DaftarUlangUpsertWithoutStatusMahasiswaAssesmentHistoryInput = {
+    update: XOR<DaftarUlangUpdateWithoutStatusMahasiswaAssesmentHistoryInput, DaftarUlangUncheckedUpdateWithoutStatusMahasiswaAssesmentHistoryInput>
+    create: XOR<DaftarUlangCreateWithoutStatusMahasiswaAssesmentHistoryInput, DaftarUlangUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput>
+    where?: DaftarUlangWhereInput
+  }
+
+  export type DaftarUlangUpdateToOneWithWhereWithoutStatusMahasiswaAssesmentHistoryInput = {
+    where?: DaftarUlangWhereInput
+    data: XOR<DaftarUlangUpdateWithoutStatusMahasiswaAssesmentHistoryInput, DaftarUlangUncheckedUpdateWithoutStatusMahasiswaAssesmentHistoryInput>
+  }
+
+  export type DaftarUlangUpdateWithoutStatusMahasiswaAssesmentHistoryInput = {
+    DaftarUlangId?: StringFieldUpdateOperationsInput | string
+    Nim?: NullableStringFieldUpdateOperationsInput | string | null
+    JenjangKkniDituju?: NullableStringFieldUpdateOperationsInput | string | null
+    KipK?: BoolFieldUpdateOperationsInput | boolean
+    Aktif?: BoolFieldUpdateOperationsInput | boolean
+    MengisiBiodata?: BoolFieldUpdateOperationsInput | boolean
+    Finalisasi?: BoolFieldUpdateOperationsInput | boolean
+    TanggalDaftar?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TanggalDaftarUlang?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Pendaftaran?: PendaftaranUpdateOneRequiredWithoutDaftarUlangNestedInput
+    ProgramStudi?: ProgramStudiUpdateOneRequiredWithoutDaftarUlangNestedInput
+  }
+
+  export type DaftarUlangUncheckedUpdateWithoutStatusMahasiswaAssesmentHistoryInput = {
+    DaftarUlangId?: StringFieldUpdateOperationsInput | string
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    ProgramStudiId?: StringFieldUpdateOperationsInput | string
+    Nim?: NullableStringFieldUpdateOperationsInput | string | null
+    JenjangKkniDituju?: NullableStringFieldUpdateOperationsInput | string | null
+    KipK?: BoolFieldUpdateOperationsInput | boolean
+    Aktif?: BoolFieldUpdateOperationsInput | boolean
+    MengisiBiodata?: BoolFieldUpdateOperationsInput | boolean
+    Finalisasi?: BoolFieldUpdateOperationsInput | boolean
+    TanggalDaftar?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TanggalDaftarUlang?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type AsesorCreateWithoutTipeAsesorInput = {
@@ -97436,6 +97699,34 @@ export namespace Prisma {
     Nama?: StringFieldUpdateOperationsInput | string
   }
 
+  export type StatusMahasiswaAssesmentHistoryCreateManyDaftarUlangInput = {
+    StatusMahasiswaAssesmentHistoryId?: string
+    StatusMahasiswaAssesmentId: string
+    Tanggal?: Date | string | null
+    Keterangan?: string | null
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUpdateWithoutDaftarUlangInput = {
+    StatusMahasiswaAssesmentHistoryId?: StringFieldUpdateOperationsInput | string
+    Tanggal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    StatusMahasiswaAssesment?: StatusMahasiswaAssesmentUpdateOneRequiredWithoutStatusMahasiswaAssesmentHistoryNestedInput
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUncheckedUpdateWithoutDaftarUlangInput = {
+    StatusMahasiswaAssesmentHistoryId?: StringFieldUpdateOperationsInput | string
+    StatusMahasiswaAssesmentId?: StringFieldUpdateOperationsInput | string
+    Tanggal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutDaftarUlangInput = {
+    StatusMahasiswaAssesmentHistoryId?: StringFieldUpdateOperationsInput | string
+    StatusMahasiswaAssesmentId?: StringFieldUpdateOperationsInput | string
+    Tanggal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type AlamatCreateManyDesaInput = {
     AlamatId?: string
     Alamat: string
@@ -98149,6 +98440,7 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     ProgramStudi?: ProgramStudiUpdateOneRequiredWithoutDaftarUlangNestedInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutDaftarUlangNestedInput
   }
 
   export type DaftarUlangUncheckedUpdateWithoutPendaftaranInput = {
@@ -98164,6 +98456,7 @@ export namespace Prisma {
     TanggalDaftarUlang?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutDaftarUlangNestedInput
   }
 
   export type DaftarUlangUncheckedUpdateManyWithoutPendaftaranInput = {
@@ -98670,6 +98963,7 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutDaftarUlangNestedInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutDaftarUlangNestedInput
   }
 
   export type DaftarUlangUncheckedUpdateWithoutProgramStudiInput = {
@@ -98685,6 +98979,7 @@ export namespace Prisma {
     TanggalDaftarUlang?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutDaftarUlangNestedInput
   }
 
   export type DaftarUlangUncheckedUpdateManyWithoutProgramStudiInput = {
@@ -98917,9 +99212,9 @@ export namespace Prisma {
 
   export type StatusMahasiswaAssesmentHistoryUpdateWithoutStatusMahasiswaAssesmentInput = {
     StatusMahasiswaAssesmentHistoryId?: StringFieldUpdateOperationsInput | string
-    DaftarUlangId?: StringFieldUpdateOperationsInput | string
     Tanggal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    DaftarUlang?: DaftarUlangUpdateOneRequiredWithoutStatusMahasiswaAssesmentHistoryNestedInput
   }
 
   export type StatusMahasiswaAssesmentHistoryUncheckedUpdateWithoutStatusMahasiswaAssesmentInput = {
