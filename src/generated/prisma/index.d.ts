@@ -234,6 +234,11 @@ export type SanggahanAssesmenMk = $Result.DefaultSelection<Prisma.$SanggahanAsse
  */
 export type SanggahanAssesmenPihak = $Result.DefaultSelection<Prisma.$SanggahanAssesmenPihakPayload>
 /**
+ * Model TipeSkRektor
+ * 
+ */
+export type TipeSkRektor = $Result.DefaultSelection<Prisma.$TipeSkRektorPayload>
+/**
  * Model SkRektor
  * 
  */
@@ -1012,6 +1017,16 @@ export class PrismaClient<
   get sanggahanAssesmenPihak(): Prisma.SanggahanAssesmenPihakDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.tipeSkRektor`: Exposes CRUD operations for the **TipeSkRektor** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TipeSkRektors
+    * const tipeSkRektors = await prisma.tipeSkRektor.findMany()
+    * ```
+    */
+  get tipeSkRektor(): Prisma.TipeSkRektorDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.skRektor`: Exposes CRUD operations for the **SkRektor** model.
     * Example usage:
     * ```ts
@@ -1634,6 +1649,7 @@ export namespace Prisma {
     SanggahanAssesmen: 'SanggahanAssesmen',
     SanggahanAssesmenMk: 'SanggahanAssesmenMk',
     SanggahanAssesmenPihak: 'SanggahanAssesmenPihak',
+    TipeSkRektor: 'TipeSkRektor',
     SkRektor: 'SkRektor',
     SkRektorAssesor: 'SkRektorAssesor',
     SkRektorMahasiswa: 'SkRektorMahasiswa',
@@ -1666,7 +1682,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin"
+      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4926,6 +4942,80 @@ export namespace Prisma {
           }
         }
       }
+      TipeSkRektor: {
+        payload: Prisma.$TipeSkRektorPayload<ExtArgs>
+        fields: Prisma.TipeSkRektorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TipeSkRektorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TipeSkRektorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>
+          }
+          findFirst: {
+            args: Prisma.TipeSkRektorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TipeSkRektorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>
+          }
+          findMany: {
+            args: Prisma.TipeSkRektorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>[]
+          }
+          create: {
+            args: Prisma.TipeSkRektorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>
+          }
+          createMany: {
+            args: Prisma.TipeSkRektorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TipeSkRektorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>[]
+          }
+          delete: {
+            args: Prisma.TipeSkRektorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>
+          }
+          update: {
+            args: Prisma.TipeSkRektorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>
+          }
+          deleteMany: {
+            args: Prisma.TipeSkRektorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TipeSkRektorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TipeSkRektorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>[]
+          }
+          upsert: {
+            args: Prisma.TipeSkRektorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TipeSkRektorPayload>
+          }
+          aggregate: {
+            args: Prisma.TipeSkRektorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTipeSkRektor>
+          }
+          groupBy: {
+            args: Prisma.TipeSkRektorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TipeSkRektorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TipeSkRektorCountArgs<ExtArgs>
+            result: $Utils.Optional<TipeSkRektorCountAggregateOutputType> | number
+          }
+        }
+      }
       SkRektor: {
         payload: Prisma.$SkRektorPayload<ExtArgs>
         fields: Prisma.SkRektorFieldRefs
@@ -6090,6 +6180,7 @@ export namespace Prisma {
     sanggahanAssesmen?: SanggahanAssesmenOmit
     sanggahanAssesmenMk?: SanggahanAssesmenMkOmit
     sanggahanAssesmenPihak?: SanggahanAssesmenPihakOmit
+    tipeSkRektor?: TipeSkRektorOmit
     skRektor?: SkRektorOmit
     skRektorAssesor?: SkRektorAssesorOmit
     skRektorMahasiswa?: SkRektorMahasiswaOmit
@@ -7164,6 +7255,37 @@ export namespace Prisma {
    */
   export type SanggahanAssesmenCountOutputTypeCountSanggahanAssesmenPihakArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SanggahanAssesmenPihakWhereInput
+  }
+
+
+  /**
+   * Count Type TipeSkRektorCountOutputType
+   */
+
+  export type TipeSkRektorCountOutputType = {
+    SkRektor: number
+  }
+
+  export type TipeSkRektorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SkRektor?: boolean | TipeSkRektorCountOutputTypeCountSkRektorArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TipeSkRektorCountOutputType without action
+   */
+  export type TipeSkRektorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektorCountOutputType
+     */
+    select?: TipeSkRektorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TipeSkRektorCountOutputType without action
+   */
+  export type TipeSkRektorCountOutputTypeCountSkRektorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkRektorWhereInput
   }
 
 
@@ -56708,6 +56830,1037 @@ export namespace Prisma {
 
 
   /**
+   * Model TipeSkRektor
+   */
+
+  export type AggregateTipeSkRektor = {
+    _count: TipeSkRektorCountAggregateOutputType | null
+    _min: TipeSkRektorMinAggregateOutputType | null
+    _max: TipeSkRektorMaxAggregateOutputType | null
+  }
+
+  export type TipeSkRektorMinAggregateOutputType = {
+    TipeSkRektorId: string | null
+    Nama: string | null
+  }
+
+  export type TipeSkRektorMaxAggregateOutputType = {
+    TipeSkRektorId: string | null
+    Nama: string | null
+  }
+
+  export type TipeSkRektorCountAggregateOutputType = {
+    TipeSkRektorId: number
+    Nama: number
+    _all: number
+  }
+
+
+  export type TipeSkRektorMinAggregateInputType = {
+    TipeSkRektorId?: true
+    Nama?: true
+  }
+
+  export type TipeSkRektorMaxAggregateInputType = {
+    TipeSkRektorId?: true
+    Nama?: true
+  }
+
+  export type TipeSkRektorCountAggregateInputType = {
+    TipeSkRektorId?: true
+    Nama?: true
+    _all?: true
+  }
+
+  export type TipeSkRektorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TipeSkRektor to aggregate.
+     */
+    where?: TipeSkRektorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipeSkRektors to fetch.
+     */
+    orderBy?: TipeSkRektorOrderByWithRelationInput | TipeSkRektorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TipeSkRektorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipeSkRektors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipeSkRektors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TipeSkRektors
+    **/
+    _count?: true | TipeSkRektorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TipeSkRektorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TipeSkRektorMaxAggregateInputType
+  }
+
+  export type GetTipeSkRektorAggregateType<T extends TipeSkRektorAggregateArgs> = {
+        [P in keyof T & keyof AggregateTipeSkRektor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTipeSkRektor[P]>
+      : GetScalarType<T[P], AggregateTipeSkRektor[P]>
+  }
+
+
+
+
+  export type TipeSkRektorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TipeSkRektorWhereInput
+    orderBy?: TipeSkRektorOrderByWithAggregationInput | TipeSkRektorOrderByWithAggregationInput[]
+    by: TipeSkRektorScalarFieldEnum[] | TipeSkRektorScalarFieldEnum
+    having?: TipeSkRektorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TipeSkRektorCountAggregateInputType | true
+    _min?: TipeSkRektorMinAggregateInputType
+    _max?: TipeSkRektorMaxAggregateInputType
+  }
+
+  export type TipeSkRektorGroupByOutputType = {
+    TipeSkRektorId: string
+    Nama: string
+    _count: TipeSkRektorCountAggregateOutputType | null
+    _min: TipeSkRektorMinAggregateOutputType | null
+    _max: TipeSkRektorMaxAggregateOutputType | null
+  }
+
+  type GetTipeSkRektorGroupByPayload<T extends TipeSkRektorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TipeSkRektorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TipeSkRektorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TipeSkRektorGroupByOutputType[P]>
+            : GetScalarType<T[P], TipeSkRektorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TipeSkRektorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TipeSkRektorId?: boolean
+    Nama?: boolean
+    SkRektor?: boolean | TipeSkRektor$SkRektorArgs<ExtArgs>
+    _count?: boolean | TipeSkRektorCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tipeSkRektor"]>
+
+  export type TipeSkRektorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TipeSkRektorId?: boolean
+    Nama?: boolean
+  }, ExtArgs["result"]["tipeSkRektor"]>
+
+  export type TipeSkRektorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TipeSkRektorId?: boolean
+    Nama?: boolean
+  }, ExtArgs["result"]["tipeSkRektor"]>
+
+  export type TipeSkRektorSelectScalar = {
+    TipeSkRektorId?: boolean
+    Nama?: boolean
+  }
+
+  export type TipeSkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"TipeSkRektorId" | "Nama", ExtArgs["result"]["tipeSkRektor"]>
+  export type TipeSkRektorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SkRektor?: boolean | TipeSkRektor$SkRektorArgs<ExtArgs>
+    _count?: boolean | TipeSkRektorCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TipeSkRektorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TipeSkRektorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $TipeSkRektorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TipeSkRektor"
+    objects: {
+      SkRektor: Prisma.$SkRektorPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      TipeSkRektorId: string
+      Nama: string
+    }, ExtArgs["result"]["tipeSkRektor"]>
+    composites: {}
+  }
+
+  type TipeSkRektorGetPayload<S extends boolean | null | undefined | TipeSkRektorDefaultArgs> = $Result.GetResult<Prisma.$TipeSkRektorPayload, S>
+
+  type TipeSkRektorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TipeSkRektorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TipeSkRektorCountAggregateInputType | true
+    }
+
+  export interface TipeSkRektorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TipeSkRektor'], meta: { name: 'TipeSkRektor' } }
+    /**
+     * Find zero or one TipeSkRektor that matches the filter.
+     * @param {TipeSkRektorFindUniqueArgs} args - Arguments to find a TipeSkRektor
+     * @example
+     * // Get one TipeSkRektor
+     * const tipeSkRektor = await prisma.tipeSkRektor.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TipeSkRektorFindUniqueArgs>(args: SelectSubset<T, TipeSkRektorFindUniqueArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TipeSkRektor that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TipeSkRektorFindUniqueOrThrowArgs} args - Arguments to find a TipeSkRektor
+     * @example
+     * // Get one TipeSkRektor
+     * const tipeSkRektor = await prisma.tipeSkRektor.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TipeSkRektorFindUniqueOrThrowArgs>(args: SelectSubset<T, TipeSkRektorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TipeSkRektor that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipeSkRektorFindFirstArgs} args - Arguments to find a TipeSkRektor
+     * @example
+     * // Get one TipeSkRektor
+     * const tipeSkRektor = await prisma.tipeSkRektor.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TipeSkRektorFindFirstArgs>(args?: SelectSubset<T, TipeSkRektorFindFirstArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TipeSkRektor that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipeSkRektorFindFirstOrThrowArgs} args - Arguments to find a TipeSkRektor
+     * @example
+     * // Get one TipeSkRektor
+     * const tipeSkRektor = await prisma.tipeSkRektor.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TipeSkRektorFindFirstOrThrowArgs>(args?: SelectSubset<T, TipeSkRektorFindFirstOrThrowArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TipeSkRektors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipeSkRektorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TipeSkRektors
+     * const tipeSkRektors = await prisma.tipeSkRektor.findMany()
+     * 
+     * // Get first 10 TipeSkRektors
+     * const tipeSkRektors = await prisma.tipeSkRektor.findMany({ take: 10 })
+     * 
+     * // Only select the `TipeSkRektorId`
+     * const tipeSkRektorWithTipeSkRektorIdOnly = await prisma.tipeSkRektor.findMany({ select: { TipeSkRektorId: true } })
+     * 
+     */
+    findMany<T extends TipeSkRektorFindManyArgs>(args?: SelectSubset<T, TipeSkRektorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TipeSkRektor.
+     * @param {TipeSkRektorCreateArgs} args - Arguments to create a TipeSkRektor.
+     * @example
+     * // Create one TipeSkRektor
+     * const TipeSkRektor = await prisma.tipeSkRektor.create({
+     *   data: {
+     *     // ... data to create a TipeSkRektor
+     *   }
+     * })
+     * 
+     */
+    create<T extends TipeSkRektorCreateArgs>(args: SelectSubset<T, TipeSkRektorCreateArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TipeSkRektors.
+     * @param {TipeSkRektorCreateManyArgs} args - Arguments to create many TipeSkRektors.
+     * @example
+     * // Create many TipeSkRektors
+     * const tipeSkRektor = await prisma.tipeSkRektor.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TipeSkRektorCreateManyArgs>(args?: SelectSubset<T, TipeSkRektorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TipeSkRektors and returns the data saved in the database.
+     * @param {TipeSkRektorCreateManyAndReturnArgs} args - Arguments to create many TipeSkRektors.
+     * @example
+     * // Create many TipeSkRektors
+     * const tipeSkRektor = await prisma.tipeSkRektor.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TipeSkRektors and only return the `TipeSkRektorId`
+     * const tipeSkRektorWithTipeSkRektorIdOnly = await prisma.tipeSkRektor.createManyAndReturn({
+     *   select: { TipeSkRektorId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TipeSkRektorCreateManyAndReturnArgs>(args?: SelectSubset<T, TipeSkRektorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TipeSkRektor.
+     * @param {TipeSkRektorDeleteArgs} args - Arguments to delete one TipeSkRektor.
+     * @example
+     * // Delete one TipeSkRektor
+     * const TipeSkRektor = await prisma.tipeSkRektor.delete({
+     *   where: {
+     *     // ... filter to delete one TipeSkRektor
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TipeSkRektorDeleteArgs>(args: SelectSubset<T, TipeSkRektorDeleteArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TipeSkRektor.
+     * @param {TipeSkRektorUpdateArgs} args - Arguments to update one TipeSkRektor.
+     * @example
+     * // Update one TipeSkRektor
+     * const tipeSkRektor = await prisma.tipeSkRektor.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TipeSkRektorUpdateArgs>(args: SelectSubset<T, TipeSkRektorUpdateArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TipeSkRektors.
+     * @param {TipeSkRektorDeleteManyArgs} args - Arguments to filter TipeSkRektors to delete.
+     * @example
+     * // Delete a few TipeSkRektors
+     * const { count } = await prisma.tipeSkRektor.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TipeSkRektorDeleteManyArgs>(args?: SelectSubset<T, TipeSkRektorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TipeSkRektors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipeSkRektorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TipeSkRektors
+     * const tipeSkRektor = await prisma.tipeSkRektor.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TipeSkRektorUpdateManyArgs>(args: SelectSubset<T, TipeSkRektorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TipeSkRektors and returns the data updated in the database.
+     * @param {TipeSkRektorUpdateManyAndReturnArgs} args - Arguments to update many TipeSkRektors.
+     * @example
+     * // Update many TipeSkRektors
+     * const tipeSkRektor = await prisma.tipeSkRektor.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TipeSkRektors and only return the `TipeSkRektorId`
+     * const tipeSkRektorWithTipeSkRektorIdOnly = await prisma.tipeSkRektor.updateManyAndReturn({
+     *   select: { TipeSkRektorId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TipeSkRektorUpdateManyAndReturnArgs>(args: SelectSubset<T, TipeSkRektorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TipeSkRektor.
+     * @param {TipeSkRektorUpsertArgs} args - Arguments to update or create a TipeSkRektor.
+     * @example
+     * // Update or create a TipeSkRektor
+     * const tipeSkRektor = await prisma.tipeSkRektor.upsert({
+     *   create: {
+     *     // ... data to create a TipeSkRektor
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TipeSkRektor we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TipeSkRektorUpsertArgs>(args: SelectSubset<T, TipeSkRektorUpsertArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TipeSkRektors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipeSkRektorCountArgs} args - Arguments to filter TipeSkRektors to count.
+     * @example
+     * // Count the number of TipeSkRektors
+     * const count = await prisma.tipeSkRektor.count({
+     *   where: {
+     *     // ... the filter for the TipeSkRektors we want to count
+     *   }
+     * })
+    **/
+    count<T extends TipeSkRektorCountArgs>(
+      args?: Subset<T, TipeSkRektorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TipeSkRektorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TipeSkRektor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipeSkRektorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TipeSkRektorAggregateArgs>(args: Subset<T, TipeSkRektorAggregateArgs>): Prisma.PrismaPromise<GetTipeSkRektorAggregateType<T>>
+
+    /**
+     * Group by TipeSkRektor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TipeSkRektorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TipeSkRektorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TipeSkRektorGroupByArgs['orderBy'] }
+        : { orderBy?: TipeSkRektorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TipeSkRektorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTipeSkRektorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TipeSkRektor model
+   */
+  readonly fields: TipeSkRektorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TipeSkRektor.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TipeSkRektorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SkRektor<T extends TipeSkRektor$SkRektorArgs<ExtArgs> = {}>(args?: Subset<T, TipeSkRektor$SkRektorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkRektorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TipeSkRektor model
+   */
+  interface TipeSkRektorFieldRefs {
+    readonly TipeSkRektorId: FieldRef<"TipeSkRektor", 'String'>
+    readonly Nama: FieldRef<"TipeSkRektor", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TipeSkRektor findUnique
+   */
+  export type TipeSkRektorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * Filter, which TipeSkRektor to fetch.
+     */
+    where: TipeSkRektorWhereUniqueInput
+  }
+
+  /**
+   * TipeSkRektor findUniqueOrThrow
+   */
+  export type TipeSkRektorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * Filter, which TipeSkRektor to fetch.
+     */
+    where: TipeSkRektorWhereUniqueInput
+  }
+
+  /**
+   * TipeSkRektor findFirst
+   */
+  export type TipeSkRektorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * Filter, which TipeSkRektor to fetch.
+     */
+    where?: TipeSkRektorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipeSkRektors to fetch.
+     */
+    orderBy?: TipeSkRektorOrderByWithRelationInput | TipeSkRektorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TipeSkRektors.
+     */
+    cursor?: TipeSkRektorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipeSkRektors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipeSkRektors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipeSkRektors.
+     */
+    distinct?: TipeSkRektorScalarFieldEnum | TipeSkRektorScalarFieldEnum[]
+  }
+
+  /**
+   * TipeSkRektor findFirstOrThrow
+   */
+  export type TipeSkRektorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * Filter, which TipeSkRektor to fetch.
+     */
+    where?: TipeSkRektorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipeSkRektors to fetch.
+     */
+    orderBy?: TipeSkRektorOrderByWithRelationInput | TipeSkRektorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TipeSkRektors.
+     */
+    cursor?: TipeSkRektorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipeSkRektors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipeSkRektors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipeSkRektors.
+     */
+    distinct?: TipeSkRektorScalarFieldEnum | TipeSkRektorScalarFieldEnum[]
+  }
+
+  /**
+   * TipeSkRektor findMany
+   */
+  export type TipeSkRektorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * Filter, which TipeSkRektors to fetch.
+     */
+    where?: TipeSkRektorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TipeSkRektors to fetch.
+     */
+    orderBy?: TipeSkRektorOrderByWithRelationInput | TipeSkRektorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TipeSkRektors.
+     */
+    cursor?: TipeSkRektorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TipeSkRektors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TipeSkRektors.
+     */
+    skip?: number
+    distinct?: TipeSkRektorScalarFieldEnum | TipeSkRektorScalarFieldEnum[]
+  }
+
+  /**
+   * TipeSkRektor create
+   */
+  export type TipeSkRektorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TipeSkRektor.
+     */
+    data: XOR<TipeSkRektorCreateInput, TipeSkRektorUncheckedCreateInput>
+  }
+
+  /**
+   * TipeSkRektor createMany
+   */
+  export type TipeSkRektorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TipeSkRektors.
+     */
+    data: TipeSkRektorCreateManyInput | TipeSkRektorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TipeSkRektor createManyAndReturn
+   */
+  export type TipeSkRektorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * The data used to create many TipeSkRektors.
+     */
+    data: TipeSkRektorCreateManyInput | TipeSkRektorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TipeSkRektor update
+   */
+  export type TipeSkRektorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TipeSkRektor.
+     */
+    data: XOR<TipeSkRektorUpdateInput, TipeSkRektorUncheckedUpdateInput>
+    /**
+     * Choose, which TipeSkRektor to update.
+     */
+    where: TipeSkRektorWhereUniqueInput
+  }
+
+  /**
+   * TipeSkRektor updateMany
+   */
+  export type TipeSkRektorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TipeSkRektors.
+     */
+    data: XOR<TipeSkRektorUpdateManyMutationInput, TipeSkRektorUncheckedUpdateManyInput>
+    /**
+     * Filter which TipeSkRektors to update
+     */
+    where?: TipeSkRektorWhereInput
+    /**
+     * Limit how many TipeSkRektors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TipeSkRektor updateManyAndReturn
+   */
+  export type TipeSkRektorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * The data used to update TipeSkRektors.
+     */
+    data: XOR<TipeSkRektorUpdateManyMutationInput, TipeSkRektorUncheckedUpdateManyInput>
+    /**
+     * Filter which TipeSkRektors to update
+     */
+    where?: TipeSkRektorWhereInput
+    /**
+     * Limit how many TipeSkRektors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TipeSkRektor upsert
+   */
+  export type TipeSkRektorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TipeSkRektor to update in case it exists.
+     */
+    where: TipeSkRektorWhereUniqueInput
+    /**
+     * In case the TipeSkRektor found by the `where` argument doesn't exist, create a new TipeSkRektor with this data.
+     */
+    create: XOR<TipeSkRektorCreateInput, TipeSkRektorUncheckedCreateInput>
+    /**
+     * In case the TipeSkRektor was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TipeSkRektorUpdateInput, TipeSkRektorUncheckedUpdateInput>
+  }
+
+  /**
+   * TipeSkRektor delete
+   */
+  export type TipeSkRektorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+    /**
+     * Filter which TipeSkRektor to delete.
+     */
+    where: TipeSkRektorWhereUniqueInput
+  }
+
+  /**
+   * TipeSkRektor deleteMany
+   */
+  export type TipeSkRektorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TipeSkRektors to delete
+     */
+    where?: TipeSkRektorWhereInput
+    /**
+     * Limit how many TipeSkRektors to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TipeSkRektor.SkRektor
+   */
+  export type TipeSkRektor$SkRektorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkRektor
+     */
+    select?: SkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkRektor
+     */
+    omit?: SkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkRektorInclude<ExtArgs> | null
+    where?: SkRektorWhereInput
+    orderBy?: SkRektorOrderByWithRelationInput | SkRektorOrderByWithRelationInput[]
+    cursor?: SkRektorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkRektorScalarFieldEnum | SkRektorScalarFieldEnum[]
+  }
+
+  /**
+   * TipeSkRektor without action
+   */
+  export type TipeSkRektorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TipeSkRektor
+     */
+    select?: TipeSkRektorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TipeSkRektor
+     */
+    omit?: TipeSkRektorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TipeSkRektorInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model SkRektor
    */
 
@@ -56729,6 +57882,7 @@ export namespace Prisma {
 
   export type SkRektorMinAggregateOutputType = {
     SkRektorId: string | null
+    TipeSkRektorId: string | null
     NamaSk: string | null
     TahunSk: number | null
     NomorSk: string | null
@@ -56740,6 +57894,7 @@ export namespace Prisma {
 
   export type SkRektorMaxAggregateOutputType = {
     SkRektorId: string | null
+    TipeSkRektorId: string | null
     NamaSk: string | null
     TahunSk: number | null
     NomorSk: string | null
@@ -56751,6 +57906,7 @@ export namespace Prisma {
 
   export type SkRektorCountAggregateOutputType = {
     SkRektorId: number
+    TipeSkRektorId: number
     NamaSk: number
     TahunSk: number
     NomorSk: number
@@ -56772,6 +57928,7 @@ export namespace Prisma {
 
   export type SkRektorMinAggregateInputType = {
     SkRektorId?: true
+    TipeSkRektorId?: true
     NamaSk?: true
     TahunSk?: true
     NomorSk?: true
@@ -56783,6 +57940,7 @@ export namespace Prisma {
 
   export type SkRektorMaxAggregateInputType = {
     SkRektorId?: true
+    TipeSkRektorId?: true
     NamaSk?: true
     TahunSk?: true
     NomorSk?: true
@@ -56794,6 +57952,7 @@ export namespace Prisma {
 
   export type SkRektorCountAggregateInputType = {
     SkRektorId?: true
+    TipeSkRektorId?: true
     NamaSk?: true
     TahunSk?: true
     NomorSk?: true
@@ -56892,6 +58051,7 @@ export namespace Prisma {
 
   export type SkRektorGroupByOutputType = {
     SkRektorId: string
+    TipeSkRektorId: string
     NamaSk: string
     TahunSk: number
     NomorSk: string
@@ -56922,6 +58082,7 @@ export namespace Prisma {
 
   export type SkRektorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkRektorId?: boolean
+    TipeSkRektorId?: boolean
     NamaSk?: boolean
     TahunSk?: boolean
     NomorSk?: boolean
@@ -56929,6 +58090,7 @@ export namespace Prisma {
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
     SkRektorAssesor?: boolean | SkRektor$SkRektorAssesorArgs<ExtArgs>
     SkRektorMahasiswa?: boolean | SkRektor$SkRektorMahasiswaArgs<ExtArgs>
     _count?: boolean | SkRektorCountOutputTypeDefaultArgs<ExtArgs>
@@ -56936,6 +58098,7 @@ export namespace Prisma {
 
   export type SkRektorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkRektorId?: boolean
+    TipeSkRektorId?: boolean
     NamaSk?: boolean
     TahunSk?: boolean
     NomorSk?: boolean
@@ -56943,10 +58106,12 @@ export namespace Prisma {
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skRektor"]>
 
   export type SkRektorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkRektorId?: boolean
+    TipeSkRektorId?: boolean
     NamaSk?: boolean
     TahunSk?: boolean
     NomorSk?: boolean
@@ -56954,10 +58119,12 @@ export namespace Prisma {
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skRektor"]>
 
   export type SkRektorSelectScalar = {
     SkRektorId?: boolean
+    TipeSkRektorId?: boolean
     NamaSk?: boolean
     TahunSk?: boolean
     NomorSk?: boolean
@@ -56967,23 +58134,30 @@ export namespace Prisma {
     UpdatedAt?: boolean
   }
 
-  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
+  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
   export type SkRektorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
     SkRektorAssesor?: boolean | SkRektor$SkRektorAssesorArgs<ExtArgs>
     SkRektorMahasiswa?: boolean | SkRektor$SkRektorMahasiswaArgs<ExtArgs>
     _count?: boolean | SkRektorCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type SkRektorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type SkRektorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SkRektorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
+  }
+  export type SkRektorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
+  }
 
   export type $SkRektorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SkRektor"
     objects: {
+      TipeSkRektor: Prisma.$TipeSkRektorPayload<ExtArgs>
       SkRektorAssesor: Prisma.$SkRektorAssesorPayload<ExtArgs>[]
       SkRektorMahasiswa: Prisma.$SkRektorMahasiswaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       SkRektorId: string
+      TipeSkRektorId: string
       NamaSk: string
       TahunSk: number
       NomorSk: string
@@ -57385,6 +58559,7 @@ export namespace Prisma {
    */
   export interface Prisma__SkRektorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    TipeSkRektor<T extends TipeSkRektorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TipeSkRektorDefaultArgs<ExtArgs>>): Prisma__TipeSkRektorClient<$Result.GetResult<Prisma.$TipeSkRektorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     SkRektorAssesor<T extends SkRektor$SkRektorAssesorArgs<ExtArgs> = {}>(args?: Subset<T, SkRektor$SkRektorAssesorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkRektorAssesorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SkRektorMahasiswa<T extends SkRektor$SkRektorMahasiswaArgs<ExtArgs> = {}>(args?: Subset<T, SkRektor$SkRektorMahasiswaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkRektorMahasiswaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -57417,6 +58592,7 @@ export namespace Prisma {
    */
   interface SkRektorFieldRefs {
     readonly SkRektorId: FieldRef<"SkRektor", 'String'>
+    readonly TipeSkRektorId: FieldRef<"SkRektor", 'String'>
     readonly NamaSk: FieldRef<"SkRektor", 'String'>
     readonly TahunSk: FieldRef<"SkRektor", 'Int'>
     readonly NomorSk: FieldRef<"SkRektor", 'String'>
@@ -57673,6 +58849,10 @@ export namespace Prisma {
      */
     data: SkRektorCreateManyInput | SkRektorCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkRektorIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -57743,6 +58923,10 @@ export namespace Prisma {
      * Limit how many SkRektors to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkRektorIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -72861,8 +74045,17 @@ export namespace Prisma {
   export type SanggahanAssesmenPihakScalarFieldEnum = (typeof SanggahanAssesmenPihakScalarFieldEnum)[keyof typeof SanggahanAssesmenPihakScalarFieldEnum]
 
 
+  export const TipeSkRektorScalarFieldEnum: {
+    TipeSkRektorId: 'TipeSkRektorId',
+    Nama: 'Nama'
+  };
+
+  export type TipeSkRektorScalarFieldEnum = (typeof TipeSkRektorScalarFieldEnum)[keyof typeof TipeSkRektorScalarFieldEnum]
+
+
   export const SkRektorScalarFieldEnum: {
     SkRektorId: 'SkRektorId',
+    TipeSkRektorId: 'TipeSkRektorId',
     NamaSk: 'NamaSk',
     TahunSk: 'TahunSk',
     NomorSk: 'NomorSk',
@@ -76233,11 +77426,52 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"SanggahanAssesmenPihak"> | Date | string | null
   }
 
+  export type TipeSkRektorWhereInput = {
+    AND?: TipeSkRektorWhereInput | TipeSkRektorWhereInput[]
+    OR?: TipeSkRektorWhereInput[]
+    NOT?: TipeSkRektorWhereInput | TipeSkRektorWhereInput[]
+    TipeSkRektorId?: StringFilter<"TipeSkRektor"> | string
+    Nama?: StringFilter<"TipeSkRektor"> | string
+    SkRektor?: SkRektorListRelationFilter
+  }
+
+  export type TipeSkRektorOrderByWithRelationInput = {
+    TipeSkRektorId?: SortOrder
+    Nama?: SortOrder
+    SkRektor?: SkRektorOrderByRelationAggregateInput
+  }
+
+  export type TipeSkRektorWhereUniqueInput = Prisma.AtLeast<{
+    TipeSkRektorId?: string
+    AND?: TipeSkRektorWhereInput | TipeSkRektorWhereInput[]
+    OR?: TipeSkRektorWhereInput[]
+    NOT?: TipeSkRektorWhereInput | TipeSkRektorWhereInput[]
+    Nama?: StringFilter<"TipeSkRektor"> | string
+    SkRektor?: SkRektorListRelationFilter
+  }, "TipeSkRektorId">
+
+  export type TipeSkRektorOrderByWithAggregationInput = {
+    TipeSkRektorId?: SortOrder
+    Nama?: SortOrder
+    _count?: TipeSkRektorCountOrderByAggregateInput
+    _max?: TipeSkRektorMaxOrderByAggregateInput
+    _min?: TipeSkRektorMinOrderByAggregateInput
+  }
+
+  export type TipeSkRektorScalarWhereWithAggregatesInput = {
+    AND?: TipeSkRektorScalarWhereWithAggregatesInput | TipeSkRektorScalarWhereWithAggregatesInput[]
+    OR?: TipeSkRektorScalarWhereWithAggregatesInput[]
+    NOT?: TipeSkRektorScalarWhereWithAggregatesInput | TipeSkRektorScalarWhereWithAggregatesInput[]
+    TipeSkRektorId?: StringWithAggregatesFilter<"TipeSkRektor"> | string
+    Nama?: StringWithAggregatesFilter<"TipeSkRektor"> | string
+  }
+
   export type SkRektorWhereInput = {
     AND?: SkRektorWhereInput | SkRektorWhereInput[]
     OR?: SkRektorWhereInput[]
     NOT?: SkRektorWhereInput | SkRektorWhereInput[]
     SkRektorId?: StringFilter<"SkRektor"> | string
+    TipeSkRektorId?: StringFilter<"SkRektor"> | string
     NamaSk?: StringFilter<"SkRektor"> | string
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
@@ -76245,12 +77479,14 @@ export namespace Prisma {
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    TipeSkRektor?: XOR<TipeSkRektorScalarRelationFilter, TipeSkRektorWhereInput>
     SkRektorAssesor?: SkRektorAssesorListRelationFilter
     SkRektorMahasiswa?: SkRektorMahasiswaListRelationFilter
   }
 
   export type SkRektorOrderByWithRelationInput = {
     SkRektorId?: SortOrder
+    TipeSkRektorId?: SortOrder
     NamaSk?: SortOrder
     TahunSk?: SortOrder
     NomorSk?: SortOrder
@@ -76258,6 +77494,7 @@ export namespace Prisma {
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
+    TipeSkRektor?: TipeSkRektorOrderByWithRelationInput
     SkRektorAssesor?: SkRektorAssesorOrderByRelationAggregateInput
     SkRektorMahasiswa?: SkRektorMahasiswaOrderByRelationAggregateInput
   }
@@ -76267,6 +77504,7 @@ export namespace Prisma {
     AND?: SkRektorWhereInput | SkRektorWhereInput[]
     OR?: SkRektorWhereInput[]
     NOT?: SkRektorWhereInput | SkRektorWhereInput[]
+    TipeSkRektorId?: StringFilter<"SkRektor"> | string
     NamaSk?: StringFilter<"SkRektor"> | string
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
@@ -76274,12 +77512,14 @@ export namespace Prisma {
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    TipeSkRektor?: XOR<TipeSkRektorScalarRelationFilter, TipeSkRektorWhereInput>
     SkRektorAssesor?: SkRektorAssesorListRelationFilter
     SkRektorMahasiswa?: SkRektorMahasiswaListRelationFilter
   }, "SkRektorId">
 
   export type SkRektorOrderByWithAggregationInput = {
     SkRektorId?: SortOrder
+    TipeSkRektorId?: SortOrder
     NamaSk?: SortOrder
     TahunSk?: SortOrder
     NomorSk?: SortOrder
@@ -76299,6 +77539,7 @@ export namespace Prisma {
     OR?: SkRektorScalarWhereWithAggregatesInput[]
     NOT?: SkRektorScalarWhereWithAggregatesInput | SkRektorScalarWhereWithAggregatesInput[]
     SkRektorId?: StringWithAggregatesFilter<"SkRektor"> | string
+    TipeSkRektorId?: StringWithAggregatesFilter<"SkRektor"> | string
     NamaSk?: StringWithAggregatesFilter<"SkRektor"> | string
     TahunSk?: IntWithAggregatesFilter<"SkRektor"> | number
     NomorSk?: StringWithAggregatesFilter<"SkRektor"> | string
@@ -80250,6 +81491,45 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type TipeSkRektorCreateInput = {
+    TipeSkRektorId?: string
+    Nama: string
+    SkRektor?: SkRektorCreateNestedManyWithoutTipeSkRektorInput
+  }
+
+  export type TipeSkRektorUncheckedCreateInput = {
+    TipeSkRektorId?: string
+    Nama: string
+    SkRektor?: SkRektorUncheckedCreateNestedManyWithoutTipeSkRektorInput
+  }
+
+  export type TipeSkRektorUpdateInput = {
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    SkRektor?: SkRektorUpdateManyWithoutTipeSkRektorNestedInput
+  }
+
+  export type TipeSkRektorUncheckedUpdateInput = {
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    SkRektor?: SkRektorUncheckedUpdateManyWithoutTipeSkRektorNestedInput
+  }
+
+  export type TipeSkRektorCreateManyInput = {
+    TipeSkRektorId?: string
+    Nama: string
+  }
+
+  export type TipeSkRektorUpdateManyMutationInput = {
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TipeSkRektorUncheckedUpdateManyInput = {
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+  }
+
   export type SkRektorCreateInput = {
     SkRektorId?: string
     NamaSk: string
@@ -80259,12 +81539,14 @@ export namespace Prisma {
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
     SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutSkRektorInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutSkRektorInput
   }
 
   export type SkRektorUncheckedCreateInput = {
     SkRektorId?: string
+    TipeSkRektorId: string
     NamaSk: string
     TahunSk?: number
     NomorSk: string
@@ -80285,12 +81567,14 @@ export namespace Prisma {
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
     SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutSkRektorNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutSkRektorNestedInput
   }
 
   export type SkRektorUncheckedUpdateInput = {
     SkRektorId?: StringFieldUpdateOperationsInput | string
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
     NamaSk?: StringFieldUpdateOperationsInput | string
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
@@ -80304,6 +81588,7 @@ export namespace Prisma {
 
   export type SkRektorCreateManyInput = {
     SkRektorId?: string
+    TipeSkRektorId: string
     NamaSk: string
     TahunSk?: number
     NomorSk: string
@@ -80326,6 +81611,7 @@ export namespace Prisma {
 
   export type SkRektorUncheckedUpdateManyInput = {
     SkRektorId?: StringFieldUpdateOperationsInput | string
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
     NamaSk?: StringFieldUpdateOperationsInput | string
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
@@ -83497,8 +84783,39 @@ export namespace Prisma {
     UpdatedAt?: SortOrder
   }
 
+  export type SkRektorListRelationFilter = {
+    every?: SkRektorWhereInput
+    some?: SkRektorWhereInput
+    none?: SkRektorWhereInput
+  }
+
+  export type SkRektorOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TipeSkRektorCountOrderByAggregateInput = {
+    TipeSkRektorId?: SortOrder
+    Nama?: SortOrder
+  }
+
+  export type TipeSkRektorMaxOrderByAggregateInput = {
+    TipeSkRektorId?: SortOrder
+    Nama?: SortOrder
+  }
+
+  export type TipeSkRektorMinOrderByAggregateInput = {
+    TipeSkRektorId?: SortOrder
+    Nama?: SortOrder
+  }
+
+  export type TipeSkRektorScalarRelationFilter = {
+    is?: TipeSkRektorWhereInput
+    isNot?: TipeSkRektorWhereInput
+  }
+
   export type SkRektorCountOrderByAggregateInput = {
     SkRektorId?: SortOrder
+    TipeSkRektorId?: SortOrder
     NamaSk?: SortOrder
     TahunSk?: SortOrder
     NomorSk?: SortOrder
@@ -83514,6 +84831,7 @@ export namespace Prisma {
 
   export type SkRektorMaxOrderByAggregateInput = {
     SkRektorId?: SortOrder
+    TipeSkRektorId?: SortOrder
     NamaSk?: SortOrder
     TahunSk?: SortOrder
     NomorSk?: SortOrder
@@ -83525,6 +84843,7 @@ export namespace Prisma {
 
   export type SkRektorMinOrderByAggregateInput = {
     SkRektorId?: SortOrder
+    TipeSkRektorId?: SortOrder
     NamaSk?: SortOrder
     TahunSk?: SortOrder
     NomorSk?: SortOrder
@@ -87059,6 +88378,54 @@ export namespace Prisma {
     update?: XOR<XOR<SanggahanAssesmenUpdateToOneWithWhereWithoutSanggahanAssesmenPihakInput, SanggahanAssesmenUpdateWithoutSanggahanAssesmenPihakInput>, SanggahanAssesmenUncheckedUpdateWithoutSanggahanAssesmenPihakInput>
   }
 
+  export type SkRektorCreateNestedManyWithoutTipeSkRektorInput = {
+    create?: XOR<SkRektorCreateWithoutTipeSkRektorInput, SkRektorUncheckedCreateWithoutTipeSkRektorInput> | SkRektorCreateWithoutTipeSkRektorInput[] | SkRektorUncheckedCreateWithoutTipeSkRektorInput[]
+    connectOrCreate?: SkRektorCreateOrConnectWithoutTipeSkRektorInput | SkRektorCreateOrConnectWithoutTipeSkRektorInput[]
+    createMany?: SkRektorCreateManyTipeSkRektorInputEnvelope
+    connect?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+  }
+
+  export type SkRektorUncheckedCreateNestedManyWithoutTipeSkRektorInput = {
+    create?: XOR<SkRektorCreateWithoutTipeSkRektorInput, SkRektorUncheckedCreateWithoutTipeSkRektorInput> | SkRektorCreateWithoutTipeSkRektorInput[] | SkRektorUncheckedCreateWithoutTipeSkRektorInput[]
+    connectOrCreate?: SkRektorCreateOrConnectWithoutTipeSkRektorInput | SkRektorCreateOrConnectWithoutTipeSkRektorInput[]
+    createMany?: SkRektorCreateManyTipeSkRektorInputEnvelope
+    connect?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+  }
+
+  export type SkRektorUpdateManyWithoutTipeSkRektorNestedInput = {
+    create?: XOR<SkRektorCreateWithoutTipeSkRektorInput, SkRektorUncheckedCreateWithoutTipeSkRektorInput> | SkRektorCreateWithoutTipeSkRektorInput[] | SkRektorUncheckedCreateWithoutTipeSkRektorInput[]
+    connectOrCreate?: SkRektorCreateOrConnectWithoutTipeSkRektorInput | SkRektorCreateOrConnectWithoutTipeSkRektorInput[]
+    upsert?: SkRektorUpsertWithWhereUniqueWithoutTipeSkRektorInput | SkRektorUpsertWithWhereUniqueWithoutTipeSkRektorInput[]
+    createMany?: SkRektorCreateManyTipeSkRektorInputEnvelope
+    set?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    disconnect?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    delete?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    connect?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    update?: SkRektorUpdateWithWhereUniqueWithoutTipeSkRektorInput | SkRektorUpdateWithWhereUniqueWithoutTipeSkRektorInput[]
+    updateMany?: SkRektorUpdateManyWithWhereWithoutTipeSkRektorInput | SkRektorUpdateManyWithWhereWithoutTipeSkRektorInput[]
+    deleteMany?: SkRektorScalarWhereInput | SkRektorScalarWhereInput[]
+  }
+
+  export type SkRektorUncheckedUpdateManyWithoutTipeSkRektorNestedInput = {
+    create?: XOR<SkRektorCreateWithoutTipeSkRektorInput, SkRektorUncheckedCreateWithoutTipeSkRektorInput> | SkRektorCreateWithoutTipeSkRektorInput[] | SkRektorUncheckedCreateWithoutTipeSkRektorInput[]
+    connectOrCreate?: SkRektorCreateOrConnectWithoutTipeSkRektorInput | SkRektorCreateOrConnectWithoutTipeSkRektorInput[]
+    upsert?: SkRektorUpsertWithWhereUniqueWithoutTipeSkRektorInput | SkRektorUpsertWithWhereUniqueWithoutTipeSkRektorInput[]
+    createMany?: SkRektorCreateManyTipeSkRektorInputEnvelope
+    set?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    disconnect?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    delete?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    connect?: SkRektorWhereUniqueInput | SkRektorWhereUniqueInput[]
+    update?: SkRektorUpdateWithWhereUniqueWithoutTipeSkRektorInput | SkRektorUpdateWithWhereUniqueWithoutTipeSkRektorInput[]
+    updateMany?: SkRektorUpdateManyWithWhereWithoutTipeSkRektorInput | SkRektorUpdateManyWithWhereWithoutTipeSkRektorInput[]
+    deleteMany?: SkRektorScalarWhereInput | SkRektorScalarWhereInput[]
+  }
+
+  export type TipeSkRektorCreateNestedOneWithoutSkRektorInput = {
+    create?: XOR<TipeSkRektorCreateWithoutSkRektorInput, TipeSkRektorUncheckedCreateWithoutSkRektorInput>
+    connectOrCreate?: TipeSkRektorCreateOrConnectWithoutSkRektorInput
+    connect?: TipeSkRektorWhereUniqueInput
+  }
+
   export type SkRektorAssesorCreateNestedManyWithoutSkRektorInput = {
     create?: XOR<SkRektorAssesorCreateWithoutSkRektorInput, SkRektorAssesorUncheckedCreateWithoutSkRektorInput> | SkRektorAssesorCreateWithoutSkRektorInput[] | SkRektorAssesorUncheckedCreateWithoutSkRektorInput[]
     connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutSkRektorInput | SkRektorAssesorCreateOrConnectWithoutSkRektorInput[]
@@ -87085,6 +88452,14 @@ export namespace Prisma {
     connectOrCreate?: SkRektorMahasiswaCreateOrConnectWithoutSkRektorInput | SkRektorMahasiswaCreateOrConnectWithoutSkRektorInput[]
     createMany?: SkRektorMahasiswaCreateManySkRektorInputEnvelope
     connect?: SkRektorMahasiswaWhereUniqueInput | SkRektorMahasiswaWhereUniqueInput[]
+  }
+
+  export type TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput = {
+    create?: XOR<TipeSkRektorCreateWithoutSkRektorInput, TipeSkRektorUncheckedCreateWithoutSkRektorInput>
+    connectOrCreate?: TipeSkRektorCreateOrConnectWithoutSkRektorInput
+    upsert?: TipeSkRektorUpsertWithoutSkRektorInput
+    connect?: TipeSkRektorWhereUniqueInput
+    update?: XOR<XOR<TipeSkRektorUpdateToOneWithWhereWithoutSkRektorInput, TipeSkRektorUpdateWithoutSkRektorInput>, TipeSkRektorUncheckedUpdateWithoutSkRektorInput>
   }
 
   export type SkRektorAssesorUpdateManyWithoutSkRektorNestedInput = {
@@ -95542,6 +96917,88 @@ export namespace Prisma {
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutSanggahanAssesmenNestedInput
   }
 
+  export type SkRektorCreateWithoutTipeSkRektorInput = {
+    SkRektorId?: string
+    NamaSk: string
+    TahunSk?: number
+    NomorSk: string
+    NamaFile: string
+    NamaDokumen: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutSkRektorInput
+    SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutSkRektorInput
+  }
+
+  export type SkRektorUncheckedCreateWithoutTipeSkRektorInput = {
+    SkRektorId?: string
+    NamaSk: string
+    TahunSk?: number
+    NomorSk: string
+    NamaFile: string
+    NamaDokumen: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutSkRektorInput
+    SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutSkRektorInput
+  }
+
+  export type SkRektorCreateOrConnectWithoutTipeSkRektorInput = {
+    where: SkRektorWhereUniqueInput
+    create: XOR<SkRektorCreateWithoutTipeSkRektorInput, SkRektorUncheckedCreateWithoutTipeSkRektorInput>
+  }
+
+  export type SkRektorCreateManyTipeSkRektorInputEnvelope = {
+    data: SkRektorCreateManyTipeSkRektorInput | SkRektorCreateManyTipeSkRektorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SkRektorUpsertWithWhereUniqueWithoutTipeSkRektorInput = {
+    where: SkRektorWhereUniqueInput
+    update: XOR<SkRektorUpdateWithoutTipeSkRektorInput, SkRektorUncheckedUpdateWithoutTipeSkRektorInput>
+    create: XOR<SkRektorCreateWithoutTipeSkRektorInput, SkRektorUncheckedCreateWithoutTipeSkRektorInput>
+  }
+
+  export type SkRektorUpdateWithWhereUniqueWithoutTipeSkRektorInput = {
+    where: SkRektorWhereUniqueInput
+    data: XOR<SkRektorUpdateWithoutTipeSkRektorInput, SkRektorUncheckedUpdateWithoutTipeSkRektorInput>
+  }
+
+  export type SkRektorUpdateManyWithWhereWithoutTipeSkRektorInput = {
+    where: SkRektorScalarWhereInput
+    data: XOR<SkRektorUpdateManyMutationInput, SkRektorUncheckedUpdateManyWithoutTipeSkRektorInput>
+  }
+
+  export type SkRektorScalarWhereInput = {
+    AND?: SkRektorScalarWhereInput | SkRektorScalarWhereInput[]
+    OR?: SkRektorScalarWhereInput[]
+    NOT?: SkRektorScalarWhereInput | SkRektorScalarWhereInput[]
+    SkRektorId?: StringFilter<"SkRektor"> | string
+    TipeSkRektorId?: StringFilter<"SkRektor"> | string
+    NamaSk?: StringFilter<"SkRektor"> | string
+    TahunSk?: IntFilter<"SkRektor"> | number
+    NomorSk?: StringFilter<"SkRektor"> | string
+    NamaFile?: StringFilter<"SkRektor"> | string
+    NamaDokumen?: StringFilter<"SkRektor"> | string
+    CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+  }
+
+  export type TipeSkRektorCreateWithoutSkRektorInput = {
+    TipeSkRektorId?: string
+    Nama: string
+  }
+
+  export type TipeSkRektorUncheckedCreateWithoutSkRektorInput = {
+    TipeSkRektorId?: string
+    Nama: string
+  }
+
+  export type TipeSkRektorCreateOrConnectWithoutSkRektorInput = {
+    where: TipeSkRektorWhereUniqueInput
+    create: XOR<TipeSkRektorCreateWithoutSkRektorInput, TipeSkRektorUncheckedCreateWithoutSkRektorInput>
+  }
+
   export type SkRektorAssesorCreateWithoutSkRektorInput = {
     AssesorMahasiswa: AssesorMahasiswaCreateNestedOneWithoutSkRektorAssesorInput
   }
@@ -95576,6 +97033,27 @@ export namespace Prisma {
   export type SkRektorMahasiswaCreateManySkRektorInputEnvelope = {
     data: SkRektorMahasiswaCreateManySkRektorInput | SkRektorMahasiswaCreateManySkRektorInput[]
     skipDuplicates?: boolean
+  }
+
+  export type TipeSkRektorUpsertWithoutSkRektorInput = {
+    update: XOR<TipeSkRektorUpdateWithoutSkRektorInput, TipeSkRektorUncheckedUpdateWithoutSkRektorInput>
+    create: XOR<TipeSkRektorCreateWithoutSkRektorInput, TipeSkRektorUncheckedCreateWithoutSkRektorInput>
+    where?: TipeSkRektorWhereInput
+  }
+
+  export type TipeSkRektorUpdateToOneWithWhereWithoutSkRektorInput = {
+    where?: TipeSkRektorWhereInput
+    data: XOR<TipeSkRektorUpdateWithoutSkRektorInput, TipeSkRektorUncheckedUpdateWithoutSkRektorInput>
+  }
+
+  export type TipeSkRektorUpdateWithoutSkRektorInput = {
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TipeSkRektorUncheckedUpdateWithoutSkRektorInput = {
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
   }
 
   export type SkRektorAssesorUpsertWithWhereUniqueWithoutSkRektorInput = {
@@ -95619,11 +97097,13 @@ export namespace Prisma {
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutSkRektorInput
   }
 
   export type SkRektorUncheckedCreateWithoutSkRektorAssesorInput = {
     SkRektorId?: string
+    TipeSkRektorId: string
     NamaSk: string
     TahunSk?: number
     NomorSk: string
@@ -95684,11 +97164,13 @@ export namespace Prisma {
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutSkRektorNestedInput
   }
 
   export type SkRektorUncheckedUpdateWithoutSkRektorAssesorInput = {
     SkRektorId?: StringFieldUpdateOperationsInput | string
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
     NamaSk?: StringFieldUpdateOperationsInput | string
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
@@ -95739,11 +97221,13 @@ export namespace Prisma {
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
     SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutSkRektorInput
   }
 
   export type SkRektorUncheckedCreateWithoutSkRektorMahasiswaInput = {
     SkRektorId?: string
+    TipeSkRektorId: string
     NamaSk: string
     TahunSk?: number
     NomorSk: string
@@ -95842,11 +97326,13 @@ export namespace Prisma {
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
     SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutSkRektorNestedInput
   }
 
   export type SkRektorUncheckedUpdateWithoutSkRektorMahasiswaInput = {
     SkRektorId?: StringFieldUpdateOperationsInput | string
+    TipeSkRektorId?: StringFieldUpdateOperationsInput | string
     NamaSk?: StringFieldUpdateOperationsInput | string
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
@@ -99167,6 +100653,54 @@ export namespace Prisma {
     NamaPihak?: StringFieldUpdateOperationsInput | string
     JabatanPihak?: NullableStringFieldUpdateOperationsInput | string | null
     InstansiPihak?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SkRektorCreateManyTipeSkRektorInput = {
+    SkRektorId?: string
+    NamaSk: string
+    TahunSk?: number
+    NomorSk: string
+    NamaFile: string
+    NamaDokumen: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+  }
+
+  export type SkRektorUpdateWithoutTipeSkRektorInput = {
+    SkRektorId?: StringFieldUpdateOperationsInput | string
+    NamaSk?: StringFieldUpdateOperationsInput | string
+    TahunSk?: IntFieldUpdateOperationsInput | number
+    NomorSk?: StringFieldUpdateOperationsInput | string
+    NamaFile?: StringFieldUpdateOperationsInput | string
+    NamaDokumen?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutSkRektorNestedInput
+    SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutSkRektorNestedInput
+  }
+
+  export type SkRektorUncheckedUpdateWithoutTipeSkRektorInput = {
+    SkRektorId?: StringFieldUpdateOperationsInput | string
+    NamaSk?: StringFieldUpdateOperationsInput | string
+    TahunSk?: IntFieldUpdateOperationsInput | number
+    NomorSk?: StringFieldUpdateOperationsInput | string
+    NamaFile?: StringFieldUpdateOperationsInput | string
+    NamaDokumen?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutSkRektorNestedInput
+    SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutSkRektorNestedInput
+  }
+
+  export type SkRektorUncheckedUpdateManyWithoutTipeSkRektorInput = {
+    SkRektorId?: StringFieldUpdateOperationsInput | string
+    NamaSk?: StringFieldUpdateOperationsInput | string
+    TahunSk?: IntFieldUpdateOperationsInput | number
+    NomorSk?: StringFieldUpdateOperationsInput | string
+    NamaFile?: StringFieldUpdateOperationsInput | string
+    NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }

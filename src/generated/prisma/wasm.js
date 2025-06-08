@@ -535,8 +535,14 @@ exports.Prisma.SanggahanAssesmenPihakScalarFieldEnum = {
   UpdatedAt: 'UpdatedAt'
 };
 
+exports.Prisma.TipeSkRektorScalarFieldEnum = {
+  TipeSkRektorId: 'TipeSkRektorId',
+  Nama: 'Nama'
+};
+
 exports.Prisma.SkRektorScalarFieldEnum = {
   SkRektorId: 'SkRektorId',
+  TipeSkRektorId: 'TipeSkRektorId',
   NamaSk: 'NamaSk',
   TahunSk: 'TahunSk',
   NomorSk: 'NomorSk',
@@ -795,6 +801,7 @@ exports.Prisma.ModelName = {
   SanggahanAssesmen: 'SanggahanAssesmen',
   SanggahanAssesmenMk: 'SanggahanAssesmenMk',
   SanggahanAssesmenPihak: 'SanggahanAssesmenPihak',
+  TipeSkRektor: 'TipeSkRektor',
   SkRektor: 'SkRektor',
   SkRektorAssesor: 'SkRektorAssesor',
   SkRektorMahasiswa: 'SkRektorMahasiswa',

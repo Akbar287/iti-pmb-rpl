@@ -704,8 +704,17 @@ model SanggahanAssesmenPihak {
   @@map("sanggahan_assesmen_pihak")
 }
 
+model TipeSkRektor {
+  TipeSkRektorId String     @id @default(uuid()) @map("tipe_sk_rektor_id")
+  Nama           String     @map("nama")
+  SkRektor       SkRektor[]
+
+  @@map("tipe_sk_rektor")
+}
+
 model SkRektor {
   SkRektorId        String              @id @default(uuid()) @map("sk_rektor_id")
+  TipeSkRektorId    String              @map("tipe_sk_rektor_id")
   NamaSk            String              @map("nama_sk")
   TahunSk           Int                 @default(2025) @map("tahun_sk")
   NomorSk           String              @map("nomor_sk")
@@ -713,6 +722,7 @@ model SkRektor {
   NamaDokumen       String              @map("nama_dokumen")
   CreatedAt         DateTime?           @map("created_at")
   UpdatedAt         DateTime?           @map("updated_at")
+  TipeSkRektor      TipeSkRektor        @relation(fields: [TipeSkRektorId], references: [TipeSkRektorId], onDelete: Cascade)
   SkRektorAssesor   SkRektorAssesor[]
   SkRektorMahasiswa SkRektorMahasiswa[]
 

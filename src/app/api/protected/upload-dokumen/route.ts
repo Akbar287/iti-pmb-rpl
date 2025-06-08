@@ -136,7 +136,6 @@ app.get('/', async (c) => {
     }
 })
 app.post('/', async (c) => {
-    console.dir(c.body)
     const body = await c.req.parseBody()
     
     const file = body.files
