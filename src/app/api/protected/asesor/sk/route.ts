@@ -19,7 +19,8 @@ app.get('/', async (c) => {
         const search = c.req.query('search') || ''
 
         const tipeAsesor = await prisma.tipeSkRektor.findFirst({
-            where: {Nama: "Asesor"}, select: { TipeSkRektorId: true }
+            where: { Nama: 'Asesor' },
+            select: { TipeSkRektorId: true },
         })
 
         if (!tipeAsesor) {
@@ -68,9 +69,9 @@ app.get('/', async (c) => {
             NamaSk: item.NamaSk,
             TahunSk: item.TahunSk,
             NomorSk: item.NomorSk,
-            NamaFile: item.NamaFile, 
+            NamaFile: item.NamaFile,
             NamaDokumen: item.NamaDokumen,
-            AsesorRelation: item._count.SkRektorAssesor
+            AsesorRelation: item._count.SkRektorAssesor,
         }))
 
         return c.json<{
@@ -106,7 +107,7 @@ app.get('/', async (c) => {
             )
         }
         const filePath = path.join(process.cwd(), 'uploads', 'files', filename)
-    
+
         try {
             const stat = fs.statSync(filePath)
             if (!stat.isFile()) {
@@ -115,15 +116,17 @@ app.get('/', async (c) => {
                     { status: 400 }
                 )
             }
-    
+
             const fileStream = fs.createReadStream(filePath)
-            const contentType = mime.getType(filePath) || 'application/octet-stream'
-    
+            const contentType =
+                mime.getType(filePath) || 'application/octet-stream'
+
             return c.body(fileStream as any, 200, {
                 'Content-Type': contentType,
             })
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'error'
+            const errorMessage =
+                error instanceof Error ? error.message : 'error'
             return c.json(
                 { data: [], status: 'error', message: errorMessage },
                 { status: 500 }
@@ -189,19 +192,21 @@ app.get('/', async (c) => {
                                                     Nama: true,
                                                 },
                                             },
-                                        }
-                                    }
+                                        },
+                                    },
                                 },
                             },
-                        }
-                    }
+                        },
+                    },
                 },
                 where: {
                     SkRektorId: SkAsesorId,
                 },
                 skip: (page - 1) * limit,
                 take: limit,
-                orderBy: { AssesorMahasiswa: {Pendaftaran: { KodePendaftar: 'asc' } } },
+                orderBy: {
+                    AssesorMahasiswa: { Pendaftaran: { KodePendaftar: 'asc' } },
+                },
             }),
 
             prisma.skRektorAssesor.count({
@@ -211,14 +216,16 @@ app.get('/', async (c) => {
             }),
         ])
         const responses: ResponseSkRektorAsesorDetail[] = data.map((item) => ({
-            Asesor: item.AssesorMahasiswa.Pendaftaran.AssesorMahasiswa.map((asesor) => ({
-                AssesorMahasiswaId: asesor.AssesorMahasiswaId,
-                AsesorId: asesor.Asesor.AsesorId,
-                NamaTipeAsesor: asesor.Asesor.TipeAsesor.Nama,
-                NamaAsesor: asesor.Asesor.User.Nama,
-                Urutan: asesor.Urutan,
-                Confirmation: asesor.Confirmation,
-            })),
+            Asesor: item.AssesorMahasiswa.Pendaftaran.AssesorMahasiswa.map(
+                (asesor) => ({
+                    AssesorMahasiswaId: asesor.AssesorMahasiswaId,
+                    AsesorId: asesor.Asesor.AsesorId,
+                    NamaTipeAsesor: asesor.Asesor.TipeAsesor.Nama,
+                    NamaAsesor: asesor.Asesor.User.Nama,
+                    Urutan: asesor.Urutan,
+                    Confirmation: asesor.Confirmation,
+                })
+            ),
             SkRektorId: item.SkRektorId,
             AsesorMahasiswaId: item.AssesorMahasiswa.AssesorMahasiswaId,
             PendaftaranId: item.AssesorMahasiswa.Pendaftaran.PendaftaranId,
@@ -249,12 +256,87 @@ app.get('/', async (c) => {
             hasPrevious: page > 1,
         })
     }
+    if (jenis === 'get-page-mhs-asesor') {
+        const page = parseInt(c.req.query('page') || '1', 10)
+        const limit = parseInt(c.req.query('limit') || '10', 10)
+        const search = c.req.query('search') || ''
+
+        const [data, total] = await Promise.all([
+            await prisma.assesorMahasiswa.findMany({
+                select: {
+                    AssesorMahasiswaId: true,
+                    Asesor: {
+                        select: {
+                            AsesorId: true,
+                            User: {
+                                select: { Nama: true },
+                            },
+                        },
+                    },
+                    Pendaftaran: {
+                        select: {
+                            PendaftaranId: true,
+                            Mahasiswa: {
+                                select: { User: { select: { Nama: true } } },
+                            },
+                        },
+                    },
+                },
+                where: {
+                    SkRektorAssesor: {
+                        none: {},
+                    },
+                },
+                skip: (page - 1) * limit,
+                take: limit,
+                orderBy: { CreatedAt: 'desc' },
+            }),
+            await prisma.assesorMahasiswa.count({
+                where: {
+                    SkRektorAssesor: {
+                        none: {},
+                    },
+                },
+            }),
+        ])
+
+        const response: ResponseAsesorMahasiswa[] = data.map((x) => ({
+            AIM: x.AssesorMahasiswaId,
+            AI: x.Asesor.AsesorId,
+            PI: x.Pendaftaran.PendaftaranId,
+            NA: x.Asesor.User.Nama,
+            NM: x.Pendaftaran.Mahasiswa.User.Nama,
+        }))
+        return c.json<{
+            data: ResponseAsesorMahasiswa[]
+            page: number
+            limit: number
+            totalElement: number
+            totalPage: number
+            isFirst: boolean
+            isLast: boolean
+            hasNext: boolean
+            hasPrevious: boolean
+        }>({
+            page: page,
+            limit: limit,
+            data: response,
+            totalElement: total,
+            totalPage: Math.ceil(total / limit),
+            isFirst: page === 1,
+            isLast:
+                page === Math.ceil(total / limit) ||
+                Math.ceil(total / limit) === 0,
+            hasNext: page < Math.ceil(total / limit),
+            hasPrevious: page > 1,
+        })
+    }
     return c.json({ error: 'Invalid query parameter' }, 400)
 })
 
 app.post('/', async (c) => {
     const body = await c.req.parseBody()
-    
+
     const file = body.files
     const NamaSk = body.NamaSk
     const TahunSk = body.TahunSk
@@ -262,7 +344,8 @@ app.post('/', async (c) => {
     const ArrayRelation: string[] = JSON.parse(body.ArrayRelation as string)
 
     const tipeAsesor = await prisma.tipeSkRektor.findFirst({
-        where: {Nama: "Asesor"}, select: { TipeSkRektorId: true }
+        where: { Nama: 'Asesor' },
+        select: { TipeSkRektorId: true },
     })
 
     if (!tipeAsesor) {
@@ -282,14 +365,14 @@ app.post('/', async (c) => {
             { status: 400 }
         )
     }
-    
+
     if (!NamaSk) {
         return c.json(
             { status: 'error', message: 'Nama SK Perlu diisi', data: [] },
             { status: 400 }
         )
     }
-    
+
     if (!TahunSk) {
         return c.json(
             { status: 'error', message: 'Tahun SK Perlu diisi', data: [] },
@@ -369,17 +452,17 @@ app.post('/', async (c) => {
             UpdatedAt: true,
             _count: {
                 select: {
-                    SkRektorAssesor: true
-                }
-            }
-        }
-    });
+                    SkRektorAssesor: true,
+                },
+            },
+        },
+    })
 
     await prisma.skRektorAssesor.createMany({
-        data: ArrayRelation.map(a => ({
+        data: ArrayRelation.map((a) => ({
             SkRektorId: data.SkRektorId,
-            AssesorMahasiswaId: a
-        }))
+            AssesorMahasiswaId: a,
+        })),
     })
 
     return c.json<ResponseSkRektorAsesor>({
@@ -395,42 +478,46 @@ app.post('/', async (c) => {
 
 app.delete('/', async (c) => {
     const id = c.req.query('id')
-    
-        const file = await prisma.skRektor.findFirst({
-            where: {
-                SkRektorId: id,
-            },
-            select: {
-                NamaDokumen: true,
-                NamaFile: true,
-            },
-        })
-    
-        const avatarDir = path.join(process.cwd(), 'uploads', 'files')
-    
-        if (file !== null) {
-            const oldPath = path.join(avatarDir, file.NamaFile || '')
-            if (fs.existsSync(oldPath)) {
-                try {
-                    fs.unlinkSync(oldPath)
-                } catch (err) {
-                    console.error('Failed to delete file :', err)
-                }
+
+    const file = await prisma.skRektor.findFirst({
+        where: {
+            SkRektorId: id,
+        },
+        select: {
+            NamaDokumen: true,
+            NamaFile: true,
+        },
+    })
+
+    const avatarDir = path.join(process.cwd(), 'uploads', 'files')
+
+    if (file !== null) {
+        const oldPath = path.join(avatarDir, file.NamaFile || '')
+        if (fs.existsSync(oldPath)) {
+            try {
+                fs.unlinkSync(oldPath)
+            } catch (err) {
+                console.error('Failed to delete file :', err)
             }
         }
-        
-        await prisma.skRektor.delete({
-            where: {
-                SkRektorId: id,
-            },
-        })
-    
-    
-        return c.json({
-            status: 'ok',
-            message: 'success delete a file',
-            data: []
-        })
+    }
+
+    await prisma.skRektorAssesor.deleteMany({
+        where: {
+            SkRektorId: id,
+        },
+    })
+    await prisma.skRektor.delete({
+        where: {
+            SkRektorId: id,
+        },
+    })
+
+    return c.json({
+        status: 'ok',
+        message: 'success delete a file',
+        data: [],
+    })
 })
 
 export const GET = handle(app)

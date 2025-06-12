@@ -18,6 +18,22 @@ export async function getSkRektorAsesorPagination(
     return res.json()
 }
 
+export async function getAsesorMahasiswaPagination(
+    page: number,
+    limit: number,
+    search: string
+): Promise<Pagination<ResponseAsesorMahasiswa[]>> {
+    const params = new URLSearchParams()
+    params.append('page', String(page))
+    params.append('limit', String(limit))
+    params.append('search', search)
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asesor/sk?jenis=get-page-mhs-asesor&${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch relasi asesor mahasiswa')
+    return res.json()
+}
+
 export async function getSkRektorAsesorDetailPagination(
     page: number,
     limit: number,
@@ -56,7 +72,7 @@ export async function setSkRektorAsesor(
     TahunSk: string,
     NomorSk: string,
     ArrayRelation: string[]
-): Promise<Response> {
+): Promise<ResponseSkRektorAsesor> {
     const formData = new FormData()
     formData.append('files', data)
     formData.append('NamaSk', NamaSk)
@@ -64,10 +80,14 @@ export async function setSkRektorAsesor(
     formData.append('NomorSk', NomorSk)
     formData.append('ArrayRelation', JSON.stringify(ArrayRelation))
 
-    return await fetch(`${BASE_URL}/api/protected/asesor/sk`, {
+    const res = await fetch(`${BASE_URL}/api/protected/asesor/sk`, {
         method: 'POST',
         body: formData,
     })
+    if (!res.ok) {
+        throw new Error('Failed to post sk asesor data')
+    }
+    return res.json()
 }
 
 export async function deleteSkRektorAsesor(SkRektorId: string): Promise<{

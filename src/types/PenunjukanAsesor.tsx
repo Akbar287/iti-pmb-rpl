@@ -73,3 +73,11 @@ type ResponseSkRektorAsesorDetail = {
         Confirmation: boolean
     }[]
 }
+
+type ResponseAsesorMahasiswa = {
+    AIM: string
+    AI: string
+    PI: string
+    NA: string
+    NM: string
+}
