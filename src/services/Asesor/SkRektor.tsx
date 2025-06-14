@@ -1,4 +1,9 @@
 import { Pagination } from '@/types/Pagination'
+import {
+    ResponseAsesorMahasiswa,
+    ResponseSkRektorAsesor,
+    ResponseSkRektorAsesorDetail,
+} from '@/types/PenunjukanAsesor'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 

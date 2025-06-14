@@ -76,6 +76,7 @@ export interface DaftarUlangProdiType {
     DaftarUlangId: string
     PendaftaranId: string
     Nim: string | null
+    Status: string
     PilihMataKuliah: number
     EvaluasiDiriMataKuliah: number
     JenjangKkniDituju: string | null
@@ -112,6 +113,7 @@ export interface DaftarUlangProdiType {
 }
 export const DaftarUlangProdiValue: DaftarUlangProdiType = {
     DaftarUlangId: '',
+    Status: '',
     PendaftaranId: '',
     Nim: null,
     JenjangKkniDituju: null,

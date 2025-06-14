@@ -1,5 +1,4 @@
 import {
-    MataKuliahMahasiswa,
     StatusMataKuliahMahasiswa,
 } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
@@ -45,6 +44,24 @@ app.get('/', async (c) => {
     const data = await prisma.daftarUlang.findFirst({
         where: {
             PendaftaranId: id,
+            Pendaftaran: {
+                StatusMahasiswaAssesmentHistory: {
+                    some: {
+                        OR: [
+                            {
+                                StatusMahasiswaAssesment: {
+                                    NamaStatus: "Pengisian Data Diri"
+                                }
+                            },
+                            {
+                                StatusMahasiswaAssesment: {
+                                    NamaStatus: "Asessmen Mandiri"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
         },
         select: {
             DaftarUlangId: true,
@@ -59,6 +76,20 @@ app.get('/', async (c) => {
             TanggalDaftarUlang: true,
             CreatedAt: true,
             UpdatedAt: true,
+            Pendaftaran: {
+                select: {
+                    StatusMahasiswaAssesmentHistory: {
+                        select: {
+                            Aktif: true,
+                            StatusMahasiswaAssesment: {
+                                select: {
+                                    NamaStatus: true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             ProgramStudi: {
                 select: {
                     ProgramStudiId: true,
@@ -97,6 +128,7 @@ app.get('/', async (c) => {
     const res: DaftarUlangProdiType = {
         DaftarUlangId: data?.DaftarUlangId || '',
         PendaftaranId: data?.PendaftaranId || '',
+        Status: data?.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus || '',
         Nim: data?.Nim || '',
         PilihMataKuliah: pilihMataKuliah.length,
         EvaluasiDiriMataKuliah: temp || 0,

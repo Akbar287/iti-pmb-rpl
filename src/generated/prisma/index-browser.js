@@ -586,9 +586,10 @@ exports.Prisma.StatusMahasiswaAssesmentScalarFieldEnum = {
 exports.Prisma.StatusMahasiswaAssesmentHistoryScalarFieldEnum = {
   StatusMahasiswaAssesmentHistoryId: 'StatusMahasiswaAssesmentHistoryId',
   StatusMahasiswaAssesmentId: 'StatusMahasiswaAssesmentId',
-  DaftarUlangId: 'DaftarUlangId',
+  PendaftaranId: 'PendaftaranId',
   Tanggal: 'Tanggal',
-  Keterangan: 'Keterangan'
+  Keterangan: 'Keterangan',
+  Aktif: 'Aktif'
 };
 
 exports.Prisma.TipeAsesorScalarFieldEnum = {

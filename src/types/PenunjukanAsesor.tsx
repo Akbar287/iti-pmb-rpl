@@ -1,4 +1,4 @@
-type ResponseAsesorFromProdi = {
+export type ResponseAsesorFromProdi = {
     AsesorId: string
     UserId: string
     Nama: string
@@ -11,7 +11,7 @@ type ResponseAsesorFromProdi = {
     }
 }
 
-type ResponseMhsFromAsesor = {
+export type ResponseMhsFromAsesor = {
     UserId: string
     MahasiswaId: string
     Nama: string
@@ -22,7 +22,17 @@ type ResponseMhsFromAsesor = {
     Confirmation: boolean
 }
 
-type RequestPenunjukanAsesor = {
+export type ResponseMhsFromAsesorSession = {
+    UserId: string
+    PendaftaranId: string
+    Nama: string
+    ProgramStudiId: string
+    NamaProgramStudi: string
+    Confirmation: boolean
+    Urutan: number
+}
+
+export type RequestPenunjukanAsesor = {
     Asesor: {
         AssesorMahasiswaId: string
         AsesorId: string
@@ -34,7 +44,7 @@ type RequestPenunjukanAsesor = {
     KodePendaftar: string
 }
 
-type ResponsePenunjukanAsesor = {
+export type ResponsePenunjukanAsesor = {
     Asesor: {
         AssesorMahasiswaId: string
         AsesorId: string
@@ -50,7 +60,7 @@ type ResponsePenunjukanAsesor = {
     NamaMahasiswa: string
 }
 
-type ResponseSkRektorAsesor = {
+export type ResponseSkRektorAsesor = {
     SkRektorId: string
     NamaSk: string
     TahunSk: number
@@ -60,7 +70,7 @@ type ResponseSkRektorAsesor = {
     AsesorRelation: number
 }
 
-type ResponseSkRektorAsesorDetail = {
+export type ResponseSkRektorAsesorDetail = {
     SkRektorId: string
     AsesorMahasiswaId: string
     PendaftaranId: string
@@ -74,7 +84,7 @@ type ResponseSkRektorAsesorDetail = {
     }[]
 }
 
-type ResponseAsesorMahasiswa = {
+export type ResponseAsesorMahasiswa = {
     AIM: string
     AI: string
     PI: string

@@ -405,13 +405,13 @@ app.get('/', async (c) => {
 
         const responses: CalonMahasiswaRplPage[] = data.map((d) => ({
             KodePendaftar: d?.KodePendaftar ?? '',
-            NoNik: d?.InformasiKependudukan?.[0].NoNik ?? '',
-            Nim: d?.DaftarUlang?.[0].Nim ?? '',
+            NoNik: d?.InformasiKependudukan.length > 0 ? d?.InformasiKependudukan?.[0].NoNik ?? '' : "",
+            Nim: d?.DaftarUlang.length > 0 ? d?.DaftarUlang?.[0].Nim ?? '' : '',
             Nama: d?.Mahasiswa.User.Nama ?? '',
             NoUjian: d?.NoUjian ?? '',
             Periode: d?.Periode ?? '',
             Gelombang: d?.Gelombang ?? '',
-            NamaProdi: d?.DaftarUlang?.[0].ProgramStudi.Nama ?? '',
+            NamaProdi: d?.DaftarUlang.length > 0 ? d?.DaftarUlang?.[0].ProgramStudi.Nama ?? '' : '',
         }))
 
         return c.json<{
@@ -570,6 +570,24 @@ app.post('/', async (c) => {
                 UpdatedAt: new Date(),
             },
         })
+
+        const statusPertama = await prisma.statusMahasiswaAssesment.findFirst({
+            select: {StatusMahasiswaAssesmentId: true},
+            where: {
+                NamaStatus: "Pengisian Data Diri"
+            }
+        })
+        if (statusPertama) {
+            await prisma.statusMahasiswaAssesmentHistory.create({
+                data: {
+                    StatusMahasiswaAssesmentId: statusPertama.StatusMahasiswaAssesmentId,
+                    Tanggal: new Date(),
+                    PendaftaranId: pendaftaran.PendaftaranId,
+                    Keterangan: '',
+                    Aktif: true,
+                }
+            })
+        }
 
         // Informasi Kependudukan
         await prisma.informasiKependudukan.create({

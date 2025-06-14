@@ -23,6 +23,7 @@ import {
     BookCheck,
     ComputerIcon,
     PenIcon,
+    PenLineIcon,
     TimerIcon,
     X,
 } from 'lucide-react'
@@ -56,6 +57,11 @@ import {
 import { Checkbox } from '../ui/checkbox'
 import { replaceItemAtIndex } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import {
+    setStatusAsessmenMandiri,
+    setStatusPenunjukanAsesor,
+} from '@/services/Status/StatusService'
+import Swal from 'sweetalert2'
 
 const EvaluasiMandiri = ({
     dataMahasiswa,
@@ -82,7 +88,17 @@ const EvaluasiMandiri = ({
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
 
     const startEvaluating = () => {
-        router.push('/evaluasi-mandiri/' + selectableMahasiswa)
+        if (dataDaftarUlang) {
+            if (dataDaftarUlang.Status === 'Asessmen Mandiri') {
+                router.push('/evaluasi-mandiri/' + selectableMahasiswa)
+            } else {
+                setStatusAsessmenMandiri(dataDaftarUlang.PendaftaranId).then(
+                    (res) => {
+                        router.push('/evaluasi-mandiri/' + selectableMahasiswa)
+                    }
+                )
+            }
+        }
     }
 
     const updateMataKuliahMahasiswa = () => {
@@ -119,6 +135,38 @@ const EvaluasiMandiri = ({
                 setLoadingAwal(false)
             })
     }, [selectableMahasiswa])
+
+    const continueToAsesor = () => {
+        Swal.fire({
+            title: 'Lanjutkan ke Asesor ?',
+            text: 'Pastikan anda yakin terhadap penilaian evaluasi mandiri anda. Lampiran di Upload Dokumen jangan sampai salah.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#f45f24',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Lanjutkan Ke Asesor!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (dataDaftarUlang) {
+                    setStatusPenunjukanAsesor(
+                        dataDaftarUlang.PendaftaranId
+                    ).then(() => {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Asesor akan ditunjuk untuk menilai Mata Kuliah RPL anda.',
+                            icon: 'success',
+                        })
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: 'Anda perlu memilih Nomor Ujian di kolom form.',
+                        icon: 'error',
+                    })
+                }
+            }
+        })
+    }
 
     return (
         <Card>
@@ -264,16 +312,29 @@ const EvaluasiMandiri = ({
                                 {(dataDaftarUlang?.PilihMataKuliah ?? 0) >
                                     0 && (
                                     <Button
-                                        className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                        className="mt-5 mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                                         type="button"
                                         onClick={() => {
                                             startEvaluating()
                                         }}
                                     >
                                         Mulai Evaluasi
-                                        <ArrowRightIcon />
+                                        <PenLineIcon />
                                     </Button>
                                 )}
+                                {dataDaftarUlang.Status ===
+                                    'Asessmen Mandiri' &&
+                                    dataDaftarUlang.EvaluasiDiriMataKuliah ===
+                                        dataDaftarUlang.PilihMataKuliah && (
+                                        <Button
+                                            className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                            type="button"
+                                            onClick={() => continueToAsesor()}
+                                        >
+                                            Lanjutkan Ke Asesor
+                                            <ArrowRightIcon />
+                                        </Button>
+                                    )}
                             </div>
                         </>
                     )}

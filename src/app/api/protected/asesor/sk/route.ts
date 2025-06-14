@@ -6,6 +6,7 @@ import fs from 'fs'
 import path from 'path'
 import mime from 'mime'
 import { v4 as uuidv4 } from 'uuid'
+import { ResponseAsesorMahasiswa, ResponseSkRektorAsesor, ResponseSkRektorAsesorDetail } from '@/types/PenunjukanAsesor'
 
 const app = new Hono().basePath('/api/protected/asesor/sk')
 

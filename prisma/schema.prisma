@@ -223,22 +223,21 @@ model Country {
 }
 
 model DaftarUlang {
-  DaftarUlangId                   String                            @id @default(uuid()) @map("daftar_ulang_id")
-  PendaftaranId                   String                            @map("pendaftaran_id")
-  ProgramStudiId                  String                            @map("program_studi_id")
-  Nim                             String?                           @map("nim")
-  JenjangKkniDituju               String?                           @map("jenjang_kkni_dituju")
-  KipK                            Boolean                           @default(false) @map("kip_k")
-  Aktif                           Boolean                           @default(false) @map("aktif")
-  MengisiBiodata                  Boolean                           @default(false) @map("mengisi_biodata")
-  Finalisasi                      Boolean                           @default(false) @map("finalisasi")
-  TanggalDaftar                   DateTime?                         @map("tanggal_daftar")
-  TanggalDaftarUlang              DateTime?                         @map("tanggal_daftar_ulang")
-  CreatedAt                       DateTime?                         @map("created_at")
-  UpdatedAt                       DateTime?                         @map("updated_at")
-  Pendaftaran                     Pendaftaran                       @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
-  ProgramStudi                    ProgramStudi                      @relation(fields: [ProgramStudiId], references: [ProgramStudiId], onDelete: Cascade)
-  StatusMahasiswaAssesmentHistory StatusMahasiswaAssesmentHistory[]
+  DaftarUlangId      String       @id @default(uuid()) @map("daftar_ulang_id")
+  PendaftaranId      String       @map("pendaftaran_id")
+  ProgramStudiId     String       @map("program_studi_id")
+  Nim                String?      @map("nim")
+  JenjangKkniDituju  String?      @map("jenjang_kkni_dituju")
+  KipK               Boolean      @default(false) @map("kip_k")
+  Aktif              Boolean      @default(false) @map("aktif")
+  MengisiBiodata     Boolean      @default(false) @map("mengisi_biodata")
+  Finalisasi         Boolean      @default(false) @map("finalisasi")
+  TanggalDaftar      DateTime?    @map("tanggal_daftar")
+  TanggalDaftarUlang DateTime?    @map("tanggal_daftar_ulang")
+  CreatedAt          DateTime?    @map("created_at")
+  UpdatedAt          DateTime?    @map("updated_at")
+  Pendaftaran        Pendaftaran  @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
+  ProgramStudi       ProgramStudi @relation(fields: [ProgramStudiId], references: [ProgramStudiId], onDelete: Cascade)
 
   @@map("daftar_ulang")
 }
@@ -555,34 +554,35 @@ model PekerjaanMahasiswa {
 }
 
 model Pendaftaran {
-  PendaftaranId                  String                           @id @default(uuid()) @map("pendaftaran_id")
-  MahasiswaId                    String                           @map("mahasiswa_id")
-  KodePendaftar                  String                           @map("kode_pendaftar")
-  NoUjian                        String                           @map("no_ujian")
-  Periode                        String                           @map("periode")
-  Gelombang                      String                           @map("gelombang")
-  SistemKuliah                   SistemKuliah                     @default(REGULER) @map("sistem_kuliah")
-  JalurPendaftaran               String                           @map("jalur_pendaftaran")
-  CreatedAt                      DateTime?                        @map("created_at")
-  UpdatedAt                      DateTime?                        @map("updated_at")
-  Mahasiswa                      Mahasiswa                        @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
-  AssesorMahasiswa               AssesorMahasiswa[]
-  BuktiForm                      BuktiForm[]
-  DaftarUlang                    DaftarUlang[]
-  InformasiKependudukan          InformasiKependudukan[]
-  InstitusiLama                  InstitusiLama[]
-  MahasiswaKonferensi            MahasiswaKonferensi[]
-  MahasiswaOrganisasiProfesi     MahasiswaOrganisasiProfesi[]
-  MahasiswaPelatihanProfessional MahasiswaPelatihanProfessional[]
-  MahasiswaPendidikan            MahasiswaPendidikan[]
-  MahasiswaPiagam                MahasiswaPiagam[]
-  MahasiswaRiwayatPekerjaan      MahasiswaRiwayatPekerjaan[]
-  MataKuliahMahasiswa            MataKuliahMahasiswa[]
-  OrangTua                       OrangTua[]
-  PekerjaanMahasiswa             PekerjaanMahasiswa[]
-  Pesantren                      Pesantren[]
-  SanggahanAssesmen              SanggahanAssesmen[]
-  SkRektorMahasiswa              SkRektorMahasiswa[]
+  PendaftaranId                   String                            @id @default(uuid()) @map("pendaftaran_id")
+  MahasiswaId                     String                            @map("mahasiswa_id")
+  KodePendaftar                   String                            @map("kode_pendaftar")
+  NoUjian                         String                            @map("no_ujian")
+  Periode                         String                            @map("periode")
+  Gelombang                       String                            @map("gelombang")
+  SistemKuliah                    SistemKuliah                      @default(REGULER) @map("sistem_kuliah")
+  JalurPendaftaran                String                            @map("jalur_pendaftaran")
+  CreatedAt                       DateTime?                         @map("created_at")
+  UpdatedAt                       DateTime?                         @map("updated_at")
+  Mahasiswa                       Mahasiswa                         @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
+  AssesorMahasiswa                AssesorMahasiswa[]
+  BuktiForm                       BuktiForm[]
+  DaftarUlang                     DaftarUlang[]
+  InformasiKependudukan           InformasiKependudukan[]
+  InstitusiLama                   InstitusiLama[]
+  MahasiswaKonferensi             MahasiswaKonferensi[]
+  MahasiswaOrganisasiProfesi      MahasiswaOrganisasiProfesi[]
+  MahasiswaPelatihanProfessional  MahasiswaPelatihanProfessional[]
+  MahasiswaPendidikan             MahasiswaPendidikan[]
+  MahasiswaPiagam                 MahasiswaPiagam[]
+  MahasiswaRiwayatPekerjaan       MahasiswaRiwayatPekerjaan[]
+  MataKuliahMahasiswa             MataKuliahMahasiswa[]
+  OrangTua                        OrangTua[]
+  PekerjaanMahasiswa              PekerjaanMahasiswa[]
+  Pesantren                       Pesantren[]
+  SanggahanAssesmen               SanggahanAssesmen[]
+  SkRektorMahasiswa               SkRektorMahasiswa[]
+  StatusMahasiswaAssesmentHistory StatusMahasiswaAssesmentHistory[]
 
   @@map("pendaftaran")
 }
@@ -781,11 +781,12 @@ model StatusMahasiswaAssesment {
 model StatusMahasiswaAssesmentHistory {
   StatusMahasiswaAssesmentHistoryId String                   @id @default(uuid()) @map("status_mahasiswa_assesment_history_id")
   StatusMahasiswaAssesmentId        String                   @map("status_mahasiswa_assesment_id")
-  DaftarUlangId                     String                   @map("daftar_ulang_id")
+  PendaftaranId                     String                   @map("pendaftaran_id")
   Tanggal                           DateTime?                @map("tanggal")
   Keterangan                        String?                  @map("keterangan")
+  Aktif                             Boolean                  @map("aktif")
   StatusMahasiswaAssesment          StatusMahasiswaAssesment @relation(fields: [StatusMahasiswaAssesmentId], references: [StatusMahasiswaAssesmentId], onDelete: Cascade)
-  DaftarUlang                       DaftarUlang              @relation(fields: [DaftarUlangId], references: [DaftarUlangId], onDelete: Cascade)
+  Pendaftaran                       Pendaftaran              @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
 
   @@map("status_mahasiswa_assesment_history")
 }
