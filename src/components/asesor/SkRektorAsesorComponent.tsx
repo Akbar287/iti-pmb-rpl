@@ -49,6 +49,7 @@ import {
 } from '@/services/Asesor/SkRektor'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { ResponseSkRektorAsesor } from '@/types/PenunjukanAsesor'
 
 const SkRektorAsesorComponent = () => {
     const router = useRouter()

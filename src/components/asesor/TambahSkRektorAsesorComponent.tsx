@@ -42,6 +42,7 @@ import {
     SelectValue,
 } from '../ui/select'
 import { useRouter } from 'next/navigation'
+import { ResponseAsesorMahasiswa } from '@/types/PenunjukanAsesor'
 const TambahSkRektorAsesorComponent = () => {
     const router = useRouter()
     const [loading, setLoading] = React.useState<boolean>(false)
