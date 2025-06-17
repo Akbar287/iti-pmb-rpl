@@ -80,6 +80,12 @@ import {
     updateAsesorMahasiswa,
 } from '@/services/Asesor/PenunjukanAsesorService'
 import { MultiSelect } from '../ui/multi-select'
+import {
+    ResponseAsesorFromProdi,
+    ResponsePenunjukanAsesor,
+} from '@/types/PenunjukanAsesor'
+import { Badge } from '../ui/badge'
+import { setStatusAsessmenOlehAsesor } from '@/services/Status/StatusService'
 
 const PenunjukanAsesorComponent = ({
     universityDataServer,
@@ -187,13 +193,17 @@ const PenunjukanAsesorComponent = ({
             KodePendaftar: data.KodePendaftar,
             PendaftaranId: data.PendaftaranId,
         })
-            .then((res) => {
+            .then(async (res) => {
+                await setStatusAsessmenOlehAsesor(data.PendaftaranId)
                 toast('Data Asesor Mahasiswa berhasil diubah')
                 let idx = dataAsesorMahasiswa.findIndex(
                     (r) => r.PendaftaranId === data.PendaftaranId
                 )
                 setDataAsesorMahasiswa(
-                    replaceItemAtIndex(dataAsesorMahasiswa, idx, res)
+                    replaceItemAtIndex(dataAsesorMahasiswa, idx, {
+                        ...res,
+                        Status: 'Asessmen Oleh Asesor',
+                    })
                 )
                 setOpenDialog(false)
                 setLoading(false)
@@ -291,6 +301,7 @@ const PenunjukanAsesorComponent = ({
                                 NamaProgramStudi: temp.NamaProgramStudi,
                                 ProgramStudiId: temp.ProgramStudiId,
                                 NamaMahasiswa: temp.NamaMahasiswa,
+                                Status: temp.Status,
                             })
                         )
                     }
@@ -312,6 +323,18 @@ const PenunjukanAsesorComponent = ({
                     {row.getValue('KodePendaftar')}
                 </div>
             ),
+        },
+        {
+            accessorKey: 'Status',
+            header: 'Status',
+            cell: ({ row }) =>
+                row.getValue('Status') === 'Penunjukan Asesor' ? (
+                    <Badge variant={'default'}>{row.getValue('Status')}</Badge>
+                ) : (
+                    <Badge variant={'destructive'}>
+                        {row.getValue('Status')}
+                    </Badge>
+                ),
         },
         {
             accessorKey: 'NamaMahasiswa',
@@ -366,13 +389,20 @@ const PenunjukanAsesorComponent = ({
                             >
                                 Copy Kode Pendaftar ID
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => ubahData(jd)}>
-                                Atur Asesor
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => hapusData(jd)}>
-                                Hapus Semua Asesor
-                            </DropdownMenuItem>
+                            {jd.Status === 'Penunjukan Asesor' ||
+                                (jd.Asesor.length !== 0 && (
+                                    <DropdownMenuSeparator />
+                                ))}
+                            {jd.Status === 'Penunjukan Asesor' && (
+                                <DropdownMenuItem onClick={() => ubahData(jd)}>
+                                    Atur Asesor
+                                </DropdownMenuItem>
+                            )}
+                            {jd.Asesor.length !== 0 && (
+                                <DropdownMenuItem onClick={() => hapusData(jd)}>
+                                    Hapus Semua Asesor
+                                </DropdownMenuItem>
+                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )

@@ -30,6 +30,9 @@ export type ResponseMhsFromAsesorSession = {
     NamaProgramStudi: string
     Confirmation: boolean
     Urutan: number
+    Status: string
+    TotalAsessmen: number
+    TotalEval: number
 }
 
 export type RequestPenunjukanAsesor = {
@@ -58,6 +61,7 @@ export type ResponsePenunjukanAsesor = {
     KodePendaftar: string
     NamaProgramStudi: string
     NamaMahasiswa: string
+    Status: string
 }
 
 export type ResponseSkRektorAsesor = {

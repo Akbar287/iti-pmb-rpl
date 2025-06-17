@@ -270,20 +270,18 @@ model EvaluasiDiri {
 }
 
 model HasilAssesmen {
-  HasilAssesmenId String         @id @default(uuid()) @map("hasil_assesmen_id")
-  EvaluasiDiriId  String         @map("evaluasi_diri_id")
-  Valid           Boolean        @default(false) @map("valid")
-  Autentik        Boolean        @default(false) @map("autentik")
-  Terkini         Boolean        @default(false) @map("terkini")
-  Memadai         Boolean        @default(false) @map("memadai")
-  Assesmen        String?        @map("assesmen")
-  Nilai           Float          @default(0) @map("nilai")
-  Diakui          Boolean        @default(false) @map("diakui")
-  TanggalAssesmen DateTime?      @map("tanggal_assesmen")
-  CreatedAt       DateTime?      @map("created_at")
-  UpdatedAt       DateTime?      @map("updated_at")
-  EvaluasiDiri    EvaluasiDiri   @relation(fields: [EvaluasiDiriId], references: [EvaluasiDiriId], onDelete: Cascade)
-  SkorAssesmen    SkorAssesmen[]
+  HasilAssesmenId String       @id @default(uuid()) @map("hasil_assesmen_id")
+  EvaluasiDiriId  String       @unique() @map("evaluasi_diri_id")
+  Valid           Boolean      @default(false) @map("valid")
+  Autentik        Boolean      @default(false) @map("autentik")
+  Terkini         Boolean      @default(false) @map("terkini")
+  Memadai         Boolean      @default(false) @map("memadai")
+  Assesmen        String?      @map("assesmen")
+  Nilai           Float        @default(0) @map("nilai")
+  TanggalAssesmen DateTime?    @map("tanggal_assesmen")
+  CreatedAt       DateTime?    @map("created_at")
+  UpdatedAt       DateTime?    @map("updated_at")
+  EvaluasiDiri    EvaluasiDiri @relation(fields: [EvaluasiDiriId], references: [EvaluasiDiriId], onDelete: Cascade)
 
   @@map("hasil_assesmen")
 }
@@ -477,6 +475,7 @@ model MataKuliahMahasiswa {
   MataKuliah                MataKuliah                 @relation(fields: [MataKuliahId], references: [MataKuliahId], onDelete: Cascade)
   EvaluasiDiri              EvaluasiDiri[]
   SanggahanAssesmenMk       SanggahanAssesmenMk[]
+  SkorAssesmen              SkorAssesmen[]
 
   @@unique([PendaftaranId, MataKuliahId])
   @@map("mata_kuliah_mahasiswa")
@@ -752,17 +751,18 @@ model SkRektorMahasiswa {
 }
 
 model SkorAssesmen {
-  SkorAssesmenId  String        @id @default(uuid()) @map("skor_assesmen_id")
-  HasilAssesmenId String        @map("hasil_assesmen_id")
-  Portofolio      Float         @default(0) @map("portofolio")
-  Tulis           Float         @default(0) @map("tulis")
-  Wawancara       Float         @default(0) @map("wawancara")
-  Demo            Float         @default(0) @map("demo")
-  SkorRataRata    Float         @default(0) @map("skor_rata_rata")
-  NilaiHuruf      String?       @map("nilai_huruf")
-  CreatedAt       DateTime?     @map("created_at")
-  UpdatedAt       DateTime?     @map("updated_at")
-  HasilAssesmen   HasilAssesmen @relation(fields: [HasilAssesmenId], references: [HasilAssesmenId], onDelete: Cascade)
+  SkorAssesmenId        String              @id @default(uuid()) @map("skor_assesmen_id")
+  MataKuliahMahasiswaId String              @unique @map("mata_kuliah_mahasiswa_id")
+  Portofolio            Float               @default(0) @map("portofolio")
+  Tulis                 Float               @default(0) @map("tulis")
+  Wawancara             Float               @default(0) @map("wawancara")
+  Demo                  Float               @default(0) @map("demo")
+  SkorRataRata          Float               @default(0) @map("skor_rata_rata")
+  Diakui                Boolean             @default(false) @map("diakui")
+  NilaiHuruf            String?             @map("nilai_huruf")
+  CreatedAt             DateTime?           @map("created_at")
+  UpdatedAt             DateTime?           @map("updated_at")
+  MataKuliahMahasiswa   MataKuliahMahasiswa @relation(fields: [MataKuliahMahasiswaId], references: [MataKuliahMahasiswaId], onDelete: Cascade)
 
   @@map("skor_assesmen")
 }

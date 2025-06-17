@@ -6618,37 +6618,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type HasilAssesmenCountOutputType
-   */
-
-  export type HasilAssesmenCountOutputType = {
-    SkorAssesmen: number
-  }
-
-  export type HasilAssesmenCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    SkorAssesmen?: boolean | HasilAssesmenCountOutputTypeCountSkorAssesmenArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * HasilAssesmenCountOutputType without action
-   */
-  export type HasilAssesmenCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the HasilAssesmenCountOutputType
-     */
-    select?: HasilAssesmenCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * HasilAssesmenCountOutputType without action
-   */
-  export type HasilAssesmenCountOutputTypeCountSkorAssesmenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SkorAssesmenWhereInput
-  }
-
-
-  /**
    * Count Type JenisDokumenCountOutputType
    */
 
@@ -6819,11 +6788,13 @@ export namespace Prisma {
   export type MataKuliahMahasiswaCountOutputType = {
     EvaluasiDiri: number
     SanggahanAssesmenMk: number
+    SkorAssesmen: number
   }
 
   export type MataKuliahMahasiswaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     EvaluasiDiri?: boolean | MataKuliahMahasiswaCountOutputTypeCountEvaluasiDiriArgs
     SanggahanAssesmenMk?: boolean | MataKuliahMahasiswaCountOutputTypeCountSanggahanAssesmenMkArgs
+    SkorAssesmen?: boolean | MataKuliahMahasiswaCountOutputTypeCountSkorAssesmenArgs
   }
 
   // Custom InputTypes
@@ -6849,6 +6820,13 @@ export namespace Prisma {
    */
   export type MataKuliahMahasiswaCountOutputTypeCountSanggahanAssesmenMkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SanggahanAssesmenMkWhereInput
+  }
+
+  /**
+   * MataKuliahMahasiswaCountOutputType without action
+   */
+  export type MataKuliahMahasiswaCountOutputTypeCountSkorAssesmenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkorAssesmenWhereInput
   }
 
 
@@ -22147,7 +22125,6 @@ export namespace Prisma {
     Memadai: boolean | null
     Assesmen: string | null
     Nilai: number | null
-    Diakui: boolean | null
     TanggalAssesmen: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -22162,7 +22139,6 @@ export namespace Prisma {
     Memadai: boolean | null
     Assesmen: string | null
     Nilai: number | null
-    Diakui: boolean | null
     TanggalAssesmen: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -22177,7 +22153,6 @@ export namespace Prisma {
     Memadai: number
     Assesmen: number
     Nilai: number
-    Diakui: number
     TanggalAssesmen: number
     CreatedAt: number
     UpdatedAt: number
@@ -22202,7 +22177,6 @@ export namespace Prisma {
     Memadai?: true
     Assesmen?: true
     Nilai?: true
-    Diakui?: true
     TanggalAssesmen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -22217,7 +22191,6 @@ export namespace Prisma {
     Memadai?: true
     Assesmen?: true
     Nilai?: true
-    Diakui?: true
     TanggalAssesmen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -22232,7 +22205,6 @@ export namespace Prisma {
     Memadai?: true
     Assesmen?: true
     Nilai?: true
-    Diakui?: true
     TanggalAssesmen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -22334,7 +22306,6 @@ export namespace Prisma {
     Memadai: boolean
     Assesmen: string | null
     Nilai: number
-    Diakui: boolean
     TanggalAssesmen: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -22368,13 +22339,10 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: boolean
     Nilai?: boolean
-    Diakui?: boolean
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
-    SkorAssesmen?: boolean | HasilAssesmen$SkorAssesmenArgs<ExtArgs>
-    _count?: boolean | HasilAssesmenCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["hasilAssesmen"]>
 
   export type HasilAssesmenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -22386,7 +22354,6 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: boolean
     Nilai?: boolean
-    Diakui?: boolean
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -22402,7 +22369,6 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: boolean
     Nilai?: boolean
-    Diakui?: boolean
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -22418,17 +22384,14 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: boolean
     Nilai?: boolean
-    Diakui?: boolean
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type HasilAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"HasilAssesmenId" | "EvaluasiDiriId" | "Valid" | "Autentik" | "Terkini" | "Memadai" | "Assesmen" | "Nilai" | "Diakui" | "TanggalAssesmen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["hasilAssesmen"]>
+  export type HasilAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"HasilAssesmenId" | "EvaluasiDiriId" | "Valid" | "Autentik" | "Terkini" | "Memadai" | "Assesmen" | "Nilai" | "TanggalAssesmen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["hasilAssesmen"]>
   export type HasilAssesmenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
-    SkorAssesmen?: boolean | HasilAssesmen$SkorAssesmenArgs<ExtArgs>
-    _count?: boolean | HasilAssesmenCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type HasilAssesmenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
@@ -22441,7 +22404,6 @@ export namespace Prisma {
     name: "HasilAssesmen"
     objects: {
       EvaluasiDiri: Prisma.$EvaluasiDiriPayload<ExtArgs>
-      SkorAssesmen: Prisma.$SkorAssesmenPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       HasilAssesmenId: string
@@ -22452,7 +22414,6 @@ export namespace Prisma {
       Memadai: boolean
       Assesmen: string | null
       Nilai: number
-      Diakui: boolean
       TanggalAssesmen: Date | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
@@ -22851,7 +22812,6 @@ export namespace Prisma {
   export interface Prisma__HasilAssesmenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     EvaluasiDiri<T extends EvaluasiDiriDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EvaluasiDiriDefaultArgs<ExtArgs>>): Prisma__EvaluasiDiriClient<$Result.GetResult<Prisma.$EvaluasiDiriPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    SkorAssesmen<T extends HasilAssesmen$SkorAssesmenArgs<ExtArgs> = {}>(args?: Subset<T, HasilAssesmen$SkorAssesmenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkorAssesmenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22889,7 +22849,6 @@ export namespace Prisma {
     readonly Memadai: FieldRef<"HasilAssesmen", 'Boolean'>
     readonly Assesmen: FieldRef<"HasilAssesmen", 'String'>
     readonly Nilai: FieldRef<"HasilAssesmen", 'Float'>
-    readonly Diakui: FieldRef<"HasilAssesmen", 'Boolean'>
     readonly TanggalAssesmen: FieldRef<"HasilAssesmen", 'DateTime'>
     readonly CreatedAt: FieldRef<"HasilAssesmen", 'DateTime'>
     readonly UpdatedAt: FieldRef<"HasilAssesmen", 'DateTime'>
@@ -23286,30 +23245,6 @@ export namespace Prisma {
      * Limit how many HasilAssesmen to delete.
      */
     limit?: number
-  }
-
-  /**
-   * HasilAssesmen.SkorAssesmen
-   */
-  export type HasilAssesmen$SkorAssesmenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SkorAssesmen
-     */
-    select?: SkorAssesmenSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SkorAssesmen
-     */
-    omit?: SkorAssesmenOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SkorAssesmenInclude<ExtArgs> | null
-    where?: SkorAssesmenWhereInput
-    orderBy?: SkorAssesmenOrderByWithRelationInput | SkorAssesmenOrderByWithRelationInput[]
-    cursor?: SkorAssesmenWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SkorAssesmenScalarFieldEnum | SkorAssesmenScalarFieldEnum[]
   }
 
   /**
@@ -38057,6 +37992,7 @@ export namespace Prisma {
     MataKuliah?: boolean | MataKuliahDefaultArgs<ExtArgs>
     EvaluasiDiri?: boolean | MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs>
     SanggahanAssesmenMk?: boolean | MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs>
+    SkorAssesmen?: boolean | MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs>
     _count?: boolean | MataKuliahMahasiswaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mataKuliahMahasiswa"]>
 
@@ -38103,6 +38039,7 @@ export namespace Prisma {
     MataKuliah?: boolean | MataKuliahDefaultArgs<ExtArgs>
     EvaluasiDiri?: boolean | MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs>
     SanggahanAssesmenMk?: boolean | MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs>
+    SkorAssesmen?: boolean | MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs>
     _count?: boolean | MataKuliahMahasiswaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MataKuliahMahasiswaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -38121,6 +38058,7 @@ export namespace Prisma {
       MataKuliah: Prisma.$MataKuliahPayload<ExtArgs>
       EvaluasiDiri: Prisma.$EvaluasiDiriPayload<ExtArgs>[]
       SanggahanAssesmenMk: Prisma.$SanggahanAssesmenMkPayload<ExtArgs>[]
+      SkorAssesmen: Prisma.$SkorAssesmenPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       MataKuliahMahasiswaId: string
@@ -38529,6 +38467,7 @@ export namespace Prisma {
     MataKuliah<T extends MataKuliahDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahDefaultArgs<ExtArgs>>): Prisma__MataKuliahClient<$Result.GetResult<Prisma.$MataKuliahPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     EvaluasiDiri<T extends MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EvaluasiDiriPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SanggahanAssesmenMk<T extends MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SanggahanAssesmenMkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SkorAssesmen<T extends MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkorAssesmenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -39007,6 +38946,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SanggahanAssesmenMkScalarFieldEnum | SanggahanAssesmenMkScalarFieldEnum[]
+  }
+
+  /**
+   * MataKuliahMahasiswa.SkorAssesmen
+   */
+  export type MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmen
+     */
+    select?: SkorAssesmenSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmen
+     */
+    omit?: SkorAssesmenOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenInclude<ExtArgs> | null
+    where?: SkorAssesmenWhereInput
+    orderBy?: SkorAssesmenOrderByWithRelationInput | SkorAssesmenOrderByWithRelationInput[]
+    cursor?: SkorAssesmenWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkorAssesmenScalarFieldEnum | SkorAssesmenScalarFieldEnum[]
   }
 
   /**
@@ -61122,12 +61085,13 @@ export namespace Prisma {
 
   export type SkorAssesmenMinAggregateOutputType = {
     SkorAssesmenId: string | null
-    HasilAssesmenId: string | null
+    MataKuliahMahasiswaId: string | null
     Portofolio: number | null
     Tulis: number | null
     Wawancara: number | null
     Demo: number | null
     SkorRataRata: number | null
+    Diakui: boolean | null
     NilaiHuruf: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -61135,12 +61099,13 @@ export namespace Prisma {
 
   export type SkorAssesmenMaxAggregateOutputType = {
     SkorAssesmenId: string | null
-    HasilAssesmenId: string | null
+    MataKuliahMahasiswaId: string | null
     Portofolio: number | null
     Tulis: number | null
     Wawancara: number | null
     Demo: number | null
     SkorRataRata: number | null
+    Diakui: boolean | null
     NilaiHuruf: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -61148,12 +61113,13 @@ export namespace Prisma {
 
   export type SkorAssesmenCountAggregateOutputType = {
     SkorAssesmenId: number
-    HasilAssesmenId: number
+    MataKuliahMahasiswaId: number
     Portofolio: number
     Tulis: number
     Wawancara: number
     Demo: number
     SkorRataRata: number
+    Diakui: number
     NilaiHuruf: number
     CreatedAt: number
     UpdatedAt: number
@@ -61179,12 +61145,13 @@ export namespace Prisma {
 
   export type SkorAssesmenMinAggregateInputType = {
     SkorAssesmenId?: true
-    HasilAssesmenId?: true
+    MataKuliahMahasiswaId?: true
     Portofolio?: true
     Tulis?: true
     Wawancara?: true
     Demo?: true
     SkorRataRata?: true
+    Diakui?: true
     NilaiHuruf?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -61192,12 +61159,13 @@ export namespace Prisma {
 
   export type SkorAssesmenMaxAggregateInputType = {
     SkorAssesmenId?: true
-    HasilAssesmenId?: true
+    MataKuliahMahasiswaId?: true
     Portofolio?: true
     Tulis?: true
     Wawancara?: true
     Demo?: true
     SkorRataRata?: true
+    Diakui?: true
     NilaiHuruf?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -61205,12 +61173,13 @@ export namespace Prisma {
 
   export type SkorAssesmenCountAggregateInputType = {
     SkorAssesmenId?: true
-    HasilAssesmenId?: true
+    MataKuliahMahasiswaId?: true
     Portofolio?: true
     Tulis?: true
     Wawancara?: true
     Demo?: true
     SkorRataRata?: true
+    Diakui?: true
     NilaiHuruf?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -61305,12 +61274,13 @@ export namespace Prisma {
 
   export type SkorAssesmenGroupByOutputType = {
     SkorAssesmenId: string
-    HasilAssesmenId: string
+    MataKuliahMahasiswaId: string
     Portofolio: number
     Tulis: number
     Wawancara: number
     Demo: number
     SkorRataRata: number
+    Diakui: boolean
     NilaiHuruf: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -61337,83 +61307,88 @@ export namespace Prisma {
 
   export type SkorAssesmenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkorAssesmenId?: boolean
-    HasilAssesmenId?: boolean
+    MataKuliahMahasiswaId?: boolean
     Portofolio?: boolean
     Tulis?: boolean
     Wawancara?: boolean
     Demo?: boolean
     SkorRataRata?: boolean
+    Diakui?: boolean
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
-    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skorAssesmen"]>
 
   export type SkorAssesmenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkorAssesmenId?: boolean
-    HasilAssesmenId?: boolean
+    MataKuliahMahasiswaId?: boolean
     Portofolio?: boolean
     Tulis?: boolean
     Wawancara?: boolean
     Demo?: boolean
     SkorRataRata?: boolean
+    Diakui?: boolean
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
-    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skorAssesmen"]>
 
   export type SkorAssesmenSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkorAssesmenId?: boolean
-    HasilAssesmenId?: boolean
+    MataKuliahMahasiswaId?: boolean
     Portofolio?: boolean
     Tulis?: boolean
     Wawancara?: boolean
     Demo?: boolean
     SkorRataRata?: boolean
+    Diakui?: boolean
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
-    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skorAssesmen"]>
 
   export type SkorAssesmenSelectScalar = {
     SkorAssesmenId?: boolean
-    HasilAssesmenId?: boolean
+    MataKuliahMahasiswaId?: boolean
     Portofolio?: boolean
     Tulis?: boolean
     Wawancara?: boolean
     Demo?: boolean
     SkorRataRata?: boolean
+    Diakui?: boolean
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type SkorAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkorAssesmenId" | "HasilAssesmenId" | "Portofolio" | "Tulis" | "Wawancara" | "Demo" | "SkorRataRata" | "NilaiHuruf" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skorAssesmen"]>
+  export type SkorAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkorAssesmenId" | "MataKuliahMahasiswaId" | "Portofolio" | "Tulis" | "Wawancara" | "Demo" | "SkorRataRata" | "Diakui" | "NilaiHuruf" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skorAssesmen"]>
   export type SkorAssesmenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }
   export type SkorAssesmenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }
   export type SkorAssesmenIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }
 
   export type $SkorAssesmenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SkorAssesmen"
     objects: {
-      HasilAssesmen: Prisma.$HasilAssesmenPayload<ExtArgs>
+      MataKuliahMahasiswa: Prisma.$MataKuliahMahasiswaPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       SkorAssesmenId: string
-      HasilAssesmenId: string
+      MataKuliahMahasiswaId: string
       Portofolio: number
       Tulis: number
       Wawancara: number
       Demo: number
       SkorRataRata: number
+      Diakui: boolean
       NilaiHuruf: string | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
@@ -61811,7 +61786,7 @@ export namespace Prisma {
    */
   export interface Prisma__SkorAssesmenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    HasilAssesmen<T extends HasilAssesmenDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HasilAssesmenDefaultArgs<ExtArgs>>): Prisma__HasilAssesmenClient<$Result.GetResult<Prisma.$HasilAssesmenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    MataKuliahMahasiswa<T extends MataKuliahMahasiswaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswaDefaultArgs<ExtArgs>>): Prisma__MataKuliahMahasiswaClient<$Result.GetResult<Prisma.$MataKuliahMahasiswaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -61842,12 +61817,13 @@ export namespace Prisma {
    */
   interface SkorAssesmenFieldRefs {
     readonly SkorAssesmenId: FieldRef<"SkorAssesmen", 'String'>
-    readonly HasilAssesmenId: FieldRef<"SkorAssesmen", 'String'>
+    readonly MataKuliahMahasiswaId: FieldRef<"SkorAssesmen", 'String'>
     readonly Portofolio: FieldRef<"SkorAssesmen", 'Float'>
     readonly Tulis: FieldRef<"SkorAssesmen", 'Float'>
     readonly Wawancara: FieldRef<"SkorAssesmen", 'Float'>
     readonly Demo: FieldRef<"SkorAssesmen", 'Float'>
     readonly SkorRataRata: FieldRef<"SkorAssesmen", 'Float'>
+    readonly Diakui: FieldRef<"SkorAssesmen", 'Boolean'>
     readonly NilaiHuruf: FieldRef<"SkorAssesmen", 'String'>
     readonly CreatedAt: FieldRef<"SkorAssesmen", 'DateTime'>
     readonly UpdatedAt: FieldRef<"SkorAssesmen", 'DateTime'>
@@ -73659,7 +73635,6 @@ export namespace Prisma {
     Memadai: 'Memadai',
     Assesmen: 'Assesmen',
     Nilai: 'Nilai',
-    Diakui: 'Diakui',
     TanggalAssesmen: 'TanggalAssesmen',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
@@ -74075,12 +74050,13 @@ export namespace Prisma {
 
   export const SkorAssesmenScalarFieldEnum: {
     SkorAssesmenId: 'SkorAssesmenId',
-    HasilAssesmenId: 'HasilAssesmenId',
+    MataKuliahMahasiswaId: 'MataKuliahMahasiswaId',
     Portofolio: 'Portofolio',
     Tulis: 'Tulis',
     Wawancara: 'Wawancara',
     Demo: 'Demo',
     SkorRataRata: 'SkorRataRata',
+    Diakui: 'Diakui',
     NilaiHuruf: 'NilaiHuruf',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
@@ -75363,12 +75339,10 @@ export namespace Prisma {
     Memadai?: BoolFilter<"HasilAssesmen"> | boolean
     Assesmen?: StringNullableFilter<"HasilAssesmen"> | string | null
     Nilai?: FloatFilter<"HasilAssesmen"> | number
-    Diakui?: BoolFilter<"HasilAssesmen"> | boolean
     TanggalAssesmen?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     EvaluasiDiri?: XOR<EvaluasiDiriScalarRelationFilter, EvaluasiDiriWhereInput>
-    SkorAssesmen?: SkorAssesmenListRelationFilter
   }
 
   export type HasilAssesmenOrderByWithRelationInput = {
@@ -75380,33 +75354,29 @@ export namespace Prisma {
     Memadai?: SortOrder
     Assesmen?: SortOrderInput | SortOrder
     Nilai?: SortOrder
-    Diakui?: SortOrder
     TanggalAssesmen?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     EvaluasiDiri?: EvaluasiDiriOrderByWithRelationInput
-    SkorAssesmen?: SkorAssesmenOrderByRelationAggregateInput
   }
 
   export type HasilAssesmenWhereUniqueInput = Prisma.AtLeast<{
     HasilAssesmenId?: string
+    EvaluasiDiriId?: string
     AND?: HasilAssesmenWhereInput | HasilAssesmenWhereInput[]
     OR?: HasilAssesmenWhereInput[]
     NOT?: HasilAssesmenWhereInput | HasilAssesmenWhereInput[]
-    EvaluasiDiriId?: StringFilter<"HasilAssesmen"> | string
     Valid?: BoolFilter<"HasilAssesmen"> | boolean
     Autentik?: BoolFilter<"HasilAssesmen"> | boolean
     Terkini?: BoolFilter<"HasilAssesmen"> | boolean
     Memadai?: BoolFilter<"HasilAssesmen"> | boolean
     Assesmen?: StringNullableFilter<"HasilAssesmen"> | string | null
     Nilai?: FloatFilter<"HasilAssesmen"> | number
-    Diakui?: BoolFilter<"HasilAssesmen"> | boolean
     TanggalAssesmen?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     EvaluasiDiri?: XOR<EvaluasiDiriScalarRelationFilter, EvaluasiDiriWhereInput>
-    SkorAssesmen?: SkorAssesmenListRelationFilter
-  }, "HasilAssesmenId">
+  }, "HasilAssesmenId" | "EvaluasiDiriId">
 
   export type HasilAssesmenOrderByWithAggregationInput = {
     HasilAssesmenId?: SortOrder
@@ -75417,7 +75387,6 @@ export namespace Prisma {
     Memadai?: SortOrder
     Assesmen?: SortOrderInput | SortOrder
     Nilai?: SortOrder
-    Diakui?: SortOrder
     TanggalAssesmen?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -75440,7 +75409,6 @@ export namespace Prisma {
     Memadai?: BoolWithAggregatesFilter<"HasilAssesmen"> | boolean
     Assesmen?: StringNullableWithAggregatesFilter<"HasilAssesmen"> | string | null
     Nilai?: FloatWithAggregatesFilter<"HasilAssesmen"> | number
-    Diakui?: BoolWithAggregatesFilter<"HasilAssesmen"> | boolean
     TanggalAssesmen?: DateTimeNullableWithAggregatesFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"HasilAssesmen"> | Date | string | null
@@ -76344,6 +76312,7 @@ export namespace Prisma {
     MataKuliah?: XOR<MataKuliahScalarRelationFilter, MataKuliahWhereInput>
     EvaluasiDiri?: EvaluasiDiriListRelationFilter
     SanggahanAssesmenMk?: SanggahanAssesmenMkListRelationFilter
+    SkorAssesmen?: SkorAssesmenListRelationFilter
   }
 
   export type MataKuliahMahasiswaOrderByWithRelationInput = {
@@ -76359,6 +76328,7 @@ export namespace Prisma {
     MataKuliah?: MataKuliahOrderByWithRelationInput
     EvaluasiDiri?: EvaluasiDiriOrderByRelationAggregateInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkOrderByRelationAggregateInput
+    SkorAssesmen?: SkorAssesmenOrderByRelationAggregateInput
   }
 
   export type MataKuliahMahasiswaWhereUniqueInput = Prisma.AtLeast<{
@@ -76378,6 +76348,7 @@ export namespace Prisma {
     MataKuliah?: XOR<MataKuliahScalarRelationFilter, MataKuliahWhereInput>
     EvaluasiDiri?: EvaluasiDiriListRelationFilter
     SanggahanAssesmenMk?: SanggahanAssesmenMkListRelationFilter
+    SkorAssesmen?: SkorAssesmenListRelationFilter
   }, "MataKuliahMahasiswaId" | "PendaftaranId_MataKuliahId">
 
   export type MataKuliahMahasiswaOrderByWithAggregationInput = {
@@ -77632,57 +77603,61 @@ export namespace Prisma {
     OR?: SkorAssesmenWhereInput[]
     NOT?: SkorAssesmenWhereInput | SkorAssesmenWhereInput[]
     SkorAssesmenId?: StringFilter<"SkorAssesmen"> | string
-    HasilAssesmenId?: StringFilter<"SkorAssesmen"> | string
+    MataKuliahMahasiswaId?: StringFilter<"SkorAssesmen"> | string
     Portofolio?: FloatFilter<"SkorAssesmen"> | number
     Tulis?: FloatFilter<"SkorAssesmen"> | number
     Wawancara?: FloatFilter<"SkorAssesmen"> | number
     Demo?: FloatFilter<"SkorAssesmen"> | number
     SkorRataRata?: FloatFilter<"SkorAssesmen"> | number
+    Diakui?: BoolFilter<"SkorAssesmen"> | boolean
     NilaiHuruf?: StringNullableFilter<"SkorAssesmen"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
-    HasilAssesmen?: XOR<HasilAssesmenScalarRelationFilter, HasilAssesmenWhereInput>
+    MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
   }
 
   export type SkorAssesmenOrderByWithRelationInput = {
     SkorAssesmenId?: SortOrder
-    HasilAssesmenId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
     Portofolio?: SortOrder
     Tulis?: SortOrder
     Wawancara?: SortOrder
     Demo?: SortOrder
     SkorRataRata?: SortOrder
+    Diakui?: SortOrder
     NilaiHuruf?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
-    HasilAssesmen?: HasilAssesmenOrderByWithRelationInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaOrderByWithRelationInput
   }
 
   export type SkorAssesmenWhereUniqueInput = Prisma.AtLeast<{
     SkorAssesmenId?: string
+    MataKuliahMahasiswaId?: string
     AND?: SkorAssesmenWhereInput | SkorAssesmenWhereInput[]
     OR?: SkorAssesmenWhereInput[]
     NOT?: SkorAssesmenWhereInput | SkorAssesmenWhereInput[]
-    HasilAssesmenId?: StringFilter<"SkorAssesmen"> | string
     Portofolio?: FloatFilter<"SkorAssesmen"> | number
     Tulis?: FloatFilter<"SkorAssesmen"> | number
     Wawancara?: FloatFilter<"SkorAssesmen"> | number
     Demo?: FloatFilter<"SkorAssesmen"> | number
     SkorRataRata?: FloatFilter<"SkorAssesmen"> | number
+    Diakui?: BoolFilter<"SkorAssesmen"> | boolean
     NilaiHuruf?: StringNullableFilter<"SkorAssesmen"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
-    HasilAssesmen?: XOR<HasilAssesmenScalarRelationFilter, HasilAssesmenWhereInput>
-  }, "SkorAssesmenId">
+    MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
+  }, "SkorAssesmenId" | "MataKuliahMahasiswaId">
 
   export type SkorAssesmenOrderByWithAggregationInput = {
     SkorAssesmenId?: SortOrder
-    HasilAssesmenId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
     Portofolio?: SortOrder
     Tulis?: SortOrder
     Wawancara?: SortOrder
     Demo?: SortOrder
     SkorRataRata?: SortOrder
+    Diakui?: SortOrder
     NilaiHuruf?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -77698,12 +77673,13 @@ export namespace Prisma {
     OR?: SkorAssesmenScalarWhereWithAggregatesInput[]
     NOT?: SkorAssesmenScalarWhereWithAggregatesInput | SkorAssesmenScalarWhereWithAggregatesInput[]
     SkorAssesmenId?: StringWithAggregatesFilter<"SkorAssesmen"> | string
-    HasilAssesmenId?: StringWithAggregatesFilter<"SkorAssesmen"> | string
+    MataKuliahMahasiswaId?: StringWithAggregatesFilter<"SkorAssesmen"> | string
     Portofolio?: FloatWithAggregatesFilter<"SkorAssesmen"> | number
     Tulis?: FloatWithAggregatesFilter<"SkorAssesmen"> | number
     Wawancara?: FloatWithAggregatesFilter<"SkorAssesmen"> | number
     Demo?: FloatWithAggregatesFilter<"SkorAssesmen"> | number
     SkorRataRata?: FloatWithAggregatesFilter<"SkorAssesmen"> | number
+    Diakui?: BoolWithAggregatesFilter<"SkorAssesmen"> | boolean
     NilaiHuruf?: StringNullableWithAggregatesFilter<"SkorAssesmen"> | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"SkorAssesmen"> | Date | string | null
@@ -79339,12 +79315,10 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: string | null
     Nilai?: number
-    Diakui?: boolean
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     EvaluasiDiri: EvaluasiDiriCreateNestedOneWithoutHasilAssesmenInput
-    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenUncheckedCreateInput = {
@@ -79356,11 +79330,9 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: string | null
     Nilai?: number
-    Diakui?: boolean
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenUpdateInput = {
@@ -79371,12 +79343,10 @@ export namespace Prisma {
     Memadai?: BoolFieldUpdateOperationsInput | boolean
     Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
     Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUpdateOneRequiredWithoutHasilAssesmenNestedInput
-    SkorAssesmen?: SkorAssesmenUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenUncheckedUpdateInput = {
@@ -79388,11 +79358,9 @@ export namespace Prisma {
     Memadai?: BoolFieldUpdateOperationsInput | boolean
     Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
     Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenCreateManyInput = {
@@ -79404,7 +79372,6 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: string | null
     Nilai?: number
-    Diakui?: boolean
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -79418,7 +79385,6 @@ export namespace Prisma {
     Memadai?: BoolFieldUpdateOperationsInput | boolean
     Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
     Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -79433,7 +79399,6 @@ export namespace Prisma {
     Memadai?: BoolFieldUpdateOperationsInput | boolean
     Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
     Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -80378,6 +80343,7 @@ export namespace Prisma {
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateInput = {
@@ -80391,6 +80357,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUpdateInput = {
@@ -80404,6 +80371,7 @@ export namespace Prisma {
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateInput = {
@@ -80417,6 +80385,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaCreateManyInput = {
@@ -81691,20 +81660,22 @@ export namespace Prisma {
     Wawancara?: number
     Demo?: number
     SkorRataRata?: number
+    Diakui?: boolean
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    HasilAssesmen: HasilAssesmenCreateNestedOneWithoutSkorAssesmenInput
+    MataKuliahMahasiswa: MataKuliahMahasiswaCreateNestedOneWithoutSkorAssesmenInput
   }
 
   export type SkorAssesmenUncheckedCreateInput = {
     SkorAssesmenId?: string
-    HasilAssesmenId: string
+    MataKuliahMahasiswaId: string
     Portofolio?: number
     Tulis?: number
     Wawancara?: number
     Demo?: number
     SkorRataRata?: number
+    Diakui?: boolean
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -81717,20 +81688,22 @@ export namespace Prisma {
     Wawancara?: FloatFieldUpdateOperationsInput | number
     Demo?: FloatFieldUpdateOperationsInput | number
     SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    HasilAssesmen?: HasilAssesmenUpdateOneRequiredWithoutSkorAssesmenNestedInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateOneRequiredWithoutSkorAssesmenNestedInput
   }
 
   export type SkorAssesmenUncheckedUpdateInput = {
     SkorAssesmenId?: StringFieldUpdateOperationsInput | string
-    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Portofolio?: FloatFieldUpdateOperationsInput | number
     Tulis?: FloatFieldUpdateOperationsInput | number
     Wawancara?: FloatFieldUpdateOperationsInput | number
     Demo?: FloatFieldUpdateOperationsInput | number
     SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -81738,12 +81711,13 @@ export namespace Prisma {
 
   export type SkorAssesmenCreateManyInput = {
     SkorAssesmenId?: string
-    HasilAssesmenId: string
+    MataKuliahMahasiswaId: string
     Portofolio?: number
     Tulis?: number
     Wawancara?: number
     Demo?: number
     SkorRataRata?: number
+    Diakui?: boolean
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -81756,6 +81730,7 @@ export namespace Prisma {
     Wawancara?: FloatFieldUpdateOperationsInput | number
     Demo?: FloatFieldUpdateOperationsInput | number
     SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -81763,12 +81738,13 @@ export namespace Prisma {
 
   export type SkorAssesmenUncheckedUpdateManyInput = {
     SkorAssesmenId?: StringFieldUpdateOperationsInput | string
-    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Portofolio?: FloatFieldUpdateOperationsInput | number
     Tulis?: FloatFieldUpdateOperationsInput | number
     Wawancara?: FloatFieldUpdateOperationsInput | number
     Demo?: FloatFieldUpdateOperationsInput | number
     SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -83301,16 +83277,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type SkorAssesmenListRelationFilter = {
-    every?: SkorAssesmenWhereInput
-    some?: SkorAssesmenWhereInput
-    none?: SkorAssesmenWhereInput
-  }
-
-  export type SkorAssesmenOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type HasilAssesmenCountOrderByAggregateInput = {
     HasilAssesmenId?: SortOrder
     EvaluasiDiriId?: SortOrder
@@ -83320,7 +83286,6 @@ export namespace Prisma {
     Memadai?: SortOrder
     Assesmen?: SortOrder
     Nilai?: SortOrder
-    Diakui?: SortOrder
     TanggalAssesmen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -83339,7 +83304,6 @@ export namespace Prisma {
     Memadai?: SortOrder
     Assesmen?: SortOrder
     Nilai?: SortOrder
-    Diakui?: SortOrder
     TanggalAssesmen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -83354,7 +83318,6 @@ export namespace Prisma {
     Memadai?: SortOrder
     Assesmen?: SortOrder
     Nilai?: SortOrder
-    Diakui?: SortOrder
     TanggalAssesmen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -84002,7 +83965,17 @@ export namespace Prisma {
     none?: SanggahanAssesmenMkWhereInput
   }
 
+  export type SkorAssesmenListRelationFilter = {
+    every?: SkorAssesmenWhereInput
+    some?: SkorAssesmenWhereInput
+    none?: SkorAssesmenWhereInput
+  }
+
   export type SanggahanAssesmenMkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SkorAssesmenOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -84909,19 +84882,15 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
   }
 
-  export type HasilAssesmenScalarRelationFilter = {
-    is?: HasilAssesmenWhereInput
-    isNot?: HasilAssesmenWhereInput
-  }
-
   export type SkorAssesmenCountOrderByAggregateInput = {
     SkorAssesmenId?: SortOrder
-    HasilAssesmenId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
     Portofolio?: SortOrder
     Tulis?: SortOrder
     Wawancara?: SortOrder
     Demo?: SortOrder
     SkorRataRata?: SortOrder
+    Diakui?: SortOrder
     NilaiHuruf?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -84937,12 +84906,13 @@ export namespace Prisma {
 
   export type SkorAssesmenMaxOrderByAggregateInput = {
     SkorAssesmenId?: SortOrder
-    HasilAssesmenId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
     Portofolio?: SortOrder
     Tulis?: SortOrder
     Wawancara?: SortOrder
     Demo?: SortOrder
     SkorRataRata?: SortOrder
+    Diakui?: SortOrder
     NilaiHuruf?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -84950,12 +84920,13 @@ export namespace Prisma {
 
   export type SkorAssesmenMinOrderByAggregateInput = {
     SkorAssesmenId?: SortOrder
-    HasilAssesmenId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
     Portofolio?: SortOrder
     Tulis?: SortOrder
     Wawancara?: SortOrder
     Demo?: SortOrder
     SkorRataRata?: SortOrder
+    Diakui?: SortOrder
     NilaiHuruf?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -86308,20 +86279,6 @@ export namespace Prisma {
     connect?: EvaluasiDiriWhereUniqueInput
   }
 
-  export type SkorAssesmenCreateNestedManyWithoutHasilAssesmenInput = {
-    create?: XOR<SkorAssesmenCreateWithoutHasilAssesmenInput, SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput> | SkorAssesmenCreateWithoutHasilAssesmenInput[] | SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput[]
-    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput | SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput[]
-    createMany?: SkorAssesmenCreateManyHasilAssesmenInputEnvelope
-    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-  }
-
-  export type SkorAssesmenUncheckedCreateNestedManyWithoutHasilAssesmenInput = {
-    create?: XOR<SkorAssesmenCreateWithoutHasilAssesmenInput, SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput> | SkorAssesmenCreateWithoutHasilAssesmenInput[] | SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput[]
-    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput | SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput[]
-    createMany?: SkorAssesmenCreateManyHasilAssesmenInputEnvelope
-    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-  }
-
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -86336,34 +86293,6 @@ export namespace Prisma {
     upsert?: EvaluasiDiriUpsertWithoutHasilAssesmenInput
     connect?: EvaluasiDiriWhereUniqueInput
     update?: XOR<XOR<EvaluasiDiriUpdateToOneWithWhereWithoutHasilAssesmenInput, EvaluasiDiriUpdateWithoutHasilAssesmenInput>, EvaluasiDiriUncheckedUpdateWithoutHasilAssesmenInput>
-  }
-
-  export type SkorAssesmenUpdateManyWithoutHasilAssesmenNestedInput = {
-    create?: XOR<SkorAssesmenCreateWithoutHasilAssesmenInput, SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput> | SkorAssesmenCreateWithoutHasilAssesmenInput[] | SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput[]
-    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput | SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput[]
-    upsert?: SkorAssesmenUpsertWithWhereUniqueWithoutHasilAssesmenInput | SkorAssesmenUpsertWithWhereUniqueWithoutHasilAssesmenInput[]
-    createMany?: SkorAssesmenCreateManyHasilAssesmenInputEnvelope
-    set?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    disconnect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    delete?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    update?: SkorAssesmenUpdateWithWhereUniqueWithoutHasilAssesmenInput | SkorAssesmenUpdateWithWhereUniqueWithoutHasilAssesmenInput[]
-    updateMany?: SkorAssesmenUpdateManyWithWhereWithoutHasilAssesmenInput | SkorAssesmenUpdateManyWithWhereWithoutHasilAssesmenInput[]
-    deleteMany?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
-  }
-
-  export type SkorAssesmenUncheckedUpdateManyWithoutHasilAssesmenNestedInput = {
-    create?: XOR<SkorAssesmenCreateWithoutHasilAssesmenInput, SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput> | SkorAssesmenCreateWithoutHasilAssesmenInput[] | SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput[]
-    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput | SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput[]
-    upsert?: SkorAssesmenUpsertWithWhereUniqueWithoutHasilAssesmenInput | SkorAssesmenUpsertWithWhereUniqueWithoutHasilAssesmenInput[]
-    createMany?: SkorAssesmenCreateManyHasilAssesmenInputEnvelope
-    set?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    disconnect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    delete?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
-    update?: SkorAssesmenUpdateWithWhereUniqueWithoutHasilAssesmenInput | SkorAssesmenUpdateWithWhereUniqueWithoutHasilAssesmenInput[]
-    updateMany?: SkorAssesmenUpdateManyWithWhereWithoutHasilAssesmenInput | SkorAssesmenUpdateManyWithWhereWithoutHasilAssesmenInput[]
-    deleteMany?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
   }
 
   export type PendaftaranCreateNestedOneWithoutInformasiKependudukanInput = {
@@ -86844,6 +86773,13 @@ export namespace Prisma {
     connect?: SanggahanAssesmenMkWhereUniqueInput | SanggahanAssesmenMkWhereUniqueInput[]
   }
 
+  export type SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput = {
+    create?: XOR<SkorAssesmenCreateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput> | SkorAssesmenCreateWithoutMataKuliahMahasiswaInput[] | SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput | SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    createMany?: SkorAssesmenCreateManyMataKuliahMahasiswaInputEnvelope
+    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+  }
+
   export type EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput = {
     create?: XOR<EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput, EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput> | EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput[] | EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput[]
     connectOrCreate?: EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput | EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput[]
@@ -86856,6 +86792,13 @@ export namespace Prisma {
     connectOrCreate?: SanggahanAssesmenMkCreateOrConnectWithoutMataKuliahMahasiswaInput | SanggahanAssesmenMkCreateOrConnectWithoutMataKuliahMahasiswaInput[]
     createMany?: SanggahanAssesmenMkCreateManyMataKuliahMahasiswaInputEnvelope
     connect?: SanggahanAssesmenMkWhereUniqueInput | SanggahanAssesmenMkWhereUniqueInput[]
+  }
+
+  export type SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput = {
+    create?: XOR<SkorAssesmenCreateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput> | SkorAssesmenCreateWithoutMataKuliahMahasiswaInput[] | SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput | SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    createMany?: SkorAssesmenCreateManyMataKuliahMahasiswaInputEnvelope
+    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
   }
 
   export type NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput = {
@@ -86910,6 +86853,20 @@ export namespace Prisma {
     deleteMany?: SanggahanAssesmenMkScalarWhereInput | SanggahanAssesmenMkScalarWhereInput[]
   }
 
+  export type SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput = {
+    create?: XOR<SkorAssesmenCreateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput> | SkorAssesmenCreateWithoutMataKuliahMahasiswaInput[] | SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput | SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    upsert?: SkorAssesmenUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput | SkorAssesmenUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    createMany?: SkorAssesmenCreateManyMataKuliahMahasiswaInputEnvelope
+    set?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    disconnect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    delete?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    update?: SkorAssesmenUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput | SkorAssesmenUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    updateMany?: SkorAssesmenUpdateManyWithWhereWithoutMataKuliahMahasiswaInput | SkorAssesmenUpdateManyWithWhereWithoutMataKuliahMahasiswaInput[]
+    deleteMany?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
+  }
+
   export type EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput = {
     create?: XOR<EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput, EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput> | EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput[] | EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput[]
     connectOrCreate?: EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput | EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput[]
@@ -86936,6 +86893,20 @@ export namespace Prisma {
     update?: SanggahanAssesmenMkUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput | SanggahanAssesmenMkUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
     updateMany?: SanggahanAssesmenMkUpdateManyWithWhereWithoutMataKuliahMahasiswaInput | SanggahanAssesmenMkUpdateManyWithWhereWithoutMataKuliahMahasiswaInput[]
     deleteMany?: SanggahanAssesmenMkScalarWhereInput | SanggahanAssesmenMkScalarWhereInput[]
+  }
+
+  export type SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput = {
+    create?: XOR<SkorAssesmenCreateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput> | SkorAssesmenCreateWithoutMataKuliahMahasiswaInput[] | SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput | SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    upsert?: SkorAssesmenUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput | SkorAssesmenUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    createMany?: SkorAssesmenCreateManyMataKuliahMahasiswaInputEnvelope
+    set?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    disconnect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    delete?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+    update?: SkorAssesmenUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput | SkorAssesmenUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    updateMany?: SkorAssesmenUpdateManyWithWhereWithoutMataKuliahMahasiswaInput | SkorAssesmenUpdateManyWithWhereWithoutMataKuliahMahasiswaInput[]
+    deleteMany?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
   }
 
   export type PermissionCreateNestedOneWithoutUserHasPermissionsInput = {
@@ -88574,18 +88545,18 @@ export namespace Prisma {
     update?: XOR<XOR<PendaftaranUpdateToOneWithWhereWithoutSkRektorMahasiswaInput, PendaftaranUpdateWithoutSkRektorMahasiswaInput>, PendaftaranUncheckedUpdateWithoutSkRektorMahasiswaInput>
   }
 
-  export type HasilAssesmenCreateNestedOneWithoutSkorAssesmenInput = {
-    create?: XOR<HasilAssesmenCreateWithoutSkorAssesmenInput, HasilAssesmenUncheckedCreateWithoutSkorAssesmenInput>
-    connectOrCreate?: HasilAssesmenCreateOrConnectWithoutSkorAssesmenInput
-    connect?: HasilAssesmenWhereUniqueInput
+  export type MataKuliahMahasiswaCreateNestedOneWithoutSkorAssesmenInput = {
+    create?: XOR<MataKuliahMahasiswaCreateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput>
+    connectOrCreate?: MataKuliahMahasiswaCreateOrConnectWithoutSkorAssesmenInput
+    connect?: MataKuliahMahasiswaWhereUniqueInput
   }
 
-  export type HasilAssesmenUpdateOneRequiredWithoutSkorAssesmenNestedInput = {
-    create?: XOR<HasilAssesmenCreateWithoutSkorAssesmenInput, HasilAssesmenUncheckedCreateWithoutSkorAssesmenInput>
-    connectOrCreate?: HasilAssesmenCreateOrConnectWithoutSkorAssesmenInput
-    upsert?: HasilAssesmenUpsertWithoutSkorAssesmenInput
-    connect?: HasilAssesmenWhereUniqueInput
-    update?: XOR<XOR<HasilAssesmenUpdateToOneWithWhereWithoutSkorAssesmenInput, HasilAssesmenUpdateWithoutSkorAssesmenInput>, HasilAssesmenUncheckedUpdateWithoutSkorAssesmenInput>
+  export type MataKuliahMahasiswaUpdateOneRequiredWithoutSkorAssesmenNestedInput = {
+    create?: XOR<MataKuliahMahasiswaCreateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput>
+    connectOrCreate?: MataKuliahMahasiswaCreateOrConnectWithoutSkorAssesmenInput
+    upsert?: MataKuliahMahasiswaUpsertWithoutSkorAssesmenInput
+    connect?: MataKuliahMahasiswaWhereUniqueInput
+    update?: XOR<XOR<MataKuliahMahasiswaUpdateToOneWithWhereWithoutSkorAssesmenInput, MataKuliahMahasiswaUpdateWithoutSkorAssesmenInput>, MataKuliahMahasiswaUncheckedUpdateWithoutSkorAssesmenInput>
   }
 
   export type StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutStatusMahasiswaAssesmentInput = {
@@ -91600,6 +91571,7 @@ export namespace Prisma {
     Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutEvaluasiDiriInput = {
@@ -91612,6 +91584,7 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutEvaluasiDiriInput = {
@@ -91672,11 +91645,9 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: string | null
     Nilai?: number
-    Diakui?: boolean
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenUncheckedCreateWithoutEvaluasiDiriInput = {
@@ -91687,11 +91658,9 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: string | null
     Nilai?: number
-    Diakui?: boolean
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenCreateOrConnectWithoutEvaluasiDiriInput = {
@@ -91725,6 +91694,7 @@ export namespace Prisma {
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutEvaluasiDiriInput = {
@@ -91737,6 +91707,7 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type CapaianPembelajaranUpsertWithoutEvaluasiDiriInput = {
@@ -91816,7 +91787,6 @@ export namespace Prisma {
     Memadai?: BoolFilter<"HasilAssesmen"> | boolean
     Assesmen?: StringNullableFilter<"HasilAssesmen"> | string | null
     Nilai?: FloatFilter<"HasilAssesmen"> | number
-    Diakui?: BoolFilter<"HasilAssesmen"> | boolean
     TanggalAssesmen?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
@@ -91847,40 +91817,6 @@ export namespace Prisma {
   export type EvaluasiDiriCreateOrConnectWithoutHasilAssesmenInput = {
     where: EvaluasiDiriWhereUniqueInput
     create: XOR<EvaluasiDiriCreateWithoutHasilAssesmenInput, EvaluasiDiriUncheckedCreateWithoutHasilAssesmenInput>
-  }
-
-  export type SkorAssesmenCreateWithoutHasilAssesmenInput = {
-    SkorAssesmenId?: string
-    Portofolio?: number
-    Tulis?: number
-    Wawancara?: number
-    Demo?: number
-    SkorRataRata?: number
-    NilaiHuruf?: string | null
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-  }
-
-  export type SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput = {
-    SkorAssesmenId?: string
-    Portofolio?: number
-    Tulis?: number
-    Wawancara?: number
-    Demo?: number
-    SkorRataRata?: number
-    NilaiHuruf?: string | null
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-  }
-
-  export type SkorAssesmenCreateOrConnectWithoutHasilAssesmenInput = {
-    where: SkorAssesmenWhereUniqueInput
-    create: XOR<SkorAssesmenCreateWithoutHasilAssesmenInput, SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput>
-  }
-
-  export type SkorAssesmenCreateManyHasilAssesmenInputEnvelope = {
-    data: SkorAssesmenCreateManyHasilAssesmenInput | SkorAssesmenCreateManyHasilAssesmenInput[]
-    skipDuplicates?: boolean
   }
 
   export type EvaluasiDiriUpsertWithoutHasilAssesmenInput = {
@@ -91914,38 +91850,6 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutEvaluasiDiriNestedInput
-  }
-
-  export type SkorAssesmenUpsertWithWhereUniqueWithoutHasilAssesmenInput = {
-    where: SkorAssesmenWhereUniqueInput
-    update: XOR<SkorAssesmenUpdateWithoutHasilAssesmenInput, SkorAssesmenUncheckedUpdateWithoutHasilAssesmenInput>
-    create: XOR<SkorAssesmenCreateWithoutHasilAssesmenInput, SkorAssesmenUncheckedCreateWithoutHasilAssesmenInput>
-  }
-
-  export type SkorAssesmenUpdateWithWhereUniqueWithoutHasilAssesmenInput = {
-    where: SkorAssesmenWhereUniqueInput
-    data: XOR<SkorAssesmenUpdateWithoutHasilAssesmenInput, SkorAssesmenUncheckedUpdateWithoutHasilAssesmenInput>
-  }
-
-  export type SkorAssesmenUpdateManyWithWhereWithoutHasilAssesmenInput = {
-    where: SkorAssesmenScalarWhereInput
-    data: XOR<SkorAssesmenUpdateManyMutationInput, SkorAssesmenUncheckedUpdateManyWithoutHasilAssesmenInput>
-  }
-
-  export type SkorAssesmenScalarWhereInput = {
-    AND?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
-    OR?: SkorAssesmenScalarWhereInput[]
-    NOT?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
-    SkorAssesmenId?: StringFilter<"SkorAssesmen"> | string
-    HasilAssesmenId?: StringFilter<"SkorAssesmen"> | string
-    Portofolio?: FloatFilter<"SkorAssesmen"> | number
-    Tulis?: FloatFilter<"SkorAssesmen"> | number
-    Wawancara?: FloatFilter<"SkorAssesmen"> | number
-    Demo?: FloatFilter<"SkorAssesmen"> | number
-    SkorRataRata?: FloatFilter<"SkorAssesmen"> | number
-    NilaiHuruf?: StringNullableFilter<"SkorAssesmen"> | string | null
-    CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
-    UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
   }
 
   export type PendaftaranCreateWithoutInformasiKependudukanInput = {
@@ -93612,6 +93516,7 @@ export namespace Prisma {
     Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutMataKuliahInput = {
@@ -93624,6 +93529,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutMataKuliahInput = {
@@ -93889,6 +93795,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SkorAssesmenCreateWithoutMataKuliahMahasiswaInput = {
+    SkorAssesmenId?: string
+    Portofolio?: number
+    Tulis?: number
+    Wawancara?: number
+    Demo?: number
+    SkorRataRata?: number
+    Diakui?: boolean
+    NilaiHuruf?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+  }
+
+  export type SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput = {
+    SkorAssesmenId?: string
+    Portofolio?: number
+    Tulis?: number
+    Wawancara?: number
+    Demo?: number
+    SkorRataRata?: number
+    Diakui?: boolean
+    NilaiHuruf?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+  }
+
+  export type SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput = {
+    where: SkorAssesmenWhereUniqueInput
+    create: XOR<SkorAssesmenCreateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type SkorAssesmenCreateManyMataKuliahMahasiswaInputEnvelope = {
+    data: SkorAssesmenCreateManyMataKuliahMahasiswaInput | SkorAssesmenCreateManyMataKuliahMahasiswaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PendaftaranUpsertWithoutMataKuliahMahasiswaInput = {
     update: XOR<PendaftaranUpdateWithoutMataKuliahMahasiswaInput, PendaftaranUncheckedUpdateWithoutMataKuliahMahasiswaInput>
     create: XOR<PendaftaranCreateWithoutMataKuliahMahasiswaInput, PendaftaranUncheckedCreateWithoutMataKuliahMahasiswaInput>
@@ -94041,6 +93983,39 @@ export namespace Prisma {
     Keterangan?: StringNullableFilter<"SanggahanAssesmenMk"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SanggahanAssesmenMk"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SanggahanAssesmenMk"> | Date | string | null
+  }
+
+  export type SkorAssesmenUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput = {
+    where: SkorAssesmenWhereUniqueInput
+    update: XOR<SkorAssesmenUpdateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedUpdateWithoutMataKuliahMahasiswaInput>
+    create: XOR<SkorAssesmenCreateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type SkorAssesmenUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput = {
+    where: SkorAssesmenWhereUniqueInput
+    data: XOR<SkorAssesmenUpdateWithoutMataKuliahMahasiswaInput, SkorAssesmenUncheckedUpdateWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type SkorAssesmenUpdateManyWithWhereWithoutMataKuliahMahasiswaInput = {
+    where: SkorAssesmenScalarWhereInput
+    data: XOR<SkorAssesmenUpdateManyMutationInput, SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type SkorAssesmenScalarWhereInput = {
+    AND?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
+    OR?: SkorAssesmenScalarWhereInput[]
+    NOT?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
+    SkorAssesmenId?: StringFilter<"SkorAssesmen"> | string
+    MataKuliahMahasiswaId?: StringFilter<"SkorAssesmen"> | string
+    Portofolio?: FloatFilter<"SkorAssesmen"> | number
+    Tulis?: FloatFilter<"SkorAssesmen"> | number
+    Wawancara?: FloatFilter<"SkorAssesmen"> | number
+    Demo?: FloatFilter<"SkorAssesmen"> | number
+    SkorRataRata?: FloatFilter<"SkorAssesmen"> | number
+    Diakui?: BoolFilter<"SkorAssesmen"> | boolean
+    NilaiHuruf?: StringNullableFilter<"SkorAssesmen"> | string | null
+    CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
+    UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
   }
 
   export type PermissionCreateWithoutUserHasPermissionsInput = {
@@ -95164,6 +95139,7 @@ export namespace Prisma {
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutPendaftaranInput = {
@@ -95176,6 +95152,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutPendaftaranInput = {
@@ -96841,6 +96818,7 @@ export namespace Prisma {
     Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutSanggahanAssesmenMkInput = {
@@ -96853,6 +96831,7 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutSanggahanAssesmenMkInput = {
@@ -96912,6 +96891,7 @@ export namespace Prisma {
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutSanggahanAssesmenMkInput = {
@@ -96924,6 +96904,7 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type SanggahanAssesmenCreateWithoutSanggahanAssesmenPihakInput = {
@@ -97481,80 +97462,72 @@ export namespace Prisma {
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
-  export type HasilAssesmenCreateWithoutSkorAssesmenInput = {
-    HasilAssesmenId?: string
-    Valid?: boolean
-    Autentik?: boolean
-    Terkini?: boolean
-    Memadai?: boolean
-    Assesmen?: string | null
-    Nilai?: number
-    Diakui?: boolean
-    TanggalAssesmen?: Date | string | null
+  export type MataKuliahMahasiswaCreateWithoutSkorAssesmenInput = {
+    MataKuliahMahasiswaId?: string
+    Rpl?: boolean
+    Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    EvaluasiDiri: EvaluasiDiriCreateNestedOneWithoutHasilAssesmenInput
+    Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
+    MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
+    EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
-  export type HasilAssesmenUncheckedCreateWithoutSkorAssesmenInput = {
-    HasilAssesmenId?: string
-    EvaluasiDiriId: string
-    Valid?: boolean
-    Autentik?: boolean
-    Terkini?: boolean
-    Memadai?: boolean
-    Assesmen?: string | null
-    Nilai?: number
-    Diakui?: boolean
-    TanggalAssesmen?: Date | string | null
+  export type MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput = {
+    MataKuliahMahasiswaId?: string
+    PendaftaranId: string
+    MataKuliahId: string
+    Rpl?: boolean
+    Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
-  export type HasilAssesmenCreateOrConnectWithoutSkorAssesmenInput = {
-    where: HasilAssesmenWhereUniqueInput
-    create: XOR<HasilAssesmenCreateWithoutSkorAssesmenInput, HasilAssesmenUncheckedCreateWithoutSkorAssesmenInput>
+  export type MataKuliahMahasiswaCreateOrConnectWithoutSkorAssesmenInput = {
+    where: MataKuliahMahasiswaWhereUniqueInput
+    create: XOR<MataKuliahMahasiswaCreateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput>
   }
 
-  export type HasilAssesmenUpsertWithoutSkorAssesmenInput = {
-    update: XOR<HasilAssesmenUpdateWithoutSkorAssesmenInput, HasilAssesmenUncheckedUpdateWithoutSkorAssesmenInput>
-    create: XOR<HasilAssesmenCreateWithoutSkorAssesmenInput, HasilAssesmenUncheckedCreateWithoutSkorAssesmenInput>
-    where?: HasilAssesmenWhereInput
+  export type MataKuliahMahasiswaUpsertWithoutSkorAssesmenInput = {
+    update: XOR<MataKuliahMahasiswaUpdateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedUpdateWithoutSkorAssesmenInput>
+    create: XOR<MataKuliahMahasiswaCreateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput>
+    where?: MataKuliahMahasiswaWhereInput
   }
 
-  export type HasilAssesmenUpdateToOneWithWhereWithoutSkorAssesmenInput = {
-    where?: HasilAssesmenWhereInput
-    data: XOR<HasilAssesmenUpdateWithoutSkorAssesmenInput, HasilAssesmenUncheckedUpdateWithoutSkorAssesmenInput>
+  export type MataKuliahMahasiswaUpdateToOneWithWhereWithoutSkorAssesmenInput = {
+    where?: MataKuliahMahasiswaWhereInput
+    data: XOR<MataKuliahMahasiswaUpdateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedUpdateWithoutSkorAssesmenInput>
   }
 
-  export type HasilAssesmenUpdateWithoutSkorAssesmenInput = {
-    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
-    Valid?: BoolFieldUpdateOperationsInput | boolean
-    Autentik?: BoolFieldUpdateOperationsInput | boolean
-    Terkini?: BoolFieldUpdateOperationsInput | boolean
-    Memadai?: BoolFieldUpdateOperationsInput | boolean
-    Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
-    Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
-    TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type MataKuliahMahasiswaUpdateWithoutSkorAssesmenInput = {
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    Rpl?: BoolFieldUpdateOperationsInput | boolean
+    Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    EvaluasiDiri?: EvaluasiDiriUpdateOneRequiredWithoutHasilAssesmenNestedInput
+    Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
+    MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
+    EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
-  export type HasilAssesmenUncheckedUpdateWithoutSkorAssesmenInput = {
-    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
-    EvaluasiDiriId?: StringFieldUpdateOperationsInput | string
-    Valid?: BoolFieldUpdateOperationsInput | boolean
-    Autentik?: BoolFieldUpdateOperationsInput | boolean
-    Terkini?: BoolFieldUpdateOperationsInput | boolean
-    Memadai?: BoolFieldUpdateOperationsInput | boolean
-    Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
-    Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
-    TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type MataKuliahMahasiswaUncheckedUpdateWithoutSkorAssesmenInput = {
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    MataKuliahId?: StringFieldUpdateOperationsInput | string
+    Rpl?: BoolFieldUpdateOperationsInput | boolean
+    Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type StatusMahasiswaAssesmentHistoryCreateWithoutStatusMahasiswaAssesmentInput = {
@@ -99354,7 +99327,6 @@ export namespace Prisma {
     Memadai?: boolean
     Assesmen?: string | null
     Nilai?: number
-    Diakui?: boolean
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -99380,11 +99352,9 @@ export namespace Prisma {
     Memadai?: BoolFieldUpdateOperationsInput | boolean
     Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
     Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    SkorAssesmen?: SkorAssesmenUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenUncheckedUpdateWithoutEvaluasiDiriInput = {
@@ -99395,11 +99365,9 @@ export namespace Prisma {
     Memadai?: BoolFieldUpdateOperationsInput | boolean
     Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
     Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenUncheckedUpdateManyWithoutEvaluasiDiriInput = {
@@ -99410,56 +99378,7 @@ export namespace Prisma {
     Memadai?: BoolFieldUpdateOperationsInput | boolean
     Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
     Nilai?: FloatFieldUpdateOperationsInput | number
-    Diakui?: BoolFieldUpdateOperationsInput | boolean
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type SkorAssesmenCreateManyHasilAssesmenInput = {
-    SkorAssesmenId?: string
-    Portofolio?: number
-    Tulis?: number
-    Wawancara?: number
-    Demo?: number
-    SkorRataRata?: number
-    NilaiHuruf?: string | null
-    CreatedAt?: Date | string | null
-    UpdatedAt?: Date | string | null
-  }
-
-  export type SkorAssesmenUpdateWithoutHasilAssesmenInput = {
-    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
-    Portofolio?: FloatFieldUpdateOperationsInput | number
-    Tulis?: FloatFieldUpdateOperationsInput | number
-    Wawancara?: FloatFieldUpdateOperationsInput | number
-    Demo?: FloatFieldUpdateOperationsInput | number
-    SkorRataRata?: FloatFieldUpdateOperationsInput | number
-    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type SkorAssesmenUncheckedUpdateWithoutHasilAssesmenInput = {
-    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
-    Portofolio?: FloatFieldUpdateOperationsInput | number
-    Tulis?: FloatFieldUpdateOperationsInput | number
-    Wawancara?: FloatFieldUpdateOperationsInput | number
-    Demo?: FloatFieldUpdateOperationsInput | number
-    SkorRataRata?: FloatFieldUpdateOperationsInput | number
-    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type SkorAssesmenUncheckedUpdateManyWithoutHasilAssesmenInput = {
-    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
-    Portofolio?: FloatFieldUpdateOperationsInput | number
-    Tulis?: FloatFieldUpdateOperationsInput | number
-    Wawancara?: FloatFieldUpdateOperationsInput | number
-    Demo?: FloatFieldUpdateOperationsInput | number
-    SkorRataRata?: FloatFieldUpdateOperationsInput | number
-    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -99692,6 +99611,7 @@ export namespace Prisma {
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutMataKuliahInput = {
@@ -99704,6 +99624,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateManyWithoutMataKuliahInput = {
@@ -99729,6 +99650,19 @@ export namespace Prisma {
     SanggahanAssesmenMkId?: string
     SanggahanAssesmenId: string
     Keterangan?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+  }
+
+  export type SkorAssesmenCreateManyMataKuliahMahasiswaInput = {
+    SkorAssesmenId?: string
+    Portofolio?: number
+    Tulis?: number
+    Wawancara?: number
+    Demo?: number
+    SkorRataRata?: number
+    Diakui?: boolean
+    NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -99784,6 +99718,45 @@ export namespace Prisma {
     SanggahanAssesmenMkId?: StringFieldUpdateOperationsInput | string
     SanggahanAssesmenId?: StringFieldUpdateOperationsInput | string
     Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SkorAssesmenUpdateWithoutMataKuliahMahasiswaInput = {
+    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: FloatFieldUpdateOperationsInput | number
+    Tulis?: FloatFieldUpdateOperationsInput | number
+    Wawancara?: FloatFieldUpdateOperationsInput | number
+    Demo?: FloatFieldUpdateOperationsInput | number
+    SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SkorAssesmenUncheckedUpdateWithoutMataKuliahMahasiswaInput = {
+    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: FloatFieldUpdateOperationsInput | number
+    Tulis?: FloatFieldUpdateOperationsInput | number
+    Wawancara?: FloatFieldUpdateOperationsInput | number
+    Demo?: FloatFieldUpdateOperationsInput | number
+    SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaInput = {
+    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: FloatFieldUpdateOperationsInput | number
+    Tulis?: FloatFieldUpdateOperationsInput | number
+    Wawancara?: FloatFieldUpdateOperationsInput | number
+    Demo?: FloatFieldUpdateOperationsInput | number
+    SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -100326,6 +100299,7 @@ export namespace Prisma {
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutPendaftaranInput = {
@@ -100338,6 +100312,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateManyWithoutPendaftaranInput = {

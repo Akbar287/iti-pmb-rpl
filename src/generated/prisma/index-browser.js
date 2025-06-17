@@ -253,7 +253,6 @@ exports.Prisma.HasilAssesmenScalarFieldEnum = {
   Memadai: 'Memadai',
   Assesmen: 'Assesmen',
   Nilai: 'Nilai',
-  Diakui: 'Diakui',
   TanggalAssesmen: 'TanggalAssesmen',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
@@ -564,12 +563,13 @@ exports.Prisma.SkRektorMahasiswaScalarFieldEnum = {
 
 exports.Prisma.SkorAssesmenScalarFieldEnum = {
   SkorAssesmenId: 'SkorAssesmenId',
-  HasilAssesmenId: 'HasilAssesmenId',
+  MataKuliahMahasiswaId: 'MataKuliahMahasiswaId',
   Portofolio: 'Portofolio',
   Tulis: 'Tulis',
   Wawancara: 'Wawancara',
   Demo: 'Demo',
   SkorRataRata: 'SkorRataRata',
+  Diakui: 'Diakui',
   NilaiHuruf: 'NilaiHuruf',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'

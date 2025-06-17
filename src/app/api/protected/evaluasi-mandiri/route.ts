@@ -25,6 +25,11 @@ app.get('/', async (c) => {
             Rpl: true,
             StatusMataKuliahMahasiswa: true,
             Keterangan: true,
+            MataKuliah: {
+                select: {
+                    Nama: true,
+                }
+            },
             _count: {
                 select: {
                     EvaluasiDiri: true,
@@ -36,9 +41,31 @@ app.get('/', async (c) => {
         },
     })
 
+    const mataKuliahPilihan: string[] = pilihMataKuliah.flatMap(x => x.MataKuliahId)
+
+    const getAllEvaluasiCount = await prisma.mataKuliah.findMany({
+        select: {
+            Nama: true,
+            _count: {
+                select: {
+                    CapaianPembelajaran: true
+                }
+            }
+        },
+        where: {
+            MataKuliahId: {
+                in: mataKuliahPilihan
+            }
+        }
+    })
+
     let temp = 0
+    let temp1 = 0
     pilihMataKuliah.forEach((pm) => {
         temp += pm._count.EvaluasiDiri
+    })
+    getAllEvaluasiCount.forEach((pm) => {
+        temp1 += pm._count.CapaianPembelajaran
     })
 
     const data = await prisma.daftarUlang.findFirst({
@@ -130,7 +157,7 @@ app.get('/', async (c) => {
         PendaftaranId: data?.PendaftaranId || '',
         Status: data?.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus || '',
         Nim: data?.Nim || '',
-        PilihMataKuliah: pilihMataKuliah.length,
+        PilihMataKuliah: temp1,
         EvaluasiDiriMataKuliah: temp || 0,
         JenjangKkniDituju: data?.JenjangKkniDituju || '',
         KipK: data?.KipK || false,

@@ -120,6 +120,14 @@ const UploadDokumen = ({
         getFileByPendaftaranId(selectableMahasiswa)
             .then((res) => {
                 setData(res.data)
+                setJenisDokumen(
+                    jenisDokumen.filter(
+                        (jd) =>
+                            !res.data.some(
+                                (bf) => bf.JenisDokumenId === jd.JenisDokumenId
+                            )
+                    )
+                )
                 setLoadingAwal(false)
             })
             .catch((res) => {
@@ -245,7 +253,9 @@ const UploadDokumen = ({
                     </Select>
                 </div>
                 <div>
-                    {selectableMahasiswa ? (
+                    {selectableMahasiswa &&
+                    jenisDokumen.length > 0 &&
+                    !loading ? (
                         <Button
                             className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                             type="button"

@@ -258,6 +258,16 @@ app.get('/', async (c) => {
                 select: {
                     Pendaftaran: {
                         select: {
+                            StatusMahasiswaAssesmentHistory: {
+                                select: {
+                                    Aktif: true, 
+                                    StatusMahasiswaAssesment: {
+                                        select: {
+                                            NamaStatus: true
+                                        }
+                                    }
+                                }
+                            },
                             KodePendaftar: true,
                             PendaftaranId: true,
                             Mahasiswa: {
@@ -323,6 +333,7 @@ app.get('/', async (c) => {
                 Urutan: asesor.Urutan,
                 Confirmation: asesor.Confirmation,
             })),
+            Status: item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
             KodePendaftar: item.Pendaftaran.KodePendaftar,
             ProgramStudiId: item.ProgramStudi.ProgramStudiId,
             PendaftaranId: item.Pendaftaran.PendaftaranId,
@@ -367,6 +378,16 @@ app.post('/', async (c) => {
             },
             Pendaftaran: {
                 select: {
+                    StatusMahasiswaAssesmentHistory: {
+                        select: {
+                            Aktif: true,
+                            StatusMahasiswaAssesment: {
+                                select: {
+                                    NamaStatus: true
+                                }
+                            }
+                        }
+                    },
                     PendaftaranId: true,
                     KodePendaftar: true,
                     Mahasiswa: {
@@ -436,6 +457,7 @@ app.post('/', async (c) => {
         ProgramStudiId: dataMhs.ProgramStudi.ProgramStudiId,
         PendaftaranId: dataMhs.Pendaftaran.PendaftaranId,
         NamaProgramStudi: dataMhs.ProgramStudi.Nama,
+        Status: dataMhs.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? dataMhs.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
         NamaMahasiswa: dataMhs.Pendaftaran.Mahasiswa.User.Nama,
     }
 
@@ -452,6 +474,16 @@ app.put('/', async (c) => {
             },
             Pendaftaran: {
                 select: {
+                    StatusMahasiswaAssesmentHistory: {
+                        select: {
+                            Aktif: true,
+                            StatusMahasiswaAssesment: {
+                                select: {
+                                    NamaStatus: true
+                                }
+                            }
+                        }
+                    },
                     PendaftaranId: true,
                     KodePendaftar: true,
                     Mahasiswa: {
@@ -532,6 +564,7 @@ app.put('/', async (c) => {
         PendaftaranId: dataMhs.Pendaftaran.PendaftaranId,
         NamaProgramStudi: dataMhs.ProgramStudi.Nama,
         NamaMahasiswa: dataMhs.Pendaftaran.Mahasiswa.User.Nama,
+        Status: dataMhs.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? dataMhs.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : ''
     }
 
     return c.json<ResponsePenunjukanAsesor>(responseData, 200)

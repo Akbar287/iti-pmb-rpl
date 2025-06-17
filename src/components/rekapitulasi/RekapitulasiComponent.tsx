@@ -41,14 +41,14 @@ import {
     TableHeader,
     TableRow,
 } from '../ui/table'
-import { getMahasiswaFromAsesor } from '@/services/Asessment/AsessmentMahasiswaService'
+import { getMahasiswaFromAsesorRekapitulasi } from '@/services/Asessment/AsessmentMahasiswaService'
 import { Badge } from '../ui/badge'
 import { ResponseMhsFromAsesorSession } from '@/types/PenunjukanAsesor'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
-import { setStatusRekapitulasiAsessmen } from '@/services/Status/StatusService'
+import { setStatusSanggahan } from '@/services/Status/StatusService'
 
-const AsessmentComponent = () => {
+const RekapitulasiComponent = () => {
     const router = useRouter()
     const [dataMahasiswa, setDataMahasiswa] = React.useState<
         ResponseMhsFromAsesorSession[]
@@ -80,16 +80,16 @@ const AsessmentComponent = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
 
     const startAsessment = (PendaftaranId: string) => {
-        router.push('/asessment/asessmen-mahasiswa/' + PendaftaranId)
+        router.push('/asessment/rekapitulasi/' + PendaftaranId)
     }
 
-    const continueRekapitulasi = (dt: ResponseMhsFromAsesorSession) => {
+    const continueSanggahan = (dt: ResponseMhsFromAsesorSession) => {
         Swal.fire({
-            title: 'Lanjutkan ke Proses Rekapitulasi ?',
+            title: 'Lanjutkan ke Proses Sanggahan ?',
             text:
                 'Lanjutkan Asessmen Calon Mahasiswa ' +
                 dt.Nama +
-                ' ke Proses Rekapitulasi. Aksi ini tidak dapat di undo',
+                ' ke Proses Sanggahan. Aksi ini tidak dapat di undo',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#f45f24',
@@ -98,7 +98,7 @@ const AsessmentComponent = () => {
             cancelButtonText: 'Batalkan',
         }).then((result) => {
             if (result.isConfirmed) {
-                setStatusRekapitulasiAsessmen(dt.PendaftaranId).then(() => {
+                setStatusSanggahan(dt.PendaftaranId).then(() => {
                     setDataMahasiswa(
                         dataMahasiswa.filter(
                             (x) => x.PendaftaranId !== dt.PendaftaranId
@@ -109,7 +109,7 @@ const AsessmentComponent = () => {
                         text:
                             'Asessmen ' +
                             dt.Nama +
-                            ' dilanjutkan ke Proses Rekapitulasi.',
+                            ' dilanjutkan ke Proses Sanggahan.',
                         icon: 'success',
                     })
                 })
@@ -119,7 +119,7 @@ const AsessmentComponent = () => {
 
     React.useEffect(() => {
         setLoading(true)
-        getMahasiswaFromAsesor(
+        getMahasiswaFromAsesorRekapitulasi(
             paginationState.page,
             paginationState.limit,
             search
@@ -184,7 +184,7 @@ const AsessmentComponent = () => {
         },
         {
             accessorKey: 'TotalAsessmen',
-            header: 'Total Asessmen',
+            header: 'Total Asessmen MK',
             cell: ({ row }) => (
                 <div className="capitalize">
                     {row.getValue('TotalAsessmen')}
@@ -193,7 +193,7 @@ const AsessmentComponent = () => {
         },
         {
             accessorKey: 'TotalEval',
-            header: 'Total Evaluasi',
+            header: 'Total MK',
             cell: ({ row }) => (
                 <div className="capitalize">{row.getValue('TotalEval')}</div>
             ),
@@ -226,20 +226,22 @@ const AsessmentComponent = () => {
                                 Copy Pendaftaran Mahasiswa ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            {jd.Status === 'Asessmen Oleh Asesor' && (
+                            {jd.Status === 'Rekapitulasi Asessmen' && (
                                 <DropdownMenuItem
                                     onClick={() =>
                                         startAsessment(jd.PendaftaranId)
                                     }
                                 >
-                                    Mulai Asessment
+                                    {jd.TotalAsessmen > 0
+                                        ? 'Lanjutkan Rekapitulasi'
+                                        : 'Mulai Rekapitulasi'}
                                 </DropdownMenuItem>
                             )}
                             {jd.TotalEval === jd.TotalAsessmen && (
                                 <DropdownMenuItem
-                                    onClick={() => continueRekapitulasi(jd)}
+                                    onClick={() => continueSanggahan(jd)}
                                 >
-                                    Lanjutkan Ke Rekapitulasi
+                                    Lanjutkan Ke Sanggahan
                                 </DropdownMenuItem>
                             )}
                         </DropdownMenuContent>
@@ -442,4 +444,4 @@ const AsessmentComponent = () => {
     )
 }
 
-export default AsessmentComponent
+export default RekapitulasiComponent

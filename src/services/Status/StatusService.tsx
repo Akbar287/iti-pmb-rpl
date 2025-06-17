@@ -50,6 +50,23 @@ export async function setStatusAsessmenOlehAsesor(
     if (!res.ok) throw new Error('Failed to change status')
     return res.json()
 }
+export async function setStatusRekapitulasiAsessmen(
+    PendaftaranId: string
+): Promise<{
+    status: string
+    data: any
+    message: string
+}> {
+    const params = new URLSearchParams({
+        p: String(PendaftaranId),
+        j: String('ra'),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/status?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to change status')
+    return res.json()
+}
 export async function setStatusSanggahan(PendaftaranId: string): Promise<{
     status: string
     data: any

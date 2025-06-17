@@ -278,6 +278,11 @@ const menu: MenuStoreProps[] = [
             },
             {
                 namaRole: ['Mahasiswa', 'Asesor'],
+                title: 'Rekapitulasi',
+                url: '/asessment/rekapitulasi',
+            },
+            {
+                namaRole: ['Mahasiswa', 'Asesor'],
                 title: 'Sanggahan',
                 url: '/asessment/sanggahan-mahasiswa',
             },

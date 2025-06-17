@@ -39,6 +39,11 @@ app.get('/', async (c) => {
             },
             where: {
                 PendaftaranId: PendaftaranId
+            },
+            orderBy: {
+                JenisDokumen: {
+                    NomorDokumen: 'asc'
+                }
             }
         });
 
@@ -101,7 +106,6 @@ app.get('/', async (c) => {
             { status: 200 }
         )
     }
-    
     if (BuktiFormId === undefined && PendaftaranId === undefined) {
         if (!filename) {
             return c.json(

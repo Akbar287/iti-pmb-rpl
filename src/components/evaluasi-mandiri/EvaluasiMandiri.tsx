@@ -110,7 +110,8 @@ const EvaluasiMandiri = ({
                         ? {
                               ...dataDaftarUlang,
                               MataKuliahMahasiswa: res,
-                              PilihMataKuliah: res.length,
+                              PilihMataKuliah:
+                                  dataDaftarUlang.PilihMataKuliah - res.length,
                           }
                         : null
                 )
@@ -151,6 +152,10 @@ const EvaluasiMandiri = ({
                     setStatusPenunjukanAsesor(
                         dataDaftarUlang.PendaftaranId
                     ).then(() => {
+                        setDataDaftarUlang({
+                            ...dataDaftarUlang,
+                            Status: 'Penunjukan Asesor',
+                        })
                         Swal.fire({
                             title: 'Berhasil!',
                             text: 'Asesor akan ditunjuk untuk menilai Mata Kuliah RPL anda.',
@@ -255,7 +260,8 @@ const EvaluasiMandiri = ({
                                     </TableRow>
                                 </TableBody>
                             </Table>
-                            {dataDaftarUlang?.PilihMataKuliah !== 0 ? (
+                            {dataDaftarUlang?.PilihMataKuliah !== 0 &&
+                            dataDaftarUlang.Status == 'Asessmen Mandiri' ? (
                                 <Alert className="mb-3">
                                     <BookCheck className="h-4 w-4" />
                                     <AlertTitle>Evaluasi Mandiri</AlertTitle>
@@ -265,8 +271,9 @@ const EvaluasiMandiri = ({
                                             dataDaftarUlang?.EvaluasiDiriMataKuliah
                                         }{' '}
                                         dari {dataDaftarUlang?.PilihMataKuliah}{' '}
-                                        Terselesaikan. Segera Selesaikan agar
-                                        dapat di assessmen oleh asessor.
+                                        Pertanyaan Terselesaikan. Segera
+                                        Selesaikan agar dapat di assessmen oleh
+                                        asessor.
                                     </AlertDescription>
                                 </Alert>
                             ) : (
@@ -276,55 +283,56 @@ const EvaluasiMandiri = ({
                                 <ComputerIcon className="h-4 w-4" />
                                 <AlertTitle>Pemberitahuan</AlertTitle>
                                 <AlertDescription>
-                                    Sebelum memulai Evaluasi Mandiri. Gunakan
-                                    Laptop atau Komputer untuk Pengalaman
-                                    terbaik. Min: 1270x720
+                                    {dataDaftarUlang.Status ==
+                                    'Asessmen Mandiri'
+                                        ? 'Sebelum memulai Evaluasi Mandiri. Gunakan Laptop atau Komputer untuk Pengalaman terbaik. Min: 1270x720'
+                                        : 'Asesor Sedang dipilih untuk menilai Mata Kuliah RPL Anda'}
                                 </AlertDescription>
                             </Alert>
-                            <div className="flex flex-row items-center">
-                                <Button
-                                    className="mt-5 mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                    type="button"
-                                    onClick={() => {
-                                        let temp =
-                                            dataDaftarUlang?.MataKuliahMahasiswa.map(
-                                                (r) => ({
-                                                    MataKuliahId:
-                                                        r.MataKuliahId,
-                                                    Keterangan: r.Keterangan,
-                                                })
-                                            )
-                                        setForm(
-                                            (temp || []).filter(
-                                                (item) =>
-                                                    item.Keterangan !== null
-                                            ) as {
-                                                MataKuliahId: string
-                                                Keterangan: KeteranganMataKuliah
-                                            }[]
-                                        )
-                                        setOpenDialog(true)
-                                    }}
-                                >
-                                    <BookCheck />
-                                    Pilih Mata Kuliah RPL
-                                </Button>
-                                {(dataDaftarUlang?.PilihMataKuliah ?? 0) >
-                                    0 && (
+                            {dataDaftarUlang.Status === 'Asessmen Mandiri' && (
+                                <div className="flex flex-row items-center">
                                     <Button
                                         className="mt-5 mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                                         type="button"
                                         onClick={() => {
-                                            startEvaluating()
+                                            let temp =
+                                                dataDaftarUlang?.MataKuliahMahasiswa.map(
+                                                    (r) => ({
+                                                        MataKuliahId:
+                                                            r.MataKuliahId,
+                                                        Keterangan:
+                                                            r.Keterangan,
+                                                    })
+                                                )
+                                            setForm(
+                                                (temp || []).filter(
+                                                    (item) =>
+                                                        item.Keterangan !== null
+                                                ) as {
+                                                    MataKuliahId: string
+                                                    Keterangan: KeteranganMataKuliah
+                                                }[]
+                                            )
+                                            setOpenDialog(true)
                                         }}
                                     >
-                                        Mulai Evaluasi
-                                        <PenLineIcon />
+                                        <BookCheck />
+                                        Pilih Mata Kuliah RPL
                                     </Button>
-                                )}
-                                {dataDaftarUlang.Status ===
-                                    'Asessmen Mandiri' &&
-                                    dataDaftarUlang.EvaluasiDiriMataKuliah ===
+                                    {(dataDaftarUlang?.PilihMataKuliah ?? 0) >
+                                        0 && (
+                                        <Button
+                                            className="mt-5 mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                            type="button"
+                                            onClick={() => {
+                                                startEvaluating()
+                                            }}
+                                        >
+                                            Mulai Evaluasi
+                                            <PenLineIcon />
+                                        </Button>
+                                    )}
+                                    {dataDaftarUlang.EvaluasiDiriMataKuliah ===
                                         dataDaftarUlang.PilihMataKuliah && (
                                         <Button
                                             className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
@@ -335,7 +343,8 @@ const EvaluasiMandiri = ({
                                             <ArrowRightIcon />
                                         </Button>
                                     )}
-                            </div>
+                                </div>
+                            )}
                         </>
                     )}
                 </div>
