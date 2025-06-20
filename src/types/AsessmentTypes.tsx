@@ -1,12 +1,6 @@
 import {
     KeteranganMataKuliah,
-    MataKuliah,
     ProfiensiPengetahuan,
-    ProgramStudi,
-    SanggahanAssesmen,
-    SanggahanAssesmenMk,
-    SanggahanAssesmenPihak,
-    SkorAssesmen,
     StatusMataKuliahMahasiswa,
 } from '@/generated/prisma'
 
