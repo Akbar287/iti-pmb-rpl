@@ -77222,10 +77222,10 @@ export namespace Prisma {
 
   export type SanggahanAssesmenWhereUniqueInput = Prisma.AtLeast<{
     SanggahanAssesmenId?: string
+    PendaftaranId?: string
     AND?: SanggahanAssesmenWhereInput | SanggahanAssesmenWhereInput[]
     OR?: SanggahanAssesmenWhereInput[]
     NOT?: SanggahanAssesmenWhereInput | SanggahanAssesmenWhereInput[]
-    PendaftaranId?: StringFilter<"SanggahanAssesmen"> | string
     ProsesBanding?: BoolFilter<"SanggahanAssesmen"> | boolean
     DiskusiBanding?: BoolFilter<"SanggahanAssesmen"> | boolean
     CreatedAt?: DateTimeNullableFilter<"SanggahanAssesmen"> | Date | string | null
@@ -77233,7 +77233,7 @@ export namespace Prisma {
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
     SanggahanAssesmenMk?: SanggahanAssesmenMkListRelationFilter
     SanggahanAssesmenPihak?: SanggahanAssesmenPihakListRelationFilter
-  }, "SanggahanAssesmenId">
+  }, "SanggahanAssesmenId" | "PendaftaranId">
 
   export type SanggahanAssesmenOrderByWithAggregationInput = {
     SanggahanAssesmenId?: SortOrder

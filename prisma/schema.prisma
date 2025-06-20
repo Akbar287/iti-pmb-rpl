@@ -665,7 +665,7 @@ model Role {
 
 model SanggahanAssesmen {
   SanggahanAssesmenId    String                   @id @default(uuid()) @map("sanggahan_assesmen_id")
-  PendaftaranId          String                   @map("pendaftaran_id")
+  PendaftaranId          String                   @unique @map("pendaftaran_id")
   ProsesBanding          Boolean                  @default(false) @map("proses_banding")
   DiskusiBanding         Boolean                  @default(false) @map("diskusi_banding")
   CreatedAt              DateTime?                @map("created_at")
