@@ -17,6 +17,7 @@ app.use('*', withApiAuth)
 app.get('/', async (c) => {
     const id = c.req.query('id')
 
+    if(!id) return c.json({}, 400)
     const pilihMataKuliah = await prisma.mataKuliahMahasiswa.findMany({
         select: {
             MataKuliahMahasiswaId: true,
@@ -70,8 +71,8 @@ app.get('/', async (c) => {
 
     const data = await prisma.daftarUlang.findFirst({
         where: {
-            PendaftaranId: id,
             Pendaftaran: {
+                PendaftaranId: id,
                 StatusMahasiswaAssesmentHistory: {
                     some: {
                         OR: [
