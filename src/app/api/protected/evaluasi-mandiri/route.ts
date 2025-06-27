@@ -29,6 +29,7 @@ app.get('/', async (c) => {
             MataKuliah: {
                 select: {
                     Nama: true,
+                    ProgramStudiId: true
                 }
             },
             _count: {
@@ -68,6 +69,27 @@ app.get('/', async (c) => {
     getAllEvaluasiCount.forEach((pm) => {
         temp1 += pm._count.CapaianPembelajaran
     })
+
+    const check = prisma.daftarUlang.findFirst({where: {PendaftaranId: id}})
+
+    if(!check) {
+        await prisma.daftarUlang.create({
+            data: {
+                PendaftaranId: id,
+                ProgramStudiId: pilihMataKuliah[0].MataKuliah.ProgramStudiId,
+                Nim: '12345678',
+                JenjangKkniDituju: '7',
+                KipK: true,
+                Aktif: true,
+                MengisiBiodata: true,
+                Finalisasi: true,
+                TanggalDaftar: new Date(),
+                TanggalDaftarUlang: new Date(),
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            }
+        })
+    }
 
     const data = await prisma.daftarUlang.findFirst({
         where: {
