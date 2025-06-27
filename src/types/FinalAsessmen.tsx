@@ -109,3 +109,14 @@ export type ResponseFinalAsessmenAsesorDetailType = {
     }
     MataKuliahMahasiswa: ResponseFinalAsessmenAsesorDetailMKMType[]
 }
+
+export type ResponseSkRektorAsessmenType = {
+    Nama: string
+    Email: string
+    NomorHp: string
+    PendaftaranId: string
+    KodePendaftar: string
+    Nim: string
+    SkRektor: boolean
+    NamaFile: string
+}
