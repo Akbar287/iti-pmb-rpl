@@ -17,7 +17,9 @@ app.use('*', withApiAuth)
 app.get('/', async (c) => {
     const id = c.req.query('id')
 
-    if(!id) return c.json({}, 400)
+    if(id === undefined) return c.json({
+        status: 'error', message: 'no queri Found ', data: []
+    }, 200)
     const pilihMataKuliah = await prisma.mataKuliahMahasiswa.findMany({
         select: {
             MataKuliahMahasiswaId: true,
@@ -69,8 +71,6 @@ app.get('/', async (c) => {
     getAllEvaluasiCount.forEach((pm) => {
         temp1 += pm._count.CapaianPembelajaran
     })
-
-    const check = prisma.daftarUlang.findFirst({where: {PendaftaranId: id}})
 
     const data = await prisma.daftarUlang.findFirst({
         where: {
