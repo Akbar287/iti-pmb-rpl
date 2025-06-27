@@ -74,25 +74,31 @@ app.get('/', async (c) => {
 
     const data = await prisma.daftarUlang.findFirst({
         where: {
-            Pendaftaran: {
-                PendaftaranId: id,
-                StatusMahasiswaAssesmentHistory: {
-                    some: {
-                        OR: [
-                            {
-                                StatusMahasiswaAssesment: {
-                                    NamaStatus: "Pengisian Data Diri"
-                                }
-                            },
-                            {
-                                StatusMahasiswaAssesment: {
-                                    NamaStatus: "Asessmen Mandiri"
-                                }
+            AND: [
+                {
+                    PendaftaranId: id,
+                }, 
+                {
+                    Pendaftaran: {
+                        StatusMahasiswaAssesmentHistory: {
+                            some: {
+                                OR: [
+                                    {
+                                        StatusMahasiswaAssesment: {
+                                            NamaStatus: "Pengisian Data Diri"
+                                        }
+                                    },
+                                    {
+                                        StatusMahasiswaAssesment: {
+                                            NamaStatus: "Asessmen Mandiri"
+                                        }
+                                    }
+                                ]
                             }
-                        ]
+                        }
                     }
                 }
-            }
+            ]
         },
         select: {
             DaftarUlangId: true,
