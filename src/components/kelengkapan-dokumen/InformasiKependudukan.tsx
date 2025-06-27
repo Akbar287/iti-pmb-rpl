@@ -39,6 +39,7 @@ import {
 } from '@/validation/InformasiKependudukanValidation'
 import {
     getInformasiKependudukanByPendaftaranId,
+    setInformasiKependudukan,
     updateInformasiKependudukan,
 } from '@/services/KelengkapanDokumen/InformasiKependudukanService'
 
@@ -75,9 +76,9 @@ const InformasiKependudukan = ({
 
     React.useEffect(() => {
         setLoadingAwal(true)
+        form.setValue('PendaftaranId', selectableMahasiswa)
         getInformasiKependudukanByPendaftaranId(selectableMahasiswa)
             .then((res) => {
-                form.setValue('PendaftaranId', res.PendaftaranId)
                 form.setValue(
                     'InformasiKependudukanId',
                     res.InformasiKependudukanId
@@ -88,7 +89,7 @@ const InformasiKependudukan = ({
                 setLoadingAwal(false)
             })
             .catch((err) => {
-                toast('Terjadi Error: ' + err)
+                toast('Silakan Anda Isi Informasi Kependudukan')
                 setLoadingAwal(false)
             })
     }, [selectableMahasiswa])
@@ -97,23 +98,49 @@ const InformasiKependudukan = ({
         dataSubmit: InformasiKependudukanFormValidation
     ) => {
         setLoading(true)
-        updateInformasiKependudukan({
-            PendaftaranId: selectableMahasiswa,
-            InformasiKependudukanId: dataSubmit.InformasiKependudukanId ?? '',
-            NoKk: dataSubmit.NoKk || '',
-            NoNik: dataSubmit.NoNik || '',
-            Suku: dataSubmit.Suku || '',
-            CreatedAt: null,
-            UpdatedAt: null,
-        })
-            .then((res) => {
-                toast('Data Kependudukan Diubah')
-                setLoading(false)
+        if (form.getValues('InformasiKependudukanId') === undefined) {
+            setInformasiKependudukan({
+                PendaftaranId: selectableMahasiswa,
+                InformasiKependudukanId:
+                    dataSubmit.InformasiKependudukanId ?? '',
+                NoKk: dataSubmit.NoKk || '',
+                NoNik: dataSubmit.NoNik || '',
+                Suku: dataSubmit.Suku || '',
+                CreatedAt: null,
+                UpdatedAt: null,
             })
-            .catch((err) => {
-                toast('Error: ' + err)
-                setLoading(false)
+                .then((res) => {
+                    toast('Data Kependudukan Disimpan')
+                    form.setValue(
+                        'InformasiKependudukanId',
+                        res.InformasiKependudukanId
+                    )
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    toast('Error: ' + err)
+                    setLoading(false)
+                })
+        } else {
+            updateInformasiKependudukan({
+                PendaftaranId: selectableMahasiswa,
+                InformasiKependudukanId:
+                    dataSubmit.InformasiKependudukanId ?? '',
+                NoKk: dataSubmit.NoKk || '',
+                NoNik: dataSubmit.NoNik || '',
+                Suku: dataSubmit.Suku || '',
+                CreatedAt: null,
+                UpdatedAt: null,
             })
+                .then((res) => {
+                    toast('Data Kependudukan Disimpan')
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    toast('Error: ' + err)
+                    setLoading(false)
+                })
+        }
     }
     return (
         <Card>

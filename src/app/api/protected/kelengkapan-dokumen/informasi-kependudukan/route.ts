@@ -22,7 +22,6 @@ app.get('/', async (c) => {
     } else {
         data = (id) ? await prisma.informasiKependudukan.findFirst({where: {InformasiKependudukanId: id}}) : await prisma.informasiKependudukan.findMany()
     }
-
     return c.json(data)
 })
 
