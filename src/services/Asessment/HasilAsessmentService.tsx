@@ -43,3 +43,22 @@ export async function getResponseFinalAsessmenAsesorPaginationType(
     if (!res.ok) throw new Error('Failed to fetch hasil asessmen')
     return res.json()
 }
+
+export async function getResponseFinalAsessmenAkademikPaginationType(
+    page: number,
+    limit: number,
+    search: string,
+    roleId: string
+): Promise<Pagination<ResponseFinalAsessmenAsesorPaginationType[]>> {
+    const params = new URLSearchParams()
+    params.append('page', String(page))
+    params.append('limit', String(limit))
+    params.append('search', search)
+    params.append('r', roleId)
+    params.append('jenis', 'get-sanggahan')
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/hasil-asessment?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch hasil asessmen')
+    return res.json()
+}

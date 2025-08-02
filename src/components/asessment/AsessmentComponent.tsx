@@ -41,7 +41,10 @@ import {
     TableHeader,
     TableRow,
 } from '../ui/table'
-import { getMahasiswaFromAsesor } from '@/services/Asessment/AsessmentMahasiswaService'
+import {
+    getMahasiswaFromAsesor,
+    getMahasiswaFromAsesorForMahasiswa,
+} from '@/services/Asessment/AsessmentMahasiswaService'
 import { Badge } from '../ui/badge'
 import { ResponseMhsFromAsesorSession } from '@/types/PenunjukanAsesor'
 import { useRouter } from 'next/navigation'
@@ -53,6 +56,12 @@ const AsessmentComponent = () => {
     const [dataMahasiswa, setDataMahasiswa] = React.useState<
         ResponseMhsFromAsesorSession[]
     >([])
+    const [role, setRole] = React.useState<{
+        GuardName: string
+        Icon: string
+        Name: string
+        RoleId: string
+    } | null>(null)
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -118,29 +127,69 @@ const AsessmentComponent = () => {
     }
 
     React.useEffect(() => {
-        setLoading(true)
-        getMahasiswaFromAsesor(
-            paginationState.page,
-            paginationState.limit,
-            search
-        )
-            .then((res) => {
-                setDataMahasiswa(res.data)
-                setLoading(false)
-                setPaginationState({
-                    page: res.page,
-                    limit: res.limit,
-                    totalElement: res.totalElement,
-                    totalPage: res.totalPage,
-                    isFirst: res.isFirst,
-                    isLast: res.isLast,
-                    hasNext: res.hasNext,
-                    hasPrevious: res.hasPrevious,
-                })
-            })
-            .catch((err) => {
-                setLoading(false)
-            })
+        let temp: {
+            GuardName: string
+            Icon: string
+            Name: string
+            RoleId: string
+        } | null = null
+        if (!role) {
+            const rolelogin = localStorage.getItem('pmb.iti.role')
+            if (rolelogin) {
+                temp = JSON.parse(rolelogin)
+                setRole(temp)
+            }
+        }
+        if (temp) {
+            setLoading(true)
+            if (temp.Name.match('Asesor')) {
+                getMahasiswaFromAsesor(
+                    paginationState.page,
+                    paginationState.limit,
+                    search
+                )
+                    .then((res) => {
+                        setDataMahasiswa(res.data)
+                        setLoading(false)
+                        setPaginationState({
+                            page: res.page,
+                            limit: res.limit,
+                            totalElement: res.totalElement,
+                            totalPage: res.totalPage,
+                            isFirst: res.isFirst,
+                            isLast: res.isLast,
+                            hasNext: res.hasNext,
+                            hasPrevious: res.hasPrevious,
+                        })
+                    })
+                    .catch((err) => {
+                        setLoading(false)
+                    })
+            } else {
+                getMahasiswaFromAsesorForMahasiswa(
+                    paginationState.page,
+                    paginationState.limit,
+                    search
+                )
+                    .then((res) => {
+                        setDataMahasiswa(res.data)
+                        setLoading(false)
+                        setPaginationState({
+                            page: res.page,
+                            limit: res.limit,
+                            totalElement: res.totalElement,
+                            totalPage: res.totalPage,
+                            isFirst: res.isFirst,
+                            isLast: res.isLast,
+                            hasNext: res.hasNext,
+                            hasPrevious: res.hasPrevious,
+                        })
+                    })
+                    .catch((err) => {
+                        setLoading(false)
+                    })
+            }
+        }
     }, [paginationState.page, search, paginationState.limit])
 
     const columns: ColumnDef<ResponseMhsFromAsesorSession>[] = [
@@ -225,22 +274,28 @@ const AsessmentComponent = () => {
                             >
                                 Copy Pendaftaran Mahasiswa ID
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            {jd.Status === 'Asessmen Oleh Asesor' && (
-                                <DropdownMenuItem
-                                    onClick={() =>
-                                        startAsessment(jd.PendaftaranId)
-                                    }
-                                >
-                                    Mulai Asessment
-                                </DropdownMenuItem>
-                            )}
-                            {jd.TotalEval === jd.TotalAsessmen && (
-                                <DropdownMenuItem
-                                    onClick={() => continueRekapitulasi(jd)}
-                                >
-                                    Lanjutkan Ke Rekapitulasi
-                                </DropdownMenuItem>
+                            {role?.Name.match('Asesor') && (
+                                <React.Fragment>
+                                    <DropdownMenuSeparator />
+                                    {jd.Status === 'Asessmen Oleh Asesor' && (
+                                        <DropdownMenuItem
+                                            onClick={() =>
+                                                startAsessment(jd.PendaftaranId)
+                                            }
+                                        >
+                                            Mulai Asessment
+                                        </DropdownMenuItem>
+                                    )}
+                                    {jd.TotalEval === jd.TotalAsessmen && (
+                                        <DropdownMenuItem
+                                            onClick={() =>
+                                                continueRekapitulasi(jd)
+                                            }
+                                        >
+                                            Lanjutkan Ke Rekapitulasi
+                                        </DropdownMenuItem>
+                                    )}
+                                </React.Fragment>
                             )}
                         </DropdownMenuContent>
                     </DropdownMenu>

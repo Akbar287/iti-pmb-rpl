@@ -3228,7 +3228,18 @@ export function SheetManageData({
                                                                 readOnly={
                                                                     loading
                                                                 }
-                                                                {...field}
+                                                                value={
+                                                                    field.value
+                                                                }
+                                                                onChange={(e) =>
+                                                                    field.onChange(
+                                                                        Number(
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                        )
+                                                                    )
+                                                                }
                                                             />
                                                         </FormControl>
                                                         <FormDescription>

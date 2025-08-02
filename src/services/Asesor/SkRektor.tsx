@@ -23,6 +23,24 @@ export async function getSkRektorAsesorPagination(
     return res.json()
 }
 
+export async function getSkRektorAsesorPaginationAsesorRole(
+    page: number,
+    limit: number,
+    search: string,
+    userId: string
+): Promise<Pagination<ResponseSkRektorAsesor[]>> {
+    const params = new URLSearchParams()
+    params.append('page', String(page))
+    params.append('limit', String(limit))
+    params.append('search', search)
+    params.append('userId', userId)
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asesor/sk?jenis=get-page-sk-from-asesor-role&${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch sk asesor mahasiswa')
+    return res.json()
+}
+
 export async function getAsesorMahasiswaPagination(
     page: number,
     limit: number,

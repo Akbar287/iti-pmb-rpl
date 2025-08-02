@@ -25,7 +25,6 @@ import {
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
 import {
-    CalendarIcon,
     ChevronLeft,
     ChevronRight,
     MoreHorizontal,
@@ -77,6 +76,8 @@ import {
     deleteAsesorMahasiswa,
     getAsesorFromProdiId,
     getAsesorMahasiswaPagination,
+    getAsesorMahasiswaPaginationFromAkademikRole,
+    getAsesorMahasiswaPaginationFromAsesorRole,
     updateAsesorMahasiswa,
 } from '@/services/Asesor/PenunjukanAsesorService'
 import { MultiSelect } from '../ui/multi-select'
@@ -86,10 +87,13 @@ import {
 } from '@/types/PenunjukanAsesor'
 import { Badge } from '../ui/badge'
 import { setStatusAsessmenOlehAsesor } from '@/services/Status/StatusService'
+import { Session } from 'next-auth'
 
 const PenunjukanAsesorComponent = ({
     universityDataServer,
+    session,
 }: {
+    session: Session | null
     universityDataServer: {
         Nama: string
         UniversityId: string
@@ -125,6 +129,12 @@ const PenunjukanAsesorComponent = ({
         hasNext: false,
         hasPrevious: false,
     })
+    const [role, setRole] = React.useState<{
+        GuardName: string
+        Icon: string
+        Name: string
+        RoleId: string
+    } | null>(null)
     const [dataAsesor, setDataAsesor] = React.useState<
         ResponseAsesorFromProdi[]
     >([])
@@ -214,35 +224,94 @@ const PenunjukanAsesorComponent = ({
             })
     }
     React.useEffect(() => {
+        let roleName = role !== null ? role.Name : null
+        if (!role) {
+            const rolelogin = localStorage.getItem('pmb.iti.role')
+            if (rolelogin) {
+                let temp = JSON.parse(rolelogin)
+                setRole(temp)
+                roleName = temp.Name
+            }
+        }
         setLoading(true)
-        getAsesorMahasiswaPagination(
-            paginationState.page,
-            paginationState.limit,
-            search,
-            selectedData.ProgramStudiId
-        )
-            .then((res) => {
-                setDataAsesorMahasiswa(res.data)
-                setLoading(false)
-                setPaginationState({
-                    page: res.page,
-                    limit: res.limit,
-                    totalElement: res.totalElement,
-                    totalPage: res.totalPage,
-                    isFirst: res.isFirst,
-                    isLast: res.isLast,
-                    hasNext: res.hasNext,
-                    hasPrevious: res.hasPrevious,
-                })
-            })
-            .catch((err) => {
-                setLoading(false)
-            })
 
-        if (dataAsesor.length === 0 && selectedData.ProgramStudiId !== '') {
-            getAsesorFromProdiId(selectedData.ProgramStudiId)
-                .then((res) => setDataAsesor(res))
-                .catch((err) => {})
+        if (roleName === 'Kaprodi') {
+            getAsesorMahasiswaPagination(
+                paginationState.page,
+                paginationState.limit,
+                search,
+                selectedData.ProgramStudiId
+            )
+                .then((res) => {
+                    setDataAsesorMahasiswa(res.data)
+                    setLoading(false)
+                    setPaginationState({
+                        page: res.page,
+                        limit: res.limit,
+                        totalElement: res.totalElement,
+                        totalPage: res.totalPage,
+                        isFirst: res.isFirst,
+                        isLast: res.isLast,
+                        hasNext: res.hasNext,
+                        hasPrevious: res.hasPrevious,
+                    })
+                })
+                .catch((err) => {
+                    setLoading(false)
+                })
+
+            if (dataAsesor.length === 0 && selectedData.ProgramStudiId !== '') {
+                getAsesorFromProdiId(selectedData.ProgramStudiId)
+                    .then((res) => setDataAsesor(res))
+                    .catch((err) => {})
+            }
+        } else if (roleName === 'Asesor') {
+            getAsesorMahasiswaPaginationFromAsesorRole(
+                paginationState.page,
+                paginationState.limit,
+                search,
+                session?.user.id ?? ''
+            )
+                .then((res) => {
+                    setDataAsesorMahasiswa(res.data)
+                    setLoading(false)
+                    setPaginationState({
+                        page: res.page,
+                        limit: res.limit,
+                        totalElement: res.totalElement,
+                        totalPage: res.totalPage,
+                        isFirst: res.isFirst,
+                        isLast: res.isLast,
+                        hasNext: res.hasNext,
+                        hasPrevious: res.hasPrevious,
+                    })
+                })
+                .catch((err) => {
+                    setLoading(false)
+                })
+        } else if (roleName === 'Akademik') {
+            getAsesorMahasiswaPaginationFromAkademikRole(
+                paginationState.page,
+                paginationState.limit,
+                search
+            )
+                .then((res) => {
+                    setDataAsesorMahasiswa(res.data)
+                    setLoading(false)
+                    setPaginationState({
+                        page: res.page,
+                        limit: res.limit,
+                        totalElement: res.totalElement,
+                        totalPage: res.totalPage,
+                        isFirst: res.isFirst,
+                        isLast: res.isLast,
+                        hasNext: res.hasNext,
+                        hasPrevious: res.hasPrevious,
+                    })
+                })
+                .catch((err) => {
+                    setLoading(false)
+                })
         }
     }, [
         paginationState.page,
@@ -389,19 +458,30 @@ const PenunjukanAsesorComponent = ({
                             >
                                 Copy Kode Pendaftar ID
                             </DropdownMenuItem>
-                            {jd.Status === 'Penunjukan Asesor' ||
-                                (jd.Asesor.length !== 0 && (
-                                    <DropdownMenuSeparator />
-                                ))}
-                            {jd.Status === 'Penunjukan Asesor' && (
-                                <DropdownMenuItem onClick={() => ubahData(jd)}>
-                                    Atur Asesor
-                                </DropdownMenuItem>
-                            )}
-                            {jd.Asesor.length !== 0 && (
-                                <DropdownMenuItem onClick={() => hapusData(jd)}>
-                                    Hapus Semua Asesor
-                                </DropdownMenuItem>
+                            {role?.Name.match('Kaprodi') && (
+                                <>
+                                    {jd.Status === 'Penunjukan Asesor' ||
+                                        (jd.Asesor.length !== 0 &&
+                                            jd.Status ===
+                                                'Penunjukan Asesor' && (
+                                                <DropdownMenuSeparator />
+                                            ))}
+                                    {jd.Status === 'Penunjukan Asesor' && (
+                                        <DropdownMenuItem
+                                            onClick={() => ubahData(jd)}
+                                        >
+                                            Atur Asesor
+                                        </DropdownMenuItem>
+                                    )}
+                                    {jd.Asesor.length !== 0 &&
+                                        jd.Status === 'Penunjukan Asesor' && (
+                                            <DropdownMenuItem
+                                                onClick={() => hapusData(jd)}
+                                            >
+                                                Hapus Semua Asesor
+                                            </DropdownMenuItem>
+                                        )}
+                                </>
                             )}
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -426,154 +506,415 @@ const PenunjukanAsesorComponent = ({
         },
     })
 
-    return (
-        <div className="w-full">
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Cari Data ..."
-                    value={search}
-                    onChange={(event) => {
-                        setPaginationState({
-                            ...paginationState,
-                            page: 1,
-                        })
-                        setSearch(event.target.value)
-                    }}
-                    className="max-w-sm"
-                />
-                <div className="w-full justify-end flex">
-                    <Select
-                        value={String(paginationState.limit)}
-                        disabled={loading}
-                        onValueChange={(value) =>
+    if (!role) {
+        return (
+            <div className="w-full">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                </div>
+            </div>
+        )
+    }
+
+    if (role.Name === 'Kaprodi') {
+        return (
+            <div className="w-full">
+                <div className="flex items-center py-4">
+                    <Input
+                        placeholder="Cari Data ..."
+                        value={search}
+                        onChange={(event) => {
                             setPaginationState({
                                 ...paginationState,
-                                limit: Number(value),
                                 page: 1,
                             })
-                        }
+                            setSearch(event.target.value)
+                        }}
+                        className="max-w-sm"
+                    />
+                    <div className="w-full justify-end flex">
+                        <Select
+                            value={String(paginationState.limit)}
+                            disabled={loading}
+                            onValueChange={(value) =>
+                                setPaginationState({
+                                    ...paginationState,
+                                    limit: Number(value),
+                                    page: 1,
+                                })
+                            }
+                        >
+                            <SelectTrigger className="w-[100px]">
+                                <SelectValue placeholder="Pilih Limit Data" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Pilih Limit Data</SelectLabel>
+                                    {[5, 10, 20, 50, 75, 100].map((l, idx) => (
+                                        <SelectItem value={String(l)} key={idx}>
+                                            {l}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 my-5 gap-5">
+                    <Select
+                        disabled={universityDataServer.length === 0 || loading}
+                        value={selectedData.UniversityId}
+                        onValueChange={(val) => {
+                            let temp = universityDataServer.find(
+                                (x) => x.UniversityId === val
+                            )
+                            if (temp) {
+                                setSelectedData({
+                                    UniversityId: temp.UniversityId,
+                                    NamaUniversity: temp.Nama,
+                                    ProgramStudiId: '',
+                                    NamaProgramStudi: '',
+                                })
+                            }
+                        }}
                     >
-                        <SelectTrigger className="w-[100px]">
-                            <SelectValue placeholder="Pilih Limit Data" />
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Pilih Universitas" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                <SelectLabel>Pilih Limit Data</SelectLabel>
-                                {[5, 10, 20, 50, 75, 100].map((l, idx) => (
-                                    <SelectItem value={String(l)} key={idx}>
-                                        {l}
+                                <SelectLabel>Pilih Universitas</SelectLabel>
+                                {universityDataServer.map((u) => (
+                                    <SelectItem
+                                        key={u.UniversityId}
+                                        value={u.UniversityId}
+                                    >
+                                        {u.Nama}
                                     </SelectItem>
                                 ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-                </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 my-5 gap-5">
-                <Select
-                    disabled={universityDataServer.length === 0 || loading}
-                    value={selectedData.UniversityId}
-                    onValueChange={(val) => {
-                        let temp = universityDataServer.find(
-                            (x) => x.UniversityId === val
-                        )
-                        if (temp) {
-                            setSelectedData({
-                                UniversityId: temp.UniversityId,
-                                NamaUniversity: temp.Nama,
-                                ProgramStudiId: '',
-                                NamaProgramStudi: '',
-                            })
-                        }
-                    }}
-                >
-                    <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Pilih Universitas" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Pilih Universitas</SelectLabel>
-                            {universityDataServer.map((u) => (
-                                <SelectItem
-                                    key={u.UniversityId}
-                                    value={u.UniversityId}
-                                >
-                                    {u.Nama}
-                                </SelectItem>
-                            ))}
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-                <Select
-                    disabled={loading || selectedData.UniversityId === ''}
-                    value={selectedData.ProgramStudiId}
-                    onValueChange={(val) => {
-                        let temp = universityDataServer
-                            .find(
-                                (x) =>
-                                    x.UniversityId === selectedData.UniversityId
-                            )
-                            ?.ProgramStudi.find((y) => y.ProgramStudiId === val)
-                        if (temp) {
-                            setSelectedData({
-                                ...selectedData,
-                                ProgramStudiId: val,
-                                NamaProgramStudi: temp.Nama,
-                            })
-                            form.setValue('NamaProgramStudi', temp.Nama)
-                            form.setValue('ProgramStudiId', val)
-                            getAsesorFromProdiId(selectedData.ProgramStudiId)
-                                .then((res) => setDataAsesor(res))
-                                .catch((err) => {})
-                        }
-                    }}
-                >
-                    <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Pilih Program Studi" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Pilih Program Studi</SelectLabel>
-                            {universityDataServer
+                    <Select
+                        disabled={loading || selectedData.UniversityId === ''}
+                        value={selectedData.ProgramStudiId}
+                        onValueChange={(val) => {
+                            let temp = universityDataServer
                                 .find(
                                     (x) =>
                                         x.UniversityId ===
                                         selectedData.UniversityId
                                 )
-                                ?.ProgramStudi.map((u) => (
-                                    <SelectItem
-                                        key={u.ProgramStudiId}
-                                        value={u.ProgramStudiId}
-                                    >
-                                        {u.Nama}
-                                    </SelectItem>
-                                ))}
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
-            </div>
-            {loading ? (
-                <div className="space-y-2">
-                    {Array.from({ length: paginationState.limit }).map(
-                        (_, i) => (
-                            <div key={i} className="flex space-x-4">
-                                <Skeleton className="h-10 w-10 rounded-full" />
-                                <div className="flex-1 space-y-2">
-                                    <Skeleton className="h-4 w-[60%]" />
-                                    <Skeleton className="h-4 w-[40%]" />
-                                </div>
-                            </div>
-                        )
-                    )}
+                                ?.ProgramStudi.find(
+                                    (y) => y.ProgramStudiId === val
+                                )
+                            if (temp) {
+                                setSelectedData({
+                                    ...selectedData,
+                                    ProgramStudiId: val,
+                                    NamaProgramStudi: temp.Nama,
+                                })
+                                form.setValue('NamaProgramStudi', temp.Nama)
+                                form.setValue('ProgramStudiId', val)
+                                getAsesorFromProdiId(
+                                    selectedData.ProgramStudiId
+                                )
+                                    .then((res) => setDataAsesor(res))
+                                    .catch((err) => {})
+                            }
+                        }}
+                    >
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Pilih Program Studi" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Pilih Program Studi</SelectLabel>
+                                {universityDataServer
+                                    .find(
+                                        (x) =>
+                                            x.UniversityId ===
+                                            selectedData.UniversityId
+                                    )
+                                    ?.ProgramStudi.map((u) => (
+                                        <SelectItem
+                                            key={u.ProgramStudiId}
+                                            value={u.ProgramStudiId}
+                                        >
+                                            {u.Nama}
+                                        </SelectItem>
+                                    ))}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
                 </div>
-            ) : (
-                <div className="rounded-md border">
-                    {selectedData.ProgramStudiId === '' ? (
-                        <div className="p-4 text-center text-muted-foreground">
-                            Silakan pilih Universitas dan Program Studi terlebih
-                            dahulu.
+                {loading ? (
+                    <div className="space-y-2">
+                        {Array.from({ length: paginationState.limit }).map(
+                            (_, i) => (
+                                <div key={i} className="flex space-x-4">
+                                    <Skeleton className="h-10 w-10 rounded-full" />
+                                    <div className="flex-1 space-y-2">
+                                        <Skeleton className="h-4 w-[60%]" />
+                                        <Skeleton className="h-4 w-[40%]" />
+                                    </div>
+                                </div>
+                            )
+                        )}
+                    </div>
+                ) : (
+                    <div className="rounded-md border">
+                        {selectedData.ProgramStudiId === '' ? (
+                            <div className="p-4 text-center text-muted-foreground">
+                                Silakan pilih Universitas dan Program Studi
+                                terlebih dahulu.
+                            </div>
+                        ) : (
+                            <Table>
+                                <TableHeader>
+                                    {table
+                                        .getHeaderGroups()
+                                        .map((headerGroup) => (
+                                            <TableRow key={headerGroup.id}>
+                                                {headerGroup.headers.map(
+                                                    (header) => {
+                                                        return (
+                                                            <TableHead
+                                                                key={header.id}
+                                                            >
+                                                                {header.isPlaceholder
+                                                                    ? null
+                                                                    : flexRender(
+                                                                          header
+                                                                              .column
+                                                                              .columnDef
+                                                                              .header,
+                                                                          header.getContext()
+                                                                      )}
+                                                            </TableHead>
+                                                        )
+                                                    }
+                                                )}
+                                            </TableRow>
+                                        ))}
+                                </TableHeader>
+                                <TableBody>
+                                    {table.getRowModel().rows?.length ? (
+                                        table.getRowModel().rows.map((row) => (
+                                            <TableRow
+                                                key={row.id}
+                                                data-state={
+                                                    row.getIsSelected() &&
+                                                    'selected'
+                                                }
+                                            >
+                                                {row
+                                                    .getVisibleCells()
+                                                    .map((cell) => (
+                                                        <TableCell
+                                                            key={cell.id}
+                                                        >
+                                                            {flexRender(
+                                                                cell.column
+                                                                    .columnDef
+                                                                    .cell,
+                                                                cell.getContext()
+                                                            )}
+                                                        </TableCell>
+                                                    ))}
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        <TableRow>
+                                            <TableCell
+                                                colSpan={columns.length}
+                                                className="h-24 text-center"
+                                            >
+                                                Tidak Ada Data.
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        )}
+                    </div>
+                )}
+                {selectedData.ProgramStudiId !== '' && (
+                    <div className="flex items-center justify-end space-x-2 py-4">
+                        <div className="flex-1 text-sm text-muted-foreground">
+                            Menampilkan{' '}
+                            {paginationState.page * paginationState.limit -
+                                paginationState.limit +
+                                1}{' '}
+                            -{' '}
+                            {paginationState.totalElement <
+                            paginationState.page * paginationState.limit
+                                ? paginationState.totalElement
+                                : paginationState.page *
+                                  paginationState.limit}{' '}
+                            dari {paginationState.totalElement} Data.
                         </div>
-                    ) : (
+                        <div className="flex items-center space-x-2 mt-4">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                    setPaginationState({
+                                        ...paginationState,
+                                        page: paginationState.page - 1,
+                                    })
+                                }}
+                                disabled={!paginationState.hasPrevious}
+                            >
+                                <ChevronLeft className="w-4 h-4" />
+                            </Button>
+
+                            {(() => {
+                                const pages = []
+                                const { page, totalPage } = paginationState
+
+                                const shouldShowLeftDots = page > 3
+                                const shouldShowRightDots = page < totalPage - 2
+
+                                const renderPage = (p: number) => (
+                                    <Button
+                                        key={p}
+                                        variant={
+                                            p === page ? 'default' : 'outline'
+                                        }
+                                        size="sm"
+                                        onClick={() =>
+                                            setPaginationState({
+                                                ...paginationState,
+                                                page: p,
+                                            })
+                                        }
+                                    >
+                                        {p}
+                                    </Button>
+                                )
+
+                                pages.push(renderPage(1))
+
+                                if (shouldShowLeftDots) {
+                                    pages.push(<span key="left-dots">...</span>)
+                                }
+
+                                for (let i = page - 1; i <= page + 1; i++) {
+                                    if (i > 1 && i < totalPage) {
+                                        pages.push(renderPage(i))
+                                    }
+                                }
+
+                                if (shouldShowRightDots) {
+                                    pages.push(
+                                        <span key="right-dots">...</span>
+                                    )
+                                }
+
+                                if (totalPage > 1) {
+                                    pages.push(renderPage(totalPage))
+                                }
+
+                                return pages
+                            })()}
+
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                    setPaginationState({
+                                        ...paginationState,
+                                        page: paginationState.page + 1,
+                                    })
+                                }}
+                                disabled={!paginationState.hasNext}
+                            >
+                                <ChevronRight className="w-4 h-4" />
+                            </Button>
+                        </div>
+                    </div>
+                )}
+                <SheetManageData
+                    openDialog={openDialog}
+                    setOpenDialog={setOpenDialog}
+                    onSubmit={onSubmit}
+                    loading={loading}
+                    form={form}
+                    universityDataServer={universityDataServer}
+                    selectedData={selectedData}
+                    asesorSelected={asesorSelected}
+                    setAsesorSelected={setAsesorSelected}
+                    dataAsesor={dataAsesor}
+                    setDataAsesor={setDataAsesor}
+                />
+            </div>
+        )
+    } else if (role.Name === 'Asesor') {
+        return (
+            <div className="w-full">
+                <div className="flex items-center py-4">
+                    <Input
+                        placeholder="Cari Data ..."
+                        value={search}
+                        onChange={(event) => {
+                            setPaginationState({
+                                ...paginationState,
+                                page: 1,
+                            })
+                            setSearch(event.target.value)
+                        }}
+                        className="max-w-sm"
+                    />
+                    <div className="w-full justify-end flex">
+                        <Select
+                            value={String(paginationState.limit)}
+                            disabled={loading}
+                            onValueChange={(value) =>
+                                setPaginationState({
+                                    ...paginationState,
+                                    limit: Number(value),
+                                    page: 1,
+                                })
+                            }
+                        >
+                            <SelectTrigger className="w-[100px]">
+                                <SelectValue placeholder="Pilih Limit Data" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Pilih Limit Data</SelectLabel>
+                                    {[5, 10, 20, 50, 75, 100].map((l, idx) => (
+                                        <SelectItem value={String(l)} key={idx}>
+                                            {l}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                {loading ? (
+                    <div className="space-y-2">
+                        {Array.from({ length: paginationState.limit }).map(
+                            (_, i) => (
+                                <div key={i} className="flex space-x-4">
+                                    <Skeleton className="h-10 w-10 rounded-full" />
+                                    <div className="flex-1 space-y-2">
+                                        <Skeleton className="h-4 w-[60%]" />
+                                        <Skeleton className="h-4 w-[40%]" />
+                                    </div>
+                                </div>
+                            )
+                        )}
+                    </div>
+                ) : (
+                    <div className="rounded-md border">
                         <Table>
                             <TableHeader>
                                 {table.getHeaderGroups().map((headerGroup) => (
@@ -630,10 +971,8 @@ const PenunjukanAsesorComponent = ({
                                 )}
                             </TableBody>
                         </Table>
-                    )}
-                </div>
-            )}
-            {selectedData.ProgramStudiId !== '' && (
+                    </div>
+                )}
                 <div className="flex items-center justify-end space-x-2 py-4">
                     <div className="flex-1 text-sm text-muted-foreground">
                         Menampilkan{' '}
@@ -723,22 +1062,226 @@ const PenunjukanAsesorComponent = ({
                         </Button>
                     </div>
                 </div>
-            )}
-            <SheetManageData
-                openDialog={openDialog}
-                setOpenDialog={setOpenDialog}
-                onSubmit={onSubmit}
-                loading={loading}
-                form={form}
-                universityDataServer={universityDataServer}
-                selectedData={selectedData}
-                asesorSelected={asesorSelected}
-                setAsesorSelected={setAsesorSelected}
-                dataAsesor={dataAsesor}
-                setDataAsesor={setDataAsesor}
-            />
-        </div>
-    )
+            </div>
+        )
+    } else if (role.Name === 'Akademik') {
+        return (
+            <div className="w-full">
+                <div className="flex items-center py-4">
+                    <Input
+                        placeholder="Cari Data ..."
+                        value={search}
+                        onChange={(event) => {
+                            setPaginationState({
+                                ...paginationState,
+                                page: 1,
+                            })
+                            setSearch(event.target.value)
+                        }}
+                        className="max-w-sm"
+                    />
+                    <div className="w-full justify-end flex">
+                        <Select
+                            value={String(paginationState.limit)}
+                            disabled={loading}
+                            onValueChange={(value) =>
+                                setPaginationState({
+                                    ...paginationState,
+                                    limit: Number(value),
+                                    page: 1,
+                                })
+                            }
+                        >
+                            <SelectTrigger className="w-[100px]">
+                                <SelectValue placeholder="Pilih Limit Data" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Pilih Limit Data</SelectLabel>
+                                    {[5, 10, 20, 50, 75, 100].map((l, idx) => (
+                                        <SelectItem value={String(l)} key={idx}>
+                                            {l}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                {loading ? (
+                    <div className="space-y-2">
+                        {Array.from({ length: paginationState.limit }).map(
+                            (_, i) => (
+                                <div key={i} className="flex space-x-4">
+                                    <Skeleton className="h-10 w-10 rounded-full" />
+                                    <div className="flex-1 space-y-2">
+                                        <Skeleton className="h-4 w-[60%]" />
+                                        <Skeleton className="h-4 w-[40%]" />
+                                    </div>
+                                </div>
+                            )
+                        )}
+                    </div>
+                ) : (
+                    <div className="rounded-md border">
+                        <Table>
+                            <TableHeader>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <TableRow key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <TableHead key={header.id}>
+                                                    {header.isPlaceholder
+                                                        ? null
+                                                        : flexRender(
+                                                              header.column
+                                                                  .columnDef
+                                                                  .header,
+                                                              header.getContext()
+                                                          )}
+                                                </TableHead>
+                                            )
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableHeader>
+                            <TableBody>
+                                {table.getRowModel().rows?.length ? (
+                                    table.getRowModel().rows.map((row) => (
+                                        <TableRow
+                                            key={row.id}
+                                            data-state={
+                                                row.getIsSelected() &&
+                                                'selected'
+                                            }
+                                        >
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell) => (
+                                                    <TableCell key={cell.id}>
+                                                        {flexRender(
+                                                            cell.column
+                                                                .columnDef.cell,
+                                                            cell.getContext()
+                                                        )}
+                                                    </TableCell>
+                                                ))}
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell
+                                            colSpan={columns.length}
+                                            className="h-24 text-center"
+                                        >
+                                            Tidak Ada Data.
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </div>
+                )}
+                <div className="flex items-center justify-end space-x-2 py-4">
+                    <div className="flex-1 text-sm text-muted-foreground">
+                        Menampilkan{' '}
+                        {paginationState.page * paginationState.limit -
+                            paginationState.limit +
+                            1}{' '}
+                        -{' '}
+                        {paginationState.totalElement <
+                        paginationState.page * paginationState.limit
+                            ? paginationState.totalElement
+                            : paginationState.page * paginationState.limit}{' '}
+                        dari {paginationState.totalElement} Data.
+                    </div>
+                    <div className="flex items-center space-x-2 mt-4">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                                setPaginationState({
+                                    ...paginationState,
+                                    page: paginationState.page - 1,
+                                })
+                            }}
+                            disabled={!paginationState.hasPrevious}
+                        >
+                            <ChevronLeft className="w-4 h-4" />
+                        </Button>
+
+                        {(() => {
+                            const pages = []
+                            const { page, totalPage } = paginationState
+
+                            const shouldShowLeftDots = page > 3
+                            const shouldShowRightDots = page < totalPage - 2
+
+                            const renderPage = (p: number) => (
+                                <Button
+                                    key={p}
+                                    variant={p === page ? 'default' : 'outline'}
+                                    size="sm"
+                                    onClick={() =>
+                                        setPaginationState({
+                                            ...paginationState,
+                                            page: p,
+                                        })
+                                    }
+                                >
+                                    {p}
+                                </Button>
+                            )
+
+                            pages.push(renderPage(1))
+
+                            if (shouldShowLeftDots) {
+                                pages.push(<span key="left-dots">...</span>)
+                            }
+
+                            for (let i = page - 1; i <= page + 1; i++) {
+                                if (i > 1 && i < totalPage) {
+                                    pages.push(renderPage(i))
+                                }
+                            }
+
+                            if (shouldShowRightDots) {
+                                pages.push(<span key="right-dots">...</span>)
+                            }
+
+                            if (totalPage > 1) {
+                                pages.push(renderPage(totalPage))
+                            }
+
+                            return pages
+                        })()}
+
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                                setPaginationState({
+                                    ...paginationState,
+                                    page: paginationState.page + 1,
+                                })
+                            }}
+                            disabled={!paginationState.hasNext}
+                        >
+                            <ChevronRight className="w-4 h-4" />
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        )
+    } else {
+        return (
+            <div className="p-6">
+                <p className="text-muted-foreground">
+                    Hanya Kaprodi yang dapat mengatur Asesor Mahasiswa.
+                </p>
+            </div>
+        )
+    }
 }
 
 export default PenunjukanAsesorComponent

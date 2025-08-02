@@ -17,3 +17,21 @@ export function removeItemAtIndex<T>(arr: T[], index: number): T[] {
 export function truncateText(text: string, length: number = 15): string {
   return text.length > length ? text.slice(0, length) + "..." : text;
 }
+
+
+export function formatDateToIndonesian(isoDateTime: string): string {
+  const dateObject = new Date(isoDateTime);
+
+  if (isNaN(dateObject.getTime())) {
+    console.error(`Invalid date string provided: ${isoDateTime}`);
+    return "Tanggal Tidak Valid";
+  }
+  const options: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  };
+  const formattedDate = dateObject.toLocaleDateString('id-ID', options);
+
+  return formattedDate;
+}

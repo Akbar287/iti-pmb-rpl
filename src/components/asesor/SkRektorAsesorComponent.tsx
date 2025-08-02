@@ -22,7 +22,7 @@ import {
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
+import { ChevronLeft, ChevronRight, MoreHorizontal, X } from 'lucide-react'
 import Swal from 'sweetalert2'
 import { Input } from '../ui/input'
 import {
@@ -45,14 +45,27 @@ import {
 } from '../ui/table'
 import {
     deleteSkRektorAsesor,
+    getFileBlobByNamafile,
     getSkRektorAsesorPagination,
+    getSkRektorAsesorPaginationAsesorRole,
 } from '@/services/Asesor/SkRektor'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { ResponseSkRektorAsesor } from '@/types/PenunjukanAsesor'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '../ui/dialog'
+import { Session } from 'next-auth'
 
-const SkRektorAsesorComponent = () => {
+const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
     const router = useRouter()
+    const [openDialog, setOpenDialog] = React.useState<boolean>(false)
+    const [previewPdf, setPreviewPdf] = React.useState<string>('')
     const [dataSkRektor, setDataSkRektor] = React.useState<
         ResponseSkRektorAsesor[]
     >([])
@@ -60,6 +73,12 @@ const SkRektorAsesorComponent = () => {
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
+    const [role, setRole] = React.useState<{
+        GuardName: string
+        Icon: string
+        Name: string
+        RoleId: string
+    } | null>(null)
     const [paginationState, setPaginationState] = React.useState<{
         page: number
         limit: number
@@ -83,29 +102,64 @@ const SkRektorAsesorComponent = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
 
     React.useEffect(() => {
+        let roleName = role !== null ? role.Name : null
+        if (!role) {
+            const rolelogin = localStorage.getItem('pmb.iti.role')
+            if (rolelogin) {
+                let temp = JSON.parse(rolelogin)
+                setRole(temp)
+                roleName = temp.Name
+            }
+        }
         setLoading(true)
-        getSkRektorAsesorPagination(
-            paginationState.page,
-            paginationState.limit,
-            search
-        )
-            .then((res) => {
-                setDataSkRektor(res.data)
-                setLoading(false)
-                setPaginationState({
-                    page: res.page,
-                    limit: res.limit,
-                    totalElement: res.totalElement,
-                    totalPage: res.totalPage,
-                    isFirst: res.isFirst,
-                    isLast: res.isLast,
-                    hasNext: res.hasNext,
-                    hasPrevious: res.hasPrevious,
+        if (roleName?.match('Asesor')) {
+            getSkRektorAsesorPaginationAsesorRole(
+                paginationState.page,
+                paginationState.limit,
+                search,
+                session?.user?.id || ''
+            )
+                .then((res) => {
+                    setDataSkRektor(res.data)
+                    setLoading(false)
+                    setPaginationState({
+                        page: res.page,
+                        limit: res.limit,
+                        totalElement: res.totalElement,
+                        totalPage: res.totalPage,
+                        isFirst: res.isFirst,
+                        isLast: res.isLast,
+                        hasNext: res.hasNext,
+                        hasPrevious: res.hasPrevious,
+                    })
                 })
-            })
-            .catch((err) => {
-                setLoading(false)
-            })
+                .catch((err) => {
+                    setLoading(false)
+                })
+        } else {
+            getSkRektorAsesorPagination(
+                paginationState.page,
+                paginationState.limit,
+                search
+            )
+                .then((res) => {
+                    setDataSkRektor(res.data)
+                    setLoading(false)
+                    setPaginationState({
+                        page: res.page,
+                        limit: res.limit,
+                        totalElement: res.totalElement,
+                        totalPage: res.totalPage,
+                        isFirst: res.isFirst,
+                        isLast: res.isLast,
+                        hasNext: res.hasNext,
+                        hasPrevious: res.hasPrevious,
+                    })
+                })
+                .catch((err) => {
+                    setLoading(false)
+                })
+        }
     }, [paginationState.page, paginationState.limit, search])
     const buatData = () => {
         router.push('/asesor/sk-rektor/buat-data')
@@ -122,12 +176,9 @@ const SkRektorAsesorComponent = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteSkRektorAsesor(jd.SkRektorId).then(() => {
-                    let idx = dataSkRektor.findIndex(
-                        (r) => r.SkRektorId === jd.SkRektorId
-                    )
                     setDataSkRektor([
                         ...dataSkRektor.filter(
-                            (x) => x.SkRektorId === jd.SkRektorId
+                            (x) => x.SkRektorId !== jd.SkRektorId
                         ),
                     ])
                     Swal.fire({
@@ -138,6 +189,14 @@ const SkRektorAsesorComponent = () => {
                 })
             }
         })
+    }
+    const unduhSk = (jd: ResponseSkRektorAsesor) => {
+        getFileBlobByNamafile(jd.NamaFile)
+            .then((res) => {
+                setPreviewPdf(res)
+                setOpenDialog(true)
+            })
+            .catch((err) => {})
     }
     const columns: ColumnDef<ResponseSkRektorAsesor>[] = [
         {
@@ -193,10 +252,19 @@ const SkRektorAsesorComponent = () => {
                             >
                                 Copy SK Rektor ID
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => hapusData(jd)}>
-                                Hapus Semua Asesor
+                            <DropdownMenuItem onClick={() => unduhSk(jd)}>
+                                Unduh SK
                             </DropdownMenuItem>
+                            {role?.Name.match('Akademik') && (
+                                <React.Fragment>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem
+                                        onClick={() => hapusData(jd)}
+                                    >
+                                        Hapus SK Asesor
+                                    </DropdownMenuItem>
+                                </React.Fragment>
+                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -230,9 +298,11 @@ const SkRektorAsesorComponent = () => {
                     className="max-w-sm"
                 />
                 <div className="w-full justify-end flex">
-                    <Button className="mr-2" onClick={() => buatData()}>
-                        Tambah
-                    </Button>
+                    {role?.Name.match('Akademik') && (
+                        <Button className="mr-2" onClick={() => buatData()}>
+                            Tambah
+                        </Button>
+                    )}
                     <Select
                         value={String(paginationState.limit)}
                         onValueChange={(value) =>
@@ -395,8 +465,58 @@ const SkRektorAsesorComponent = () => {
                     </Button>
                 </div>
             </div>
+            <DialogPreviewDokumen
+                openDialog={openDialog}
+                pdfPreview={previewPdf}
+                setOpenDialog={setOpenDialog}
+            />
         </div>
     )
 }
 
 export default SkRektorAsesorComponent
+
+function DialogPreviewDokumen({
+    openDialog,
+    pdfPreview,
+    setOpenDialog,
+}: {
+    pdfPreview: string | null
+    openDialog: boolean
+    setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
+}) {
+    return (
+        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogContent className="w-full max-h-[80vh]  overflow-y-scroll">
+                <DialogHeader>
+                    <DialogTitle>Dokumen SK</DialogTitle>
+                    <DialogDescription>Surat Keputusan</DialogDescription>
+                </DialogHeader>
+                {pdfPreview === null ? (
+                    <Skeleton className="w-full h-32" />
+                ) : (
+                    <iframe
+                        src={pdfPreview || ''}
+                        title="PDF Preview"
+                        width="100%"
+                        height="500px"
+                        className="border rounded"
+                    ></iframe>
+                )}
+                <DialogFooter>
+                    <Button
+                        className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer"
+                        variant={'destructive'}
+                        onClick={() => {
+                            setOpenDialog(false)
+                        }}
+                        type="button"
+                    >
+                        <X />
+                        Tutup
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+}

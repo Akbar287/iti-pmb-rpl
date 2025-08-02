@@ -546,6 +546,7 @@ exports.Prisma.SkRektorScalarFieldEnum = {
   TahunSk: 'TahunSk',
   NomorSk: 'NomorSk',
   NamaFile: 'NamaFile',
+  FileData: 'FileData',
   NamaDokumen: 'NamaDokumen',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'

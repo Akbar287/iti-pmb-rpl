@@ -61,6 +61,348 @@ app.get('/', async (c) => {
             })) ?? []
         return c.json<ResponseAsesorFromProdi[]>(response, 200)
     }
+    if(jenis === 'get-page-mhs-from-asesor') {
+        const userId = c.req.query('userId')
+        const page = parseInt(c.req.query('page') || '1', 10)
+        const limit = parseInt(c.req.query('limit') || '10', 10)
+        const search = c.req.query('search') || ''
+
+        let where: Prisma.AsesorWhereInput = search ? {
+            UserId: userId,
+            AssesorMahasiswa: {
+                some: {
+                    SkRektorAssesor: { none: {} },
+                    OR: [
+                        {
+                            Asesor: {
+                                User: {
+                                    Nama: {
+                                        contains: search,
+                                        mode: 'insensitive',
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            Pendaftaran: {
+                                KodePendaftar: {
+                                    contains: search,
+                                    mode: 'insensitive',
+                                },
+                            }
+                        },
+                        {
+                            Pendaftaran: {
+                                Mahasiswa: {
+                                    User: {
+                                        Nama: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+        : {
+            UserId: userId,
+            AssesorMahasiswa: {
+                some: {
+                    SkRektorAssesor: { none: {} },
+                }
+            }
+        }
+
+            const data = await prisma.asesor.findFirst({
+                select: {
+                    AssesorMahasiswa: {
+                        select: {
+                            AssesorMahasiswaId: true,
+                            Urutan: true,
+                            Confirmation: true,
+                            Pendaftaran: {
+                                select: {
+                                    AssesorMahasiswa: {
+                                        select: {
+                                            Urutan: true,
+                                            AssesorMahasiswaId: true,
+                                            Confirmation: true,
+                                            Asesor: {
+                                                select: {
+                                                    AsesorId: true,
+                                                    TipeAsesor: {
+                                                        select: {
+                                                            TipeAsesorId: true,
+                                                            Nama: true,
+                                                        }
+                                                    },
+                                                    User: {
+                                                        select: {
+                                                            UserId: true,
+                                                            Nama: true,
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        }
+                                    },
+                                    DaftarUlang: {
+                                        select: {
+                                            ProgramStudi: {
+                                                select: {
+                                                    ProgramStudiId: true,
+                                                    Nama: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                    StatusMahasiswaAssesmentHistory: {
+                                        select: {
+                                            Aktif: true, 
+                                            StatusMahasiswaAssesment: {
+                                                select: {
+                                                    NamaStatus: true
+                                                }
+                                            }
+                                        }
+                                    },
+                                    KodePendaftar: true,
+                                    PendaftaranId: true,
+                                    Mahasiswa: {
+                                        select: {
+                                            User: {
+                                                select: {
+                                                    UserId: true,
+                                                    Nama: true,
+                                                },
+                                            },
+                                            MahasiswaId: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                },
+                where,
+                skip: (page - 1) * limit,
+                take: limit,
+                orderBy: {},
+            })
+            
+            const total = data?.AssesorMahasiswa?.length ?? 0
+
+        const responses: ResponsePenunjukanAsesor[] = data?.AssesorMahasiswa?.map(item => ({
+            Asesor: item.Pendaftaran.AssesorMahasiswa.map(a => (
+                {
+                    AssesorMahasiswaId: a.AssesorMahasiswaId,
+                    AsesorId: a.Asesor.AsesorId,
+                    NamaTipeAsesor: a.Asesor.TipeAsesor.Nama,
+                    NamaAsesor: a.Asesor.User.Nama,
+                    Urutan: a.Urutan,
+                    Confirmation: a.Confirmation,
+                }
+            )),
+            Status: item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
+            KodePendaftar: item.Pendaftaran.KodePendaftar,
+            ProgramStudiId: item.Pendaftaran.DaftarUlang.length > 0 ? item.Pendaftaran.DaftarUlang[0].ProgramStudi.ProgramStudiId : '',
+            PendaftaranId: item.Pendaftaran.PendaftaranId,
+            NamaProgramStudi: item.Pendaftaran.DaftarUlang.length > 0 ? item.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama : '',
+            NamaMahasiswa: item.Pendaftaran.Mahasiswa.User.Nama,
+        })) ?? []
+
+        return c.json<{
+            data: ResponsePenunjukanAsesor[]
+            page: number
+            limit: number
+            totalElement: number
+            totalPage: number
+            isFirst: boolean
+            isLast: boolean
+            hasNext: boolean
+            hasPrevious: boolean
+        }>({
+            page: page,
+            limit: limit,
+            data: responses,
+            totalElement: total,
+            totalPage: Math.ceil(total / limit),
+            isFirst: page === 1,
+            isLast:
+                page === Math.ceil(total / limit) ||
+                Math.ceil(total / limit) === 0,
+            hasNext: page < Math.ceil(total / limit),
+            hasPrevious: page > 1,
+        })
+    }
+    if(jenis === 'get-page-mhs-from-akademik') {
+        const page = parseInt(c.req.query('page') || '1', 10)
+        const limit = parseInt(c.req.query('limit') || '10', 10)
+        const search = c.req.query('search') || ''
+
+        let where: Prisma.PendaftaranWhereInput = search ? {
+            AssesorMahasiswa: {
+                some: {
+                    SkRektorAssesor: { none: {} },
+                    OR: [
+                        {
+                            Asesor: {
+                                User: {
+                                    Nama: {
+                                        contains: search,
+                                        mode: 'insensitive',
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            Pendaftaran: {
+                                KodePendaftar: {
+                                    contains: search,
+                                    mode: 'insensitive',
+                                },
+                            }
+                        },
+                        {
+                            Pendaftaran: {
+                                Mahasiswa: {
+                                    User: {
+                                        Nama: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+        : {
+            AssesorMahasiswa: {
+                some: {
+                    SkRektorAssesor: { none: {} },
+                }
+            }
+        }
+        const [data, total] = await Promise.all([
+            prisma.pendaftaran.findMany({
+                select: {
+                    DaftarUlang: {
+                                        select: {
+                                            ProgramStudi: {
+                                                select: {
+                                                    ProgramStudiId: true,
+                                                    Nama: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                    StatusMahasiswaAssesmentHistory: {
+                                        select: {
+                                            Aktif: true, 
+                                            StatusMahasiswaAssesment: {
+                                                select: {
+                                                    NamaStatus: true
+                                                }
+                                            }
+                                        }
+                                    },
+                                    KodePendaftar: true,
+                                    PendaftaranId: true,
+                                    Mahasiswa: {
+                                        select: {
+                                            User: {
+                                                select: {
+                                                    UserId: true,
+                                                    Nama: true,
+                                                },
+                                            },
+                                            MahasiswaId: true
+                                        }
+                                    },
+                    AssesorMahasiswa: {
+                        select: {
+                            Asesor: {
+                                select: {
+                                    AsesorId: true,
+                                    TipeAsesor: {
+                                        select: {
+                                            TipeAsesorId: true,
+                                            Nama: true,
+                                        }
+                                    },
+                                    User: {
+                                        select: {
+                                            UserId: true,
+                                            Nama: true,
+                                        },
+                                    },
+                                },
+                            },
+                            AssesorMahasiswaId: true,
+                            Urutan: true,
+                            Confirmation: true,
+                        }
+                    }
+                },
+                where,
+                skip: (page - 1) * limit,
+                take: limit,
+                orderBy: {KodePendaftar: 'asc'},
+            }),
+            prisma.pendaftaran.count({
+                where,
+            }),
+        ])
+
+        const responses: ResponsePenunjukanAsesor[] = data.map(item => ({
+            Asesor: item.AssesorMahasiswa.map(a => (
+                {
+                    AssesorMahasiswaId: a.AssesorMahasiswaId,
+                    AsesorId: a.Asesor.AsesorId,
+                    NamaTipeAsesor: a.Asesor.TipeAsesor.Nama,
+                    NamaAsesor: a.Asesor.User.Nama,
+                    Urutan: a.Urutan,
+                    Confirmation: a.Confirmation,
+                }
+            )),
+            Status: item.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? item.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
+            KodePendaftar: item.KodePendaftar,
+            ProgramStudiId: item.DaftarUlang.length > 0 ? item.DaftarUlang[0].ProgramStudi.ProgramStudiId : '',
+            PendaftaranId: item.PendaftaranId,
+            NamaProgramStudi: item.DaftarUlang.length > 0 ? item.DaftarUlang[0].ProgramStudi.Nama : '',
+            NamaMahasiswa: item.Mahasiswa.User.Nama,
+        })) ?? []
+
+        return c.json<{
+            data: ResponsePenunjukanAsesor[]
+            page: number
+            limit: number
+            totalElement: number
+            totalPage: number
+            isFirst: boolean
+            isLast: boolean
+            hasNext: boolean
+            hasPrevious: boolean
+        }>({
+            page: page,
+            limit: limit,
+            data: responses,
+            totalElement: total,
+            totalPage: Math.ceil(total / limit),
+            isFirst: page === 1,
+            isLast:
+                page === Math.ceil(total / limit) ||
+                Math.ceil(total / limit) === 0,
+            hasNext: page < Math.ceil(total / limit),
+            hasPrevious: page > 1,
+        })
+    }
     if (jenis === 'get-mhs-from-asesorId') {
         const asesorId = c.req.query('asesorId')
 

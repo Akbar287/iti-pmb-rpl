@@ -57826,6 +57826,7 @@ export namespace Prisma {
     TahunSk: number | null
     NomorSk: string | null
     NamaFile: string | null
+    FileData: Uint8Array | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -57838,6 +57839,7 @@ export namespace Prisma {
     TahunSk: number | null
     NomorSk: string | null
     NamaFile: string | null
+    FileData: Uint8Array | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -57850,6 +57852,7 @@ export namespace Prisma {
     TahunSk: number
     NomorSk: number
     NamaFile: number
+    FileData: number
     NamaDokumen: number
     CreatedAt: number
     UpdatedAt: number
@@ -57872,6 +57875,7 @@ export namespace Prisma {
     TahunSk?: true
     NomorSk?: true
     NamaFile?: true
+    FileData?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -57884,6 +57888,7 @@ export namespace Prisma {
     TahunSk?: true
     NomorSk?: true
     NamaFile?: true
+    FileData?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -57896,6 +57901,7 @@ export namespace Prisma {
     TahunSk?: true
     NomorSk?: true
     NamaFile?: true
+    FileData?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -57995,6 +58001,7 @@ export namespace Prisma {
     TahunSk: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -58026,6 +58033,7 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -58042,6 +58050,7 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -58055,6 +58064,7 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -58068,12 +58078,13 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
+  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "FileData" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
   export type SkRektorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
     SkRektorAssesor?: boolean | SkRektor$SkRektorAssesorArgs<ExtArgs>
@@ -58101,6 +58112,7 @@ export namespace Prisma {
       TahunSk: number
       NomorSk: string
       NamaFile: string
+      FileData: Uint8Array
       NamaDokumen: string
       CreatedAt: Date | null
       UpdatedAt: Date | null
@@ -58536,6 +58548,7 @@ export namespace Prisma {
     readonly TahunSk: FieldRef<"SkRektor", 'Int'>
     readonly NomorSk: FieldRef<"SkRektor", 'String'>
     readonly NamaFile: FieldRef<"SkRektor", 'String'>
+    readonly FileData: FieldRef<"SkRektor", 'Bytes'>
     readonly NamaDokumen: FieldRef<"SkRektor", 'String'>
     readonly CreatedAt: FieldRef<"SkRektor", 'DateTime'>
     readonly UpdatedAt: FieldRef<"SkRektor", 'DateTime'>
@@ -74024,6 +74037,7 @@ export namespace Prisma {
     TahunSk: 'TahunSk',
     NomorSk: 'NomorSk',
     NamaFile: 'NamaFile',
+    FileData: 'FileData',
     NamaDokumen: 'NamaDokumen',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
@@ -74411,6 +74425,20 @@ export namespace Prisma {
    * Reference to a field of type 'SistemKuliah[]'
    */
   export type ListEnumSistemKuliahFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SistemKuliah[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes'
+   */
+  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes[]'
+   */
+  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
     
 
 
@@ -77437,6 +77465,7 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
+    FileData?: BytesFilter<"SkRektor"> | Uint8Array
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
@@ -77452,6 +77481,7 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -77470,6 +77500,7 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
+    FileData?: BytesFilter<"SkRektor"> | Uint8Array
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
@@ -77485,6 +77516,7 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -77505,6 +77537,7 @@ export namespace Prisma {
     TahunSk?: IntWithAggregatesFilter<"SkRektor"> | number
     NomorSk?: StringWithAggregatesFilter<"SkRektor"> | string
     NamaFile?: StringWithAggregatesFilter<"SkRektor"> | string
+    FileData?: BytesWithAggregatesFilter<"SkRektor"> | Uint8Array
     NamaDokumen?: StringWithAggregatesFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
@@ -81500,6 +81533,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -81515,6 +81549,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -81528,6 +81563,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -81543,6 +81579,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -81557,6 +81594,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -81568,6 +81606,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -81580,6 +81619,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -84783,6 +84823,13 @@ export namespace Prisma {
     Nama?: SortOrder
   }
 
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
   export type TipeSkRektorScalarRelationFilter = {
     is?: TipeSkRektorWhereInput
     isNot?: TipeSkRektorWhereInput
@@ -84795,6 +84842,7 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -84811,6 +84859,7 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -84823,6 +84872,7 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -84830,6 +84880,16 @@ export namespace Prisma {
 
   export type SkRektorSumOrderByAggregateInput = {
     TahunSk?: SortOrder
+  }
+
+  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type SkRektorScalarRelationFilter = {
@@ -88425,6 +88485,10 @@ export namespace Prisma {
     connect?: SkRektorMahasiswaWhereUniqueInput | SkRektorMahasiswaWhereUniqueInput[]
   }
 
+  export type BytesFieldUpdateOperationsInput = {
+    set?: Uint8Array
+  }
+
   export type TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput = {
     create?: XOR<TipeSkRektorCreateWithoutSkRektorInput, TipeSkRektorUncheckedCreateWithoutSkRektorInput>
     connectOrCreate?: TipeSkRektorCreateOrConnectWithoutSkRektorInput
@@ -89534,6 +89598,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSistemKuliahFilter<$PrismaModel>
     _max?: NestedEnumSistemKuliahFilter<$PrismaModel>
+  }
+
+  export type NestedBytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
+  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type NestedEnumJenisKelaminFilter<$PrismaModel = never> = {
@@ -96969,6 +97050,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -96982,6 +97064,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -97025,6 +97108,7 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
+    FileData?: BytesFilter<"SkRektor"> | Uint8Array
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
@@ -97140,6 +97224,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -97154,6 +97239,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -97207,6 +97293,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -97221,6 +97308,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -97264,6 +97352,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -97278,6 +97367,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -97371,6 +97461,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -97385,6 +97476,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100767,6 +100859,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -100778,6 +100871,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100791,6 +100885,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100804,6 +100899,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

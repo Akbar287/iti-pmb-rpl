@@ -4,6 +4,7 @@ import { getSession } from '@/provider/api'
 import React from 'react'
 
 const Page = async () => {
+    const session = await getSession()
     const universityDataServer = await prisma.university.findMany({
         select: {
             UniversityId: true,
@@ -22,6 +23,7 @@ const Page = async () => {
             <h1 className="text-2xl font-bold mb-4">Penunjukan Asesor</h1>
             <PenunjukanAsesorComponent
                 universityDataServer={universityDataServer}
+                session={session}
             />
         </div>
     )

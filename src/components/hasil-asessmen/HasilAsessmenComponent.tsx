@@ -51,6 +51,7 @@ import {
     ResponseFinalAsessmenPaginationType,
 } from '@/types/FinalAsessmen'
 import {
+    getResponseFinalAsessmenAkademikPaginationType,
     getResponseFinalAsessmenAsesorPaginationType,
     getResponseFinalAsessmenPaginationType,
 } from '@/services/Asessment/HasilAsessmentService'
@@ -104,7 +105,7 @@ const HasilAsessmenComponent = () => {
         RoleId: string
     }) {
         setLoading(true)
-        if (role.Name === 'Mahasiswa') {
+        if (role.Name.match('Mahasiswa')) {
             getResponseFinalAsessmenPaginationType(
                 paginationState.page,
                 paginationState.limit,
@@ -113,6 +114,30 @@ const HasilAsessmenComponent = () => {
             )
                 .then((res) => {
                     setDataMahasiswa(res.data)
+                    setLoading(false)
+                    setPaginationState({
+                        page: res.page,
+                        limit: res.limit,
+                        totalElement: res.totalElement,
+                        totalPage: res.totalPage,
+                        isFirst: res.isFirst,
+                        isLast: res.isLast,
+                        hasNext: res.hasNext,
+                        hasPrevious: res.hasPrevious,
+                    })
+                })
+                .catch((err) => {
+                    setLoading(false)
+                })
+        } else if (role.Name.match('Akademik')) {
+            getResponseFinalAsessmenAkademikPaginationType(
+                paginationState.page,
+                paginationState.limit,
+                search,
+                role?.RoleId
+            )
+                .then((res) => {
+                    setDataAsesor(res.data)
                     setLoading(false)
                     setPaginationState({
                         page: res.page,

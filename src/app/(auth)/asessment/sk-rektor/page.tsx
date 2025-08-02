@@ -1,8 +1,10 @@
 import SkRektorAsessmenComponent from '@/components/asessment/SkRektorAsessmenComponent'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/provider/api'
 import React from 'react'
 
 const Page = async () => {
+    const session = await getSession()
     const data = await prisma.university.findMany({
         select: {
             UniversityId: true,
@@ -15,10 +17,10 @@ const Page = async () => {
             },
         },
     })
+
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Sk Rektor</h1>
-            <SkRektorAsessmenComponent dataServer={data} />
+            <SkRektorAsessmenComponent dataServer={data} session={session} />
         </div>
     )
 }

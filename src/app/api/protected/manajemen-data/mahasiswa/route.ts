@@ -249,17 +249,15 @@ app.get('/', async (c) => {
                 JalurPendaftaran: data?.JalurPendaftaran ?? '',
             },
             DaftarUlang: {
-                DaftarUlangId: data?.DaftarUlang?.[0].DaftarUlangId ?? '',
-                Nim: data?.DaftarUlang?.[0].Nim ?? '',
-                JenjangKkniDituju:
-                    data?.DaftarUlang?.[0].JenjangKkniDituju ?? '',
-                KipK: data?.DaftarUlang?.[0].KipK ?? false,
-                Aktif: data?.DaftarUlang?.[0].Aktif ?? false,
-                MengisiBiodata: data?.DaftarUlang?.[0].MengisiBiodata ?? false,
-                Finalisasi: data?.DaftarUlang?.[0].Finalisasi ?? false,
-                TanggalDaftar: data?.DaftarUlang?.[0].TanggalDaftar || null,
-                TanggalDaftarUlang:
-                    data?.DaftarUlang?.[0].TanggalDaftarUlang || null,
+                DaftarUlangId: data?.DaftarUlang.length === 0 ? '' : data?.DaftarUlang?.[0].DaftarUlangId ?? '',
+                Nim: data?.DaftarUlang.length === 0 ? '' : data?.DaftarUlang?.[0].Nim ?? '',
+                JenjangKkniDituju: data?.DaftarUlang.length === 0 ? '' : data?.DaftarUlang?.[0].JenjangKkniDituju ?? '',
+                KipK: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].KipK ?? false,
+                Aktif: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].Aktif ?? false,
+                MengisiBiodata: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].MengisiBiodata ?? false,
+                Finalisasi: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].Finalisasi ?? false,
+                TanggalDaftar: data?.DaftarUlang.length === 0 ? null : data?.DaftarUlang?.[0].TanggalDaftar || null,
+                TanggalDaftarUlang: data?.DaftarUlang.length === 0 ? null : data?.DaftarUlang?.[0].TanggalDaftarUlang || null,
             },
             StatusPerkawinan:
                 data?.Mahasiswa.StatusPerkawinan || StatusPerkawinan.Lajang,
@@ -273,12 +271,10 @@ app.get('/', async (c) => {
                 NomorHpOrangTua: o.NomorHp,
             })),
             InformasiKependudukan: {
-                NoKk: data?.InformasiKependudukan?.[0].NoKk ?? '',
-                NoNik: data?.InformasiKependudukan?.[0].NoNik ?? '',
-                Suku: data?.InformasiKependudukan?.[0].Suku ?? '',
-                InformasiKependudukanId:
-                    data?.InformasiKependudukan?.[0].InformasiKependudukanId ??
-                    '',
+                NoKk: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].NoKk ?? '',
+                NoNik: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].NoNik ?? '',
+                Suku: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].Suku ?? '',
+                InformasiKependudukanId: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].InformasiKependudukanId ?? '',
             },
             PekerjaanMahasiswa:
                 data?.PekerjaanMahasiswa?.map((p) => ({
@@ -288,30 +284,29 @@ app.get('/', async (c) => {
                         p.StatusPekerjaan ?? StatusPekerjaan.Lainnya,
                 })) ?? [],
             Pesantren: {
-                PesantrenId: data?.Pesantren?.[0].PesantrenId ?? '',
-                NamaPesantren: data?.Pesantren?.[0].NamaPesantren ?? '',
-                LamaPesantren: data?.Pesantren?.[0].LamaPesantren ?? '',
+                PesantrenId: data?.Pesantren.length === 0 ? '' : data?.Pesantren?.[0].PesantrenId ?? '',
+                NamaPesantren: data?.Pesantren.length === 0 ? '' : data?.Pesantren?.[0].NamaPesantren ?? '',
+                LamaPesantren: data?.Pesantren.length === 0 ? '' : data?.Pesantren?.[0].LamaPesantren ?? '',
             },
             InstitusiLama: {
-                InstitusiLamaId: data?.InstitusiLama?.[0].InstitusiLamaId ?? '',
-                Jenjang:
-                    data?.InstitusiLama?.[0].Jenjang ?? Jenjang.TIDAK_TAMAT_SD,
-                JenisInstitusi: data?.InstitusiLama?.[0].JenisInstitusi ?? '',
-                NamaInstitusi: data?.InstitusiLama?.[0].NamaInstitusi ?? '',
-                Jurusan: data?.InstitusiLama?.[0].Jurusan ?? '',
-                Nisn: data?.InstitusiLama?.[0].Nisn ?? '',
-                Npsn: data?.InstitusiLama?.[0].Npsn ?? '',
-                TahunLulus: data?.InstitusiLama?.[0].TahunLulus ?? 0,
-                NilaiLulusan: data?.InstitusiLama?.[0].NilaiLulusan ?? 0,
+                InstitusiLamaId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].InstitusiLamaId ?? '',
+                Jenjang: data?.InstitusiLama.length === 0 ? Jenjang.TIDAK_TAMAT_SD : data?.InstitusiLama?.[0].Jenjang ?? Jenjang.TIDAK_TAMAT_SD,
+                JenisInstitusi: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].JenisInstitusi ?? '',
+                NamaInstitusi: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].NamaInstitusi ?? '',
+                Jurusan: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Jurusan ?? '',
+                Nisn: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Nisn ?? '',
+                Npsn: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Npsn ?? '',
+                TahunLulus: data?.InstitusiLama.length === 0 ? 0 : data?.InstitusiLama?.[0].TahunLulus ?? 0,
+                NilaiLulusan: data?.InstitusiLama.length === 0 ? 0 : data?.InstitusiLama?.[0].NilaiLulusan ?? 0,
                 AlamatInstitusi: {
-                        AlamatId: data?.InstitusiLama?.[0].Alamat?.AlamatId ?? '',
-                        Alamat: data?.InstitusiLama?.[0].Alamat?.Alamat ?? '',
-                        KodePos: data?.InstitusiLama?.[0].Alamat?.KodePos ?? '',
-                        DesaId: data?.InstitusiLama?.[0].Alamat?.Desa.DesaId ?? '',
-                        KecamatanId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.KecamatanId ?? '',
-                        KabupatenId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.KabupatenId ?? '',
-                        ProvinsiId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ?? '',
-                        CountryId: data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId ?? '',
+                        AlamatId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.AlamatId ?? '',
+                        Alamat: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Alamat ?? '',
+                        KodePos: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.KodePos ?? '',
+                        DesaId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.DesaId ?? '',
+                        KecamatanId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.KecamatanId ?? '',
+                        KabupatenId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.KabupatenId ?? '',
+                        ProvinsiId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ?? '',
+                        CountryId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId ?? '',
                 }
             },
         }
@@ -577,17 +572,18 @@ app.post('/', async (c) => {
                 NamaStatus: "Pengisian Data Diri"
             }
         })
-        if (statusPertama) {
-            await prisma.statusMahasiswaAssesmentHistory.create({
-                data: {
-                    StatusMahasiswaAssesmentId: statusPertama.StatusMahasiswaAssesmentId,
-                    Tanggal: new Date(),
-                    PendaftaranId: pendaftaran.PendaftaranId,
-                    Keterangan: '',
-                    Aktif: true,
-                }
-            })
+        if (!statusPertama) {
+            return c.json({}, 400)
         }
+        await prisma.statusMahasiswaAssesmentHistory.create({
+            data: {
+                StatusMahasiswaAssesmentId: statusPertama.StatusMahasiswaAssesmentId,
+                Tanggal: new Date(),
+                PendaftaranId: pendaftaran.PendaftaranId,
+                Keterangan: '',
+                Aktif: true,
+            }
+        })
 
         // Informasi Kependudukan
         await prisma.informasiKependudukan.create({
@@ -770,45 +766,87 @@ app.put('/', async (c) => {
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
         },
+        select: {
+            InformasiKependudukan: true,
+            InstitusiLama: true,
+            Pesantren: true,
+            OrangTua: true,
+            DaftarUlang: true,
+            PendaftaranId: true,
+            KodePendaftar: true,
+            NoUjian: true,
+            Periode: true,
+            Gelombang: true, 
+            SistemKuliah: true,
+            JalurPendaftaran: true
+        },
         where: { PendaftaranId: body.Pendaftaran.PendaftaranId },
     })
 
     // Informasi Kependudukan
-    await prisma.informasiKependudukan.update({
-        data: {
-            PendaftaranId: pendaftaran.PendaftaranId,
-            NoKk: body.InformasiKependudukan.NoKk,
-            NoNik: body.InformasiKependudukan.NoNik,
-            Suku: body.InformasiKependudukan.Suku,
-            CreatedAt: new Date(),
-            UpdatedAt: new Date(),
-        },
-        where: {
-            InformasiKependudukanId:
-                body.InformasiKependudukan.InformasiKependudukanId,
-        },
-    })
+    if(pendaftaran.InformasiKependudukan.length === 0) {
+        await prisma.informasiKependudukan.create({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                NoKk: body.InformasiKependudukan.NoKk,
+                NoNik: body.InformasiKependudukan.NoNik,
+                Suku: body.InformasiKependudukan.Suku,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            },
+        })
+    } else {
+        await prisma.informasiKependudukan.update({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                NoKk: body.InformasiKependudukan.NoKk,
+                NoNik: body.InformasiKependudukan.NoNik,
+                Suku: body.InformasiKependudukan.Suku,
+                UpdatedAt: new Date(),
+            },
+            where: {
+                InformasiKependudukanId:
+                    body.InformasiKependudukan.InformasiKependudukanId,
+            },
+        })
+    }
 
     // Pesantren
-    await prisma.pesantren.update({
-        data: {
-            PendaftaranId: pendaftaran.PendaftaranId,
-            NamaPesantren: body.Pesantren.NamaPesantren,
-            LamaPesantren: body.Pesantren.LamaPesantren,
-            CreatedAt: new Date(),
-            UpdatedAt: new Date(),
-        },
-        where: {
-            PesantrenId: body.Pesantren.PesantrenId,
-        },
-    })
-
-    body.OrangTua.forEach(async (ot) => {
-        await prisma.orangTua.update({
-            where: {
-                OrangTuaId: ot.OrangTuaId,
-            },
+    if(pendaftaran.Pesantren.length === 0) {
+        await prisma.pesantren.create({
             data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                NamaPesantren: body.Pesantren.NamaPesantren,
+                LamaPesantren: body.Pesantren.LamaPesantren,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            },
+        })
+    } else {
+        await prisma.pesantren.update({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                NamaPesantren: body.Pesantren.NamaPesantren,
+                LamaPesantren: body.Pesantren.LamaPesantren,
+                UpdatedAt: new Date(),
+            },
+            where: {
+                PesantrenId: body.Pesantren.PesantrenId,
+            },
+        })
+    }
+    
+    if(pendaftaran.OrangTua.length !== 0) {
+        await prisma.orangTua.deleteMany({
+            where: {
+                PendaftaranId: pendaftaran.PendaftaranId
+            }
+        })
+    }
+    body.OrangTua.forEach(async (ot) => {
+        await prisma.orangTua.create({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
                 Nama: ot.NamaOrangTua,
                 Pekerjaan: ot.PekerjaanOrangTua,
                 JenisOrtu: ot.JenisOrtu,
@@ -842,22 +880,39 @@ app.put('/', async (c) => {
             })
     }
 
-    await prisma.institusiLama.update({
-        data: {
-            AlamatId: alamatInstitusi.AlamatId,
-            Jenjang: body.InstitusiLama.Jenjang,
-            JenisInstitusi: body.InstitusiLama.JenisInstitusi,
-            NamaInstitusi: body.InstitusiLama.NamaInstitusi,
-            Jurusan: body.InstitusiLama.Jurusan,
-            Nisn: body.InstitusiLama.Nisn,
-            Npsn: body.InstitusiLama.Npsn,
-            TahunLulus: body.InstitusiLama.TahunLulus,
-            NilaiLulusan: body.InstitusiLama.NilaiLulusan,
-        },
-        where: {
-            InstitusiLamaId: body.InstitusiLama.InstitusiLamaId,
-        },
-    })
+    if(pendaftaran.InstitusiLama.length === 0 ) {
+        await prisma.institusiLama.create({
+            data: {
+                AlamatId: alamatInstitusi.AlamatId,
+                Jenjang: body.InstitusiLama.Jenjang,
+                JenisInstitusi: body.InstitusiLama.JenisInstitusi,
+                NamaInstitusi: body.InstitusiLama.NamaInstitusi,
+                Jurusan: body.InstitusiLama.Jurusan,
+                Nisn: body.InstitusiLama.Nisn,
+                Npsn: body.InstitusiLama.Npsn,
+                TahunLulus: body.InstitusiLama.TahunLulus,
+                NilaiLulusan: body.InstitusiLama.NilaiLulusan,
+                PendaftaranId: pendaftaran.PendaftaranId
+            }
+        })
+    } else {
+        await prisma.institusiLama.update({
+            data: {
+                AlamatId: alamatInstitusi.AlamatId,
+                Jenjang: body.InstitusiLama.Jenjang,
+                JenisInstitusi: body.InstitusiLama.JenisInstitusi,
+                NamaInstitusi: body.InstitusiLama.NamaInstitusi,
+                Jurusan: body.InstitusiLama.Jurusan,
+                Nisn: body.InstitusiLama.Nisn,
+                Npsn: body.InstitusiLama.Npsn,
+                TahunLulus: body.InstitusiLama.TahunLulus,
+                NilaiLulusan: body.InstitusiLama.NilaiLulusan,
+            },
+            where: {
+                InstitusiLamaId: body.InstitusiLama.InstitusiLamaId,
+            },
+        })
+    }
 
     const prodi = await prisma.programStudi.findFirst({
         where: {
@@ -873,22 +928,40 @@ app.put('/', async (c) => {
     if (!prodi) {
         throw new Error('Program Studi not found')
     }
-    await prisma.daftarUlang.update({
-        data: {
-            ProgramStudiId: prodi.ProgramStudiId,
-            Nim: body.DaftarUlang.Nim,
-            JenjangKkniDituju: body.DaftarUlang.JenjangKkniDituju,
-            KipK: body.DaftarUlang.KipK,
-            Aktif: body.DaftarUlang.Aktif,
-            MengisiBiodata: body.DaftarUlang.MengisiBiodata,
-            Finalisasi: body.DaftarUlang.Finalisasi,
-            TanggalDaftar: body.DaftarUlang.TanggalDaftar,
-            TanggalDaftarUlang: body.DaftarUlang.TanggalDaftarUlang,
-        },
-        where: {
-            DaftarUlangId: body.DaftarUlang.DaftarUlangId,
-        },
-    })
+
+    if(pendaftaran.DaftarUlang.length === 0) {
+        await prisma.daftarUlang.create({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                ProgramStudiId: prodi.ProgramStudiId,
+                Nim: body.DaftarUlang.Nim,
+                JenjangKkniDituju: body.DaftarUlang.JenjangKkniDituju,
+                KipK: body.DaftarUlang.KipK,
+                Aktif: body.DaftarUlang.Aktif,
+                MengisiBiodata: body.DaftarUlang.MengisiBiodata,
+                Finalisasi: body.DaftarUlang.Finalisasi,
+                TanggalDaftar: body.DaftarUlang.TanggalDaftar,
+                TanggalDaftarUlang: body.DaftarUlang.TanggalDaftarUlang,
+            },
+        })
+    } else {
+        await prisma.daftarUlang.update({
+            data: {
+                ProgramStudiId: prodi.ProgramStudiId,
+                Nim: body.DaftarUlang.Nim,
+                JenjangKkniDituju: body.DaftarUlang.JenjangKkniDituju,
+                KipK: body.DaftarUlang.KipK,
+                Aktif: body.DaftarUlang.Aktif,
+                MengisiBiodata: body.DaftarUlang.MengisiBiodata,
+                Finalisasi: body.DaftarUlang.Finalisasi,
+                TanggalDaftar: body.DaftarUlang.TanggalDaftar,
+                TanggalDaftarUlang: body.DaftarUlang.TanggalDaftarUlang,
+            },
+            where: {
+                DaftarUlangId: body.DaftarUlang.DaftarUlangId,
+            },
+        })
+    }
 
     const response: CalonMahasiswaRplPage = {
         KodePendaftar: pendaftaran.KodePendaftar,

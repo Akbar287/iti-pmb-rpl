@@ -21,3 +21,77 @@ export async function getSkAsessmenPagination(
     if (!res.ok) throw new Error('Failed to fetch sk rektor')
     return res.json()
 }
+
+export async function getSkAsessmenMahasiswaPagination(
+    page: number,
+    limit: number,
+    search: string
+): Promise<Pagination<ResponseSkRektorAsessmenType[]>> {
+    const params = new URLSearchParams()
+    params.append('page', String(page))
+    params.append('limit', String(limit))
+    params.append('search', search)
+    params.append('_m', 'true')
+    params.append('jenis', 'get-sk-rektor')
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch sk rektor')
+    return res.json()
+}
+
+export async function getSkAsessmenAsesorRolePagination(
+    page: number,
+    limit: number,
+    search: string,
+    ProgramStudiId: string
+): Promise<Pagination<ResponseSkRektorAsessmenType[]>> {
+    const params = new URLSearchParams()
+    params.append('page', String(page))
+    params.append('limit', String(limit))
+    params.append('search', search)
+    params.append('program-studi', ProgramStudiId)
+    params.append('_a', 'true')
+    params.append('jenis', 'get-sk-rektor')
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch sk rektor')
+    return res.json()
+}
+
+export async function getFileSkAsessmenBlobByNamafile(
+    NamaFile: string
+): Promise<string> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=_f&_f=${NamaFile}`
+    )
+
+    if (!res.ok) {
+        throw new Error('Failed to get dokumen sk asessmen')
+    }
+
+    const blob = await res.blob()
+    const previewUrl = URL.createObjectURL(blob)
+    return previewUrl
+}
+
+export async function setFile(
+    data: File,
+    PendaftaranId: string,
+    NamaSk: string,
+    TahunSk: string,
+    NomorSk: string
+): Promise<Response> {
+    const formData = new FormData()
+    formData.append('files', data)
+    formData.append('PendaftaranId', PendaftaranId)
+    formData.append('NamaSk', NamaSk)
+    formData.append('TahunSk', TahunSk)
+    formData.append('NomorSk', NomorSk)
+
+    return await fetch(`${BASE_URL}/api/protected/asessment/sk-rektor`, {
+        method: 'POST',
+        body: formData,
+    })
+}

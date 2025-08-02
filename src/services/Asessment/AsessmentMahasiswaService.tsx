@@ -19,6 +19,23 @@ export async function getMahasiswaFromAsesor(
     return res.json()
 }
 
+export async function getMahasiswaFromAsesorForMahasiswa(
+    page: number,
+    limit: number,
+    search: string
+): Promise<Pagination<ResponseMhsFromAsesorSession[]>> {
+    const params = new URLSearchParams()
+    params.append('page', String(page))
+    params.append('limit', String(limit))
+    params.append('search', search)
+    params.append('_m', 'true')
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/asessmen-mahasiswa?jenis=get-mhs-from-asesor&${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch mahasiswa from asesor')
+    return res.json()
+}
+
 export async function setSkorAsessmenFromAsesor(
     SkorAssesmenId: string,
     MataKuliahMahasiswaId: string,

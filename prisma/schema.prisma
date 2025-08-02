@@ -718,6 +718,7 @@ model SkRektor {
   TahunSk           Int                 @default(2025) @map("tahun_sk")
   NomorSk           String              @map("nomor_sk")
   NamaFile          String              @map("nama_file")
+  FileData          Bytes               @map("file_data")
   NamaDokumen       String              @map("nama_dokumen")
   CreatedAt         DateTime?           @map("created_at")
   UpdatedAt         DateTime?           @map("updated_at")

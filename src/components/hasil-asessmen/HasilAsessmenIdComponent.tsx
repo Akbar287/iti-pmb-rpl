@@ -458,12 +458,17 @@ const HasilAsessmenIdComponent = ({
                                 <div className="w-full justify-end flex">
                                     <Select
                                         value={String(paginationState.limit)}
-                                        onValueChange={(value) =>
+                                        onValueChange={(value) => {
                                             setPaginationState({
                                                 ...paginationState,
                                                 limit: Number(value),
+                                                totalPage: Math.ceil(
+                                                    dataServer
+                                                        .MataKuliahMahasiswa
+                                                        .length / Number(value)
+                                                ),
                                             })
-                                        }
+                                        }}
                                     >
                                         <SelectTrigger className="w-[100px]">
                                             <SelectValue placeholder="Pilih Limit Data" />

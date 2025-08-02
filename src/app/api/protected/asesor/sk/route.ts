@@ -99,6 +99,124 @@ app.get('/', async (c) => {
             hasPrevious: page > 1,
         })
     }
+    if (jenis === 'get-page-sk-from-asesor-role') {
+        const userId = c.req.query('userId')
+        const page = parseInt(c.req.query('page') || '1', 10)
+        const limit = parseInt(c.req.query('limit') || '10', 10)
+        const search = c.req.query('search') || ''
+
+        const tipeAsesor = await prisma.tipeSkRektor.findFirst({
+            where: { Nama: 'Asesor' },
+            select: { TipeSkRektorId: true },
+        })
+
+        if (!tipeAsesor) {
+            return c.json({ error: 'Tipe Asesor not found' }, 404)
+        }
+
+        const [data, total] = await Promise.all([
+            prisma.skRektor.findMany({
+                select: {
+                    SkRektorId: true,
+                    NamaSk: true,
+                    TahunSk: true,
+                    NomorSk: true,
+                    NamaDokumen: true,
+                    NamaFile: true,
+                    _count: {
+                        select: {
+                            SkRektorAssesor: true,
+                        },
+                    },
+                    SkRektorAssesor: {
+                        select: {
+                            AssesorMahasiswa: {
+                                select: {
+                                    Asesor: {
+                                        select: {
+                                            AsesorId: true,
+                                            User: {
+                                                select: { Nama: true },
+                                            },
+                                        },
+                                    }
+                                },
+                            },
+                        }
+                    }
+                },
+                where: {
+                    NomorSk: {
+                        contains: search,
+                        mode: 'insensitive',
+                    },
+                    NamaSk: {
+                        contains: search,
+                        mode: 'insensitive',
+                    },
+                    TahunSk: search
+                        ? { equals: isNaN(Number(search)) ? undefined : Number(search) }
+                        : undefined,
+                    SkRektorAssesor: {
+                        some: {
+                            AssesorMahasiswa: {
+                                Asesor: {
+                                    UserId: userId
+                                }
+                            }
+                        }
+                    },
+                    TipeSkRektorId: tipeAsesor?.TipeSkRektorId,
+                },
+                skip: (page - 1) * limit,
+                take: limit,
+                orderBy: { CreatedAt: 'desc' },
+            }),
+            prisma.skRektor.count({
+                where: {
+                    NomorSk: {
+                        contains: search,
+                        mode: 'insensitive',
+                    },
+                    TipeSkRektorId: tipeAsesor?.TipeSkRektorId,
+                },
+            }),
+        ])
+
+        const responses: ResponseSkRektorAsesor[] = data.map((item) => ({
+            SkRektorId: item.SkRektorId,
+            NamaSk: item.NamaSk,
+            TahunSk: item.TahunSk,
+            NomorSk: item.NomorSk,
+            NamaFile: item.NamaFile,
+            NamaDokumen: item.NamaDokumen,
+            AsesorRelation: item._count.SkRektorAssesor,
+        }))
+
+        return c.json<{
+            data: ResponseSkRektorAsesor[]
+            page: number
+            limit: number
+            totalElement: number
+            totalPage: number
+            isFirst: boolean
+            isLast: boolean
+            hasNext: boolean
+            hasPrevious: boolean
+        }>({
+            page: page,
+            limit: limit,
+            data: responses,
+            totalElement: total,
+            totalPage: Math.ceil(total / limit),
+            isFirst: page === 1,
+            isLast:
+                page === Math.ceil(total / limit) ||
+                Math.ceil(total / limit) === 0,
+            hasNext: page < Math.ceil(total / limit),
+            hasPrevious: page > 1,
+        })
+    }
     if (jenis === 'get-sk-file') {
         const filename = c.req.query('filename')
         if (!filename) {
@@ -107,24 +225,32 @@ app.get('/', async (c) => {
                 { status: 400 }
             )
         }
-        const filePath = path.join(process.cwd(), 'uploads', 'files', filename)
 
         try {
-            const stat = fs.statSync(filePath)
-            if (!stat.isFile()) {
+            const fileRecord = await prisma.skRektor.findFirst({
+                where: { NamaFile: filename },
+                select: {
+                    FileData: true,
+                    NamaDokumen: true,
+                },
+            })
+
+            if (!fileRecord || !fileRecord.FileData) {
                 return c.json(
-                    { data: [], status: 'error', message: 'not a file' },
-                    { status: 400 }
+                    { data: [], status: 'error', message: 'file not found in DB' },
+                    { status: 404 }
                 )
             }
 
-            const fileStream = fs.createReadStream(filePath)
             const contentType =
-                mime.getType(filePath) || 'application/octet-stream'
+                mime.getType(fileRecord.NamaDokumen || filename) ||
+                'application/octet-stream'
 
-            return c.body(fileStream as any, 200, {
+            return c.body(fileRecord.FileData, 200, {
                 'Content-Type': contentType,
+                'Content-Disposition': `inline; filename="${filename}"`,
             })
+
         } catch (error) {
             const errorMessage =
                 error instanceof Error ? error.message : 'error'
@@ -417,27 +543,16 @@ app.post('/', async (c) => {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer())
-
     const originalFileName = file.name
     const filename = `${uuidv4()}.${fileExt}`
-
-    const dir = path.join(process.cwd(), 'uploads', 'files')
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true })
-    }
-
-    const filePath = path.join(dir, filename)
-
-    fs.writeFileSync(filePath, buffer)
-
     const data = await prisma.skRektor.create({
         data: {
             TipeSkRektorId: tipeAsesor.TipeSkRektorId,
             NamaSk: NamaSk as string,
             TahunSk: parseInt(TahunSk as string),
             NomorSk: NomorSk as string,
-            NamaFile: filePath,
+            NamaFile: filename,
+            FileData: buffer,
             NamaDokumen: originalFileName,
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
@@ -480,29 +595,6 @@ app.post('/', async (c) => {
 app.delete('/', async (c) => {
     const id = c.req.query('id')
 
-    const file = await prisma.skRektor.findFirst({
-        where: {
-            SkRektorId: id,
-        },
-        select: {
-            NamaDokumen: true,
-            NamaFile: true,
-        },
-    })
-
-    const avatarDir = path.join(process.cwd(), 'uploads', 'files')
-
-    if (file !== null) {
-        const oldPath = path.join(avatarDir, file.NamaFile || '')
-        if (fs.existsSync(oldPath)) {
-            try {
-                fs.unlinkSync(oldPath)
-            } catch (err) {
-                console.error('Failed to delete file :', err)
-            }
-        }
-    }
-
     await prisma.skRektorAssesor.deleteMany({
         where: {
             SkRektorId: id,
@@ -523,5 +615,4 @@ app.delete('/', async (c) => {
 
 export const GET = handle(app)
 export const POST = handle(app)
-export const PUT = handle(app)
 export const DELETE = handle(app)
