@@ -35,7 +35,6 @@ app.put('/', async (c) => {
             TanggalLahir: body.TanggalLahir,
             JenisKelamin: body.JenisKelamin,
             PendidikanTerakhir: body.PendidikanTerakhir,
-            Avatar: body.Avatar,
             Agama: body.Agama,
             Telepon: body.Telepon,
             NomorWa: body.NomorWa,

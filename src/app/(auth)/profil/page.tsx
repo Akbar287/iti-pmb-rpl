@@ -24,7 +24,6 @@ const Page = async () => {
             TanggalLahir: true,
             JenisKelamin: true,
             PendidikanTerakhir: true,
-            Avatar: true,
             Agama: true,
             Telepon: true,
             NomorWa: true,

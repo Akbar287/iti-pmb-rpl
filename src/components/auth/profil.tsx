@@ -58,7 +58,11 @@ import {
     getKecamatanByKabupatenId,
     getProvinsiByCountryId,
 } from '@/services/AreaServices'
-import { updatePassword, updateProfilService } from '@/services/ProfileService'
+import {
+    getFileBlobAvatarByUserId,
+    updatePassword,
+    updateProfilService,
+} from '@/services/ProfileService'
 import {
     Dialog,
     DialogContent,
@@ -67,6 +71,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '../ui/dialog'
+import { Skeleton } from '../ui/skeleton'
 
 interface IProfil {
     data: ProfilInterface | null
@@ -85,8 +90,7 @@ const Profil = ({
     kecamatanDataServer,
     desaDataServer,
 }: IProfil) => {
-    const [countryData, setCountryData] =
-        React.useState<Country[]>(countryDataServer)
+    const [avatar, setAvatar] = React.useState<string | null>(null)
     const [provinsiData, setProvinsiData] =
         React.useState<Provinsi[]>(provinsiDataServer)
     const [profilePicture, setProfilePicture] = React.useState<string | null>(
@@ -132,7 +136,6 @@ const Profil = ({
             TanggalLahir: data?.TanggalLahir ?? new Date(),
             JenisKelamin: data?.JenisKelamin,
             PendidikanTerakhir: data?.PendidikanTerakhir,
-            Avatar: data?.Avatar ?? '',
             Agama: data?.Agama ?? '',
             Telepon: data?.Telepon ?? '',
             NomorWa: data?.NomorWa ?? '',
@@ -146,10 +149,17 @@ const Profil = ({
         setLoading(false)
     }
 
+    React.useEffect(() => {
+        getFileBlobAvatarByUserId(data?.UserId as string)
+            .then((res) => {
+                setAvatar(res)
+            })
+            .catch((err) => console.log(err))
+    }, [])
+
     const submitUpdatePassword = async () => {
         setLoading(true)
         const res = await updatePassword(formPassword)
-        console.log(res)
         setOpenDialogPassword(false)
         setFormPassword({
             password_baru: '',
@@ -164,6 +174,7 @@ const Profil = ({
         if (file) {
             setImageFile(file)
             setProfilePicture(URL.createObjectURL(file))
+            console.log(URL.createObjectURL(file))
         }
     }
 
@@ -181,16 +192,14 @@ const Profil = ({
 
             if (!res.ok) throw new Error('Upload failed')
 
-            await res.json()
+            setAvatar(profilePicture)
             setImageFile(null)
             setProfilePicture(null)
+            setLoading(false)
             toast('Upload Gambar Berhasil')
         } catch (err) {
             console.error(err)
             toast('Terdapat Kesalahan saat upload')
-        } finally {
-            setLoading(false)
-            toast('Upload Gambar Berhasil')
         }
     }
 
@@ -205,22 +214,27 @@ const Profil = ({
                 </CardHeader>
                 <CardContent>
                     <div className="flex justify-center w-full">
-                        <Image
-                            src={
-                                profilePicture !== null
-                                    ? profilePicture
-                                    : '/api/protected/avatar?avatar=' +
-                                      (data !== null
-                                          ? data.Avatar
-                                          : 'default.png')
-                            }
-                            alt={data !== null ? data.Nama : 'Gambar Profil'}
-                            className="aspect-square"
-                            width={'150'}
-                            height={'150'}
-                            placeholder="blur"
-                            blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAB4UExUReHr/9/p/eLs/uLs/+Ls/6u5/XuN/HyO/OLs/+Hr/+Ls/+Dq/9Ld/7TB/oaX/Nbh/4qb/HqN/ODq/t/p/dTf/Y2e/HqM/I6f/Njj/93n/N7o/MDM/JSk/MDN/OHr/t7o/cLO/au5/LLA/MPQ/oKU/HyO/Ku5/f///+YXLFcAAAAJdFJOU/39/f79/v7+/A3xRCEAAAABYktHRCctD6gjAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH6QQVBjcc71NhTgAAAF1JREFUCNclykcSgCAQRNEx6yDJgAkVEbn/ER3Lv+h6i4aGQqQBoGFty34yLgRnH1EqrZVEgK4fRmOmmbgs62btftChP93l/eXOBPAO5nlMuFPASCLHDPKirKiyqF860Qao+6qD4QAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0wNC0yMVQwNjo1NToyMyswMDowMJB/OL0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUtMDQtMjFUMDY6NTU6MjMrMDA6MDDhIoABAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTA0LTIxVDA2OjU1OjI4KzAwOjAwtDD1JAAAAABJRU5ErkJggg=="
-                        />
+                        {avatar ? (
+                            <Image
+                                src={
+                                    profilePicture !== null
+                                        ? profilePicture
+                                        : avatar !== null
+                                        ? avatar
+                                        : ''
+                                }
+                                alt={
+                                    data !== null ? data.Nama : 'Gambar Profil'
+                                }
+                                className="aspect-square"
+                                width={'150'}
+                                height={'150'}
+                                placeholder="blur"
+                                blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAB4UExUReHr/9/p/eLs/uLs/+Ls/6u5/XuN/HyO/OLs/+Hr/+Ls/+Dq/9Ld/7TB/oaX/Nbh/4qb/HqN/ODq/t/p/dTf/Y2e/HqM/I6f/Njj/93n/N7o/MDM/JSk/MDN/OHr/t7o/cLO/au5/LLA/MPQ/oKU/HyO/Ku5/f///+YXLFcAAAAJdFJOU/39/f79/v7+/A3xRCEAAAABYktHRCctD6gjAAAACXBIWXMAAAsSAAALEgHS3X78AAAAB3RJTUUH6QQVBjcc71NhTgAAAF1JREFUCNclykcSgCAQRNEx6yDJgAkVEbn/ER3Lv+h6i4aGQqQBoGFty34yLgRnH1EqrZVEgK4fRmOmmbgs62btftChP93l/eXOBPAO5nlMuFPASCLHDPKirKiyqF860Qao+6qD4QAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyNS0wNC0yMVQwNjo1NToyMyswMDowMJB/OL0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjUtMDQtMjFUMDY6NTU6MjMrMDA6MDDhIoABAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI1LTA0LTIxVDA2OjU1OjI4KzAwOjAwtDD1JAAAAABJRU5ErkJggg=="
+                            />
+                        ) : (
+                            <Skeleton className="w-36 h-36" />
+                        )}
                     </div>
                 </CardContent>
                 <CardFooter>
@@ -784,7 +798,7 @@ const Profil = ({
                                                                     <SelectValue placeholder="Pilih Negara" />
                                                                 </SelectTrigger>
                                                                 <SelectContent>
-                                                                    {countryData.map(
+                                                                    {countryDataServer.map(
                                                                         (c) => (
                                                                             <SelectItem
                                                                                 value={

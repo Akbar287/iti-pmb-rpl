@@ -22,7 +22,6 @@ export const UserCreateSkemaValidation = z.object({
     TanggalLahir: z.coerce.date(),
     JenisKelamin: JenisKelaminEnum.default('PRIA').optional(),
     PendidikanTerakhir: JenjangEnum.default('TIDAK_TAMAT_SD').optional(),
-    Avatar: z.string(),
     Agama: z.string(),
     Telepon: z.string(),
     NomorWa: z.string(),

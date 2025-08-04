@@ -14388,6 +14388,7 @@ export namespace Prisma {
     PendaftaranId: string | null
     JenisDokumenId: string | null
     NamaFile: string | null
+    FileData: Uint8Array | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -14398,6 +14399,7 @@ export namespace Prisma {
     PendaftaranId: string | null
     JenisDokumenId: string | null
     NamaFile: string | null
+    FileData: Uint8Array | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -14408,6 +14410,7 @@ export namespace Prisma {
     PendaftaranId: number
     JenisDokumenId: number
     NamaFile: number
+    FileData: number
     NamaDokumen: number
     CreatedAt: number
     UpdatedAt: number
@@ -14420,6 +14423,7 @@ export namespace Prisma {
     PendaftaranId?: true
     JenisDokumenId?: true
     NamaFile?: true
+    FileData?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -14430,6 +14434,7 @@ export namespace Prisma {
     PendaftaranId?: true
     JenisDokumenId?: true
     NamaFile?: true
+    FileData?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -14440,6 +14445,7 @@ export namespace Prisma {
     PendaftaranId?: true
     JenisDokumenId?: true
     NamaFile?: true
+    FileData?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -14523,6 +14529,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -14550,6 +14557,7 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -14564,6 +14572,7 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -14576,6 +14585,7 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -14588,12 +14598,13 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
+    FileData?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type BuktiFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"BuktiFormId" | "PendaftaranId" | "JenisDokumenId" | "NamaFile" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["buktiForm"]>
+  export type BuktiFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"BuktiFormId" | "PendaftaranId" | "JenisDokumenId" | "NamaFile" | "FileData" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["buktiForm"]>
   export type BuktiFormInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
     JenisDokumen?: boolean | JenisDokumenDefaultArgs<ExtArgs>
@@ -14621,6 +14632,7 @@ export namespace Prisma {
       PendaftaranId: string
       JenisDokumenId: string
       NamaFile: string
+      FileData: Uint8Array
       NamaDokumen: string
       CreatedAt: Date | null
       UpdatedAt: Date | null
@@ -15054,6 +15066,7 @@ export namespace Prisma {
     readonly PendaftaranId: FieldRef<"BuktiForm", 'String'>
     readonly JenisDokumenId: FieldRef<"BuktiForm", 'String'>
     readonly NamaFile: FieldRef<"BuktiForm", 'String'>
+    readonly FileData: FieldRef<"BuktiForm", 'Bytes'>
     readonly NamaDokumen: FieldRef<"BuktiForm", 'String'>
     readonly CreatedAt: FieldRef<"BuktiForm", 'DateTime'>
     readonly UpdatedAt: FieldRef<"BuktiForm", 'DateTime'>
@@ -71052,7 +71065,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin | null
     PendidikanTerakhir: $Enums.Jenjang | null
-    Avatar: string | null
+    Avatar: Uint8Array | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -71073,7 +71086,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin | null
     PendidikanTerakhir: $Enums.Jenjang | null
-    Avatar: string | null
+    Avatar: Uint8Array | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -71253,7 +71266,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin
     PendidikanTerakhir: $Enums.Jenjang
-    Avatar: string | null
+    Avatar: Uint8Array | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -71411,7 +71424,7 @@ export namespace Prisma {
       TanggalLahir: Date | null
       JenisKelamin: $Enums.JenisKelamin
       PendidikanTerakhir: $Enums.Jenjang
-      Avatar: string | null
+      Avatar: Uint8Array | null
       Agama: string | null
       Telepon: string | null
       NomorWa: string | null
@@ -71858,7 +71871,7 @@ export namespace Prisma {
     readonly TanggalLahir: FieldRef<"User", 'DateTime'>
     readonly JenisKelamin: FieldRef<"User", 'JenisKelamin'>
     readonly PendidikanTerakhir: FieldRef<"User", 'Jenjang'>
-    readonly Avatar: FieldRef<"User", 'String'>
+    readonly Avatar: FieldRef<"User", 'Bytes'>
     readonly Agama: FieldRef<"User", 'String'>
     readonly Telepon: FieldRef<"User", 'String'>
     readonly NomorWa: FieldRef<"User", 'String'>
@@ -73560,6 +73573,7 @@ export namespace Prisma {
     PendaftaranId: 'PendaftaranId',
     JenisDokumenId: 'JenisDokumenId',
     NamaFile: 'NamaFile',
+    FileData: 'FileData',
     NamaDokumen: 'NamaDokumen',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
@@ -74289,6 +74303,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Bytes'
+   */
+  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes[]'
+   */
+  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
+    
+
+
+  /**
    * Reference to a field of type 'ProfiensiPengetahuan'
    */
   export type EnumProfiensiPengetahuanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProfiensiPengetahuan'>
@@ -74425,20 +74453,6 @@ export namespace Prisma {
    * Reference to a field of type 'SistemKuliah[]'
    */
   export type ListEnumSistemKuliahFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SistemKuliah[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Bytes'
-   */
-  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
-    
-
-
-  /**
-   * Reference to a field of type 'Bytes[]'
-   */
-  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
     
 
 
@@ -74912,6 +74926,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
+    FileData?: BytesFilter<"BuktiForm"> | Uint8Array
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -74925,6 +74940,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -74941,6 +74957,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
+    FileData?: BytesFilter<"BuktiForm"> | Uint8Array
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -74954,6 +74971,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -74970,6 +74988,7 @@ export namespace Prisma {
     PendaftaranId?: StringWithAggregatesFilter<"BuktiForm"> | string
     JenisDokumenId?: StringWithAggregatesFilter<"BuktiForm"> | string
     NamaFile?: StringWithAggregatesFilter<"BuktiForm"> | string
+    FileData?: BytesWithAggregatesFilter<"BuktiForm"> | Uint8Array
     NamaDokumen?: StringWithAggregatesFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
@@ -78231,7 +78250,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: StringNullableFilter<"User"> | string | null
+    Avatar?: BytesNullableFilter<"User"> | Uint8Array | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -78288,7 +78307,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: StringNullableFilter<"User"> | string | null
+    Avatar?: BytesNullableFilter<"User"> | Uint8Array | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -78342,7 +78361,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminWithAggregatesFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangWithAggregatesFilter<"User"> | $Enums.Jenjang
-    Avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
+    Avatar?: BytesNullableWithAggregatesFilter<"User"> | Uint8Array | null
     Agama?: StringNullableWithAggregatesFilter<"User"> | string | null
     Telepon?: StringNullableWithAggregatesFilter<"User"> | string | null
     NomorWa?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -78887,6 +78906,7 @@ export namespace Prisma {
   export type BuktiFormCreateInput = {
     BuktiFormId?: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -78900,6 +78920,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -78909,6 +78930,7 @@ export namespace Prisma {
   export type BuktiFormUpdateInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -78922,6 +78944,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -78933,6 +78956,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -78941,6 +78965,7 @@ export namespace Prisma {
   export type BuktiFormUpdateManyMutationInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -78951,6 +78976,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -82324,7 +82350,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -82351,7 +82377,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -82376,7 +82402,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -82403,7 +82429,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -82429,7 +82455,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -82449,7 +82475,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -82470,7 +82496,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -82992,6 +83018,13 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
   export type JenisDokumenScalarRelationFilter = {
     is?: JenisDokumenWhereInput
     isNot?: JenisDokumenWhereInput
@@ -83012,6 +83045,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -83022,6 +83056,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -83032,9 +83067,20 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
+    FileData?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+  }
+
+  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type BuktiFormScalarRelationFilter = {
@@ -84823,13 +84869,6 @@ export namespace Prisma {
     Nama?: SortOrder
   }
 
-  export type BytesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
-  }
-
   export type TipeSkRektorScalarRelationFilter = {
     is?: TipeSkRektorWhereInput
     isNot?: TipeSkRektorWhereInput
@@ -84880,16 +84919,6 @@ export namespace Prisma {
 
   export type SkRektorSumOrderByAggregateInput = {
     TahunSk?: SortOrder
-  }
-
-  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBytesFilter<$PrismaModel>
-    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type SkRektorScalarRelationFilter = {
@@ -85306,6 +85335,13 @@ export namespace Prisma {
     not?: NestedEnumJenisKelaminFilter<$PrismaModel> | $Enums.JenisKelamin
   }
 
+  export type BytesNullableFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
+  }
+
   export type MahasiswaListRelationFilter = {
     every?: MahasiswaWhereInput
     some?: MahasiswaWhereInput
@@ -85397,6 +85433,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumJenisKelaminFilter<$PrismaModel>
     _max?: NestedEnumJenisKelaminFilter<$PrismaModel>
+  }
+
+  export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBytesNullableFilter<$PrismaModel>
+    _max?: NestedBytesNullableFilter<$PrismaModel>
   }
 
   export type UserloginCountOrderByAggregateInput = {
@@ -85961,6 +86007,10 @@ export namespace Prisma {
     connectOrCreate?: BuktiFormEvaluasiDiriCreateOrConnectWithoutBuktiFormInput | BuktiFormEvaluasiDiriCreateOrConnectWithoutBuktiFormInput[]
     createMany?: BuktiFormEvaluasiDiriCreateManyBuktiFormInputEnvelope
     connect?: BuktiFormEvaluasiDiriWhereUniqueInput | BuktiFormEvaluasiDiriWhereUniqueInput[]
+  }
+
+  export type BytesFieldUpdateOperationsInput = {
+    set?: Uint8Array
   }
 
   export type PendaftaranUpdateOneRequiredWithoutBuktiFormNestedInput = {
@@ -88485,10 +88535,6 @@ export namespace Prisma {
     connect?: SkRektorMahasiswaWhereUniqueInput | SkRektorMahasiswaWhereUniqueInput[]
   }
 
-  export type BytesFieldUpdateOperationsInput = {
-    set?: Uint8Array
-  }
-
   export type TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput = {
     create?: XOR<TipeSkRektorCreateWithoutSkRektorInput, TipeSkRektorUncheckedCreateWithoutSkRektorInput>
     connectOrCreate?: TipeSkRektorCreateOrConnectWithoutSkRektorInput
@@ -89095,6 +89141,10 @@ export namespace Prisma {
     set?: $Enums.JenisKelamin
   }
 
+  export type NullableBytesFieldUpdateOperationsInput = {
+    set?: Uint8Array | null
+  }
+
   export type AlamatUpdateOneRequiredWithoutUserNestedInput = {
     create?: XOR<AlamatCreateWithoutUserInput, AlamatUncheckedCreateWithoutUserInput>
     connectOrCreate?: AlamatCreateOrConnectWithoutUserInput
@@ -89406,6 +89456,23 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedBytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+  }
+
+  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
+  }
+
   export type NestedEnumProfiensiPengetahuanFilter<$PrismaModel = never> = {
     equals?: $Enums.ProfiensiPengetahuan | EnumProfiensiPengetahuanFieldRefInput<$PrismaModel>
     in?: $Enums.ProfiensiPengetahuan[] | ListEnumProfiensiPengetahuanFieldRefInput<$PrismaModel>
@@ -89600,28 +89667,18 @@ export namespace Prisma {
     _max?: NestedEnumSistemKuliahFilter<$PrismaModel>
   }
 
-  export type NestedBytesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
-  }
-
-  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBytesFilter<$PrismaModel>
-    _max?: NestedBytesFilter<$PrismaModel>
-  }
-
   export type NestedEnumJenisKelaminFilter<$PrismaModel = never> = {
     equals?: $Enums.JenisKelamin | EnumJenisKelaminFieldRefInput<$PrismaModel>
     in?: $Enums.JenisKelamin[] | ListEnumJenisKelaminFieldRefInput<$PrismaModel>
     notIn?: $Enums.JenisKelamin[] | ListEnumJenisKelaminFieldRefInput<$PrismaModel>
     not?: NestedEnumJenisKelaminFilter<$PrismaModel> | $Enums.JenisKelamin
+  }
+
+  export type NestedBytesNullableFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
   }
 
   export type NestedEnumJenisKelaminWithAggregatesFilter<$PrismaModel = never> = {
@@ -89632,6 +89689,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumJenisKelaminFilter<$PrismaModel>
     _max?: NestedEnumJenisKelaminFilter<$PrismaModel>
+  }
+
+  export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBytesNullableFilter<$PrismaModel>
+    _max?: NestedBytesNullableFilter<$PrismaModel>
   }
 
   export type DesaCreateWithoutAlamatInput = {
@@ -89736,7 +89803,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -89761,7 +89828,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -89903,7 +89970,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: StringNullableFilter<"User"> | string | null
+    Avatar?: BytesNullableFilter<"User"> | Uint8Array | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -89948,7 +90015,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -89974,7 +90041,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -90169,7 +90236,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -90195,7 +90262,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -91051,6 +91118,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutBuktiFormEvaluasiDiriInput = {
     BuktiFormId?: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -91063,6 +91131,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -91114,6 +91183,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutBuktiFormEvaluasiDiriInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -91126,6 +91196,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -92260,6 +92331,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutJenisDokumenInput = {
     BuktiFormId?: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -92271,6 +92343,7 @@ export namespace Prisma {
     BuktiFormId?: string
     PendaftaranId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -92311,6 +92384,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
+    FileData?: BytesFilter<"BuktiForm"> | Uint8Array
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -92499,7 +92573,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -92525,7 +92599,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -92635,7 +92709,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -92661,7 +92735,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94131,7 +94205,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -94157,7 +94231,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -94226,7 +94300,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94252,7 +94326,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94301,7 +94375,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -94327,7 +94401,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -94398,7 +94472,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94424,7 +94498,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94897,6 +94971,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutPendaftaranInput = {
     BuktiFormId?: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -94908,6 +94983,7 @@ export namespace Prisma {
     BuktiFormId?: string
     JenisDokumenId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -98786,7 +98862,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -98812,7 +98888,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -98852,7 +98928,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98878,7 +98954,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -98926,7 +99002,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: string | null
+    Avatar?: Uint8Array | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -99026,7 +99102,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99051,7 +99127,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99076,7 +99152,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -99479,6 +99555,7 @@ export namespace Prisma {
     BuktiFormId?: string
     PendaftaranId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -99487,6 +99564,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutJenisDokumenInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99498,6 +99576,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99508,6 +99587,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -99866,6 +99946,7 @@ export namespace Prisma {
     BuktiFormId?: string
     JenisDokumenId: string
     NamaFile: string
+    FileData: Uint8Array
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -100061,6 +100142,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutPendaftaranInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100072,6 +100154,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -100082,6 +100165,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

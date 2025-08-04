@@ -8,7 +8,6 @@ export interface ProfilInterface {
     TanggalLahir: Date | null
     JenisKelamin: JenisKelamin
     PendidikanTerakhir: Jenjang
-    Avatar: string | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null

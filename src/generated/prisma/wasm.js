@@ -186,6 +186,7 @@ exports.Prisma.BuktiFormScalarFieldEnum = {
   PendaftaranId: 'PendaftaranId',
   JenisDokumenId: 'JenisDokumenId',
   NamaFile: 'NamaFile',
+  FileData: 'FileData',
   NamaDokumen: 'NamaDokumen',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'

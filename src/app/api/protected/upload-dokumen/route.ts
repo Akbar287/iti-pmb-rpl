@@ -113,22 +113,38 @@ app.get('/', async (c) => {
                 { status: 400 }
             )
         }
-        const filePath = path.join(process.cwd(), 'uploads', 'files', filename)
-    
+        const fileRecord = await prisma.buktiForm.findFirst({
+            where: {
+                NamaFile: filename,
+            },
+            select: {
+                FileData: true,
+                NamaFile: true,
+                NamaDokumen: true,
+            }
+        })
+
+        if (!fileRecord) {
+            return c.json(
+                { data: [], status: 'error', message: 'file is required' },
+                { status: 400 }
+            )
+        }
         try {
-            const stat = fs.statSync(filePath)
-            if (!stat.isFile()) {
+            if (!fileRecord || !fileRecord.FileData) {
                 return c.json(
-                    { data: [], status: 'error', message: 'not a file' },
-                    { status: 400 }
+                    { data: [], status: 'error', message: 'file not found in DB' },
+                    { status: 404 }
                 )
             }
-    
-            const fileStream = fs.createReadStream(filePath)
-            const contentType = mime.getType(filePath) || 'application/octet-stream'
-    
-            return c.body(fileStream as any, 200, {
+
+            const contentType =
+                mime.getType(fileRecord.NamaDokumen || filename) ||
+                'application/octet-stream'
+
+            return c.body(fileRecord.FileData, 200, {
                 'Content-Type': contentType,
+                'Content-Disposition': `inline; filename="${filename}"`,
             })
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'error'
@@ -203,25 +219,15 @@ app.post('/', async (c) => {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer())
-
     const originalFileName = file.name
     const filename = `${uuidv4()}.${fileExt}`
-
-    const dir = path.join(process.cwd(), 'uploads', 'files')
-
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true })
-    }
-
-    const filePath = path.join(dir, filename)
-
-    fs.writeFileSync(filePath, buffer)
 
     const data = await prisma.buktiForm.create({
         data: {
             JenisDokumenId: JenisDokumenId as string,
             PendaftaranId: PendaftaranId as string,
             NamaFile: filename,
+            FileData: buffer,
             NamaDokumen: originalFileName,
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
@@ -265,29 +271,6 @@ app.post('/', async (c) => {
 app.delete('/', async (c) => {
     const id = c.req.query('id')
 
-    const file = await prisma.buktiForm.findFirst({
-        where: {
-            BuktiFormId: id,
-        },
-        select: {
-            NamaDokumen: true,
-            NamaFile: true,
-        },
-    })
-
-    const avatarDir = path.join(process.cwd(), 'uploads', 'files')
-
-    if (file !== null) {
-        const oldPath = path.join(avatarDir, file.NamaFile || '')
-        if (fs.existsSync(oldPath)) {
-            try {
-                fs.unlinkSync(oldPath)
-            } catch (err) {
-                console.error('Failed to delete file :', err)
-            }
-        }
-    }
-    
     await prisma.buktiForm.delete({
         where: {
             BuktiFormId: id,

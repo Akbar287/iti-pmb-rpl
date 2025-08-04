@@ -79,7 +79,7 @@ const authOptions: AuthOptions = {
                         id: userLogin.User.UserId,
                         username: userLogin.Username,
                         nama: userLogin.User.Nama,
-                        avatar: userLogin.User.Avatar,
+                        avatar: process.env.NEXT_PUBLIC_API_BASE_URL + '/api/protected/avatar?userId=' + userLogin.User.UserId,
                         email: userLogin.User.Email,
                         roles: userLogin.User.UserHasRoles.flatMap(
                             (f) => f.Role
