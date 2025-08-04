@@ -52,7 +52,15 @@ const AsessmentIdComponent = ({
     dataServer: AsessmenAsesorTypes
 }) => {
     const [data, setData] = React.useState(dataServer)
-    const [dataPdf, setDataPdf] = React.useState<BuktiForm | null>(null)
+    const [dataPdf, setDataPdf] = React.useState<{
+        BuktiFormId: string
+        PendaftaranId: string
+        JenisDokumenId: string
+        NamaFile: string
+        NamaDokumen: string
+        CreatedAt: Date | null
+        UpdatedAt: Date | null
+    } | null>(null)
     const [openDialogPdfPreview, setOpenDialogPdfPreview] =
         React.useState<boolean>(false)
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
@@ -309,7 +317,15 @@ const AsessmentIdComponent = ({
                 })
         }
     }
-    const openDokumen = async (dok: BuktiForm) => {
+    const openDokumen = async (dok: {
+        BuktiFormId: string
+        PendaftaranId: string
+        JenisDokumenId: string
+        NamaFile: string
+        NamaDokumen: string
+        CreatedAt: Date | null
+        UpdatedAt: Date | null
+    }) => {
         const res = await getFileBlobByNamafile(dok.NamaFile)
         setDataPdf(dok)
         setPdfPreview(res)
@@ -970,8 +986,26 @@ function DialogPreviewDokumen({
     pdfPreview,
     setPdfPreview,
 }: {
-    data: BuktiForm | null
-    setData: React.Dispatch<React.SetStateAction<BuktiForm | null>>
+    data: {
+        BuktiFormId: string
+        PendaftaranId: string
+        JenisDokumenId: string
+        NamaFile: string
+        NamaDokumen: string
+        CreatedAt: Date | null
+        UpdatedAt: Date | null
+    } | null
+    setData: React.Dispatch<
+        React.SetStateAction<{
+            BuktiFormId: string
+            PendaftaranId: string
+            JenisDokumenId: string
+            NamaFile: string
+            NamaDokumen: string
+            CreatedAt: Date | null
+            UpdatedAt: Date | null
+        } | null>
+    >
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     pdfPreview: string | null

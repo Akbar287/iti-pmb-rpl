@@ -199,7 +199,6 @@ export function UserDataTable({
         setOpenDialogUser(true)
         setLoadingAssignRole(true)
         form.reset()
-        form.setValue('Avatar', 'default.png')
         setProvinsiData([])
         setKabupatenData([])
         setKecamatanData([])
@@ -271,7 +270,6 @@ export function UserDataTable({
                     )
                     form.setValue('JenisKelamin', res.JenisKelamin)
                     form.setValue('PendidikanTerakhir', res.PendidikanTerakhir)
-                    form.setValue('Avatar', res.Avatar || 'default.png')
                     form.setValue('Agama', res.Agama || '')
                     form.setValue('Telepon', res.Telepon || '')
                     form.setValue('NomorWa', res.NomorWa || '')
@@ -301,7 +299,6 @@ export function UserDataTable({
             TanggalLahir: undefined,
             JenisKelamin: undefined,
             PendidikanTerakhir: undefined,
-            Avatar: '',
             Agama: '',
             Telepon: '',
             NomorWa: '',
@@ -323,7 +320,6 @@ export function UserDataTable({
                     form.getValues('JenisKelamin') || JenisKelamin.PRIA,
                 PendidikanTerakhir:
                     form.getValues('PendidikanTerakhir') || 'TIDAK_TAMAT_SD',
-                Avatar: form.getValues('Avatar'),
                 Agama: form.getValues('Agama'),
                 Telepon: form.getValues('Telepon'),
                 NomorWa: form.getValues('NomorWa'),
@@ -370,7 +366,6 @@ export function UserDataTable({
                     form.getValues('JenisKelamin') || JenisKelamin.PRIA,
                 PendidikanTerakhir:
                     form.getValues('PendidikanTerakhir') || 'TIDAK_TAMAT_SD',
-                Avatar: form.getValues('Avatar'),
                 Agama: form.getValues('Agama'),
                 Telepon: form.getValues('Telepon'),
                 NomorWa: form.getValues('NomorWa'),
@@ -758,6 +753,7 @@ export function UserDataTable({
             />
             <SheetManageData
                 openDialogUser={openDialogUser}
+                userIdData={userIdData}
                 setOpenDialogUser={setOpenDialogUser}
                 selectedUser={selectedUser}
                 setSelectedUser={setSelectedUser}
@@ -801,8 +797,10 @@ export function SheetManageData({
     desaData,
     setDesaData,
     titleDialog,
+    userIdData,
 }: {
     openDialogUser: boolean
+    userIdData: string
     setOpenDialogUser: React.Dispatch<React.SetStateAction<boolean>>
     selectedUser: UserTable | undefined
     loadingAssignRole: boolean
@@ -854,13 +852,13 @@ export function SheetManageData({
                                             <AvatarImage
                                                 src={
                                                     BASE_URL +
-                                                    '/api/protected/avatar?avatar=' +
-                                                    form.getValues('Avatar')
+                                                    '/api/protected/avatar?userId=' +
+                                                    userIdData
                                                 }
-                                                alt={form.getValues('Nama')}
+                                                alt={form.watch('Nama')}
                                             />
                                             <AvatarFallback>
-                                                {form.getValues('Nama')}
+                                                {form.watch('Nama')}
                                             </AvatarFallback>
                                         </Avatar>
                                     </div>

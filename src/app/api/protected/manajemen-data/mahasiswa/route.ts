@@ -232,7 +232,7 @@ app.get('/', async (c) => {
                 PendidikanTerakhir:
                     data?.Mahasiswa.User.PendidikanTerakhir ||
                     Jenjang.TIDAK_TAMAT_SD,
-                Avatar: data?.Mahasiswa.User.Avatar ?? 'default.png',
+                Avatar: process.env.NEXT_PUBLIC_API_BASE_URL + '/api/protected/avatar?userId=' + data?.Mahasiswa.User.UserId,
                 Agama: data?.Mahasiswa.User.Agama ?? '',
                 Telepon: data?.Mahasiswa.User.Telepon ?? '',
                 NomorWa: data?.Mahasiswa.User.NomorWa ?? '',
@@ -498,7 +498,7 @@ app.post('/', async (c) => {
                 TanggalLahir: body.User.TanggalLahir,
                 JenisKelamin: body.User.JenisKelamin,
                 PendidikanTerakhir: body.User.PendidikanTerakhir,
-                Avatar: body.User.Avatar,
+                Avatar: null,
                 Agama: body.User.Agama,
                 Telepon: body.User.Telepon,
                 NomorWa: body.User.NomorWa,
@@ -727,7 +727,6 @@ app.put('/', async (c) => {
             TanggalLahir: body.User.TanggalLahir,
             JenisKelamin: body.User.JenisKelamin,
             PendidikanTerakhir: body.User.PendidikanTerakhir,
-            Avatar: body.User.Avatar,
             Agama: body.User.Agama,
             Telepon: body.User.Telepon,
             NomorWa: body.User.NomorWa,

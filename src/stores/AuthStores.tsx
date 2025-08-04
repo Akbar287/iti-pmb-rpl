@@ -22,7 +22,7 @@ const useCountStore = create<State & Actions>((set, get) => ({
         TanggalLahir: null,
         JenisKelamin: JenisKelamin.PRIA,
         PendidikanTerakhir: Jenjang.TIDAK_TAMAT_SD,
-        Avatar: '',
+        Avatar: null,
         Agama: '',
         Telepon: '',
         NomorWa: '',
