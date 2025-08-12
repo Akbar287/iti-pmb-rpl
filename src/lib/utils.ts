@@ -35,3 +35,10 @@ export function formatDateToIndonesian(isoDateTime: string): string {
 
   return formattedDate;
 }
+
+export function getInitials(programStudi: string): string {
+  return programStudi
+    .split(" ")                         
+    .map(word => word[0].toUpperCase()) 
+    .join("");                          
+}

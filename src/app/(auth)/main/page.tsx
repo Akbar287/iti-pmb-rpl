@@ -1,8 +1,11 @@
 import React from 'react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { User } from 'lucide-react'
+import { getSession } from '@/provider/api'
+import Dashboard from '@/components/dashboard/Dashboard'
 
-const Page = () => {
+const Page = async () => {
+    const session = await getSession()
     return (
         <React.Fragment>
             <div className="w-full flex">
@@ -15,6 +18,7 @@ const Page = () => {
                     </AlertDescription>
                 </Alert>
             </div>
+            <Dashboard session={session} />
         </React.Fragment>
     )
 }
