@@ -173,3 +173,31 @@ export interface ChartDataItemPmb {
     status: string
     message: string
 }
+
+export interface ChartDataItemRektor {
+    data: [
+        { hasilPerProdi: HasilPerProdiPmb[] },
+        { countPerStatusLengkap: CountPerStatusLengkapPmb[] },
+        { hasilMK: HasilMKPmb[] },
+        { totalUserPerRole: HasilCPPmb[] },
+        SkChart[],
+        SkChart[]
+    ]
+    status: string
+    message: string
+}
+
+export interface SkChart {
+    name: string
+    total: number
+    fill: string
+}
+
+export interface ChartDataItemAdmin {
+    data: [
+        { hasilPerProdi: HasilPerProdiPmb[] },
+        { totalUserPerRole: HasilCPPmb[] }
+    ]
+    status: string
+    message: string
+}

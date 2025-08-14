@@ -1,6 +1,8 @@
 import {
     ChartAkademikData,
+    ChartDataItemAdmin,
     ChartDataItemPmb,
+    ChartDataItemRektor,
     ChartKaprodiData,
     ChartMahasiswaData,
     ChartResponseAsesor,
@@ -63,6 +65,32 @@ export async function getChartAkademikRole(
 export async function getChartPmbRole(
     roleId: string
 ): Promise<ChartDataItemPmb> {
+    const params = new URLSearchParams({
+        _r: String(roleId),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/chart?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch chart')
+    return res.json()
+}
+
+export async function getChartRektorRole(
+    roleId: string
+): Promise<ChartDataItemRektor> {
+    const params = new URLSearchParams({
+        _r: String(roleId),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/chart?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to fetch chart')
+    return res.json()
+}
+
+export async function getChartAdminRole(
+    roleId: string
+): Promise<ChartDataItemAdmin> {
     const params = new URLSearchParams({
         _r: String(roleId),
     })

@@ -31,6 +31,147 @@ app.get('/', async (c) => {
     }
 
     if (role.Name.match('Rektor')) {
+        let data: any = []
+
+        // Chart 1 - Jumlah Mahasiswa per Program Studi
+        const countPerProdi = await prisma.programStudi.findMany({
+            where: { DeletedAt: null },
+            select: {
+                ProgramStudiId: true,
+                Nama: true,
+                _count: { select: { DaftarUlang: true }},
+            },
+        });
+
+        const hasilPerProdi = countPerProdi.map(p => ({
+            programStudiId: p.ProgramStudiId,
+            programStudi: p.Nama,
+            jumlahMahasiswa: p._count.DaftarUlang,
+        }));
+
+        data.push( {hasilPerProdi} );
+
+        // Chart 2 - Jumlah Mahasiswa per status
+        const byStatus = await prisma.statusMahasiswaAssesmentHistory.groupBy({
+            by: ['StatusMahasiswaAssesmentId'],
+            where: { Aktif: true },
+            _count: { _all: true },
+        });
+
+
+        const allStatuses = await prisma.statusMahasiswaAssesment.findMany({
+            select: { StatusMahasiswaAssesmentId: true, NamaStatus: true, Urutan: true },
+            orderBy: { Urutan: 'asc' },
+        });
+
+        const byId = new Map(byStatus.map(s => [s.StatusMahasiswaAssesmentId, s._count._all]));
+
+        const countPerStatusLengkap = allStatuses.map(s => ({
+            statusId: s.StatusMahasiswaAssesmentId,
+            status: s.NamaStatus,
+            jumlah: byId.get(s.StatusMahasiswaAssesmentId) ?? 0,
+        }));
+
+        data.push({ countPerStatusLengkap });
+
+        // Chart 3 - Jumlah MK per Program Studi
+        const mkPerProdi = await prisma.programStudi.findMany({
+            where: { DeletedAt: null },
+            select: {
+                ProgramStudiId: true,
+                Nama: true,
+                _count: {
+                select: {
+                    MataKuliah: true
+                },
+                },
+            },
+        });
+
+        const hasilMK = mkPerProdi.map(p => ({
+            programStudiId: p.ProgramStudiId,
+            programStudi: p.Nama,
+            jumlahMataKuliah: p._count.MataKuliah,
+        }));
+
+        data.push({ hasilMK });
+
+        // Chart 4 - Jumlah Pengguna berdasarkan Role
+        const countPerRole = await prisma.role.findMany({
+            select: {
+                RoleId: true,
+                Name: true,
+                _count: {
+                    select: { UserHasRoles: true }
+                }
+            },
+            where: { UserHasRoles: { some: {
+                User: {
+                    DeletedAt: null,
+                }
+            }}}
+        });
+
+        const totalUserPerRole = countPerRole.map(r => ({
+            roleId: r.RoleId,
+            role: r.Name,
+            jumlahPengguna: r._count.UserHasRoles,
+        }));
+
+        data.push({ totalUserPerRole });
+
+        // Chart 5 - Jumlah Asesor Belum dan Sudah di SK
+        const [withRelationAsesor, withoutRelationAsesor] = await Promise.all([
+            prisma.assesorMahasiswa.count({
+                where: { 
+                    Confirmation: true,
+                    SkRektorAssesor: { some: {} } },
+            }),
+            prisma.assesorMahasiswa.count({
+                where: { 
+                    Confirmation: true,
+                    SkRektorAssesor: { none: {} } },
+            }),
+        ]);
+
+        data.push([
+            {
+                name: 'Asesor Sudah SK',
+                total: withRelationAsesor,
+                fill: 'var(--chart-1)',
+            },{
+                name: "Asesor Belum SK",
+                total: withoutRelationAsesor,
+                fill: 'var(--chart-2)',
+            }
+        ])
+
+        // Chart 6 - Jumlah Mahasiswa Belum dan Sudah di SK
+        const [withRelationMhs, withoutRelationMhs] = await Promise.all([
+            prisma.pendaftaran.count({
+                where: { SkRektorMahasiswa: { some: {} } },
+            }),
+            prisma.pendaftaran.count({
+                where: { SkRektorMahasiswa: { none: {} } },
+            }),
+        ]);
+
+        data.push([{
+            name: 'Mahasiswa Sudah SK',
+            total: withRelationMhs,
+            fill: 'var(--chart-1)',
+        }, {
+            name: 'Mahasiswa Belum SK',
+            total: withoutRelationMhs,
+            fill: 'var(--chart-2)',
+        }])
+
+
+        return c.json({
+            data : data,
+            status: 'success',
+            message: 'Chart data retrieved successfully',
+        }, { status: 200})
     } else if (role.Name.match('Kaprodi')) {
         let data = []
         // Chart 1
@@ -506,6 +647,54 @@ app.get('/', async (c) => {
             message: 'Chart data retrieved successfully',
         }, { status: 200})
     } else if (role.Name.match('Admin')) {
+        let data: any = []
+        // Chart 1 - Jumlah Mahasiswa per Program Studi
+        const countPerProdi = await prisma.programStudi.findMany({
+            where: { DeletedAt: null },
+            select: {
+                ProgramStudiId: true,
+                Nama: true,
+                _count: { select: { DaftarUlang: true }},
+            },
+        });
+
+        const hasilPerProdi = countPerProdi.map(p => ({
+            programStudiId: p.ProgramStudiId,
+            programStudi: p.Nama,
+            jumlahMahasiswa: p._count.DaftarUlang,
+        }));
+
+        data.push( {hasilPerProdi} );
+
+        // Chart 2 - Jumlah Pengguna berdasarkan Role
+        const countPerRole = await prisma.role.findMany({
+            select: {
+                RoleId: true,
+                Name: true,
+                _count: {
+                    select: { UserHasRoles: true }
+                }
+            },
+            where: { UserHasRoles: { some: {
+                User: {
+                    DeletedAt: null,
+                }
+            }}}
+        });
+
+        const totalUserPerRole = countPerRole.map(r => ({
+            roleId: r.RoleId,
+            role: r.Name,
+            jumlahPengguna: r._count.UserHasRoles,
+        }));
+
+        data.push({ totalUserPerRole });
+
+        return c.json({
+            data: data,
+            status: 'success',
+            message: 'Chart data retrieved successfully',
+        }, { status: 200})
     } else if (role.Name.match('PMB')) {
 
         // chart 1 - Jumlah Mahasiswa per Program Studi
