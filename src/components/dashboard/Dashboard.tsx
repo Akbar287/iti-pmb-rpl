@@ -1,10 +1,14 @@
 'use client'
 import {
+    getChartAkademikRole,
     getChartAsesorRole,
     getChartKaprodiRole,
     getChartMahasiswaRole,
+    getChartPmbRole,
 } from '@/services/ChartServices'
 import {
+    ChartAkademikData,
+    ChartDataItemPmb,
     ChartKaprodiData,
     ChartMahasiswaData,
     ChartResponseAsesor,
@@ -67,8 +71,11 @@ const Dashboard = ({ session }: { session: Session | null }) => {
     )
     const [dataKaprodi, setDataKaprodi] =
         React.useState<ChartKaprodiData | null>(null)
+    const [dataAkademik, setDataAkademik] =
+        React.useState<ChartAkademikData | null>(null)
     const [dataAsesor, setDataAsesor] =
         React.useState<ChartResponseAsesor | null>(null)
+    const [dataPmb, setDataPmb] = React.useState<ChartDataItemPmb | null>(null)
     React.useEffect(() => {
         setLoading(true)
         let roleState: {
@@ -107,7 +114,17 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                 .finally(() => setLoading(false))
         } else if (roleState?.Name.match('Admin')) {
         } else if (roleState?.Name.match('PMB')) {
+            setLoading(true)
+            getChartPmbRole(roleState.RoleId)
+                .then((res) => setDataPmb(res))
+                .catch((err) => {})
+                .finally(() => setLoading(false))
         } else if (roleState?.Name.match('Akademik')) {
+            setLoading(true)
+            getChartAkademikRole(roleState.RoleId)
+                .then((res) => setDataAkademik(res))
+                .catch((err) => {})
+                .finally(() => setLoading(false))
         } else {
             setLoading(false)
         }
@@ -1015,7 +1032,433 @@ const Dashboard = ({ session }: { session: Session | null }) => {
             )
         } else if (role.Name.match('Admin')) {
         } else if (role.Name.match('PMB')) {
+            const chartConfigPmb1 = {
+                jumlahMahasiswa: {
+                    label: 'Jumlah Mahasiswa',
+                    color: 'var(--chart-1)',
+                },
+            } satisfies ChartConfig
+            const chartConfigPmb2 = {
+                jumlah: {
+                    label: 'Jumlah Mahasiswa',
+                    color: 'var(--chart-2)',
+                },
+            } satisfies ChartConfig
+            const chartConfigPmb3 = {
+                jumlahMataKuliah: {
+                    label: 'Jumlah Mata Kuliah',
+                    color: 'var(--chart-2)',
+                },
+            } satisfies ChartConfig
+            const chartConfigPmb4 = {
+                jumlahCapaianPembelajaran: {
+                    label: 'Jumlah Capaian Pembelajaran',
+                    color: 'var(--chart-2)',
+                },
+            } satisfies ChartConfig
+
+            return (
+                <div className="w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 mb-3">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Jumlah Mahasiswa</CardTitle>
+                                <CardDescription>
+                                    Jumlah Mahasiswa per Program Studi
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {dataPmb && dataPmb.data.length > 0 ? (
+                                    <ChartContainer config={chartConfigPmb1}>
+                                        <BarChart
+                                            accessibilityLayer
+                                            data={dataPmb.data[0].hasilPerProdi}
+                                        >
+                                            <CartesianGrid vertical={false} />
+                                            <XAxis
+                                                dataKey="programStudi"
+                                                tickLine={false}
+                                                axisLine={false}
+                                                tickMargin={8}
+                                                tickFormatter={(value) =>
+                                                    getInitials(value)
+                                                }
+                                            />
+                                            <ChartTooltip
+                                                cursor={false}
+                                                content={
+                                                    <ChartTooltipContent />
+                                                }
+                                            />
+                                            <Bar
+                                                dataKey="jumlahMahasiswa"
+                                                fill="var(--chart-1)"
+                                                radius={8}
+                                            >
+                                                <LabelList
+                                                    position="top"
+                                                    offset={12}
+                                                    className="fill-foreground"
+                                                    fontSize={12}
+                                                />
+                                            </Bar>
+                                        </BarChart>
+                                    </ChartContainer>
+                                ) : (
+                                    <div className="w-full justify-center">
+                                        <h1>Tidak ada Data</h1>
+                                    </div>
+                                )}
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex w-full items-start gap-2 text-sm">
+                                    <div className="grid gap-2">
+                                        <div className="flex items-center gap-2 leading-none font-medium">
+                                            Trending up by 5.2% this month{' '}
+                                            {/* <TrendingUp className="h-4 w-4" /> */}
+                                        </div>
+                                        <div className="text-muted-foreground flex items-center gap-2 leading-none">
+                                            Showing total visitors for the last
+                                            6 months
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-1 mb-3">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Jumlah Mahasiswa</CardTitle>
+                                <CardDescription>
+                                    Jumlah Mahasiswa per Status
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {dataPmb && dataPmb.data.length > 0 ? (
+                                    <ChartContainer config={chartConfigPmb2}>
+                                        <BarChart
+                                            accessibilityLayer
+                                            data={
+                                                dataPmb.data[1]
+                                                    .countPerStatusLengkap
+                                            }
+                                        >
+                                            <CartesianGrid vertical={false} />
+                                            <XAxis
+                                                dataKey="status"
+                                                tickLine={false}
+                                                axisLine={false}
+                                                tickMargin={8}
+                                                tickFormatter={(value) =>
+                                                    getInitials(value)
+                                                }
+                                            />
+                                            <ChartTooltip
+                                                cursor={false}
+                                                content={
+                                                    <ChartTooltipContent />
+                                                }
+                                            />
+                                            <Bar
+                                                dataKey="jumlah"
+                                                fill="var(--chart-1)"
+                                                radius={8}
+                                            >
+                                                <LabelList
+                                                    position="top"
+                                                    offset={12}
+                                                    className="fill-foreground"
+                                                    fontSize={12}
+                                                />
+                                            </Bar>
+                                        </BarChart>
+                                    </ChartContainer>
+                                ) : (
+                                    <div className="w-full justify-center">
+                                        <h1>Tidak ada Data</h1>
+                                    </div>
+                                )}
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex w-full items-start gap-2 text-sm">
+                                    <div className="grid gap-2">
+                                        <div className="flex items-center gap-2 leading-none font-medium">
+                                            Trending up by 5.2% this month{' '}
+                                            {/* <TrendingUp className="h-4 w-4" /> */}
+                                        </div>
+                                        <div className="text-muted-foreground flex items-center gap-2 leading-none">
+                                            Showing total visitors for the last
+                                            6 months
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-1 mb-3">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Jumlah Mata Kuliah</CardTitle>
+                                <CardDescription>
+                                    Jumlah Mata Kuliah per Program Studi
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {dataPmb && dataPmb.data.length > 0 ? (
+                                    <ChartContainer config={chartConfigPmb3}>
+                                        <BarChart
+                                            accessibilityLayer
+                                            data={dataPmb.data[2].hasilMK}
+                                        >
+                                            <CartesianGrid vertical={false} />
+                                            <XAxis
+                                                dataKey="programStudi"
+                                                tickLine={false}
+                                                axisLine={false}
+                                                tickMargin={8}
+                                                tickFormatter={(value) =>
+                                                    getInitials(value)
+                                                }
+                                            />
+                                            <ChartTooltip
+                                                cursor={false}
+                                                content={
+                                                    <ChartTooltipContent />
+                                                }
+                                            />
+                                            <Bar
+                                                dataKey="jumlahMataKuliah"
+                                                fill="var(--chart-2)"
+                                                radius={8}
+                                            >
+                                                <LabelList
+                                                    position="top"
+                                                    offset={12}
+                                                    className="fill-foreground"
+                                                    fontSize={12}
+                                                />
+                                            </Bar>
+                                        </BarChart>
+                                    </ChartContainer>
+                                ) : (
+                                    <div className="w-full justify-center">
+                                        <h1>Tidak ada Data</h1>
+                                    </div>
+                                )}
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex w-full items-start gap-2 text-sm">
+                                    <div className="grid gap-2">
+                                        <div className="flex items-center gap-2 leading-none font-medium">
+                                            Trending up by 5.2% this month{' '}
+                                            {/* <TrendingUp className="h-4 w-4" /> */}
+                                        </div>
+                                        <div className="text-muted-foreground flex items-center gap-2 leading-none">
+                                            Showing total visitors for the last
+                                            6 months
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-1 mb-3">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>
+                                    Jumlah Capaian Pembelajaran
+                                </CardTitle>
+                                <CardDescription>
+                                    Jumlah Capaian Pembelajaran per Program
+                                    Studi
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {dataPmb && dataPmb.data.length > 0 ? (
+                                    <ChartContainer config={chartConfigPmb4}>
+                                        <BarChart
+                                            accessibilityLayer
+                                            data={dataPmb.data[3].hasilCP}
+                                        >
+                                            <CartesianGrid vertical={false} />
+                                            <XAxis
+                                                dataKey="programStudi"
+                                                tickLine={false}
+                                                axisLine={false}
+                                                tickMargin={8}
+                                                tickFormatter={(value) =>
+                                                    getInitials(value)
+                                                }
+                                            />
+                                            <ChartTooltip
+                                                cursor={false}
+                                                content={
+                                                    <ChartTooltipContent />
+                                                }
+                                            />
+                                            <Bar
+                                                dataKey="jumlahCapaianPembelajaran"
+                                                fill="var(--chart-2)"
+                                                radius={8}
+                                            >
+                                                <LabelList
+                                                    position="top"
+                                                    offset={12}
+                                                    className="fill-foreground"
+                                                    fontSize={12}
+                                                />
+                                            </Bar>
+                                        </BarChart>
+                                    </ChartContainer>
+                                ) : (
+                                    <div className="w-full justify-center">
+                                        <h1>Tidak ada Data</h1>
+                                    </div>
+                                )}
+                            </CardContent>
+                            <CardFooter>
+                                <div className="flex w-full items-start gap-2 text-sm">
+                                    <div className="grid gap-2">
+                                        <div className="flex items-center gap-2 leading-none font-medium">
+                                            Trending up by 5.2% this month{' '}
+                                            {/* <TrendingUp className="h-4 w-4" /> */}
+                                        </div>
+                                        <div className="text-muted-foreground flex items-center gap-2 leading-none">
+                                            Showing total visitors for the last
+                                            6 months
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </div>
+            )
         } else if (role.Name.match('Akademik')) {
+            const chartConfigAkademikAsesor = {
+                total: {
+                    label: 'Jumlah',
+                },
+                'Asesor Sudah SK': {
+                    label: 'Asesor Sudah SK',
+                    color: 'var(--chart-1)',
+                },
+                'Asesor Belum SK': {
+                    label: 'Asesor Belum SK',
+                    color: 'var(--chart-2)',
+                },
+            } satisfies ChartConfig
+            const chartConfigAkademikMhs = {
+                total: {
+                    label: 'Jumlah',
+                },
+                'Mahasiswa Sudah SK': {
+                    label: 'Mahasiswa Sudah SK',
+                    color: 'var(--chart-1)',
+                },
+                'Mahasiswa Belum SK': {
+                    label: 'Mahasiswa Belum SK',
+                    color: 'var(--chart-2)',
+                },
+            } satisfies ChartConfig
+
+            return (
+                <div className="w-full flex gap-2 flex-col md:flex-row">
+                    <div className="w-full sm:w-full md:w-1/2">
+                        <Card className="flex flex-col">
+                            <CardHeader className="items-center pb-0">
+                                <CardTitle>Total Asesor</CardTitle>
+                                <CardDescription>
+                                    Berdasarkan Asesor Sudah di SK dan Belum di
+                                    SK
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-1 pb-0">
+                                {dataAkademik &&
+                                dataAkademik.data.length > 0 ? (
+                                    <ChartContainer
+                                        config={chartConfigAkademikAsesor}
+                                        className="[&_.recharts-pie-label-text]:fill-foreground mx-auto aspect-square max-h-[250px] pb-0"
+                                    >
+                                        <PieChart>
+                                            <ChartTooltip
+                                                content={
+                                                    <ChartTooltipContent
+                                                        hideLabel={false}
+                                                    />
+                                                }
+                                            />
+                                            <Pie
+                                                data={dataAkademik.data[0]}
+                                                dataKey="total"
+                                                label
+                                                nameKey="name"
+                                            />
+                                        </PieChart>
+                                    </ChartContainer>
+                                ) : (
+                                    <div className="w-full">Tidak Ada data</div>
+                                )}
+                            </CardContent>
+                            <CardFooter className="flex-col gap-2 text-sm">
+                                <div className="flex items-center gap-2 leading-none font-medium">
+                                    Trending up by 5.2% this month
+                                </div>
+                                <div className="text-muted-foreground leading-none">
+                                    Showing total visitors for the last 6 months
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                    <div className="w-full sm:w-full md:w-1/2">
+                        <Card className="flex flex-col">
+                            <CardHeader className="items-center pb-0">
+                                <CardTitle>Total Mahasiswa</CardTitle>
+                                <CardDescription>
+                                    Berdasarkan Mahasiswa yang sudah di SK dan
+                                    belum di SK
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex-1 pb-0">
+                                {dataAkademik &&
+                                dataAkademik.data.length > 0 ? (
+                                    <ChartContainer
+                                        config={chartConfigAkademikMhs}
+                                        className="[&_.recharts-pie-label-text]:fill-foreground mx-auto aspect-square max-h-[250px] pb-0"
+                                    >
+                                        <PieChart>
+                                            <ChartTooltip
+                                                content={
+                                                    <ChartTooltipContent
+                                                        hideLabel={false}
+                                                    />
+                                                }
+                                            />
+                                            <Pie
+                                                data={dataAkademik.data[1]}
+                                                dataKey="total"
+                                                label
+                                                nameKey="name"
+                                            />
+                                        </PieChart>
+                                    </ChartContainer>
+                                ) : (
+                                    <div className="w-full">Tidak Ada data</div>
+                                )}
+                            </CardContent>
+                            <CardFooter className="flex-col gap-2 text-sm">
+                                <div className="flex items-center gap-2 leading-none font-medium">
+                                    Trending up by 5.2% this month
+                                </div>
+                                <div className="text-muted-foreground leading-none">
+                                    Showing total visitors for the last 6 months
+                                </div>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                </div>
+            )
         } else {
         }
     } else {

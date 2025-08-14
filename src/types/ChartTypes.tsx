@@ -125,3 +125,51 @@ export interface ChartKaprodiData {
     status: string
     message: string
 }
+
+export interface ChartItem {
+    name: string
+    total: number
+}
+
+export interface ChartAkademikData {
+    data: ChartItem[][]
+    status: string
+    message: string
+}
+
+export interface HasilPerProdiPmb {
+    programStudiId: string
+    programStudi: string
+    jumlahMahasiswa: number
+}
+
+export interface CountPerStatusLengkapPmb {
+    statusId: string
+    status: string
+    jumlah: number
+}
+
+export interface HasilMKPmb {
+    programStudiId: string
+    programStudi: string
+    jumlahMataKuliah: number
+}
+
+export interface HasilCPPmb {
+    programStudiId: string
+    programStudi: string
+    jumlahCapaianPembelajaran: number
+}
+
+export interface ChartDataPmb {
+    hasilPerProdi?: HasilPerProdiPmb[]
+    countPerStatusLengkap?: CountPerStatusLengkapPmb[]
+    hasilMK?: HasilMKPmb[]
+    hasilCP?: HasilCPPmb[]
+}
+
+export interface ChartDataItemPmb {
+    data: ChartDataPmb[]
+    status: string
+    message: string
+}

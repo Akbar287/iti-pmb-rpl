@@ -507,63 +507,155 @@ app.get('/', async (c) => {
         }, { status: 200})
     } else if (role.Name.match('Admin')) {
     } else if (role.Name.match('PMB')) {
+
+        // chart 1 - Jumlah Mahasiswa per Program Studi
+        let data = []
+        const countPerProdi = await prisma.programStudi.findMany({
+            where: { DeletedAt: null },
+            select: {
+                ProgramStudiId: true,
+                Nama: true,
+                _count: { select: { DaftarUlang: true }},
+            },
+        });
+
+        const hasilPerProdi = countPerProdi.map(p => ({
+            programStudiId: p.ProgramStudiId,
+            programStudi: p.Nama,
+            jumlahMahasiswa: p._count.DaftarUlang,
+        }));
+
+        data.push( {hasilPerProdi} );
+
+
+        // Chart 2 - Jumlah Mahasiswa per status
+        const byStatus = await prisma.statusMahasiswaAssesmentHistory.groupBy({
+            by: ['StatusMahasiswaAssesmentId'],
+            where: { Aktif: true },
+            _count: { _all: true },
+        });
+
+
+        const allStatuses = await prisma.statusMahasiswaAssesment.findMany({
+            select: { StatusMahasiswaAssesmentId: true, NamaStatus: true, Urutan: true },
+            orderBy: { Urutan: 'asc' },
+        });
+
+        const byId = new Map(byStatus.map(s => [s.StatusMahasiswaAssesmentId, s._count._all]));
+
+        const countPerStatusLengkap = allStatuses.map(s => ({
+            statusId: s.StatusMahasiswaAssesmentId,
+            status: s.NamaStatus,
+            jumlah: byId.get(s.StatusMahasiswaAssesmentId) ?? 0,
+        }));
+
+        data.push({ countPerStatusLengkap });
+
+        // Chart 3 - Jumlah MK per Program Studi
+        const mkPerProdi = await prisma.programStudi.findMany({
+            where: { DeletedAt: null },
+            select: {
+                ProgramStudiId: true,
+                Nama: true,
+                _count: {
+                select: {
+                    MataKuliah: true
+                },
+                },
+            },
+        });
+
+        const hasilMK = mkPerProdi.map(p => ({
+            programStudiId: p.ProgramStudiId,
+            programStudi: p.Nama,
+            jumlahMataKuliah: p._count.MataKuliah,
+        }));
+
+        data.push({ hasilMK });
+
+        const prodis = await prisma.programStudi.findMany({
+            where: { DeletedAt: null },
+            select: { ProgramStudiId: true, Nama: true },
+        });
+
+        const hasilCP = await Promise.all(
+        prodis.map(async (p) => {
+            const countCP = await prisma.capaianPembelajaran.count({
+            where: {
+                DeletedAt: null,
+                MataKuliah: {
+                ProgramStudiId: p.ProgramStudiId,
+                DeletedAt: null,
+                },
+                Active: true,
+            },
+            });
+
+            return {
+            programStudiId: p.ProgramStudiId,
+            programStudi: p.Nama,
+            jumlahCapaianPembelajaran: countCP,
+            };
+        }));
+
+        data.push({ hasilCP });
+
+        return c.json({
+            data: data,
+            status: 'success',
+            message: 'Chart data retrieved successfully',
+        },{ status: 200 })
     } else if (role.Name.match('Akademik')) {
-        
-        //Chart 1
-        // let allData = await prisma.pendaftaran.findMany({
-        //     select: {
-        //                 AssesorMahasiswa: {
-        //                     select: {
-        //                         Asesor: {
-        //                             select: {
-        //                                 AsesorId: true
-        //                             }
-        //                         }
-        //                     }
-        //                 },
-        //                 SkRektorMahasiswa: {
-        //                     select: {
-        //                         SkRektorId: true
-        //                     }
-        //                 },
-        //                 DaftarUlang: {
-        //                     select: {
-        //                         ProgramStudi: {
-        //                             select: {ProgramStudiId: true}
-        //                         }
-        //                     }
-        //                 }
-        //     },
-        //     where: {
-        //         AssesorMahasiswa: {some: {Asesor: {DeletedAt: null}}}
-        //     }
-        // })
 
-        // const result = allData.map((ps) => {
-        //     let withSk = 0
-        //     let withoutSk = 0
+        let data = []
+        // Chart 1
+        const [withRelationAsesor, withoutRelationAsesor] = await Promise.all([
+            prisma.assesorMahasiswa.count({
+                where: { 
+                    Confirmation: true,
+                    SkRektorAssesor: { some: {} } },
+            }),
+            prisma.assesorMahasiswa.count({
+                where: { 
+                    Confirmation: true,
+                    SkRektorAssesor: { none: {} } },
+            }),
+        ]);
 
-        //     ps.AsesorProgramStudi.forEach((ap) => {
-        //         ap.Asesor?.AssesorMahasiswa.forEach((am) => {
-        //             if (am.Pendaftaran?.SkRektorMahasiswa?.length > 0) {
-        //                 withSk++
-        //             } else {
-        //                 withoutSk++
-        //             }
-        //         })
-        //     })
+        data.push([
+            {
+                name: 'Asesor Sudah SK',
+                total: withRelationAsesor,
+                fill: 'var(--chart-1)',
+            },{
+                name: "Asesor Belum SK",
+                total: withoutRelationAsesor,
+                fill: 'var(--chart-2)',
+            }
+        ])
 
-        //     return {
-        //         programStudiId: ps.ProgramStudiId,
-        //         nama: ps.Nama,
-        //         withSk,
-        //         withoutSk,
-        //     }
-        // })
+        const [withRelationMhs, withoutRelationMhs] = await Promise.all([
+            prisma.pendaftaran.count({
+                where: { SkRektorMahasiswa: { some: {} } },
+            }),
+            prisma.pendaftaran.count({
+                where: { SkRektorMahasiswa: { none: {} } },
+            }),
+        ]);
+
+        data.push([{
+            name: 'Mahasiswa Sudah SK',
+            total: withRelationMhs,
+            fill: 'var(--chart-1)',
+        }, {
+            name: 'Mahasiswa Belum SK',
+            total: withoutRelationMhs,
+            fill: 'var(--chart-2)',
+        }])
 
         return c.json(
             {
-                data: [],
+                data,
                 status: 'success',
                 message: 'Chart data retrieved successfully',
             },
