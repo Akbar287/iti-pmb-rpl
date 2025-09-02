@@ -123,4 +123,5 @@ export type CalonMahasiswaRplPage = {
     Periode: string
     Gelombang: string
     NamaProdi: string
+    Username: string
 }

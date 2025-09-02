@@ -226,24 +226,24 @@ const RekapitulasiComponent = () => {
                                 Copy Pendaftaran Mahasiswa ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            {jd.Status === 'Rekapitulasi Asessmen' && (
-                                <DropdownMenuItem
-                                    onClick={() =>
-                                        startAsessment(jd.PendaftaranId)
-                                    }
-                                >
-                                    {jd.TotalAsessmen > 0
-                                        ? 'Lanjutkan Rekapitulasi'
-                                        : 'Mulai Rekapitulasi'}
-                                </DropdownMenuItem>
-                            )}
-                            {jd.TotalEval === jd.TotalAsessmen && (
-                                <DropdownMenuItem
-                                    onClick={() => continueSanggahan(jd)}
-                                >
-                                    Lanjutkan Ke Sanggahan
-                                </DropdownMenuItem>
-                            )}
+                            {jd.Status === 'Rekapitulasi Asessmen' &&
+                                jd.TotalEval !== jd.TotalAsessmen && (
+                                    <DropdownMenuItem
+                                        onClick={() =>
+                                            startAsessment(jd.PendaftaranId)
+                                        }
+                                    >
+                                        Mulai Rekapitulasi
+                                    </DropdownMenuItem>
+                                )}
+                            {jd.TotalEval === jd.TotalAsessmen &&
+                                jd.Status === 'Rekapitulasi Asessmen' && (
+                                    <DropdownMenuItem
+                                        onClick={() => continueSanggahan(jd)}
+                                    >
+                                        Lanjutkan Ke Sanggahan
+                                    </DropdownMenuItem>
+                                )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )

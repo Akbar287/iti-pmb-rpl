@@ -8,7 +8,7 @@ import {
     StatusPerkawinan,
 } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
-import bcrypt from "bcrypt"
+import bcrypt from 'bcrypt'
 import {
     CalonMahasiswaRplPage,
     CalonMahasiswaRplRequestResponseDTO,
@@ -78,9 +78,38 @@ app.get('/', async (c) => {
                         NilaiLulusan: true,
                         Alamat: {
                             select: {
-                                AlamatId: true, Alamat: true, KodePos: true, Desa: {select: {DesaId: true, Kecamatan: {select: {KecamatanId: true, Kabupaten: {select: {KabupatenId: true, Provinsi: {select: {ProvinsiId: true, Country: {select: {CountryId: true}}}}}}}}}}
-                            }
-                        }
+                                AlamatId: true,
+                                Alamat: true,
+                                KodePos: true,
+                                Desa: {
+                                    select: {
+                                        DesaId: true,
+                                        Kecamatan: {
+                                            select: {
+                                                KecamatanId: true,
+                                                Kabupaten: {
+                                                    select: {
+                                                        KabupatenId: true,
+                                                        Provinsi: {
+                                                            select: {
+                                                                ProvinsiId:
+                                                                    true,
+                                                                Country: {
+                                                                    select: {
+                                                                        CountryId:
+                                                                            true,
+                                                                    },
+                                                                },
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
                 OrangTua: {
@@ -232,7 +261,10 @@ app.get('/', async (c) => {
                 PendidikanTerakhir:
                     data?.Mahasiswa.User.PendidikanTerakhir ||
                     Jenjang.TIDAK_TAMAT_SD,
-                Avatar: process.env.NEXT_PUBLIC_API_BASE_URL + '/api/protected/avatar?userId=' + data?.Mahasiswa.User.UserId,
+                Avatar:
+                    process.env.NEXT_PUBLIC_API_BASE_URL +
+                    '/api/protected/avatar?userId=' +
+                    data?.Mahasiswa.User.UserId,
                 Agama: data?.Mahasiswa.User.Agama ?? '',
                 Telepon: data?.Mahasiswa.User.Telepon ?? '',
                 NomorWa: data?.Mahasiswa.User.NomorWa ?? '',
@@ -249,15 +281,42 @@ app.get('/', async (c) => {
                 JalurPendaftaran: data?.JalurPendaftaran ?? '',
             },
             DaftarUlang: {
-                DaftarUlangId: data?.DaftarUlang.length === 0 ? '' : data?.DaftarUlang?.[0].DaftarUlangId ?? '',
-                Nim: data?.DaftarUlang.length === 0 ? '' : data?.DaftarUlang?.[0].Nim ?? '',
-                JenjangKkniDituju: data?.DaftarUlang.length === 0 ? '' : data?.DaftarUlang?.[0].JenjangKkniDituju ?? '',
-                KipK: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].KipK ?? false,
-                Aktif: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].Aktif ?? false,
-                MengisiBiodata: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].MengisiBiodata ?? false,
-                Finalisasi: data?.DaftarUlang.length === 0 ? false : data?.DaftarUlang?.[0].Finalisasi ?? false,
-                TanggalDaftar: data?.DaftarUlang.length === 0 ? null : data?.DaftarUlang?.[0].TanggalDaftar || null,
-                TanggalDaftarUlang: data?.DaftarUlang.length === 0 ? null : data?.DaftarUlang?.[0].TanggalDaftarUlang || null,
+                DaftarUlangId:
+                    data?.DaftarUlang.length === 0
+                        ? ''
+                        : data?.DaftarUlang?.[0].DaftarUlangId ?? '',
+                Nim:
+                    data?.DaftarUlang.length === 0
+                        ? ''
+                        : data?.DaftarUlang?.[0].Nim ?? '',
+                JenjangKkniDituju:
+                    data?.DaftarUlang.length === 0
+                        ? ''
+                        : data?.DaftarUlang?.[0].JenjangKkniDituju ?? '',
+                KipK:
+                    data?.DaftarUlang.length === 0
+                        ? false
+                        : data?.DaftarUlang?.[0].KipK ?? false,
+                Aktif:
+                    data?.DaftarUlang.length === 0
+                        ? false
+                        : data?.DaftarUlang?.[0].Aktif ?? false,
+                MengisiBiodata:
+                    data?.DaftarUlang.length === 0
+                        ? false
+                        : data?.DaftarUlang?.[0].MengisiBiodata ?? false,
+                Finalisasi:
+                    data?.DaftarUlang.length === 0
+                        ? false
+                        : data?.DaftarUlang?.[0].Finalisasi ?? false,
+                TanggalDaftar:
+                    data?.DaftarUlang.length === 0
+                        ? null
+                        : data?.DaftarUlang?.[0].TanggalDaftar || null,
+                TanggalDaftarUlang:
+                    data?.DaftarUlang.length === 0
+                        ? null
+                        : data?.DaftarUlang?.[0].TanggalDaftarUlang || null,
             },
             StatusPerkawinan:
                 data?.Mahasiswa.StatusPerkawinan || StatusPerkawinan.Lajang,
@@ -271,10 +330,23 @@ app.get('/', async (c) => {
                 NomorHpOrangTua: o.NomorHp,
             })),
             InformasiKependudukan: {
-                NoKk: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].NoKk ?? '',
-                NoNik: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].NoNik ?? '',
-                Suku: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].Suku ?? '',
-                InformasiKependudukanId: data?.InformasiKependudukan.length === 0 ? '' : data?.InformasiKependudukan?.[0].InformasiKependudukanId ?? '',
+                NoKk:
+                    data?.InformasiKependudukan.length === 0
+                        ? ''
+                        : data?.InformasiKependudukan?.[0].NoKk ?? '',
+                NoNik:
+                    data?.InformasiKependudukan.length === 0
+                        ? ''
+                        : data?.InformasiKependudukan?.[0].NoNik ?? '',
+                Suku:
+                    data?.InformasiKependudukan.length === 0
+                        ? ''
+                        : data?.InformasiKependudukan?.[0].Suku ?? '',
+                InformasiKependudukanId:
+                    data?.InformasiKependudukan.length === 0
+                        ? ''
+                        : data?.InformasiKependudukan?.[0]
+                              .InformasiKependudukanId ?? '',
             },
             PekerjaanMahasiswa:
                 data?.PekerjaanMahasiswa?.map((p) => ({
@@ -284,30 +356,96 @@ app.get('/', async (c) => {
                         p.StatusPekerjaan ?? StatusPekerjaan.Lainnya,
                 })) ?? [],
             Pesantren: {
-                PesantrenId: data?.Pesantren.length === 0 ? '' : data?.Pesantren?.[0].PesantrenId ?? '',
-                NamaPesantren: data?.Pesantren.length === 0 ? '' : data?.Pesantren?.[0].NamaPesantren ?? '',
-                LamaPesantren: data?.Pesantren.length === 0 ? '' : data?.Pesantren?.[0].LamaPesantren ?? '',
+                PesantrenId:
+                    data?.Pesantren.length === 0
+                        ? ''
+                        : data?.Pesantren?.[0].PesantrenId ?? '',
+                NamaPesantren:
+                    data?.Pesantren.length === 0
+                        ? ''
+                        : data?.Pesantren?.[0].NamaPesantren ?? '',
+                LamaPesantren:
+                    data?.Pesantren.length === 0
+                        ? ''
+                        : data?.Pesantren?.[0].LamaPesantren ?? '',
             },
             InstitusiLama: {
-                InstitusiLamaId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].InstitusiLamaId ?? '',
-                Jenjang: data?.InstitusiLama.length === 0 ? Jenjang.TIDAK_TAMAT_SD : data?.InstitusiLama?.[0].Jenjang ?? Jenjang.TIDAK_TAMAT_SD,
-                JenisInstitusi: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].JenisInstitusi ?? '',
-                NamaInstitusi: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].NamaInstitusi ?? '',
-                Jurusan: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Jurusan ?? '',
-                Nisn: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Nisn ?? '',
-                Npsn: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Npsn ?? '',
-                TahunLulus: data?.InstitusiLama.length === 0 ? 0 : data?.InstitusiLama?.[0].TahunLulus ?? 0,
-                NilaiLulusan: data?.InstitusiLama.length === 0 ? 0 : data?.InstitusiLama?.[0].NilaiLulusan ?? 0,
+                InstitusiLamaId:
+                    data?.InstitusiLama.length === 0
+                        ? ''
+                        : data?.InstitusiLama?.[0].InstitusiLamaId ?? '',
+                Jenjang:
+                    data?.InstitusiLama.length === 0
+                        ? Jenjang.TIDAK_TAMAT_SD
+                        : data?.InstitusiLama?.[0].Jenjang ??
+                          Jenjang.TIDAK_TAMAT_SD,
+                JenisInstitusi:
+                    data?.InstitusiLama.length === 0
+                        ? ''
+                        : data?.InstitusiLama?.[0].JenisInstitusi ?? '',
+                NamaInstitusi:
+                    data?.InstitusiLama.length === 0
+                        ? ''
+                        : data?.InstitusiLama?.[0].NamaInstitusi ?? '',
+                Jurusan:
+                    data?.InstitusiLama.length === 0
+                        ? ''
+                        : data?.InstitusiLama?.[0].Jurusan ?? '',
+                Nisn:
+                    data?.InstitusiLama.length === 0
+                        ? ''
+                        : data?.InstitusiLama?.[0].Nisn ?? '',
+                Npsn:
+                    data?.InstitusiLama.length === 0
+                        ? ''
+                        : data?.InstitusiLama?.[0].Npsn ?? '',
+                TahunLulus:
+                    data?.InstitusiLama.length === 0
+                        ? 0
+                        : data?.InstitusiLama?.[0].TahunLulus ?? 0,
+                NilaiLulusan:
+                    data?.InstitusiLama.length === 0
+                        ? 0
+                        : data?.InstitusiLama?.[0].NilaiLulusan ?? 0,
                 AlamatInstitusi: {
-                        AlamatId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.AlamatId ?? '',
-                        Alamat: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Alamat ?? '',
-                        KodePos: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.KodePos ?? '',
-                        DesaId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.DesaId ?? '',
-                        KecamatanId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.KecamatanId ?? '',
-                        KabupatenId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.KabupatenId ?? '',
-                        ProvinsiId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.ProvinsiId ?? '',
-                        CountryId: data?.InstitusiLama.length === 0 ? '' : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan.Kabupaten.Provinsi.Country.CountryId ?? '',
-                }
+                    AlamatId:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.AlamatId ?? '',
+                    Alamat:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.Alamat ?? '',
+                    KodePos:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.KodePos ?? '',
+                    DesaId:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.Desa.DesaId ??
+                              '',
+                    KecamatanId:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
+                                  .KecamatanId ?? '',
+                    KabupatenId:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
+                                  .Kabupaten.KabupatenId ?? '',
+                    ProvinsiId:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
+                                  .Kabupaten.Provinsi.ProvinsiId ?? '',
+                    CountryId:
+                        data?.InstitusiLama.length === 0
+                            ? ''
+                            : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
+                                  .Kabupaten.Provinsi.Country.CountryId ?? '',
+                },
             },
         }
         return c.json<CalonMahasiswaRplRequestResponseDTO>(response, 200)
@@ -388,6 +526,12 @@ app.get('/', async (c) => {
                             User: {
                                 select: {
                                     Nama: true,
+                                    Userlogin: {
+                                        select: {   
+                                            Username: true,
+                                            Credential: true,
+                                        }
+                                    }
                                 },
                             },
                         },
@@ -400,13 +544,20 @@ app.get('/', async (c) => {
 
         const responses: CalonMahasiswaRplPage[] = data.map((d) => ({
             KodePendaftar: d?.KodePendaftar ?? '',
-            NoNik: d?.InformasiKependudukan.length > 0 ? d?.InformasiKependudukan?.[0].NoNik ?? '' : "",
+            Username: d?.Mahasiswa.User.Userlogin.find(x => x.Credential === 'credential')?.Username ?? '',
+            NoNik:
+                d?.InformasiKependudukan.length > 0
+                    ? d?.InformasiKependudukan?.[0].NoNik ?? ''
+                    : '',
             Nim: d?.DaftarUlang.length > 0 ? d?.DaftarUlang?.[0].Nim ?? '' : '',
             Nama: d?.Mahasiswa.User.Nama ?? '',
             NoUjian: d?.NoUjian ?? '',
             Periode: d?.Periode ?? '',
             Gelombang: d?.Gelombang ?? '',
-            NamaProdi: d?.DaftarUlang.length > 0 ? d?.DaftarUlang?.[0].ProgramStudi.Nama ?? '' : '',
+            NamaProdi:
+                d?.DaftarUlang.length > 0
+                    ? d?.DaftarUlang?.[0].ProgramStudi.Nama ?? ''
+                    : '',
         }))
 
         return c.json<{
@@ -515,14 +666,17 @@ app.post('/', async (c) => {
             KodePendaftar: body.Pendaftaran.KodePendaftar,
             NoUjian: body.Pendaftaran.NoUjian,
             JalurPendaftaran: body.Pendaftaran.JalurPendaftaran,
-            Nim: body.DaftarUlang.Nim
+            Nim: body.DaftarUlang.Nim,
         })
 
         await prisma.userlogin.create({
             data: {
                 UserId: user.UserId,
                 Username: dataUsername,
-                Password: await bcrypt.hash(dataUsername, await bcrypt.genSalt(10)),
+                Password: await bcrypt.hash(
+                    dataUsername,
+                    await bcrypt.genSalt(10)
+                ),
                 Credential: 'credential',
             },
         })
@@ -567,22 +721,23 @@ app.post('/', async (c) => {
         })
 
         const statusPertama = await prisma.statusMahasiswaAssesment.findFirst({
-            select: {StatusMahasiswaAssesmentId: true},
+            select: { StatusMahasiswaAssesmentId: true },
             where: {
-                NamaStatus: "Pengisian Data Diri"
-            }
+                NamaStatus: 'Pengisian Data Diri',
+            },
         })
         if (!statusPertama) {
             return c.json({}, 400)
         }
         await prisma.statusMahasiswaAssesmentHistory.create({
             data: {
-                StatusMahasiswaAssesmentId: statusPertama.StatusMahasiswaAssesmentId,
+                StatusMahasiswaAssesmentId:
+                    statusPertama.StatusMahasiswaAssesmentId,
                 Tanggal: new Date(),
                 PendaftaranId: pendaftaran.PendaftaranId,
                 Keterangan: '',
                 Aktif: true,
-            }
+            },
         })
 
         // Informasi Kependudukan
@@ -627,13 +782,16 @@ app.post('/', async (c) => {
             data: {
                 Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
                 KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
-                DesaId: body.InstitusiLama.AlamatInstitusi.DesaId
-            }
+                DesaId: body.InstitusiLama.AlamatInstitusi.DesaId,
+            },
         })
         await prisma.institusiLama.create({
             data: {
                 PendaftaranId: pendaftaran.PendaftaranId,
-                AlamatId: (alamatInstitusi !== null) ? alamatInstitusi.AlamatId : alamat.AlamatId,
+                AlamatId:
+                    alamatInstitusi !== null
+                        ? alamatInstitusi.AlamatId
+                        : alamat.AlamatId,
                 Jenjang: body.InstitusiLama.Jenjang,
                 JenisInstitusi: body.InstitusiLama.JenisInstitusi,
                 NamaInstitusi: body.InstitusiLama.NamaInstitusi,
@@ -679,6 +837,7 @@ app.post('/', async (c) => {
             KodePendaftar: pendaftaran.KodePendaftar,
             NoNik: body.InformasiKependudukan.NoNik,
             Nim: body.DaftarUlang.Nim,
+            Username: dataUsername,
             Nama: user.Nama,
             NoUjian: pendaftaran.NoUjian,
             Periode: pendaftaran.Periode,
@@ -686,7 +845,7 @@ app.post('/', async (c) => {
             NamaProdi: body.ProgramStudi.NamaProgramStudi,
         }
 
-        // Kirim Ke Notifikasi Wa Mahasiswa ; 
+        // Kirim Ke Notifikasi Wa Mahasiswa ;
         // Username dan Password adalah sama;
         // dataUsername
 
@@ -741,6 +900,16 @@ app.put('/', async (c) => {
         },
     })
 
+    const userlogin = await prisma.userlogin.findFirst({
+        where: {
+            Credential: 'credential',
+            UserId: user.UserId,
+        }, 
+        select: {
+            Username: true,
+        }
+    })
+
     const mahasiswa = await prisma.mahasiswa.update({
         data: {
             UserId: user.UserId,
@@ -775,15 +944,15 @@ app.put('/', async (c) => {
             KodePendaftar: true,
             NoUjian: true,
             Periode: true,
-            Gelombang: true, 
+            Gelombang: true,
             SistemKuliah: true,
-            JalurPendaftaran: true
+            JalurPendaftaran: true,
         },
         where: { PendaftaranId: body.Pendaftaran.PendaftaranId },
     })
 
     // Informasi Kependudukan
-    if(pendaftaran.InformasiKependudukan.length === 0) {
+    if (pendaftaran.InformasiKependudukan.length === 0) {
         await prisma.informasiKependudukan.create({
             data: {
                 PendaftaranId: pendaftaran.PendaftaranId,
@@ -811,7 +980,7 @@ app.put('/', async (c) => {
     }
 
     // Pesantren
-    if(pendaftaran.Pesantren.length === 0) {
+    if (pendaftaran.Pesantren.length === 0) {
         await prisma.pesantren.create({
             data: {
                 PendaftaranId: pendaftaran.PendaftaranId,
@@ -834,12 +1003,12 @@ app.put('/', async (c) => {
             },
         })
     }
-    
-    if(pendaftaran.OrangTua.length !== 0) {
+
+    if (pendaftaran.OrangTua.length !== 0) {
         await prisma.orangTua.deleteMany({
             where: {
-                PendaftaranId: pendaftaran.PendaftaranId
-            }
+                PendaftaranId: pendaftaran.PendaftaranId,
+            },
         })
     }
     body.OrangTua.forEach(async (ot) => {
@@ -857,29 +1026,29 @@ app.put('/', async (c) => {
         })
     })
 
-    let alamatInstitusi = null;
-    if(body.Alamat.AlamatId === body.InstitusiLama.AlamatInstitusi.AlamatId) {
+    let alamatInstitusi = null
+    if (body.Alamat.AlamatId === body.InstitusiLama.AlamatInstitusi.AlamatId) {
         alamatInstitusi = await prisma.alamat.create({
-                data: {
-                    Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
-                    KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
-                    DesaId: body.InstitusiLama.AlamatInstitusi.DesaId
-                }, 
-            })
+            data: {
+                Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
+                KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
+                DesaId: body.InstitusiLama.AlamatInstitusi.DesaId,
+            },
+        })
     } else {
         alamatInstitusi = await prisma.alamat.update({
-                data: {
-                    Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
-                    KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
-                    DesaId: body.InstitusiLama.AlamatInstitusi.DesaId
-                }, 
-                where: {
-                    AlamatId: body.InstitusiLama.AlamatInstitusi.AlamatId
-                }
-            })
+            data: {
+                Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
+                KodePos: body.InstitusiLama.AlamatInstitusi.KodePos,
+                DesaId: body.InstitusiLama.AlamatInstitusi.DesaId,
+            },
+            where: {
+                AlamatId: body.InstitusiLama.AlamatInstitusi.AlamatId,
+            },
+        })
     }
 
-    if(pendaftaran.InstitusiLama.length === 0 ) {
+    if (pendaftaran.InstitusiLama.length === 0) {
         await prisma.institusiLama.create({
             data: {
                 AlamatId: alamatInstitusi.AlamatId,
@@ -891,8 +1060,8 @@ app.put('/', async (c) => {
                 Npsn: body.InstitusiLama.Npsn,
                 TahunLulus: body.InstitusiLama.TahunLulus,
                 NilaiLulusan: body.InstitusiLama.NilaiLulusan,
-                PendaftaranId: pendaftaran.PendaftaranId
-            }
+                PendaftaranId: pendaftaran.PendaftaranId,
+            },
         })
     } else {
         await prisma.institusiLama.update({
@@ -928,7 +1097,7 @@ app.put('/', async (c) => {
         throw new Error('Program Studi not found')
     }
 
-    if(pendaftaran.DaftarUlang.length === 0) {
+    if (pendaftaran.DaftarUlang.length === 0) {
         await prisma.daftarUlang.create({
             data: {
                 PendaftaranId: pendaftaran.PendaftaranId,
@@ -971,69 +1140,113 @@ app.put('/', async (c) => {
         Periode: pendaftaran.Periode,
         Gelombang: pendaftaran.Gelombang,
         NamaProdi: body.ProgramStudi.NamaProgramStudi,
+        Username: userlogin?.Username || ''
     }
     return c.json(response, 200)
 })
 
 app.delete('/', async (c) => {
     const PendaftaranId = c.req.query('id')
-    const idForAll = await prisma.pendaftaran.findFirst({select: {
-        DaftarUlang: {select: {DaftarUlangId: true}},
-        OrangTua: {select: {OrangTuaId: true}},
-        InstitusiLama: {select: {InstitusiLamaId: true, Alamat: {select: {AlamatId: true}}}},
-        Pesantren: {select: {PesantrenId: true}},
-        InformasiKependudukan: {select: {InformasiKependudukanId: true}},
-        Mahasiswa: {select: {MahasiswaId: true, User: {select: {UserId: true}}}}
-    }, where: {PendaftaranId: PendaftaranId}})
+    const idForAll = await prisma.pendaftaran.findFirst({
+        select: {
+            DaftarUlang: { select: { DaftarUlangId: true } },
+            OrangTua: { select: { OrangTuaId: true } },
+            InstitusiLama: {
+                select: {
+                    InstitusiLamaId: true,
+                    Alamat: { select: { AlamatId: true } },
+                },
+            },
+            Pesantren: { select: { PesantrenId: true } },
+            InformasiKependudukan: {
+                select: { InformasiKependudukanId: true },
+            },
+            Mahasiswa: {
+                select: {
+                    MahasiswaId: true,
+                    User: { select: { UserId: true } },
+                },
+            },
+        },
+        where: { PendaftaranId: PendaftaranId },
+    })
 
-    const mhsRole = await prisma.role.findFirst({where: {
-        Name: {
-            equals: 'Mahasiswa', mode: 'insensitive'
-        }
-    }})
+    const mhsRole = await prisma.role.findFirst({
+        where: {
+            Name: {
+                equals: 'Mahasiswa',
+                mode: 'insensitive',
+            },
+        },
+    })
 
-    if (mhsRole && idForAll && idForAll.DaftarUlang && idForAll.DaftarUlang.length > 0) {
+    if (
+        mhsRole &&
+        idForAll &&
+        idForAll.DaftarUlang &&
+        idForAll.DaftarUlang.length > 0
+    ) {
         await prisma.daftarUlang.deleteMany({
             where: {
-                DaftarUlangId: { in: idForAll.DaftarUlang.map(item => item.DaftarUlangId) },
+                DaftarUlangId: {
+                    in: idForAll.DaftarUlang.map((item) => item.DaftarUlangId),
+                },
             },
         })
 
         await prisma.orangTua.deleteMany({
             where: {
-                OrangTuaId: { in: idForAll.OrangTua.map(item => item.OrangTuaId) },
+                OrangTuaId: {
+                    in: idForAll.OrangTua.map((item) => item.OrangTuaId),
+                },
             },
         })
 
         await prisma.pesantren.deleteMany({
             where: {
-                PesantrenId: { in: idForAll.Pesantren.map(item => item.PesantrenId) },
+                PesantrenId: {
+                    in: idForAll.Pesantren.map((item) => item.PesantrenId),
+                },
             },
         })
 
         await prisma.institusiLama.deleteMany({
             where: {
-                InstitusiLamaId: { in: idForAll.InstitusiLama.map(item => item.InstitusiLamaId) },
+                InstitusiLamaId: {
+                    in: idForAll.InstitusiLama.map(
+                        (item) => item.InstitusiLamaId
+                    ),
+                },
             },
         })
 
         await prisma.alamat.deleteMany({
             where: {
                 AlamatId: {
-                    in: idForAll.InstitusiLama.map(il => il.Alamat?.AlamatId).filter((id): id is string => Boolean(id))
-                }
-            }
-        })
-        
-        await prisma.informasiKependudukan.deleteMany({
-            where: {
-                InformasiKependudukanId: { in: idForAll.InformasiKependudukan.map(item => item.InformasiKependudukanId) },
+                    in: idForAll.InstitusiLama.map(
+                        (il) => il.Alamat?.AlamatId
+                    ).filter((id): id is string => Boolean(id)),
+                },
             },
         })
 
-        await prisma.pendaftaran.delete({where: {PendaftaranId: PendaftaranId}})
+        await prisma.informasiKependudukan.deleteMany({
+            where: {
+                InformasiKependudukanId: {
+                    in: idForAll.InformasiKependudukan.map(
+                        (item) => item.InformasiKependudukanId
+                    ),
+                },
+            },
+        })
 
-        await prisma.mahasiswa.delete({where: {MahasiswaId: idForAll.Mahasiswa.MahasiswaId}})
+        await prisma.pendaftaran.delete({
+            where: { PendaftaranId: PendaftaranId },
+        })
+
+        await prisma.mahasiswa.delete({
+            where: { MahasiswaId: idForAll.Mahasiswa.MahasiswaId },
+        })
 
         await prisma.userHasRoles.delete({
             where: {
@@ -1053,27 +1266,62 @@ export const POST = handle(app)
 export const PUT = handle(app)
 export const DELETE = handle(app)
 
-function generateShortStrongPassword(data: {
-    KodePendaftar: string
-    NoUjian: string
-    JalurPendaftaran: string
-    Nim: string
-}) {
-    const { KodePendaftar, NoUjian, JalurPendaftaran, Nim } = data
+function generateShortStrongPassword(
+    data: {
+        KodePendaftar: string
+        NoUjian: string
+        JalurPendaftaran: string
+        Nim: string
+    },
+    opts: { minLength?: number; exactLength?: boolean } = {}
+): string {
+    const { minLength = 8, exactLength = false } = opts
+    const {
+        KodePendaftar = '',
+        NoUjian = '',
+        JalurPendaftaran = '',
+        Nim = '',
+    } = data
 
-    // Ambil 2 karakter dari beberapa field
-    const part1 = KodePendaftar.slice(-2) // e.g. "01"
-    const part2 = NoUjian.slice(-2) // e.g. "56"
-    const part3 = JalurPendaftaran.charAt(0).toUpperCase() // e.g. "R"
-    const part4 = Nim.slice(-2) // e.g. "34"
+    const part1 = KodePendaftar.slice(-2)
+    const part2 = NoUjian.slice(-2)
+    const part3 = (JalurPendaftaran.trim().charAt(0) || 'X').toUpperCase()
+    const part4 = Nim.slice(-2)
 
-    const base = `${part1}${part2}${part3}${part4}`
+    const base = `${part1}${part2}${part3}${part4}`.replace(/[^A-Za-z0-9]/g, '')
+    let username = shuffle(base)
 
-    // Acak susunannya biar lebih aman
-    const shuffled = base
-        .split('')
-        .sort(() => 0.5 - Math.random())
-        .join('')
+    if (username.length < minLength) {
+        username += randomAlnum(minLength - username.length)
+    }
 
-    return shuffled
+    if (exactLength && username.length > minLength) {
+        username = username.slice(0, minLength)
+    }
+
+    return username
+}
+
+function shuffle(s: string): string {
+    const arr = s.split('')
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+    return arr.join('')
+}
+
+function randomAlnum(n: number): string {
+    const chars =
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    const out: string[] = []
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+        const buf = new Uint32Array(n)
+        crypto.getRandomValues(buf)
+        for (let i = 0; i < n; i++) out.push(chars[buf[i] % chars.length])
+    } else {
+        for (let i = 0; i < n; i++)
+            out.push(chars[Math.floor(Math.random() * chars.length)])
+    }
+    return out.join('')
 }

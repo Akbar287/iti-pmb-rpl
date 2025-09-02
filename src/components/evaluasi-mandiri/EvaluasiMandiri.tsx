@@ -85,6 +85,8 @@ const EvaluasiMandiri = ({
     const [form, setForm] = React.useState<CreateMataKuliahMahasiswaTypes>([])
     const [loading, setLoading] = React.useState<boolean>(false)
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
+    const [loadingToEvaluating, setLoadingToEvaluating] =
+        React.useState<boolean>(false)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
 
     const startEvaluating = () => {
@@ -92,11 +94,14 @@ const EvaluasiMandiri = ({
             if (dataDaftarUlang.Status === 'Asessmen Mandiri') {
                 router.push('/evaluasi-mandiri/' + selectableMahasiswa)
             } else {
-                setStatusAsessmenMandiri(dataDaftarUlang.PendaftaranId).then(
-                    (res) => {
+                setLoadingToEvaluating(true)
+                setStatusAsessmenMandiri(dataDaftarUlang.PendaftaranId)
+                    .then((res) => {
                         router.push('/evaluasi-mandiri/' + selectableMahasiswa)
-                    }
-                )
+                    })
+                    .finally(() => {
+                        setLoadingToEvaluating(false)
+                    })
             }
         }
     }
@@ -110,11 +115,11 @@ const EvaluasiMandiri = ({
                         ? {
                               ...dataDaftarUlang,
                               MataKuliahMahasiswa: res,
-                              PilihMataKuliah:
-                                  dataDaftarUlang.PilihMataKuliah - res.length,
+                              PilihMataKuliah: res.length,
                           }
                         : null
                 )
+
                 toast('Data Mata Kuliah sudah disimpan')
                 setLoading(false)
                 setOpenDialog(false)
@@ -261,7 +266,9 @@ const EvaluasiMandiri = ({
                                 </TableBody>
                             </Table>
                             {dataDaftarUlang?.PilihMataKuliah !== 0 &&
-                            dataDaftarUlang.Status == 'Asessmen Mandiri' ? (
+                            (dataDaftarUlang.Status == 'Asessmen Mandiri' ||
+                                dataDaftarUlang.Status ==
+                                    'Pengisian Data Diri') ? (
                                 <Alert className="mb-3">
                                     <BookCheck className="h-4 w-4" />
                                     <AlertTitle>Evaluasi Mandiri</AlertTitle>
@@ -284,16 +291,21 @@ const EvaluasiMandiri = ({
                                 <AlertTitle>Pemberitahuan</AlertTitle>
                                 <AlertDescription>
                                     {dataDaftarUlang.Status ==
-                                    'Asessmen Mandiri'
+                                        'Asessmen Mandiri' ||
+                                    dataDaftarUlang.Status ==
+                                        'Pengisian Data Diri'
                                         ? 'Sebelum memulai Evaluasi Mandiri. Gunakan Laptop atau Komputer untuk Pengalaman terbaik. Min: 1270x720'
                                         : 'Asesor Sedang dipilih untuk menilai Mata Kuliah RPL Anda'}
                                 </AlertDescription>
                             </Alert>
-                            {dataDaftarUlang.Status === 'Asessmen Mandiri' && (
+                            {(dataDaftarUlang.Status === 'Asessmen Mandiri' ||
+                                dataDaftarUlang.Status ==
+                                    'Pengisian Data Diri') && (
                                 <div className="flex flex-row items-center">
                                     <Button
                                         className="mt-5 mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                                         type="button"
+                                        disabled={loadingToEvaluating}
                                         onClick={() => {
                                             let temp =
                                                 dataDaftarUlang?.MataKuliahMahasiswa.map(
@@ -324,6 +336,7 @@ const EvaluasiMandiri = ({
                                         <Button
                                             className="mt-5 mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                                             type="button"
+                                            disabled={loadingToEvaluating}
                                             onClick={() => {
                                                 startEvaluating()
                                             }}
@@ -333,16 +346,21 @@ const EvaluasiMandiri = ({
                                         </Button>
                                     )}
                                     {dataDaftarUlang.EvaluasiDiriMataKuliah ===
-                                        dataDaftarUlang.PilihMataKuliah && (
-                                        <Button
-                                            className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                            type="button"
-                                            onClick={() => continueToAsesor()}
-                                        >
-                                            Lanjutkan Ke Asesor
-                                            <ArrowRightIcon />
-                                        </Button>
-                                    )}
+                                        dataDaftarUlang.PilihMataKuliah &&
+                                        dataDaftarUlang.EvaluasiDiriMataKuliah !==
+                                            0 && (
+                                            <Button
+                                                className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                                type="button"
+                                                disabled={loadingToEvaluating}
+                                                onClick={() =>
+                                                    continueToAsesor()
+                                                }
+                                            >
+                                                Lanjutkan Ke Asesor
+                                                <ArrowRightIcon />
+                                            </Button>
+                                        )}
                                 </div>
                             )}
                         </>

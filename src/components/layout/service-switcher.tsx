@@ -19,7 +19,6 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar'
 import { Role } from '@/generated/prisma'
-import Image from 'next/image'
 
 export function TeamSwitcher({
     teams,

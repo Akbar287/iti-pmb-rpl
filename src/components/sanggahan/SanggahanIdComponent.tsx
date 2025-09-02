@@ -415,11 +415,13 @@ const SanggahanIdComponent = ({
                             </TableBody>
                         </Table>
                         <Separator className="my-3" />
-                        <div className="grid grid-cols-1 gap-3">
-                            <h1 className="font-bold">
-                                Silakan Dipilih antara Ya / Tidak
-                            </h1>
-                        </div>
+                        {role?.Name.match('Mahasiswa') && (
+                            <div className="grid grid-cols-1 gap-3">
+                                <h1 className="font-bold">
+                                    Silakan Dipilih antara Ya / Tidak
+                                </h1>
+                            </div>
+                        )}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <label
                                 className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
@@ -441,7 +443,8 @@ const SanggahanIdComponent = ({
                                     disabled={
                                         loading ||
                                         data.SanggahanAssesmen
-                                            .SanggahanAssesmenId !== ''
+                                            .SanggahanAssesmenId !== '' ||
+                                        !role?.Name.match('Mahasiswa')
                                     }
                                     onChange={(e) => {
                                         setForm({
@@ -477,7 +480,8 @@ const SanggahanIdComponent = ({
                                     disabled={
                                         loading ||
                                         data.SanggahanAssesmen
-                                            .SanggahanAssesmenId !== ''
+                                            .SanggahanAssesmenId !== '' ||
+                                        !role?.Name.match('Mahasiswa')
                                     }
                                     onChange={(e) =>
                                         setForm({
@@ -743,220 +747,428 @@ const SanggahanIdComponent = ({
                                         <TableHead>Tulis</TableHead>
                                         <TableHead>Wawancara</TableHead>
                                         <TableHead>Demo</TableHead>
-                                        <TableHead>
+                                        <TableHead rowSpan={2}>
                                             {role?.Name.match('Asesor')
                                                 ? 'Perbaiki'
                                                 : 'Sanggah'}
                                         </TableHead>
                                     </TableRow>
                                 </TableHeader>
-                                <TableBody>
-                                    {data.SanggahanAssesmen.SanggahanAssesmenMk.map(
-                                        (mkm) => {
-                                            const temp =
-                                                data.ProgramStudi.MataKuliahMahasiswa.find(
-                                                    (x) =>
-                                                        x.MataKuliahMahasiswaId ===
-                                                        mkm.MataKuliahMahasiswaId
-                                                )
-                                            return (
-                                                <TableRow
-                                                    key={
-                                                        mkm.MataKuliahMahasiswaId
-                                                    }
-                                                >
-                                                    <TableCell>
-                                                        {temp?.MataKuliah.Kode}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {temp?.MataKuliah.Nama}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {
-                                                            temp?.SkorAsessmen
-                                                                .Portofolio
+                                {role?.Name.match('Mahasiswa') ? (
+                                    <TableBody>
+                                        {data.ProgramStudi.MataKuliahMahasiswa.map(
+                                            (mkm) => {
+                                                const temp =
+                                                    data.ProgramStudi.MataKuliahMahasiswa.find(
+                                                        (x) =>
+                                                            x.MataKuliahMahasiswaId ===
+                                                            mkm.MataKuliahMahasiswaId
+                                                    )
+                                                return (
+                                                    <TableRow
+                                                        key={
+                                                            mkm.MataKuliahMahasiswaId
                                                         }
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {
-                                                            temp?.SkorAsessmen
-                                                                .Tulis
-                                                        }
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {
-                                                            temp?.SkorAsessmen
-                                                                .Wawancara
-                                                        }
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {
-                                                            temp?.SkorAsessmen
-                                                                .Demo
-                                                        }
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {temp?.SkorAsessmen
-                                                            .Diakui ? (
-                                                            <Badge
-                                                                variant={
-                                                                    'default'
-                                                                }
-                                                            >
-                                                                Ya
-                                                            </Badge>
-                                                        ) : (
-                                                            <Badge
-                                                                variant={
-                                                                    'destructive'
-                                                                }
-                                                            >
-                                                                Tidak
-                                                            </Badge>
-                                                        )}
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {
-                                                            temp?.SkorAsessmen
-                                                                .SkorRataRata
-                                                        }
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {
-                                                            temp?.SkorAsessmen
-                                                                .NilaiHuruf
-                                                        }
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {role?.Name.match(
-                                                            'Asesor'
-                                                        ) ? (
-                                                            <Button
-                                                                className="mt-3 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                                                type="button"
-                                                                size={'sm'}
-                                                                disabled={
-                                                                    loading
-                                                                }
-                                                                onClick={() =>
-                                                                    fixMk(
-                                                                        mkm.MataKuliahMahasiswaId
-                                                                    )
-                                                                }
-                                                            >
-                                                                {loading ? (
-                                                                    <>
-                                                                        <Timer />{' '}
-                                                                        Loading
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                        <WrenchIcon />
-                                                                        Perbaiki
-                                                                    </>
-                                                                )}
-                                                            </Button>
-                                                        ) : (
-                                                            <Checkbox
-                                                                disabled={
-                                                                    loading ||
-                                                                    data
-                                                                        .SanggahanAssesmen
-                                                                        .SanggahanAssesmenId !==
-                                                                        ''
-                                                                }
-                                                                id={
-                                                                    temp
-                                                                        ?.MataKuliah
-                                                                        .Kode
-                                                                }
-                                                                checked={form.SanggahanAssesmenMk.some(
-                                                                    (x) =>
-                                                                        x.MataKuliahMahasiswaId ===
-                                                                        mkm.MataKuliahMahasiswaId
-                                                                )}
-                                                                onCheckedChange={(
-                                                                    checked
-                                                                ) => {
-                                                                    if (
-                                                                        checked
-                                                                    ) {
-                                                                        setForm(
-                                                                            {
-                                                                                ...form,
-                                                                                SanggahanAssesmenMk:
-                                                                                    [
-                                                                                        ...form.SanggahanAssesmenMk,
-                                                                                        {
-                                                                                            SanggahanAssesmenMkId:
-                                                                                                '',
-                                                                                            SanggahanAssesmenId:
-                                                                                                '',
-                                                                                            MataKuliahMahasiswaId:
-                                                                                                mkm.MataKuliahMahasiswaId,
-                                                                                            Keterangan:
-                                                                                                mkm.Keterangan,
-                                                                                            CreatedAt:
-                                                                                                new Date(),
-                                                                                            UpdatedAt:
-                                                                                                new Date(),
-                                                                                        },
-                                                                                    ],
-                                                                            }
-                                                                        )
-                                                                    } else {
-                                                                        setForm(
-                                                                            {
-                                                                                ...form,
-                                                                                SanggahanAssesmenMk:
-                                                                                    form.SanggahanAssesmenMk.filter(
-                                                                                        (
-                                                                                            x
-                                                                                        ) =>
-                                                                                            x.MataKuliahMahasiswaId !==
-                                                                                            mkm.MataKuliahMahasiswaId
-                                                                                    ),
-                                                                            }
+                                                    >
+                                                        <TableCell>
+                                                            {
+                                                                temp?.MataKuliah
+                                                                    .Kode
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp?.MataKuliah
+                                                                    .Nama
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Portofolio
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Tulis
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Wawancara
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Demo
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {temp?.SkorAsessmen
+                                                                .Diakui ? (
+                                                                <Badge
+                                                                    variant={
+                                                                        'default'
+                                                                    }
+                                                                >
+                                                                    Ya
+                                                                </Badge>
+                                                            ) : (
+                                                                <Badge
+                                                                    variant={
+                                                                        'destructive'
+                                                                    }
+                                                                >
+                                                                    Tidak
+                                                                </Badge>
+                                                            )}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .SkorRataRata
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .NilaiHuruf
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {role?.Name.match(
+                                                                'Asesor'
+                                                            ) ? (
+                                                                <Button
+                                                                    className="mt-3 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                                                    type="button"
+                                                                    size={'sm'}
+                                                                    disabled={
+                                                                        loading
+                                                                    }
+                                                                    onClick={() =>
+                                                                        fixMk(
+                                                                            mkm.MataKuliahMahasiswaId
                                                                         )
                                                                     }
-                                                                }}
-                                                            />
-                                                        )}
-                                                    </TableCell>
-                                                </TableRow>
-                                            )
-                                        }
-                                    )}
-                                </TableBody>
+                                                                >
+                                                                    {loading ? (
+                                                                        <>
+                                                                            <Timer />{' '}
+                                                                            Loading
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <WrenchIcon />
+                                                                            Perbaiki
+                                                                        </>
+                                                                    )}
+                                                                </Button>
+                                                            ) : (
+                                                                <Checkbox
+                                                                    disabled={
+                                                                        loading ||
+                                                                        data
+                                                                            .SanggahanAssesmen
+                                                                            .SanggahanAssesmenId !==
+                                                                            ''
+                                                                    }
+                                                                    id={
+                                                                        temp
+                                                                            ?.MataKuliah
+                                                                            .Kode
+                                                                    }
+                                                                    checked={form.SanggahanAssesmenMk.some(
+                                                                        (x) =>
+                                                                            x.MataKuliahMahasiswaId ===
+                                                                            mkm.MataKuliahMahasiswaId
+                                                                    )}
+                                                                    onCheckedChange={(
+                                                                        checked
+                                                                    ) => {
+                                                                        if (
+                                                                            checked
+                                                                        ) {
+                                                                            setForm(
+                                                                                {
+                                                                                    ...form,
+                                                                                    SanggahanAssesmenMk:
+                                                                                        [
+                                                                                            ...form.SanggahanAssesmenMk,
+                                                                                            {
+                                                                                                SanggahanAssesmenMkId:
+                                                                                                    '',
+                                                                                                SanggahanAssesmenId:
+                                                                                                    '',
+                                                                                                MataKuliahMahasiswaId:
+                                                                                                    mkm.MataKuliahMahasiswaId,
+                                                                                                Keterangan:
+                                                                                                    mkm.Keterangan,
+                                                                                                CreatedAt:
+                                                                                                    new Date(),
+                                                                                                UpdatedAt:
+                                                                                                    new Date(),
+                                                                                            },
+                                                                                        ],
+                                                                                }
+                                                                            )
+                                                                        } else {
+                                                                            setForm(
+                                                                                {
+                                                                                    ...form,
+                                                                                    SanggahanAssesmenMk:
+                                                                                        form.SanggahanAssesmenMk.filter(
+                                                                                            (
+                                                                                                x
+                                                                                            ) =>
+                                                                                                x.MataKuliahMahasiswaId !==
+                                                                                                mkm.MataKuliahMahasiswaId
+                                                                                        ),
+                                                                                }
+                                                                            )
+                                                                        }
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )
+                                            }
+                                        )}
+                                    </TableBody>
+                                ) : role?.Name.match('Asesor') ? (
+                                    <TableBody>
+                                        {data.SanggahanAssesmen.SanggahanAssesmenMk.map(
+                                            (mkm) => {
+                                                const temp =
+                                                    data.ProgramStudi.MataKuliahMahasiswa.find(
+                                                        (x) =>
+                                                            x.MataKuliahMahasiswaId ===
+                                                            mkm.MataKuliahMahasiswaId
+                                                    )
+                                                return (
+                                                    <TableRow
+                                                        key={
+                                                            mkm.MataKuliahMahasiswaId
+                                                        }
+                                                    >
+                                                        <TableCell>
+                                                            {
+                                                                temp?.MataKuliah
+                                                                    .Kode
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp?.MataKuliah
+                                                                    .Nama
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Portofolio
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Tulis
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Wawancara
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .Demo
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {temp?.SkorAsessmen
+                                                                .Diakui ? (
+                                                                <Badge
+                                                                    variant={
+                                                                        'default'
+                                                                    }
+                                                                >
+                                                                    Ya
+                                                                </Badge>
+                                                            ) : (
+                                                                <Badge
+                                                                    variant={
+                                                                        'destructive'
+                                                                    }
+                                                                >
+                                                                    Tidak
+                                                                </Badge>
+                                                            )}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .SkorRataRata
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {
+                                                                temp
+                                                                    ?.SkorAsessmen
+                                                                    .NilaiHuruf
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {role?.Name.match(
+                                                                'Asesor'
+                                                            ) ? (
+                                                                <Button
+                                                                    className="mt-3 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                                                    type="button"
+                                                                    size={'sm'}
+                                                                    disabled={
+                                                                        loading
+                                                                    }
+                                                                    onClick={() =>
+                                                                        fixMk(
+                                                                            mkm.MataKuliahMahasiswaId
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    {loading ? (
+                                                                        <>
+                                                                            <Timer />{' '}
+                                                                            Loading
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <WrenchIcon />
+                                                                            Perbaiki
+                                                                        </>
+                                                                    )}
+                                                                </Button>
+                                                            ) : (
+                                                                <Checkbox
+                                                                    disabled={
+                                                                        loading ||
+                                                                        data
+                                                                            .SanggahanAssesmen
+                                                                            .SanggahanAssesmenId !==
+                                                                            ''
+                                                                    }
+                                                                    id={
+                                                                        temp
+                                                                            ?.MataKuliah
+                                                                            .Kode
+                                                                    }
+                                                                    checked={form.SanggahanAssesmenMk.some(
+                                                                        (x) =>
+                                                                            x.MataKuliahMahasiswaId ===
+                                                                            mkm.MataKuliahMahasiswaId
+                                                                    )}
+                                                                    onCheckedChange={(
+                                                                        checked
+                                                                    ) => {
+                                                                        if (
+                                                                            checked
+                                                                        ) {
+                                                                            setForm(
+                                                                                {
+                                                                                    ...form,
+                                                                                    SanggahanAssesmenMk:
+                                                                                        [
+                                                                                            ...form.SanggahanAssesmenMk,
+                                                                                            {
+                                                                                                SanggahanAssesmenMkId:
+                                                                                                    '',
+                                                                                                SanggahanAssesmenId:
+                                                                                                    '',
+                                                                                                MataKuliahMahasiswaId:
+                                                                                                    mkm.MataKuliahMahasiswaId,
+                                                                                                Keterangan:
+                                                                                                    mkm.Keterangan,
+                                                                                                CreatedAt:
+                                                                                                    new Date(),
+                                                                                                UpdatedAt:
+                                                                                                    new Date(),
+                                                                                            },
+                                                                                        ],
+                                                                                }
+                                                                            )
+                                                                        } else {
+                                                                            setForm(
+                                                                                {
+                                                                                    ...form,
+                                                                                    SanggahanAssesmenMk:
+                                                                                        form.SanggahanAssesmenMk.filter(
+                                                                                            (
+                                                                                                x
+                                                                                            ) =>
+                                                                                                x.MataKuliahMahasiswaId !==
+                                                                                                mkm.MataKuliahMahasiswaId
+                                                                                        ),
+                                                                                }
+                                                                            )
+                                                                        }
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )
+                                            }
+                                        )}
+                                    </TableBody>
+                                ) : (
+                                    <></>
+                                )}
                             </Table>
                         </div>
                     </div>
                 </CardContent>
-                {data.SanggahanAssesmen.SanggahanAssesmenId === '' && (
-                    <CardFooter className="flex-col gap-2">
-                        <Button
-                            className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                            size={'lg'}
-                            disabled={
-                                loading ||
-                                data.SanggahanAssesmen.SanggahanAssesmenId !==
-                                    ''
-                            }
-                            onClick={() => save()}
-                        >
-                            {loading ? (
-                                <>
-                                    <Timer /> Loading
-                                </>
-                            ) : (
-                                <>
-                                    <PenLine />
-                                    Simpan
-                                </>
-                            )}
-                        </Button>
-                    </CardFooter>
-                )}
+                {data.SanggahanAssesmen.SanggahanAssesmenId === '' &&
+                    role?.Name === 'Mahasiswa' && (
+                        <CardFooter className="flex-col gap-2">
+                            <Button
+                                className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                size={'lg'}
+                                disabled={
+                                    loading ||
+                                    data.SanggahanAssesmen
+                                        .SanggahanAssesmenId !== ''
+                                }
+                                onClick={() => save()}
+                            >
+                                {loading ? (
+                                    <>
+                                        <Timer /> Loading
+                                    </>
+                                ) : (
+                                    <>
+                                        <PenLine />
+                                        Simpan
+                                    </>
+                                )}
+                            </Button>
+                        </CardFooter>
+                    )}
             </Card>
             {role?.Name.match('Asesor') && (
                 <Card className="w-full">

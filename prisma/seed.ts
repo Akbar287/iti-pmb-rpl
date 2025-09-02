@@ -1,9 +1,8 @@
-import { JenisKelamin, Jenjang, PrismaClient } from "../src/generated/prisma";
+import { PrismaClient } from "../src/generated/prisma";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  
   //   await prisma.statusMahasiswaAssesment.createMany({
   //       data: [
   //         {

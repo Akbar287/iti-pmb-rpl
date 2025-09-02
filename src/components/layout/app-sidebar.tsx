@@ -19,10 +19,12 @@ import { Role } from '@/generated/prisma'
 import { toast } from 'sonner'
 import { MenuProps } from '@/types/types'
 import useCountStore from '@/stores/MenuStore'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { startTransition } from 'react'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const router = useRouter()
+    const pathname = usePathname()
     const { data: session } = useSession()
     const getMenuByRole = useCountStore((state) => state.getMenuByRole)
     const [selectedRole, setSelectedRole] = React.useState<Role | null>(null)
@@ -30,10 +32,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         null
     )
     const changeRole = async (role: Role) => {
-        router.push('/')
+        toast(`Beralih ke role ${role.Name}`)
+        localStorage.setItem('pmb.iti.role', JSON.stringify(role))
         setSelectedRole(role)
         setSelectedMenu(getMenuByRole(role))
-        localStorage.setItem('pmb.iti.role', JSON.stringify(role))
+        if (pathname !== '/') {
+            router.push('/')
+        } else {
+            window.location.reload()
+        }
     }
 
     React.useEffect(() => {
@@ -67,7 +74,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     )
             }
         }
-    }, [])
+    }, [selectedRole])
 
     const data = {
         navSecondary: [

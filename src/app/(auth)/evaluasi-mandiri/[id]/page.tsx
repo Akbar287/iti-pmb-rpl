@@ -34,6 +34,11 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                                     Urutan: true,
                                     Active: true,
                                     EvaluasiDiri: {
+                                        where: {
+                                            MataKuliahMahasiswa: {
+                                                PendaftaranId: id,
+                                            },
+                                        },
                                         select: {
                                             EvaluasiDiriId: true,
                                             MataKuliahMahasiswaId: true,

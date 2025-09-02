@@ -748,6 +748,13 @@ const ManajemenMahasiswaComponent = ({
     }
     const columns: ColumnDef<CalonMahasiswaRplPage>[] = [
         {
+            accessorKey: 'Username',
+            header: 'Username',
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue('Username')}</div>
+            ),
+        },
+        {
             accessorKey: 'KodePendaftar',
             header: 'Kode Pendaftar',
             cell: ({ row }) => (
@@ -2534,29 +2541,6 @@ export function SheetManageData({
                                             />
                                             <FormField
                                                 control={form.control}
-                                                name="pendaftaran.Periode"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>
-                                                            Periode
-                                                        </FormLabel>
-                                                        <FormControl>
-                                                            <Input
-                                                                readOnly={
-                                                                    loading
-                                                                }
-                                                                {...field}
-                                                            />
-                                                        </FormControl>
-                                                        <FormDescription>
-                                                            Periode Anda
-                                                        </FormDescription>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                            <FormField
-                                                control={form.control}
                                                 name="pendaftaran.Gelombang"
                                                 render={({ field }) => (
                                                     <FormItem>
@@ -2695,7 +2679,13 @@ export function SheetManageData({
                                                                 readOnly={
                                                                     loading
                                                                 }
-                                                                {...field}
+                                                                onChange={
+                                                                    field.onChange
+                                                                }
+                                                                value={
+                                                                    field.value ||
+                                                                    ''
+                                                                }
                                                             />
                                                         </FormControl>
                                                         <FormDescription>

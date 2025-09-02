@@ -48,7 +48,7 @@ import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { toast } from 'sonner'
 import { Textarea } from '../ui/textarea'
-import { cn, replaceItemAtIndex } from '@/lib/utils'
+import { cn, replaceItemAtIndex, truncateText } from '@/lib/utils'
 import { Skeleton } from '../ui/skeleton'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -321,8 +321,15 @@ const RiwayatPekerjaanMahasiswa = ({
                                         <TableCell>
                                             {row.PosisiJabatan}
                                         </TableCell>
-                                        <TableCell>{row.Alamat}</TableCell>
-                                        <TableCell>{row.UraianTugas}</TableCell>
+                                        <TableCell>
+                                            {truncateText(row.Alamat ?? '', 32)}
+                                        </TableCell>
+                                        <TableCell>
+                                            {truncateText(
+                                                row.UraianTugas ?? '',
+                                                32
+                                            )}
+                                        </TableCell>
                                         <TableCell>
                                             {row.MulaiBekerja === null
                                                 ? 'N/A'
@@ -665,7 +672,7 @@ function DialogRiwayatPekerjaanMahasiswa({
                                             htmlFor="masih_latihan"
                                             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                         >
-                                            Saya Masih Ikut Pelatihan
+                                            Saya Masih Bekerja Disini
                                         </label>
                                     </div>
                                 </div>

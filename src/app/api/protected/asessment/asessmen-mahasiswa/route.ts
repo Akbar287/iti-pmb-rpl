@@ -710,15 +710,16 @@ app.get('/', async (c) => {
                 }),
             ])
 
-            let temp = 0
-            data?.AssesorMahasiswa.forEach((am) => {
+            let temp: number[] = []
+            data?.AssesorMahasiswa.forEach((am, index) => {
+                temp[index] = 0;
                 am.Pendaftaran.MataKuliahMahasiswa.forEach((mkm) => {
-                    temp += mkm._count.SkorAssesmen
+                    temp[index] += mkm._count.SkorAssesmen
                 })
             })
 
             const response: ResponseMhsFromAsesorSession[] =
-                data?.AssesorMahasiswa.map((item) => {
+                data?.AssesorMahasiswa.map((item, idx) => {
                     return {
                         UserId: item.Pendaftaran.Mahasiswa.User.UserId,
                         PendaftaranId: item.Pendaftaran.PendaftaranId,
@@ -742,7 +743,7 @@ app.get('/', async (c) => {
                                   (x) => x.Aktif
                               )?.StatusMahasiswaAssesment.NamaStatus ?? ''
                             : '',
-                        TotalAsessmen: temp,
+                        TotalAsessmen: temp[idx],
                         TotalEval: item.Pendaftaran._count.MataKuliahMahasiswa,
                     }
                 }) ?? []
@@ -928,7 +929,3 @@ app.put('/', async (c) => {
 export const GET = handle(app)
 export const POST = handle(app)
 export const PUT = handle(app)
-
-function getRandomInt(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-}

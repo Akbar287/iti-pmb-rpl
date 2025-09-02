@@ -461,12 +461,15 @@ const PenunjukanAsesorComponent = ({
                             {role?.Name.match('Kaprodi') && (
                                 <>
                                     {jd.Status === 'Penunjukan Asesor' ||
+                                        jd.Status === 'Pengisian Data Diri' ||
                                         (jd.Asesor.length !== 0 &&
                                             jd.Status ===
                                                 'Penunjukan Asesor' && (
                                                 <DropdownMenuSeparator />
                                             ))}
-                                    {jd.Status === 'Penunjukan Asesor' && (
+                                    {(jd.Status === 'Penunjukan Asesor' ||
+                                        jd.Status ===
+                                            'Pengisian Data Diri') && (
                                         <DropdownMenuItem
                                             onClick={() => ubahData(jd)}
                                         >
@@ -474,7 +477,9 @@ const PenunjukanAsesorComponent = ({
                                         </DropdownMenuItem>
                                     )}
                                     {jd.Asesor.length !== 0 &&
-                                        jd.Status === 'Penunjukan Asesor' && (
+                                        (jd.Status === 'Penunjukan Asesor' ||
+                                            jd.Status ===
+                                                'Pengisian Data Diri') && (
                                             <DropdownMenuItem
                                                 onClick={() => hapusData(jd)}
                                             >
