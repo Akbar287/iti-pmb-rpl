@@ -819,6 +819,7 @@ model University {
   UniversityJabatan     UniversityJabatan[]
   UniversitySosialMedia UniversitySosialMedia[]
   UniversityInformasi   UniversityInformasi[]
+  SettingMainPage       SettingMainPage[]
 
   @@map("university")
 }
@@ -831,7 +832,7 @@ model UniversitySosialMedia {
   Icon                    String?    @map("icon")
   University              University @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
 
-  // @@map("university_sosial_media")
+  @@map("university_sosial_media")
 }
 
 model UniversityInformasi {
@@ -841,7 +842,7 @@ model UniversityInformasi {
   Informasi             String?    @map("informasi")
   University            University @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
 
-  // @@map("university_informasi")
+  @@map("university_informasi")
 }
 
 model UniversityJabatan {
@@ -909,4 +910,134 @@ model Userlogin {
   User        User   @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
 
   @@map("userlogin")
+}
+
+model JenisKegiatan {
+  JenisKegiatanId String            @id @default(uuid()) @map("jenis_kegiatan_id")
+  Nama            String            @map("nama")
+  Color           String            @map("color")
+  SettingKegiatan SettingKegiatan[]
+
+  @@map("jenis_kegiatan")
+}
+
+model KategoriBerita {
+  KategoriBeritaId String          @id @default(uuid()) @map("kategori_berita_id")
+  Nama             String          @map("nama")
+  Color            String          @map("color")
+  SettingBerita    SettingBerita[]
+
+  @@map("kategori_berita")
+}
+
+model SettingMainPage {
+  SettingMainPageId             String @id @default(uuid()) @map("setting_main_page_id")
+  UniversityId                  String @map("university_id")
+  BackgroundFileUtama           Bytes  @map("background_file_utama")
+  TextMainPage1                 String @map("text_main_page_1")
+  TextMainPage2                 String @map("text_main_page_2")
+  TextMainPage3                 String @map("text_main_page_3")
+  SelayangPandangText           String @map("selayang_pandang_text")
+  SelayangPandangDeskripsi      String @map("selayang_pandang_deskripsi")
+  SelayangPandangBackgroundFile Bytes  @map("selayang_pandang_background_file")
+  WhyText                       String @map("why_text")
+  WhyDeskripsi                  String @map("why_deskripsi")
+  CommunityText                 String @map("community_text")
+  CommunityDeskripsi            String @map("community_deskripsi")
+  KegiatanText                  String @map("kegiatan_text")
+  KegiatanDeskripsi             String @map("kegiatan_deskripsi")
+  BeritaText                    String @map("berita_text")
+  BeritaDeskripsi               String @map("berita_deskripsi")
+  TestomoniText                 String @map("testomoni_text")
+  TestomoniDeskripsi            String @map("testomoni_deskripsi")
+
+  University       University         @relation(fields: [UniversityId], references: [UniversityId], onDelete: Cascade)
+  SettingKegiatan  SettingKegiatan[]
+  SettingCommunity SettingCommunity[]
+  SettingWhy       SettingWhy[]
+  SettingNumber    SettingNumber[]
+  SettingTestimony SettingTestimony[]
+  SettingBerita    SettingBerita[]
+
+  @@map("setting_main_page")
+}
+
+model SettingKegiatan {
+  SettingKegiatanId String          @id @default(uuid()) @map("setting_kegiatan_id")
+  JenisKegiatanId   String          @map("jenis_kegiatan_id")
+  SettingMainPageId String          @map("setting_main_page_id")
+  Nama              String          @map("nama")
+  Lokasi            String?         @map("lokasi")
+  Deskripsi         String?         @map("deskripsi")
+  WaktuMulai        DateTime        @map("waktu_mulai")
+  WaktuSelesai      DateTime?       @map("waktu_selesai")
+  JenisKegiatan     JenisKegiatan   @relation(fields: [JenisKegiatanId], references: [JenisKegiatanId], onDelete: Cascade)
+  SettingMainPage   SettingMainPage @relation(fields: [SettingMainPageId], references: [SettingMainPageId], onDelete: Cascade)
+
+  @@map("setting_kegiatan")
+}
+
+model SettingCommunity {
+  SettingCommunityId String @id @default(uuid()) @map("setting_community_id")
+  SettingMainPageId  String @map("setting_main_page_id")
+  Title              String @map("title")
+  Gambar             Bytes  @map("gambar")
+
+  SettingMainPage SettingMainPage @relation(fields: [SettingMainPageId], references: [SettingMainPageId], onDelete: Cascade)
+
+  @@map("setting_community")
+}
+
+model SettingWhy {
+  SettingWhyId      String @id @default(uuid()) @map("setting_why_id")
+  SettingMainPageId String @map("setting_main_page_id")
+  Icon              String @map("icon")
+  Title             String @map("title")
+  Subtitle          String @map("subtitle")
+
+  SettingMainPage SettingMainPage @relation(fields: [SettingMainPageId], references: [SettingMainPageId], onDelete: Cascade)
+
+  @@map("setting_why")
+}
+
+model SettingNumber {
+  SettingNumberId   String @id @default(uuid()) @map("setting_number_id")
+  SettingMainPageId String @map("setting_main_page_id")
+  Title             String @map("title")
+  Subtitle          String @map("subtitle")
+  Angka             String @map("angka")
+
+  SettingMainPage SettingMainPage @relation(fields: [SettingMainPageId], references: [SettingMainPageId], onDelete: Cascade)
+
+  @@map("setting_number")
+}
+
+model SettingTestimony {
+  SettingTestimonyId String @id @default(uuid()) @map("setting_testimony_id")
+  SettingMainPageId  String @map("setting_main_page_id")
+  Nama               String @map("nama")
+  Jabatan            String @map("jabatan")
+  JurusanTahun       String @map("jurusan_tahun")
+  Testimoni          String @map("testimoni")
+  Foto               Bytes  @map("foto")
+
+  SettingMainPage SettingMainPage @relation(fields: [SettingMainPageId], references: [SettingMainPageId], onDelete: Cascade)
+
+  @@map("setting_testimony")
+}
+
+model SettingBerita {
+  SettingBeritaId   String   @id @default(uuid()) @map("setting_berita_id")
+  KategoriBeritaId  String   @map("kategori_berita_id")
+  SettingMainPageId String   @map("setting_main_page_id")
+  Title             String   @map("title")
+  Deskripsi         String   @map("deskripsi")
+  Gambar            Bytes    @map("gambar")
+  Populer           Boolean  @default(false) @map("populer")
+  Waktu             DateTime @map("waktu")
+
+  SettingMainPage SettingMainPage @relation(fields: [SettingMainPageId], references: [SettingMainPageId], onDelete: Cascade)
+  KategoriBerita  KategoriBerita  @relation(fields: [KategoriBeritaId], references: [KategoriBeritaId], onDelete: Cascade)
+
+  @@map("setting_berita")
 }

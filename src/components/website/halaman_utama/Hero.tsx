@@ -2,13 +2,26 @@
 import Foto1 from '@/assets/images/foto-1.png'
 import { Separator } from '@radix-ui/react-separator'
 
-const Hero = () => {
+const Hero = ({
+    data,
+}: {
+    data: {
+        SettingMainPageId: string
+        TextMainPage1: string
+        TextMainPage2: string
+        TextMainPage3: string
+    } | null
+}) => {
     return (
         <div className="relative min-h-screen w-full">
             <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
-                    backgroundImage: `url(${Foto1.src})`,
+                    backgroundImage: `url(${
+                        process.env.NEXT_PUBLIC_API_BASE_URL +
+                        '/api/img?_t=_m&_id=' +
+                        (data ? data.SettingMainPageId : Foto1.src)
+                    })`,
                     filter: 'blur(10px)',
                     zIndex: -1,
                     backgroundSize: 'cover',
@@ -25,13 +38,15 @@ const Hero = () => {
             {/* Content */}
             <div className="relative container mx-auto flex flex-col items-center justify-center min-h-screen text-center px-4 pt-20">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                    Selamat Datang di <br />
+                    {data ? data.TextMainPage1 : 'Selamat Datang di'} <br />
                     <span className="text-primary">
-                        Rekognisi Pembelajaran Lampau (RPL)
+                        {data
+                            ? data.TextMainPage2
+                            : 'Rekognisi Pembelajaran Lampau (RPL)'}
                     </span>
                 </h1>
                 <p className="text-xl md:text-4xl text-white/90 max-w-3xl mb-10 ">
-                    Institut Teknologi Indonesia
+                    {data ? data.TextMainPage3 : 'Institut Teknologi Indonesia'}
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
                     <Separator

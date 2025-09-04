@@ -678,6 +678,95 @@ exports.Prisma.UserloginScalarFieldEnum = {
   Credential: 'Credential'
 };
 
+exports.Prisma.JenisKegiatanScalarFieldEnum = {
+  JenisKegiatanId: 'JenisKegiatanId',
+  Nama: 'Nama',
+  Color: 'Color'
+};
+
+exports.Prisma.KategoriBeritaScalarFieldEnum = {
+  KategoriBeritaId: 'KategoriBeritaId',
+  Nama: 'Nama',
+  Color: 'Color'
+};
+
+exports.Prisma.SettingMainPageScalarFieldEnum = {
+  SettingMainPageId: 'SettingMainPageId',
+  UniversityId: 'UniversityId',
+  BackgroundFileUtama: 'BackgroundFileUtama',
+  TextMainPage1: 'TextMainPage1',
+  TextMainPage2: 'TextMainPage2',
+  TextMainPage3: 'TextMainPage3',
+  SelayangPandangText: 'SelayangPandangText',
+  SelayangPandangDeskripsi: 'SelayangPandangDeskripsi',
+  SelayangPandangBackgroundFile: 'SelayangPandangBackgroundFile',
+  WhyText: 'WhyText',
+  WhyDeskripsi: 'WhyDeskripsi',
+  CommunityText: 'CommunityText',
+  CommunityDeskripsi: 'CommunityDeskripsi',
+  KegiatanText: 'KegiatanText',
+  KegiatanDeskripsi: 'KegiatanDeskripsi',
+  BeritaText: 'BeritaText',
+  BeritaDeskripsi: 'BeritaDeskripsi',
+  TestomoniText: 'TestomoniText',
+  TestomoniDeskripsi: 'TestomoniDeskripsi'
+};
+
+exports.Prisma.SettingKegiatanScalarFieldEnum = {
+  SettingKegiatanId: 'SettingKegiatanId',
+  JenisKegiatanId: 'JenisKegiatanId',
+  SettingMainPageId: 'SettingMainPageId',
+  Nama: 'Nama',
+  Lokasi: 'Lokasi',
+  Deskripsi: 'Deskripsi',
+  WaktuMulai: 'WaktuMulai',
+  WaktuSelesai: 'WaktuSelesai'
+};
+
+exports.Prisma.SettingCommunityScalarFieldEnum = {
+  SettingCommunityId: 'SettingCommunityId',
+  SettingMainPageId: 'SettingMainPageId',
+  Title: 'Title',
+  Gambar: 'Gambar'
+};
+
+exports.Prisma.SettingWhyScalarFieldEnum = {
+  SettingWhyId: 'SettingWhyId',
+  SettingMainPageId: 'SettingMainPageId',
+  Icon: 'Icon',
+  Title: 'Title',
+  Subtitle: 'Subtitle'
+};
+
+exports.Prisma.SettingNumberScalarFieldEnum = {
+  SettingNumberId: 'SettingNumberId',
+  SettingMainPageId: 'SettingMainPageId',
+  Title: 'Title',
+  Subtitle: 'Subtitle',
+  Angka: 'Angka'
+};
+
+exports.Prisma.SettingTestimonyScalarFieldEnum = {
+  SettingTestimonyId: 'SettingTestimonyId',
+  SettingMainPageId: 'SettingMainPageId',
+  Nama: 'Nama',
+  Jabatan: 'Jabatan',
+  JurusanTahun: 'JurusanTahun',
+  Testimoni: 'Testimoni',
+  Foto: 'Foto'
+};
+
+exports.Prisma.SettingBeritaScalarFieldEnum = {
+  SettingBeritaId: 'SettingBeritaId',
+  KategoriBeritaId: 'KategoriBeritaId',
+  SettingMainPageId: 'SettingMainPageId',
+  Title: 'Title',
+  Deskripsi: 'Deskripsi',
+  Gambar: 'Gambar',
+  Populer: 'Populer',
+  Waktu: 'Waktu'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -818,7 +907,16 @@ exports.Prisma.ModelName = {
   UniversityJabatan: 'UniversityJabatan',
   UniversityJabatanOrang: 'UniversityJabatanOrang',
   User: 'User',
-  Userlogin: 'Userlogin'
+  Userlogin: 'Userlogin',
+  JenisKegiatan: 'JenisKegiatan',
+  KategoriBerita: 'KategoriBerita',
+  SettingMainPage: 'SettingMainPage',
+  SettingKegiatan: 'SettingKegiatan',
+  SettingCommunity: 'SettingCommunity',
+  SettingWhy: 'SettingWhy',
+  SettingNumber: 'SettingNumber',
+  SettingTestimony: 'SettingTestimony',
+  SettingBerita: 'SettingBerita'
 };
 
 /**

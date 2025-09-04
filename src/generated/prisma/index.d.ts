@@ -308,6 +308,51 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Userlogin = $Result.DefaultSelection<Prisma.$UserloginPayload>
+/**
+ * Model JenisKegiatan
+ * 
+ */
+export type JenisKegiatan = $Result.DefaultSelection<Prisma.$JenisKegiatanPayload>
+/**
+ * Model KategoriBerita
+ * 
+ */
+export type KategoriBerita = $Result.DefaultSelection<Prisma.$KategoriBeritaPayload>
+/**
+ * Model SettingMainPage
+ * 
+ */
+export type SettingMainPage = $Result.DefaultSelection<Prisma.$SettingMainPagePayload>
+/**
+ * Model SettingKegiatan
+ * 
+ */
+export type SettingKegiatan = $Result.DefaultSelection<Prisma.$SettingKegiatanPayload>
+/**
+ * Model SettingCommunity
+ * 
+ */
+export type SettingCommunity = $Result.DefaultSelection<Prisma.$SettingCommunityPayload>
+/**
+ * Model SettingWhy
+ * 
+ */
+export type SettingWhy = $Result.DefaultSelection<Prisma.$SettingWhyPayload>
+/**
+ * Model SettingNumber
+ * 
+ */
+export type SettingNumber = $Result.DefaultSelection<Prisma.$SettingNumberPayload>
+/**
+ * Model SettingTestimony
+ * 
+ */
+export type SettingTestimony = $Result.DefaultSelection<Prisma.$SettingTestimonyPayload>
+/**
+ * Model SettingBerita
+ * 
+ */
+export type SettingBerita = $Result.DefaultSelection<Prisma.$SettingBeritaPayload>
 
 /**
  * Enums
@@ -1165,6 +1210,96 @@ export class PrismaClient<
     * ```
     */
   get userlogin(): Prisma.UserloginDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.jenisKegiatan`: Exposes CRUD operations for the **JenisKegiatan** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JenisKegiatans
+    * const jenisKegiatans = await prisma.jenisKegiatan.findMany()
+    * ```
+    */
+  get jenisKegiatan(): Prisma.JenisKegiatanDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kategoriBerita`: Exposes CRUD operations for the **KategoriBerita** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KategoriBeritas
+    * const kategoriBeritas = await prisma.kategoriBerita.findMany()
+    * ```
+    */
+  get kategoriBerita(): Prisma.KategoriBeritaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.settingMainPage`: Exposes CRUD operations for the **SettingMainPage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SettingMainPages
+    * const settingMainPages = await prisma.settingMainPage.findMany()
+    * ```
+    */
+  get settingMainPage(): Prisma.SettingMainPageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.settingKegiatan`: Exposes CRUD operations for the **SettingKegiatan** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SettingKegiatans
+    * const settingKegiatans = await prisma.settingKegiatan.findMany()
+    * ```
+    */
+  get settingKegiatan(): Prisma.SettingKegiatanDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.settingCommunity`: Exposes CRUD operations for the **SettingCommunity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SettingCommunities
+    * const settingCommunities = await prisma.settingCommunity.findMany()
+    * ```
+    */
+  get settingCommunity(): Prisma.SettingCommunityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.settingWhy`: Exposes CRUD operations for the **SettingWhy** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SettingWhies
+    * const settingWhies = await prisma.settingWhy.findMany()
+    * ```
+    */
+  get settingWhy(): Prisma.SettingWhyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.settingNumber`: Exposes CRUD operations for the **SettingNumber** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SettingNumbers
+    * const settingNumbers = await prisma.settingNumber.findMany()
+    * ```
+    */
+  get settingNumber(): Prisma.SettingNumberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.settingTestimony`: Exposes CRUD operations for the **SettingTestimony** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SettingTestimonies
+    * const settingTestimonies = await prisma.settingTestimony.findMany()
+    * ```
+    */
+  get settingTestimony(): Prisma.SettingTestimonyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.settingBerita`: Exposes CRUD operations for the **SettingBerita** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SettingBeritas
+    * const settingBeritas = await prisma.settingBerita.findMany()
+    * ```
+    */
+  get settingBerita(): Prisma.SettingBeritaDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1663,7 +1798,16 @@ export namespace Prisma {
     UniversityJabatan: 'UniversityJabatan',
     UniversityJabatanOrang: 'UniversityJabatanOrang',
     User: 'User',
-    Userlogin: 'Userlogin'
+    Userlogin: 'Userlogin',
+    JenisKegiatan: 'JenisKegiatan',
+    KategoriBerita: 'KategoriBerita',
+    SettingMainPage: 'SettingMainPage',
+    SettingKegiatan: 'SettingKegiatan',
+    SettingCommunity: 'SettingCommunity',
+    SettingWhy: 'SettingWhy',
+    SettingNumber: 'SettingNumber',
+    SettingTestimony: 'SettingTestimony',
+    SettingBerita: 'SettingBerita'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1682,7 +1826,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin"
+      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6052,6 +6196,672 @@ export namespace Prisma {
           }
         }
       }
+      JenisKegiatan: {
+        payload: Prisma.$JenisKegiatanPayload<ExtArgs>
+        fields: Prisma.JenisKegiatanFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JenisKegiatanFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JenisKegiatanFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>
+          }
+          findFirst: {
+            args: Prisma.JenisKegiatanFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JenisKegiatanFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>
+          }
+          findMany: {
+            args: Prisma.JenisKegiatanFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>[]
+          }
+          create: {
+            args: Prisma.JenisKegiatanCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>
+          }
+          createMany: {
+            args: Prisma.JenisKegiatanCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JenisKegiatanCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>[]
+          }
+          delete: {
+            args: Prisma.JenisKegiatanDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>
+          }
+          update: {
+            args: Prisma.JenisKegiatanUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>
+          }
+          deleteMany: {
+            args: Prisma.JenisKegiatanDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JenisKegiatanUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.JenisKegiatanUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>[]
+          }
+          upsert: {
+            args: Prisma.JenisKegiatanUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JenisKegiatanPayload>
+          }
+          aggregate: {
+            args: Prisma.JenisKegiatanAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJenisKegiatan>
+          }
+          groupBy: {
+            args: Prisma.JenisKegiatanGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JenisKegiatanGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JenisKegiatanCountArgs<ExtArgs>
+            result: $Utils.Optional<JenisKegiatanCountAggregateOutputType> | number
+          }
+        }
+      }
+      KategoriBerita: {
+        payload: Prisma.$KategoriBeritaPayload<ExtArgs>
+        fields: Prisma.KategoriBeritaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KategoriBeritaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KategoriBeritaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>
+          }
+          findFirst: {
+            args: Prisma.KategoriBeritaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KategoriBeritaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>
+          }
+          findMany: {
+            args: Prisma.KategoriBeritaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>[]
+          }
+          create: {
+            args: Prisma.KategoriBeritaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>
+          }
+          createMany: {
+            args: Prisma.KategoriBeritaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KategoriBeritaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>[]
+          }
+          delete: {
+            args: Prisma.KategoriBeritaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>
+          }
+          update: {
+            args: Prisma.KategoriBeritaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>
+          }
+          deleteMany: {
+            args: Prisma.KategoriBeritaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KategoriBeritaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.KategoriBeritaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>[]
+          }
+          upsert: {
+            args: Prisma.KategoriBeritaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KategoriBeritaPayload>
+          }
+          aggregate: {
+            args: Prisma.KategoriBeritaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKategoriBerita>
+          }
+          groupBy: {
+            args: Prisma.KategoriBeritaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KategoriBeritaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KategoriBeritaCountArgs<ExtArgs>
+            result: $Utils.Optional<KategoriBeritaCountAggregateOutputType> | number
+          }
+        }
+      }
+      SettingMainPage: {
+        payload: Prisma.$SettingMainPagePayload<ExtArgs>
+        fields: Prisma.SettingMainPageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingMainPageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingMainPageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>
+          }
+          findFirst: {
+            args: Prisma.SettingMainPageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingMainPageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>
+          }
+          findMany: {
+            args: Prisma.SettingMainPageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>[]
+          }
+          create: {
+            args: Prisma.SettingMainPageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>
+          }
+          createMany: {
+            args: Prisma.SettingMainPageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingMainPageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>[]
+          }
+          delete: {
+            args: Prisma.SettingMainPageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>
+          }
+          update: {
+            args: Prisma.SettingMainPageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingMainPageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingMainPageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SettingMainPageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>[]
+          }
+          upsert: {
+            args: Prisma.SettingMainPageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingMainPagePayload>
+          }
+          aggregate: {
+            args: Prisma.SettingMainPageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSettingMainPage>
+          }
+          groupBy: {
+            args: Prisma.SettingMainPageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingMainPageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingMainPageCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingMainPageCountAggregateOutputType> | number
+          }
+        }
+      }
+      SettingKegiatan: {
+        payload: Prisma.$SettingKegiatanPayload<ExtArgs>
+        fields: Prisma.SettingKegiatanFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingKegiatanFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingKegiatanFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>
+          }
+          findFirst: {
+            args: Prisma.SettingKegiatanFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingKegiatanFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>
+          }
+          findMany: {
+            args: Prisma.SettingKegiatanFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>[]
+          }
+          create: {
+            args: Prisma.SettingKegiatanCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>
+          }
+          createMany: {
+            args: Prisma.SettingKegiatanCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingKegiatanCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>[]
+          }
+          delete: {
+            args: Prisma.SettingKegiatanDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>
+          }
+          update: {
+            args: Prisma.SettingKegiatanUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingKegiatanDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingKegiatanUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SettingKegiatanUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>[]
+          }
+          upsert: {
+            args: Prisma.SettingKegiatanUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingKegiatanPayload>
+          }
+          aggregate: {
+            args: Prisma.SettingKegiatanAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSettingKegiatan>
+          }
+          groupBy: {
+            args: Prisma.SettingKegiatanGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingKegiatanGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingKegiatanCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingKegiatanCountAggregateOutputType> | number
+          }
+        }
+      }
+      SettingCommunity: {
+        payload: Prisma.$SettingCommunityPayload<ExtArgs>
+        fields: Prisma.SettingCommunityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingCommunityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingCommunityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>
+          }
+          findFirst: {
+            args: Prisma.SettingCommunityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingCommunityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>
+          }
+          findMany: {
+            args: Prisma.SettingCommunityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>[]
+          }
+          create: {
+            args: Prisma.SettingCommunityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>
+          }
+          createMany: {
+            args: Prisma.SettingCommunityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingCommunityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>[]
+          }
+          delete: {
+            args: Prisma.SettingCommunityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>
+          }
+          update: {
+            args: Prisma.SettingCommunityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingCommunityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingCommunityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SettingCommunityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>[]
+          }
+          upsert: {
+            args: Prisma.SettingCommunityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingCommunityPayload>
+          }
+          aggregate: {
+            args: Prisma.SettingCommunityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSettingCommunity>
+          }
+          groupBy: {
+            args: Prisma.SettingCommunityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingCommunityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingCommunityCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingCommunityCountAggregateOutputType> | number
+          }
+        }
+      }
+      SettingWhy: {
+        payload: Prisma.$SettingWhyPayload<ExtArgs>
+        fields: Prisma.SettingWhyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingWhyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingWhyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>
+          }
+          findFirst: {
+            args: Prisma.SettingWhyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingWhyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>
+          }
+          findMany: {
+            args: Prisma.SettingWhyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>[]
+          }
+          create: {
+            args: Prisma.SettingWhyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>
+          }
+          createMany: {
+            args: Prisma.SettingWhyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingWhyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>[]
+          }
+          delete: {
+            args: Prisma.SettingWhyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>
+          }
+          update: {
+            args: Prisma.SettingWhyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingWhyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingWhyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SettingWhyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>[]
+          }
+          upsert: {
+            args: Prisma.SettingWhyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingWhyPayload>
+          }
+          aggregate: {
+            args: Prisma.SettingWhyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSettingWhy>
+          }
+          groupBy: {
+            args: Prisma.SettingWhyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingWhyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingWhyCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingWhyCountAggregateOutputType> | number
+          }
+        }
+      }
+      SettingNumber: {
+        payload: Prisma.$SettingNumberPayload<ExtArgs>
+        fields: Prisma.SettingNumberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingNumberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingNumberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>
+          }
+          findFirst: {
+            args: Prisma.SettingNumberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingNumberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>
+          }
+          findMany: {
+            args: Prisma.SettingNumberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>[]
+          }
+          create: {
+            args: Prisma.SettingNumberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>
+          }
+          createMany: {
+            args: Prisma.SettingNumberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingNumberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>[]
+          }
+          delete: {
+            args: Prisma.SettingNumberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>
+          }
+          update: {
+            args: Prisma.SettingNumberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingNumberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingNumberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SettingNumberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>[]
+          }
+          upsert: {
+            args: Prisma.SettingNumberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingNumberPayload>
+          }
+          aggregate: {
+            args: Prisma.SettingNumberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSettingNumber>
+          }
+          groupBy: {
+            args: Prisma.SettingNumberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingNumberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingNumberCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingNumberCountAggregateOutputType> | number
+          }
+        }
+      }
+      SettingTestimony: {
+        payload: Prisma.$SettingTestimonyPayload<ExtArgs>
+        fields: Prisma.SettingTestimonyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingTestimonyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingTestimonyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>
+          }
+          findFirst: {
+            args: Prisma.SettingTestimonyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingTestimonyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>
+          }
+          findMany: {
+            args: Prisma.SettingTestimonyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>[]
+          }
+          create: {
+            args: Prisma.SettingTestimonyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>
+          }
+          createMany: {
+            args: Prisma.SettingTestimonyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingTestimonyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>[]
+          }
+          delete: {
+            args: Prisma.SettingTestimonyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>
+          }
+          update: {
+            args: Prisma.SettingTestimonyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingTestimonyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingTestimonyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SettingTestimonyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>[]
+          }
+          upsert: {
+            args: Prisma.SettingTestimonyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingTestimonyPayload>
+          }
+          aggregate: {
+            args: Prisma.SettingTestimonyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSettingTestimony>
+          }
+          groupBy: {
+            args: Prisma.SettingTestimonyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingTestimonyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingTestimonyCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingTestimonyCountAggregateOutputType> | number
+          }
+        }
+      }
+      SettingBerita: {
+        payload: Prisma.$SettingBeritaPayload<ExtArgs>
+        fields: Prisma.SettingBeritaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SettingBeritaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SettingBeritaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>
+          }
+          findFirst: {
+            args: Prisma.SettingBeritaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SettingBeritaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>
+          }
+          findMany: {
+            args: Prisma.SettingBeritaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>[]
+          }
+          create: {
+            args: Prisma.SettingBeritaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>
+          }
+          createMany: {
+            args: Prisma.SettingBeritaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SettingBeritaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>[]
+          }
+          delete: {
+            args: Prisma.SettingBeritaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>
+          }
+          update: {
+            args: Prisma.SettingBeritaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>
+          }
+          deleteMany: {
+            args: Prisma.SettingBeritaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SettingBeritaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SettingBeritaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>[]
+          }
+          upsert: {
+            args: Prisma.SettingBeritaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SettingBeritaPayload>
+          }
+          aggregate: {
+            args: Prisma.SettingBeritaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSettingBerita>
+          }
+          groupBy: {
+            args: Prisma.SettingBeritaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SettingBeritaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SettingBeritaCountArgs<ExtArgs>
+            result: $Utils.Optional<SettingBeritaCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6195,6 +7005,15 @@ export namespace Prisma {
     universityJabatanOrang?: UniversityJabatanOrangOmit
     user?: UserOmit
     userlogin?: UserloginOmit
+    jenisKegiatan?: JenisKegiatanOmit
+    kategoriBerita?: KategoriBeritaOmit
+    settingMainPage?: SettingMainPageOmit
+    settingKegiatan?: SettingKegiatanOmit
+    settingCommunity?: SettingCommunityOmit
+    settingWhy?: SettingWhyOmit
+    settingNumber?: SettingNumberOmit
+    settingTestimony?: SettingTestimonyOmit
+    settingBerita?: SettingBeritaOmit
   }
 
   /* Types for Logging */
@@ -7356,6 +8175,7 @@ export namespace Prisma {
     UniversityJabatan: number
     UniversitySosialMedia: number
     UniversityInformasi: number
+    SettingMainPage: number
   }
 
   export type UniversityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7363,6 +8183,7 @@ export namespace Prisma {
     UniversityJabatan?: boolean | UniversityCountOutputTypeCountUniversityJabatanArgs
     UniversitySosialMedia?: boolean | UniversityCountOutputTypeCountUniversitySosialMediaArgs
     UniversityInformasi?: boolean | UniversityCountOutputTypeCountUniversityInformasiArgs
+    SettingMainPage?: boolean | UniversityCountOutputTypeCountSettingMainPageArgs
   }
 
   // Custom InputTypes
@@ -7402,6 +8223,13 @@ export namespace Prisma {
    */
   export type UniversityCountOutputTypeCountUniversityInformasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UniversityInformasiWhereInput
+  }
+
+  /**
+   * UniversityCountOutputType without action
+   */
+  export type UniversityCountOutputTypeCountSettingMainPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingMainPageWhereInput
   }
 
 
@@ -7500,6 +8328,144 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAsesorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AsesorWhereInput
+  }
+
+
+  /**
+   * Count Type JenisKegiatanCountOutputType
+   */
+
+  export type JenisKegiatanCountOutputType = {
+    SettingKegiatan: number
+  }
+
+  export type JenisKegiatanCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingKegiatan?: boolean | JenisKegiatanCountOutputTypeCountSettingKegiatanArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * JenisKegiatanCountOutputType without action
+   */
+  export type JenisKegiatanCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatanCountOutputType
+     */
+    select?: JenisKegiatanCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * JenisKegiatanCountOutputType without action
+   */
+  export type JenisKegiatanCountOutputTypeCountSettingKegiatanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingKegiatanWhereInput
+  }
+
+
+  /**
+   * Count Type KategoriBeritaCountOutputType
+   */
+
+  export type KategoriBeritaCountOutputType = {
+    SettingBerita: number
+  }
+
+  export type KategoriBeritaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingBerita?: boolean | KategoriBeritaCountOutputTypeCountSettingBeritaArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * KategoriBeritaCountOutputType without action
+   */
+  export type KategoriBeritaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBeritaCountOutputType
+     */
+    select?: KategoriBeritaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * KategoriBeritaCountOutputType without action
+   */
+  export type KategoriBeritaCountOutputTypeCountSettingBeritaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingBeritaWhereInput
+  }
+
+
+  /**
+   * Count Type SettingMainPageCountOutputType
+   */
+
+  export type SettingMainPageCountOutputType = {
+    SettingKegiatan: number
+    SettingCommunity: number
+    SettingWhy: number
+    SettingNumber: number
+    SettingTestimony: number
+    SettingBerita: number
+  }
+
+  export type SettingMainPageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingKegiatan?: boolean | SettingMainPageCountOutputTypeCountSettingKegiatanArgs
+    SettingCommunity?: boolean | SettingMainPageCountOutputTypeCountSettingCommunityArgs
+    SettingWhy?: boolean | SettingMainPageCountOutputTypeCountSettingWhyArgs
+    SettingNumber?: boolean | SettingMainPageCountOutputTypeCountSettingNumberArgs
+    SettingTestimony?: boolean | SettingMainPageCountOutputTypeCountSettingTestimonyArgs
+    SettingBerita?: boolean | SettingMainPageCountOutputTypeCountSettingBeritaArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SettingMainPageCountOutputType without action
+   */
+  export type SettingMainPageCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPageCountOutputType
+     */
+    select?: SettingMainPageCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SettingMainPageCountOutputType without action
+   */
+  export type SettingMainPageCountOutputTypeCountSettingKegiatanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingKegiatanWhereInput
+  }
+
+  /**
+   * SettingMainPageCountOutputType without action
+   */
+  export type SettingMainPageCountOutputTypeCountSettingCommunityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingCommunityWhereInput
+  }
+
+  /**
+   * SettingMainPageCountOutputType without action
+   */
+  export type SettingMainPageCountOutputTypeCountSettingWhyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingWhyWhereInput
+  }
+
+  /**
+   * SettingMainPageCountOutputType without action
+   */
+  export type SettingMainPageCountOutputTypeCountSettingNumberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingNumberWhereInput
+  }
+
+  /**
+   * SettingMainPageCountOutputType without action
+   */
+  export type SettingMainPageCountOutputTypeCountSettingTestimonyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingTestimonyWhereInput
+  }
+
+  /**
+   * SettingMainPageCountOutputType without action
+   */
+  export type SettingMainPageCountOutputTypeCountSettingBeritaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingBeritaWhereInput
   }
 
 
@@ -65731,6 +66697,7 @@ export namespace Prisma {
     UniversityJabatan?: boolean | University$UniversityJabatanArgs<ExtArgs>
     UniversitySosialMedia?: boolean | University$UniversitySosialMediaArgs<ExtArgs>
     UniversityInformasi?: boolean | University$UniversityInformasiArgs<ExtArgs>
+    SettingMainPage?: boolean | University$SettingMainPageArgs<ExtArgs>
     _count?: boolean | UniversityCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["university"]>
 
@@ -65773,6 +66740,7 @@ export namespace Prisma {
     UniversityJabatan?: boolean | University$UniversityJabatanArgs<ExtArgs>
     UniversitySosialMedia?: boolean | University$UniversitySosialMediaArgs<ExtArgs>
     UniversityInformasi?: boolean | University$UniversityInformasiArgs<ExtArgs>
+    SettingMainPage?: boolean | University$SettingMainPageArgs<ExtArgs>
     _count?: boolean | UniversityCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UniversityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -65790,6 +66758,7 @@ export namespace Prisma {
       UniversityJabatan: Prisma.$UniversityJabatanPayload<ExtArgs>[]
       UniversitySosialMedia: Prisma.$UniversitySosialMediaPayload<ExtArgs>[]
       UniversityInformasi: Prisma.$UniversityInformasiPayload<ExtArgs>[]
+      SettingMainPage: Prisma.$SettingMainPagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       UniversityId: string
@@ -66198,6 +67167,7 @@ export namespace Prisma {
     UniversityJabatan<T extends University$UniversityJabatanArgs<ExtArgs> = {}>(args?: Subset<T, University$UniversityJabatanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityJabatanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     UniversitySosialMedia<T extends University$UniversitySosialMediaArgs<ExtArgs> = {}>(args?: Subset<T, University$UniversitySosialMediaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversitySosialMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     UniversityInformasi<T extends University$UniversityInformasiArgs<ExtArgs> = {}>(args?: Subset<T, University$UniversityInformasiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UniversityInformasiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SettingMainPage<T extends University$SettingMainPageArgs<ExtArgs> = {}>(args?: Subset<T, University$SettingMainPageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -66723,6 +67693,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UniversityInformasiScalarFieldEnum | UniversityInformasiScalarFieldEnum[]
+  }
+
+  /**
+   * University.SettingMainPage
+   */
+  export type University$SettingMainPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    where?: SettingMainPageWhereInput
+    orderBy?: SettingMainPageOrderByWithRelationInput | SettingMainPageOrderByWithRelationInput[]
+    cursor?: SettingMainPageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingMainPageScalarFieldEnum | SettingMainPageScalarFieldEnum[]
   }
 
   /**
@@ -73473,6 +74467,9959 @@ export namespace Prisma {
 
 
   /**
+   * Model JenisKegiatan
+   */
+
+  export type AggregateJenisKegiatan = {
+    _count: JenisKegiatanCountAggregateOutputType | null
+    _min: JenisKegiatanMinAggregateOutputType | null
+    _max: JenisKegiatanMaxAggregateOutputType | null
+  }
+
+  export type JenisKegiatanMinAggregateOutputType = {
+    JenisKegiatanId: string | null
+    Nama: string | null
+    Color: string | null
+  }
+
+  export type JenisKegiatanMaxAggregateOutputType = {
+    JenisKegiatanId: string | null
+    Nama: string | null
+    Color: string | null
+  }
+
+  export type JenisKegiatanCountAggregateOutputType = {
+    JenisKegiatanId: number
+    Nama: number
+    Color: number
+    _all: number
+  }
+
+
+  export type JenisKegiatanMinAggregateInputType = {
+    JenisKegiatanId?: true
+    Nama?: true
+    Color?: true
+  }
+
+  export type JenisKegiatanMaxAggregateInputType = {
+    JenisKegiatanId?: true
+    Nama?: true
+    Color?: true
+  }
+
+  export type JenisKegiatanCountAggregateInputType = {
+    JenisKegiatanId?: true
+    Nama?: true
+    Color?: true
+    _all?: true
+  }
+
+  export type JenisKegiatanAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JenisKegiatan to aggregate.
+     */
+    where?: JenisKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JenisKegiatans to fetch.
+     */
+    orderBy?: JenisKegiatanOrderByWithRelationInput | JenisKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JenisKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JenisKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JenisKegiatans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JenisKegiatans
+    **/
+    _count?: true | JenisKegiatanCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JenisKegiatanMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JenisKegiatanMaxAggregateInputType
+  }
+
+  export type GetJenisKegiatanAggregateType<T extends JenisKegiatanAggregateArgs> = {
+        [P in keyof T & keyof AggregateJenisKegiatan]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJenisKegiatan[P]>
+      : GetScalarType<T[P], AggregateJenisKegiatan[P]>
+  }
+
+
+
+
+  export type JenisKegiatanGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JenisKegiatanWhereInput
+    orderBy?: JenisKegiatanOrderByWithAggregationInput | JenisKegiatanOrderByWithAggregationInput[]
+    by: JenisKegiatanScalarFieldEnum[] | JenisKegiatanScalarFieldEnum
+    having?: JenisKegiatanScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JenisKegiatanCountAggregateInputType | true
+    _min?: JenisKegiatanMinAggregateInputType
+    _max?: JenisKegiatanMaxAggregateInputType
+  }
+
+  export type JenisKegiatanGroupByOutputType = {
+    JenisKegiatanId: string
+    Nama: string
+    Color: string
+    _count: JenisKegiatanCountAggregateOutputType | null
+    _min: JenisKegiatanMinAggregateOutputType | null
+    _max: JenisKegiatanMaxAggregateOutputType | null
+  }
+
+  type GetJenisKegiatanGroupByPayload<T extends JenisKegiatanGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JenisKegiatanGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JenisKegiatanGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JenisKegiatanGroupByOutputType[P]>
+            : GetScalarType<T[P], JenisKegiatanGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JenisKegiatanSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    JenisKegiatanId?: boolean
+    Nama?: boolean
+    Color?: boolean
+    SettingKegiatan?: boolean | JenisKegiatan$SettingKegiatanArgs<ExtArgs>
+    _count?: boolean | JenisKegiatanCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jenisKegiatan"]>
+
+  export type JenisKegiatanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    JenisKegiatanId?: boolean
+    Nama?: boolean
+    Color?: boolean
+  }, ExtArgs["result"]["jenisKegiatan"]>
+
+  export type JenisKegiatanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    JenisKegiatanId?: boolean
+    Nama?: boolean
+    Color?: boolean
+  }, ExtArgs["result"]["jenisKegiatan"]>
+
+  export type JenisKegiatanSelectScalar = {
+    JenisKegiatanId?: boolean
+    Nama?: boolean
+    Color?: boolean
+  }
+
+  export type JenisKegiatanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"JenisKegiatanId" | "Nama" | "Color", ExtArgs["result"]["jenisKegiatan"]>
+  export type JenisKegiatanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingKegiatan?: boolean | JenisKegiatan$SettingKegiatanArgs<ExtArgs>
+    _count?: boolean | JenisKegiatanCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type JenisKegiatanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type JenisKegiatanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $JenisKegiatanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JenisKegiatan"
+    objects: {
+      SettingKegiatan: Prisma.$SettingKegiatanPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      JenisKegiatanId: string
+      Nama: string
+      Color: string
+    }, ExtArgs["result"]["jenisKegiatan"]>
+    composites: {}
+  }
+
+  type JenisKegiatanGetPayload<S extends boolean | null | undefined | JenisKegiatanDefaultArgs> = $Result.GetResult<Prisma.$JenisKegiatanPayload, S>
+
+  type JenisKegiatanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<JenisKegiatanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: JenisKegiatanCountAggregateInputType | true
+    }
+
+  export interface JenisKegiatanDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JenisKegiatan'], meta: { name: 'JenisKegiatan' } }
+    /**
+     * Find zero or one JenisKegiatan that matches the filter.
+     * @param {JenisKegiatanFindUniqueArgs} args - Arguments to find a JenisKegiatan
+     * @example
+     * // Get one JenisKegiatan
+     * const jenisKegiatan = await prisma.jenisKegiatan.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JenisKegiatanFindUniqueArgs>(args: SelectSubset<T, JenisKegiatanFindUniqueArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one JenisKegiatan that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {JenisKegiatanFindUniqueOrThrowArgs} args - Arguments to find a JenisKegiatan
+     * @example
+     * // Get one JenisKegiatan
+     * const jenisKegiatan = await prisma.jenisKegiatan.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JenisKegiatanFindUniqueOrThrowArgs>(args: SelectSubset<T, JenisKegiatanFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JenisKegiatan that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JenisKegiatanFindFirstArgs} args - Arguments to find a JenisKegiatan
+     * @example
+     * // Get one JenisKegiatan
+     * const jenisKegiatan = await prisma.jenisKegiatan.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JenisKegiatanFindFirstArgs>(args?: SelectSubset<T, JenisKegiatanFindFirstArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JenisKegiatan that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JenisKegiatanFindFirstOrThrowArgs} args - Arguments to find a JenisKegiatan
+     * @example
+     * // Get one JenisKegiatan
+     * const jenisKegiatan = await prisma.jenisKegiatan.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JenisKegiatanFindFirstOrThrowArgs>(args?: SelectSubset<T, JenisKegiatanFindFirstOrThrowArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more JenisKegiatans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JenisKegiatanFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JenisKegiatans
+     * const jenisKegiatans = await prisma.jenisKegiatan.findMany()
+     * 
+     * // Get first 10 JenisKegiatans
+     * const jenisKegiatans = await prisma.jenisKegiatan.findMany({ take: 10 })
+     * 
+     * // Only select the `JenisKegiatanId`
+     * const jenisKegiatanWithJenisKegiatanIdOnly = await prisma.jenisKegiatan.findMany({ select: { JenisKegiatanId: true } })
+     * 
+     */
+    findMany<T extends JenisKegiatanFindManyArgs>(args?: SelectSubset<T, JenisKegiatanFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a JenisKegiatan.
+     * @param {JenisKegiatanCreateArgs} args - Arguments to create a JenisKegiatan.
+     * @example
+     * // Create one JenisKegiatan
+     * const JenisKegiatan = await prisma.jenisKegiatan.create({
+     *   data: {
+     *     // ... data to create a JenisKegiatan
+     *   }
+     * })
+     * 
+     */
+    create<T extends JenisKegiatanCreateArgs>(args: SelectSubset<T, JenisKegiatanCreateArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many JenisKegiatans.
+     * @param {JenisKegiatanCreateManyArgs} args - Arguments to create many JenisKegiatans.
+     * @example
+     * // Create many JenisKegiatans
+     * const jenisKegiatan = await prisma.jenisKegiatan.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JenisKegiatanCreateManyArgs>(args?: SelectSubset<T, JenisKegiatanCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JenisKegiatans and returns the data saved in the database.
+     * @param {JenisKegiatanCreateManyAndReturnArgs} args - Arguments to create many JenisKegiatans.
+     * @example
+     * // Create many JenisKegiatans
+     * const jenisKegiatan = await prisma.jenisKegiatan.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JenisKegiatans and only return the `JenisKegiatanId`
+     * const jenisKegiatanWithJenisKegiatanIdOnly = await prisma.jenisKegiatan.createManyAndReturn({
+     *   select: { JenisKegiatanId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JenisKegiatanCreateManyAndReturnArgs>(args?: SelectSubset<T, JenisKegiatanCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a JenisKegiatan.
+     * @param {JenisKegiatanDeleteArgs} args - Arguments to delete one JenisKegiatan.
+     * @example
+     * // Delete one JenisKegiatan
+     * const JenisKegiatan = await prisma.jenisKegiatan.delete({
+     *   where: {
+     *     // ... filter to delete one JenisKegiatan
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JenisKegiatanDeleteArgs>(args: SelectSubset<T, JenisKegiatanDeleteArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one JenisKegiatan.
+     * @param {JenisKegiatanUpdateArgs} args - Arguments to update one JenisKegiatan.
+     * @example
+     * // Update one JenisKegiatan
+     * const jenisKegiatan = await prisma.jenisKegiatan.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JenisKegiatanUpdateArgs>(args: SelectSubset<T, JenisKegiatanUpdateArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more JenisKegiatans.
+     * @param {JenisKegiatanDeleteManyArgs} args - Arguments to filter JenisKegiatans to delete.
+     * @example
+     * // Delete a few JenisKegiatans
+     * const { count } = await prisma.jenisKegiatan.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JenisKegiatanDeleteManyArgs>(args?: SelectSubset<T, JenisKegiatanDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JenisKegiatans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JenisKegiatanUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JenisKegiatans
+     * const jenisKegiatan = await prisma.jenisKegiatan.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JenisKegiatanUpdateManyArgs>(args: SelectSubset<T, JenisKegiatanUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JenisKegiatans and returns the data updated in the database.
+     * @param {JenisKegiatanUpdateManyAndReturnArgs} args - Arguments to update many JenisKegiatans.
+     * @example
+     * // Update many JenisKegiatans
+     * const jenisKegiatan = await prisma.jenisKegiatan.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more JenisKegiatans and only return the `JenisKegiatanId`
+     * const jenisKegiatanWithJenisKegiatanIdOnly = await prisma.jenisKegiatan.updateManyAndReturn({
+     *   select: { JenisKegiatanId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends JenisKegiatanUpdateManyAndReturnArgs>(args: SelectSubset<T, JenisKegiatanUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one JenisKegiatan.
+     * @param {JenisKegiatanUpsertArgs} args - Arguments to update or create a JenisKegiatan.
+     * @example
+     * // Update or create a JenisKegiatan
+     * const jenisKegiatan = await prisma.jenisKegiatan.upsert({
+     *   create: {
+     *     // ... data to create a JenisKegiatan
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JenisKegiatan we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JenisKegiatanUpsertArgs>(args: SelectSubset<T, JenisKegiatanUpsertArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of JenisKegiatans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JenisKegiatanCountArgs} args - Arguments to filter JenisKegiatans to count.
+     * @example
+     * // Count the number of JenisKegiatans
+     * const count = await prisma.jenisKegiatan.count({
+     *   where: {
+     *     // ... the filter for the JenisKegiatans we want to count
+     *   }
+     * })
+    **/
+    count<T extends JenisKegiatanCountArgs>(
+      args?: Subset<T, JenisKegiatanCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JenisKegiatanCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JenisKegiatan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JenisKegiatanAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JenisKegiatanAggregateArgs>(args: Subset<T, JenisKegiatanAggregateArgs>): Prisma.PrismaPromise<GetJenisKegiatanAggregateType<T>>
+
+    /**
+     * Group by JenisKegiatan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JenisKegiatanGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JenisKegiatanGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JenisKegiatanGroupByArgs['orderBy'] }
+        : { orderBy?: JenisKegiatanGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JenisKegiatanGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJenisKegiatanGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JenisKegiatan model
+   */
+  readonly fields: JenisKegiatanFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JenisKegiatan.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JenisKegiatanClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SettingKegiatan<T extends JenisKegiatan$SettingKegiatanArgs<ExtArgs> = {}>(args?: Subset<T, JenisKegiatan$SettingKegiatanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JenisKegiatan model
+   */
+  interface JenisKegiatanFieldRefs {
+    readonly JenisKegiatanId: FieldRef<"JenisKegiatan", 'String'>
+    readonly Nama: FieldRef<"JenisKegiatan", 'String'>
+    readonly Color: FieldRef<"JenisKegiatan", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JenisKegiatan findUnique
+   */
+  export type JenisKegiatanFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which JenisKegiatan to fetch.
+     */
+    where: JenisKegiatanWhereUniqueInput
+  }
+
+  /**
+   * JenisKegiatan findUniqueOrThrow
+   */
+  export type JenisKegiatanFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which JenisKegiatan to fetch.
+     */
+    where: JenisKegiatanWhereUniqueInput
+  }
+
+  /**
+   * JenisKegiatan findFirst
+   */
+  export type JenisKegiatanFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which JenisKegiatan to fetch.
+     */
+    where?: JenisKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JenisKegiatans to fetch.
+     */
+    orderBy?: JenisKegiatanOrderByWithRelationInput | JenisKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JenisKegiatans.
+     */
+    cursor?: JenisKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JenisKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JenisKegiatans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JenisKegiatans.
+     */
+    distinct?: JenisKegiatanScalarFieldEnum | JenisKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * JenisKegiatan findFirstOrThrow
+   */
+  export type JenisKegiatanFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which JenisKegiatan to fetch.
+     */
+    where?: JenisKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JenisKegiatans to fetch.
+     */
+    orderBy?: JenisKegiatanOrderByWithRelationInput | JenisKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JenisKegiatans.
+     */
+    cursor?: JenisKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JenisKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JenisKegiatans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JenisKegiatans.
+     */
+    distinct?: JenisKegiatanScalarFieldEnum | JenisKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * JenisKegiatan findMany
+   */
+  export type JenisKegiatanFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which JenisKegiatans to fetch.
+     */
+    where?: JenisKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JenisKegiatans to fetch.
+     */
+    orderBy?: JenisKegiatanOrderByWithRelationInput | JenisKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JenisKegiatans.
+     */
+    cursor?: JenisKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JenisKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JenisKegiatans.
+     */
+    skip?: number
+    distinct?: JenisKegiatanScalarFieldEnum | JenisKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * JenisKegiatan create
+   */
+  export type JenisKegiatanCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JenisKegiatan.
+     */
+    data: XOR<JenisKegiatanCreateInput, JenisKegiatanUncheckedCreateInput>
+  }
+
+  /**
+   * JenisKegiatan createMany
+   */
+  export type JenisKegiatanCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JenisKegiatans.
+     */
+    data: JenisKegiatanCreateManyInput | JenisKegiatanCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JenisKegiatan createManyAndReturn
+   */
+  export type JenisKegiatanCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * The data used to create many JenisKegiatans.
+     */
+    data: JenisKegiatanCreateManyInput | JenisKegiatanCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JenisKegiatan update
+   */
+  export type JenisKegiatanUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JenisKegiatan.
+     */
+    data: XOR<JenisKegiatanUpdateInput, JenisKegiatanUncheckedUpdateInput>
+    /**
+     * Choose, which JenisKegiatan to update.
+     */
+    where: JenisKegiatanWhereUniqueInput
+  }
+
+  /**
+   * JenisKegiatan updateMany
+   */
+  export type JenisKegiatanUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JenisKegiatans.
+     */
+    data: XOR<JenisKegiatanUpdateManyMutationInput, JenisKegiatanUncheckedUpdateManyInput>
+    /**
+     * Filter which JenisKegiatans to update
+     */
+    where?: JenisKegiatanWhereInput
+    /**
+     * Limit how many JenisKegiatans to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * JenisKegiatan updateManyAndReturn
+   */
+  export type JenisKegiatanUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * The data used to update JenisKegiatans.
+     */
+    data: XOR<JenisKegiatanUpdateManyMutationInput, JenisKegiatanUncheckedUpdateManyInput>
+    /**
+     * Filter which JenisKegiatans to update
+     */
+    where?: JenisKegiatanWhereInput
+    /**
+     * Limit how many JenisKegiatans to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * JenisKegiatan upsert
+   */
+  export type JenisKegiatanUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JenisKegiatan to update in case it exists.
+     */
+    where: JenisKegiatanWhereUniqueInput
+    /**
+     * In case the JenisKegiatan found by the `where` argument doesn't exist, create a new JenisKegiatan with this data.
+     */
+    create: XOR<JenisKegiatanCreateInput, JenisKegiatanUncheckedCreateInput>
+    /**
+     * In case the JenisKegiatan was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JenisKegiatanUpdateInput, JenisKegiatanUncheckedUpdateInput>
+  }
+
+  /**
+   * JenisKegiatan delete
+   */
+  export type JenisKegiatanDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter which JenisKegiatan to delete.
+     */
+    where: JenisKegiatanWhereUniqueInput
+  }
+
+  /**
+   * JenisKegiatan deleteMany
+   */
+  export type JenisKegiatanDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JenisKegiatans to delete
+     */
+    where?: JenisKegiatanWhereInput
+    /**
+     * Limit how many JenisKegiatans to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * JenisKegiatan.SettingKegiatan
+   */
+  export type JenisKegiatan$SettingKegiatanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    where?: SettingKegiatanWhereInput
+    orderBy?: SettingKegiatanOrderByWithRelationInput | SettingKegiatanOrderByWithRelationInput[]
+    cursor?: SettingKegiatanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingKegiatanScalarFieldEnum | SettingKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * JenisKegiatan without action
+   */
+  export type JenisKegiatanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JenisKegiatan
+     */
+    select?: JenisKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JenisKegiatan
+     */
+    omit?: JenisKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JenisKegiatanInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model KategoriBerita
+   */
+
+  export type AggregateKategoriBerita = {
+    _count: KategoriBeritaCountAggregateOutputType | null
+    _min: KategoriBeritaMinAggregateOutputType | null
+    _max: KategoriBeritaMaxAggregateOutputType | null
+  }
+
+  export type KategoriBeritaMinAggregateOutputType = {
+    KategoriBeritaId: string | null
+    Nama: string | null
+    Color: string | null
+  }
+
+  export type KategoriBeritaMaxAggregateOutputType = {
+    KategoriBeritaId: string | null
+    Nama: string | null
+    Color: string | null
+  }
+
+  export type KategoriBeritaCountAggregateOutputType = {
+    KategoriBeritaId: number
+    Nama: number
+    Color: number
+    _all: number
+  }
+
+
+  export type KategoriBeritaMinAggregateInputType = {
+    KategoriBeritaId?: true
+    Nama?: true
+    Color?: true
+  }
+
+  export type KategoriBeritaMaxAggregateInputType = {
+    KategoriBeritaId?: true
+    Nama?: true
+    Color?: true
+  }
+
+  export type KategoriBeritaCountAggregateInputType = {
+    KategoriBeritaId?: true
+    Nama?: true
+    Color?: true
+    _all?: true
+  }
+
+  export type KategoriBeritaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KategoriBerita to aggregate.
+     */
+    where?: KategoriBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KategoriBeritas to fetch.
+     */
+    orderBy?: KategoriBeritaOrderByWithRelationInput | KategoriBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KategoriBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KategoriBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KategoriBeritas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KategoriBeritas
+    **/
+    _count?: true | KategoriBeritaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KategoriBeritaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KategoriBeritaMaxAggregateInputType
+  }
+
+  export type GetKategoriBeritaAggregateType<T extends KategoriBeritaAggregateArgs> = {
+        [P in keyof T & keyof AggregateKategoriBerita]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKategoriBerita[P]>
+      : GetScalarType<T[P], AggregateKategoriBerita[P]>
+  }
+
+
+
+
+  export type KategoriBeritaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KategoriBeritaWhereInput
+    orderBy?: KategoriBeritaOrderByWithAggregationInput | KategoriBeritaOrderByWithAggregationInput[]
+    by: KategoriBeritaScalarFieldEnum[] | KategoriBeritaScalarFieldEnum
+    having?: KategoriBeritaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KategoriBeritaCountAggregateInputType | true
+    _min?: KategoriBeritaMinAggregateInputType
+    _max?: KategoriBeritaMaxAggregateInputType
+  }
+
+  export type KategoriBeritaGroupByOutputType = {
+    KategoriBeritaId: string
+    Nama: string
+    Color: string
+    _count: KategoriBeritaCountAggregateOutputType | null
+    _min: KategoriBeritaMinAggregateOutputType | null
+    _max: KategoriBeritaMaxAggregateOutputType | null
+  }
+
+  type GetKategoriBeritaGroupByPayload<T extends KategoriBeritaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KategoriBeritaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KategoriBeritaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KategoriBeritaGroupByOutputType[P]>
+            : GetScalarType<T[P], KategoriBeritaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KategoriBeritaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    KategoriBeritaId?: boolean
+    Nama?: boolean
+    Color?: boolean
+    SettingBerita?: boolean | KategoriBerita$SettingBeritaArgs<ExtArgs>
+    _count?: boolean | KategoriBeritaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kategoriBerita"]>
+
+  export type KategoriBeritaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    KategoriBeritaId?: boolean
+    Nama?: boolean
+    Color?: boolean
+  }, ExtArgs["result"]["kategoriBerita"]>
+
+  export type KategoriBeritaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    KategoriBeritaId?: boolean
+    Nama?: boolean
+    Color?: boolean
+  }, ExtArgs["result"]["kategoriBerita"]>
+
+  export type KategoriBeritaSelectScalar = {
+    KategoriBeritaId?: boolean
+    Nama?: boolean
+    Color?: boolean
+  }
+
+  export type KategoriBeritaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"KategoriBeritaId" | "Nama" | "Color", ExtArgs["result"]["kategoriBerita"]>
+  export type KategoriBeritaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingBerita?: boolean | KategoriBerita$SettingBeritaArgs<ExtArgs>
+    _count?: boolean | KategoriBeritaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type KategoriBeritaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type KategoriBeritaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $KategoriBeritaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KategoriBerita"
+    objects: {
+      SettingBerita: Prisma.$SettingBeritaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      KategoriBeritaId: string
+      Nama: string
+      Color: string
+    }, ExtArgs["result"]["kategoriBerita"]>
+    composites: {}
+  }
+
+  type KategoriBeritaGetPayload<S extends boolean | null | undefined | KategoriBeritaDefaultArgs> = $Result.GetResult<Prisma.$KategoriBeritaPayload, S>
+
+  type KategoriBeritaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<KategoriBeritaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KategoriBeritaCountAggregateInputType | true
+    }
+
+  export interface KategoriBeritaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KategoriBerita'], meta: { name: 'KategoriBerita' } }
+    /**
+     * Find zero or one KategoriBerita that matches the filter.
+     * @param {KategoriBeritaFindUniqueArgs} args - Arguments to find a KategoriBerita
+     * @example
+     * // Get one KategoriBerita
+     * const kategoriBerita = await prisma.kategoriBerita.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KategoriBeritaFindUniqueArgs>(args: SelectSubset<T, KategoriBeritaFindUniqueArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one KategoriBerita that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {KategoriBeritaFindUniqueOrThrowArgs} args - Arguments to find a KategoriBerita
+     * @example
+     * // Get one KategoriBerita
+     * const kategoriBerita = await prisma.kategoriBerita.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KategoriBeritaFindUniqueOrThrowArgs>(args: SelectSubset<T, KategoriBeritaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KategoriBerita that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KategoriBeritaFindFirstArgs} args - Arguments to find a KategoriBerita
+     * @example
+     * // Get one KategoriBerita
+     * const kategoriBerita = await prisma.kategoriBerita.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KategoriBeritaFindFirstArgs>(args?: SelectSubset<T, KategoriBeritaFindFirstArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KategoriBerita that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KategoriBeritaFindFirstOrThrowArgs} args - Arguments to find a KategoriBerita
+     * @example
+     * // Get one KategoriBerita
+     * const kategoriBerita = await prisma.kategoriBerita.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KategoriBeritaFindFirstOrThrowArgs>(args?: SelectSubset<T, KategoriBeritaFindFirstOrThrowArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more KategoriBeritas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KategoriBeritaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KategoriBeritas
+     * const kategoriBeritas = await prisma.kategoriBerita.findMany()
+     * 
+     * // Get first 10 KategoriBeritas
+     * const kategoriBeritas = await prisma.kategoriBerita.findMany({ take: 10 })
+     * 
+     * // Only select the `KategoriBeritaId`
+     * const kategoriBeritaWithKategoriBeritaIdOnly = await prisma.kategoriBerita.findMany({ select: { KategoriBeritaId: true } })
+     * 
+     */
+    findMany<T extends KategoriBeritaFindManyArgs>(args?: SelectSubset<T, KategoriBeritaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a KategoriBerita.
+     * @param {KategoriBeritaCreateArgs} args - Arguments to create a KategoriBerita.
+     * @example
+     * // Create one KategoriBerita
+     * const KategoriBerita = await prisma.kategoriBerita.create({
+     *   data: {
+     *     // ... data to create a KategoriBerita
+     *   }
+     * })
+     * 
+     */
+    create<T extends KategoriBeritaCreateArgs>(args: SelectSubset<T, KategoriBeritaCreateArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many KategoriBeritas.
+     * @param {KategoriBeritaCreateManyArgs} args - Arguments to create many KategoriBeritas.
+     * @example
+     * // Create many KategoriBeritas
+     * const kategoriBerita = await prisma.kategoriBerita.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KategoriBeritaCreateManyArgs>(args?: SelectSubset<T, KategoriBeritaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many KategoriBeritas and returns the data saved in the database.
+     * @param {KategoriBeritaCreateManyAndReturnArgs} args - Arguments to create many KategoriBeritas.
+     * @example
+     * // Create many KategoriBeritas
+     * const kategoriBerita = await prisma.kategoriBerita.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many KategoriBeritas and only return the `KategoriBeritaId`
+     * const kategoriBeritaWithKategoriBeritaIdOnly = await prisma.kategoriBerita.createManyAndReturn({
+     *   select: { KategoriBeritaId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KategoriBeritaCreateManyAndReturnArgs>(args?: SelectSubset<T, KategoriBeritaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a KategoriBerita.
+     * @param {KategoriBeritaDeleteArgs} args - Arguments to delete one KategoriBerita.
+     * @example
+     * // Delete one KategoriBerita
+     * const KategoriBerita = await prisma.kategoriBerita.delete({
+     *   where: {
+     *     // ... filter to delete one KategoriBerita
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KategoriBeritaDeleteArgs>(args: SelectSubset<T, KategoriBeritaDeleteArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one KategoriBerita.
+     * @param {KategoriBeritaUpdateArgs} args - Arguments to update one KategoriBerita.
+     * @example
+     * // Update one KategoriBerita
+     * const kategoriBerita = await prisma.kategoriBerita.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KategoriBeritaUpdateArgs>(args: SelectSubset<T, KategoriBeritaUpdateArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more KategoriBeritas.
+     * @param {KategoriBeritaDeleteManyArgs} args - Arguments to filter KategoriBeritas to delete.
+     * @example
+     * // Delete a few KategoriBeritas
+     * const { count } = await prisma.kategoriBerita.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KategoriBeritaDeleteManyArgs>(args?: SelectSubset<T, KategoriBeritaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KategoriBeritas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KategoriBeritaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KategoriBeritas
+     * const kategoriBerita = await prisma.kategoriBerita.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KategoriBeritaUpdateManyArgs>(args: SelectSubset<T, KategoriBeritaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KategoriBeritas and returns the data updated in the database.
+     * @param {KategoriBeritaUpdateManyAndReturnArgs} args - Arguments to update many KategoriBeritas.
+     * @example
+     * // Update many KategoriBeritas
+     * const kategoriBerita = await prisma.kategoriBerita.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more KategoriBeritas and only return the `KategoriBeritaId`
+     * const kategoriBeritaWithKategoriBeritaIdOnly = await prisma.kategoriBerita.updateManyAndReturn({
+     *   select: { KategoriBeritaId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends KategoriBeritaUpdateManyAndReturnArgs>(args: SelectSubset<T, KategoriBeritaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one KategoriBerita.
+     * @param {KategoriBeritaUpsertArgs} args - Arguments to update or create a KategoriBerita.
+     * @example
+     * // Update or create a KategoriBerita
+     * const kategoriBerita = await prisma.kategoriBerita.upsert({
+     *   create: {
+     *     // ... data to create a KategoriBerita
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KategoriBerita we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KategoriBeritaUpsertArgs>(args: SelectSubset<T, KategoriBeritaUpsertArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of KategoriBeritas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KategoriBeritaCountArgs} args - Arguments to filter KategoriBeritas to count.
+     * @example
+     * // Count the number of KategoriBeritas
+     * const count = await prisma.kategoriBerita.count({
+     *   where: {
+     *     // ... the filter for the KategoriBeritas we want to count
+     *   }
+     * })
+    **/
+    count<T extends KategoriBeritaCountArgs>(
+      args?: Subset<T, KategoriBeritaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KategoriBeritaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KategoriBerita.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KategoriBeritaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KategoriBeritaAggregateArgs>(args: Subset<T, KategoriBeritaAggregateArgs>): Prisma.PrismaPromise<GetKategoriBeritaAggregateType<T>>
+
+    /**
+     * Group by KategoriBerita.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KategoriBeritaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KategoriBeritaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KategoriBeritaGroupByArgs['orderBy'] }
+        : { orderBy?: KategoriBeritaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KategoriBeritaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKategoriBeritaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KategoriBerita model
+   */
+  readonly fields: KategoriBeritaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KategoriBerita.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KategoriBeritaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SettingBerita<T extends KategoriBerita$SettingBeritaArgs<ExtArgs> = {}>(args?: Subset<T, KategoriBerita$SettingBeritaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KategoriBerita model
+   */
+  interface KategoriBeritaFieldRefs {
+    readonly KategoriBeritaId: FieldRef<"KategoriBerita", 'String'>
+    readonly Nama: FieldRef<"KategoriBerita", 'String'>
+    readonly Color: FieldRef<"KategoriBerita", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KategoriBerita findUnique
+   */
+  export type KategoriBeritaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which KategoriBerita to fetch.
+     */
+    where: KategoriBeritaWhereUniqueInput
+  }
+
+  /**
+   * KategoriBerita findUniqueOrThrow
+   */
+  export type KategoriBeritaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which KategoriBerita to fetch.
+     */
+    where: KategoriBeritaWhereUniqueInput
+  }
+
+  /**
+   * KategoriBerita findFirst
+   */
+  export type KategoriBeritaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which KategoriBerita to fetch.
+     */
+    where?: KategoriBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KategoriBeritas to fetch.
+     */
+    orderBy?: KategoriBeritaOrderByWithRelationInput | KategoriBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KategoriBeritas.
+     */
+    cursor?: KategoriBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KategoriBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KategoriBeritas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KategoriBeritas.
+     */
+    distinct?: KategoriBeritaScalarFieldEnum | KategoriBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * KategoriBerita findFirstOrThrow
+   */
+  export type KategoriBeritaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which KategoriBerita to fetch.
+     */
+    where?: KategoriBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KategoriBeritas to fetch.
+     */
+    orderBy?: KategoriBeritaOrderByWithRelationInput | KategoriBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KategoriBeritas.
+     */
+    cursor?: KategoriBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KategoriBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KategoriBeritas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KategoriBeritas.
+     */
+    distinct?: KategoriBeritaScalarFieldEnum | KategoriBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * KategoriBerita findMany
+   */
+  export type KategoriBeritaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which KategoriBeritas to fetch.
+     */
+    where?: KategoriBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KategoriBeritas to fetch.
+     */
+    orderBy?: KategoriBeritaOrderByWithRelationInput | KategoriBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KategoriBeritas.
+     */
+    cursor?: KategoriBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KategoriBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KategoriBeritas.
+     */
+    skip?: number
+    distinct?: KategoriBeritaScalarFieldEnum | KategoriBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * KategoriBerita create
+   */
+  export type KategoriBeritaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KategoriBerita.
+     */
+    data: XOR<KategoriBeritaCreateInput, KategoriBeritaUncheckedCreateInput>
+  }
+
+  /**
+   * KategoriBerita createMany
+   */
+  export type KategoriBeritaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KategoriBeritas.
+     */
+    data: KategoriBeritaCreateManyInput | KategoriBeritaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KategoriBerita createManyAndReturn
+   */
+  export type KategoriBeritaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * The data used to create many KategoriBeritas.
+     */
+    data: KategoriBeritaCreateManyInput | KategoriBeritaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KategoriBerita update
+   */
+  export type KategoriBeritaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KategoriBerita.
+     */
+    data: XOR<KategoriBeritaUpdateInput, KategoriBeritaUncheckedUpdateInput>
+    /**
+     * Choose, which KategoriBerita to update.
+     */
+    where: KategoriBeritaWhereUniqueInput
+  }
+
+  /**
+   * KategoriBerita updateMany
+   */
+  export type KategoriBeritaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KategoriBeritas.
+     */
+    data: XOR<KategoriBeritaUpdateManyMutationInput, KategoriBeritaUncheckedUpdateManyInput>
+    /**
+     * Filter which KategoriBeritas to update
+     */
+    where?: KategoriBeritaWhereInput
+    /**
+     * Limit how many KategoriBeritas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KategoriBerita updateManyAndReturn
+   */
+  export type KategoriBeritaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * The data used to update KategoriBeritas.
+     */
+    data: XOR<KategoriBeritaUpdateManyMutationInput, KategoriBeritaUncheckedUpdateManyInput>
+    /**
+     * Filter which KategoriBeritas to update
+     */
+    where?: KategoriBeritaWhereInput
+    /**
+     * Limit how many KategoriBeritas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KategoriBerita upsert
+   */
+  export type KategoriBeritaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KategoriBerita to update in case it exists.
+     */
+    where: KategoriBeritaWhereUniqueInput
+    /**
+     * In case the KategoriBerita found by the `where` argument doesn't exist, create a new KategoriBerita with this data.
+     */
+    create: XOR<KategoriBeritaCreateInput, KategoriBeritaUncheckedCreateInput>
+    /**
+     * In case the KategoriBerita was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KategoriBeritaUpdateInput, KategoriBeritaUncheckedUpdateInput>
+  }
+
+  /**
+   * KategoriBerita delete
+   */
+  export type KategoriBeritaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+    /**
+     * Filter which KategoriBerita to delete.
+     */
+    where: KategoriBeritaWhereUniqueInput
+  }
+
+  /**
+   * KategoriBerita deleteMany
+   */
+  export type KategoriBeritaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KategoriBeritas to delete
+     */
+    where?: KategoriBeritaWhereInput
+    /**
+     * Limit how many KategoriBeritas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * KategoriBerita.SettingBerita
+   */
+  export type KategoriBerita$SettingBeritaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    where?: SettingBeritaWhereInput
+    orderBy?: SettingBeritaOrderByWithRelationInput | SettingBeritaOrderByWithRelationInput[]
+    cursor?: SettingBeritaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingBeritaScalarFieldEnum | SettingBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * KategoriBerita without action
+   */
+  export type KategoriBeritaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KategoriBerita
+     */
+    select?: KategoriBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KategoriBerita
+     */
+    omit?: KategoriBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KategoriBeritaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SettingMainPage
+   */
+
+  export type AggregateSettingMainPage = {
+    _count: SettingMainPageCountAggregateOutputType | null
+    _min: SettingMainPageMinAggregateOutputType | null
+    _max: SettingMainPageMaxAggregateOutputType | null
+  }
+
+  export type SettingMainPageMinAggregateOutputType = {
+    SettingMainPageId: string | null
+    UniversityId: string | null
+    BackgroundFileUtama: Uint8Array | null
+    TextMainPage1: string | null
+    TextMainPage2: string | null
+    TextMainPage3: string | null
+    SelayangPandangText: string | null
+    SelayangPandangDeskripsi: string | null
+    SelayangPandangBackgroundFile: Uint8Array | null
+    WhyText: string | null
+    WhyDeskripsi: string | null
+    CommunityText: string | null
+    CommunityDeskripsi: string | null
+    KegiatanText: string | null
+    KegiatanDeskripsi: string | null
+    BeritaText: string | null
+    BeritaDeskripsi: string | null
+    TestomoniText: string | null
+    TestomoniDeskripsi: string | null
+  }
+
+  export type SettingMainPageMaxAggregateOutputType = {
+    SettingMainPageId: string | null
+    UniversityId: string | null
+    BackgroundFileUtama: Uint8Array | null
+    TextMainPage1: string | null
+    TextMainPage2: string | null
+    TextMainPage3: string | null
+    SelayangPandangText: string | null
+    SelayangPandangDeskripsi: string | null
+    SelayangPandangBackgroundFile: Uint8Array | null
+    WhyText: string | null
+    WhyDeskripsi: string | null
+    CommunityText: string | null
+    CommunityDeskripsi: string | null
+    KegiatanText: string | null
+    KegiatanDeskripsi: string | null
+    BeritaText: string | null
+    BeritaDeskripsi: string | null
+    TestomoniText: string | null
+    TestomoniDeskripsi: string | null
+  }
+
+  export type SettingMainPageCountAggregateOutputType = {
+    SettingMainPageId: number
+    UniversityId: number
+    BackgroundFileUtama: number
+    TextMainPage1: number
+    TextMainPage2: number
+    TextMainPage3: number
+    SelayangPandangText: number
+    SelayangPandangDeskripsi: number
+    SelayangPandangBackgroundFile: number
+    WhyText: number
+    WhyDeskripsi: number
+    CommunityText: number
+    CommunityDeskripsi: number
+    KegiatanText: number
+    KegiatanDeskripsi: number
+    BeritaText: number
+    BeritaDeskripsi: number
+    TestomoniText: number
+    TestomoniDeskripsi: number
+    _all: number
+  }
+
+
+  export type SettingMainPageMinAggregateInputType = {
+    SettingMainPageId?: true
+    UniversityId?: true
+    BackgroundFileUtama?: true
+    TextMainPage1?: true
+    TextMainPage2?: true
+    TextMainPage3?: true
+    SelayangPandangText?: true
+    SelayangPandangDeskripsi?: true
+    SelayangPandangBackgroundFile?: true
+    WhyText?: true
+    WhyDeskripsi?: true
+    CommunityText?: true
+    CommunityDeskripsi?: true
+    KegiatanText?: true
+    KegiatanDeskripsi?: true
+    BeritaText?: true
+    BeritaDeskripsi?: true
+    TestomoniText?: true
+    TestomoniDeskripsi?: true
+  }
+
+  export type SettingMainPageMaxAggregateInputType = {
+    SettingMainPageId?: true
+    UniversityId?: true
+    BackgroundFileUtama?: true
+    TextMainPage1?: true
+    TextMainPage2?: true
+    TextMainPage3?: true
+    SelayangPandangText?: true
+    SelayangPandangDeskripsi?: true
+    SelayangPandangBackgroundFile?: true
+    WhyText?: true
+    WhyDeskripsi?: true
+    CommunityText?: true
+    CommunityDeskripsi?: true
+    KegiatanText?: true
+    KegiatanDeskripsi?: true
+    BeritaText?: true
+    BeritaDeskripsi?: true
+    TestomoniText?: true
+    TestomoniDeskripsi?: true
+  }
+
+  export type SettingMainPageCountAggregateInputType = {
+    SettingMainPageId?: true
+    UniversityId?: true
+    BackgroundFileUtama?: true
+    TextMainPage1?: true
+    TextMainPage2?: true
+    TextMainPage3?: true
+    SelayangPandangText?: true
+    SelayangPandangDeskripsi?: true
+    SelayangPandangBackgroundFile?: true
+    WhyText?: true
+    WhyDeskripsi?: true
+    CommunityText?: true
+    CommunityDeskripsi?: true
+    KegiatanText?: true
+    KegiatanDeskripsi?: true
+    BeritaText?: true
+    BeritaDeskripsi?: true
+    TestomoniText?: true
+    TestomoniDeskripsi?: true
+    _all?: true
+  }
+
+  export type SettingMainPageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingMainPage to aggregate.
+     */
+    where?: SettingMainPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingMainPages to fetch.
+     */
+    orderBy?: SettingMainPageOrderByWithRelationInput | SettingMainPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingMainPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingMainPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingMainPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SettingMainPages
+    **/
+    _count?: true | SettingMainPageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingMainPageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingMainPageMaxAggregateInputType
+  }
+
+  export type GetSettingMainPageAggregateType<T extends SettingMainPageAggregateArgs> = {
+        [P in keyof T & keyof AggregateSettingMainPage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSettingMainPage[P]>
+      : GetScalarType<T[P], AggregateSettingMainPage[P]>
+  }
+
+
+
+
+  export type SettingMainPageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingMainPageWhereInput
+    orderBy?: SettingMainPageOrderByWithAggregationInput | SettingMainPageOrderByWithAggregationInput[]
+    by: SettingMainPageScalarFieldEnum[] | SettingMainPageScalarFieldEnum
+    having?: SettingMainPageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingMainPageCountAggregateInputType | true
+    _min?: SettingMainPageMinAggregateInputType
+    _max?: SettingMainPageMaxAggregateInputType
+  }
+
+  export type SettingMainPageGroupByOutputType = {
+    SettingMainPageId: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    _count: SettingMainPageCountAggregateOutputType | null
+    _min: SettingMainPageMinAggregateOutputType | null
+    _max: SettingMainPageMaxAggregateOutputType | null
+  }
+
+  type GetSettingMainPageGroupByPayload<T extends SettingMainPageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingMainPageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingMainPageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingMainPageGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingMainPageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingMainPageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingMainPageId?: boolean
+    UniversityId?: boolean
+    BackgroundFileUtama?: boolean
+    TextMainPage1?: boolean
+    TextMainPage2?: boolean
+    TextMainPage3?: boolean
+    SelayangPandangText?: boolean
+    SelayangPandangDeskripsi?: boolean
+    SelayangPandangBackgroundFile?: boolean
+    WhyText?: boolean
+    WhyDeskripsi?: boolean
+    CommunityText?: boolean
+    CommunityDeskripsi?: boolean
+    KegiatanText?: boolean
+    KegiatanDeskripsi?: boolean
+    BeritaText?: boolean
+    BeritaDeskripsi?: boolean
+    TestomoniText?: boolean
+    TestomoniDeskripsi?: boolean
+    University?: boolean | UniversityDefaultArgs<ExtArgs>
+    SettingKegiatan?: boolean | SettingMainPage$SettingKegiatanArgs<ExtArgs>
+    SettingCommunity?: boolean | SettingMainPage$SettingCommunityArgs<ExtArgs>
+    SettingWhy?: boolean | SettingMainPage$SettingWhyArgs<ExtArgs>
+    SettingNumber?: boolean | SettingMainPage$SettingNumberArgs<ExtArgs>
+    SettingTestimony?: boolean | SettingMainPage$SettingTestimonyArgs<ExtArgs>
+    SettingBerita?: boolean | SettingMainPage$SettingBeritaArgs<ExtArgs>
+    _count?: boolean | SettingMainPageCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingMainPage"]>
+
+  export type SettingMainPageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingMainPageId?: boolean
+    UniversityId?: boolean
+    BackgroundFileUtama?: boolean
+    TextMainPage1?: boolean
+    TextMainPage2?: boolean
+    TextMainPage3?: boolean
+    SelayangPandangText?: boolean
+    SelayangPandangDeskripsi?: boolean
+    SelayangPandangBackgroundFile?: boolean
+    WhyText?: boolean
+    WhyDeskripsi?: boolean
+    CommunityText?: boolean
+    CommunityDeskripsi?: boolean
+    KegiatanText?: boolean
+    KegiatanDeskripsi?: boolean
+    BeritaText?: boolean
+    BeritaDeskripsi?: boolean
+    TestomoniText?: boolean
+    TestomoniDeskripsi?: boolean
+    University?: boolean | UniversityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingMainPage"]>
+
+  export type SettingMainPageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingMainPageId?: boolean
+    UniversityId?: boolean
+    BackgroundFileUtama?: boolean
+    TextMainPage1?: boolean
+    TextMainPage2?: boolean
+    TextMainPage3?: boolean
+    SelayangPandangText?: boolean
+    SelayangPandangDeskripsi?: boolean
+    SelayangPandangBackgroundFile?: boolean
+    WhyText?: boolean
+    WhyDeskripsi?: boolean
+    CommunityText?: boolean
+    CommunityDeskripsi?: boolean
+    KegiatanText?: boolean
+    KegiatanDeskripsi?: boolean
+    BeritaText?: boolean
+    BeritaDeskripsi?: boolean
+    TestomoniText?: boolean
+    TestomoniDeskripsi?: boolean
+    University?: boolean | UniversityDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingMainPage"]>
+
+  export type SettingMainPageSelectScalar = {
+    SettingMainPageId?: boolean
+    UniversityId?: boolean
+    BackgroundFileUtama?: boolean
+    TextMainPage1?: boolean
+    TextMainPage2?: boolean
+    TextMainPage3?: boolean
+    SelayangPandangText?: boolean
+    SelayangPandangDeskripsi?: boolean
+    SelayangPandangBackgroundFile?: boolean
+    WhyText?: boolean
+    WhyDeskripsi?: boolean
+    CommunityText?: boolean
+    CommunityDeskripsi?: boolean
+    KegiatanText?: boolean
+    KegiatanDeskripsi?: boolean
+    BeritaText?: boolean
+    BeritaDeskripsi?: boolean
+    TestomoniText?: boolean
+    TestomoniDeskripsi?: boolean
+  }
+
+  export type SettingMainPageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SettingMainPageId" | "UniversityId" | "BackgroundFileUtama" | "TextMainPage1" | "TextMainPage2" | "TextMainPage3" | "SelayangPandangText" | "SelayangPandangDeskripsi" | "SelayangPandangBackgroundFile" | "WhyText" | "WhyDeskripsi" | "CommunityText" | "CommunityDeskripsi" | "KegiatanText" | "KegiatanDeskripsi" | "BeritaText" | "BeritaDeskripsi" | "TestomoniText" | "TestomoniDeskripsi", ExtArgs["result"]["settingMainPage"]>
+  export type SettingMainPageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    University?: boolean | UniversityDefaultArgs<ExtArgs>
+    SettingKegiatan?: boolean | SettingMainPage$SettingKegiatanArgs<ExtArgs>
+    SettingCommunity?: boolean | SettingMainPage$SettingCommunityArgs<ExtArgs>
+    SettingWhy?: boolean | SettingMainPage$SettingWhyArgs<ExtArgs>
+    SettingNumber?: boolean | SettingMainPage$SettingNumberArgs<ExtArgs>
+    SettingTestimony?: boolean | SettingMainPage$SettingTestimonyArgs<ExtArgs>
+    SettingBerita?: boolean | SettingMainPage$SettingBeritaArgs<ExtArgs>
+    _count?: boolean | SettingMainPageCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SettingMainPageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    University?: boolean | UniversityDefaultArgs<ExtArgs>
+  }
+  export type SettingMainPageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    University?: boolean | UniversityDefaultArgs<ExtArgs>
+  }
+
+  export type $SettingMainPagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SettingMainPage"
+    objects: {
+      University: Prisma.$UniversityPayload<ExtArgs>
+      SettingKegiatan: Prisma.$SettingKegiatanPayload<ExtArgs>[]
+      SettingCommunity: Prisma.$SettingCommunityPayload<ExtArgs>[]
+      SettingWhy: Prisma.$SettingWhyPayload<ExtArgs>[]
+      SettingNumber: Prisma.$SettingNumberPayload<ExtArgs>[]
+      SettingTestimony: Prisma.$SettingTestimonyPayload<ExtArgs>[]
+      SettingBerita: Prisma.$SettingBeritaPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SettingMainPageId: string
+      UniversityId: string
+      BackgroundFileUtama: Uint8Array
+      TextMainPage1: string
+      TextMainPage2: string
+      TextMainPage3: string
+      SelayangPandangText: string
+      SelayangPandangDeskripsi: string
+      SelayangPandangBackgroundFile: Uint8Array
+      WhyText: string
+      WhyDeskripsi: string
+      CommunityText: string
+      CommunityDeskripsi: string
+      KegiatanText: string
+      KegiatanDeskripsi: string
+      BeritaText: string
+      BeritaDeskripsi: string
+      TestomoniText: string
+      TestomoniDeskripsi: string
+    }, ExtArgs["result"]["settingMainPage"]>
+    composites: {}
+  }
+
+  type SettingMainPageGetPayload<S extends boolean | null | undefined | SettingMainPageDefaultArgs> = $Result.GetResult<Prisma.$SettingMainPagePayload, S>
+
+  type SettingMainPageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SettingMainPageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SettingMainPageCountAggregateInputType | true
+    }
+
+  export interface SettingMainPageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SettingMainPage'], meta: { name: 'SettingMainPage' } }
+    /**
+     * Find zero or one SettingMainPage that matches the filter.
+     * @param {SettingMainPageFindUniqueArgs} args - Arguments to find a SettingMainPage
+     * @example
+     * // Get one SettingMainPage
+     * const settingMainPage = await prisma.settingMainPage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingMainPageFindUniqueArgs>(args: SelectSubset<T, SettingMainPageFindUniqueArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SettingMainPage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SettingMainPageFindUniqueOrThrowArgs} args - Arguments to find a SettingMainPage
+     * @example
+     * // Get one SettingMainPage
+     * const settingMainPage = await prisma.settingMainPage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingMainPageFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingMainPageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingMainPage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingMainPageFindFirstArgs} args - Arguments to find a SettingMainPage
+     * @example
+     * // Get one SettingMainPage
+     * const settingMainPage = await prisma.settingMainPage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingMainPageFindFirstArgs>(args?: SelectSubset<T, SettingMainPageFindFirstArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingMainPage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingMainPageFindFirstOrThrowArgs} args - Arguments to find a SettingMainPage
+     * @example
+     * // Get one SettingMainPage
+     * const settingMainPage = await prisma.settingMainPage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingMainPageFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingMainPageFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SettingMainPages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingMainPageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SettingMainPages
+     * const settingMainPages = await prisma.settingMainPage.findMany()
+     * 
+     * // Get first 10 SettingMainPages
+     * const settingMainPages = await prisma.settingMainPage.findMany({ take: 10 })
+     * 
+     * // Only select the `SettingMainPageId`
+     * const settingMainPageWithSettingMainPageIdOnly = await prisma.settingMainPage.findMany({ select: { SettingMainPageId: true } })
+     * 
+     */
+    findMany<T extends SettingMainPageFindManyArgs>(args?: SelectSubset<T, SettingMainPageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SettingMainPage.
+     * @param {SettingMainPageCreateArgs} args - Arguments to create a SettingMainPage.
+     * @example
+     * // Create one SettingMainPage
+     * const SettingMainPage = await prisma.settingMainPage.create({
+     *   data: {
+     *     // ... data to create a SettingMainPage
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingMainPageCreateArgs>(args: SelectSubset<T, SettingMainPageCreateArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SettingMainPages.
+     * @param {SettingMainPageCreateManyArgs} args - Arguments to create many SettingMainPages.
+     * @example
+     * // Create many SettingMainPages
+     * const settingMainPage = await prisma.settingMainPage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingMainPageCreateManyArgs>(args?: SelectSubset<T, SettingMainPageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SettingMainPages and returns the data saved in the database.
+     * @param {SettingMainPageCreateManyAndReturnArgs} args - Arguments to create many SettingMainPages.
+     * @example
+     * // Create many SettingMainPages
+     * const settingMainPage = await prisma.settingMainPage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SettingMainPages and only return the `SettingMainPageId`
+     * const settingMainPageWithSettingMainPageIdOnly = await prisma.settingMainPage.createManyAndReturn({
+     *   select: { SettingMainPageId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingMainPageCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingMainPageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SettingMainPage.
+     * @param {SettingMainPageDeleteArgs} args - Arguments to delete one SettingMainPage.
+     * @example
+     * // Delete one SettingMainPage
+     * const SettingMainPage = await prisma.settingMainPage.delete({
+     *   where: {
+     *     // ... filter to delete one SettingMainPage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingMainPageDeleteArgs>(args: SelectSubset<T, SettingMainPageDeleteArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SettingMainPage.
+     * @param {SettingMainPageUpdateArgs} args - Arguments to update one SettingMainPage.
+     * @example
+     * // Update one SettingMainPage
+     * const settingMainPage = await prisma.settingMainPage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingMainPageUpdateArgs>(args: SelectSubset<T, SettingMainPageUpdateArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SettingMainPages.
+     * @param {SettingMainPageDeleteManyArgs} args - Arguments to filter SettingMainPages to delete.
+     * @example
+     * // Delete a few SettingMainPages
+     * const { count } = await prisma.settingMainPage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingMainPageDeleteManyArgs>(args?: SelectSubset<T, SettingMainPageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingMainPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingMainPageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SettingMainPages
+     * const settingMainPage = await prisma.settingMainPage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingMainPageUpdateManyArgs>(args: SelectSubset<T, SettingMainPageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingMainPages and returns the data updated in the database.
+     * @param {SettingMainPageUpdateManyAndReturnArgs} args - Arguments to update many SettingMainPages.
+     * @example
+     * // Update many SettingMainPages
+     * const settingMainPage = await prisma.settingMainPage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SettingMainPages and only return the `SettingMainPageId`
+     * const settingMainPageWithSettingMainPageIdOnly = await prisma.settingMainPage.updateManyAndReturn({
+     *   select: { SettingMainPageId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SettingMainPageUpdateManyAndReturnArgs>(args: SelectSubset<T, SettingMainPageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SettingMainPage.
+     * @param {SettingMainPageUpsertArgs} args - Arguments to update or create a SettingMainPage.
+     * @example
+     * // Update or create a SettingMainPage
+     * const settingMainPage = await prisma.settingMainPage.upsert({
+     *   create: {
+     *     // ... data to create a SettingMainPage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SettingMainPage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingMainPageUpsertArgs>(args: SelectSubset<T, SettingMainPageUpsertArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SettingMainPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingMainPageCountArgs} args - Arguments to filter SettingMainPages to count.
+     * @example
+     * // Count the number of SettingMainPages
+     * const count = await prisma.settingMainPage.count({
+     *   where: {
+     *     // ... the filter for the SettingMainPages we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingMainPageCountArgs>(
+      args?: Subset<T, SettingMainPageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingMainPageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SettingMainPage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingMainPageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingMainPageAggregateArgs>(args: Subset<T, SettingMainPageAggregateArgs>): Prisma.PrismaPromise<GetSettingMainPageAggregateType<T>>
+
+    /**
+     * Group by SettingMainPage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingMainPageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingMainPageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingMainPageGroupByArgs['orderBy'] }
+        : { orderBy?: SettingMainPageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingMainPageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingMainPageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SettingMainPage model
+   */
+  readonly fields: SettingMainPageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SettingMainPage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingMainPageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    University<T extends UniversityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UniversityDefaultArgs<ExtArgs>>): Prisma__UniversityClient<$Result.GetResult<Prisma.$UniversityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    SettingKegiatan<T extends SettingMainPage$SettingKegiatanArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPage$SettingKegiatanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SettingCommunity<T extends SettingMainPage$SettingCommunityArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPage$SettingCommunityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SettingWhy<T extends SettingMainPage$SettingWhyArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPage$SettingWhyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SettingNumber<T extends SettingMainPage$SettingNumberArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPage$SettingNumberArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SettingTestimony<T extends SettingMainPage$SettingTestimonyArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPage$SettingTestimonyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SettingBerita<T extends SettingMainPage$SettingBeritaArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPage$SettingBeritaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SettingMainPage model
+   */
+  interface SettingMainPageFieldRefs {
+    readonly SettingMainPageId: FieldRef<"SettingMainPage", 'String'>
+    readonly UniversityId: FieldRef<"SettingMainPage", 'String'>
+    readonly BackgroundFileUtama: FieldRef<"SettingMainPage", 'Bytes'>
+    readonly TextMainPage1: FieldRef<"SettingMainPage", 'String'>
+    readonly TextMainPage2: FieldRef<"SettingMainPage", 'String'>
+    readonly TextMainPage3: FieldRef<"SettingMainPage", 'String'>
+    readonly SelayangPandangText: FieldRef<"SettingMainPage", 'String'>
+    readonly SelayangPandangDeskripsi: FieldRef<"SettingMainPage", 'String'>
+    readonly SelayangPandangBackgroundFile: FieldRef<"SettingMainPage", 'Bytes'>
+    readonly WhyText: FieldRef<"SettingMainPage", 'String'>
+    readonly WhyDeskripsi: FieldRef<"SettingMainPage", 'String'>
+    readonly CommunityText: FieldRef<"SettingMainPage", 'String'>
+    readonly CommunityDeskripsi: FieldRef<"SettingMainPage", 'String'>
+    readonly KegiatanText: FieldRef<"SettingMainPage", 'String'>
+    readonly KegiatanDeskripsi: FieldRef<"SettingMainPage", 'String'>
+    readonly BeritaText: FieldRef<"SettingMainPage", 'String'>
+    readonly BeritaDeskripsi: FieldRef<"SettingMainPage", 'String'>
+    readonly TestomoniText: FieldRef<"SettingMainPage", 'String'>
+    readonly TestomoniDeskripsi: FieldRef<"SettingMainPage", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SettingMainPage findUnique
+   */
+  export type SettingMainPageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingMainPage to fetch.
+     */
+    where: SettingMainPageWhereUniqueInput
+  }
+
+  /**
+   * SettingMainPage findUniqueOrThrow
+   */
+  export type SettingMainPageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingMainPage to fetch.
+     */
+    where: SettingMainPageWhereUniqueInput
+  }
+
+  /**
+   * SettingMainPage findFirst
+   */
+  export type SettingMainPageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingMainPage to fetch.
+     */
+    where?: SettingMainPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingMainPages to fetch.
+     */
+    orderBy?: SettingMainPageOrderByWithRelationInput | SettingMainPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingMainPages.
+     */
+    cursor?: SettingMainPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingMainPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingMainPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingMainPages.
+     */
+    distinct?: SettingMainPageScalarFieldEnum | SettingMainPageScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage findFirstOrThrow
+   */
+  export type SettingMainPageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingMainPage to fetch.
+     */
+    where?: SettingMainPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingMainPages to fetch.
+     */
+    orderBy?: SettingMainPageOrderByWithRelationInput | SettingMainPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingMainPages.
+     */
+    cursor?: SettingMainPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingMainPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingMainPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingMainPages.
+     */
+    distinct?: SettingMainPageScalarFieldEnum | SettingMainPageScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage findMany
+   */
+  export type SettingMainPageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingMainPages to fetch.
+     */
+    where?: SettingMainPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingMainPages to fetch.
+     */
+    orderBy?: SettingMainPageOrderByWithRelationInput | SettingMainPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SettingMainPages.
+     */
+    cursor?: SettingMainPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingMainPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingMainPages.
+     */
+    skip?: number
+    distinct?: SettingMainPageScalarFieldEnum | SettingMainPageScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage create
+   */
+  export type SettingMainPageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SettingMainPage.
+     */
+    data: XOR<SettingMainPageCreateInput, SettingMainPageUncheckedCreateInput>
+  }
+
+  /**
+   * SettingMainPage createMany
+   */
+  export type SettingMainPageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SettingMainPages.
+     */
+    data: SettingMainPageCreateManyInput | SettingMainPageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SettingMainPage createManyAndReturn
+   */
+  export type SettingMainPageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * The data used to create many SettingMainPages.
+     */
+    data: SettingMainPageCreateManyInput | SettingMainPageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingMainPage update
+   */
+  export type SettingMainPageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SettingMainPage.
+     */
+    data: XOR<SettingMainPageUpdateInput, SettingMainPageUncheckedUpdateInput>
+    /**
+     * Choose, which SettingMainPage to update.
+     */
+    where: SettingMainPageWhereUniqueInput
+  }
+
+  /**
+   * SettingMainPage updateMany
+   */
+  export type SettingMainPageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SettingMainPages.
+     */
+    data: XOR<SettingMainPageUpdateManyMutationInput, SettingMainPageUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingMainPages to update
+     */
+    where?: SettingMainPageWhereInput
+    /**
+     * Limit how many SettingMainPages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingMainPage updateManyAndReturn
+   */
+  export type SettingMainPageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * The data used to update SettingMainPages.
+     */
+    data: XOR<SettingMainPageUpdateManyMutationInput, SettingMainPageUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingMainPages to update
+     */
+    where?: SettingMainPageWhereInput
+    /**
+     * Limit how many SettingMainPages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingMainPage upsert
+   */
+  export type SettingMainPageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SettingMainPage to update in case it exists.
+     */
+    where: SettingMainPageWhereUniqueInput
+    /**
+     * In case the SettingMainPage found by the `where` argument doesn't exist, create a new SettingMainPage with this data.
+     */
+    create: XOR<SettingMainPageCreateInput, SettingMainPageUncheckedCreateInput>
+    /**
+     * In case the SettingMainPage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingMainPageUpdateInput, SettingMainPageUncheckedUpdateInput>
+  }
+
+  /**
+   * SettingMainPage delete
+   */
+  export type SettingMainPageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+    /**
+     * Filter which SettingMainPage to delete.
+     */
+    where: SettingMainPageWhereUniqueInput
+  }
+
+  /**
+   * SettingMainPage deleteMany
+   */
+  export type SettingMainPageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingMainPages to delete
+     */
+    where?: SettingMainPageWhereInput
+    /**
+     * Limit how many SettingMainPages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingMainPage.SettingKegiatan
+   */
+  export type SettingMainPage$SettingKegiatanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    where?: SettingKegiatanWhereInput
+    orderBy?: SettingKegiatanOrderByWithRelationInput | SettingKegiatanOrderByWithRelationInput[]
+    cursor?: SettingKegiatanWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingKegiatanScalarFieldEnum | SettingKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage.SettingCommunity
+   */
+  export type SettingMainPage$SettingCommunityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    where?: SettingCommunityWhereInput
+    orderBy?: SettingCommunityOrderByWithRelationInput | SettingCommunityOrderByWithRelationInput[]
+    cursor?: SettingCommunityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingCommunityScalarFieldEnum | SettingCommunityScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage.SettingWhy
+   */
+  export type SettingMainPage$SettingWhyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    where?: SettingWhyWhereInput
+    orderBy?: SettingWhyOrderByWithRelationInput | SettingWhyOrderByWithRelationInput[]
+    cursor?: SettingWhyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingWhyScalarFieldEnum | SettingWhyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage.SettingNumber
+   */
+  export type SettingMainPage$SettingNumberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    where?: SettingNumberWhereInput
+    orderBy?: SettingNumberOrderByWithRelationInput | SettingNumberOrderByWithRelationInput[]
+    cursor?: SettingNumberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingNumberScalarFieldEnum | SettingNumberScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage.SettingTestimony
+   */
+  export type SettingMainPage$SettingTestimonyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    where?: SettingTestimonyWhereInput
+    orderBy?: SettingTestimonyOrderByWithRelationInput | SettingTestimonyOrderByWithRelationInput[]
+    cursor?: SettingTestimonyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingTestimonyScalarFieldEnum | SettingTestimonyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage.SettingBerita
+   */
+  export type SettingMainPage$SettingBeritaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    where?: SettingBeritaWhereInput
+    orderBy?: SettingBeritaOrderByWithRelationInput | SettingBeritaOrderByWithRelationInput[]
+    cursor?: SettingBeritaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SettingBeritaScalarFieldEnum | SettingBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * SettingMainPage without action
+   */
+  export type SettingMainPageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingMainPage
+     */
+    select?: SettingMainPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingMainPage
+     */
+    omit?: SettingMainPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingMainPageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SettingKegiatan
+   */
+
+  export type AggregateSettingKegiatan = {
+    _count: SettingKegiatanCountAggregateOutputType | null
+    _min: SettingKegiatanMinAggregateOutputType | null
+    _max: SettingKegiatanMaxAggregateOutputType | null
+  }
+
+  export type SettingKegiatanMinAggregateOutputType = {
+    SettingKegiatanId: string | null
+    JenisKegiatanId: string | null
+    SettingMainPageId: string | null
+    Nama: string | null
+    Lokasi: string | null
+    Deskripsi: string | null
+    WaktuMulai: Date | null
+    WaktuSelesai: Date | null
+  }
+
+  export type SettingKegiatanMaxAggregateOutputType = {
+    SettingKegiatanId: string | null
+    JenisKegiatanId: string | null
+    SettingMainPageId: string | null
+    Nama: string | null
+    Lokasi: string | null
+    Deskripsi: string | null
+    WaktuMulai: Date | null
+    WaktuSelesai: Date | null
+  }
+
+  export type SettingKegiatanCountAggregateOutputType = {
+    SettingKegiatanId: number
+    JenisKegiatanId: number
+    SettingMainPageId: number
+    Nama: number
+    Lokasi: number
+    Deskripsi: number
+    WaktuMulai: number
+    WaktuSelesai: number
+    _all: number
+  }
+
+
+  export type SettingKegiatanMinAggregateInputType = {
+    SettingKegiatanId?: true
+    JenisKegiatanId?: true
+    SettingMainPageId?: true
+    Nama?: true
+    Lokasi?: true
+    Deskripsi?: true
+    WaktuMulai?: true
+    WaktuSelesai?: true
+  }
+
+  export type SettingKegiatanMaxAggregateInputType = {
+    SettingKegiatanId?: true
+    JenisKegiatanId?: true
+    SettingMainPageId?: true
+    Nama?: true
+    Lokasi?: true
+    Deskripsi?: true
+    WaktuMulai?: true
+    WaktuSelesai?: true
+  }
+
+  export type SettingKegiatanCountAggregateInputType = {
+    SettingKegiatanId?: true
+    JenisKegiatanId?: true
+    SettingMainPageId?: true
+    Nama?: true
+    Lokasi?: true
+    Deskripsi?: true
+    WaktuMulai?: true
+    WaktuSelesai?: true
+    _all?: true
+  }
+
+  export type SettingKegiatanAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingKegiatan to aggregate.
+     */
+    where?: SettingKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingKegiatans to fetch.
+     */
+    orderBy?: SettingKegiatanOrderByWithRelationInput | SettingKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingKegiatans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SettingKegiatans
+    **/
+    _count?: true | SettingKegiatanCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingKegiatanMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingKegiatanMaxAggregateInputType
+  }
+
+  export type GetSettingKegiatanAggregateType<T extends SettingKegiatanAggregateArgs> = {
+        [P in keyof T & keyof AggregateSettingKegiatan]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSettingKegiatan[P]>
+      : GetScalarType<T[P], AggregateSettingKegiatan[P]>
+  }
+
+
+
+
+  export type SettingKegiatanGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingKegiatanWhereInput
+    orderBy?: SettingKegiatanOrderByWithAggregationInput | SettingKegiatanOrderByWithAggregationInput[]
+    by: SettingKegiatanScalarFieldEnum[] | SettingKegiatanScalarFieldEnum
+    having?: SettingKegiatanScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingKegiatanCountAggregateInputType | true
+    _min?: SettingKegiatanMinAggregateInputType
+    _max?: SettingKegiatanMaxAggregateInputType
+  }
+
+  export type SettingKegiatanGroupByOutputType = {
+    SettingKegiatanId: string
+    JenisKegiatanId: string
+    SettingMainPageId: string
+    Nama: string
+    Lokasi: string | null
+    Deskripsi: string | null
+    WaktuMulai: Date
+    WaktuSelesai: Date | null
+    _count: SettingKegiatanCountAggregateOutputType | null
+    _min: SettingKegiatanMinAggregateOutputType | null
+    _max: SettingKegiatanMaxAggregateOutputType | null
+  }
+
+  type GetSettingKegiatanGroupByPayload<T extends SettingKegiatanGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingKegiatanGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingKegiatanGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingKegiatanGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingKegiatanGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingKegiatanSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingKegiatanId?: boolean
+    JenisKegiatanId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Lokasi?: boolean
+    Deskripsi?: boolean
+    WaktuMulai?: boolean
+    WaktuSelesai?: boolean
+    JenisKegiatan?: boolean | JenisKegiatanDefaultArgs<ExtArgs>
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingKegiatan"]>
+
+  export type SettingKegiatanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingKegiatanId?: boolean
+    JenisKegiatanId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Lokasi?: boolean
+    Deskripsi?: boolean
+    WaktuMulai?: boolean
+    WaktuSelesai?: boolean
+    JenisKegiatan?: boolean | JenisKegiatanDefaultArgs<ExtArgs>
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingKegiatan"]>
+
+  export type SettingKegiatanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingKegiatanId?: boolean
+    JenisKegiatanId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Lokasi?: boolean
+    Deskripsi?: boolean
+    WaktuMulai?: boolean
+    WaktuSelesai?: boolean
+    JenisKegiatan?: boolean | JenisKegiatanDefaultArgs<ExtArgs>
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingKegiatan"]>
+
+  export type SettingKegiatanSelectScalar = {
+    SettingKegiatanId?: boolean
+    JenisKegiatanId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Lokasi?: boolean
+    Deskripsi?: boolean
+    WaktuMulai?: boolean
+    WaktuSelesai?: boolean
+  }
+
+  export type SettingKegiatanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SettingKegiatanId" | "JenisKegiatanId" | "SettingMainPageId" | "Nama" | "Lokasi" | "Deskripsi" | "WaktuMulai" | "WaktuSelesai", ExtArgs["result"]["settingKegiatan"]>
+  export type SettingKegiatanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    JenisKegiatan?: boolean | JenisKegiatanDefaultArgs<ExtArgs>
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingKegiatanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    JenisKegiatan?: boolean | JenisKegiatanDefaultArgs<ExtArgs>
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingKegiatanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    JenisKegiatan?: boolean | JenisKegiatanDefaultArgs<ExtArgs>
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+
+  export type $SettingKegiatanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SettingKegiatan"
+    objects: {
+      JenisKegiatan: Prisma.$JenisKegiatanPayload<ExtArgs>
+      SettingMainPage: Prisma.$SettingMainPagePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SettingKegiatanId: string
+      JenisKegiatanId: string
+      SettingMainPageId: string
+      Nama: string
+      Lokasi: string | null
+      Deskripsi: string | null
+      WaktuMulai: Date
+      WaktuSelesai: Date | null
+    }, ExtArgs["result"]["settingKegiatan"]>
+    composites: {}
+  }
+
+  type SettingKegiatanGetPayload<S extends boolean | null | undefined | SettingKegiatanDefaultArgs> = $Result.GetResult<Prisma.$SettingKegiatanPayload, S>
+
+  type SettingKegiatanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SettingKegiatanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SettingKegiatanCountAggregateInputType | true
+    }
+
+  export interface SettingKegiatanDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SettingKegiatan'], meta: { name: 'SettingKegiatan' } }
+    /**
+     * Find zero or one SettingKegiatan that matches the filter.
+     * @param {SettingKegiatanFindUniqueArgs} args - Arguments to find a SettingKegiatan
+     * @example
+     * // Get one SettingKegiatan
+     * const settingKegiatan = await prisma.settingKegiatan.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingKegiatanFindUniqueArgs>(args: SelectSubset<T, SettingKegiatanFindUniqueArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SettingKegiatan that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SettingKegiatanFindUniqueOrThrowArgs} args - Arguments to find a SettingKegiatan
+     * @example
+     * // Get one SettingKegiatan
+     * const settingKegiatan = await prisma.settingKegiatan.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingKegiatanFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingKegiatanFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingKegiatan that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingKegiatanFindFirstArgs} args - Arguments to find a SettingKegiatan
+     * @example
+     * // Get one SettingKegiatan
+     * const settingKegiatan = await prisma.settingKegiatan.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingKegiatanFindFirstArgs>(args?: SelectSubset<T, SettingKegiatanFindFirstArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingKegiatan that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingKegiatanFindFirstOrThrowArgs} args - Arguments to find a SettingKegiatan
+     * @example
+     * // Get one SettingKegiatan
+     * const settingKegiatan = await prisma.settingKegiatan.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingKegiatanFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingKegiatanFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SettingKegiatans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingKegiatanFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SettingKegiatans
+     * const settingKegiatans = await prisma.settingKegiatan.findMany()
+     * 
+     * // Get first 10 SettingKegiatans
+     * const settingKegiatans = await prisma.settingKegiatan.findMany({ take: 10 })
+     * 
+     * // Only select the `SettingKegiatanId`
+     * const settingKegiatanWithSettingKegiatanIdOnly = await prisma.settingKegiatan.findMany({ select: { SettingKegiatanId: true } })
+     * 
+     */
+    findMany<T extends SettingKegiatanFindManyArgs>(args?: SelectSubset<T, SettingKegiatanFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SettingKegiatan.
+     * @param {SettingKegiatanCreateArgs} args - Arguments to create a SettingKegiatan.
+     * @example
+     * // Create one SettingKegiatan
+     * const SettingKegiatan = await prisma.settingKegiatan.create({
+     *   data: {
+     *     // ... data to create a SettingKegiatan
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingKegiatanCreateArgs>(args: SelectSubset<T, SettingKegiatanCreateArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SettingKegiatans.
+     * @param {SettingKegiatanCreateManyArgs} args - Arguments to create many SettingKegiatans.
+     * @example
+     * // Create many SettingKegiatans
+     * const settingKegiatan = await prisma.settingKegiatan.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingKegiatanCreateManyArgs>(args?: SelectSubset<T, SettingKegiatanCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SettingKegiatans and returns the data saved in the database.
+     * @param {SettingKegiatanCreateManyAndReturnArgs} args - Arguments to create many SettingKegiatans.
+     * @example
+     * // Create many SettingKegiatans
+     * const settingKegiatan = await prisma.settingKegiatan.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SettingKegiatans and only return the `SettingKegiatanId`
+     * const settingKegiatanWithSettingKegiatanIdOnly = await prisma.settingKegiatan.createManyAndReturn({
+     *   select: { SettingKegiatanId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingKegiatanCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingKegiatanCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SettingKegiatan.
+     * @param {SettingKegiatanDeleteArgs} args - Arguments to delete one SettingKegiatan.
+     * @example
+     * // Delete one SettingKegiatan
+     * const SettingKegiatan = await prisma.settingKegiatan.delete({
+     *   where: {
+     *     // ... filter to delete one SettingKegiatan
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingKegiatanDeleteArgs>(args: SelectSubset<T, SettingKegiatanDeleteArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SettingKegiatan.
+     * @param {SettingKegiatanUpdateArgs} args - Arguments to update one SettingKegiatan.
+     * @example
+     * // Update one SettingKegiatan
+     * const settingKegiatan = await prisma.settingKegiatan.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingKegiatanUpdateArgs>(args: SelectSubset<T, SettingKegiatanUpdateArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SettingKegiatans.
+     * @param {SettingKegiatanDeleteManyArgs} args - Arguments to filter SettingKegiatans to delete.
+     * @example
+     * // Delete a few SettingKegiatans
+     * const { count } = await prisma.settingKegiatan.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingKegiatanDeleteManyArgs>(args?: SelectSubset<T, SettingKegiatanDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingKegiatans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingKegiatanUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SettingKegiatans
+     * const settingKegiatan = await prisma.settingKegiatan.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingKegiatanUpdateManyArgs>(args: SelectSubset<T, SettingKegiatanUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingKegiatans and returns the data updated in the database.
+     * @param {SettingKegiatanUpdateManyAndReturnArgs} args - Arguments to update many SettingKegiatans.
+     * @example
+     * // Update many SettingKegiatans
+     * const settingKegiatan = await prisma.settingKegiatan.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SettingKegiatans and only return the `SettingKegiatanId`
+     * const settingKegiatanWithSettingKegiatanIdOnly = await prisma.settingKegiatan.updateManyAndReturn({
+     *   select: { SettingKegiatanId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SettingKegiatanUpdateManyAndReturnArgs>(args: SelectSubset<T, SettingKegiatanUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SettingKegiatan.
+     * @param {SettingKegiatanUpsertArgs} args - Arguments to update or create a SettingKegiatan.
+     * @example
+     * // Update or create a SettingKegiatan
+     * const settingKegiatan = await prisma.settingKegiatan.upsert({
+     *   create: {
+     *     // ... data to create a SettingKegiatan
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SettingKegiatan we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingKegiatanUpsertArgs>(args: SelectSubset<T, SettingKegiatanUpsertArgs<ExtArgs>>): Prisma__SettingKegiatanClient<$Result.GetResult<Prisma.$SettingKegiatanPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SettingKegiatans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingKegiatanCountArgs} args - Arguments to filter SettingKegiatans to count.
+     * @example
+     * // Count the number of SettingKegiatans
+     * const count = await prisma.settingKegiatan.count({
+     *   where: {
+     *     // ... the filter for the SettingKegiatans we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingKegiatanCountArgs>(
+      args?: Subset<T, SettingKegiatanCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingKegiatanCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SettingKegiatan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingKegiatanAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingKegiatanAggregateArgs>(args: Subset<T, SettingKegiatanAggregateArgs>): Prisma.PrismaPromise<GetSettingKegiatanAggregateType<T>>
+
+    /**
+     * Group by SettingKegiatan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingKegiatanGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingKegiatanGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingKegiatanGroupByArgs['orderBy'] }
+        : { orderBy?: SettingKegiatanGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingKegiatanGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingKegiatanGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SettingKegiatan model
+   */
+  readonly fields: SettingKegiatanFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SettingKegiatan.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingKegiatanClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    JenisKegiatan<T extends JenisKegiatanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JenisKegiatanDefaultArgs<ExtArgs>>): Prisma__JenisKegiatanClient<$Result.GetResult<Prisma.$JenisKegiatanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    SettingMainPage<T extends SettingMainPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPageDefaultArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SettingKegiatan model
+   */
+  interface SettingKegiatanFieldRefs {
+    readonly SettingKegiatanId: FieldRef<"SettingKegiatan", 'String'>
+    readonly JenisKegiatanId: FieldRef<"SettingKegiatan", 'String'>
+    readonly SettingMainPageId: FieldRef<"SettingKegiatan", 'String'>
+    readonly Nama: FieldRef<"SettingKegiatan", 'String'>
+    readonly Lokasi: FieldRef<"SettingKegiatan", 'String'>
+    readonly Deskripsi: FieldRef<"SettingKegiatan", 'String'>
+    readonly WaktuMulai: FieldRef<"SettingKegiatan", 'DateTime'>
+    readonly WaktuSelesai: FieldRef<"SettingKegiatan", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SettingKegiatan findUnique
+   */
+  export type SettingKegiatanFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingKegiatan to fetch.
+     */
+    where: SettingKegiatanWhereUniqueInput
+  }
+
+  /**
+   * SettingKegiatan findUniqueOrThrow
+   */
+  export type SettingKegiatanFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingKegiatan to fetch.
+     */
+    where: SettingKegiatanWhereUniqueInput
+  }
+
+  /**
+   * SettingKegiatan findFirst
+   */
+  export type SettingKegiatanFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingKegiatan to fetch.
+     */
+    where?: SettingKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingKegiatans to fetch.
+     */
+    orderBy?: SettingKegiatanOrderByWithRelationInput | SettingKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingKegiatans.
+     */
+    cursor?: SettingKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingKegiatans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingKegiatans.
+     */
+    distinct?: SettingKegiatanScalarFieldEnum | SettingKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * SettingKegiatan findFirstOrThrow
+   */
+  export type SettingKegiatanFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingKegiatan to fetch.
+     */
+    where?: SettingKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingKegiatans to fetch.
+     */
+    orderBy?: SettingKegiatanOrderByWithRelationInput | SettingKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingKegiatans.
+     */
+    cursor?: SettingKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingKegiatans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingKegiatans.
+     */
+    distinct?: SettingKegiatanScalarFieldEnum | SettingKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * SettingKegiatan findMany
+   */
+  export type SettingKegiatanFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingKegiatans to fetch.
+     */
+    where?: SettingKegiatanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingKegiatans to fetch.
+     */
+    orderBy?: SettingKegiatanOrderByWithRelationInput | SettingKegiatanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SettingKegiatans.
+     */
+    cursor?: SettingKegiatanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingKegiatans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingKegiatans.
+     */
+    skip?: number
+    distinct?: SettingKegiatanScalarFieldEnum | SettingKegiatanScalarFieldEnum[]
+  }
+
+  /**
+   * SettingKegiatan create
+   */
+  export type SettingKegiatanCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SettingKegiatan.
+     */
+    data: XOR<SettingKegiatanCreateInput, SettingKegiatanUncheckedCreateInput>
+  }
+
+  /**
+   * SettingKegiatan createMany
+   */
+  export type SettingKegiatanCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SettingKegiatans.
+     */
+    data: SettingKegiatanCreateManyInput | SettingKegiatanCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SettingKegiatan createManyAndReturn
+   */
+  export type SettingKegiatanCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * The data used to create many SettingKegiatans.
+     */
+    data: SettingKegiatanCreateManyInput | SettingKegiatanCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingKegiatan update
+   */
+  export type SettingKegiatanUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SettingKegiatan.
+     */
+    data: XOR<SettingKegiatanUpdateInput, SettingKegiatanUncheckedUpdateInput>
+    /**
+     * Choose, which SettingKegiatan to update.
+     */
+    where: SettingKegiatanWhereUniqueInput
+  }
+
+  /**
+   * SettingKegiatan updateMany
+   */
+  export type SettingKegiatanUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SettingKegiatans.
+     */
+    data: XOR<SettingKegiatanUpdateManyMutationInput, SettingKegiatanUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingKegiatans to update
+     */
+    where?: SettingKegiatanWhereInput
+    /**
+     * Limit how many SettingKegiatans to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingKegiatan updateManyAndReturn
+   */
+  export type SettingKegiatanUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * The data used to update SettingKegiatans.
+     */
+    data: XOR<SettingKegiatanUpdateManyMutationInput, SettingKegiatanUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingKegiatans to update
+     */
+    where?: SettingKegiatanWhereInput
+    /**
+     * Limit how many SettingKegiatans to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingKegiatan upsert
+   */
+  export type SettingKegiatanUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SettingKegiatan to update in case it exists.
+     */
+    where: SettingKegiatanWhereUniqueInput
+    /**
+     * In case the SettingKegiatan found by the `where` argument doesn't exist, create a new SettingKegiatan with this data.
+     */
+    create: XOR<SettingKegiatanCreateInput, SettingKegiatanUncheckedCreateInput>
+    /**
+     * In case the SettingKegiatan was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingKegiatanUpdateInput, SettingKegiatanUncheckedUpdateInput>
+  }
+
+  /**
+   * SettingKegiatan delete
+   */
+  export type SettingKegiatanDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+    /**
+     * Filter which SettingKegiatan to delete.
+     */
+    where: SettingKegiatanWhereUniqueInput
+  }
+
+  /**
+   * SettingKegiatan deleteMany
+   */
+  export type SettingKegiatanDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingKegiatans to delete
+     */
+    where?: SettingKegiatanWhereInput
+    /**
+     * Limit how many SettingKegiatans to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingKegiatan without action
+   */
+  export type SettingKegiatanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingKegiatan
+     */
+    select?: SettingKegiatanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingKegiatan
+     */
+    omit?: SettingKegiatanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingKegiatanInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SettingCommunity
+   */
+
+  export type AggregateSettingCommunity = {
+    _count: SettingCommunityCountAggregateOutputType | null
+    _min: SettingCommunityMinAggregateOutputType | null
+    _max: SettingCommunityMaxAggregateOutputType | null
+  }
+
+  export type SettingCommunityMinAggregateOutputType = {
+    SettingCommunityId: string | null
+    SettingMainPageId: string | null
+    Title: string | null
+    Gambar: Uint8Array | null
+  }
+
+  export type SettingCommunityMaxAggregateOutputType = {
+    SettingCommunityId: string | null
+    SettingMainPageId: string | null
+    Title: string | null
+    Gambar: Uint8Array | null
+  }
+
+  export type SettingCommunityCountAggregateOutputType = {
+    SettingCommunityId: number
+    SettingMainPageId: number
+    Title: number
+    Gambar: number
+    _all: number
+  }
+
+
+  export type SettingCommunityMinAggregateInputType = {
+    SettingCommunityId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Gambar?: true
+  }
+
+  export type SettingCommunityMaxAggregateInputType = {
+    SettingCommunityId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Gambar?: true
+  }
+
+  export type SettingCommunityCountAggregateInputType = {
+    SettingCommunityId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Gambar?: true
+    _all?: true
+  }
+
+  export type SettingCommunityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingCommunity to aggregate.
+     */
+    where?: SettingCommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingCommunities to fetch.
+     */
+    orderBy?: SettingCommunityOrderByWithRelationInput | SettingCommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingCommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingCommunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingCommunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SettingCommunities
+    **/
+    _count?: true | SettingCommunityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingCommunityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingCommunityMaxAggregateInputType
+  }
+
+  export type GetSettingCommunityAggregateType<T extends SettingCommunityAggregateArgs> = {
+        [P in keyof T & keyof AggregateSettingCommunity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSettingCommunity[P]>
+      : GetScalarType<T[P], AggregateSettingCommunity[P]>
+  }
+
+
+
+
+  export type SettingCommunityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingCommunityWhereInput
+    orderBy?: SettingCommunityOrderByWithAggregationInput | SettingCommunityOrderByWithAggregationInput[]
+    by: SettingCommunityScalarFieldEnum[] | SettingCommunityScalarFieldEnum
+    having?: SettingCommunityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingCommunityCountAggregateInputType | true
+    _min?: SettingCommunityMinAggregateInputType
+    _max?: SettingCommunityMaxAggregateInputType
+  }
+
+  export type SettingCommunityGroupByOutputType = {
+    SettingCommunityId: string
+    SettingMainPageId: string
+    Title: string
+    Gambar: Uint8Array
+    _count: SettingCommunityCountAggregateOutputType | null
+    _min: SettingCommunityMinAggregateOutputType | null
+    _max: SettingCommunityMaxAggregateOutputType | null
+  }
+
+  type GetSettingCommunityGroupByPayload<T extends SettingCommunityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingCommunityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingCommunityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingCommunityGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingCommunityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingCommunitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingCommunityId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Gambar?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingCommunity"]>
+
+  export type SettingCommunitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingCommunityId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Gambar?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingCommunity"]>
+
+  export type SettingCommunitySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingCommunityId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Gambar?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingCommunity"]>
+
+  export type SettingCommunitySelectScalar = {
+    SettingCommunityId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Gambar?: boolean
+  }
+
+  export type SettingCommunityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SettingCommunityId" | "SettingMainPageId" | "Title" | "Gambar", ExtArgs["result"]["settingCommunity"]>
+  export type SettingCommunityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingCommunityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingCommunityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+
+  export type $SettingCommunityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SettingCommunity"
+    objects: {
+      SettingMainPage: Prisma.$SettingMainPagePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SettingCommunityId: string
+      SettingMainPageId: string
+      Title: string
+      Gambar: Uint8Array
+    }, ExtArgs["result"]["settingCommunity"]>
+    composites: {}
+  }
+
+  type SettingCommunityGetPayload<S extends boolean | null | undefined | SettingCommunityDefaultArgs> = $Result.GetResult<Prisma.$SettingCommunityPayload, S>
+
+  type SettingCommunityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SettingCommunityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SettingCommunityCountAggregateInputType | true
+    }
+
+  export interface SettingCommunityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SettingCommunity'], meta: { name: 'SettingCommunity' } }
+    /**
+     * Find zero or one SettingCommunity that matches the filter.
+     * @param {SettingCommunityFindUniqueArgs} args - Arguments to find a SettingCommunity
+     * @example
+     * // Get one SettingCommunity
+     * const settingCommunity = await prisma.settingCommunity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingCommunityFindUniqueArgs>(args: SelectSubset<T, SettingCommunityFindUniqueArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SettingCommunity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SettingCommunityFindUniqueOrThrowArgs} args - Arguments to find a SettingCommunity
+     * @example
+     * // Get one SettingCommunity
+     * const settingCommunity = await prisma.settingCommunity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingCommunityFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingCommunityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingCommunity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCommunityFindFirstArgs} args - Arguments to find a SettingCommunity
+     * @example
+     * // Get one SettingCommunity
+     * const settingCommunity = await prisma.settingCommunity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingCommunityFindFirstArgs>(args?: SelectSubset<T, SettingCommunityFindFirstArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingCommunity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCommunityFindFirstOrThrowArgs} args - Arguments to find a SettingCommunity
+     * @example
+     * // Get one SettingCommunity
+     * const settingCommunity = await prisma.settingCommunity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingCommunityFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingCommunityFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SettingCommunities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCommunityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SettingCommunities
+     * const settingCommunities = await prisma.settingCommunity.findMany()
+     * 
+     * // Get first 10 SettingCommunities
+     * const settingCommunities = await prisma.settingCommunity.findMany({ take: 10 })
+     * 
+     * // Only select the `SettingCommunityId`
+     * const settingCommunityWithSettingCommunityIdOnly = await prisma.settingCommunity.findMany({ select: { SettingCommunityId: true } })
+     * 
+     */
+    findMany<T extends SettingCommunityFindManyArgs>(args?: SelectSubset<T, SettingCommunityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SettingCommunity.
+     * @param {SettingCommunityCreateArgs} args - Arguments to create a SettingCommunity.
+     * @example
+     * // Create one SettingCommunity
+     * const SettingCommunity = await prisma.settingCommunity.create({
+     *   data: {
+     *     // ... data to create a SettingCommunity
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingCommunityCreateArgs>(args: SelectSubset<T, SettingCommunityCreateArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SettingCommunities.
+     * @param {SettingCommunityCreateManyArgs} args - Arguments to create many SettingCommunities.
+     * @example
+     * // Create many SettingCommunities
+     * const settingCommunity = await prisma.settingCommunity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingCommunityCreateManyArgs>(args?: SelectSubset<T, SettingCommunityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SettingCommunities and returns the data saved in the database.
+     * @param {SettingCommunityCreateManyAndReturnArgs} args - Arguments to create many SettingCommunities.
+     * @example
+     * // Create many SettingCommunities
+     * const settingCommunity = await prisma.settingCommunity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SettingCommunities and only return the `SettingCommunityId`
+     * const settingCommunityWithSettingCommunityIdOnly = await prisma.settingCommunity.createManyAndReturn({
+     *   select: { SettingCommunityId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingCommunityCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingCommunityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SettingCommunity.
+     * @param {SettingCommunityDeleteArgs} args - Arguments to delete one SettingCommunity.
+     * @example
+     * // Delete one SettingCommunity
+     * const SettingCommunity = await prisma.settingCommunity.delete({
+     *   where: {
+     *     // ... filter to delete one SettingCommunity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingCommunityDeleteArgs>(args: SelectSubset<T, SettingCommunityDeleteArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SettingCommunity.
+     * @param {SettingCommunityUpdateArgs} args - Arguments to update one SettingCommunity.
+     * @example
+     * // Update one SettingCommunity
+     * const settingCommunity = await prisma.settingCommunity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingCommunityUpdateArgs>(args: SelectSubset<T, SettingCommunityUpdateArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SettingCommunities.
+     * @param {SettingCommunityDeleteManyArgs} args - Arguments to filter SettingCommunities to delete.
+     * @example
+     * // Delete a few SettingCommunities
+     * const { count } = await prisma.settingCommunity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingCommunityDeleteManyArgs>(args?: SelectSubset<T, SettingCommunityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingCommunities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCommunityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SettingCommunities
+     * const settingCommunity = await prisma.settingCommunity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingCommunityUpdateManyArgs>(args: SelectSubset<T, SettingCommunityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingCommunities and returns the data updated in the database.
+     * @param {SettingCommunityUpdateManyAndReturnArgs} args - Arguments to update many SettingCommunities.
+     * @example
+     * // Update many SettingCommunities
+     * const settingCommunity = await prisma.settingCommunity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SettingCommunities and only return the `SettingCommunityId`
+     * const settingCommunityWithSettingCommunityIdOnly = await prisma.settingCommunity.updateManyAndReturn({
+     *   select: { SettingCommunityId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SettingCommunityUpdateManyAndReturnArgs>(args: SelectSubset<T, SettingCommunityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SettingCommunity.
+     * @param {SettingCommunityUpsertArgs} args - Arguments to update or create a SettingCommunity.
+     * @example
+     * // Update or create a SettingCommunity
+     * const settingCommunity = await prisma.settingCommunity.upsert({
+     *   create: {
+     *     // ... data to create a SettingCommunity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SettingCommunity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingCommunityUpsertArgs>(args: SelectSubset<T, SettingCommunityUpsertArgs<ExtArgs>>): Prisma__SettingCommunityClient<$Result.GetResult<Prisma.$SettingCommunityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SettingCommunities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCommunityCountArgs} args - Arguments to filter SettingCommunities to count.
+     * @example
+     * // Count the number of SettingCommunities
+     * const count = await prisma.settingCommunity.count({
+     *   where: {
+     *     // ... the filter for the SettingCommunities we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingCommunityCountArgs>(
+      args?: Subset<T, SettingCommunityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingCommunityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SettingCommunity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCommunityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingCommunityAggregateArgs>(args: Subset<T, SettingCommunityAggregateArgs>): Prisma.PrismaPromise<GetSettingCommunityAggregateType<T>>
+
+    /**
+     * Group by SettingCommunity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingCommunityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingCommunityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingCommunityGroupByArgs['orderBy'] }
+        : { orderBy?: SettingCommunityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingCommunityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingCommunityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SettingCommunity model
+   */
+  readonly fields: SettingCommunityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SettingCommunity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingCommunityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SettingMainPage<T extends SettingMainPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPageDefaultArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SettingCommunity model
+   */
+  interface SettingCommunityFieldRefs {
+    readonly SettingCommunityId: FieldRef<"SettingCommunity", 'String'>
+    readonly SettingMainPageId: FieldRef<"SettingCommunity", 'String'>
+    readonly Title: FieldRef<"SettingCommunity", 'String'>
+    readonly Gambar: FieldRef<"SettingCommunity", 'Bytes'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SettingCommunity findUnique
+   */
+  export type SettingCommunityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingCommunity to fetch.
+     */
+    where: SettingCommunityWhereUniqueInput
+  }
+
+  /**
+   * SettingCommunity findUniqueOrThrow
+   */
+  export type SettingCommunityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingCommunity to fetch.
+     */
+    where: SettingCommunityWhereUniqueInput
+  }
+
+  /**
+   * SettingCommunity findFirst
+   */
+  export type SettingCommunityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingCommunity to fetch.
+     */
+    where?: SettingCommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingCommunities to fetch.
+     */
+    orderBy?: SettingCommunityOrderByWithRelationInput | SettingCommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingCommunities.
+     */
+    cursor?: SettingCommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingCommunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingCommunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingCommunities.
+     */
+    distinct?: SettingCommunityScalarFieldEnum | SettingCommunityScalarFieldEnum[]
+  }
+
+  /**
+   * SettingCommunity findFirstOrThrow
+   */
+  export type SettingCommunityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingCommunity to fetch.
+     */
+    where?: SettingCommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingCommunities to fetch.
+     */
+    orderBy?: SettingCommunityOrderByWithRelationInput | SettingCommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingCommunities.
+     */
+    cursor?: SettingCommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingCommunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingCommunities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingCommunities.
+     */
+    distinct?: SettingCommunityScalarFieldEnum | SettingCommunityScalarFieldEnum[]
+  }
+
+  /**
+   * SettingCommunity findMany
+   */
+  export type SettingCommunityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingCommunities to fetch.
+     */
+    where?: SettingCommunityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingCommunities to fetch.
+     */
+    orderBy?: SettingCommunityOrderByWithRelationInput | SettingCommunityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SettingCommunities.
+     */
+    cursor?: SettingCommunityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingCommunities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingCommunities.
+     */
+    skip?: number
+    distinct?: SettingCommunityScalarFieldEnum | SettingCommunityScalarFieldEnum[]
+  }
+
+  /**
+   * SettingCommunity create
+   */
+  export type SettingCommunityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SettingCommunity.
+     */
+    data: XOR<SettingCommunityCreateInput, SettingCommunityUncheckedCreateInput>
+  }
+
+  /**
+   * SettingCommunity createMany
+   */
+  export type SettingCommunityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SettingCommunities.
+     */
+    data: SettingCommunityCreateManyInput | SettingCommunityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SettingCommunity createManyAndReturn
+   */
+  export type SettingCommunityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * The data used to create many SettingCommunities.
+     */
+    data: SettingCommunityCreateManyInput | SettingCommunityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingCommunity update
+   */
+  export type SettingCommunityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SettingCommunity.
+     */
+    data: XOR<SettingCommunityUpdateInput, SettingCommunityUncheckedUpdateInput>
+    /**
+     * Choose, which SettingCommunity to update.
+     */
+    where: SettingCommunityWhereUniqueInput
+  }
+
+  /**
+   * SettingCommunity updateMany
+   */
+  export type SettingCommunityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SettingCommunities.
+     */
+    data: XOR<SettingCommunityUpdateManyMutationInput, SettingCommunityUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingCommunities to update
+     */
+    where?: SettingCommunityWhereInput
+    /**
+     * Limit how many SettingCommunities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingCommunity updateManyAndReturn
+   */
+  export type SettingCommunityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * The data used to update SettingCommunities.
+     */
+    data: XOR<SettingCommunityUpdateManyMutationInput, SettingCommunityUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingCommunities to update
+     */
+    where?: SettingCommunityWhereInput
+    /**
+     * Limit how many SettingCommunities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingCommunity upsert
+   */
+  export type SettingCommunityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SettingCommunity to update in case it exists.
+     */
+    where: SettingCommunityWhereUniqueInput
+    /**
+     * In case the SettingCommunity found by the `where` argument doesn't exist, create a new SettingCommunity with this data.
+     */
+    create: XOR<SettingCommunityCreateInput, SettingCommunityUncheckedCreateInput>
+    /**
+     * In case the SettingCommunity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingCommunityUpdateInput, SettingCommunityUncheckedUpdateInput>
+  }
+
+  /**
+   * SettingCommunity delete
+   */
+  export type SettingCommunityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+    /**
+     * Filter which SettingCommunity to delete.
+     */
+    where: SettingCommunityWhereUniqueInput
+  }
+
+  /**
+   * SettingCommunity deleteMany
+   */
+  export type SettingCommunityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingCommunities to delete
+     */
+    where?: SettingCommunityWhereInput
+    /**
+     * Limit how many SettingCommunities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingCommunity without action
+   */
+  export type SettingCommunityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingCommunity
+     */
+    select?: SettingCommunitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingCommunity
+     */
+    omit?: SettingCommunityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingCommunityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SettingWhy
+   */
+
+  export type AggregateSettingWhy = {
+    _count: SettingWhyCountAggregateOutputType | null
+    _min: SettingWhyMinAggregateOutputType | null
+    _max: SettingWhyMaxAggregateOutputType | null
+  }
+
+  export type SettingWhyMinAggregateOutputType = {
+    SettingWhyId: string | null
+    SettingMainPageId: string | null
+    Icon: string | null
+    Title: string | null
+    Subtitle: string | null
+  }
+
+  export type SettingWhyMaxAggregateOutputType = {
+    SettingWhyId: string | null
+    SettingMainPageId: string | null
+    Icon: string | null
+    Title: string | null
+    Subtitle: string | null
+  }
+
+  export type SettingWhyCountAggregateOutputType = {
+    SettingWhyId: number
+    SettingMainPageId: number
+    Icon: number
+    Title: number
+    Subtitle: number
+    _all: number
+  }
+
+
+  export type SettingWhyMinAggregateInputType = {
+    SettingWhyId?: true
+    SettingMainPageId?: true
+    Icon?: true
+    Title?: true
+    Subtitle?: true
+  }
+
+  export type SettingWhyMaxAggregateInputType = {
+    SettingWhyId?: true
+    SettingMainPageId?: true
+    Icon?: true
+    Title?: true
+    Subtitle?: true
+  }
+
+  export type SettingWhyCountAggregateInputType = {
+    SettingWhyId?: true
+    SettingMainPageId?: true
+    Icon?: true
+    Title?: true
+    Subtitle?: true
+    _all?: true
+  }
+
+  export type SettingWhyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingWhy to aggregate.
+     */
+    where?: SettingWhyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingWhies to fetch.
+     */
+    orderBy?: SettingWhyOrderByWithRelationInput | SettingWhyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingWhyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingWhies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingWhies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SettingWhies
+    **/
+    _count?: true | SettingWhyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingWhyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingWhyMaxAggregateInputType
+  }
+
+  export type GetSettingWhyAggregateType<T extends SettingWhyAggregateArgs> = {
+        [P in keyof T & keyof AggregateSettingWhy]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSettingWhy[P]>
+      : GetScalarType<T[P], AggregateSettingWhy[P]>
+  }
+
+
+
+
+  export type SettingWhyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingWhyWhereInput
+    orderBy?: SettingWhyOrderByWithAggregationInput | SettingWhyOrderByWithAggregationInput[]
+    by: SettingWhyScalarFieldEnum[] | SettingWhyScalarFieldEnum
+    having?: SettingWhyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingWhyCountAggregateInputType | true
+    _min?: SettingWhyMinAggregateInputType
+    _max?: SettingWhyMaxAggregateInputType
+  }
+
+  export type SettingWhyGroupByOutputType = {
+    SettingWhyId: string
+    SettingMainPageId: string
+    Icon: string
+    Title: string
+    Subtitle: string
+    _count: SettingWhyCountAggregateOutputType | null
+    _min: SettingWhyMinAggregateOutputType | null
+    _max: SettingWhyMaxAggregateOutputType | null
+  }
+
+  type GetSettingWhyGroupByPayload<T extends SettingWhyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingWhyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingWhyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingWhyGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingWhyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingWhySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingWhyId?: boolean
+    SettingMainPageId?: boolean
+    Icon?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingWhy"]>
+
+  export type SettingWhySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingWhyId?: boolean
+    SettingMainPageId?: boolean
+    Icon?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingWhy"]>
+
+  export type SettingWhySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingWhyId?: boolean
+    SettingMainPageId?: boolean
+    Icon?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingWhy"]>
+
+  export type SettingWhySelectScalar = {
+    SettingWhyId?: boolean
+    SettingMainPageId?: boolean
+    Icon?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+  }
+
+  export type SettingWhyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SettingWhyId" | "SettingMainPageId" | "Icon" | "Title" | "Subtitle", ExtArgs["result"]["settingWhy"]>
+  export type SettingWhyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingWhyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingWhyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+
+  export type $SettingWhyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SettingWhy"
+    objects: {
+      SettingMainPage: Prisma.$SettingMainPagePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SettingWhyId: string
+      SettingMainPageId: string
+      Icon: string
+      Title: string
+      Subtitle: string
+    }, ExtArgs["result"]["settingWhy"]>
+    composites: {}
+  }
+
+  type SettingWhyGetPayload<S extends boolean | null | undefined | SettingWhyDefaultArgs> = $Result.GetResult<Prisma.$SettingWhyPayload, S>
+
+  type SettingWhyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SettingWhyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SettingWhyCountAggregateInputType | true
+    }
+
+  export interface SettingWhyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SettingWhy'], meta: { name: 'SettingWhy' } }
+    /**
+     * Find zero or one SettingWhy that matches the filter.
+     * @param {SettingWhyFindUniqueArgs} args - Arguments to find a SettingWhy
+     * @example
+     * // Get one SettingWhy
+     * const settingWhy = await prisma.settingWhy.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingWhyFindUniqueArgs>(args: SelectSubset<T, SettingWhyFindUniqueArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SettingWhy that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SettingWhyFindUniqueOrThrowArgs} args - Arguments to find a SettingWhy
+     * @example
+     * // Get one SettingWhy
+     * const settingWhy = await prisma.settingWhy.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingWhyFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingWhyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingWhy that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingWhyFindFirstArgs} args - Arguments to find a SettingWhy
+     * @example
+     * // Get one SettingWhy
+     * const settingWhy = await prisma.settingWhy.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingWhyFindFirstArgs>(args?: SelectSubset<T, SettingWhyFindFirstArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingWhy that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingWhyFindFirstOrThrowArgs} args - Arguments to find a SettingWhy
+     * @example
+     * // Get one SettingWhy
+     * const settingWhy = await prisma.settingWhy.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingWhyFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingWhyFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SettingWhies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingWhyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SettingWhies
+     * const settingWhies = await prisma.settingWhy.findMany()
+     * 
+     * // Get first 10 SettingWhies
+     * const settingWhies = await prisma.settingWhy.findMany({ take: 10 })
+     * 
+     * // Only select the `SettingWhyId`
+     * const settingWhyWithSettingWhyIdOnly = await prisma.settingWhy.findMany({ select: { SettingWhyId: true } })
+     * 
+     */
+    findMany<T extends SettingWhyFindManyArgs>(args?: SelectSubset<T, SettingWhyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SettingWhy.
+     * @param {SettingWhyCreateArgs} args - Arguments to create a SettingWhy.
+     * @example
+     * // Create one SettingWhy
+     * const SettingWhy = await prisma.settingWhy.create({
+     *   data: {
+     *     // ... data to create a SettingWhy
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingWhyCreateArgs>(args: SelectSubset<T, SettingWhyCreateArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SettingWhies.
+     * @param {SettingWhyCreateManyArgs} args - Arguments to create many SettingWhies.
+     * @example
+     * // Create many SettingWhies
+     * const settingWhy = await prisma.settingWhy.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingWhyCreateManyArgs>(args?: SelectSubset<T, SettingWhyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SettingWhies and returns the data saved in the database.
+     * @param {SettingWhyCreateManyAndReturnArgs} args - Arguments to create many SettingWhies.
+     * @example
+     * // Create many SettingWhies
+     * const settingWhy = await prisma.settingWhy.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SettingWhies and only return the `SettingWhyId`
+     * const settingWhyWithSettingWhyIdOnly = await prisma.settingWhy.createManyAndReturn({
+     *   select: { SettingWhyId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingWhyCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingWhyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SettingWhy.
+     * @param {SettingWhyDeleteArgs} args - Arguments to delete one SettingWhy.
+     * @example
+     * // Delete one SettingWhy
+     * const SettingWhy = await prisma.settingWhy.delete({
+     *   where: {
+     *     // ... filter to delete one SettingWhy
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingWhyDeleteArgs>(args: SelectSubset<T, SettingWhyDeleteArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SettingWhy.
+     * @param {SettingWhyUpdateArgs} args - Arguments to update one SettingWhy.
+     * @example
+     * // Update one SettingWhy
+     * const settingWhy = await prisma.settingWhy.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingWhyUpdateArgs>(args: SelectSubset<T, SettingWhyUpdateArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SettingWhies.
+     * @param {SettingWhyDeleteManyArgs} args - Arguments to filter SettingWhies to delete.
+     * @example
+     * // Delete a few SettingWhies
+     * const { count } = await prisma.settingWhy.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingWhyDeleteManyArgs>(args?: SelectSubset<T, SettingWhyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingWhies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingWhyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SettingWhies
+     * const settingWhy = await prisma.settingWhy.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingWhyUpdateManyArgs>(args: SelectSubset<T, SettingWhyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingWhies and returns the data updated in the database.
+     * @param {SettingWhyUpdateManyAndReturnArgs} args - Arguments to update many SettingWhies.
+     * @example
+     * // Update many SettingWhies
+     * const settingWhy = await prisma.settingWhy.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SettingWhies and only return the `SettingWhyId`
+     * const settingWhyWithSettingWhyIdOnly = await prisma.settingWhy.updateManyAndReturn({
+     *   select: { SettingWhyId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SettingWhyUpdateManyAndReturnArgs>(args: SelectSubset<T, SettingWhyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SettingWhy.
+     * @param {SettingWhyUpsertArgs} args - Arguments to update or create a SettingWhy.
+     * @example
+     * // Update or create a SettingWhy
+     * const settingWhy = await prisma.settingWhy.upsert({
+     *   create: {
+     *     // ... data to create a SettingWhy
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SettingWhy we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingWhyUpsertArgs>(args: SelectSubset<T, SettingWhyUpsertArgs<ExtArgs>>): Prisma__SettingWhyClient<$Result.GetResult<Prisma.$SettingWhyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SettingWhies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingWhyCountArgs} args - Arguments to filter SettingWhies to count.
+     * @example
+     * // Count the number of SettingWhies
+     * const count = await prisma.settingWhy.count({
+     *   where: {
+     *     // ... the filter for the SettingWhies we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingWhyCountArgs>(
+      args?: Subset<T, SettingWhyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingWhyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SettingWhy.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingWhyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingWhyAggregateArgs>(args: Subset<T, SettingWhyAggregateArgs>): Prisma.PrismaPromise<GetSettingWhyAggregateType<T>>
+
+    /**
+     * Group by SettingWhy.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingWhyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingWhyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingWhyGroupByArgs['orderBy'] }
+        : { orderBy?: SettingWhyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingWhyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingWhyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SettingWhy model
+   */
+  readonly fields: SettingWhyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SettingWhy.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingWhyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SettingMainPage<T extends SettingMainPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPageDefaultArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SettingWhy model
+   */
+  interface SettingWhyFieldRefs {
+    readonly SettingWhyId: FieldRef<"SettingWhy", 'String'>
+    readonly SettingMainPageId: FieldRef<"SettingWhy", 'String'>
+    readonly Icon: FieldRef<"SettingWhy", 'String'>
+    readonly Title: FieldRef<"SettingWhy", 'String'>
+    readonly Subtitle: FieldRef<"SettingWhy", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SettingWhy findUnique
+   */
+  export type SettingWhyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingWhy to fetch.
+     */
+    where: SettingWhyWhereUniqueInput
+  }
+
+  /**
+   * SettingWhy findUniqueOrThrow
+   */
+  export type SettingWhyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingWhy to fetch.
+     */
+    where: SettingWhyWhereUniqueInput
+  }
+
+  /**
+   * SettingWhy findFirst
+   */
+  export type SettingWhyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingWhy to fetch.
+     */
+    where?: SettingWhyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingWhies to fetch.
+     */
+    orderBy?: SettingWhyOrderByWithRelationInput | SettingWhyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingWhies.
+     */
+    cursor?: SettingWhyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingWhies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingWhies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingWhies.
+     */
+    distinct?: SettingWhyScalarFieldEnum | SettingWhyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingWhy findFirstOrThrow
+   */
+  export type SettingWhyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingWhy to fetch.
+     */
+    where?: SettingWhyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingWhies to fetch.
+     */
+    orderBy?: SettingWhyOrderByWithRelationInput | SettingWhyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingWhies.
+     */
+    cursor?: SettingWhyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingWhies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingWhies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingWhies.
+     */
+    distinct?: SettingWhyScalarFieldEnum | SettingWhyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingWhy findMany
+   */
+  export type SettingWhyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingWhies to fetch.
+     */
+    where?: SettingWhyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingWhies to fetch.
+     */
+    orderBy?: SettingWhyOrderByWithRelationInput | SettingWhyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SettingWhies.
+     */
+    cursor?: SettingWhyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingWhies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingWhies.
+     */
+    skip?: number
+    distinct?: SettingWhyScalarFieldEnum | SettingWhyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingWhy create
+   */
+  export type SettingWhyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SettingWhy.
+     */
+    data: XOR<SettingWhyCreateInput, SettingWhyUncheckedCreateInput>
+  }
+
+  /**
+   * SettingWhy createMany
+   */
+  export type SettingWhyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SettingWhies.
+     */
+    data: SettingWhyCreateManyInput | SettingWhyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SettingWhy createManyAndReturn
+   */
+  export type SettingWhyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * The data used to create many SettingWhies.
+     */
+    data: SettingWhyCreateManyInput | SettingWhyCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingWhy update
+   */
+  export type SettingWhyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SettingWhy.
+     */
+    data: XOR<SettingWhyUpdateInput, SettingWhyUncheckedUpdateInput>
+    /**
+     * Choose, which SettingWhy to update.
+     */
+    where: SettingWhyWhereUniqueInput
+  }
+
+  /**
+   * SettingWhy updateMany
+   */
+  export type SettingWhyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SettingWhies.
+     */
+    data: XOR<SettingWhyUpdateManyMutationInput, SettingWhyUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingWhies to update
+     */
+    where?: SettingWhyWhereInput
+    /**
+     * Limit how many SettingWhies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingWhy updateManyAndReturn
+   */
+  export type SettingWhyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * The data used to update SettingWhies.
+     */
+    data: XOR<SettingWhyUpdateManyMutationInput, SettingWhyUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingWhies to update
+     */
+    where?: SettingWhyWhereInput
+    /**
+     * Limit how many SettingWhies to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingWhy upsert
+   */
+  export type SettingWhyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SettingWhy to update in case it exists.
+     */
+    where: SettingWhyWhereUniqueInput
+    /**
+     * In case the SettingWhy found by the `where` argument doesn't exist, create a new SettingWhy with this data.
+     */
+    create: XOR<SettingWhyCreateInput, SettingWhyUncheckedCreateInput>
+    /**
+     * In case the SettingWhy was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingWhyUpdateInput, SettingWhyUncheckedUpdateInput>
+  }
+
+  /**
+   * SettingWhy delete
+   */
+  export type SettingWhyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+    /**
+     * Filter which SettingWhy to delete.
+     */
+    where: SettingWhyWhereUniqueInput
+  }
+
+  /**
+   * SettingWhy deleteMany
+   */
+  export type SettingWhyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingWhies to delete
+     */
+    where?: SettingWhyWhereInput
+    /**
+     * Limit how many SettingWhies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingWhy without action
+   */
+  export type SettingWhyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingWhy
+     */
+    select?: SettingWhySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingWhy
+     */
+    omit?: SettingWhyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingWhyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SettingNumber
+   */
+
+  export type AggregateSettingNumber = {
+    _count: SettingNumberCountAggregateOutputType | null
+    _min: SettingNumberMinAggregateOutputType | null
+    _max: SettingNumberMaxAggregateOutputType | null
+  }
+
+  export type SettingNumberMinAggregateOutputType = {
+    SettingNumberId: string | null
+    SettingMainPageId: string | null
+    Title: string | null
+    Subtitle: string | null
+    Angka: string | null
+  }
+
+  export type SettingNumberMaxAggregateOutputType = {
+    SettingNumberId: string | null
+    SettingMainPageId: string | null
+    Title: string | null
+    Subtitle: string | null
+    Angka: string | null
+  }
+
+  export type SettingNumberCountAggregateOutputType = {
+    SettingNumberId: number
+    SettingMainPageId: number
+    Title: number
+    Subtitle: number
+    Angka: number
+    _all: number
+  }
+
+
+  export type SettingNumberMinAggregateInputType = {
+    SettingNumberId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Subtitle?: true
+    Angka?: true
+  }
+
+  export type SettingNumberMaxAggregateInputType = {
+    SettingNumberId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Subtitle?: true
+    Angka?: true
+  }
+
+  export type SettingNumberCountAggregateInputType = {
+    SettingNumberId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Subtitle?: true
+    Angka?: true
+    _all?: true
+  }
+
+  export type SettingNumberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingNumber to aggregate.
+     */
+    where?: SettingNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingNumbers to fetch.
+     */
+    orderBy?: SettingNumberOrderByWithRelationInput | SettingNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingNumbers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SettingNumbers
+    **/
+    _count?: true | SettingNumberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingNumberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingNumberMaxAggregateInputType
+  }
+
+  export type GetSettingNumberAggregateType<T extends SettingNumberAggregateArgs> = {
+        [P in keyof T & keyof AggregateSettingNumber]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSettingNumber[P]>
+      : GetScalarType<T[P], AggregateSettingNumber[P]>
+  }
+
+
+
+
+  export type SettingNumberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingNumberWhereInput
+    orderBy?: SettingNumberOrderByWithAggregationInput | SettingNumberOrderByWithAggregationInput[]
+    by: SettingNumberScalarFieldEnum[] | SettingNumberScalarFieldEnum
+    having?: SettingNumberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingNumberCountAggregateInputType | true
+    _min?: SettingNumberMinAggregateInputType
+    _max?: SettingNumberMaxAggregateInputType
+  }
+
+  export type SettingNumberGroupByOutputType = {
+    SettingNumberId: string
+    SettingMainPageId: string
+    Title: string
+    Subtitle: string
+    Angka: string
+    _count: SettingNumberCountAggregateOutputType | null
+    _min: SettingNumberMinAggregateOutputType | null
+    _max: SettingNumberMaxAggregateOutputType | null
+  }
+
+  type GetSettingNumberGroupByPayload<T extends SettingNumberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingNumberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingNumberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingNumberGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingNumberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingNumberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingNumberId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+    Angka?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingNumber"]>
+
+  export type SettingNumberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingNumberId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+    Angka?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingNumber"]>
+
+  export type SettingNumberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingNumberId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+    Angka?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingNumber"]>
+
+  export type SettingNumberSelectScalar = {
+    SettingNumberId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Subtitle?: boolean
+    Angka?: boolean
+  }
+
+  export type SettingNumberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SettingNumberId" | "SettingMainPageId" | "Title" | "Subtitle" | "Angka", ExtArgs["result"]["settingNumber"]>
+  export type SettingNumberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingNumberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingNumberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+
+  export type $SettingNumberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SettingNumber"
+    objects: {
+      SettingMainPage: Prisma.$SettingMainPagePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SettingNumberId: string
+      SettingMainPageId: string
+      Title: string
+      Subtitle: string
+      Angka: string
+    }, ExtArgs["result"]["settingNumber"]>
+    composites: {}
+  }
+
+  type SettingNumberGetPayload<S extends boolean | null | undefined | SettingNumberDefaultArgs> = $Result.GetResult<Prisma.$SettingNumberPayload, S>
+
+  type SettingNumberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SettingNumberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SettingNumberCountAggregateInputType | true
+    }
+
+  export interface SettingNumberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SettingNumber'], meta: { name: 'SettingNumber' } }
+    /**
+     * Find zero or one SettingNumber that matches the filter.
+     * @param {SettingNumberFindUniqueArgs} args - Arguments to find a SettingNumber
+     * @example
+     * // Get one SettingNumber
+     * const settingNumber = await prisma.settingNumber.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingNumberFindUniqueArgs>(args: SelectSubset<T, SettingNumberFindUniqueArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SettingNumber that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SettingNumberFindUniqueOrThrowArgs} args - Arguments to find a SettingNumber
+     * @example
+     * // Get one SettingNumber
+     * const settingNumber = await prisma.settingNumber.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingNumberFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingNumberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingNumber that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingNumberFindFirstArgs} args - Arguments to find a SettingNumber
+     * @example
+     * // Get one SettingNumber
+     * const settingNumber = await prisma.settingNumber.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingNumberFindFirstArgs>(args?: SelectSubset<T, SettingNumberFindFirstArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingNumber that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingNumberFindFirstOrThrowArgs} args - Arguments to find a SettingNumber
+     * @example
+     * // Get one SettingNumber
+     * const settingNumber = await prisma.settingNumber.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingNumberFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingNumberFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SettingNumbers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingNumberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SettingNumbers
+     * const settingNumbers = await prisma.settingNumber.findMany()
+     * 
+     * // Get first 10 SettingNumbers
+     * const settingNumbers = await prisma.settingNumber.findMany({ take: 10 })
+     * 
+     * // Only select the `SettingNumberId`
+     * const settingNumberWithSettingNumberIdOnly = await prisma.settingNumber.findMany({ select: { SettingNumberId: true } })
+     * 
+     */
+    findMany<T extends SettingNumberFindManyArgs>(args?: SelectSubset<T, SettingNumberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SettingNumber.
+     * @param {SettingNumberCreateArgs} args - Arguments to create a SettingNumber.
+     * @example
+     * // Create one SettingNumber
+     * const SettingNumber = await prisma.settingNumber.create({
+     *   data: {
+     *     // ... data to create a SettingNumber
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingNumberCreateArgs>(args: SelectSubset<T, SettingNumberCreateArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SettingNumbers.
+     * @param {SettingNumberCreateManyArgs} args - Arguments to create many SettingNumbers.
+     * @example
+     * // Create many SettingNumbers
+     * const settingNumber = await prisma.settingNumber.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingNumberCreateManyArgs>(args?: SelectSubset<T, SettingNumberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SettingNumbers and returns the data saved in the database.
+     * @param {SettingNumberCreateManyAndReturnArgs} args - Arguments to create many SettingNumbers.
+     * @example
+     * // Create many SettingNumbers
+     * const settingNumber = await prisma.settingNumber.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SettingNumbers and only return the `SettingNumberId`
+     * const settingNumberWithSettingNumberIdOnly = await prisma.settingNumber.createManyAndReturn({
+     *   select: { SettingNumberId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingNumberCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingNumberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SettingNumber.
+     * @param {SettingNumberDeleteArgs} args - Arguments to delete one SettingNumber.
+     * @example
+     * // Delete one SettingNumber
+     * const SettingNumber = await prisma.settingNumber.delete({
+     *   where: {
+     *     // ... filter to delete one SettingNumber
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingNumberDeleteArgs>(args: SelectSubset<T, SettingNumberDeleteArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SettingNumber.
+     * @param {SettingNumberUpdateArgs} args - Arguments to update one SettingNumber.
+     * @example
+     * // Update one SettingNumber
+     * const settingNumber = await prisma.settingNumber.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingNumberUpdateArgs>(args: SelectSubset<T, SettingNumberUpdateArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SettingNumbers.
+     * @param {SettingNumberDeleteManyArgs} args - Arguments to filter SettingNumbers to delete.
+     * @example
+     * // Delete a few SettingNumbers
+     * const { count } = await prisma.settingNumber.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingNumberDeleteManyArgs>(args?: SelectSubset<T, SettingNumberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingNumbers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingNumberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SettingNumbers
+     * const settingNumber = await prisma.settingNumber.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingNumberUpdateManyArgs>(args: SelectSubset<T, SettingNumberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingNumbers and returns the data updated in the database.
+     * @param {SettingNumberUpdateManyAndReturnArgs} args - Arguments to update many SettingNumbers.
+     * @example
+     * // Update many SettingNumbers
+     * const settingNumber = await prisma.settingNumber.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SettingNumbers and only return the `SettingNumberId`
+     * const settingNumberWithSettingNumberIdOnly = await prisma.settingNumber.updateManyAndReturn({
+     *   select: { SettingNumberId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SettingNumberUpdateManyAndReturnArgs>(args: SelectSubset<T, SettingNumberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SettingNumber.
+     * @param {SettingNumberUpsertArgs} args - Arguments to update or create a SettingNumber.
+     * @example
+     * // Update or create a SettingNumber
+     * const settingNumber = await prisma.settingNumber.upsert({
+     *   create: {
+     *     // ... data to create a SettingNumber
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SettingNumber we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingNumberUpsertArgs>(args: SelectSubset<T, SettingNumberUpsertArgs<ExtArgs>>): Prisma__SettingNumberClient<$Result.GetResult<Prisma.$SettingNumberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SettingNumbers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingNumberCountArgs} args - Arguments to filter SettingNumbers to count.
+     * @example
+     * // Count the number of SettingNumbers
+     * const count = await prisma.settingNumber.count({
+     *   where: {
+     *     // ... the filter for the SettingNumbers we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingNumberCountArgs>(
+      args?: Subset<T, SettingNumberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingNumberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SettingNumber.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingNumberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingNumberAggregateArgs>(args: Subset<T, SettingNumberAggregateArgs>): Prisma.PrismaPromise<GetSettingNumberAggregateType<T>>
+
+    /**
+     * Group by SettingNumber.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingNumberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingNumberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingNumberGroupByArgs['orderBy'] }
+        : { orderBy?: SettingNumberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingNumberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingNumberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SettingNumber model
+   */
+  readonly fields: SettingNumberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SettingNumber.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingNumberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SettingMainPage<T extends SettingMainPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPageDefaultArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SettingNumber model
+   */
+  interface SettingNumberFieldRefs {
+    readonly SettingNumberId: FieldRef<"SettingNumber", 'String'>
+    readonly SettingMainPageId: FieldRef<"SettingNumber", 'String'>
+    readonly Title: FieldRef<"SettingNumber", 'String'>
+    readonly Subtitle: FieldRef<"SettingNumber", 'String'>
+    readonly Angka: FieldRef<"SettingNumber", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SettingNumber findUnique
+   */
+  export type SettingNumberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingNumber to fetch.
+     */
+    where: SettingNumberWhereUniqueInput
+  }
+
+  /**
+   * SettingNumber findUniqueOrThrow
+   */
+  export type SettingNumberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingNumber to fetch.
+     */
+    where: SettingNumberWhereUniqueInput
+  }
+
+  /**
+   * SettingNumber findFirst
+   */
+  export type SettingNumberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingNumber to fetch.
+     */
+    where?: SettingNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingNumbers to fetch.
+     */
+    orderBy?: SettingNumberOrderByWithRelationInput | SettingNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingNumbers.
+     */
+    cursor?: SettingNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingNumbers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingNumbers.
+     */
+    distinct?: SettingNumberScalarFieldEnum | SettingNumberScalarFieldEnum[]
+  }
+
+  /**
+   * SettingNumber findFirstOrThrow
+   */
+  export type SettingNumberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingNumber to fetch.
+     */
+    where?: SettingNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingNumbers to fetch.
+     */
+    orderBy?: SettingNumberOrderByWithRelationInput | SettingNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingNumbers.
+     */
+    cursor?: SettingNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingNumbers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingNumbers.
+     */
+    distinct?: SettingNumberScalarFieldEnum | SettingNumberScalarFieldEnum[]
+  }
+
+  /**
+   * SettingNumber findMany
+   */
+  export type SettingNumberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingNumbers to fetch.
+     */
+    where?: SettingNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingNumbers to fetch.
+     */
+    orderBy?: SettingNumberOrderByWithRelationInput | SettingNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SettingNumbers.
+     */
+    cursor?: SettingNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingNumbers.
+     */
+    skip?: number
+    distinct?: SettingNumberScalarFieldEnum | SettingNumberScalarFieldEnum[]
+  }
+
+  /**
+   * SettingNumber create
+   */
+  export type SettingNumberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SettingNumber.
+     */
+    data: XOR<SettingNumberCreateInput, SettingNumberUncheckedCreateInput>
+  }
+
+  /**
+   * SettingNumber createMany
+   */
+  export type SettingNumberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SettingNumbers.
+     */
+    data: SettingNumberCreateManyInput | SettingNumberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SettingNumber createManyAndReturn
+   */
+  export type SettingNumberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * The data used to create many SettingNumbers.
+     */
+    data: SettingNumberCreateManyInput | SettingNumberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingNumber update
+   */
+  export type SettingNumberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SettingNumber.
+     */
+    data: XOR<SettingNumberUpdateInput, SettingNumberUncheckedUpdateInput>
+    /**
+     * Choose, which SettingNumber to update.
+     */
+    where: SettingNumberWhereUniqueInput
+  }
+
+  /**
+   * SettingNumber updateMany
+   */
+  export type SettingNumberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SettingNumbers.
+     */
+    data: XOR<SettingNumberUpdateManyMutationInput, SettingNumberUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingNumbers to update
+     */
+    where?: SettingNumberWhereInput
+    /**
+     * Limit how many SettingNumbers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingNumber updateManyAndReturn
+   */
+  export type SettingNumberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * The data used to update SettingNumbers.
+     */
+    data: XOR<SettingNumberUpdateManyMutationInput, SettingNumberUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingNumbers to update
+     */
+    where?: SettingNumberWhereInput
+    /**
+     * Limit how many SettingNumbers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingNumber upsert
+   */
+  export type SettingNumberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SettingNumber to update in case it exists.
+     */
+    where: SettingNumberWhereUniqueInput
+    /**
+     * In case the SettingNumber found by the `where` argument doesn't exist, create a new SettingNumber with this data.
+     */
+    create: XOR<SettingNumberCreateInput, SettingNumberUncheckedCreateInput>
+    /**
+     * In case the SettingNumber was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingNumberUpdateInput, SettingNumberUncheckedUpdateInput>
+  }
+
+  /**
+   * SettingNumber delete
+   */
+  export type SettingNumberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+    /**
+     * Filter which SettingNumber to delete.
+     */
+    where: SettingNumberWhereUniqueInput
+  }
+
+  /**
+   * SettingNumber deleteMany
+   */
+  export type SettingNumberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingNumbers to delete
+     */
+    where?: SettingNumberWhereInput
+    /**
+     * Limit how many SettingNumbers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingNumber without action
+   */
+  export type SettingNumberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingNumber
+     */
+    select?: SettingNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingNumber
+     */
+    omit?: SettingNumberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingNumberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SettingTestimony
+   */
+
+  export type AggregateSettingTestimony = {
+    _count: SettingTestimonyCountAggregateOutputType | null
+    _min: SettingTestimonyMinAggregateOutputType | null
+    _max: SettingTestimonyMaxAggregateOutputType | null
+  }
+
+  export type SettingTestimonyMinAggregateOutputType = {
+    SettingTestimonyId: string | null
+    SettingMainPageId: string | null
+    Nama: string | null
+    Jabatan: string | null
+    JurusanTahun: string | null
+    Testimoni: string | null
+    Foto: Uint8Array | null
+  }
+
+  export type SettingTestimonyMaxAggregateOutputType = {
+    SettingTestimonyId: string | null
+    SettingMainPageId: string | null
+    Nama: string | null
+    Jabatan: string | null
+    JurusanTahun: string | null
+    Testimoni: string | null
+    Foto: Uint8Array | null
+  }
+
+  export type SettingTestimonyCountAggregateOutputType = {
+    SettingTestimonyId: number
+    SettingMainPageId: number
+    Nama: number
+    Jabatan: number
+    JurusanTahun: number
+    Testimoni: number
+    Foto: number
+    _all: number
+  }
+
+
+  export type SettingTestimonyMinAggregateInputType = {
+    SettingTestimonyId?: true
+    SettingMainPageId?: true
+    Nama?: true
+    Jabatan?: true
+    JurusanTahun?: true
+    Testimoni?: true
+    Foto?: true
+  }
+
+  export type SettingTestimonyMaxAggregateInputType = {
+    SettingTestimonyId?: true
+    SettingMainPageId?: true
+    Nama?: true
+    Jabatan?: true
+    JurusanTahun?: true
+    Testimoni?: true
+    Foto?: true
+  }
+
+  export type SettingTestimonyCountAggregateInputType = {
+    SettingTestimonyId?: true
+    SettingMainPageId?: true
+    Nama?: true
+    Jabatan?: true
+    JurusanTahun?: true
+    Testimoni?: true
+    Foto?: true
+    _all?: true
+  }
+
+  export type SettingTestimonyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingTestimony to aggregate.
+     */
+    where?: SettingTestimonyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingTestimonies to fetch.
+     */
+    orderBy?: SettingTestimonyOrderByWithRelationInput | SettingTestimonyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingTestimonyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingTestimonies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingTestimonies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SettingTestimonies
+    **/
+    _count?: true | SettingTestimonyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingTestimonyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingTestimonyMaxAggregateInputType
+  }
+
+  export type GetSettingTestimonyAggregateType<T extends SettingTestimonyAggregateArgs> = {
+        [P in keyof T & keyof AggregateSettingTestimony]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSettingTestimony[P]>
+      : GetScalarType<T[P], AggregateSettingTestimony[P]>
+  }
+
+
+
+
+  export type SettingTestimonyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingTestimonyWhereInput
+    orderBy?: SettingTestimonyOrderByWithAggregationInput | SettingTestimonyOrderByWithAggregationInput[]
+    by: SettingTestimonyScalarFieldEnum[] | SettingTestimonyScalarFieldEnum
+    having?: SettingTestimonyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingTestimonyCountAggregateInputType | true
+    _min?: SettingTestimonyMinAggregateInputType
+    _max?: SettingTestimonyMaxAggregateInputType
+  }
+
+  export type SettingTestimonyGroupByOutputType = {
+    SettingTestimonyId: string
+    SettingMainPageId: string
+    Nama: string
+    Jabatan: string
+    JurusanTahun: string
+    Testimoni: string
+    Foto: Uint8Array
+    _count: SettingTestimonyCountAggregateOutputType | null
+    _min: SettingTestimonyMinAggregateOutputType | null
+    _max: SettingTestimonyMaxAggregateOutputType | null
+  }
+
+  type GetSettingTestimonyGroupByPayload<T extends SettingTestimonyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingTestimonyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingTestimonyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingTestimonyGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingTestimonyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingTestimonySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingTestimonyId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Jabatan?: boolean
+    JurusanTahun?: boolean
+    Testimoni?: boolean
+    Foto?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingTestimony"]>
+
+  export type SettingTestimonySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingTestimonyId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Jabatan?: boolean
+    JurusanTahun?: boolean
+    Testimoni?: boolean
+    Foto?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingTestimony"]>
+
+  export type SettingTestimonySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingTestimonyId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Jabatan?: boolean
+    JurusanTahun?: boolean
+    Testimoni?: boolean
+    Foto?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingTestimony"]>
+
+  export type SettingTestimonySelectScalar = {
+    SettingTestimonyId?: boolean
+    SettingMainPageId?: boolean
+    Nama?: boolean
+    Jabatan?: boolean
+    JurusanTahun?: boolean
+    Testimoni?: boolean
+    Foto?: boolean
+  }
+
+  export type SettingTestimonyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SettingTestimonyId" | "SettingMainPageId" | "Nama" | "Jabatan" | "JurusanTahun" | "Testimoni" | "Foto", ExtArgs["result"]["settingTestimony"]>
+  export type SettingTestimonyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingTestimonyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+  export type SettingTestimonyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+  }
+
+  export type $SettingTestimonyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SettingTestimony"
+    objects: {
+      SettingMainPage: Prisma.$SettingMainPagePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SettingTestimonyId: string
+      SettingMainPageId: string
+      Nama: string
+      Jabatan: string
+      JurusanTahun: string
+      Testimoni: string
+      Foto: Uint8Array
+    }, ExtArgs["result"]["settingTestimony"]>
+    composites: {}
+  }
+
+  type SettingTestimonyGetPayload<S extends boolean | null | undefined | SettingTestimonyDefaultArgs> = $Result.GetResult<Prisma.$SettingTestimonyPayload, S>
+
+  type SettingTestimonyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SettingTestimonyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SettingTestimonyCountAggregateInputType | true
+    }
+
+  export interface SettingTestimonyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SettingTestimony'], meta: { name: 'SettingTestimony' } }
+    /**
+     * Find zero or one SettingTestimony that matches the filter.
+     * @param {SettingTestimonyFindUniqueArgs} args - Arguments to find a SettingTestimony
+     * @example
+     * // Get one SettingTestimony
+     * const settingTestimony = await prisma.settingTestimony.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingTestimonyFindUniqueArgs>(args: SelectSubset<T, SettingTestimonyFindUniqueArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SettingTestimony that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SettingTestimonyFindUniqueOrThrowArgs} args - Arguments to find a SettingTestimony
+     * @example
+     * // Get one SettingTestimony
+     * const settingTestimony = await prisma.settingTestimony.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingTestimonyFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingTestimonyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingTestimony that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingTestimonyFindFirstArgs} args - Arguments to find a SettingTestimony
+     * @example
+     * // Get one SettingTestimony
+     * const settingTestimony = await prisma.settingTestimony.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingTestimonyFindFirstArgs>(args?: SelectSubset<T, SettingTestimonyFindFirstArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingTestimony that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingTestimonyFindFirstOrThrowArgs} args - Arguments to find a SettingTestimony
+     * @example
+     * // Get one SettingTestimony
+     * const settingTestimony = await prisma.settingTestimony.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingTestimonyFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingTestimonyFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SettingTestimonies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingTestimonyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SettingTestimonies
+     * const settingTestimonies = await prisma.settingTestimony.findMany()
+     * 
+     * // Get first 10 SettingTestimonies
+     * const settingTestimonies = await prisma.settingTestimony.findMany({ take: 10 })
+     * 
+     * // Only select the `SettingTestimonyId`
+     * const settingTestimonyWithSettingTestimonyIdOnly = await prisma.settingTestimony.findMany({ select: { SettingTestimonyId: true } })
+     * 
+     */
+    findMany<T extends SettingTestimonyFindManyArgs>(args?: SelectSubset<T, SettingTestimonyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SettingTestimony.
+     * @param {SettingTestimonyCreateArgs} args - Arguments to create a SettingTestimony.
+     * @example
+     * // Create one SettingTestimony
+     * const SettingTestimony = await prisma.settingTestimony.create({
+     *   data: {
+     *     // ... data to create a SettingTestimony
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingTestimonyCreateArgs>(args: SelectSubset<T, SettingTestimonyCreateArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SettingTestimonies.
+     * @param {SettingTestimonyCreateManyArgs} args - Arguments to create many SettingTestimonies.
+     * @example
+     * // Create many SettingTestimonies
+     * const settingTestimony = await prisma.settingTestimony.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingTestimonyCreateManyArgs>(args?: SelectSubset<T, SettingTestimonyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SettingTestimonies and returns the data saved in the database.
+     * @param {SettingTestimonyCreateManyAndReturnArgs} args - Arguments to create many SettingTestimonies.
+     * @example
+     * // Create many SettingTestimonies
+     * const settingTestimony = await prisma.settingTestimony.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SettingTestimonies and only return the `SettingTestimonyId`
+     * const settingTestimonyWithSettingTestimonyIdOnly = await prisma.settingTestimony.createManyAndReturn({
+     *   select: { SettingTestimonyId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingTestimonyCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingTestimonyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SettingTestimony.
+     * @param {SettingTestimonyDeleteArgs} args - Arguments to delete one SettingTestimony.
+     * @example
+     * // Delete one SettingTestimony
+     * const SettingTestimony = await prisma.settingTestimony.delete({
+     *   where: {
+     *     // ... filter to delete one SettingTestimony
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingTestimonyDeleteArgs>(args: SelectSubset<T, SettingTestimonyDeleteArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SettingTestimony.
+     * @param {SettingTestimonyUpdateArgs} args - Arguments to update one SettingTestimony.
+     * @example
+     * // Update one SettingTestimony
+     * const settingTestimony = await prisma.settingTestimony.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingTestimonyUpdateArgs>(args: SelectSubset<T, SettingTestimonyUpdateArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SettingTestimonies.
+     * @param {SettingTestimonyDeleteManyArgs} args - Arguments to filter SettingTestimonies to delete.
+     * @example
+     * // Delete a few SettingTestimonies
+     * const { count } = await prisma.settingTestimony.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingTestimonyDeleteManyArgs>(args?: SelectSubset<T, SettingTestimonyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingTestimonies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingTestimonyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SettingTestimonies
+     * const settingTestimony = await prisma.settingTestimony.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingTestimonyUpdateManyArgs>(args: SelectSubset<T, SettingTestimonyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingTestimonies and returns the data updated in the database.
+     * @param {SettingTestimonyUpdateManyAndReturnArgs} args - Arguments to update many SettingTestimonies.
+     * @example
+     * // Update many SettingTestimonies
+     * const settingTestimony = await prisma.settingTestimony.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SettingTestimonies and only return the `SettingTestimonyId`
+     * const settingTestimonyWithSettingTestimonyIdOnly = await prisma.settingTestimony.updateManyAndReturn({
+     *   select: { SettingTestimonyId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SettingTestimonyUpdateManyAndReturnArgs>(args: SelectSubset<T, SettingTestimonyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SettingTestimony.
+     * @param {SettingTestimonyUpsertArgs} args - Arguments to update or create a SettingTestimony.
+     * @example
+     * // Update or create a SettingTestimony
+     * const settingTestimony = await prisma.settingTestimony.upsert({
+     *   create: {
+     *     // ... data to create a SettingTestimony
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SettingTestimony we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingTestimonyUpsertArgs>(args: SelectSubset<T, SettingTestimonyUpsertArgs<ExtArgs>>): Prisma__SettingTestimonyClient<$Result.GetResult<Prisma.$SettingTestimonyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SettingTestimonies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingTestimonyCountArgs} args - Arguments to filter SettingTestimonies to count.
+     * @example
+     * // Count the number of SettingTestimonies
+     * const count = await prisma.settingTestimony.count({
+     *   where: {
+     *     // ... the filter for the SettingTestimonies we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingTestimonyCountArgs>(
+      args?: Subset<T, SettingTestimonyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingTestimonyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SettingTestimony.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingTestimonyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingTestimonyAggregateArgs>(args: Subset<T, SettingTestimonyAggregateArgs>): Prisma.PrismaPromise<GetSettingTestimonyAggregateType<T>>
+
+    /**
+     * Group by SettingTestimony.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingTestimonyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingTestimonyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingTestimonyGroupByArgs['orderBy'] }
+        : { orderBy?: SettingTestimonyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingTestimonyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingTestimonyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SettingTestimony model
+   */
+  readonly fields: SettingTestimonyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SettingTestimony.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingTestimonyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SettingMainPage<T extends SettingMainPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPageDefaultArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SettingTestimony model
+   */
+  interface SettingTestimonyFieldRefs {
+    readonly SettingTestimonyId: FieldRef<"SettingTestimony", 'String'>
+    readonly SettingMainPageId: FieldRef<"SettingTestimony", 'String'>
+    readonly Nama: FieldRef<"SettingTestimony", 'String'>
+    readonly Jabatan: FieldRef<"SettingTestimony", 'String'>
+    readonly JurusanTahun: FieldRef<"SettingTestimony", 'String'>
+    readonly Testimoni: FieldRef<"SettingTestimony", 'String'>
+    readonly Foto: FieldRef<"SettingTestimony", 'Bytes'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SettingTestimony findUnique
+   */
+  export type SettingTestimonyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingTestimony to fetch.
+     */
+    where: SettingTestimonyWhereUniqueInput
+  }
+
+  /**
+   * SettingTestimony findUniqueOrThrow
+   */
+  export type SettingTestimonyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingTestimony to fetch.
+     */
+    where: SettingTestimonyWhereUniqueInput
+  }
+
+  /**
+   * SettingTestimony findFirst
+   */
+  export type SettingTestimonyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingTestimony to fetch.
+     */
+    where?: SettingTestimonyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingTestimonies to fetch.
+     */
+    orderBy?: SettingTestimonyOrderByWithRelationInput | SettingTestimonyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingTestimonies.
+     */
+    cursor?: SettingTestimonyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingTestimonies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingTestimonies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingTestimonies.
+     */
+    distinct?: SettingTestimonyScalarFieldEnum | SettingTestimonyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingTestimony findFirstOrThrow
+   */
+  export type SettingTestimonyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingTestimony to fetch.
+     */
+    where?: SettingTestimonyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingTestimonies to fetch.
+     */
+    orderBy?: SettingTestimonyOrderByWithRelationInput | SettingTestimonyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingTestimonies.
+     */
+    cursor?: SettingTestimonyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingTestimonies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingTestimonies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingTestimonies.
+     */
+    distinct?: SettingTestimonyScalarFieldEnum | SettingTestimonyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingTestimony findMany
+   */
+  export type SettingTestimonyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingTestimonies to fetch.
+     */
+    where?: SettingTestimonyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingTestimonies to fetch.
+     */
+    orderBy?: SettingTestimonyOrderByWithRelationInput | SettingTestimonyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SettingTestimonies.
+     */
+    cursor?: SettingTestimonyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingTestimonies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingTestimonies.
+     */
+    skip?: number
+    distinct?: SettingTestimonyScalarFieldEnum | SettingTestimonyScalarFieldEnum[]
+  }
+
+  /**
+   * SettingTestimony create
+   */
+  export type SettingTestimonyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SettingTestimony.
+     */
+    data: XOR<SettingTestimonyCreateInput, SettingTestimonyUncheckedCreateInput>
+  }
+
+  /**
+   * SettingTestimony createMany
+   */
+  export type SettingTestimonyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SettingTestimonies.
+     */
+    data: SettingTestimonyCreateManyInput | SettingTestimonyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SettingTestimony createManyAndReturn
+   */
+  export type SettingTestimonyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * The data used to create many SettingTestimonies.
+     */
+    data: SettingTestimonyCreateManyInput | SettingTestimonyCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingTestimony update
+   */
+  export type SettingTestimonyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SettingTestimony.
+     */
+    data: XOR<SettingTestimonyUpdateInput, SettingTestimonyUncheckedUpdateInput>
+    /**
+     * Choose, which SettingTestimony to update.
+     */
+    where: SettingTestimonyWhereUniqueInput
+  }
+
+  /**
+   * SettingTestimony updateMany
+   */
+  export type SettingTestimonyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SettingTestimonies.
+     */
+    data: XOR<SettingTestimonyUpdateManyMutationInput, SettingTestimonyUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingTestimonies to update
+     */
+    where?: SettingTestimonyWhereInput
+    /**
+     * Limit how many SettingTestimonies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingTestimony updateManyAndReturn
+   */
+  export type SettingTestimonyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * The data used to update SettingTestimonies.
+     */
+    data: XOR<SettingTestimonyUpdateManyMutationInput, SettingTestimonyUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingTestimonies to update
+     */
+    where?: SettingTestimonyWhereInput
+    /**
+     * Limit how many SettingTestimonies to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingTestimony upsert
+   */
+  export type SettingTestimonyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SettingTestimony to update in case it exists.
+     */
+    where: SettingTestimonyWhereUniqueInput
+    /**
+     * In case the SettingTestimony found by the `where` argument doesn't exist, create a new SettingTestimony with this data.
+     */
+    create: XOR<SettingTestimonyCreateInput, SettingTestimonyUncheckedCreateInput>
+    /**
+     * In case the SettingTestimony was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingTestimonyUpdateInput, SettingTestimonyUncheckedUpdateInput>
+  }
+
+  /**
+   * SettingTestimony delete
+   */
+  export type SettingTestimonyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+    /**
+     * Filter which SettingTestimony to delete.
+     */
+    where: SettingTestimonyWhereUniqueInput
+  }
+
+  /**
+   * SettingTestimony deleteMany
+   */
+  export type SettingTestimonyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingTestimonies to delete
+     */
+    where?: SettingTestimonyWhereInput
+    /**
+     * Limit how many SettingTestimonies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingTestimony without action
+   */
+  export type SettingTestimonyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingTestimony
+     */
+    select?: SettingTestimonySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingTestimony
+     */
+    omit?: SettingTestimonyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingTestimonyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SettingBerita
+   */
+
+  export type AggregateSettingBerita = {
+    _count: SettingBeritaCountAggregateOutputType | null
+    _min: SettingBeritaMinAggregateOutputType | null
+    _max: SettingBeritaMaxAggregateOutputType | null
+  }
+
+  export type SettingBeritaMinAggregateOutputType = {
+    SettingBeritaId: string | null
+    KategoriBeritaId: string | null
+    SettingMainPageId: string | null
+    Title: string | null
+    Deskripsi: string | null
+    Gambar: Uint8Array | null
+    Populer: boolean | null
+    Waktu: Date | null
+  }
+
+  export type SettingBeritaMaxAggregateOutputType = {
+    SettingBeritaId: string | null
+    KategoriBeritaId: string | null
+    SettingMainPageId: string | null
+    Title: string | null
+    Deskripsi: string | null
+    Gambar: Uint8Array | null
+    Populer: boolean | null
+    Waktu: Date | null
+  }
+
+  export type SettingBeritaCountAggregateOutputType = {
+    SettingBeritaId: number
+    KategoriBeritaId: number
+    SettingMainPageId: number
+    Title: number
+    Deskripsi: number
+    Gambar: number
+    Populer: number
+    Waktu: number
+    _all: number
+  }
+
+
+  export type SettingBeritaMinAggregateInputType = {
+    SettingBeritaId?: true
+    KategoriBeritaId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Deskripsi?: true
+    Gambar?: true
+    Populer?: true
+    Waktu?: true
+  }
+
+  export type SettingBeritaMaxAggregateInputType = {
+    SettingBeritaId?: true
+    KategoriBeritaId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Deskripsi?: true
+    Gambar?: true
+    Populer?: true
+    Waktu?: true
+  }
+
+  export type SettingBeritaCountAggregateInputType = {
+    SettingBeritaId?: true
+    KategoriBeritaId?: true
+    SettingMainPageId?: true
+    Title?: true
+    Deskripsi?: true
+    Gambar?: true
+    Populer?: true
+    Waktu?: true
+    _all?: true
+  }
+
+  export type SettingBeritaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingBerita to aggregate.
+     */
+    where?: SettingBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingBeritas to fetch.
+     */
+    orderBy?: SettingBeritaOrderByWithRelationInput | SettingBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SettingBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingBeritas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SettingBeritas
+    **/
+    _count?: true | SettingBeritaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SettingBeritaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SettingBeritaMaxAggregateInputType
+  }
+
+  export type GetSettingBeritaAggregateType<T extends SettingBeritaAggregateArgs> = {
+        [P in keyof T & keyof AggregateSettingBerita]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSettingBerita[P]>
+      : GetScalarType<T[P], AggregateSettingBerita[P]>
+  }
+
+
+
+
+  export type SettingBeritaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SettingBeritaWhereInput
+    orderBy?: SettingBeritaOrderByWithAggregationInput | SettingBeritaOrderByWithAggregationInput[]
+    by: SettingBeritaScalarFieldEnum[] | SettingBeritaScalarFieldEnum
+    having?: SettingBeritaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SettingBeritaCountAggregateInputType | true
+    _min?: SettingBeritaMinAggregateInputType
+    _max?: SettingBeritaMaxAggregateInputType
+  }
+
+  export type SettingBeritaGroupByOutputType = {
+    SettingBeritaId: string
+    KategoriBeritaId: string
+    SettingMainPageId: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer: boolean
+    Waktu: Date
+    _count: SettingBeritaCountAggregateOutputType | null
+    _min: SettingBeritaMinAggregateOutputType | null
+    _max: SettingBeritaMaxAggregateOutputType | null
+  }
+
+  type GetSettingBeritaGroupByPayload<T extends SettingBeritaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SettingBeritaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SettingBeritaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SettingBeritaGroupByOutputType[P]>
+            : GetScalarType<T[P], SettingBeritaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SettingBeritaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingBeritaId?: boolean
+    KategoriBeritaId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Deskripsi?: boolean
+    Gambar?: boolean
+    Populer?: boolean
+    Waktu?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+    KategoriBerita?: boolean | KategoriBeritaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingBerita"]>
+
+  export type SettingBeritaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingBeritaId?: boolean
+    KategoriBeritaId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Deskripsi?: boolean
+    Gambar?: boolean
+    Populer?: boolean
+    Waktu?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+    KategoriBerita?: boolean | KategoriBeritaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingBerita"]>
+
+  export type SettingBeritaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SettingBeritaId?: boolean
+    KategoriBeritaId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Deskripsi?: boolean
+    Gambar?: boolean
+    Populer?: boolean
+    Waktu?: boolean
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+    KategoriBerita?: boolean | KategoriBeritaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["settingBerita"]>
+
+  export type SettingBeritaSelectScalar = {
+    SettingBeritaId?: boolean
+    KategoriBeritaId?: boolean
+    SettingMainPageId?: boolean
+    Title?: boolean
+    Deskripsi?: boolean
+    Gambar?: boolean
+    Populer?: boolean
+    Waktu?: boolean
+  }
+
+  export type SettingBeritaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SettingBeritaId" | "KategoriBeritaId" | "SettingMainPageId" | "Title" | "Deskripsi" | "Gambar" | "Populer" | "Waktu", ExtArgs["result"]["settingBerita"]>
+  export type SettingBeritaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+    KategoriBerita?: boolean | KategoriBeritaDefaultArgs<ExtArgs>
+  }
+  export type SettingBeritaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+    KategoriBerita?: boolean | KategoriBeritaDefaultArgs<ExtArgs>
+  }
+  export type SettingBeritaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SettingMainPage?: boolean | SettingMainPageDefaultArgs<ExtArgs>
+    KategoriBerita?: boolean | KategoriBeritaDefaultArgs<ExtArgs>
+  }
+
+  export type $SettingBeritaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SettingBerita"
+    objects: {
+      SettingMainPage: Prisma.$SettingMainPagePayload<ExtArgs>
+      KategoriBerita: Prisma.$KategoriBeritaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SettingBeritaId: string
+      KategoriBeritaId: string
+      SettingMainPageId: string
+      Title: string
+      Deskripsi: string
+      Gambar: Uint8Array
+      Populer: boolean
+      Waktu: Date
+    }, ExtArgs["result"]["settingBerita"]>
+    composites: {}
+  }
+
+  type SettingBeritaGetPayload<S extends boolean | null | undefined | SettingBeritaDefaultArgs> = $Result.GetResult<Prisma.$SettingBeritaPayload, S>
+
+  type SettingBeritaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SettingBeritaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SettingBeritaCountAggregateInputType | true
+    }
+
+  export interface SettingBeritaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SettingBerita'], meta: { name: 'SettingBerita' } }
+    /**
+     * Find zero or one SettingBerita that matches the filter.
+     * @param {SettingBeritaFindUniqueArgs} args - Arguments to find a SettingBerita
+     * @example
+     * // Get one SettingBerita
+     * const settingBerita = await prisma.settingBerita.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SettingBeritaFindUniqueArgs>(args: SelectSubset<T, SettingBeritaFindUniqueArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SettingBerita that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SettingBeritaFindUniqueOrThrowArgs} args - Arguments to find a SettingBerita
+     * @example
+     * // Get one SettingBerita
+     * const settingBerita = await prisma.settingBerita.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SettingBeritaFindUniqueOrThrowArgs>(args: SelectSubset<T, SettingBeritaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingBerita that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingBeritaFindFirstArgs} args - Arguments to find a SettingBerita
+     * @example
+     * // Get one SettingBerita
+     * const settingBerita = await prisma.settingBerita.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SettingBeritaFindFirstArgs>(args?: SelectSubset<T, SettingBeritaFindFirstArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SettingBerita that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingBeritaFindFirstOrThrowArgs} args - Arguments to find a SettingBerita
+     * @example
+     * // Get one SettingBerita
+     * const settingBerita = await prisma.settingBerita.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SettingBeritaFindFirstOrThrowArgs>(args?: SelectSubset<T, SettingBeritaFindFirstOrThrowArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SettingBeritas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingBeritaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SettingBeritas
+     * const settingBeritas = await prisma.settingBerita.findMany()
+     * 
+     * // Get first 10 SettingBeritas
+     * const settingBeritas = await prisma.settingBerita.findMany({ take: 10 })
+     * 
+     * // Only select the `SettingBeritaId`
+     * const settingBeritaWithSettingBeritaIdOnly = await prisma.settingBerita.findMany({ select: { SettingBeritaId: true } })
+     * 
+     */
+    findMany<T extends SettingBeritaFindManyArgs>(args?: SelectSubset<T, SettingBeritaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SettingBerita.
+     * @param {SettingBeritaCreateArgs} args - Arguments to create a SettingBerita.
+     * @example
+     * // Create one SettingBerita
+     * const SettingBerita = await prisma.settingBerita.create({
+     *   data: {
+     *     // ... data to create a SettingBerita
+     *   }
+     * })
+     * 
+     */
+    create<T extends SettingBeritaCreateArgs>(args: SelectSubset<T, SettingBeritaCreateArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SettingBeritas.
+     * @param {SettingBeritaCreateManyArgs} args - Arguments to create many SettingBeritas.
+     * @example
+     * // Create many SettingBeritas
+     * const settingBerita = await prisma.settingBerita.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SettingBeritaCreateManyArgs>(args?: SelectSubset<T, SettingBeritaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SettingBeritas and returns the data saved in the database.
+     * @param {SettingBeritaCreateManyAndReturnArgs} args - Arguments to create many SettingBeritas.
+     * @example
+     * // Create many SettingBeritas
+     * const settingBerita = await prisma.settingBerita.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SettingBeritas and only return the `SettingBeritaId`
+     * const settingBeritaWithSettingBeritaIdOnly = await prisma.settingBerita.createManyAndReturn({
+     *   select: { SettingBeritaId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SettingBeritaCreateManyAndReturnArgs>(args?: SelectSubset<T, SettingBeritaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SettingBerita.
+     * @param {SettingBeritaDeleteArgs} args - Arguments to delete one SettingBerita.
+     * @example
+     * // Delete one SettingBerita
+     * const SettingBerita = await prisma.settingBerita.delete({
+     *   where: {
+     *     // ... filter to delete one SettingBerita
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SettingBeritaDeleteArgs>(args: SelectSubset<T, SettingBeritaDeleteArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SettingBerita.
+     * @param {SettingBeritaUpdateArgs} args - Arguments to update one SettingBerita.
+     * @example
+     * // Update one SettingBerita
+     * const settingBerita = await prisma.settingBerita.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SettingBeritaUpdateArgs>(args: SelectSubset<T, SettingBeritaUpdateArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SettingBeritas.
+     * @param {SettingBeritaDeleteManyArgs} args - Arguments to filter SettingBeritas to delete.
+     * @example
+     * // Delete a few SettingBeritas
+     * const { count } = await prisma.settingBerita.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SettingBeritaDeleteManyArgs>(args?: SelectSubset<T, SettingBeritaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingBeritas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingBeritaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SettingBeritas
+     * const settingBerita = await prisma.settingBerita.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SettingBeritaUpdateManyArgs>(args: SelectSubset<T, SettingBeritaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SettingBeritas and returns the data updated in the database.
+     * @param {SettingBeritaUpdateManyAndReturnArgs} args - Arguments to update many SettingBeritas.
+     * @example
+     * // Update many SettingBeritas
+     * const settingBerita = await prisma.settingBerita.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SettingBeritas and only return the `SettingBeritaId`
+     * const settingBeritaWithSettingBeritaIdOnly = await prisma.settingBerita.updateManyAndReturn({
+     *   select: { SettingBeritaId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SettingBeritaUpdateManyAndReturnArgs>(args: SelectSubset<T, SettingBeritaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SettingBerita.
+     * @param {SettingBeritaUpsertArgs} args - Arguments to update or create a SettingBerita.
+     * @example
+     * // Update or create a SettingBerita
+     * const settingBerita = await prisma.settingBerita.upsert({
+     *   create: {
+     *     // ... data to create a SettingBerita
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SettingBerita we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SettingBeritaUpsertArgs>(args: SelectSubset<T, SettingBeritaUpsertArgs<ExtArgs>>): Prisma__SettingBeritaClient<$Result.GetResult<Prisma.$SettingBeritaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SettingBeritas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingBeritaCountArgs} args - Arguments to filter SettingBeritas to count.
+     * @example
+     * // Count the number of SettingBeritas
+     * const count = await prisma.settingBerita.count({
+     *   where: {
+     *     // ... the filter for the SettingBeritas we want to count
+     *   }
+     * })
+    **/
+    count<T extends SettingBeritaCountArgs>(
+      args?: Subset<T, SettingBeritaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SettingBeritaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SettingBerita.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingBeritaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SettingBeritaAggregateArgs>(args: Subset<T, SettingBeritaAggregateArgs>): Prisma.PrismaPromise<GetSettingBeritaAggregateType<T>>
+
+    /**
+     * Group by SettingBerita.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SettingBeritaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SettingBeritaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SettingBeritaGroupByArgs['orderBy'] }
+        : { orderBy?: SettingBeritaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SettingBeritaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSettingBeritaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SettingBerita model
+   */
+  readonly fields: SettingBeritaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SettingBerita.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SettingBeritaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SettingMainPage<T extends SettingMainPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SettingMainPageDefaultArgs<ExtArgs>>): Prisma__SettingMainPageClient<$Result.GetResult<Prisma.$SettingMainPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    KategoriBerita<T extends KategoriBeritaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KategoriBeritaDefaultArgs<ExtArgs>>): Prisma__KategoriBeritaClient<$Result.GetResult<Prisma.$KategoriBeritaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SettingBerita model
+   */
+  interface SettingBeritaFieldRefs {
+    readonly SettingBeritaId: FieldRef<"SettingBerita", 'String'>
+    readonly KategoriBeritaId: FieldRef<"SettingBerita", 'String'>
+    readonly SettingMainPageId: FieldRef<"SettingBerita", 'String'>
+    readonly Title: FieldRef<"SettingBerita", 'String'>
+    readonly Deskripsi: FieldRef<"SettingBerita", 'String'>
+    readonly Gambar: FieldRef<"SettingBerita", 'Bytes'>
+    readonly Populer: FieldRef<"SettingBerita", 'Boolean'>
+    readonly Waktu: FieldRef<"SettingBerita", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SettingBerita findUnique
+   */
+  export type SettingBeritaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingBerita to fetch.
+     */
+    where: SettingBeritaWhereUniqueInput
+  }
+
+  /**
+   * SettingBerita findUniqueOrThrow
+   */
+  export type SettingBeritaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingBerita to fetch.
+     */
+    where: SettingBeritaWhereUniqueInput
+  }
+
+  /**
+   * SettingBerita findFirst
+   */
+  export type SettingBeritaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingBerita to fetch.
+     */
+    where?: SettingBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingBeritas to fetch.
+     */
+    orderBy?: SettingBeritaOrderByWithRelationInput | SettingBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingBeritas.
+     */
+    cursor?: SettingBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingBeritas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingBeritas.
+     */
+    distinct?: SettingBeritaScalarFieldEnum | SettingBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * SettingBerita findFirstOrThrow
+   */
+  export type SettingBeritaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingBerita to fetch.
+     */
+    where?: SettingBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingBeritas to fetch.
+     */
+    orderBy?: SettingBeritaOrderByWithRelationInput | SettingBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SettingBeritas.
+     */
+    cursor?: SettingBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingBeritas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingBeritas.
+     */
+    distinct?: SettingBeritaScalarFieldEnum | SettingBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * SettingBerita findMany
+   */
+  export type SettingBeritaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * Filter, which SettingBeritas to fetch.
+     */
+    where?: SettingBeritaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SettingBeritas to fetch.
+     */
+    orderBy?: SettingBeritaOrderByWithRelationInput | SettingBeritaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SettingBeritas.
+     */
+    cursor?: SettingBeritaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SettingBeritas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SettingBeritas.
+     */
+    skip?: number
+    distinct?: SettingBeritaScalarFieldEnum | SettingBeritaScalarFieldEnum[]
+  }
+
+  /**
+   * SettingBerita create
+   */
+  export type SettingBeritaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SettingBerita.
+     */
+    data: XOR<SettingBeritaCreateInput, SettingBeritaUncheckedCreateInput>
+  }
+
+  /**
+   * SettingBerita createMany
+   */
+  export type SettingBeritaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SettingBeritas.
+     */
+    data: SettingBeritaCreateManyInput | SettingBeritaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SettingBerita createManyAndReturn
+   */
+  export type SettingBeritaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * The data used to create many SettingBeritas.
+     */
+    data: SettingBeritaCreateManyInput | SettingBeritaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingBerita update
+   */
+  export type SettingBeritaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SettingBerita.
+     */
+    data: XOR<SettingBeritaUpdateInput, SettingBeritaUncheckedUpdateInput>
+    /**
+     * Choose, which SettingBerita to update.
+     */
+    where: SettingBeritaWhereUniqueInput
+  }
+
+  /**
+   * SettingBerita updateMany
+   */
+  export type SettingBeritaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SettingBeritas.
+     */
+    data: XOR<SettingBeritaUpdateManyMutationInput, SettingBeritaUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingBeritas to update
+     */
+    where?: SettingBeritaWhereInput
+    /**
+     * Limit how many SettingBeritas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingBerita updateManyAndReturn
+   */
+  export type SettingBeritaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * The data used to update SettingBeritas.
+     */
+    data: XOR<SettingBeritaUpdateManyMutationInput, SettingBeritaUncheckedUpdateManyInput>
+    /**
+     * Filter which SettingBeritas to update
+     */
+    where?: SettingBeritaWhereInput
+    /**
+     * Limit how many SettingBeritas to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SettingBerita upsert
+   */
+  export type SettingBeritaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SettingBerita to update in case it exists.
+     */
+    where: SettingBeritaWhereUniqueInput
+    /**
+     * In case the SettingBerita found by the `where` argument doesn't exist, create a new SettingBerita with this data.
+     */
+    create: XOR<SettingBeritaCreateInput, SettingBeritaUncheckedCreateInput>
+    /**
+     * In case the SettingBerita was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SettingBeritaUpdateInput, SettingBeritaUncheckedUpdateInput>
+  }
+
+  /**
+   * SettingBerita delete
+   */
+  export type SettingBeritaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+    /**
+     * Filter which SettingBerita to delete.
+     */
+    where: SettingBeritaWhereUniqueInput
+  }
+
+  /**
+   * SettingBerita deleteMany
+   */
+  export type SettingBeritaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SettingBeritas to delete
+     */
+    where?: SettingBeritaWhereInput
+    /**
+     * Limit how many SettingBeritas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SettingBerita without action
+   */
+  export type SettingBeritaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SettingBerita
+     */
+    select?: SettingBeritaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SettingBerita
+     */
+    omit?: SettingBeritaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingBeritaInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -74222,6 +85169,122 @@ export namespace Prisma {
   };
 
   export type UserloginScalarFieldEnum = (typeof UserloginScalarFieldEnum)[keyof typeof UserloginScalarFieldEnum]
+
+
+  export const JenisKegiatanScalarFieldEnum: {
+    JenisKegiatanId: 'JenisKegiatanId',
+    Nama: 'Nama',
+    Color: 'Color'
+  };
+
+  export type JenisKegiatanScalarFieldEnum = (typeof JenisKegiatanScalarFieldEnum)[keyof typeof JenisKegiatanScalarFieldEnum]
+
+
+  export const KategoriBeritaScalarFieldEnum: {
+    KategoriBeritaId: 'KategoriBeritaId',
+    Nama: 'Nama',
+    Color: 'Color'
+  };
+
+  export type KategoriBeritaScalarFieldEnum = (typeof KategoriBeritaScalarFieldEnum)[keyof typeof KategoriBeritaScalarFieldEnum]
+
+
+  export const SettingMainPageScalarFieldEnum: {
+    SettingMainPageId: 'SettingMainPageId',
+    UniversityId: 'UniversityId',
+    BackgroundFileUtama: 'BackgroundFileUtama',
+    TextMainPage1: 'TextMainPage1',
+    TextMainPage2: 'TextMainPage2',
+    TextMainPage3: 'TextMainPage3',
+    SelayangPandangText: 'SelayangPandangText',
+    SelayangPandangDeskripsi: 'SelayangPandangDeskripsi',
+    SelayangPandangBackgroundFile: 'SelayangPandangBackgroundFile',
+    WhyText: 'WhyText',
+    WhyDeskripsi: 'WhyDeskripsi',
+    CommunityText: 'CommunityText',
+    CommunityDeskripsi: 'CommunityDeskripsi',
+    KegiatanText: 'KegiatanText',
+    KegiatanDeskripsi: 'KegiatanDeskripsi',
+    BeritaText: 'BeritaText',
+    BeritaDeskripsi: 'BeritaDeskripsi',
+    TestomoniText: 'TestomoniText',
+    TestomoniDeskripsi: 'TestomoniDeskripsi'
+  };
+
+  export type SettingMainPageScalarFieldEnum = (typeof SettingMainPageScalarFieldEnum)[keyof typeof SettingMainPageScalarFieldEnum]
+
+
+  export const SettingKegiatanScalarFieldEnum: {
+    SettingKegiatanId: 'SettingKegiatanId',
+    JenisKegiatanId: 'JenisKegiatanId',
+    SettingMainPageId: 'SettingMainPageId',
+    Nama: 'Nama',
+    Lokasi: 'Lokasi',
+    Deskripsi: 'Deskripsi',
+    WaktuMulai: 'WaktuMulai',
+    WaktuSelesai: 'WaktuSelesai'
+  };
+
+  export type SettingKegiatanScalarFieldEnum = (typeof SettingKegiatanScalarFieldEnum)[keyof typeof SettingKegiatanScalarFieldEnum]
+
+
+  export const SettingCommunityScalarFieldEnum: {
+    SettingCommunityId: 'SettingCommunityId',
+    SettingMainPageId: 'SettingMainPageId',
+    Title: 'Title',
+    Gambar: 'Gambar'
+  };
+
+  export type SettingCommunityScalarFieldEnum = (typeof SettingCommunityScalarFieldEnum)[keyof typeof SettingCommunityScalarFieldEnum]
+
+
+  export const SettingWhyScalarFieldEnum: {
+    SettingWhyId: 'SettingWhyId',
+    SettingMainPageId: 'SettingMainPageId',
+    Icon: 'Icon',
+    Title: 'Title',
+    Subtitle: 'Subtitle'
+  };
+
+  export type SettingWhyScalarFieldEnum = (typeof SettingWhyScalarFieldEnum)[keyof typeof SettingWhyScalarFieldEnum]
+
+
+  export const SettingNumberScalarFieldEnum: {
+    SettingNumberId: 'SettingNumberId',
+    SettingMainPageId: 'SettingMainPageId',
+    Title: 'Title',
+    Subtitle: 'Subtitle',
+    Angka: 'Angka'
+  };
+
+  export type SettingNumberScalarFieldEnum = (typeof SettingNumberScalarFieldEnum)[keyof typeof SettingNumberScalarFieldEnum]
+
+
+  export const SettingTestimonyScalarFieldEnum: {
+    SettingTestimonyId: 'SettingTestimonyId',
+    SettingMainPageId: 'SettingMainPageId',
+    Nama: 'Nama',
+    Jabatan: 'Jabatan',
+    JurusanTahun: 'JurusanTahun',
+    Testimoni: 'Testimoni',
+    Foto: 'Foto'
+  };
+
+  export type SettingTestimonyScalarFieldEnum = (typeof SettingTestimonyScalarFieldEnum)[keyof typeof SettingTestimonyScalarFieldEnum]
+
+
+  export const SettingBeritaScalarFieldEnum: {
+    SettingBeritaId: 'SettingBeritaId',
+    KategoriBeritaId: 'KategoriBeritaId',
+    SettingMainPageId: 'SettingMainPageId',
+    Title: 'Title',
+    Deskripsi: 'Deskripsi',
+    Gambar: 'Gambar',
+    Populer: 'Populer',
+    Waktu: 'Waktu'
+  };
+
+  export type SettingBeritaScalarFieldEnum = (typeof SettingBeritaScalarFieldEnum)[keyof typeof SettingBeritaScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -77938,6 +89001,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanListRelationFilter
     UniversitySosialMedia?: UniversitySosialMediaListRelationFilter
     UniversityInformasi?: UniversityInformasiListRelationFilter
+    SettingMainPage?: SettingMainPageListRelationFilter
   }
 
   export type UniversityOrderByWithRelationInput = {
@@ -77953,6 +89017,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanOrderByRelationAggregateInput
     UniversitySosialMedia?: UniversitySosialMediaOrderByRelationAggregateInput
     UniversityInformasi?: UniversityInformasiOrderByRelationAggregateInput
+    SettingMainPage?: SettingMainPageOrderByRelationAggregateInput
   }
 
   export type UniversityWhereUniqueInput = Prisma.AtLeast<{
@@ -77971,6 +89036,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanListRelationFilter
     UniversitySosialMedia?: UniversitySosialMediaListRelationFilter
     UniversityInformasi?: UniversityInformasiListRelationFilter
+    SettingMainPage?: SettingMainPageListRelationFilter
   }, "UniversityId">
 
   export type UniversityOrderByWithAggregationInput = {
@@ -78425,6 +89491,610 @@ export namespace Prisma {
     Username?: StringWithAggregatesFilter<"Userlogin"> | string
     Password?: StringWithAggregatesFilter<"Userlogin"> | string
     Credential?: StringWithAggregatesFilter<"Userlogin"> | string
+  }
+
+  export type JenisKegiatanWhereInput = {
+    AND?: JenisKegiatanWhereInput | JenisKegiatanWhereInput[]
+    OR?: JenisKegiatanWhereInput[]
+    NOT?: JenisKegiatanWhereInput | JenisKegiatanWhereInput[]
+    JenisKegiatanId?: StringFilter<"JenisKegiatan"> | string
+    Nama?: StringFilter<"JenisKegiatan"> | string
+    Color?: StringFilter<"JenisKegiatan"> | string
+    SettingKegiatan?: SettingKegiatanListRelationFilter
+  }
+
+  export type JenisKegiatanOrderByWithRelationInput = {
+    JenisKegiatanId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+    SettingKegiatan?: SettingKegiatanOrderByRelationAggregateInput
+  }
+
+  export type JenisKegiatanWhereUniqueInput = Prisma.AtLeast<{
+    JenisKegiatanId?: string
+    AND?: JenisKegiatanWhereInput | JenisKegiatanWhereInput[]
+    OR?: JenisKegiatanWhereInput[]
+    NOT?: JenisKegiatanWhereInput | JenisKegiatanWhereInput[]
+    Nama?: StringFilter<"JenisKegiatan"> | string
+    Color?: StringFilter<"JenisKegiatan"> | string
+    SettingKegiatan?: SettingKegiatanListRelationFilter
+  }, "JenisKegiatanId">
+
+  export type JenisKegiatanOrderByWithAggregationInput = {
+    JenisKegiatanId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+    _count?: JenisKegiatanCountOrderByAggregateInput
+    _max?: JenisKegiatanMaxOrderByAggregateInput
+    _min?: JenisKegiatanMinOrderByAggregateInput
+  }
+
+  export type JenisKegiatanScalarWhereWithAggregatesInput = {
+    AND?: JenisKegiatanScalarWhereWithAggregatesInput | JenisKegiatanScalarWhereWithAggregatesInput[]
+    OR?: JenisKegiatanScalarWhereWithAggregatesInput[]
+    NOT?: JenisKegiatanScalarWhereWithAggregatesInput | JenisKegiatanScalarWhereWithAggregatesInput[]
+    JenisKegiatanId?: StringWithAggregatesFilter<"JenisKegiatan"> | string
+    Nama?: StringWithAggregatesFilter<"JenisKegiatan"> | string
+    Color?: StringWithAggregatesFilter<"JenisKegiatan"> | string
+  }
+
+  export type KategoriBeritaWhereInput = {
+    AND?: KategoriBeritaWhereInput | KategoriBeritaWhereInput[]
+    OR?: KategoriBeritaWhereInput[]
+    NOT?: KategoriBeritaWhereInput | KategoriBeritaWhereInput[]
+    KategoriBeritaId?: StringFilter<"KategoriBerita"> | string
+    Nama?: StringFilter<"KategoriBerita"> | string
+    Color?: StringFilter<"KategoriBerita"> | string
+    SettingBerita?: SettingBeritaListRelationFilter
+  }
+
+  export type KategoriBeritaOrderByWithRelationInput = {
+    KategoriBeritaId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+    SettingBerita?: SettingBeritaOrderByRelationAggregateInput
+  }
+
+  export type KategoriBeritaWhereUniqueInput = Prisma.AtLeast<{
+    KategoriBeritaId?: string
+    AND?: KategoriBeritaWhereInput | KategoriBeritaWhereInput[]
+    OR?: KategoriBeritaWhereInput[]
+    NOT?: KategoriBeritaWhereInput | KategoriBeritaWhereInput[]
+    Nama?: StringFilter<"KategoriBerita"> | string
+    Color?: StringFilter<"KategoriBerita"> | string
+    SettingBerita?: SettingBeritaListRelationFilter
+  }, "KategoriBeritaId">
+
+  export type KategoriBeritaOrderByWithAggregationInput = {
+    KategoriBeritaId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+    _count?: KategoriBeritaCountOrderByAggregateInput
+    _max?: KategoriBeritaMaxOrderByAggregateInput
+    _min?: KategoriBeritaMinOrderByAggregateInput
+  }
+
+  export type KategoriBeritaScalarWhereWithAggregatesInput = {
+    AND?: KategoriBeritaScalarWhereWithAggregatesInput | KategoriBeritaScalarWhereWithAggregatesInput[]
+    OR?: KategoriBeritaScalarWhereWithAggregatesInput[]
+    NOT?: KategoriBeritaScalarWhereWithAggregatesInput | KategoriBeritaScalarWhereWithAggregatesInput[]
+    KategoriBeritaId?: StringWithAggregatesFilter<"KategoriBerita"> | string
+    Nama?: StringWithAggregatesFilter<"KategoriBerita"> | string
+    Color?: StringWithAggregatesFilter<"KategoriBerita"> | string
+  }
+
+  export type SettingMainPageWhereInput = {
+    AND?: SettingMainPageWhereInput | SettingMainPageWhereInput[]
+    OR?: SettingMainPageWhereInput[]
+    NOT?: SettingMainPageWhereInput | SettingMainPageWhereInput[]
+    SettingMainPageId?: StringFilter<"SettingMainPage"> | string
+    UniversityId?: StringFilter<"SettingMainPage"> | string
+    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Uint8Array
+    TextMainPage1?: StringFilter<"SettingMainPage"> | string
+    TextMainPage2?: StringFilter<"SettingMainPage"> | string
+    TextMainPage3?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangText?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangDeskripsi?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Uint8Array
+    WhyText?: StringFilter<"SettingMainPage"> | string
+    WhyDeskripsi?: StringFilter<"SettingMainPage"> | string
+    CommunityText?: StringFilter<"SettingMainPage"> | string
+    CommunityDeskripsi?: StringFilter<"SettingMainPage"> | string
+    KegiatanText?: StringFilter<"SettingMainPage"> | string
+    KegiatanDeskripsi?: StringFilter<"SettingMainPage"> | string
+    BeritaText?: StringFilter<"SettingMainPage"> | string
+    BeritaDeskripsi?: StringFilter<"SettingMainPage"> | string
+    TestomoniText?: StringFilter<"SettingMainPage"> | string
+    TestomoniDeskripsi?: StringFilter<"SettingMainPage"> | string
+    University?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
+    SettingKegiatan?: SettingKegiatanListRelationFilter
+    SettingCommunity?: SettingCommunityListRelationFilter
+    SettingWhy?: SettingWhyListRelationFilter
+    SettingNumber?: SettingNumberListRelationFilter
+    SettingTestimony?: SettingTestimonyListRelationFilter
+    SettingBerita?: SettingBeritaListRelationFilter
+  }
+
+  export type SettingMainPageOrderByWithRelationInput = {
+    SettingMainPageId?: SortOrder
+    UniversityId?: SortOrder
+    BackgroundFileUtama?: SortOrder
+    TextMainPage1?: SortOrder
+    TextMainPage2?: SortOrder
+    TextMainPage3?: SortOrder
+    SelayangPandangText?: SortOrder
+    SelayangPandangDeskripsi?: SortOrder
+    SelayangPandangBackgroundFile?: SortOrder
+    WhyText?: SortOrder
+    WhyDeskripsi?: SortOrder
+    CommunityText?: SortOrder
+    CommunityDeskripsi?: SortOrder
+    KegiatanText?: SortOrder
+    KegiatanDeskripsi?: SortOrder
+    BeritaText?: SortOrder
+    BeritaDeskripsi?: SortOrder
+    TestomoniText?: SortOrder
+    TestomoniDeskripsi?: SortOrder
+    University?: UniversityOrderByWithRelationInput
+    SettingKegiatan?: SettingKegiatanOrderByRelationAggregateInput
+    SettingCommunity?: SettingCommunityOrderByRelationAggregateInput
+    SettingWhy?: SettingWhyOrderByRelationAggregateInput
+    SettingNumber?: SettingNumberOrderByRelationAggregateInput
+    SettingTestimony?: SettingTestimonyOrderByRelationAggregateInput
+    SettingBerita?: SettingBeritaOrderByRelationAggregateInput
+  }
+
+  export type SettingMainPageWhereUniqueInput = Prisma.AtLeast<{
+    SettingMainPageId?: string
+    AND?: SettingMainPageWhereInput | SettingMainPageWhereInput[]
+    OR?: SettingMainPageWhereInput[]
+    NOT?: SettingMainPageWhereInput | SettingMainPageWhereInput[]
+    UniversityId?: StringFilter<"SettingMainPage"> | string
+    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Uint8Array
+    TextMainPage1?: StringFilter<"SettingMainPage"> | string
+    TextMainPage2?: StringFilter<"SettingMainPage"> | string
+    TextMainPage3?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangText?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangDeskripsi?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Uint8Array
+    WhyText?: StringFilter<"SettingMainPage"> | string
+    WhyDeskripsi?: StringFilter<"SettingMainPage"> | string
+    CommunityText?: StringFilter<"SettingMainPage"> | string
+    CommunityDeskripsi?: StringFilter<"SettingMainPage"> | string
+    KegiatanText?: StringFilter<"SettingMainPage"> | string
+    KegiatanDeskripsi?: StringFilter<"SettingMainPage"> | string
+    BeritaText?: StringFilter<"SettingMainPage"> | string
+    BeritaDeskripsi?: StringFilter<"SettingMainPage"> | string
+    TestomoniText?: StringFilter<"SettingMainPage"> | string
+    TestomoniDeskripsi?: StringFilter<"SettingMainPage"> | string
+    University?: XOR<UniversityScalarRelationFilter, UniversityWhereInput>
+    SettingKegiatan?: SettingKegiatanListRelationFilter
+    SettingCommunity?: SettingCommunityListRelationFilter
+    SettingWhy?: SettingWhyListRelationFilter
+    SettingNumber?: SettingNumberListRelationFilter
+    SettingTestimony?: SettingTestimonyListRelationFilter
+    SettingBerita?: SettingBeritaListRelationFilter
+  }, "SettingMainPageId">
+
+  export type SettingMainPageOrderByWithAggregationInput = {
+    SettingMainPageId?: SortOrder
+    UniversityId?: SortOrder
+    BackgroundFileUtama?: SortOrder
+    TextMainPage1?: SortOrder
+    TextMainPage2?: SortOrder
+    TextMainPage3?: SortOrder
+    SelayangPandangText?: SortOrder
+    SelayangPandangDeskripsi?: SortOrder
+    SelayangPandangBackgroundFile?: SortOrder
+    WhyText?: SortOrder
+    WhyDeskripsi?: SortOrder
+    CommunityText?: SortOrder
+    CommunityDeskripsi?: SortOrder
+    KegiatanText?: SortOrder
+    KegiatanDeskripsi?: SortOrder
+    BeritaText?: SortOrder
+    BeritaDeskripsi?: SortOrder
+    TestomoniText?: SortOrder
+    TestomoniDeskripsi?: SortOrder
+    _count?: SettingMainPageCountOrderByAggregateInput
+    _max?: SettingMainPageMaxOrderByAggregateInput
+    _min?: SettingMainPageMinOrderByAggregateInput
+  }
+
+  export type SettingMainPageScalarWhereWithAggregatesInput = {
+    AND?: SettingMainPageScalarWhereWithAggregatesInput | SettingMainPageScalarWhereWithAggregatesInput[]
+    OR?: SettingMainPageScalarWhereWithAggregatesInput[]
+    NOT?: SettingMainPageScalarWhereWithAggregatesInput | SettingMainPageScalarWhereWithAggregatesInput[]
+    SettingMainPageId?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    UniversityId?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    BackgroundFileUtama?: BytesWithAggregatesFilter<"SettingMainPage"> | Uint8Array
+    TextMainPage1?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    TextMainPage2?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    TextMainPage3?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    SelayangPandangText?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    SelayangPandangDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    SelayangPandangBackgroundFile?: BytesWithAggregatesFilter<"SettingMainPage"> | Uint8Array
+    WhyText?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    WhyDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    CommunityText?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    CommunityDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    KegiatanText?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    KegiatanDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    BeritaText?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    BeritaDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    TestomoniText?: StringWithAggregatesFilter<"SettingMainPage"> | string
+    TestomoniDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
+  }
+
+  export type SettingKegiatanWhereInput = {
+    AND?: SettingKegiatanWhereInput | SettingKegiatanWhereInput[]
+    OR?: SettingKegiatanWhereInput[]
+    NOT?: SettingKegiatanWhereInput | SettingKegiatanWhereInput[]
+    SettingKegiatanId?: StringFilter<"SettingKegiatan"> | string
+    JenisKegiatanId?: StringFilter<"SettingKegiatan"> | string
+    SettingMainPageId?: StringFilter<"SettingKegiatan"> | string
+    Nama?: StringFilter<"SettingKegiatan"> | string
+    Lokasi?: StringNullableFilter<"SettingKegiatan"> | string | null
+    Deskripsi?: StringNullableFilter<"SettingKegiatan"> | string | null
+    WaktuMulai?: DateTimeFilter<"SettingKegiatan"> | Date | string
+    WaktuSelesai?: DateTimeNullableFilter<"SettingKegiatan"> | Date | string | null
+    JenisKegiatan?: XOR<JenisKegiatanScalarRelationFilter, JenisKegiatanWhereInput>
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }
+
+  export type SettingKegiatanOrderByWithRelationInput = {
+    SettingKegiatanId?: SortOrder
+    JenisKegiatanId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Lokasi?: SortOrderInput | SortOrder
+    Deskripsi?: SortOrderInput | SortOrder
+    WaktuMulai?: SortOrder
+    WaktuSelesai?: SortOrderInput | SortOrder
+    JenisKegiatan?: JenisKegiatanOrderByWithRelationInput
+    SettingMainPage?: SettingMainPageOrderByWithRelationInput
+  }
+
+  export type SettingKegiatanWhereUniqueInput = Prisma.AtLeast<{
+    SettingKegiatanId?: string
+    AND?: SettingKegiatanWhereInput | SettingKegiatanWhereInput[]
+    OR?: SettingKegiatanWhereInput[]
+    NOT?: SettingKegiatanWhereInput | SettingKegiatanWhereInput[]
+    JenisKegiatanId?: StringFilter<"SettingKegiatan"> | string
+    SettingMainPageId?: StringFilter<"SettingKegiatan"> | string
+    Nama?: StringFilter<"SettingKegiatan"> | string
+    Lokasi?: StringNullableFilter<"SettingKegiatan"> | string | null
+    Deskripsi?: StringNullableFilter<"SettingKegiatan"> | string | null
+    WaktuMulai?: DateTimeFilter<"SettingKegiatan"> | Date | string
+    WaktuSelesai?: DateTimeNullableFilter<"SettingKegiatan"> | Date | string | null
+    JenisKegiatan?: XOR<JenisKegiatanScalarRelationFilter, JenisKegiatanWhereInput>
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }, "SettingKegiatanId">
+
+  export type SettingKegiatanOrderByWithAggregationInput = {
+    SettingKegiatanId?: SortOrder
+    JenisKegiatanId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Lokasi?: SortOrderInput | SortOrder
+    Deskripsi?: SortOrderInput | SortOrder
+    WaktuMulai?: SortOrder
+    WaktuSelesai?: SortOrderInput | SortOrder
+    _count?: SettingKegiatanCountOrderByAggregateInput
+    _max?: SettingKegiatanMaxOrderByAggregateInput
+    _min?: SettingKegiatanMinOrderByAggregateInput
+  }
+
+  export type SettingKegiatanScalarWhereWithAggregatesInput = {
+    AND?: SettingKegiatanScalarWhereWithAggregatesInput | SettingKegiatanScalarWhereWithAggregatesInput[]
+    OR?: SettingKegiatanScalarWhereWithAggregatesInput[]
+    NOT?: SettingKegiatanScalarWhereWithAggregatesInput | SettingKegiatanScalarWhereWithAggregatesInput[]
+    SettingKegiatanId?: StringWithAggregatesFilter<"SettingKegiatan"> | string
+    JenisKegiatanId?: StringWithAggregatesFilter<"SettingKegiatan"> | string
+    SettingMainPageId?: StringWithAggregatesFilter<"SettingKegiatan"> | string
+    Nama?: StringWithAggregatesFilter<"SettingKegiatan"> | string
+    Lokasi?: StringNullableWithAggregatesFilter<"SettingKegiatan"> | string | null
+    Deskripsi?: StringNullableWithAggregatesFilter<"SettingKegiatan"> | string | null
+    WaktuMulai?: DateTimeWithAggregatesFilter<"SettingKegiatan"> | Date | string
+    WaktuSelesai?: DateTimeNullableWithAggregatesFilter<"SettingKegiatan"> | Date | string | null
+  }
+
+  export type SettingCommunityWhereInput = {
+    AND?: SettingCommunityWhereInput | SettingCommunityWhereInput[]
+    OR?: SettingCommunityWhereInput[]
+    NOT?: SettingCommunityWhereInput | SettingCommunityWhereInput[]
+    SettingCommunityId?: StringFilter<"SettingCommunity"> | string
+    SettingMainPageId?: StringFilter<"SettingCommunity"> | string
+    Title?: StringFilter<"SettingCommunity"> | string
+    Gambar?: BytesFilter<"SettingCommunity"> | Uint8Array
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }
+
+  export type SettingCommunityOrderByWithRelationInput = {
+    SettingCommunityId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Gambar?: SortOrder
+    SettingMainPage?: SettingMainPageOrderByWithRelationInput
+  }
+
+  export type SettingCommunityWhereUniqueInput = Prisma.AtLeast<{
+    SettingCommunityId?: string
+    AND?: SettingCommunityWhereInput | SettingCommunityWhereInput[]
+    OR?: SettingCommunityWhereInput[]
+    NOT?: SettingCommunityWhereInput | SettingCommunityWhereInput[]
+    SettingMainPageId?: StringFilter<"SettingCommunity"> | string
+    Title?: StringFilter<"SettingCommunity"> | string
+    Gambar?: BytesFilter<"SettingCommunity"> | Uint8Array
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }, "SettingCommunityId">
+
+  export type SettingCommunityOrderByWithAggregationInput = {
+    SettingCommunityId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Gambar?: SortOrder
+    _count?: SettingCommunityCountOrderByAggregateInput
+    _max?: SettingCommunityMaxOrderByAggregateInput
+    _min?: SettingCommunityMinOrderByAggregateInput
+  }
+
+  export type SettingCommunityScalarWhereWithAggregatesInput = {
+    AND?: SettingCommunityScalarWhereWithAggregatesInput | SettingCommunityScalarWhereWithAggregatesInput[]
+    OR?: SettingCommunityScalarWhereWithAggregatesInput[]
+    NOT?: SettingCommunityScalarWhereWithAggregatesInput | SettingCommunityScalarWhereWithAggregatesInput[]
+    SettingCommunityId?: StringWithAggregatesFilter<"SettingCommunity"> | string
+    SettingMainPageId?: StringWithAggregatesFilter<"SettingCommunity"> | string
+    Title?: StringWithAggregatesFilter<"SettingCommunity"> | string
+    Gambar?: BytesWithAggregatesFilter<"SettingCommunity"> | Uint8Array
+  }
+
+  export type SettingWhyWhereInput = {
+    AND?: SettingWhyWhereInput | SettingWhyWhereInput[]
+    OR?: SettingWhyWhereInput[]
+    NOT?: SettingWhyWhereInput | SettingWhyWhereInput[]
+    SettingWhyId?: StringFilter<"SettingWhy"> | string
+    SettingMainPageId?: StringFilter<"SettingWhy"> | string
+    Icon?: StringFilter<"SettingWhy"> | string
+    Title?: StringFilter<"SettingWhy"> | string
+    Subtitle?: StringFilter<"SettingWhy"> | string
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }
+
+  export type SettingWhyOrderByWithRelationInput = {
+    SettingWhyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Icon?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+    SettingMainPage?: SettingMainPageOrderByWithRelationInput
+  }
+
+  export type SettingWhyWhereUniqueInput = Prisma.AtLeast<{
+    SettingWhyId?: string
+    AND?: SettingWhyWhereInput | SettingWhyWhereInput[]
+    OR?: SettingWhyWhereInput[]
+    NOT?: SettingWhyWhereInput | SettingWhyWhereInput[]
+    SettingMainPageId?: StringFilter<"SettingWhy"> | string
+    Icon?: StringFilter<"SettingWhy"> | string
+    Title?: StringFilter<"SettingWhy"> | string
+    Subtitle?: StringFilter<"SettingWhy"> | string
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }, "SettingWhyId">
+
+  export type SettingWhyOrderByWithAggregationInput = {
+    SettingWhyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Icon?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+    _count?: SettingWhyCountOrderByAggregateInput
+    _max?: SettingWhyMaxOrderByAggregateInput
+    _min?: SettingWhyMinOrderByAggregateInput
+  }
+
+  export type SettingWhyScalarWhereWithAggregatesInput = {
+    AND?: SettingWhyScalarWhereWithAggregatesInput | SettingWhyScalarWhereWithAggregatesInput[]
+    OR?: SettingWhyScalarWhereWithAggregatesInput[]
+    NOT?: SettingWhyScalarWhereWithAggregatesInput | SettingWhyScalarWhereWithAggregatesInput[]
+    SettingWhyId?: StringWithAggregatesFilter<"SettingWhy"> | string
+    SettingMainPageId?: StringWithAggregatesFilter<"SettingWhy"> | string
+    Icon?: StringWithAggregatesFilter<"SettingWhy"> | string
+    Title?: StringWithAggregatesFilter<"SettingWhy"> | string
+    Subtitle?: StringWithAggregatesFilter<"SettingWhy"> | string
+  }
+
+  export type SettingNumberWhereInput = {
+    AND?: SettingNumberWhereInput | SettingNumberWhereInput[]
+    OR?: SettingNumberWhereInput[]
+    NOT?: SettingNumberWhereInput | SettingNumberWhereInput[]
+    SettingNumberId?: StringFilter<"SettingNumber"> | string
+    SettingMainPageId?: StringFilter<"SettingNumber"> | string
+    Title?: StringFilter<"SettingNumber"> | string
+    Subtitle?: StringFilter<"SettingNumber"> | string
+    Angka?: StringFilter<"SettingNumber"> | string
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }
+
+  export type SettingNumberOrderByWithRelationInput = {
+    SettingNumberId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+    Angka?: SortOrder
+    SettingMainPage?: SettingMainPageOrderByWithRelationInput
+  }
+
+  export type SettingNumberWhereUniqueInput = Prisma.AtLeast<{
+    SettingNumberId?: string
+    AND?: SettingNumberWhereInput | SettingNumberWhereInput[]
+    OR?: SettingNumberWhereInput[]
+    NOT?: SettingNumberWhereInput | SettingNumberWhereInput[]
+    SettingMainPageId?: StringFilter<"SettingNumber"> | string
+    Title?: StringFilter<"SettingNumber"> | string
+    Subtitle?: StringFilter<"SettingNumber"> | string
+    Angka?: StringFilter<"SettingNumber"> | string
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }, "SettingNumberId">
+
+  export type SettingNumberOrderByWithAggregationInput = {
+    SettingNumberId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+    Angka?: SortOrder
+    _count?: SettingNumberCountOrderByAggregateInput
+    _max?: SettingNumberMaxOrderByAggregateInput
+    _min?: SettingNumberMinOrderByAggregateInput
+  }
+
+  export type SettingNumberScalarWhereWithAggregatesInput = {
+    AND?: SettingNumberScalarWhereWithAggregatesInput | SettingNumberScalarWhereWithAggregatesInput[]
+    OR?: SettingNumberScalarWhereWithAggregatesInput[]
+    NOT?: SettingNumberScalarWhereWithAggregatesInput | SettingNumberScalarWhereWithAggregatesInput[]
+    SettingNumberId?: StringWithAggregatesFilter<"SettingNumber"> | string
+    SettingMainPageId?: StringWithAggregatesFilter<"SettingNumber"> | string
+    Title?: StringWithAggregatesFilter<"SettingNumber"> | string
+    Subtitle?: StringWithAggregatesFilter<"SettingNumber"> | string
+    Angka?: StringWithAggregatesFilter<"SettingNumber"> | string
+  }
+
+  export type SettingTestimonyWhereInput = {
+    AND?: SettingTestimonyWhereInput | SettingTestimonyWhereInput[]
+    OR?: SettingTestimonyWhereInput[]
+    NOT?: SettingTestimonyWhereInput | SettingTestimonyWhereInput[]
+    SettingTestimonyId?: StringFilter<"SettingTestimony"> | string
+    SettingMainPageId?: StringFilter<"SettingTestimony"> | string
+    Nama?: StringFilter<"SettingTestimony"> | string
+    Jabatan?: StringFilter<"SettingTestimony"> | string
+    JurusanTahun?: StringFilter<"SettingTestimony"> | string
+    Testimoni?: StringFilter<"SettingTestimony"> | string
+    Foto?: BytesFilter<"SettingTestimony"> | Uint8Array
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }
+
+  export type SettingTestimonyOrderByWithRelationInput = {
+    SettingTestimonyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Jabatan?: SortOrder
+    JurusanTahun?: SortOrder
+    Testimoni?: SortOrder
+    Foto?: SortOrder
+    SettingMainPage?: SettingMainPageOrderByWithRelationInput
+  }
+
+  export type SettingTestimonyWhereUniqueInput = Prisma.AtLeast<{
+    SettingTestimonyId?: string
+    AND?: SettingTestimonyWhereInput | SettingTestimonyWhereInput[]
+    OR?: SettingTestimonyWhereInput[]
+    NOT?: SettingTestimonyWhereInput | SettingTestimonyWhereInput[]
+    SettingMainPageId?: StringFilter<"SettingTestimony"> | string
+    Nama?: StringFilter<"SettingTestimony"> | string
+    Jabatan?: StringFilter<"SettingTestimony"> | string
+    JurusanTahun?: StringFilter<"SettingTestimony"> | string
+    Testimoni?: StringFilter<"SettingTestimony"> | string
+    Foto?: BytesFilter<"SettingTestimony"> | Uint8Array
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+  }, "SettingTestimonyId">
+
+  export type SettingTestimonyOrderByWithAggregationInput = {
+    SettingTestimonyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Jabatan?: SortOrder
+    JurusanTahun?: SortOrder
+    Testimoni?: SortOrder
+    Foto?: SortOrder
+    _count?: SettingTestimonyCountOrderByAggregateInput
+    _max?: SettingTestimonyMaxOrderByAggregateInput
+    _min?: SettingTestimonyMinOrderByAggregateInput
+  }
+
+  export type SettingTestimonyScalarWhereWithAggregatesInput = {
+    AND?: SettingTestimonyScalarWhereWithAggregatesInput | SettingTestimonyScalarWhereWithAggregatesInput[]
+    OR?: SettingTestimonyScalarWhereWithAggregatesInput[]
+    NOT?: SettingTestimonyScalarWhereWithAggregatesInput | SettingTestimonyScalarWhereWithAggregatesInput[]
+    SettingTestimonyId?: StringWithAggregatesFilter<"SettingTestimony"> | string
+    SettingMainPageId?: StringWithAggregatesFilter<"SettingTestimony"> | string
+    Nama?: StringWithAggregatesFilter<"SettingTestimony"> | string
+    Jabatan?: StringWithAggregatesFilter<"SettingTestimony"> | string
+    JurusanTahun?: StringWithAggregatesFilter<"SettingTestimony"> | string
+    Testimoni?: StringWithAggregatesFilter<"SettingTestimony"> | string
+    Foto?: BytesWithAggregatesFilter<"SettingTestimony"> | Uint8Array
+  }
+
+  export type SettingBeritaWhereInput = {
+    AND?: SettingBeritaWhereInput | SettingBeritaWhereInput[]
+    OR?: SettingBeritaWhereInput[]
+    NOT?: SettingBeritaWhereInput | SettingBeritaWhereInput[]
+    SettingBeritaId?: StringFilter<"SettingBerita"> | string
+    KategoriBeritaId?: StringFilter<"SettingBerita"> | string
+    SettingMainPageId?: StringFilter<"SettingBerita"> | string
+    Title?: StringFilter<"SettingBerita"> | string
+    Deskripsi?: StringFilter<"SettingBerita"> | string
+    Gambar?: BytesFilter<"SettingBerita"> | Uint8Array
+    Populer?: BoolFilter<"SettingBerita"> | boolean
+    Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+    KategoriBerita?: XOR<KategoriBeritaScalarRelationFilter, KategoriBeritaWhereInput>
+  }
+
+  export type SettingBeritaOrderByWithRelationInput = {
+    SettingBeritaId?: SortOrder
+    KategoriBeritaId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Deskripsi?: SortOrder
+    Gambar?: SortOrder
+    Populer?: SortOrder
+    Waktu?: SortOrder
+    SettingMainPage?: SettingMainPageOrderByWithRelationInput
+    KategoriBerita?: KategoriBeritaOrderByWithRelationInput
+  }
+
+  export type SettingBeritaWhereUniqueInput = Prisma.AtLeast<{
+    SettingBeritaId?: string
+    AND?: SettingBeritaWhereInput | SettingBeritaWhereInput[]
+    OR?: SettingBeritaWhereInput[]
+    NOT?: SettingBeritaWhereInput | SettingBeritaWhereInput[]
+    KategoriBeritaId?: StringFilter<"SettingBerita"> | string
+    SettingMainPageId?: StringFilter<"SettingBerita"> | string
+    Title?: StringFilter<"SettingBerita"> | string
+    Deskripsi?: StringFilter<"SettingBerita"> | string
+    Gambar?: BytesFilter<"SettingBerita"> | Uint8Array
+    Populer?: BoolFilter<"SettingBerita"> | boolean
+    Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
+    SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
+    KategoriBerita?: XOR<KategoriBeritaScalarRelationFilter, KategoriBeritaWhereInput>
+  }, "SettingBeritaId">
+
+  export type SettingBeritaOrderByWithAggregationInput = {
+    SettingBeritaId?: SortOrder
+    KategoriBeritaId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Deskripsi?: SortOrder
+    Gambar?: SortOrder
+    Populer?: SortOrder
+    Waktu?: SortOrder
+    _count?: SettingBeritaCountOrderByAggregateInput
+    _max?: SettingBeritaMaxOrderByAggregateInput
+    _min?: SettingBeritaMinOrderByAggregateInput
+  }
+
+  export type SettingBeritaScalarWhereWithAggregatesInput = {
+    AND?: SettingBeritaScalarWhereWithAggregatesInput | SettingBeritaScalarWhereWithAggregatesInput[]
+    OR?: SettingBeritaScalarWhereWithAggregatesInput[]
+    NOT?: SettingBeritaScalarWhereWithAggregatesInput | SettingBeritaScalarWhereWithAggregatesInput[]
+    SettingBeritaId?: StringWithAggregatesFilter<"SettingBerita"> | string
+    KategoriBeritaId?: StringWithAggregatesFilter<"SettingBerita"> | string
+    SettingMainPageId?: StringWithAggregatesFilter<"SettingBerita"> | string
+    Title?: StringWithAggregatesFilter<"SettingBerita"> | string
+    Deskripsi?: StringWithAggregatesFilter<"SettingBerita"> | string
+    Gambar?: BytesWithAggregatesFilter<"SettingBerita"> | Uint8Array
+    Populer?: BoolWithAggregatesFilter<"SettingBerita"> | boolean
+    Waktu?: DateTimeWithAggregatesFilter<"SettingBerita"> | Date | string
   }
 
   export type AlamatCreateInput = {
@@ -82023,6 +93693,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityUncheckedCreateInput = {
@@ -82037,6 +93708,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUncheckedCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiUncheckedCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageUncheckedCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityUpdateInput = {
@@ -82051,6 +93723,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityUncheckedUpdateInput = {
@@ -82065,6 +93738,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUncheckedUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUncheckedUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUncheckedUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityCreateManyInput = {
@@ -82560,6 +94234,652 @@ export namespace Prisma {
     Username?: StringFieldUpdateOperationsInput | string
     Password?: StringFieldUpdateOperationsInput | string
     Credential?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JenisKegiatanCreateInput = {
+    JenisKegiatanId?: string
+    Nama: string
+    Color: string
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutJenisKegiatanInput
+  }
+
+  export type JenisKegiatanUncheckedCreateInput = {
+    JenisKegiatanId?: string
+    Nama: string
+    Color: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutJenisKegiatanInput
+  }
+
+  export type JenisKegiatanUpdateInput = {
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutJenisKegiatanNestedInput
+  }
+
+  export type JenisKegiatanUncheckedUpdateInput = {
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutJenisKegiatanNestedInput
+  }
+
+  export type JenisKegiatanCreateManyInput = {
+    JenisKegiatanId?: string
+    Nama: string
+    Color: string
+  }
+
+  export type JenisKegiatanUpdateManyMutationInput = {
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JenisKegiatanUncheckedUpdateManyInput = {
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type KategoriBeritaCreateInput = {
+    KategoriBeritaId?: string
+    Nama: string
+    Color: string
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutKategoriBeritaInput
+  }
+
+  export type KategoriBeritaUncheckedCreateInput = {
+    KategoriBeritaId?: string
+    Nama: string
+    Color: string
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutKategoriBeritaInput
+  }
+
+  export type KategoriBeritaUpdateInput = {
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+    SettingBerita?: SettingBeritaUpdateManyWithoutKategoriBeritaNestedInput
+  }
+
+  export type KategoriBeritaUncheckedUpdateInput = {
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutKategoriBeritaNestedInput
+  }
+
+  export type KategoriBeritaCreateManyInput = {
+    KategoriBeritaId?: string
+    Nama: string
+    Color: string
+  }
+
+  export type KategoriBeritaUpdateManyMutationInput = {
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type KategoriBeritaUncheckedUpdateManyInput = {
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingMainPageCreateInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    University: UniversityCreateNestedOneWithoutSettingMainPageInput
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUpdateInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    University?: UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageCreateManyInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+  }
+
+  export type SettingMainPageUpdateManyMutationInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingMainPageUncheckedUpdateManyInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingKegiatanCreateInput = {
+    SettingKegiatanId?: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+    JenisKegiatan: JenisKegiatanCreateNestedOneWithoutSettingKegiatanInput
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingKegiatanInput
+  }
+
+  export type SettingKegiatanUncheckedCreateInput = {
+    SettingKegiatanId?: string
+    JenisKegiatanId: string
+    SettingMainPageId: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+  }
+
+  export type SettingKegiatanUpdateInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    JenisKegiatan?: JenisKegiatanUpdateOneRequiredWithoutSettingKegiatanNestedInput
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingKegiatanNestedInput
+  }
+
+  export type SettingKegiatanUncheckedUpdateInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingKegiatanCreateManyInput = {
+    SettingKegiatanId?: string
+    JenisKegiatanId: string
+    SettingMainPageId: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+  }
+
+  export type SettingKegiatanUpdateManyMutationInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingKegiatanUncheckedUpdateManyInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingCommunityCreateInput = {
+    SettingCommunityId?: string
+    Title: string
+    Gambar: Uint8Array
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingCommunityInput
+  }
+
+  export type SettingCommunityUncheckedCreateInput = {
+    SettingCommunityId?: string
+    SettingMainPageId: string
+    Title: string
+    Gambar: Uint8Array
+  }
+
+  export type SettingCommunityUpdateInput = {
+    SettingCommunityId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingCommunityNestedInput
+  }
+
+  export type SettingCommunityUncheckedUpdateInput = {
+    SettingCommunityId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingCommunityCreateManyInput = {
+    SettingCommunityId?: string
+    SettingMainPageId: string
+    Title: string
+    Gambar: Uint8Array
+  }
+
+  export type SettingCommunityUpdateManyMutationInput = {
+    SettingCommunityId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingCommunityUncheckedUpdateManyInput = {
+    SettingCommunityId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingWhyCreateInput = {
+    SettingWhyId?: string
+    Icon: string
+    Title: string
+    Subtitle: string
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingWhyInput
+  }
+
+  export type SettingWhyUncheckedCreateInput = {
+    SettingWhyId?: string
+    SettingMainPageId: string
+    Icon: string
+    Title: string
+    Subtitle: string
+  }
+
+  export type SettingWhyUpdateInput = {
+    SettingWhyId?: StringFieldUpdateOperationsInput | string
+    Icon?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingWhyNestedInput
+  }
+
+  export type SettingWhyUncheckedUpdateInput = {
+    SettingWhyId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Icon?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingWhyCreateManyInput = {
+    SettingWhyId?: string
+    SettingMainPageId: string
+    Icon: string
+    Title: string
+    Subtitle: string
+  }
+
+  export type SettingWhyUpdateManyMutationInput = {
+    SettingWhyId?: StringFieldUpdateOperationsInput | string
+    Icon?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingWhyUncheckedUpdateManyInput = {
+    SettingWhyId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Icon?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingNumberCreateInput = {
+    SettingNumberId?: string
+    Title: string
+    Subtitle: string
+    Angka: string
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingNumberInput
+  }
+
+  export type SettingNumberUncheckedCreateInput = {
+    SettingNumberId?: string
+    SettingMainPageId: string
+    Title: string
+    Subtitle: string
+    Angka: string
+  }
+
+  export type SettingNumberUpdateInput = {
+    SettingNumberId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    Angka?: StringFieldUpdateOperationsInput | string
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingNumberNestedInput
+  }
+
+  export type SettingNumberUncheckedUpdateInput = {
+    SettingNumberId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    Angka?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingNumberCreateManyInput = {
+    SettingNumberId?: string
+    SettingMainPageId: string
+    Title: string
+    Subtitle: string
+    Angka: string
+  }
+
+  export type SettingNumberUpdateManyMutationInput = {
+    SettingNumberId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    Angka?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingNumberUncheckedUpdateManyInput = {
+    SettingNumberId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    Angka?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingTestimonyCreateInput = {
+    SettingTestimonyId?: string
+    Nama: string
+    Jabatan: string
+    JurusanTahun: string
+    Testimoni: string
+    Foto: Uint8Array
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingTestimonyInput
+  }
+
+  export type SettingTestimonyUncheckedCreateInput = {
+    SettingTestimonyId?: string
+    SettingMainPageId: string
+    Nama: string
+    Jabatan: string
+    JurusanTahun: string
+    Testimoni: string
+    Foto: Uint8Array
+  }
+
+  export type SettingTestimonyUpdateInput = {
+    SettingTestimonyId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jabatan?: StringFieldUpdateOperationsInput | string
+    JurusanTahun?: StringFieldUpdateOperationsInput | string
+    Testimoni?: StringFieldUpdateOperationsInput | string
+    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingTestimonyNestedInput
+  }
+
+  export type SettingTestimonyUncheckedUpdateInput = {
+    SettingTestimonyId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jabatan?: StringFieldUpdateOperationsInput | string
+    JurusanTahun?: StringFieldUpdateOperationsInput | string
+    Testimoni?: StringFieldUpdateOperationsInput | string
+    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingTestimonyCreateManyInput = {
+    SettingTestimonyId?: string
+    SettingMainPageId: string
+    Nama: string
+    Jabatan: string
+    JurusanTahun: string
+    Testimoni: string
+    Foto: Uint8Array
+  }
+
+  export type SettingTestimonyUpdateManyMutationInput = {
+    SettingTestimonyId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jabatan?: StringFieldUpdateOperationsInput | string
+    JurusanTahun?: StringFieldUpdateOperationsInput | string
+    Testimoni?: StringFieldUpdateOperationsInput | string
+    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingTestimonyUncheckedUpdateManyInput = {
+    SettingTestimonyId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jabatan?: StringFieldUpdateOperationsInput | string
+    JurusanTahun?: StringFieldUpdateOperationsInput | string
+    Testimoni?: StringFieldUpdateOperationsInput | string
+    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingBeritaCreateInput = {
+    SettingBeritaId?: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingBeritaInput
+    KategoriBerita: KategoriBeritaCreateNestedOneWithoutSettingBeritaInput
+  }
+
+  export type SettingBeritaUncheckedCreateInput = {
+    SettingBeritaId?: string
+    KategoriBeritaId: string
+    SettingMainPageId: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+  }
+
+  export type SettingBeritaUpdateInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput
+    KategoriBerita?: KategoriBeritaUpdateOneRequiredWithoutSettingBeritaNestedInput
+  }
+
+  export type SettingBeritaUncheckedUpdateInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SettingBeritaCreateManyInput = {
+    SettingBeritaId?: string
+    KategoriBeritaId: string
+    SettingMainPageId: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+  }
+
+  export type SettingBeritaUpdateManyMutationInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SettingBeritaUncheckedUpdateManyInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -85162,6 +97482,12 @@ export namespace Prisma {
     none?: UniversityInformasiWhereInput
   }
 
+  export type SettingMainPageListRelationFilter = {
+    every?: SettingMainPageWhereInput
+    some?: SettingMainPageWhereInput
+    none?: SettingMainPageWhereInput
+  }
+
   export type ProgramStudiOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -85175,6 +97501,10 @@ export namespace Prisma {
   }
 
   export type UniversityInformasiOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SettingMainPageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -85467,6 +97797,348 @@ export namespace Prisma {
     Username?: SortOrder
     Password?: SortOrder
     Credential?: SortOrder
+  }
+
+  export type SettingKegiatanListRelationFilter = {
+    every?: SettingKegiatanWhereInput
+    some?: SettingKegiatanWhereInput
+    none?: SettingKegiatanWhereInput
+  }
+
+  export type SettingKegiatanOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type JenisKegiatanCountOrderByAggregateInput = {
+    JenisKegiatanId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+  }
+
+  export type JenisKegiatanMaxOrderByAggregateInput = {
+    JenisKegiatanId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+  }
+
+  export type JenisKegiatanMinOrderByAggregateInput = {
+    JenisKegiatanId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+  }
+
+  export type SettingBeritaListRelationFilter = {
+    every?: SettingBeritaWhereInput
+    some?: SettingBeritaWhereInput
+    none?: SettingBeritaWhereInput
+  }
+
+  export type SettingBeritaOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KategoriBeritaCountOrderByAggregateInput = {
+    KategoriBeritaId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+  }
+
+  export type KategoriBeritaMaxOrderByAggregateInput = {
+    KategoriBeritaId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+  }
+
+  export type KategoriBeritaMinOrderByAggregateInput = {
+    KategoriBeritaId?: SortOrder
+    Nama?: SortOrder
+    Color?: SortOrder
+  }
+
+  export type SettingCommunityListRelationFilter = {
+    every?: SettingCommunityWhereInput
+    some?: SettingCommunityWhereInput
+    none?: SettingCommunityWhereInput
+  }
+
+  export type SettingWhyListRelationFilter = {
+    every?: SettingWhyWhereInput
+    some?: SettingWhyWhereInput
+    none?: SettingWhyWhereInput
+  }
+
+  export type SettingNumberListRelationFilter = {
+    every?: SettingNumberWhereInput
+    some?: SettingNumberWhereInput
+    none?: SettingNumberWhereInput
+  }
+
+  export type SettingTestimonyListRelationFilter = {
+    every?: SettingTestimonyWhereInput
+    some?: SettingTestimonyWhereInput
+    none?: SettingTestimonyWhereInput
+  }
+
+  export type SettingCommunityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SettingWhyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SettingNumberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SettingTestimonyOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SettingMainPageCountOrderByAggregateInput = {
+    SettingMainPageId?: SortOrder
+    UniversityId?: SortOrder
+    BackgroundFileUtama?: SortOrder
+    TextMainPage1?: SortOrder
+    TextMainPage2?: SortOrder
+    TextMainPage3?: SortOrder
+    SelayangPandangText?: SortOrder
+    SelayangPandangDeskripsi?: SortOrder
+    SelayangPandangBackgroundFile?: SortOrder
+    WhyText?: SortOrder
+    WhyDeskripsi?: SortOrder
+    CommunityText?: SortOrder
+    CommunityDeskripsi?: SortOrder
+    KegiatanText?: SortOrder
+    KegiatanDeskripsi?: SortOrder
+    BeritaText?: SortOrder
+    BeritaDeskripsi?: SortOrder
+    TestomoniText?: SortOrder
+    TestomoniDeskripsi?: SortOrder
+  }
+
+  export type SettingMainPageMaxOrderByAggregateInput = {
+    SettingMainPageId?: SortOrder
+    UniversityId?: SortOrder
+    BackgroundFileUtama?: SortOrder
+    TextMainPage1?: SortOrder
+    TextMainPage2?: SortOrder
+    TextMainPage3?: SortOrder
+    SelayangPandangText?: SortOrder
+    SelayangPandangDeskripsi?: SortOrder
+    SelayangPandangBackgroundFile?: SortOrder
+    WhyText?: SortOrder
+    WhyDeskripsi?: SortOrder
+    CommunityText?: SortOrder
+    CommunityDeskripsi?: SortOrder
+    KegiatanText?: SortOrder
+    KegiatanDeskripsi?: SortOrder
+    BeritaText?: SortOrder
+    BeritaDeskripsi?: SortOrder
+    TestomoniText?: SortOrder
+    TestomoniDeskripsi?: SortOrder
+  }
+
+  export type SettingMainPageMinOrderByAggregateInput = {
+    SettingMainPageId?: SortOrder
+    UniversityId?: SortOrder
+    BackgroundFileUtama?: SortOrder
+    TextMainPage1?: SortOrder
+    TextMainPage2?: SortOrder
+    TextMainPage3?: SortOrder
+    SelayangPandangText?: SortOrder
+    SelayangPandangDeskripsi?: SortOrder
+    SelayangPandangBackgroundFile?: SortOrder
+    WhyText?: SortOrder
+    WhyDeskripsi?: SortOrder
+    CommunityText?: SortOrder
+    CommunityDeskripsi?: SortOrder
+    KegiatanText?: SortOrder
+    KegiatanDeskripsi?: SortOrder
+    BeritaText?: SortOrder
+    BeritaDeskripsi?: SortOrder
+    TestomoniText?: SortOrder
+    TestomoniDeskripsi?: SortOrder
+  }
+
+  export type JenisKegiatanScalarRelationFilter = {
+    is?: JenisKegiatanWhereInput
+    isNot?: JenisKegiatanWhereInput
+  }
+
+  export type SettingMainPageScalarRelationFilter = {
+    is?: SettingMainPageWhereInput
+    isNot?: SettingMainPageWhereInput
+  }
+
+  export type SettingKegiatanCountOrderByAggregateInput = {
+    SettingKegiatanId?: SortOrder
+    JenisKegiatanId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Lokasi?: SortOrder
+    Deskripsi?: SortOrder
+    WaktuMulai?: SortOrder
+    WaktuSelesai?: SortOrder
+  }
+
+  export type SettingKegiatanMaxOrderByAggregateInput = {
+    SettingKegiatanId?: SortOrder
+    JenisKegiatanId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Lokasi?: SortOrder
+    Deskripsi?: SortOrder
+    WaktuMulai?: SortOrder
+    WaktuSelesai?: SortOrder
+  }
+
+  export type SettingKegiatanMinOrderByAggregateInput = {
+    SettingKegiatanId?: SortOrder
+    JenisKegiatanId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Lokasi?: SortOrder
+    Deskripsi?: SortOrder
+    WaktuMulai?: SortOrder
+    WaktuSelesai?: SortOrder
+  }
+
+  export type SettingCommunityCountOrderByAggregateInput = {
+    SettingCommunityId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Gambar?: SortOrder
+  }
+
+  export type SettingCommunityMaxOrderByAggregateInput = {
+    SettingCommunityId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Gambar?: SortOrder
+  }
+
+  export type SettingCommunityMinOrderByAggregateInput = {
+    SettingCommunityId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Gambar?: SortOrder
+  }
+
+  export type SettingWhyCountOrderByAggregateInput = {
+    SettingWhyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Icon?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+  }
+
+  export type SettingWhyMaxOrderByAggregateInput = {
+    SettingWhyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Icon?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+  }
+
+  export type SettingWhyMinOrderByAggregateInput = {
+    SettingWhyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Icon?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+  }
+
+  export type SettingNumberCountOrderByAggregateInput = {
+    SettingNumberId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+    Angka?: SortOrder
+  }
+
+  export type SettingNumberMaxOrderByAggregateInput = {
+    SettingNumberId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+    Angka?: SortOrder
+  }
+
+  export type SettingNumberMinOrderByAggregateInput = {
+    SettingNumberId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Subtitle?: SortOrder
+    Angka?: SortOrder
+  }
+
+  export type SettingTestimonyCountOrderByAggregateInput = {
+    SettingTestimonyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Jabatan?: SortOrder
+    JurusanTahun?: SortOrder
+    Testimoni?: SortOrder
+    Foto?: SortOrder
+  }
+
+  export type SettingTestimonyMaxOrderByAggregateInput = {
+    SettingTestimonyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Jabatan?: SortOrder
+    JurusanTahun?: SortOrder
+    Testimoni?: SortOrder
+    Foto?: SortOrder
+  }
+
+  export type SettingTestimonyMinOrderByAggregateInput = {
+    SettingTestimonyId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Nama?: SortOrder
+    Jabatan?: SortOrder
+    JurusanTahun?: SortOrder
+    Testimoni?: SortOrder
+    Foto?: SortOrder
+  }
+
+  export type KategoriBeritaScalarRelationFilter = {
+    is?: KategoriBeritaWhereInput
+    isNot?: KategoriBeritaWhereInput
+  }
+
+  export type SettingBeritaCountOrderByAggregateInput = {
+    SettingBeritaId?: SortOrder
+    KategoriBeritaId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Deskripsi?: SortOrder
+    Gambar?: SortOrder
+    Populer?: SortOrder
+    Waktu?: SortOrder
+  }
+
+  export type SettingBeritaMaxOrderByAggregateInput = {
+    SettingBeritaId?: SortOrder
+    KategoriBeritaId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Deskripsi?: SortOrder
+    Gambar?: SortOrder
+    Populer?: SortOrder
+    Waktu?: SortOrder
+  }
+
+  export type SettingBeritaMinOrderByAggregateInput = {
+    SettingBeritaId?: SortOrder
+    KategoriBeritaId?: SortOrder
+    SettingMainPageId?: SortOrder
+    Title?: SortOrder
+    Deskripsi?: SortOrder
+    Gambar?: SortOrder
+    Populer?: SortOrder
+    Waktu?: SortOrder
   }
 
   export type DesaCreateNestedOneWithoutAlamatInput = {
@@ -88815,6 +101487,13 @@ export namespace Prisma {
     connect?: UniversityInformasiWhereUniqueInput | UniversityInformasiWhereUniqueInput[]
   }
 
+  export type SettingMainPageCreateNestedManyWithoutUniversityInput = {
+    create?: XOR<SettingMainPageCreateWithoutUniversityInput, SettingMainPageUncheckedCreateWithoutUniversityInput> | SettingMainPageCreateWithoutUniversityInput[] | SettingMainPageUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutUniversityInput | SettingMainPageCreateOrConnectWithoutUniversityInput[]
+    createMany?: SettingMainPageCreateManyUniversityInputEnvelope
+    connect?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+  }
+
   export type ProgramStudiUncheckedCreateNestedManyWithoutUniversityInput = {
     create?: XOR<ProgramStudiCreateWithoutUniversityInput, ProgramStudiUncheckedCreateWithoutUniversityInput> | ProgramStudiCreateWithoutUniversityInput[] | ProgramStudiUncheckedCreateWithoutUniversityInput[]
     connectOrCreate?: ProgramStudiCreateOrConnectWithoutUniversityInput | ProgramStudiCreateOrConnectWithoutUniversityInput[]
@@ -88841,6 +101520,13 @@ export namespace Prisma {
     connectOrCreate?: UniversityInformasiCreateOrConnectWithoutUniversityInput | UniversityInformasiCreateOrConnectWithoutUniversityInput[]
     createMany?: UniversityInformasiCreateManyUniversityInputEnvelope
     connect?: UniversityInformasiWhereUniqueInput | UniversityInformasiWhereUniqueInput[]
+  }
+
+  export type SettingMainPageUncheckedCreateNestedManyWithoutUniversityInput = {
+    create?: XOR<SettingMainPageCreateWithoutUniversityInput, SettingMainPageUncheckedCreateWithoutUniversityInput> | SettingMainPageCreateWithoutUniversityInput[] | SettingMainPageUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutUniversityInput | SettingMainPageCreateOrConnectWithoutUniversityInput[]
+    createMany?: SettingMainPageCreateManyUniversityInputEnvelope
+    connect?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
   }
 
   export type AlamatUpdateOneRequiredWithoutUniversityNestedInput = {
@@ -88907,6 +101593,20 @@ export namespace Prisma {
     deleteMany?: UniversityInformasiScalarWhereInput | UniversityInformasiScalarWhereInput[]
   }
 
+  export type SettingMainPageUpdateManyWithoutUniversityNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutUniversityInput, SettingMainPageUncheckedCreateWithoutUniversityInput> | SettingMainPageCreateWithoutUniversityInput[] | SettingMainPageUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutUniversityInput | SettingMainPageCreateOrConnectWithoutUniversityInput[]
+    upsert?: SettingMainPageUpsertWithWhereUniqueWithoutUniversityInput | SettingMainPageUpsertWithWhereUniqueWithoutUniversityInput[]
+    createMany?: SettingMainPageCreateManyUniversityInputEnvelope
+    set?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    disconnect?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    delete?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    connect?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    update?: SettingMainPageUpdateWithWhereUniqueWithoutUniversityInput | SettingMainPageUpdateWithWhereUniqueWithoutUniversityInput[]
+    updateMany?: SettingMainPageUpdateManyWithWhereWithoutUniversityInput | SettingMainPageUpdateManyWithWhereWithoutUniversityInput[]
+    deleteMany?: SettingMainPageScalarWhereInput | SettingMainPageScalarWhereInput[]
+  }
+
   export type ProgramStudiUncheckedUpdateManyWithoutUniversityNestedInput = {
     create?: XOR<ProgramStudiCreateWithoutUniversityInput, ProgramStudiUncheckedCreateWithoutUniversityInput> | ProgramStudiCreateWithoutUniversityInput[] | ProgramStudiUncheckedCreateWithoutUniversityInput[]
     connectOrCreate?: ProgramStudiCreateOrConnectWithoutUniversityInput | ProgramStudiCreateOrConnectWithoutUniversityInput[]
@@ -88961,6 +101661,20 @@ export namespace Prisma {
     update?: UniversityInformasiUpdateWithWhereUniqueWithoutUniversityInput | UniversityInformasiUpdateWithWhereUniqueWithoutUniversityInput[]
     updateMany?: UniversityInformasiUpdateManyWithWhereWithoutUniversityInput | UniversityInformasiUpdateManyWithWhereWithoutUniversityInput[]
     deleteMany?: UniversityInformasiScalarWhereInput | UniversityInformasiScalarWhereInput[]
+  }
+
+  export type SettingMainPageUncheckedUpdateManyWithoutUniversityNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutUniversityInput, SettingMainPageUncheckedCreateWithoutUniversityInput> | SettingMainPageCreateWithoutUniversityInput[] | SettingMainPageUncheckedCreateWithoutUniversityInput[]
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutUniversityInput | SettingMainPageCreateOrConnectWithoutUniversityInput[]
+    upsert?: SettingMainPageUpsertWithWhereUniqueWithoutUniversityInput | SettingMainPageUpsertWithWhereUniqueWithoutUniversityInput[]
+    createMany?: SettingMainPageCreateManyUniversityInputEnvelope
+    set?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    disconnect?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    delete?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    connect?: SettingMainPageWhereUniqueInput | SettingMainPageWhereUniqueInput[]
+    update?: SettingMainPageUpdateWithWhereUniqueWithoutUniversityInput | SettingMainPageUpdateWithWhereUniqueWithoutUniversityInput[]
+    updateMany?: SettingMainPageUpdateManyWithWhereWithoutUniversityInput | SettingMainPageUpdateManyWithWhereWithoutUniversityInput[]
+    deleteMany?: SettingMainPageScalarWhereInput | SettingMainPageScalarWhereInput[]
   }
 
   export type UniversityCreateNestedOneWithoutUniversitySosialMediaInput = {
@@ -89305,6 +102019,468 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutUserloginInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserloginInput, UserUpdateWithoutUserloginInput>, UserUncheckedUpdateWithoutUserloginInput>
+  }
+
+  export type SettingKegiatanCreateNestedManyWithoutJenisKegiatanInput = {
+    create?: XOR<SettingKegiatanCreateWithoutJenisKegiatanInput, SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput> | SettingKegiatanCreateWithoutJenisKegiatanInput[] | SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput | SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput[]
+    createMany?: SettingKegiatanCreateManyJenisKegiatanInputEnvelope
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+  }
+
+  export type SettingKegiatanUncheckedCreateNestedManyWithoutJenisKegiatanInput = {
+    create?: XOR<SettingKegiatanCreateWithoutJenisKegiatanInput, SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput> | SettingKegiatanCreateWithoutJenisKegiatanInput[] | SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput | SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput[]
+    createMany?: SettingKegiatanCreateManyJenisKegiatanInputEnvelope
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+  }
+
+  export type SettingKegiatanUpdateManyWithoutJenisKegiatanNestedInput = {
+    create?: XOR<SettingKegiatanCreateWithoutJenisKegiatanInput, SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput> | SettingKegiatanCreateWithoutJenisKegiatanInput[] | SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput | SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput[]
+    upsert?: SettingKegiatanUpsertWithWhereUniqueWithoutJenisKegiatanInput | SettingKegiatanUpsertWithWhereUniqueWithoutJenisKegiatanInput[]
+    createMany?: SettingKegiatanCreateManyJenisKegiatanInputEnvelope
+    set?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    disconnect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    delete?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    update?: SettingKegiatanUpdateWithWhereUniqueWithoutJenisKegiatanInput | SettingKegiatanUpdateWithWhereUniqueWithoutJenisKegiatanInput[]
+    updateMany?: SettingKegiatanUpdateManyWithWhereWithoutJenisKegiatanInput | SettingKegiatanUpdateManyWithWhereWithoutJenisKegiatanInput[]
+    deleteMany?: SettingKegiatanScalarWhereInput | SettingKegiatanScalarWhereInput[]
+  }
+
+  export type SettingKegiatanUncheckedUpdateManyWithoutJenisKegiatanNestedInput = {
+    create?: XOR<SettingKegiatanCreateWithoutJenisKegiatanInput, SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput> | SettingKegiatanCreateWithoutJenisKegiatanInput[] | SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput | SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput[]
+    upsert?: SettingKegiatanUpsertWithWhereUniqueWithoutJenisKegiatanInput | SettingKegiatanUpsertWithWhereUniqueWithoutJenisKegiatanInput[]
+    createMany?: SettingKegiatanCreateManyJenisKegiatanInputEnvelope
+    set?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    disconnect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    delete?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    update?: SettingKegiatanUpdateWithWhereUniqueWithoutJenisKegiatanInput | SettingKegiatanUpdateWithWhereUniqueWithoutJenisKegiatanInput[]
+    updateMany?: SettingKegiatanUpdateManyWithWhereWithoutJenisKegiatanInput | SettingKegiatanUpdateManyWithWhereWithoutJenisKegiatanInput[]
+    deleteMany?: SettingKegiatanScalarWhereInput | SettingKegiatanScalarWhereInput[]
+  }
+
+  export type SettingBeritaCreateNestedManyWithoutKategoriBeritaInput = {
+    create?: XOR<SettingBeritaCreateWithoutKategoriBeritaInput, SettingBeritaUncheckedCreateWithoutKategoriBeritaInput> | SettingBeritaCreateWithoutKategoriBeritaInput[] | SettingBeritaUncheckedCreateWithoutKategoriBeritaInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutKategoriBeritaInput | SettingBeritaCreateOrConnectWithoutKategoriBeritaInput[]
+    createMany?: SettingBeritaCreateManyKategoriBeritaInputEnvelope
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+  }
+
+  export type SettingBeritaUncheckedCreateNestedManyWithoutKategoriBeritaInput = {
+    create?: XOR<SettingBeritaCreateWithoutKategoriBeritaInput, SettingBeritaUncheckedCreateWithoutKategoriBeritaInput> | SettingBeritaCreateWithoutKategoriBeritaInput[] | SettingBeritaUncheckedCreateWithoutKategoriBeritaInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutKategoriBeritaInput | SettingBeritaCreateOrConnectWithoutKategoriBeritaInput[]
+    createMany?: SettingBeritaCreateManyKategoriBeritaInputEnvelope
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+  }
+
+  export type SettingBeritaUpdateManyWithoutKategoriBeritaNestedInput = {
+    create?: XOR<SettingBeritaCreateWithoutKategoriBeritaInput, SettingBeritaUncheckedCreateWithoutKategoriBeritaInput> | SettingBeritaCreateWithoutKategoriBeritaInput[] | SettingBeritaUncheckedCreateWithoutKategoriBeritaInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutKategoriBeritaInput | SettingBeritaCreateOrConnectWithoutKategoriBeritaInput[]
+    upsert?: SettingBeritaUpsertWithWhereUniqueWithoutKategoriBeritaInput | SettingBeritaUpsertWithWhereUniqueWithoutKategoriBeritaInput[]
+    createMany?: SettingBeritaCreateManyKategoriBeritaInputEnvelope
+    set?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    disconnect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    delete?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    update?: SettingBeritaUpdateWithWhereUniqueWithoutKategoriBeritaInput | SettingBeritaUpdateWithWhereUniqueWithoutKategoriBeritaInput[]
+    updateMany?: SettingBeritaUpdateManyWithWhereWithoutKategoriBeritaInput | SettingBeritaUpdateManyWithWhereWithoutKategoriBeritaInput[]
+    deleteMany?: SettingBeritaScalarWhereInput | SettingBeritaScalarWhereInput[]
+  }
+
+  export type SettingBeritaUncheckedUpdateManyWithoutKategoriBeritaNestedInput = {
+    create?: XOR<SettingBeritaCreateWithoutKategoriBeritaInput, SettingBeritaUncheckedCreateWithoutKategoriBeritaInput> | SettingBeritaCreateWithoutKategoriBeritaInput[] | SettingBeritaUncheckedCreateWithoutKategoriBeritaInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutKategoriBeritaInput | SettingBeritaCreateOrConnectWithoutKategoriBeritaInput[]
+    upsert?: SettingBeritaUpsertWithWhereUniqueWithoutKategoriBeritaInput | SettingBeritaUpsertWithWhereUniqueWithoutKategoriBeritaInput[]
+    createMany?: SettingBeritaCreateManyKategoriBeritaInputEnvelope
+    set?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    disconnect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    delete?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    update?: SettingBeritaUpdateWithWhereUniqueWithoutKategoriBeritaInput | SettingBeritaUpdateWithWhereUniqueWithoutKategoriBeritaInput[]
+    updateMany?: SettingBeritaUpdateManyWithWhereWithoutKategoriBeritaInput | SettingBeritaUpdateManyWithWhereWithoutKategoriBeritaInput[]
+    deleteMany?: SettingBeritaScalarWhereInput | SettingBeritaScalarWhereInput[]
+  }
+
+  export type UniversityCreateNestedOneWithoutSettingMainPageInput = {
+    create?: XOR<UniversityCreateWithoutSettingMainPageInput, UniversityUncheckedCreateWithoutSettingMainPageInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutSettingMainPageInput
+    connect?: UniversityWhereUniqueInput
+  }
+
+  export type SettingKegiatanCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingKegiatanCreateWithoutSettingMainPageInput, SettingKegiatanUncheckedCreateWithoutSettingMainPageInput> | SettingKegiatanCreateWithoutSettingMainPageInput[] | SettingKegiatanUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutSettingMainPageInput | SettingKegiatanCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingKegiatanCreateManySettingMainPageInputEnvelope
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+  }
+
+  export type SettingCommunityCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingCommunityCreateWithoutSettingMainPageInput, SettingCommunityUncheckedCreateWithoutSettingMainPageInput> | SettingCommunityCreateWithoutSettingMainPageInput[] | SettingCommunityUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingCommunityCreateOrConnectWithoutSettingMainPageInput | SettingCommunityCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingCommunityCreateManySettingMainPageInputEnvelope
+    connect?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+  }
+
+  export type SettingWhyCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingWhyCreateWithoutSettingMainPageInput, SettingWhyUncheckedCreateWithoutSettingMainPageInput> | SettingWhyCreateWithoutSettingMainPageInput[] | SettingWhyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingWhyCreateOrConnectWithoutSettingMainPageInput | SettingWhyCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingWhyCreateManySettingMainPageInputEnvelope
+    connect?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+  }
+
+  export type SettingNumberCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingNumberCreateWithoutSettingMainPageInput, SettingNumberUncheckedCreateWithoutSettingMainPageInput> | SettingNumberCreateWithoutSettingMainPageInput[] | SettingNumberUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingNumberCreateOrConnectWithoutSettingMainPageInput | SettingNumberCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingNumberCreateManySettingMainPageInputEnvelope
+    connect?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+  }
+
+  export type SettingTestimonyCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingTestimonyCreateWithoutSettingMainPageInput, SettingTestimonyUncheckedCreateWithoutSettingMainPageInput> | SettingTestimonyCreateWithoutSettingMainPageInput[] | SettingTestimonyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingTestimonyCreateOrConnectWithoutSettingMainPageInput | SettingTestimonyCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingTestimonyCreateManySettingMainPageInputEnvelope
+    connect?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+  }
+
+  export type SettingBeritaCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingBeritaCreateWithoutSettingMainPageInput, SettingBeritaUncheckedCreateWithoutSettingMainPageInput> | SettingBeritaCreateWithoutSettingMainPageInput[] | SettingBeritaUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutSettingMainPageInput | SettingBeritaCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingBeritaCreateManySettingMainPageInputEnvelope
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+  }
+
+  export type SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingKegiatanCreateWithoutSettingMainPageInput, SettingKegiatanUncheckedCreateWithoutSettingMainPageInput> | SettingKegiatanCreateWithoutSettingMainPageInput[] | SettingKegiatanUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutSettingMainPageInput | SettingKegiatanCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingKegiatanCreateManySettingMainPageInputEnvelope
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+  }
+
+  export type SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingCommunityCreateWithoutSettingMainPageInput, SettingCommunityUncheckedCreateWithoutSettingMainPageInput> | SettingCommunityCreateWithoutSettingMainPageInput[] | SettingCommunityUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingCommunityCreateOrConnectWithoutSettingMainPageInput | SettingCommunityCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingCommunityCreateManySettingMainPageInputEnvelope
+    connect?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+  }
+
+  export type SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingWhyCreateWithoutSettingMainPageInput, SettingWhyUncheckedCreateWithoutSettingMainPageInput> | SettingWhyCreateWithoutSettingMainPageInput[] | SettingWhyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingWhyCreateOrConnectWithoutSettingMainPageInput | SettingWhyCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingWhyCreateManySettingMainPageInputEnvelope
+    connect?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+  }
+
+  export type SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingNumberCreateWithoutSettingMainPageInput, SettingNumberUncheckedCreateWithoutSettingMainPageInput> | SettingNumberCreateWithoutSettingMainPageInput[] | SettingNumberUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingNumberCreateOrConnectWithoutSettingMainPageInput | SettingNumberCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingNumberCreateManySettingMainPageInputEnvelope
+    connect?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+  }
+
+  export type SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingTestimonyCreateWithoutSettingMainPageInput, SettingTestimonyUncheckedCreateWithoutSettingMainPageInput> | SettingTestimonyCreateWithoutSettingMainPageInput[] | SettingTestimonyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingTestimonyCreateOrConnectWithoutSettingMainPageInput | SettingTestimonyCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingTestimonyCreateManySettingMainPageInputEnvelope
+    connect?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+  }
+
+  export type SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput = {
+    create?: XOR<SettingBeritaCreateWithoutSettingMainPageInput, SettingBeritaUncheckedCreateWithoutSettingMainPageInput> | SettingBeritaCreateWithoutSettingMainPageInput[] | SettingBeritaUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutSettingMainPageInput | SettingBeritaCreateOrConnectWithoutSettingMainPageInput[]
+    createMany?: SettingBeritaCreateManySettingMainPageInputEnvelope
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+  }
+
+  export type UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput = {
+    create?: XOR<UniversityCreateWithoutSettingMainPageInput, UniversityUncheckedCreateWithoutSettingMainPageInput>
+    connectOrCreate?: UniversityCreateOrConnectWithoutSettingMainPageInput
+    upsert?: UniversityUpsertWithoutSettingMainPageInput
+    connect?: UniversityWhereUniqueInput
+    update?: XOR<XOR<UniversityUpdateToOneWithWhereWithoutSettingMainPageInput, UniversityUpdateWithoutSettingMainPageInput>, UniversityUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingKegiatanCreateWithoutSettingMainPageInput, SettingKegiatanUncheckedCreateWithoutSettingMainPageInput> | SettingKegiatanCreateWithoutSettingMainPageInput[] | SettingKegiatanUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutSettingMainPageInput | SettingKegiatanCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingKegiatanUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingKegiatanUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingKegiatanCreateManySettingMainPageInputEnvelope
+    set?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    disconnect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    delete?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    update?: SettingKegiatanUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingKegiatanUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingKegiatanUpdateManyWithWhereWithoutSettingMainPageInput | SettingKegiatanUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingKegiatanScalarWhereInput | SettingKegiatanScalarWhereInput[]
+  }
+
+  export type SettingCommunityUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingCommunityCreateWithoutSettingMainPageInput, SettingCommunityUncheckedCreateWithoutSettingMainPageInput> | SettingCommunityCreateWithoutSettingMainPageInput[] | SettingCommunityUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingCommunityCreateOrConnectWithoutSettingMainPageInput | SettingCommunityCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingCommunityUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingCommunityUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingCommunityCreateManySettingMainPageInputEnvelope
+    set?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    disconnect?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    delete?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    connect?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    update?: SettingCommunityUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingCommunityUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingCommunityUpdateManyWithWhereWithoutSettingMainPageInput | SettingCommunityUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingCommunityScalarWhereInput | SettingCommunityScalarWhereInput[]
+  }
+
+  export type SettingWhyUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingWhyCreateWithoutSettingMainPageInput, SettingWhyUncheckedCreateWithoutSettingMainPageInput> | SettingWhyCreateWithoutSettingMainPageInput[] | SettingWhyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingWhyCreateOrConnectWithoutSettingMainPageInput | SettingWhyCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingWhyUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingWhyUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingWhyCreateManySettingMainPageInputEnvelope
+    set?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    disconnect?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    delete?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    connect?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    update?: SettingWhyUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingWhyUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingWhyUpdateManyWithWhereWithoutSettingMainPageInput | SettingWhyUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingWhyScalarWhereInput | SettingWhyScalarWhereInput[]
+  }
+
+  export type SettingNumberUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingNumberCreateWithoutSettingMainPageInput, SettingNumberUncheckedCreateWithoutSettingMainPageInput> | SettingNumberCreateWithoutSettingMainPageInput[] | SettingNumberUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingNumberCreateOrConnectWithoutSettingMainPageInput | SettingNumberCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingNumberUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingNumberUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingNumberCreateManySettingMainPageInputEnvelope
+    set?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    disconnect?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    delete?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    connect?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    update?: SettingNumberUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingNumberUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingNumberUpdateManyWithWhereWithoutSettingMainPageInput | SettingNumberUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingNumberScalarWhereInput | SettingNumberScalarWhereInput[]
+  }
+
+  export type SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingTestimonyCreateWithoutSettingMainPageInput, SettingTestimonyUncheckedCreateWithoutSettingMainPageInput> | SettingTestimonyCreateWithoutSettingMainPageInput[] | SettingTestimonyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingTestimonyCreateOrConnectWithoutSettingMainPageInput | SettingTestimonyCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingTestimonyUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingTestimonyUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingTestimonyCreateManySettingMainPageInputEnvelope
+    set?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    disconnect?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    delete?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    connect?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    update?: SettingTestimonyUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingTestimonyUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingTestimonyUpdateManyWithWhereWithoutSettingMainPageInput | SettingTestimonyUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingTestimonyScalarWhereInput | SettingTestimonyScalarWhereInput[]
+  }
+
+  export type SettingBeritaUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingBeritaCreateWithoutSettingMainPageInput, SettingBeritaUncheckedCreateWithoutSettingMainPageInput> | SettingBeritaCreateWithoutSettingMainPageInput[] | SettingBeritaUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutSettingMainPageInput | SettingBeritaCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingBeritaUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingBeritaUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingBeritaCreateManySettingMainPageInputEnvelope
+    set?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    disconnect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    delete?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    update?: SettingBeritaUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingBeritaUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingBeritaUpdateManyWithWhereWithoutSettingMainPageInput | SettingBeritaUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingBeritaScalarWhereInput | SettingBeritaScalarWhereInput[]
+  }
+
+  export type SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingKegiatanCreateWithoutSettingMainPageInput, SettingKegiatanUncheckedCreateWithoutSettingMainPageInput> | SettingKegiatanCreateWithoutSettingMainPageInput[] | SettingKegiatanUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingKegiatanCreateOrConnectWithoutSettingMainPageInput | SettingKegiatanCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingKegiatanUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingKegiatanUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingKegiatanCreateManySettingMainPageInputEnvelope
+    set?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    disconnect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    delete?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    connect?: SettingKegiatanWhereUniqueInput | SettingKegiatanWhereUniqueInput[]
+    update?: SettingKegiatanUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingKegiatanUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingKegiatanUpdateManyWithWhereWithoutSettingMainPageInput | SettingKegiatanUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingKegiatanScalarWhereInput | SettingKegiatanScalarWhereInput[]
+  }
+
+  export type SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingCommunityCreateWithoutSettingMainPageInput, SettingCommunityUncheckedCreateWithoutSettingMainPageInput> | SettingCommunityCreateWithoutSettingMainPageInput[] | SettingCommunityUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingCommunityCreateOrConnectWithoutSettingMainPageInput | SettingCommunityCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingCommunityUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingCommunityUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingCommunityCreateManySettingMainPageInputEnvelope
+    set?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    disconnect?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    delete?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    connect?: SettingCommunityWhereUniqueInput | SettingCommunityWhereUniqueInput[]
+    update?: SettingCommunityUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingCommunityUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingCommunityUpdateManyWithWhereWithoutSettingMainPageInput | SettingCommunityUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingCommunityScalarWhereInput | SettingCommunityScalarWhereInput[]
+  }
+
+  export type SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingWhyCreateWithoutSettingMainPageInput, SettingWhyUncheckedCreateWithoutSettingMainPageInput> | SettingWhyCreateWithoutSettingMainPageInput[] | SettingWhyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingWhyCreateOrConnectWithoutSettingMainPageInput | SettingWhyCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingWhyUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingWhyUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingWhyCreateManySettingMainPageInputEnvelope
+    set?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    disconnect?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    delete?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    connect?: SettingWhyWhereUniqueInput | SettingWhyWhereUniqueInput[]
+    update?: SettingWhyUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingWhyUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingWhyUpdateManyWithWhereWithoutSettingMainPageInput | SettingWhyUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingWhyScalarWhereInput | SettingWhyScalarWhereInput[]
+  }
+
+  export type SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingNumberCreateWithoutSettingMainPageInput, SettingNumberUncheckedCreateWithoutSettingMainPageInput> | SettingNumberCreateWithoutSettingMainPageInput[] | SettingNumberUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingNumberCreateOrConnectWithoutSettingMainPageInput | SettingNumberCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingNumberUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingNumberUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingNumberCreateManySettingMainPageInputEnvelope
+    set?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    disconnect?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    delete?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    connect?: SettingNumberWhereUniqueInput | SettingNumberWhereUniqueInput[]
+    update?: SettingNumberUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingNumberUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingNumberUpdateManyWithWhereWithoutSettingMainPageInput | SettingNumberUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingNumberScalarWhereInput | SettingNumberScalarWhereInput[]
+  }
+
+  export type SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingTestimonyCreateWithoutSettingMainPageInput, SettingTestimonyUncheckedCreateWithoutSettingMainPageInput> | SettingTestimonyCreateWithoutSettingMainPageInput[] | SettingTestimonyUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingTestimonyCreateOrConnectWithoutSettingMainPageInput | SettingTestimonyCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingTestimonyUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingTestimonyUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingTestimonyCreateManySettingMainPageInputEnvelope
+    set?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    disconnect?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    delete?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    connect?: SettingTestimonyWhereUniqueInput | SettingTestimonyWhereUniqueInput[]
+    update?: SettingTestimonyUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingTestimonyUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingTestimonyUpdateManyWithWhereWithoutSettingMainPageInput | SettingTestimonyUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingTestimonyScalarWhereInput | SettingTestimonyScalarWhereInput[]
+  }
+
+  export type SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput = {
+    create?: XOR<SettingBeritaCreateWithoutSettingMainPageInput, SettingBeritaUncheckedCreateWithoutSettingMainPageInput> | SettingBeritaCreateWithoutSettingMainPageInput[] | SettingBeritaUncheckedCreateWithoutSettingMainPageInput[]
+    connectOrCreate?: SettingBeritaCreateOrConnectWithoutSettingMainPageInput | SettingBeritaCreateOrConnectWithoutSettingMainPageInput[]
+    upsert?: SettingBeritaUpsertWithWhereUniqueWithoutSettingMainPageInput | SettingBeritaUpsertWithWhereUniqueWithoutSettingMainPageInput[]
+    createMany?: SettingBeritaCreateManySettingMainPageInputEnvelope
+    set?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    disconnect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    delete?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+    update?: SettingBeritaUpdateWithWhereUniqueWithoutSettingMainPageInput | SettingBeritaUpdateWithWhereUniqueWithoutSettingMainPageInput[]
+    updateMany?: SettingBeritaUpdateManyWithWhereWithoutSettingMainPageInput | SettingBeritaUpdateManyWithWhereWithoutSettingMainPageInput[]
+    deleteMany?: SettingBeritaScalarWhereInput | SettingBeritaScalarWhereInput[]
+  }
+
+  export type JenisKegiatanCreateNestedOneWithoutSettingKegiatanInput = {
+    create?: XOR<JenisKegiatanCreateWithoutSettingKegiatanInput, JenisKegiatanUncheckedCreateWithoutSettingKegiatanInput>
+    connectOrCreate?: JenisKegiatanCreateOrConnectWithoutSettingKegiatanInput
+    connect?: JenisKegiatanWhereUniqueInput
+  }
+
+  export type SettingMainPageCreateNestedOneWithoutSettingKegiatanInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingKegiatanInput, SettingMainPageUncheckedCreateWithoutSettingKegiatanInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingKegiatanInput
+    connect?: SettingMainPageWhereUniqueInput
+  }
+
+  export type JenisKegiatanUpdateOneRequiredWithoutSettingKegiatanNestedInput = {
+    create?: XOR<JenisKegiatanCreateWithoutSettingKegiatanInput, JenisKegiatanUncheckedCreateWithoutSettingKegiatanInput>
+    connectOrCreate?: JenisKegiatanCreateOrConnectWithoutSettingKegiatanInput
+    upsert?: JenisKegiatanUpsertWithoutSettingKegiatanInput
+    connect?: JenisKegiatanWhereUniqueInput
+    update?: XOR<XOR<JenisKegiatanUpdateToOneWithWhereWithoutSettingKegiatanInput, JenisKegiatanUpdateWithoutSettingKegiatanInput>, JenisKegiatanUncheckedUpdateWithoutSettingKegiatanInput>
+  }
+
+  export type SettingMainPageUpdateOneRequiredWithoutSettingKegiatanNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingKegiatanInput, SettingMainPageUncheckedCreateWithoutSettingKegiatanInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingKegiatanInput
+    upsert?: SettingMainPageUpsertWithoutSettingKegiatanInput
+    connect?: SettingMainPageWhereUniqueInput
+    update?: XOR<XOR<SettingMainPageUpdateToOneWithWhereWithoutSettingKegiatanInput, SettingMainPageUpdateWithoutSettingKegiatanInput>, SettingMainPageUncheckedUpdateWithoutSettingKegiatanInput>
+  }
+
+  export type SettingMainPageCreateNestedOneWithoutSettingCommunityInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingCommunityInput, SettingMainPageUncheckedCreateWithoutSettingCommunityInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingCommunityInput
+    connect?: SettingMainPageWhereUniqueInput
+  }
+
+  export type SettingMainPageUpdateOneRequiredWithoutSettingCommunityNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingCommunityInput, SettingMainPageUncheckedCreateWithoutSettingCommunityInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingCommunityInput
+    upsert?: SettingMainPageUpsertWithoutSettingCommunityInput
+    connect?: SettingMainPageWhereUniqueInput
+    update?: XOR<XOR<SettingMainPageUpdateToOneWithWhereWithoutSettingCommunityInput, SettingMainPageUpdateWithoutSettingCommunityInput>, SettingMainPageUncheckedUpdateWithoutSettingCommunityInput>
+  }
+
+  export type SettingMainPageCreateNestedOneWithoutSettingWhyInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingWhyInput, SettingMainPageUncheckedCreateWithoutSettingWhyInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingWhyInput
+    connect?: SettingMainPageWhereUniqueInput
+  }
+
+  export type SettingMainPageUpdateOneRequiredWithoutSettingWhyNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingWhyInput, SettingMainPageUncheckedCreateWithoutSettingWhyInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingWhyInput
+    upsert?: SettingMainPageUpsertWithoutSettingWhyInput
+    connect?: SettingMainPageWhereUniqueInput
+    update?: XOR<XOR<SettingMainPageUpdateToOneWithWhereWithoutSettingWhyInput, SettingMainPageUpdateWithoutSettingWhyInput>, SettingMainPageUncheckedUpdateWithoutSettingWhyInput>
+  }
+
+  export type SettingMainPageCreateNestedOneWithoutSettingNumberInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingNumberInput, SettingMainPageUncheckedCreateWithoutSettingNumberInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingNumberInput
+    connect?: SettingMainPageWhereUniqueInput
+  }
+
+  export type SettingMainPageUpdateOneRequiredWithoutSettingNumberNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingNumberInput, SettingMainPageUncheckedCreateWithoutSettingNumberInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingNumberInput
+    upsert?: SettingMainPageUpsertWithoutSettingNumberInput
+    connect?: SettingMainPageWhereUniqueInput
+    update?: XOR<XOR<SettingMainPageUpdateToOneWithWhereWithoutSettingNumberInput, SettingMainPageUpdateWithoutSettingNumberInput>, SettingMainPageUncheckedUpdateWithoutSettingNumberInput>
+  }
+
+  export type SettingMainPageCreateNestedOneWithoutSettingTestimonyInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingTestimonyInput, SettingMainPageUncheckedCreateWithoutSettingTestimonyInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingTestimonyInput
+    connect?: SettingMainPageWhereUniqueInput
+  }
+
+  export type SettingMainPageUpdateOneRequiredWithoutSettingTestimonyNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingTestimonyInput, SettingMainPageUncheckedCreateWithoutSettingTestimonyInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingTestimonyInput
+    upsert?: SettingMainPageUpsertWithoutSettingTestimonyInput
+    connect?: SettingMainPageWhereUniqueInput
+    update?: XOR<XOR<SettingMainPageUpdateToOneWithWhereWithoutSettingTestimonyInput, SettingMainPageUpdateWithoutSettingTestimonyInput>, SettingMainPageUncheckedUpdateWithoutSettingTestimonyInput>
+  }
+
+  export type SettingMainPageCreateNestedOneWithoutSettingBeritaInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingBeritaInput, SettingMainPageUncheckedCreateWithoutSettingBeritaInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingBeritaInput
+    connect?: SettingMainPageWhereUniqueInput
+  }
+
+  export type KategoriBeritaCreateNestedOneWithoutSettingBeritaInput = {
+    create?: XOR<KategoriBeritaCreateWithoutSettingBeritaInput, KategoriBeritaUncheckedCreateWithoutSettingBeritaInput>
+    connectOrCreate?: KategoriBeritaCreateOrConnectWithoutSettingBeritaInput
+    connect?: KategoriBeritaWhereUniqueInput
+  }
+
+  export type SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput = {
+    create?: XOR<SettingMainPageCreateWithoutSettingBeritaInput, SettingMainPageUncheckedCreateWithoutSettingBeritaInput>
+    connectOrCreate?: SettingMainPageCreateOrConnectWithoutSettingBeritaInput
+    upsert?: SettingMainPageUpsertWithoutSettingBeritaInput
+    connect?: SettingMainPageWhereUniqueInput
+    update?: XOR<XOR<SettingMainPageUpdateToOneWithWhereWithoutSettingBeritaInput, SettingMainPageUpdateWithoutSettingBeritaInput>, SettingMainPageUncheckedUpdateWithoutSettingBeritaInput>
+  }
+
+  export type KategoriBeritaUpdateOneRequiredWithoutSettingBeritaNestedInput = {
+    create?: XOR<KategoriBeritaCreateWithoutSettingBeritaInput, KategoriBeritaUncheckedCreateWithoutSettingBeritaInput>
+    connectOrCreate?: KategoriBeritaCreateOrConnectWithoutSettingBeritaInput
+    upsert?: KategoriBeritaUpsertWithoutSettingBeritaInput
+    connect?: KategoriBeritaWhereUniqueInput
+    update?: XOR<XOR<KategoriBeritaUpdateToOneWithWhereWithoutSettingBeritaInput, KategoriBeritaUpdateWithoutSettingBeritaInput>, KategoriBeritaUncheckedUpdateWithoutSettingBeritaInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -89769,6 +102945,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityUncheckedCreateWithoutAlamatInput = {
@@ -89782,6 +102959,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUncheckedCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiUncheckedCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageUncheckedCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityCreateOrConnectWithoutAlamatInput = {
@@ -96221,6 +109399,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityUncheckedCreateWithoutProgramStudiInput = {
@@ -96234,6 +109413,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUncheckedCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiUncheckedCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageUncheckedCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityCreateOrConnectWithoutProgramStudiInput = {
@@ -96359,6 +109539,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityUncheckedUpdateWithoutProgramStudiInput = {
@@ -96372,6 +109553,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUncheckedUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUncheckedUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUncheckedUpdateManyWithoutUniversityNestedInput
   }
 
   export type DaftarUlangUpsertWithWhereUniqueWithoutProgramStudiInput = {
@@ -98121,6 +111303,70 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SettingMainPageCreateWithoutUniversityInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateWithoutUniversityInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageCreateOrConnectWithoutUniversityInput = {
+    where: SettingMainPageWhereUniqueInput
+    create: XOR<SettingMainPageCreateWithoutUniversityInput, SettingMainPageUncheckedCreateWithoutUniversityInput>
+  }
+
+  export type SettingMainPageCreateManyUniversityInputEnvelope = {
+    data: SettingMainPageCreateManyUniversityInput | SettingMainPageCreateManyUniversityInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AlamatUpsertWithoutUniversityInput = {
     update: XOR<AlamatUpdateWithoutUniversityInput, AlamatUncheckedUpdateWithoutUniversityInput>
     create: XOR<AlamatCreateWithoutUniversityInput, AlamatUncheckedCreateWithoutUniversityInput>
@@ -98262,6 +111508,47 @@ export namespace Prisma {
     Informasi?: StringNullableFilter<"UniversityInformasi"> | string | null
   }
 
+  export type SettingMainPageUpsertWithWhereUniqueWithoutUniversityInput = {
+    where: SettingMainPageWhereUniqueInput
+    update: XOR<SettingMainPageUpdateWithoutUniversityInput, SettingMainPageUncheckedUpdateWithoutUniversityInput>
+    create: XOR<SettingMainPageCreateWithoutUniversityInput, SettingMainPageUncheckedCreateWithoutUniversityInput>
+  }
+
+  export type SettingMainPageUpdateWithWhereUniqueWithoutUniversityInput = {
+    where: SettingMainPageWhereUniqueInput
+    data: XOR<SettingMainPageUpdateWithoutUniversityInput, SettingMainPageUncheckedUpdateWithoutUniversityInput>
+  }
+
+  export type SettingMainPageUpdateManyWithWhereWithoutUniversityInput = {
+    where: SettingMainPageScalarWhereInput
+    data: XOR<SettingMainPageUpdateManyMutationInput, SettingMainPageUncheckedUpdateManyWithoutUniversityInput>
+  }
+
+  export type SettingMainPageScalarWhereInput = {
+    AND?: SettingMainPageScalarWhereInput | SettingMainPageScalarWhereInput[]
+    OR?: SettingMainPageScalarWhereInput[]
+    NOT?: SettingMainPageScalarWhereInput | SettingMainPageScalarWhereInput[]
+    SettingMainPageId?: StringFilter<"SettingMainPage"> | string
+    UniversityId?: StringFilter<"SettingMainPage"> | string
+    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Uint8Array
+    TextMainPage1?: StringFilter<"SettingMainPage"> | string
+    TextMainPage2?: StringFilter<"SettingMainPage"> | string
+    TextMainPage3?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangText?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangDeskripsi?: StringFilter<"SettingMainPage"> | string
+    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Uint8Array
+    WhyText?: StringFilter<"SettingMainPage"> | string
+    WhyDeskripsi?: StringFilter<"SettingMainPage"> | string
+    CommunityText?: StringFilter<"SettingMainPage"> | string
+    CommunityDeskripsi?: StringFilter<"SettingMainPage"> | string
+    KegiatanText?: StringFilter<"SettingMainPage"> | string
+    KegiatanDeskripsi?: StringFilter<"SettingMainPage"> | string
+    BeritaText?: StringFilter<"SettingMainPage"> | string
+    BeritaDeskripsi?: StringFilter<"SettingMainPage"> | string
+    TestomoniText?: StringFilter<"SettingMainPage"> | string
+    TestomoniDeskripsi?: StringFilter<"SettingMainPage"> | string
+  }
+
   export type UniversityCreateWithoutUniversitySosialMediaInput = {
     UniversityId?: string
     Nama: string
@@ -98273,6 +111560,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiCreateNestedManyWithoutUniversityInput
     UniversityJabatan?: UniversityJabatanCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityUncheckedCreateWithoutUniversitySosialMediaInput = {
@@ -98286,6 +111574,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUncheckedCreateNestedManyWithoutUniversityInput
     UniversityJabatan?: UniversityJabatanUncheckedCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiUncheckedCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageUncheckedCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityCreateOrConnectWithoutUniversitySosialMediaInput = {
@@ -98315,6 +111604,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUpdateManyWithoutUniversityNestedInput
     UniversityJabatan?: UniversityJabatanUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityUncheckedUpdateWithoutUniversitySosialMediaInput = {
@@ -98328,6 +111618,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUncheckedUpdateManyWithoutUniversityNestedInput
     UniversityJabatan?: UniversityJabatanUncheckedUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUncheckedUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUncheckedUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityCreateWithoutUniversityInformasiInput = {
@@ -98341,6 +111632,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiCreateNestedManyWithoutUniversityInput
     UniversityJabatan?: UniversityJabatanCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityUncheckedCreateWithoutUniversityInformasiInput = {
@@ -98354,6 +111646,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUncheckedCreateNestedManyWithoutUniversityInput
     UniversityJabatan?: UniversityJabatanUncheckedCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageUncheckedCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityCreateOrConnectWithoutUniversityInformasiInput = {
@@ -98383,6 +111676,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUpdateManyWithoutUniversityNestedInput
     UniversityJabatan?: UniversityJabatanUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityUncheckedUpdateWithoutUniversityInformasiInput = {
@@ -98396,6 +111690,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUncheckedUpdateManyWithoutUniversityNestedInput
     UniversityJabatan?: UniversityJabatanUncheckedUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUncheckedUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityCreateWithoutUniversityJabatanInput = {
@@ -98409,6 +111704,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityUncheckedCreateWithoutUniversityJabatanInput = {
@@ -98422,6 +111718,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUncheckedCreateNestedManyWithoutUniversityInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedCreateNestedManyWithoutUniversityInput
     UniversityInformasi?: UniversityInformasiUncheckedCreateNestedManyWithoutUniversityInput
+    SettingMainPage?: SettingMainPageUncheckedCreateNestedManyWithoutUniversityInput
   }
 
   export type UniversityCreateOrConnectWithoutUniversityJabatanInput = {
@@ -98479,6 +111776,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityUncheckedUpdateWithoutUniversityJabatanInput = {
@@ -98492,6 +111790,7 @@ export namespace Prisma {
     ProgramStudi?: ProgramStudiUncheckedUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUncheckedUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUncheckedUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityJabatanOrangUpsertWithWhereUniqueWithoutUniversityJabatanInput = {
@@ -98969,6 +112268,1321 @@ export namespace Prisma {
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type SettingKegiatanCreateWithoutJenisKegiatanInput = {
+    SettingKegiatanId?: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingKegiatanInput
+  }
+
+  export type SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput = {
+    SettingKegiatanId?: string
+    SettingMainPageId: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+  }
+
+  export type SettingKegiatanCreateOrConnectWithoutJenisKegiatanInput = {
+    where: SettingKegiatanWhereUniqueInput
+    create: XOR<SettingKegiatanCreateWithoutJenisKegiatanInput, SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput>
+  }
+
+  export type SettingKegiatanCreateManyJenisKegiatanInputEnvelope = {
+    data: SettingKegiatanCreateManyJenisKegiatanInput | SettingKegiatanCreateManyJenisKegiatanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SettingKegiatanUpsertWithWhereUniqueWithoutJenisKegiatanInput = {
+    where: SettingKegiatanWhereUniqueInput
+    update: XOR<SettingKegiatanUpdateWithoutJenisKegiatanInput, SettingKegiatanUncheckedUpdateWithoutJenisKegiatanInput>
+    create: XOR<SettingKegiatanCreateWithoutJenisKegiatanInput, SettingKegiatanUncheckedCreateWithoutJenisKegiatanInput>
+  }
+
+  export type SettingKegiatanUpdateWithWhereUniqueWithoutJenisKegiatanInput = {
+    where: SettingKegiatanWhereUniqueInput
+    data: XOR<SettingKegiatanUpdateWithoutJenisKegiatanInput, SettingKegiatanUncheckedUpdateWithoutJenisKegiatanInput>
+  }
+
+  export type SettingKegiatanUpdateManyWithWhereWithoutJenisKegiatanInput = {
+    where: SettingKegiatanScalarWhereInput
+    data: XOR<SettingKegiatanUpdateManyMutationInput, SettingKegiatanUncheckedUpdateManyWithoutJenisKegiatanInput>
+  }
+
+  export type SettingKegiatanScalarWhereInput = {
+    AND?: SettingKegiatanScalarWhereInput | SettingKegiatanScalarWhereInput[]
+    OR?: SettingKegiatanScalarWhereInput[]
+    NOT?: SettingKegiatanScalarWhereInput | SettingKegiatanScalarWhereInput[]
+    SettingKegiatanId?: StringFilter<"SettingKegiatan"> | string
+    JenisKegiatanId?: StringFilter<"SettingKegiatan"> | string
+    SettingMainPageId?: StringFilter<"SettingKegiatan"> | string
+    Nama?: StringFilter<"SettingKegiatan"> | string
+    Lokasi?: StringNullableFilter<"SettingKegiatan"> | string | null
+    Deskripsi?: StringNullableFilter<"SettingKegiatan"> | string | null
+    WaktuMulai?: DateTimeFilter<"SettingKegiatan"> | Date | string
+    WaktuSelesai?: DateTimeNullableFilter<"SettingKegiatan"> | Date | string | null
+  }
+
+  export type SettingBeritaCreateWithoutKategoriBeritaInput = {
+    SettingBeritaId?: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+    SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingBeritaInput
+  }
+
+  export type SettingBeritaUncheckedCreateWithoutKategoriBeritaInput = {
+    SettingBeritaId?: string
+    SettingMainPageId: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+  }
+
+  export type SettingBeritaCreateOrConnectWithoutKategoriBeritaInput = {
+    where: SettingBeritaWhereUniqueInput
+    create: XOR<SettingBeritaCreateWithoutKategoriBeritaInput, SettingBeritaUncheckedCreateWithoutKategoriBeritaInput>
+  }
+
+  export type SettingBeritaCreateManyKategoriBeritaInputEnvelope = {
+    data: SettingBeritaCreateManyKategoriBeritaInput | SettingBeritaCreateManyKategoriBeritaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SettingBeritaUpsertWithWhereUniqueWithoutKategoriBeritaInput = {
+    where: SettingBeritaWhereUniqueInput
+    update: XOR<SettingBeritaUpdateWithoutKategoriBeritaInput, SettingBeritaUncheckedUpdateWithoutKategoriBeritaInput>
+    create: XOR<SettingBeritaCreateWithoutKategoriBeritaInput, SettingBeritaUncheckedCreateWithoutKategoriBeritaInput>
+  }
+
+  export type SettingBeritaUpdateWithWhereUniqueWithoutKategoriBeritaInput = {
+    where: SettingBeritaWhereUniqueInput
+    data: XOR<SettingBeritaUpdateWithoutKategoriBeritaInput, SettingBeritaUncheckedUpdateWithoutKategoriBeritaInput>
+  }
+
+  export type SettingBeritaUpdateManyWithWhereWithoutKategoriBeritaInput = {
+    where: SettingBeritaScalarWhereInput
+    data: XOR<SettingBeritaUpdateManyMutationInput, SettingBeritaUncheckedUpdateManyWithoutKategoriBeritaInput>
+  }
+
+  export type SettingBeritaScalarWhereInput = {
+    AND?: SettingBeritaScalarWhereInput | SettingBeritaScalarWhereInput[]
+    OR?: SettingBeritaScalarWhereInput[]
+    NOT?: SettingBeritaScalarWhereInput | SettingBeritaScalarWhereInput[]
+    SettingBeritaId?: StringFilter<"SettingBerita"> | string
+    KategoriBeritaId?: StringFilter<"SettingBerita"> | string
+    SettingMainPageId?: StringFilter<"SettingBerita"> | string
+    Title?: StringFilter<"SettingBerita"> | string
+    Deskripsi?: StringFilter<"SettingBerita"> | string
+    Gambar?: BytesFilter<"SettingBerita"> | Uint8Array
+    Populer?: BoolFilter<"SettingBerita"> | boolean
+    Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
+  }
+
+  export type UniversityCreateWithoutSettingMainPageInput = {
+    UniversityId?: string
+    Nama: string
+    Akreditasi: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    Alamat: AlamatCreateNestedOneWithoutUniversityInput
+    ProgramStudi?: ProgramStudiCreateNestedManyWithoutUniversityInput
+    UniversityJabatan?: UniversityJabatanCreateNestedManyWithoutUniversityInput
+    UniversitySosialMedia?: UniversitySosialMediaCreateNestedManyWithoutUniversityInput
+    UniversityInformasi?: UniversityInformasiCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityUncheckedCreateWithoutSettingMainPageInput = {
+    UniversityId?: string
+    AlamatId: string
+    Nama: string
+    Akreditasi: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    ProgramStudi?: ProgramStudiUncheckedCreateNestedManyWithoutUniversityInput
+    UniversityJabatan?: UniversityJabatanUncheckedCreateNestedManyWithoutUniversityInput
+    UniversitySosialMedia?: UniversitySosialMediaUncheckedCreateNestedManyWithoutUniversityInput
+    UniversityInformasi?: UniversityInformasiUncheckedCreateNestedManyWithoutUniversityInput
+  }
+
+  export type UniversityCreateOrConnectWithoutSettingMainPageInput = {
+    where: UniversityWhereUniqueInput
+    create: XOR<UniversityCreateWithoutSettingMainPageInput, UniversityUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingKegiatanCreateWithoutSettingMainPageInput = {
+    SettingKegiatanId?: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+    JenisKegiatan: JenisKegiatanCreateNestedOneWithoutSettingKegiatanInput
+  }
+
+  export type SettingKegiatanUncheckedCreateWithoutSettingMainPageInput = {
+    SettingKegiatanId?: string
+    JenisKegiatanId: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+  }
+
+  export type SettingKegiatanCreateOrConnectWithoutSettingMainPageInput = {
+    where: SettingKegiatanWhereUniqueInput
+    create: XOR<SettingKegiatanCreateWithoutSettingMainPageInput, SettingKegiatanUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingKegiatanCreateManySettingMainPageInputEnvelope = {
+    data: SettingKegiatanCreateManySettingMainPageInput | SettingKegiatanCreateManySettingMainPageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SettingCommunityCreateWithoutSettingMainPageInput = {
+    SettingCommunityId?: string
+    Title: string
+    Gambar: Uint8Array
+  }
+
+  export type SettingCommunityUncheckedCreateWithoutSettingMainPageInput = {
+    SettingCommunityId?: string
+    Title: string
+    Gambar: Uint8Array
+  }
+
+  export type SettingCommunityCreateOrConnectWithoutSettingMainPageInput = {
+    where: SettingCommunityWhereUniqueInput
+    create: XOR<SettingCommunityCreateWithoutSettingMainPageInput, SettingCommunityUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingCommunityCreateManySettingMainPageInputEnvelope = {
+    data: SettingCommunityCreateManySettingMainPageInput | SettingCommunityCreateManySettingMainPageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SettingWhyCreateWithoutSettingMainPageInput = {
+    SettingWhyId?: string
+    Icon: string
+    Title: string
+    Subtitle: string
+  }
+
+  export type SettingWhyUncheckedCreateWithoutSettingMainPageInput = {
+    SettingWhyId?: string
+    Icon: string
+    Title: string
+    Subtitle: string
+  }
+
+  export type SettingWhyCreateOrConnectWithoutSettingMainPageInput = {
+    where: SettingWhyWhereUniqueInput
+    create: XOR<SettingWhyCreateWithoutSettingMainPageInput, SettingWhyUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingWhyCreateManySettingMainPageInputEnvelope = {
+    data: SettingWhyCreateManySettingMainPageInput | SettingWhyCreateManySettingMainPageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SettingNumberCreateWithoutSettingMainPageInput = {
+    SettingNumberId?: string
+    Title: string
+    Subtitle: string
+    Angka: string
+  }
+
+  export type SettingNumberUncheckedCreateWithoutSettingMainPageInput = {
+    SettingNumberId?: string
+    Title: string
+    Subtitle: string
+    Angka: string
+  }
+
+  export type SettingNumberCreateOrConnectWithoutSettingMainPageInput = {
+    where: SettingNumberWhereUniqueInput
+    create: XOR<SettingNumberCreateWithoutSettingMainPageInput, SettingNumberUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingNumberCreateManySettingMainPageInputEnvelope = {
+    data: SettingNumberCreateManySettingMainPageInput | SettingNumberCreateManySettingMainPageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SettingTestimonyCreateWithoutSettingMainPageInput = {
+    SettingTestimonyId?: string
+    Nama: string
+    Jabatan: string
+    JurusanTahun: string
+    Testimoni: string
+    Foto: Uint8Array
+  }
+
+  export type SettingTestimonyUncheckedCreateWithoutSettingMainPageInput = {
+    SettingTestimonyId?: string
+    Nama: string
+    Jabatan: string
+    JurusanTahun: string
+    Testimoni: string
+    Foto: Uint8Array
+  }
+
+  export type SettingTestimonyCreateOrConnectWithoutSettingMainPageInput = {
+    where: SettingTestimonyWhereUniqueInput
+    create: XOR<SettingTestimonyCreateWithoutSettingMainPageInput, SettingTestimonyUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingTestimonyCreateManySettingMainPageInputEnvelope = {
+    data: SettingTestimonyCreateManySettingMainPageInput | SettingTestimonyCreateManySettingMainPageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SettingBeritaCreateWithoutSettingMainPageInput = {
+    SettingBeritaId?: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+    KategoriBerita: KategoriBeritaCreateNestedOneWithoutSettingBeritaInput
+  }
+
+  export type SettingBeritaUncheckedCreateWithoutSettingMainPageInput = {
+    SettingBeritaId?: string
+    KategoriBeritaId: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+  }
+
+  export type SettingBeritaCreateOrConnectWithoutSettingMainPageInput = {
+    where: SettingBeritaWhereUniqueInput
+    create: XOR<SettingBeritaCreateWithoutSettingMainPageInput, SettingBeritaUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingBeritaCreateManySettingMainPageInputEnvelope = {
+    data: SettingBeritaCreateManySettingMainPageInput | SettingBeritaCreateManySettingMainPageInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UniversityUpsertWithoutSettingMainPageInput = {
+    update: XOR<UniversityUpdateWithoutSettingMainPageInput, UniversityUncheckedUpdateWithoutSettingMainPageInput>
+    create: XOR<UniversityCreateWithoutSettingMainPageInput, UniversityUncheckedCreateWithoutSettingMainPageInput>
+    where?: UniversityWhereInput
+  }
+
+  export type UniversityUpdateToOneWithWhereWithoutSettingMainPageInput = {
+    where?: UniversityWhereInput
+    data: XOR<UniversityUpdateWithoutSettingMainPageInput, UniversityUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type UniversityUpdateWithoutSettingMainPageInput = {
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Akreditasi?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Alamat?: AlamatUpdateOneRequiredWithoutUniversityNestedInput
+    ProgramStudi?: ProgramStudiUpdateManyWithoutUniversityNestedInput
+    UniversityJabatan?: UniversityJabatanUpdateManyWithoutUniversityNestedInput
+    UniversitySosialMedia?: UniversitySosialMediaUpdateManyWithoutUniversityNestedInput
+    UniversityInformasi?: UniversityInformasiUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type UniversityUncheckedUpdateWithoutSettingMainPageInput = {
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    AlamatId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Akreditasi?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ProgramStudi?: ProgramStudiUncheckedUpdateManyWithoutUniversityNestedInput
+    UniversityJabatan?: UniversityJabatanUncheckedUpdateManyWithoutUniversityNestedInput
+    UniversitySosialMedia?: UniversitySosialMediaUncheckedUpdateManyWithoutUniversityNestedInput
+    UniversityInformasi?: UniversityInformasiUncheckedUpdateManyWithoutUniversityNestedInput
+  }
+
+  export type SettingKegiatanUpsertWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingKegiatanWhereUniqueInput
+    update: XOR<SettingKegiatanUpdateWithoutSettingMainPageInput, SettingKegiatanUncheckedUpdateWithoutSettingMainPageInput>
+    create: XOR<SettingKegiatanCreateWithoutSettingMainPageInput, SettingKegiatanUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingKegiatanUpdateWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingKegiatanWhereUniqueInput
+    data: XOR<SettingKegiatanUpdateWithoutSettingMainPageInput, SettingKegiatanUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type SettingKegiatanUpdateManyWithWhereWithoutSettingMainPageInput = {
+    where: SettingKegiatanScalarWhereInput
+    data: XOR<SettingKegiatanUpdateManyMutationInput, SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageInput>
+  }
+
+  export type SettingCommunityUpsertWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingCommunityWhereUniqueInput
+    update: XOR<SettingCommunityUpdateWithoutSettingMainPageInput, SettingCommunityUncheckedUpdateWithoutSettingMainPageInput>
+    create: XOR<SettingCommunityCreateWithoutSettingMainPageInput, SettingCommunityUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingCommunityUpdateWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingCommunityWhereUniqueInput
+    data: XOR<SettingCommunityUpdateWithoutSettingMainPageInput, SettingCommunityUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type SettingCommunityUpdateManyWithWhereWithoutSettingMainPageInput = {
+    where: SettingCommunityScalarWhereInput
+    data: XOR<SettingCommunityUpdateManyMutationInput, SettingCommunityUncheckedUpdateManyWithoutSettingMainPageInput>
+  }
+
+  export type SettingCommunityScalarWhereInput = {
+    AND?: SettingCommunityScalarWhereInput | SettingCommunityScalarWhereInput[]
+    OR?: SettingCommunityScalarWhereInput[]
+    NOT?: SettingCommunityScalarWhereInput | SettingCommunityScalarWhereInput[]
+    SettingCommunityId?: StringFilter<"SettingCommunity"> | string
+    SettingMainPageId?: StringFilter<"SettingCommunity"> | string
+    Title?: StringFilter<"SettingCommunity"> | string
+    Gambar?: BytesFilter<"SettingCommunity"> | Uint8Array
+  }
+
+  export type SettingWhyUpsertWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingWhyWhereUniqueInput
+    update: XOR<SettingWhyUpdateWithoutSettingMainPageInput, SettingWhyUncheckedUpdateWithoutSettingMainPageInput>
+    create: XOR<SettingWhyCreateWithoutSettingMainPageInput, SettingWhyUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingWhyUpdateWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingWhyWhereUniqueInput
+    data: XOR<SettingWhyUpdateWithoutSettingMainPageInput, SettingWhyUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type SettingWhyUpdateManyWithWhereWithoutSettingMainPageInput = {
+    where: SettingWhyScalarWhereInput
+    data: XOR<SettingWhyUpdateManyMutationInput, SettingWhyUncheckedUpdateManyWithoutSettingMainPageInput>
+  }
+
+  export type SettingWhyScalarWhereInput = {
+    AND?: SettingWhyScalarWhereInput | SettingWhyScalarWhereInput[]
+    OR?: SettingWhyScalarWhereInput[]
+    NOT?: SettingWhyScalarWhereInput | SettingWhyScalarWhereInput[]
+    SettingWhyId?: StringFilter<"SettingWhy"> | string
+    SettingMainPageId?: StringFilter<"SettingWhy"> | string
+    Icon?: StringFilter<"SettingWhy"> | string
+    Title?: StringFilter<"SettingWhy"> | string
+    Subtitle?: StringFilter<"SettingWhy"> | string
+  }
+
+  export type SettingNumberUpsertWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingNumberWhereUniqueInput
+    update: XOR<SettingNumberUpdateWithoutSettingMainPageInput, SettingNumberUncheckedUpdateWithoutSettingMainPageInput>
+    create: XOR<SettingNumberCreateWithoutSettingMainPageInput, SettingNumberUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingNumberUpdateWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingNumberWhereUniqueInput
+    data: XOR<SettingNumberUpdateWithoutSettingMainPageInput, SettingNumberUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type SettingNumberUpdateManyWithWhereWithoutSettingMainPageInput = {
+    where: SettingNumberScalarWhereInput
+    data: XOR<SettingNumberUpdateManyMutationInput, SettingNumberUncheckedUpdateManyWithoutSettingMainPageInput>
+  }
+
+  export type SettingNumberScalarWhereInput = {
+    AND?: SettingNumberScalarWhereInput | SettingNumberScalarWhereInput[]
+    OR?: SettingNumberScalarWhereInput[]
+    NOT?: SettingNumberScalarWhereInput | SettingNumberScalarWhereInput[]
+    SettingNumberId?: StringFilter<"SettingNumber"> | string
+    SettingMainPageId?: StringFilter<"SettingNumber"> | string
+    Title?: StringFilter<"SettingNumber"> | string
+    Subtitle?: StringFilter<"SettingNumber"> | string
+    Angka?: StringFilter<"SettingNumber"> | string
+  }
+
+  export type SettingTestimonyUpsertWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingTestimonyWhereUniqueInput
+    update: XOR<SettingTestimonyUpdateWithoutSettingMainPageInput, SettingTestimonyUncheckedUpdateWithoutSettingMainPageInput>
+    create: XOR<SettingTestimonyCreateWithoutSettingMainPageInput, SettingTestimonyUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingTestimonyUpdateWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingTestimonyWhereUniqueInput
+    data: XOR<SettingTestimonyUpdateWithoutSettingMainPageInput, SettingTestimonyUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type SettingTestimonyUpdateManyWithWhereWithoutSettingMainPageInput = {
+    where: SettingTestimonyScalarWhereInput
+    data: XOR<SettingTestimonyUpdateManyMutationInput, SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageInput>
+  }
+
+  export type SettingTestimonyScalarWhereInput = {
+    AND?: SettingTestimonyScalarWhereInput | SettingTestimonyScalarWhereInput[]
+    OR?: SettingTestimonyScalarWhereInput[]
+    NOT?: SettingTestimonyScalarWhereInput | SettingTestimonyScalarWhereInput[]
+    SettingTestimonyId?: StringFilter<"SettingTestimony"> | string
+    SettingMainPageId?: StringFilter<"SettingTestimony"> | string
+    Nama?: StringFilter<"SettingTestimony"> | string
+    Jabatan?: StringFilter<"SettingTestimony"> | string
+    JurusanTahun?: StringFilter<"SettingTestimony"> | string
+    Testimoni?: StringFilter<"SettingTestimony"> | string
+    Foto?: BytesFilter<"SettingTestimony"> | Uint8Array
+  }
+
+  export type SettingBeritaUpsertWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingBeritaWhereUniqueInput
+    update: XOR<SettingBeritaUpdateWithoutSettingMainPageInput, SettingBeritaUncheckedUpdateWithoutSettingMainPageInput>
+    create: XOR<SettingBeritaCreateWithoutSettingMainPageInput, SettingBeritaUncheckedCreateWithoutSettingMainPageInput>
+  }
+
+  export type SettingBeritaUpdateWithWhereUniqueWithoutSettingMainPageInput = {
+    where: SettingBeritaWhereUniqueInput
+    data: XOR<SettingBeritaUpdateWithoutSettingMainPageInput, SettingBeritaUncheckedUpdateWithoutSettingMainPageInput>
+  }
+
+  export type SettingBeritaUpdateManyWithWhereWithoutSettingMainPageInput = {
+    where: SettingBeritaScalarWhereInput
+    data: XOR<SettingBeritaUpdateManyMutationInput, SettingBeritaUncheckedUpdateManyWithoutSettingMainPageInput>
+  }
+
+  export type JenisKegiatanCreateWithoutSettingKegiatanInput = {
+    JenisKegiatanId?: string
+    Nama: string
+    Color: string
+  }
+
+  export type JenisKegiatanUncheckedCreateWithoutSettingKegiatanInput = {
+    JenisKegiatanId?: string
+    Nama: string
+    Color: string
+  }
+
+  export type JenisKegiatanCreateOrConnectWithoutSettingKegiatanInput = {
+    where: JenisKegiatanWhereUniqueInput
+    create: XOR<JenisKegiatanCreateWithoutSettingKegiatanInput, JenisKegiatanUncheckedCreateWithoutSettingKegiatanInput>
+  }
+
+  export type SettingMainPageCreateWithoutSettingKegiatanInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    University: UniversityCreateNestedOneWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateWithoutSettingKegiatanInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingCommunity?: SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageCreateOrConnectWithoutSettingKegiatanInput = {
+    where: SettingMainPageWhereUniqueInput
+    create: XOR<SettingMainPageCreateWithoutSettingKegiatanInput, SettingMainPageUncheckedCreateWithoutSettingKegiatanInput>
+  }
+
+  export type JenisKegiatanUpsertWithoutSettingKegiatanInput = {
+    update: XOR<JenisKegiatanUpdateWithoutSettingKegiatanInput, JenisKegiatanUncheckedUpdateWithoutSettingKegiatanInput>
+    create: XOR<JenisKegiatanCreateWithoutSettingKegiatanInput, JenisKegiatanUncheckedCreateWithoutSettingKegiatanInput>
+    where?: JenisKegiatanWhereInput
+  }
+
+  export type JenisKegiatanUpdateToOneWithWhereWithoutSettingKegiatanInput = {
+    where?: JenisKegiatanWhereInput
+    data: XOR<JenisKegiatanUpdateWithoutSettingKegiatanInput, JenisKegiatanUncheckedUpdateWithoutSettingKegiatanInput>
+  }
+
+  export type JenisKegiatanUpdateWithoutSettingKegiatanInput = {
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type JenisKegiatanUncheckedUpdateWithoutSettingKegiatanInput = {
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingMainPageUpsertWithoutSettingKegiatanInput = {
+    update: XOR<SettingMainPageUpdateWithoutSettingKegiatanInput, SettingMainPageUncheckedUpdateWithoutSettingKegiatanInput>
+    create: XOR<SettingMainPageCreateWithoutSettingKegiatanInput, SettingMainPageUncheckedCreateWithoutSettingKegiatanInput>
+    where?: SettingMainPageWhereInput
+  }
+
+  export type SettingMainPageUpdateToOneWithWhereWithoutSettingKegiatanInput = {
+    where?: SettingMainPageWhereInput
+    data: XOR<SettingMainPageUpdateWithoutSettingKegiatanInput, SettingMainPageUncheckedUpdateWithoutSettingKegiatanInput>
+  }
+
+  export type SettingMainPageUpdateWithoutSettingKegiatanInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    University?: UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateWithoutSettingKegiatanInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingCommunity?: SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageCreateWithoutSettingCommunityInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    University: UniversityCreateNestedOneWithoutSettingMainPageInput
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateWithoutSettingCommunityInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageCreateOrConnectWithoutSettingCommunityInput = {
+    where: SettingMainPageWhereUniqueInput
+    create: XOR<SettingMainPageCreateWithoutSettingCommunityInput, SettingMainPageUncheckedCreateWithoutSettingCommunityInput>
+  }
+
+  export type SettingMainPageUpsertWithoutSettingCommunityInput = {
+    update: XOR<SettingMainPageUpdateWithoutSettingCommunityInput, SettingMainPageUncheckedUpdateWithoutSettingCommunityInput>
+    create: XOR<SettingMainPageCreateWithoutSettingCommunityInput, SettingMainPageUncheckedCreateWithoutSettingCommunityInput>
+    where?: SettingMainPageWhereInput
+  }
+
+  export type SettingMainPageUpdateToOneWithWhereWithoutSettingCommunityInput = {
+    where?: SettingMainPageWhereInput
+    data: XOR<SettingMainPageUpdateWithoutSettingCommunityInput, SettingMainPageUncheckedUpdateWithoutSettingCommunityInput>
+  }
+
+  export type SettingMainPageUpdateWithoutSettingCommunityInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    University?: UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateWithoutSettingCommunityInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageCreateWithoutSettingWhyInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    University: UniversityCreateNestedOneWithoutSettingMainPageInput
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateWithoutSettingWhyInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageCreateOrConnectWithoutSettingWhyInput = {
+    where: SettingMainPageWhereUniqueInput
+    create: XOR<SettingMainPageCreateWithoutSettingWhyInput, SettingMainPageUncheckedCreateWithoutSettingWhyInput>
+  }
+
+  export type SettingMainPageUpsertWithoutSettingWhyInput = {
+    update: XOR<SettingMainPageUpdateWithoutSettingWhyInput, SettingMainPageUncheckedUpdateWithoutSettingWhyInput>
+    create: XOR<SettingMainPageCreateWithoutSettingWhyInput, SettingMainPageUncheckedCreateWithoutSettingWhyInput>
+    where?: SettingMainPageWhereInput
+  }
+
+  export type SettingMainPageUpdateToOneWithWhereWithoutSettingWhyInput = {
+    where?: SettingMainPageWhereInput
+    data: XOR<SettingMainPageUpdateWithoutSettingWhyInput, SettingMainPageUncheckedUpdateWithoutSettingWhyInput>
+  }
+
+  export type SettingMainPageUpdateWithoutSettingWhyInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    University?: UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateWithoutSettingWhyInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageCreateWithoutSettingNumberInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    University: UniversityCreateNestedOneWithoutSettingMainPageInput
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateWithoutSettingNumberInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageCreateOrConnectWithoutSettingNumberInput = {
+    where: SettingMainPageWhereUniqueInput
+    create: XOR<SettingMainPageCreateWithoutSettingNumberInput, SettingMainPageUncheckedCreateWithoutSettingNumberInput>
+  }
+
+  export type SettingMainPageUpsertWithoutSettingNumberInput = {
+    update: XOR<SettingMainPageUpdateWithoutSettingNumberInput, SettingMainPageUncheckedUpdateWithoutSettingNumberInput>
+    create: XOR<SettingMainPageCreateWithoutSettingNumberInput, SettingMainPageUncheckedCreateWithoutSettingNumberInput>
+    where?: SettingMainPageWhereInput
+  }
+
+  export type SettingMainPageUpdateToOneWithWhereWithoutSettingNumberInput = {
+    where?: SettingMainPageWhereInput
+    data: XOR<SettingMainPageUpdateWithoutSettingNumberInput, SettingMainPageUncheckedUpdateWithoutSettingNumberInput>
+  }
+
+  export type SettingMainPageUpdateWithoutSettingNumberInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    University?: UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateWithoutSettingNumberInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageCreateWithoutSettingTestimonyInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    University: UniversityCreateNestedOneWithoutSettingMainPageInput
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateWithoutSettingTestimonyInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingBerita?: SettingBeritaUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageCreateOrConnectWithoutSettingTestimonyInput = {
+    where: SettingMainPageWhereUniqueInput
+    create: XOR<SettingMainPageCreateWithoutSettingTestimonyInput, SettingMainPageUncheckedCreateWithoutSettingTestimonyInput>
+  }
+
+  export type SettingMainPageUpsertWithoutSettingTestimonyInput = {
+    update: XOR<SettingMainPageUpdateWithoutSettingTestimonyInput, SettingMainPageUncheckedUpdateWithoutSettingTestimonyInput>
+    create: XOR<SettingMainPageCreateWithoutSettingTestimonyInput, SettingMainPageUncheckedCreateWithoutSettingTestimonyInput>
+    where?: SettingMainPageWhereInput
+  }
+
+  export type SettingMainPageUpdateToOneWithWhereWithoutSettingTestimonyInput = {
+    where?: SettingMainPageWhereInput
+    data: XOR<SettingMainPageUpdateWithoutSettingTestimonyInput, SettingMainPageUncheckedUpdateWithoutSettingTestimonyInput>
+  }
+
+  export type SettingMainPageUpdateWithoutSettingTestimonyInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    University?: UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateWithoutSettingTestimonyInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageCreateWithoutSettingBeritaInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    University: UniversityCreateNestedOneWithoutSettingMainPageInput
+    SettingKegiatan?: SettingKegiatanCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageUncheckedCreateWithoutSettingBeritaInput = {
+    SettingMainPageId?: string
+    UniversityId: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+    SettingKegiatan?: SettingKegiatanUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingCommunity?: SettingCommunityUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingWhy?: SettingWhyUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingNumber?: SettingNumberUncheckedCreateNestedManyWithoutSettingMainPageInput
+    SettingTestimony?: SettingTestimonyUncheckedCreateNestedManyWithoutSettingMainPageInput
+  }
+
+  export type SettingMainPageCreateOrConnectWithoutSettingBeritaInput = {
+    where: SettingMainPageWhereUniqueInput
+    create: XOR<SettingMainPageCreateWithoutSettingBeritaInput, SettingMainPageUncheckedCreateWithoutSettingBeritaInput>
+  }
+
+  export type KategoriBeritaCreateWithoutSettingBeritaInput = {
+    KategoriBeritaId?: string
+    Nama: string
+    Color: string
+  }
+
+  export type KategoriBeritaUncheckedCreateWithoutSettingBeritaInput = {
+    KategoriBeritaId?: string
+    Nama: string
+    Color: string
+  }
+
+  export type KategoriBeritaCreateOrConnectWithoutSettingBeritaInput = {
+    where: KategoriBeritaWhereUniqueInput
+    create: XOR<KategoriBeritaCreateWithoutSettingBeritaInput, KategoriBeritaUncheckedCreateWithoutSettingBeritaInput>
+  }
+
+  export type SettingMainPageUpsertWithoutSettingBeritaInput = {
+    update: XOR<SettingMainPageUpdateWithoutSettingBeritaInput, SettingMainPageUncheckedUpdateWithoutSettingBeritaInput>
+    create: XOR<SettingMainPageCreateWithoutSettingBeritaInput, SettingMainPageUncheckedCreateWithoutSettingBeritaInput>
+    where?: SettingMainPageWhereInput
+  }
+
+  export type SettingMainPageUpdateToOneWithWhereWithoutSettingBeritaInput = {
+    where?: SettingMainPageWhereInput
+    data: XOR<SettingMainPageUpdateWithoutSettingBeritaInput, SettingMainPageUncheckedUpdateWithoutSettingBeritaInput>
+  }
+
+  export type SettingMainPageUpdateWithoutSettingBeritaInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    University?: UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateWithoutSettingBeritaInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    UniversityId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type KategoriBeritaUpsertWithoutSettingBeritaInput = {
+    update: XOR<KategoriBeritaUpdateWithoutSettingBeritaInput, KategoriBeritaUncheckedUpdateWithoutSettingBeritaInput>
+    create: XOR<KategoriBeritaCreateWithoutSettingBeritaInput, KategoriBeritaUncheckedCreateWithoutSettingBeritaInput>
+    where?: KategoriBeritaWhereInput
+  }
+
+  export type KategoriBeritaUpdateToOneWithWhereWithoutSettingBeritaInput = {
+    where?: KategoriBeritaWhereInput
+    data: XOR<KategoriBeritaUpdateWithoutSettingBeritaInput, KategoriBeritaUncheckedUpdateWithoutSettingBeritaInput>
+  }
+
+  export type KategoriBeritaUpdateWithoutSettingBeritaInput = {
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type KategoriBeritaUncheckedUpdateWithoutSettingBeritaInput = {
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Color?: StringFieldUpdateOperationsInput | string
+  }
+
   export type InstitusiLamaCreateManyAlamatInput = {
     InstitusiLamaId?: string
     PendaftaranId: string
@@ -99069,6 +113683,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityUncheckedUpdateWithoutAlamatInput = {
@@ -99082,6 +113697,7 @@ export namespace Prisma {
     UniversityJabatan?: UniversityJabatanUncheckedUpdateManyWithoutUniversityNestedInput
     UniversitySosialMedia?: UniversitySosialMediaUncheckedUpdateManyWithoutUniversityNestedInput
     UniversityInformasi?: UniversityInformasiUncheckedUpdateManyWithoutUniversityNestedInput
+    SettingMainPage?: SettingMainPageUncheckedUpdateManyWithoutUniversityNestedInput
   }
 
   export type UniversityUncheckedUpdateManyWithoutAlamatInput = {
@@ -101125,6 +115741,27 @@ export namespace Prisma {
     Informasi?: string | null
   }
 
+  export type SettingMainPageCreateManyUniversityInput = {
+    SettingMainPageId?: string
+    BackgroundFileUtama: Uint8Array
+    TextMainPage1: string
+    TextMainPage2: string
+    TextMainPage3: string
+    SelayangPandangText: string
+    SelayangPandangDeskripsi: string
+    SelayangPandangBackgroundFile: Uint8Array
+    WhyText: string
+    WhyDeskripsi: string
+    CommunityText: string
+    CommunityDeskripsi: string
+    KegiatanText: string
+    KegiatanDeskripsi: string
+    BeritaText: string
+    BeritaDeskripsi: string
+    TestomoniText: string
+    TestomoniDeskripsi: string
+  }
+
   export type ProgramStudiUpdateWithoutUniversityInput = {
     ProgramStudiId?: StringFieldUpdateOperationsInput | string
     Nama?: StringFieldUpdateOperationsInput | string
@@ -101227,6 +115864,81 @@ export namespace Prisma {
     UniversityInformasiId?: StringFieldUpdateOperationsInput | string
     Nama?: StringFieldUpdateOperationsInput | string
     Informasi?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SettingMainPageUpdateWithoutUniversityInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateWithoutUniversityInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
+    SettingKegiatan?: SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingCommunity?: SettingCommunityUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingWhy?: SettingWhyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingNumber?: SettingNumberUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingTestimony?: SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageNestedInput
+    SettingBerita?: SettingBeritaUncheckedUpdateManyWithoutSettingMainPageNestedInput
+  }
+
+  export type SettingMainPageUncheckedUpdateManyWithoutUniversityInput = {
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    TextMainPage1?: StringFieldUpdateOperationsInput | string
+    TextMainPage2?: StringFieldUpdateOperationsInput | string
+    TextMainPage3?: StringFieldUpdateOperationsInput | string
+    SelayangPandangText?: StringFieldUpdateOperationsInput | string
+    SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    WhyText?: StringFieldUpdateOperationsInput | string
+    WhyDeskripsi?: StringFieldUpdateOperationsInput | string
+    CommunityText?: StringFieldUpdateOperationsInput | string
+    CommunityDeskripsi?: StringFieldUpdateOperationsInput | string
+    KegiatanText?: StringFieldUpdateOperationsInput | string
+    KegiatanDeskripsi?: StringFieldUpdateOperationsInput | string
+    BeritaText?: StringFieldUpdateOperationsInput | string
+    BeritaDeskripsi?: StringFieldUpdateOperationsInput | string
+    TestomoniText?: StringFieldUpdateOperationsInput | string
+    TestomoniDeskripsi?: StringFieldUpdateOperationsInput | string
   }
 
   export type UniversityJabatanOrangCreateManyUniversityJabatanInput = {
@@ -101393,6 +116105,282 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingKegiatanCreateManyJenisKegiatanInput = {
+    SettingKegiatanId?: string
+    SettingMainPageId: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+  }
+
+  export type SettingKegiatanUpdateWithoutJenisKegiatanInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingKegiatanNestedInput
+  }
+
+  export type SettingKegiatanUncheckedUpdateWithoutJenisKegiatanInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingKegiatanUncheckedUpdateManyWithoutJenisKegiatanInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingBeritaCreateManyKategoriBeritaInput = {
+    SettingBeritaId?: string
+    SettingMainPageId: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+  }
+
+  export type SettingBeritaUpdateWithoutKategoriBeritaInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+    SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput
+  }
+
+  export type SettingBeritaUncheckedUpdateWithoutKategoriBeritaInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SettingBeritaUncheckedUpdateManyWithoutKategoriBeritaInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    SettingMainPageId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SettingKegiatanCreateManySettingMainPageInput = {
+    SettingKegiatanId?: string
+    JenisKegiatanId: string
+    Nama: string
+    Lokasi?: string | null
+    Deskripsi?: string | null
+    WaktuMulai: Date | string
+    WaktuSelesai?: Date | string | null
+  }
+
+  export type SettingCommunityCreateManySettingMainPageInput = {
+    SettingCommunityId?: string
+    Title: string
+    Gambar: Uint8Array
+  }
+
+  export type SettingWhyCreateManySettingMainPageInput = {
+    SettingWhyId?: string
+    Icon: string
+    Title: string
+    Subtitle: string
+  }
+
+  export type SettingNumberCreateManySettingMainPageInput = {
+    SettingNumberId?: string
+    Title: string
+    Subtitle: string
+    Angka: string
+  }
+
+  export type SettingTestimonyCreateManySettingMainPageInput = {
+    SettingTestimonyId?: string
+    Nama: string
+    Jabatan: string
+    JurusanTahun: string
+    Testimoni: string
+    Foto: Uint8Array
+  }
+
+  export type SettingBeritaCreateManySettingMainPageInput = {
+    SettingBeritaId?: string
+    KategoriBeritaId: string
+    Title: string
+    Deskripsi: string
+    Gambar: Uint8Array
+    Populer?: boolean
+    Waktu: Date | string
+  }
+
+  export type SettingKegiatanUpdateWithoutSettingMainPageInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    JenisKegiatan?: JenisKegiatanUpdateOneRequiredWithoutSettingKegiatanNestedInput
+  }
+
+  export type SettingKegiatanUncheckedUpdateWithoutSettingMainPageInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingKegiatanUncheckedUpdateManyWithoutSettingMainPageInput = {
+    SettingKegiatanId?: StringFieldUpdateOperationsInput | string
+    JenisKegiatanId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Lokasi?: NullableStringFieldUpdateOperationsInput | string | null
+    Deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    WaktuMulai?: DateTimeFieldUpdateOperationsInput | Date | string
+    WaktuSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SettingCommunityUpdateWithoutSettingMainPageInput = {
+    SettingCommunityId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingCommunityUncheckedUpdateWithoutSettingMainPageInput = {
+    SettingCommunityId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingCommunityUncheckedUpdateManyWithoutSettingMainPageInput = {
+    SettingCommunityId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingWhyUpdateWithoutSettingMainPageInput = {
+    SettingWhyId?: StringFieldUpdateOperationsInput | string
+    Icon?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingWhyUncheckedUpdateWithoutSettingMainPageInput = {
+    SettingWhyId?: StringFieldUpdateOperationsInput | string
+    Icon?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingWhyUncheckedUpdateManyWithoutSettingMainPageInput = {
+    SettingWhyId?: StringFieldUpdateOperationsInput | string
+    Icon?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingNumberUpdateWithoutSettingMainPageInput = {
+    SettingNumberId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    Angka?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingNumberUncheckedUpdateWithoutSettingMainPageInput = {
+    SettingNumberId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    Angka?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingNumberUncheckedUpdateManyWithoutSettingMainPageInput = {
+    SettingNumberId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Subtitle?: StringFieldUpdateOperationsInput | string
+    Angka?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SettingTestimonyUpdateWithoutSettingMainPageInput = {
+    SettingTestimonyId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jabatan?: StringFieldUpdateOperationsInput | string
+    JurusanTahun?: StringFieldUpdateOperationsInput | string
+    Testimoni?: StringFieldUpdateOperationsInput | string
+    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingTestimonyUncheckedUpdateWithoutSettingMainPageInput = {
+    SettingTestimonyId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jabatan?: StringFieldUpdateOperationsInput | string
+    JurusanTahun?: StringFieldUpdateOperationsInput | string
+    Testimoni?: StringFieldUpdateOperationsInput | string
+    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageInput = {
+    SettingTestimonyId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Jabatan?: StringFieldUpdateOperationsInput | string
+    JurusanTahun?: StringFieldUpdateOperationsInput | string
+    Testimoni?: StringFieldUpdateOperationsInput | string
+    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+  }
+
+  export type SettingBeritaUpdateWithoutSettingMainPageInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+    KategoriBerita?: KategoriBeritaUpdateOneRequiredWithoutSettingBeritaNestedInput
+  }
+
+  export type SettingBeritaUncheckedUpdateWithoutSettingMainPageInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SettingBeritaUncheckedUpdateManyWithoutSettingMainPageInput = {
+    SettingBeritaId?: StringFieldUpdateOperationsInput | string
+    KategoriBeritaId?: StringFieldUpdateOperationsInput | string
+    Title?: StringFieldUpdateOperationsInput | string
+    Deskripsi?: StringFieldUpdateOperationsInput | string
+    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Populer?: BoolFieldUpdateOperationsInput | boolean
+    Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

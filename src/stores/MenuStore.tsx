@@ -1,6 +1,7 @@
 import { Role } from '@/generated/prisma'
 import { MenuProps, MenuStoreProps } from '@/types/types'
 import {
+    AppWindowMac,
     BookTextIcon,
     Database,
     FileArchiveIcon,
@@ -125,29 +126,6 @@ const menu: MenuStoreProps[] = [
         ],
     },
     {
-        namaRole: ['Admin'],
-        title: 'Manajemen Sistem',
-        url: '/manajemen-sistem',
-        icon: SquareTerminal,
-        items: [
-            {
-                namaRole: ['Admin'],
-                title: 'Role',
-                url: '/manajemen-sistem/role',
-            },
-            {
-                namaRole: ['Admin'],
-                title: 'Permission',
-                url: '/manajemen-sistem/permission',
-            },
-            {
-                namaRole: ['Admin'],
-                title: 'API Key',
-                url: '/manajemen-sistem/api-key',
-            },
-        ],
-    },
-    {
         namaRole: ['Admin', 'Kaprodi', 'PMB'],
         title: 'Manajemen Pembelajaran',
         url: '/manajemen-pembelajaran',
@@ -264,6 +242,72 @@ const menu: MenuStoreProps[] = [
         url: '/evaluasi-mandiri',
         icon: FileArchiveIcon,
         items: null,
+    },
+    {
+        namaRole: ['Admin'],
+        title: 'Website',
+        url: '/website',
+        icon: AppWindowMac,
+        items: [
+            {
+                namaRole: ['Admin'],
+                title: 'Homepage',
+                url: '/website/homepage',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Komunitas',
+                url: '/website/komunitas',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Kegiatan',
+                url: '/website/kegiatan',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Berita',
+                url: '/website/berita',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Angka',
+                url: '/website/angka',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Testimoni',
+                url: '/website/testimoni',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Alasan',
+                url: '/website/alasan',
+            },
+        ],
+    },
+    {
+        namaRole: ['Admin'],
+        title: 'Manajemen Sistem',
+        url: '/manajemen-sistem',
+        icon: SquareTerminal,
+        items: [
+            {
+                namaRole: ['Admin'],
+                title: 'Role',
+                url: '/manajemen-sistem/role',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Permission',
+                url: '/manajemen-sistem/permission',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'API Key',
+                url: '/manajemen-sistem/api-key',
+            },
+        ],
     },
     {
         namaRole: ['Mahasiswa', 'Asesor', 'Akademik'],
