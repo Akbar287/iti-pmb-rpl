@@ -15,15 +15,13 @@ app.get('/', async (c) => {
     const search = c.req.query('search') ?? ''
 
     let data = null
-    if (id) {
-        data = await prisma.settingWhy.findFirst({ where: { SettingWhyId: id } })
-    } else if (page && limit) {
+    if (page && limit && id) {
         let where: Prisma.SettingWhyWhereInput = search
             ? {
-                  OR: [{ Title: { contains: search, mode: 'insensitive' } }, {Subtitle: { contains: search, mode: 'insensitive'}}],
+                  OR: [{ Title: { contains: search, mode: 'insensitive' } }, {Subtitle: { contains: search, mode: 'insensitive'}}, {SettingMainPageId: id}],
               }
-            : {}
-
+            : {SettingMainPageId: id}
+    
         const [data, total] = await Promise.all([
             prisma.settingWhy.findMany({
                 where,
@@ -31,10 +29,10 @@ app.get('/', async (c) => {
                 take: limit,
                 orderBy: { Title: 'asc' },
             }),
-
+    
             prisma.settingWhy.count({ where }),
         ])
-
+    
         return c.json<{
             data: SettingWhy[]
             page: number
@@ -58,6 +56,8 @@ app.get('/', async (c) => {
             hasNext: page < Math.ceil(total / limit),
             hasPrevious: page > 1,
         })
+    } else if (id) {
+        data = await prisma.settingWhy.findFirst({ where: { SettingWhyId: id } })
     } else {
         data = await prisma.settingWhy.findMany()
     }

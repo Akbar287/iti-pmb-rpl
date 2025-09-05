@@ -249,7 +249,7 @@ const Profil = ({
                                         setImageFile(null)
                                         setProfilePicture(null)
                                     }}
-                                    className="mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                    className="mr-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                                 >
                                     {loading ? <Timer /> : <SaveAll />}
                                     {loading ? 'Loading' : 'Batalkan'}
@@ -259,7 +259,7 @@ const Profil = ({
                                     disabled={loading}
                                     onClick={() => handleUpload()}
                                     variant={'default'}
-                                    className="mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                    className="mr-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                                 >
                                     {loading ? <Timer /> : <SaveAll />}
                                     {loading ? 'Loading' : 'Upload'}
@@ -270,6 +270,7 @@ const Profil = ({
                                 <Label htmlFor="picture">Picture</Label>
                                 <Input
                                     id="picture"
+                                    disabled={loading}
                                     onChange={(e) => handleImageChange(e)}
                                     type="file"
                                 />
@@ -278,7 +279,7 @@ const Profil = ({
                         {/* <Button
                             type="button"
                             disabled={loading}
-                            className="mr-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                            className="mr-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                         >
                             {loading ? <Timer /> : <SaveAll />}
                             {loading ? 'Loading' : 'Unggah Gambar'}
@@ -286,7 +287,7 @@ const Profil = ({
                     </div>
                 </CardFooter>
             </Card>
-            <div className="w-full items-center justify-between">
+            <div className="items-center justify-between w-full">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <Card className="w-full">
@@ -303,7 +304,7 @@ const Profil = ({
                                             variant="destructive"
                                             className="bg-transparent border-red-500 "
                                         >
-                                            <User2 className="h-4 w-4" />
+                                            <User2 className="w-4 h-4" />
                                             <AlertTitle className="font-semibold text-red-500">
                                                 Kesalahan
                                             </AlertTitle>
@@ -313,7 +314,7 @@ const Profil = ({
                                         </Alert>
                                     )}
                                     <div className="container mx-auto">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                                        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
                                             <FormField
                                                 control={form.control}
                                                 name="Nama"
@@ -324,6 +325,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -348,6 +352,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -372,6 +379,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -396,6 +406,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -414,6 +427,7 @@ const Profil = ({
                                             <FormField
                                                 control={form.control}
                                                 name="TanggalLahir"
+                                                disabled={loading}
                                                 render={({ field }) => (
                                                     <FormItem className="flex flex-col">
                                                         <FormLabel>
@@ -425,6 +439,9 @@ const Profil = ({
                                                             >
                                                                 <FormControl>
                                                                     <Button
+                                                                        disabled={
+                                                                            loading
+                                                                        }
                                                                         variant={
                                                                             'outline'
                                                                         }
@@ -446,7 +463,7 @@ const Profil = ({
                                                                                 Tanggal
                                                                             </span>
                                                                         )}
-                                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                                        <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
                                                                     </Button>
                                                                 </FormControl>
                                                             </PopoverTrigger>
@@ -672,6 +689,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -696,6 +716,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -720,6 +743,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -1137,6 +1163,7 @@ const Profil = ({
                                             <FormField
                                                 control={form.control}
                                                 name="KodePos"
+                                                disabled={loading}
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel>
@@ -1144,6 +1171,9 @@ const Profil = ({
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
+                                                                disabled={
+                                                                    loading
+                                                                }
                                                                 readOnly={
                                                                     loading
                                                                 }
@@ -1165,7 +1195,7 @@ const Profil = ({
                                 <Button
                                     type="submit"
                                     disabled={loading}
-                                    className="mr-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                    className="mr-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                                 >
                                     {loading ? <Timer /> : <SaveAll />}
                                     {loading ? 'Loading' : 'Simpan Data'}
@@ -1174,7 +1204,7 @@ const Profil = ({
                                     type="button"
                                     onClick={() => setOpenDialogPassword(true)}
                                     disabled={loading}
-                                    className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                    className="mx-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                                 >
                                     {loading ? <Timer /> : <Lock />}
                                     Ubah Password
@@ -1196,7 +1226,7 @@ const Profil = ({
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label
                                 htmlFor="password_lama"
                                 className="text-right"
@@ -1215,7 +1245,7 @@ const Profil = ({
                                 className="col-span-3"
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label
                                 htmlFor="password_baru"
                                 className="text-right"
@@ -1237,7 +1267,7 @@ const Profil = ({
                     </div>
                     <DialogFooter>
                         <Button
-                            className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                            className="mx-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                             variant={'destructive'}
                             type="button"
                             onClick={() => setOpenDialogPassword(false)}
@@ -1245,7 +1275,7 @@ const Profil = ({
                             Tutup
                         </Button>
                         <Button
-                            className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                            className="mx-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                             type="button"
                             onClick={() => submitUpdatePassword()}
                         >

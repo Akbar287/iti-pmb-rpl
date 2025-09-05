@@ -241,7 +241,7 @@ const InstitusiLama = ({
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="my-2 w-full">
+                <div className="w-full my-2">
                     <h1>Silakan Pilih Nomor Ujian</h1>
                     <Select
                         value={selectableMahasiswa}
@@ -273,7 +273,7 @@ const InstitusiLama = ({
                     !loadingAwal &&
                     data.length === 0 ? (
                         <Button
-                            className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                            className="transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                             type="button"
                             onClick={() => tambahData()}
                         >
@@ -287,9 +287,9 @@ const InstitusiLama = ({
                 {!selectableMahasiswa ? (
                     <></>
                 ) : loadingAwal ? (
-                    <Skeleton className="w-full mt-2 h-56" />
+                    <Skeleton className="w-full h-56 mt-2" />
                 ) : (
-                    <div className="my-2 w-full gap-3 grid grid-cols-1">
+                    <div className="grid w-full grid-cols-1 gap-3 my-2">
                         {data.length === 0 ? (
                             <h1 className="text-2xl text-center">
                                 Tidak ada Data
@@ -308,7 +308,7 @@ const InstitusiLama = ({
                                             {d.NilaiLulusan}
                                         </CardDescription>
                                     </CardHeader>
-                                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <CardContent className="grid grid-cols-1 gap-3 md:grid-cols-2">
                                         <Table>
                                             <TableCaption>
                                                 Informasi Institusi
@@ -470,7 +470,7 @@ const InstitusiLama = ({
                                     </CardContent>
                                     <CardFooter>
                                         <Button
-                                            className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                            className="mx-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                                             type="button"
                                             onClick={() => ubahData(d)}
                                         >
@@ -478,7 +478,7 @@ const InstitusiLama = ({
                                             Ubah
                                         </Button>
                                         <Button
-                                            className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                            className="mx-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 "
                                             variant={'destructive'}
                                             type="button"
                                             onClick={() => hapusData(d)}
@@ -564,9 +564,9 @@ function DialogInstitusiLama({
                         Catat Data Institusi Sebelumnya
                     </DialogDescription>
                 </DialogHeader>
-                <div className="w-full justify-center md:justify-between">
+                <div className="justify-center w-full md:justify-between">
                     <div className="grid grid-cols-1 gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label
                                 htmlFor="jenis_institusi"
                                 className="text-right"
@@ -586,7 +586,7 @@ function DialogInstitusiLama({
                                 className="col-span-3"
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label
                                 htmlFor="nama_institusi"
                                 className="text-right"
@@ -606,7 +606,7 @@ function DialogInstitusiLama({
                                 className="col-span-3"
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="jurusan" className="text-right">
                                 Jurusan
                             </Label>
@@ -623,7 +623,7 @@ function DialogInstitusiLama({
                                 className="col-span-3"
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="jenjang" className="text-right">
                                 Jenjang
                             </Label>
@@ -668,7 +668,7 @@ function DialogInstitusiLama({
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="nisn" className="text-right">
                                 <TooltipProvider>
                                     <Tooltip>
@@ -692,7 +692,7 @@ function DialogInstitusiLama({
                                 className="col-span-3"
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="npsn" className="text-right">
                                 <TooltipProvider>
                                     <Tooltip>
@@ -716,7 +716,7 @@ function DialogInstitusiLama({
                                 className="col-span-3"
                             />
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <label className="text-sm font-medium">Tahun</label>
                             <Input
                                 type="text"
@@ -733,7 +733,7 @@ function DialogInstitusiLama({
                             />
                         </div>
 
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label
                                 htmlFor="nilai_kelulusan"
                                 className="text-right"
@@ -757,7 +757,7 @@ function DialogInstitusiLama({
                         </div>
                     </div>
                     <div className="grid grid-cols-1 gap-4 py-4">
-                        <div className="grid grid-cols-4 w-full items-center gap-4">
+                        <div className="grid items-center w-full grid-cols-4 gap-4">
                             <Label htmlFor="negara" className="text-right">
                                 Negara
                             </Label>
@@ -799,7 +799,7 @@ function DialogInstitusiLama({
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="provinsi" className="text-right">
                                 Provinsi
                             </Label>
@@ -836,7 +836,7 @@ function DialogInstitusiLama({
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="kabupaten" className="text-right">
                                 Kabupaten
                             </Label>
@@ -871,7 +871,7 @@ function DialogInstitusiLama({
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="kecamatan" className="text-right">
                                 Kecamatan
                             </Label>
@@ -904,7 +904,7 @@ function DialogInstitusiLama({
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="desa" className="text-right">
                                 Desa
                             </Label>
@@ -930,7 +930,7 @@ function DialogInstitusiLama({
                                 </SelectContent>
                             </Select>
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label
                                 htmlFor="alamat"
                                 className="text-sm font-medium"
@@ -952,7 +952,7 @@ function DialogInstitusiLama({
                             />
                         </div>
 
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
                             <Label htmlFor="kode_pos" className="text-right">
                                 Kode Pos
                             </Label>
@@ -973,7 +973,7 @@ function DialogInstitusiLama({
                 </div>
                 <DialogFooter>
                     <Button
-                        className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer"
+                        className="mx-2 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90"
                         variant={'default'}
                         type="button"
                         onClick={() => submitEvent()}

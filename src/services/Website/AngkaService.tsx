@@ -4,11 +4,13 @@ import { Pagination } from '@/types/Pagination'
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 export async function getSettingNumberPagination(
+    SettingMainPageId: string,
     page: number,
     limit: number,
     search: string
 ): Promise<Pagination<SettingNumber[]>> {
     const params = new URLSearchParams({
+        id: SettingMainPageId,
         page: String(page),
         limit: String(limit),
         search,

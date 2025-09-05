@@ -15,14 +15,12 @@ app.get('/', async (c) => {
     const search = c.req.query('search') ?? ''
 
     let data = null
-    if (id) {
-        data = await prisma.settingNumber.findFirst({ where: { SettingNumberId: id } })
-    } else if (page && limit) {
+    if (page && limit && id) {
         let where: Prisma.SettingNumberWhereInput = search
             ? {
-                  OR: [{ Title: { contains: search, mode: 'insensitive' } }, {Subtitle: { contains: search, mode: 'insensitive'}}],
+                  OR: [{ Title: { contains: search, mode: 'insensitive' } }, {Subtitle: { contains: search, mode: 'insensitive'}}, {SettingMainPageId: id}],
               }
-            : {}
+            : {SettingMainPageId: id}
 
         const [data, total] = await Promise.all([
             prisma.settingNumber.findMany({
@@ -58,6 +56,8 @@ app.get('/', async (c) => {
             hasNext: page < Math.ceil(total / limit),
             hasPrevious: page > 1,
         })
+    } else if (id) {
+        data = await prisma.settingNumber.findFirst({ where: { SettingNumberId: id } })
     } else {
         data = await prisma.settingNumber.findMany()
     }

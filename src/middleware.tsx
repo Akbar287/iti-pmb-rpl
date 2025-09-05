@@ -48,6 +48,7 @@ const protectedPaths = [
     '/dukungan',
     '/question',
     '/notifikasi',
+    '/website',
 ]
 
 export default withAuth(mainMiddleware, protectedPaths)
@@ -96,5 +97,6 @@ export const config = {
         '/dukungan/:path*',
         '/question/:path*',
         '/notifikasi/:path*',
+        '/website/:path*',
     ],
 }
