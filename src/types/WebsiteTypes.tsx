@@ -44,3 +44,16 @@ export interface SettingBeritaTypes {
     Populer: boolean
     Waktu: Date
 }
+
+export interface SettingKegiatanTypes {
+    Nama: string
+    SettingMainPageId: string
+    JenisKegiatanId: string
+    SettingKegiatanId: string
+    Lokasi: string | null
+    Deskripsi: string | null
+    WaktuMulai: Date
+    WaktuSelesai: Date | null
+    NamaJenis: string
+    Color: string
+}

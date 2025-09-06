@@ -1,5 +1,5 @@
 'use client'
-import { KategoriBerita } from '@/generated/prisma'
+import { JenisKegiatan } from '@/generated/prisma'
 import { cn, replaceItemAtIndex } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
@@ -77,23 +77,21 @@ import {
     FormLabel,
     FormMessage,
 } from '../ui/form'
-import { SettingBeritaTypes } from '@/types/WebsiteTypes'
-import {
-    deleteBerita,
-    getBeritaPagination,
-    setBerita,
-    updateBerita,
-    updatePopulerBerita,
-} from '@/services/Website/BeritaService'
-import {
-    SettingBeritaFormValidation,
-    SettingBeritaSkemaValidasi,
-} from '@/validation/WebsiteFormValidation'
 import { Textarea } from '../ui/textarea'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { format } from 'date-fns'
 import { Calendar } from '../ui/calendar'
-import { Badge } from '../ui/badge'
+import { SettingKegiatanTypes } from '@/types/WebsiteTypes'
+import {
+    deleteSettingKegiatan,
+    getSettingKegiatanPagination,
+    setSettingKegiatan,
+    updateSettingKegiatan,
+} from '@/services/Website/KegiatanService'
+import {
+    SettingKegiatanFormValidation,
+    SettingKegiatanSkemaValidasi,
+} from '@/validation/WebsiteFormValidation'
 
 type KomunitasUniversityType = {
     UniversityId: string
@@ -104,12 +102,12 @@ type KomunitasUniversityType = {
     }[]
 }
 
-const BeritaComponent = ({
+const KegiatanComponent = ({
     university,
-    kategoriBerita,
+    jenisKegiatan,
 }: {
     university: KomunitasUniversityType[]
-    kategoriBerita: KategoriBerita[]
+    jenisKegiatan: JenisKegiatan[]
 }) => {
     const [selectable, setSelectable] = React.useState<{
         UniversityId: string
@@ -118,7 +116,9 @@ const BeritaComponent = ({
         UniversityId: '',
         SettingMainPageId: '',
     })
-    const [dataBerita, setDataBerita] = React.useState<SettingBeritaTypes[]>([])
+    const [dataKegiatan, setDataKegiatan] = React.useState<
+        SettingKegiatanTypes[]
+    >([])
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [titleDialog, setTitleDialog] = React.useState<string>('')
     const [loadingSubmit, setLoadingSubmit] = React.useState(false)
@@ -149,17 +149,10 @@ const BeritaComponent = ({
     })
     const [search, setSearch] = React.useState<string>('')
 
-    async function urlToFile(url: string, filename = 'existing-image') {
-        const res = await fetch(url, { cache: 'no-store' })
-        const blob = await res.blob()
-        const ext = blob.type.split('/')[1] || 'png'
-        return new File([blob], `${filename}.${ext}`, { type: blob.type })
-    }
-
     React.useEffect(() => {
         if (selectable.SettingMainPageId !== '') {
             setLoading(true)
-            getBeritaPagination(
+            getSettingKegiatanPagination(
                 selectable.SettingMainPageId,
                 paginationState.page,
                 paginationState.limit,
@@ -167,7 +160,7 @@ const BeritaComponent = ({
             )
                 .then(async (res) => {
                     setLoading(false)
-                    setDataBerita(res.data)
+                    setDataKegiatan(res.data)
                     setPaginationState({
                         page: res.page,
                         limit: res.limit,
@@ -191,89 +184,85 @@ const BeritaComponent = ({
         search,
     ])
 
-    const form = useForm<SettingBeritaFormValidation>({
-        resolver: zodResolver(SettingBeritaSkemaValidasi),
+    const form = useForm<SettingKegiatanFormValidation>({
+        resolver: zodResolver(SettingKegiatanSkemaValidasi),
         defaultValues: {
-            Gambar: null,
-            KategoriBeritaId: '',
-            Title: '',
-            Waktu: new Date(),
+            Nama: '',
+            Lokasi: '',
             Deskripsi: '',
-            Populer: false,
+            JenisKegiatanId: '',
+            NamaJenis: '',
+            Color: '',
             SettingMainPageId: '',
-            SettingBeritaId: '',
+            SettingKegiatanId: '',
+            WaktuMulai: new Date(),
+            WaktuSelesai: new Date(),
         },
     })
 
-    const onSubmit = async (data: SettingBeritaFormValidation) => {
+    const onSubmit = async (data: SettingKegiatanFormValidation) => {
         setLoadingSubmit(true)
-        if (titleDialog === 'Ubah Berita' && data.Gambar) {
-            await updateBerita(data.Gambar, data)
+        if (titleDialog === 'Ubah Kegiatan') {
+            await updateSettingKegiatan(data)
                 .then((res) => {
-                    toast('Data Berita berhasil diubah')
-                    let idx = dataBerita.findIndex(
-                        (r) => r.SettingBeritaId === data.SettingBeritaId
+                    toast('Data Kegiatan berhasil diubah')
+                    let idx = dataKegiatan.findIndex(
+                        (r) => r.SettingKegiatanId === data.SettingKegiatanId
                     )
-                    setDataBerita(replaceItemAtIndex(dataBerita, idx, res))
+                    setDataKegiatan(replaceItemAtIndex(dataKegiatan, idx, res))
                     setOpenDialog(false)
                     setLoadingSubmit(false)
                 })
                 .catch((err) => {
-                    toast('Data Berita gagal diubah. Error: ' + err)
+                    toast('Data Kegiatan gagal diubah. Error: ' + err)
                     setLoadingSubmit(false)
                 })
         } else {
-            if (data.Gambar) {
-                await setBerita(data.Gambar, data)
-                    .then((res) => {
-                        toast('Data Berita berhasil ditambah')
-                        setDataBerita([...dataBerita, res])
-                        setLoadingSubmit(false)
-                        setOpenDialog(false)
-                    })
-                    .catch((err) => {
-                        toast('Data Berita gagal ditambah. Error: ' + err)
-                        setLoadingSubmit(false)
-                    })
-            }
+            await setSettingKegiatan(data)
+                .then((res) => {
+                    toast('Data Kegiatan berhasil ditambah')
+                    setDataKegiatan([...dataKegiatan, res])
+                    setLoadingSubmit(false)
+                    setOpenDialog(false)
+                })
+                .catch((err) => {
+                    toast('Data Kegiatan gagal ditambah. Error: ' + err)
+                    setLoadingSubmit(false)
+                })
         }
     }
 
     const buatData = () => {
         form.reset()
         form.setValue('SettingMainPageId', selectable.SettingMainPageId)
-        setTitleDialog('Tambah Berita')
+        setTitleDialog('Tambah Kegiatan')
         setOpenDialog(true)
     }
-    const ubahData = async (jd: SettingBeritaTypes) => {
-        form.setValue('Gambar', null)
+    const ubahData = async (jd: SettingKegiatanTypes) => {
+        form.setValue('Nama', jd.Nama)
+        form.setValue('Lokasi', jd.Lokasi ?? '')
+        form.setValue('Deskripsi', jd.Deskripsi ?? '')
+        form.setValue('JenisKegiatanId', jd.JenisKegiatanId)
         form.setValue('SettingMainPageId', jd.SettingMainPageId)
-        form.setValue('Title', jd.Title)
-        form.setValue('KategoriBeritaId', jd.KategoriBeritaId)
-        form.setValue('SettingBeritaId', jd.SettingBeritaId)
-        form.setValue('Deskripsi', jd.Deskripsi)
-        form.setValue('Populer', jd.Populer)
-        form.setValue('Waktu', new Date(jd.Waktu))
-        let k = kategoriBerita.find(
-            (x) => x.KategoriBeritaId === jd.KategoriBeritaId
+        form.setValue('SettingKegiatanId', jd.SettingKegiatanId)
+        form.setValue('WaktuMulai', new Date(jd.WaktuMulai))
+        form.setValue(
+            'WaktuSelesai',
+            jd.WaktuSelesai ? new Date(jd.WaktuSelesai) : new Date()
+        )
+        let k = jenisKegiatan.find(
+            (x) => x.JenisKegiatanId === jd.JenisKegiatanId
         )
         if (k) {
-            form.setValue('NamaKategori', k.Nama)
+            form.setValue('NamaJenis', k.Nama)
             form.setValue('Color', k.Color)
         }
-        urlToFile(
-            process.env.NEXT_PUBLIC_API_BASE_URL +
-                '/api/img?_t=_b&_id=' +
-                jd.SettingBeritaId
-        )
-            .then((res) => form.setValue('Gambar', res))
-            .catch((err) => toast('Gagal Ambil data Gambar'))
-        setTitleDialog('Ubah Berita')
+        setTitleDialog('Ubah Kegiatan')
         setOpenDialog(true)
     }
-    const hapusData = (jd: SettingBeritaTypes) => {
+    const hapusData = (jd: SettingKegiatanTypes) => {
         Swal.fire({
-            title: 'Ingin Hapus Berita ' + jd.SettingBeritaId + ' ?',
+            title: 'Ingin Hapus Kegiatan ' + jd.Nama + ' ?',
             text: 'Aksi ini tidak dapat di undo',
             icon: 'warning',
             showCancelButton: true,
@@ -282,10 +271,10 @@ const BeritaComponent = ({
             confirmButtonText: 'Ya, Hapus!',
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteBerita(jd.SettingBeritaId).then(() => {
-                    setDataBerita(
-                        dataBerita.filter(
-                            (r) => r.SettingBeritaId !== jd.SettingBeritaId
+                deleteSettingKegiatan(jd.SettingKegiatanId).then(() => {
+                    setDataKegiatan(
+                        dataKegiatan.filter(
+                            (r) => r.SettingKegiatanId !== jd.SettingKegiatanId
                         )
                     )
                     Swal.fire({
@@ -298,77 +287,12 @@ const BeritaComponent = ({
         })
     }
 
-    const makePopuler = (SettingBeritaId: string) => {
-        updatePopulerBerita(SettingBeritaId)
-            .then((res) => {
-                let temp: SettingBeritaTypes[] = dataBerita
-                let populerLama = dataBerita.find((x) => x.Populer)
-                if (populerLama) {
-                    let idx_populerLama = dataBerita.findIndex((x) => x.Populer)
-                    temp = replaceItemAtIndex(dataBerita, idx_populerLama, {
-                        ...populerLama,
-                        Populer: false,
-                    })
-                }
-
-                let populerBaru = dataBerita.find(
-                    (x) => x.SettingBeritaId == SettingBeritaId
-                )
-                if (populerBaru) {
-                    let idx_populerBaru = dataBerita.findIndex(
-                        (x) => x.SettingBeritaId == SettingBeritaId
-                    )
-                    temp = replaceItemAtIndex(temp, idx_populerBaru, {
-                        ...populerBaru,
-                        Populer: true,
-                    })
-                }
-                setDataBerita(temp)
-                toast('Berhasil Menjadikan Berita Populer')
-            })
-            .catch((err) => {
-                toast('Gagal Menjadikan Berita Populer')
-            })
-    }
-
-    const columns: ColumnDef<SettingBeritaTypes>[] = [
+    const columns: ColumnDef<SettingKegiatanTypes>[] = [
         {
-            accessorKey: 'Foto',
-            header: 'Foto',
+            accessorKey: 'Nama',
+            header: 'Nama',
             cell: ({ row }) => (
-                <img
-                    src={
-                        process.env.NEXT_PUBLIC_API_BASE_URL +
-                        '/api/img?_t=_b&_id=' +
-                        row.original.SettingBeritaId
-                    }
-                    alt={row.original.SettingBeritaId}
-                    width={100}
-                    height={100}
-                />
-            ),
-        },
-        {
-            accessorKey: 'Title',
-            header: 'Title',
-            cell: ({ row }) => {
-                let populer = row.original.Populer ? (
-                    <Badge variant="default">Populer</Badge>
-                ) : (
-                    ''
-                )
-                return (
-                    <div className="capitalize">
-                        {populer} {row.getValue('Title')}
-                    </div>
-                )
-            },
-        },
-        {
-            accessorKey: 'KategoriId',
-            header: 'Kategori',
-            cell: ({ row }) => (
-                <div className="capitalize">{row.original.NamaKategori}</div>
+                <div className="capitalize">{row.original.Nama}</div>
             ),
         },
         {
@@ -376,15 +300,17 @@ const BeritaComponent = ({
             header: 'Waktu',
             cell: ({ row }) => (
                 <div className="capitalize">
-                    {format(row.original.Waktu, 'PPP')}
+                    {format(row.original.WaktuMulai, 'PPP')} -{' '}
+                    {row.original.WaktuSelesai &&
+                        format(row.original.WaktuSelesai, 'PPP')}
                 </div>
             ),
         },
         {
-            accessorKey: 'Populer',
-            header: 'Populer',
+            accessorKey: 'Lokasi',
+            header: 'Lokasi',
             cell: ({ row }) => (
-                <div className="capitalize">{row.getValue('Populer')}</div>
+                <div className="capitalize">{row.getValue('Lokasi')}</div>
             ),
         },
         {
@@ -405,22 +331,13 @@ const BeritaComponent = ({
                             <DropdownMenuItem
                                 onClick={() =>
                                     navigator.clipboard.writeText(
-                                        jd.SettingBeritaId
+                                        jd.SettingKegiatanId
                                     )
                                 }
                             >
-                                Copy Berita ID
+                                Copy Kegiatan ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            {!row.original.Populer && (
-                                <DropdownMenuItem
-                                    onClick={() =>
-                                        makePopuler(jd.SettingBeritaId)
-                                    }
-                                >
-                                    Jadikan Populer
-                                </DropdownMenuItem>
-                            )}
                             <DropdownMenuItem onClick={() => ubahData(jd)}>
                                 Ubah Data
                             </DropdownMenuItem>
@@ -435,7 +352,7 @@ const BeritaComponent = ({
     ]
 
     const table = useReactTable({
-        data: dataBerita,
+        data: dataKegiatan,
         columns,
         manualPagination: true,
         onColumnFiltersChange: setColumnFilters,
@@ -456,9 +373,9 @@ const BeritaComponent = ({
             <Card className="shadow-md bg-gray-50 dark:bg-gray-800">
                 <CardHeader>
                     <CardTitle>
-                        <h1 className="text-2xl">Berita</h1>
+                        <h1 className="text-2xl">Kegiatan</h1>
                     </CardTitle>
-                    <CardDescription>Berita</CardDescription>
+                    <CardDescription>Kegiatan</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -779,13 +696,13 @@ const BeritaComponent = ({
                 loadingSubmit={loadingSubmit}
                 titleDialog={titleDialog}
                 selectable={selectable}
-                kategoriBerita={kategoriBerita}
+                jenisKegiatan={jenisKegiatan}
             />
         </div>
     )
 }
 
-export default BeritaComponent
+export default KegiatanComponent
 
 export function SheetManageData({
     openDialog,
@@ -796,20 +713,20 @@ export function SheetManageData({
     loadingSubmit,
     titleDialog,
     selectable,
-    kategoriBerita,
+    jenisKegiatan,
 }: {
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
-    onSubmit: (data: SettingBeritaFormValidation) => void
-    form: UseFormReturn<SettingBeritaFormValidation>
+    onSubmit: (data: SettingKegiatanFormValidation) => void
+    form: UseFormReturn<SettingKegiatanFormValidation>
     titleDialog: string
     loadingSubmit: boolean
     selectable: {
         UniversityId: string
         SettingMainPageId: string
     }
-    kategoriBerita: KategoriBerita[]
+    jenisKegiatan: JenisKegiatan[]
 }) {
     return (
         <div className="grid grid-cols-2 gap-2">
@@ -829,11 +746,11 @@ export function SheetManageData({
                                     <div className="grid grid-cols-1 gap-3">
                                         <FormField
                                             control={form.control}
-                                            name="Title"
+                                            name="Nama"
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>
-                                                        Judul Berita
+                                                        Nama Kegiatan
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
@@ -846,7 +763,7 @@ export function SheetManageData({
                                                         />
                                                     </FormControl>
                                                     <FormDescription>
-                                                        Judul Berita
+                                                        Nama Kegiatan
                                                     </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>
@@ -854,11 +771,36 @@ export function SheetManageData({
                                         />
                                         <FormField
                                             control={form.control}
-                                            name="KategoriBeritaId"
+                                            name="Lokasi"
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>
-                                                        Kategori Berita
+                                                        Lokasi Kegiatan
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            disabled={
+                                                                loadingSubmit ||
+                                                                loading
+                                                            }
+                                                            readOnly={loading}
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Lokasi Kegiatan
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="JenisKegiatanId"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Jenis kegiatan
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Select
@@ -874,14 +816,14 @@ export function SheetManageData({
                                                                     e
                                                                 )
                                                                 let temp =
-                                                                    kategoriBerita.find(
+                                                                    jenisKegiatan.find(
                                                                         (x) =>
-                                                                            x.KategoriBeritaId ===
+                                                                            x.JenisKegiatanId ===
                                                                             e
                                                                     )
                                                                 if (temp) {
                                                                     form.setValue(
-                                                                        'NamaKategori',
+                                                                        'NamaJenis',
                                                                         temp.Nama
                                                                     )
                                                                     form.setValue(
@@ -892,21 +834,22 @@ export function SheetManageData({
                                                             }}
                                                         >
                                                             <SelectTrigger className="w-full">
-                                                                <SelectValue placeholder="Pilih Kategori" />
+                                                                <SelectValue placeholder="Pilih Jenis kegiatan" />
                                                             </SelectTrigger>
                                                             <SelectContent>
                                                                 <SelectGroup>
                                                                     <SelectLabel>
-                                                                        Kategori
+                                                                        Jenis
+                                                                        kegiatan
                                                                     </SelectLabel>
-                                                                    {kategoriBerita.map(
+                                                                    {jenisKegiatan.map(
                                                                         (x) => (
                                                                             <SelectItem
                                                                                 value={
-                                                                                    x.KategoriBeritaId
+                                                                                    x.JenisKegiatanId
                                                                                 }
                                                                                 key={
-                                                                                    x.KategoriBeritaId
+                                                                                    x.JenisKegiatanId
                                                                                 }
                                                                             >
                                                                                 {
@@ -920,7 +863,7 @@ export function SheetManageData({
                                                         </Select>
                                                     </FormControl>
                                                     <FormDescription>
-                                                        Pilih Kategori Berita
+                                                        Pilih Jenis kegiatan
                                                     </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>
@@ -928,70 +871,280 @@ export function SheetManageData({
                                         />
                                         <FormField
                                             control={form.control}
-                                            name="Waktu"
-                                            disabled={loading}
-                                            render={({ field }) => (
-                                                <FormItem className="flex flex-col">
-                                                    <FormLabel>
-                                                        Waktu Berita
-                                                    </FormLabel>
-                                                    <Popover>
-                                                        <PopoverTrigger asChild>
-                                                            <FormControl>
-                                                                <Button
-                                                                    disabled={
-                                                                        loading
+                                            name="WaktuMulai"
+                                            render={({ field }) => {
+                                                const current = field.value
+                                                const [tempDate, setTempDate] =
+                                                    React.useState<
+                                                        Date | undefined
+                                                    >(current)
+                                                const [tempTime, setTempTime] =
+                                                    React.useState<string>(
+                                                        current
+                                                            ? current
+                                                                  .toTimeString()
+                                                                  .slice(0, 5)
+                                                            : '08:00'
+                                                    )
+
+                                                const commit = (
+                                                    d?: Date,
+                                                    t?: string
+                                                ) => {
+                                                    if (!d || !t) return
+                                                    const [h, m] = t
+                                                        .split(':')
+                                                        .map(Number)
+                                                    const combined = new Date(
+                                                        d.getFullYear(),
+                                                        d.getMonth(),
+                                                        d.getDate(),
+                                                        h ?? 0,
+                                                        m ?? 0,
+                                                        0,
+                                                        0
+                                                    )
+                                                    field.onChange(combined)
+                                                }
+
+                                                const displayText = current
+                                                    ? `${format(
+                                                          current,
+                                                          'PPP'
+                                                      )} • ${format(
+                                                          current,
+                                                          'p'
+                                                      )}`
+                                                    : 'Pilih Tanggal & Waktu'
+
+                                                return (
+                                                    <FormItem className="flex flex-col">
+                                                        <FormLabel>
+                                                            Waktu Mulai Kegiatan
+                                                        </FormLabel>
+                                                        <Popover>
+                                                            <PopoverTrigger
+                                                                asChild
+                                                            >
+                                                                <FormControl>
+                                                                    <Button
+                                                                        variant="outline"
+                                                                        className={cn(
+                                                                            'w-[280px] pl-3 justify-between text-left font-normal',
+                                                                            !current &&
+                                                                                'text-muted-foreground'
+                                                                        )}
+                                                                    >
+                                                                        {
+                                                                            displayText
+                                                                        }
+                                                                        <CalendarIcon className="w-4 h-4 opacity-50" />
+                                                                    </Button>
+                                                                </FormControl>
+                                                            </PopoverTrigger>
+                                                            <PopoverContent
+                                                                className="w-auto p-3 space-y-3"
+                                                                align="start"
+                                                            >
+                                                                <Calendar
+                                                                    mode="single"
+                                                                    selected={
+                                                                        tempDate
                                                                     }
-                                                                    variant={
-                                                                        'outline'
-                                                                    }
-                                                                    className={cn(
-                                                                        'w-[240px] pl-3 text-left font-normal',
-                                                                        !field.value &&
-                                                                            'text-muted-foreground'
-                                                                    )}
-                                                                >
-                                                                    {field.value instanceof
-                                                                    Date ? (
-                                                                        format(
-                                                                            field.value,
-                                                                            'PPP'
+                                                                    onSelect={(
+                                                                        d
+                                                                    ) => {
+                                                                        setTempDate(
+                                                                            d
                                                                         )
-                                                                    ) : (
-                                                                        <span>
-                                                                            Pilih
-                                                                            Tanggal
-                                                                        </span>
-                                                                    )}
-                                                                    <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
-                                                                </Button>
-                                                            </FormControl>
-                                                        </PopoverTrigger>
-                                                        <PopoverContent
-                                                            className="w-auto p-0"
-                                                            align="start"
-                                                        >
-                                                            <Calendar
-                                                                mode="single"
-                                                                selected={
-                                                                    field.value
-                                                                }
-                                                                onSelect={
-                                                                    field.onChange
-                                                                }
-                                                                disabled={
-                                                                    loading ||
-                                                                    loadingSubmit
-                                                                }
-                                                            />
-                                                        </PopoverContent>
-                                                    </Popover>
-                                                    <FormDescription>
-                                                        Waktu Berita
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
+                                                                        commit(
+                                                                            d,
+                                                                            tempTime
+                                                                        )
+                                                                    }}
+                                                                />
+
+                                                                <div className="flex items-center gap-2">
+                                                                    <label className="text-sm text-muted-foreground">
+                                                                        Jam
+                                                                    </label>
+                                                                    <input
+                                                                        type="time"
+                                                                        value={
+                                                                            tempTime
+                                                                        }
+                                                                        onChange={(
+                                                                            e
+                                                                        ) => {
+                                                                            const v =
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            setTempTime(
+                                                                                v
+                                                                            )
+                                                                            if (
+                                                                                tempDate
+                                                                            )
+                                                                                commit(
+                                                                                    tempDate,
+                                                                                    v
+                                                                                )
+                                                                        }}
+                                                                        className="px-2 border rounded-md h-9"
+                                                                        step={
+                                                                            60
+                                                                        }
+                                                                    />
+                                                                </div>
+                                                            </PopoverContent>
+                                                        </Popover>
+                                                        <FormDescription>
+                                                            Waktu Awal
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )
+                                            }}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="WaktuSelesai"
+                                            render={({ field }) => {
+                                                const current = field.value
+                                                const [tempDate, setTempDate] =
+                                                    React.useState<
+                                                        Date | undefined
+                                                    >(current)
+                                                const [tempTime, setTempTime] =
+                                                    React.useState<string>(
+                                                        current
+                                                            ? current
+                                                                  .toTimeString()
+                                                                  .slice(0, 5)
+                                                            : '08:00'
+                                                    )
+
+                                                const commit = (
+                                                    d?: Date,
+                                                    t?: string
+                                                ) => {
+                                                    if (!d || !t) return
+                                                    const [h, m] = t
+                                                        .split(':')
+                                                        .map(Number)
+                                                    const combined = new Date(
+                                                        d.getFullYear(),
+                                                        d.getMonth(),
+                                                        d.getDate(),
+                                                        h ?? 0,
+                                                        m ?? 0,
+                                                        0,
+                                                        0
+                                                    )
+                                                    field.onChange(combined)
+                                                }
+
+                                                const displayText = current
+                                                    ? `${format(
+                                                          current,
+                                                          'PPP'
+                                                      )} • ${format(
+                                                          current,
+                                                          'p'
+                                                      )}`
+                                                    : 'Pilih Tanggal & Waktu'
+
+                                                return (
+                                                    <FormItem className="flex flex-col">
+                                                        <FormLabel>
+                                                            Waktu Selesai
+                                                            Kegiatan
+                                                        </FormLabel>
+                                                        <Popover>
+                                                            <PopoverTrigger
+                                                                asChild
+                                                            >
+                                                                <FormControl>
+                                                                    <Button
+                                                                        variant="outline"
+                                                                        className={cn(
+                                                                            'w-[280px] pl-3 justify-between text-left font-normal',
+                                                                            !current &&
+                                                                                'text-muted-foreground'
+                                                                        )}
+                                                                    >
+                                                                        {
+                                                                            displayText
+                                                                        }
+                                                                        <CalendarIcon className="w-4 h-4 opacity-50" />
+                                                                    </Button>
+                                                                </FormControl>
+                                                            </PopoverTrigger>
+                                                            <PopoverContent
+                                                                className="w-auto p-3 space-y-3"
+                                                                align="start"
+                                                            >
+                                                                <Calendar
+                                                                    mode="single"
+                                                                    selected={
+                                                                        tempDate
+                                                                    }
+                                                                    onSelect={(
+                                                                        d
+                                                                    ) => {
+                                                                        setTempDate(
+                                                                            d
+                                                                        )
+                                                                        commit(
+                                                                            d,
+                                                                            tempTime
+                                                                        )
+                                                                    }}
+                                                                />
+
+                                                                <div className="flex items-center gap-2">
+                                                                    <label className="text-sm text-muted-foreground">
+                                                                        Jam
+                                                                    </label>
+                                                                    <input
+                                                                        type="time"
+                                                                        value={
+                                                                            tempTime
+                                                                        }
+                                                                        onChange={(
+                                                                            e
+                                                                        ) => {
+                                                                            const v =
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            setTempTime(
+                                                                                v
+                                                                            )
+                                                                            if (
+                                                                                tempDate
+                                                                            )
+                                                                                commit(
+                                                                                    tempDate,
+                                                                                    v
+                                                                                )
+                                                                        }}
+                                                                        className="px-2 border rounded-md h-9"
+                                                                        step={
+                                                                            60
+                                                                        }
+                                                                    />
+                                                                </div>
+                                                            </PopoverContent>
+                                                        </Popover>
+                                                        <FormDescription>
+                                                            Waktu Selesai
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )
+                                            }}
                                         />
                                         <FormField
                                             control={form.control}
@@ -999,7 +1152,7 @@ export function SheetManageData({
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormLabel>
-                                                        Konten Berita
+                                                        Deskripsi Kegiatan
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Textarea
@@ -1012,63 +1165,7 @@ export function SheetManageData({
                                                         />
                                                     </FormControl>
                                                     <FormDescription>
-                                                        Konten Berita
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            disabled={loading || loadingSubmit}
-                                            name="Gambar"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Gambar
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <div className="grid items-center w-full max-w-sm gap-3">
-                                                            <Input
-                                                                id="picture"
-                                                                type="file"
-                                                                disabled={
-                                                                    loading ||
-                                                                    loadingSubmit
-                                                                }
-                                                                onChange={(
-                                                                    e
-                                                                ) => {
-                                                                    field.onChange(
-                                                                        e.target
-                                                                            .files?.[0]
-                                                                    )
-                                                                }}
-                                                            />
-                                                            {form.watch(
-                                                                'Gambar'
-                                                            ) &&
-                                                                form.watch(
-                                                                    'Gambar'
-                                                                ) instanceof
-                                                                    File && (
-                                                                    <img
-                                                                        src={URL.createObjectURL(
-                                                                            form.watch(
-                                                                                'Gambar'
-                                                                            ) as File
-                                                                        )}
-                                                                        alt="Preview"
-                                                                        className="w-full mt-2 border rounded-md"
-                                                                        style={{
-                                                                            maxWidth: 200,
-                                                                        }}
-                                                                    />
-                                                                )}
-                                                        </div>
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Gambar
+                                                        Deskripsi
                                                     </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>

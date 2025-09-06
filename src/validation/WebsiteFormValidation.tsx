@@ -73,6 +73,31 @@ export type SettingCommunityFormValidation = z.infer<
     typeof SettingCommunitySkemaValidasi
 >
 
+export const SettingKegiatanSkemaValidasi = z.object({
+    Nama: z.string().min(1, 'Nama tidak boleh kosong'),
+    Lokasi: z.string().min(1, 'Lokasi tidak boleh kosong'),
+    Deskripsi: z.string().min(1, 'Deskripsi tidak boleh kosong'),
+    JenisKegiatanId: z.string().min(1, 'Id JenisKegiatan tidak boleh kosong'),
+    NamaJenis: z.string().min(1, 'NamaJenis tidak boleh kosong'),
+    Color: z.string().min(1, 'Color tidak boleh kosong'),
+    SettingMainPageId: z
+        .string()
+        .min(1, 'Id SettingMainPage tidak boleh kosong'),
+    SettingKegiatanId: z.string(),
+    WaktuMulai: z.date({
+        required_error: 'Waktu harus diisi',
+        invalid_type_error: 'Format waktu tidak valid',
+    }),
+    WaktuSelesai: z.date({
+        required_error: 'Waktu harus diisi',
+        invalid_type_error: 'Format waktu tidak valid',
+    }),
+})
+
+export type SettingKegiatanFormValidation = z.infer<
+    typeof SettingKegiatanSkemaValidasi
+>
+
 export const SettingBeritaSkemaValidasi = z.object({
     Gambar: fileSchema,
     Title: z.string().min(1, 'Title tidak boleh kosong'),
