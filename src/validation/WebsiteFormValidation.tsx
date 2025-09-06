@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10MB
+export const MAX_FILE_SIZE = 10 * 1024 * 1024
 export const ACCEPTED_FILE_TYPES = [
     'image/png',
     'image/jpeg',
@@ -71,6 +71,30 @@ export const SettingCommunitySkemaValidasi = z.object({
 
 export type SettingCommunityFormValidation = z.infer<
     typeof SettingCommunitySkemaValidasi
+>
+
+export const SettingBeritaSkemaValidasi = z.object({
+    Gambar: fileSchema,
+    Title: z.string().min(1, 'Title tidak boleh kosong'),
+    SettingMainPageId: z
+        .string()
+        .min(1, 'Id SettingMainPage tidak boleh kosong'),
+    KategoriBeritaId: z
+        .string()
+        .min(1, 'Id KategoriBeritaId tidak boleh kosong'),
+    SettingBeritaId: z.string(),
+    Populer: z.boolean(),
+    NamaKategori: z.string().min(1, 'NamaKategori tidak boleh kosong'),
+    Color: z.string().min(1, 'Color tidak boleh kosong'),
+    Deskripsi: z.string().min(1, 'Deskripsi tidak boleh kosong'),
+    Waktu: z.date({
+        required_error: 'Waktu harus diisi',
+        invalid_type_error: 'Format waktu tidak valid',
+    }),
+})
+
+export type SettingBeritaFormValidation = z.infer<
+    typeof SettingBeritaSkemaValidasi
 >
 
 export const SettingTestimonySkemaValidasi = z.object({

@@ -32,3 +32,15 @@ export interface SettingCommunityTypes {
     SettingMainPageId: string
     Title: string
 }
+
+export interface SettingBeritaTypes {
+    KategoriBeritaId: string
+    NamaKategori: string
+    Color: string
+    SettingMainPageId: string
+    Title: string
+    SettingBeritaId: string
+    Deskripsi: string
+    Populer: boolean
+    Waktu: Date
+}
