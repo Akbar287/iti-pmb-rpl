@@ -295,6 +295,20 @@ const EvaluasiMandiri = ({
                                     dataDaftarUlang.Status ==
                                         'Pengisian Data Diri'
                                         ? 'Sebelum memulai Evaluasi Mandiri. Gunakan Laptop atau Komputer untuk Pengalaman terbaik. Min: 1270x720'
+                                        : dataDaftarUlang.Status ===
+                                          'Penerbitan SK Asessmen'
+                                        ? 'SK anda sudah terbit, silakan ke menu Sk. Rektor'
+                                        : dataDaftarUlang.Status ===
+                                          'Hasil Final Asessmen'
+                                        ? 'Hasil Asessmen anda sudah selesai. Silakan ke menu Hasil Asessmen'
+                                        : dataDaftarUlang.Status === 'Sanggahan'
+                                        ? 'Silakan ke menu sanggahan untuk melihat hasil anda dan silakan melanjutkan atau menyanggah'
+                                        : dataDaftarUlang.Status ===
+                                          'Rekapitulasi Asessmen'
+                                        ? 'Hasil Asessmen oleh Asesor sedang di Rekapitulasi. Silakan Menunggu'
+                                        : dataDaftarUlang.Status ===
+                                          'Asessmen Oleh Asesor'
+                                        ? 'Evaluasi anda sedang di Asessmen oleh Asesor'
                                         : 'Asesor Sedang dipilih untuk menilai Mata Kuliah RPL Anda'}
                                 </AlertDescription>
                             </Alert>

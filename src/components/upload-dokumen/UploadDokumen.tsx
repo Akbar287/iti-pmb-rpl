@@ -19,6 +19,7 @@ import {
 import { Button } from '../ui/button'
 import {
     AlertCircle,
+    ComputerIcon,
     FileWarning,
     PenIcon,
     PlusCircle,
@@ -80,17 +81,17 @@ const UploadDokumen = ({
     dataMahasiswa: {
         MahasiswaId: string
         StatusPerkawinan: StatusPerkawinan
-        Pendaftaran: {
-            PendaftaranId: string
-            KodePendaftar: string
-            NoUjian: string
-            Periode: string
-        }[]
+        Status: string
+        PendaftaranId: string
+        KodePendaftar: string
+        NoUjian: string
+        Periode: string
     }[]
     jenisDokumenServer: JenisDokumen[]
 }) => {
     const [selectableMahasiswa, setSelectableMahasiswa] =
         React.useState<string>('')
+    const [statusMhs, setStatusMhs] = React.useState<string>('')
     const [data, setData] = React.useState<BuktiFormTypes[]>([])
     const [previewTemp, setPreviewTemp] = React.useState<BuktiFormTypes | null>(
         null
@@ -231,6 +232,12 @@ const UploadDokumen = ({
                         value={selectableMahasiswa}
                         onValueChange={(e) => {
                             setSelectableMahasiswa(e)
+                            let temp = dataMahasiswa.find(
+                                (v) => v.PendaftaranId === e
+                            )
+                            if (temp) {
+                                setStatusMhs(temp.Status)
+                            }
                         }}
                     >
                         <SelectTrigger className="w-1/2">
@@ -242,20 +249,30 @@ const UploadDokumen = ({
                                 {dataMahasiswa.map((m) => (
                                     <SelectItem
                                         key={m.MahasiswaId}
-                                        value={m.Pendaftaran[0].PendaftaranId}
+                                        value={m.PendaftaranId}
                                     >
-                                        {m.Pendaftaran[0].NoUjian} -{' '}
-                                        {m.Pendaftaran[0].Periode}
+                                        {m.NoUjian} - {m.Periode}
                                     </SelectItem>
                                 ))}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                 </div>
+                <Alert>
+                    <ComputerIcon className="h-4 w-4" />
+                    <AlertTitle>Peringatan</AlertTitle>
+                    <AlertDescription>
+                        Dokumen ini hanya bisa diupload saat anda sedang
+                        melakukan Pengisian data diri dan sanggahan. Pastikan
+                        sebelum anda melakukan evaluasi mandiri, anda sudah
+                        menyelesaikan Upload dokumen.
+                    </AlertDescription>
+                </Alert>
                 <div>
                     {selectableMahasiswa &&
                     jenisDokumen.length > 0 &&
-                    !loading ? (
+                    !loading &&
+                    ['Pengisian Data Diri', 'Sanggahan'].includes(statusMhs) ? (
                         <Button
                             className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                             type="button"
@@ -308,15 +325,22 @@ const UploadDokumen = ({
                                                 <ScanEye />
                                                 Lihat
                                             </Button>
-                                            <Button
-                                                className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                                variant={'destructive'}
-                                                type="button"
-                                                onClick={() => hapusData(row)}
-                                            >
-                                                <Trash2 />
-                                                Hapus
-                                            </Button>
+                                            {[
+                                                'Pengisian Data Diri',
+                                                'Sanggahan',
+                                            ].includes(statusMhs) && (
+                                                <Button
+                                                    className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                                    variant={'destructive'}
+                                                    type="button"
+                                                    onClick={() =>
+                                                        hapusData(row)
+                                                    }
+                                                >
+                                                    <Trash2 />
+                                                    Hapus
+                                                </Button>
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 ))

@@ -51,24 +51,6 @@ const Page = async () => {
                     },
                 },
             },
-            SettingKegiatan: {
-                select: {
-                    SettingKegiatanId: true,
-                    JenisKegiatanId: true,
-                    SettingMainPageId: true,
-                    Nama: true,
-                    Lokasi: true,
-                    Deskripsi: true,
-                    WaktuMulai: true,
-                    WaktuSelesai: true,
-                    JenisKegiatan: {
-                        select: {
-                            JenisKegiatanId: true,
-                            Nama: true,
-                        },
-                    },
-                },
-            },
             SettingNumber: true,
             SettingTestimony: {
                 select: {
@@ -149,7 +131,7 @@ const Page = async () => {
                 />
                 <Events
                     jenisKegiatan={jenisKegiatan ? jenisKegiatan : null}
-                    data={dbData ? dbData.SettingKegiatan : null}
+                    SettingMainPageId={dbData ? dbData.SettingMainPageId : null}
                 />
                 <News
                     text={

@@ -1,15 +1,28 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { JenisKegiatan, SettingKegiatan } from '@/generated/prisma'
+import { JenisKegiatan } from '@/generated/prisma'
+import { convertKegiatan } from '@/lib/utils'
+import { SettingKegiatanTypes } from '@/types/WebsiteTypes'
 import { CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react'
 import React from 'react'
+import { toast } from 'sonner'
+
+type OutputItem = {
+    id: string
+    title: string
+    date: string
+    time: string
+    location: string
+    category: string
+    description: string
+}
 
 const Events = ({
-    data,
+    SettingMainPageId,
     jenisKegiatan,
 }: {
     jenisKegiatan: JenisKegiatan[] | null
-    data: SettingKegiatan[] | null
+    SettingMainPageId: string | null
 }) => {
     const [currentMonth, setCurrentMonth] = React.useState(
         new Date().getMonth()
@@ -17,6 +30,7 @@ const Events = ({
     const [currentYear, setCurrentYear] = React.useState(
         new Date().getFullYear()
     )
+    const [events, setEvents] = React.useState<OutputItem[]>([])
 
     const months = [
         'Januari',
@@ -46,48 +60,25 @@ const Events = ({
               { name: 'Karir', color: 'bg-pink-100 text-pink-800' },
           ]
 
-    const events = [
-        {
-            id: 1,
-            title: 'Simposium Penelitian Tahunan',
-            date: '15 April 2025',
-            time: '09:00 - 17:00',
-            location: 'Auditorium Utama',
-            category: 'Akademik',
-            description:
-                'Bergabunglah dengan kami untuk simposium tahunan yang menampilkan penelitian terbaru dari mahasiswa dan fakultas di berbagai bidang.',
-        },
-        {
-            id: 2,
-            title: 'Festival Budaya Internasional',
-            date: '20 April 2025',
-            time: '11:00 - 20:00',
-            location: 'Kampus Utama',
-            category: 'Budaya',
-            description:
-                'Nikmati makanan, musik, dan tarian dari seluruh dunia di festival tahunan kami yang merayakan keragaman budaya komunitas kita.',
-        },
-        {
-            id: 3,
-            title: 'Konser Orkestra Universitas',
-            date: '25 April 2025',
-            time: '19:30',
-            location: 'Teater Seni',
-            category: 'Budaya',
-            description:
-                'Saksikan penampilan luar biasa dari orkestra universitas kami, menampilkan karya-karya klasik dan kontemporer.',
-        },
-        {
-            id: 4,
-            title: 'Turnamen Sepak Bola Antar Fakultas',
-            date: '27 April 2025',
-            time: '10:00 - 16:00',
-            location: 'Lapangan Olahraga Utama',
-            category: 'Atletik',
-            description:
-                'Bergabunglah dengan kami untuk turnamen sepak bola tahunan antar fakultas. Tim terbaik akan bersaing untuk mendapatkan gelar juara.',
-        },
-    ]
+    React.useEffect(() => {
+        async function getAllData() {
+            await fetch(
+                process.env.NEXT_PUBLIC_API_BASE_URL +
+                    '/api/img?_t=_k&_cm=' +
+                    currentMonth +
+                    '&_cy=' +
+                    currentYear
+            )
+                .then(async (res) => {
+                    const response: SettingKegiatanTypes[] = await res.json()
+                    setEvents(convertKegiatan(response))
+                })
+                .catch((err) => {
+                    toast('Ada Masalah pada jaringan')
+                })
+        }
+        getAllData()
+    }, [currentMonth, currentYear])
 
     const navigateMonth = (direction: number) => {
         let newMonth = currentMonth + direction
@@ -162,60 +153,67 @@ const Events = ({
                     ))}
                 </div>
 
-                {/* Events List */}
                 <div className="space-y-6">
-                    {events.map((event) => (
-                        <div
-                            key={event.id}
-                            className="overflow-hidden transition-shadow bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600 hover:shadow-lg"
-                        >
-                            <div className="flex flex-col gap-6 p-6 md:flex-row">
-                                <div className="flex items-center space-x-3 md:w-1/4">
-                                    <div className="p-3 rounded-full bg-primary/30">
-                                        <CalendarIcon className="w-6 h-6 text-primary" />
+                    {events.length === 0 ? (
+                        <div className="flex justify-center items-center">
+                            <h2 className="font-bold text-4xl text-primary mt-5">
+                                Tidak Ada Event
+                            </h2>
+                        </div>
+                    ) : (
+                        events.map((event) => (
+                            <div
+                                key={event.id}
+                                className="overflow-hidden transition-shadow bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-600 hover:shadow-lg"
+                            >
+                                <div className="flex flex-col gap-6 p-6 md:flex-row">
+                                    <div className="flex items-center space-x-3 md:w-1/4">
+                                        <div className="p-3 rounded-full bg-primary/30">
+                                            <CalendarIcon className="w-6 h-6 text-primary" />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-gray-700 dark:text-gray-200">
+                                                {event.date}
+                                            </p>
+                                            <p className="text-sm text-gray-700 dark:text-gray-200">
+                                                {event.time}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="font-bold text-gray-700 dark:text-gray-200">
-                                            {event.date}
-                                        </p>
-                                        <p className="text-sm text-gray-700 dark:text-gray-200">
-                                            {event.time}
-                                        </p>
-                                    </div>
-                                </div>
 
-                                <div className="md:w-3/4">
-                                    <div className="flex flex-wrap items-start justify-between mb-2">
-                                        <h4 className="text-xl font-bold text-primary">
-                                            {event.title}
-                                        </h4>
-                                        <span
-                                            className={`${getCategoryStyle(
-                                                event.category
-                                            )} text-xs font-medium px-2.5 py-0.5 rounded`}
+                                    <div className="md:w-3/4">
+                                        <div className="flex flex-wrap items-start justify-between mb-2">
+                                            <h4 className="text-xl font-bold text-primary">
+                                                {event.title}
+                                            </h4>
+                                            <span
+                                                className={`${getCategoryStyle(
+                                                    event.category
+                                                )} text-xs font-medium px-2.5 py-0.5 rounded`}
+                                            >
+                                                {event.category}
+                                            </span>
+                                        </div>
+                                        <p className="mb-2 text-sm text-gray-700 dark:text-gray-200">
+                                            <span className="font-medium">
+                                                Lokasi:
+                                            </span>{' '}
+                                            {event.location}
+                                        </p>
+                                        <p className="mb-4 text-sm text-gray-700 dark:text-gray-200">
+                                            {event.description}
+                                        </p>
+                                        <Button
+                                            variant="outline"
+                                            className="font-bold text-gray-700 dark:text-gray-200 border-primary hover:bg-primary hover:text-white"
                                         >
-                                            {event.category}
-                                        </span>
+                                            Cek Selengkapnya
+                                        </Button>
                                     </div>
-                                    <p className="mb-2 text-sm text-gray-700 dark:text-gray-200">
-                                        <span className="font-medium">
-                                            Lokasi:
-                                        </span>{' '}
-                                        {event.location}
-                                    </p>
-                                    <p className="mb-4 text-sm text-gray-700 dark:text-gray-200">
-                                        {event.description}
-                                    </p>
-                                    <Button
-                                        variant="outline"
-                                        className="font-bold text-gray-700 dark:text-gray-200 border-primary hover:bg-primary hover:text-white"
-                                    >
-                                        Cek Selengkapnya
-                                    </Button>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
 
                 <div className="mt-12 text-center">
