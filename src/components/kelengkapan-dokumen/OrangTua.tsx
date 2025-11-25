@@ -263,7 +263,7 @@ const OrangTua = ({
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Nama</TableHead>
-                                <TableHead>Jenis Ortu</TableHead>
+                                <TableHead>Orang tua</TableHead>
                                 <TableHead>Pekerjaan</TableHead>
                                 <TableHead>Penghasilan</TableHead>
                                 <TableHead>Nomor HP</TableHead>
@@ -380,7 +380,7 @@ function DialogOrangTua({
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel>
-                                                Jenis Orang Tua{' '}
+                                                Hubungan Orang Tua{' '}
                                             </FormLabel>
                                             <FormControl>
                                                 <Select
@@ -391,7 +391,7 @@ function DialogOrangTua({
                                                     }
                                                 >
                                                     <SelectTrigger className="w-full">
-                                                        <SelectValue placeholder="Pilih Jenis Orang Tua" />
+                                                        <SelectValue placeholder="Pilih Hubungan Orang Tua" />
                                                     </SelectTrigger>
                                                     <SelectContent>
                                                         <SelectGroup>
@@ -431,7 +431,7 @@ function DialogOrangTua({
                                                 </Select>
                                             </FormControl>
                                             <FormDescription>
-                                                Jenis Orang Tua ?
+                                                Hubungan Orang Tua ?
                                             </FormDescription>
                                             <FormMessage />
                                         </FormItem>

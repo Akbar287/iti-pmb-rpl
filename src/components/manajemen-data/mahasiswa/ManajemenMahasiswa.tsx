@@ -12,6 +12,7 @@ import {
     useReactTable,
     VisibilityState,
 } from '@tanstack/react-table'
+import { Progress } from "@/components/ui/progress"
 import React from 'react'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -26,11 +27,15 @@ import {
 import { Button } from '../../ui/button'
 import {
     CalendarIcon,
+    Check,
+    CheckCircle2,
     ChevronLeft,
     ChevronRight,
     MoreHorizontal,
     PenIcon,
+    RefreshCw,
     Timer,
+    X,
 } from 'lucide-react'
 import Swal from 'sweetalert2'
 import { Input } from '../../ui/input'
@@ -84,9 +89,12 @@ import {
 } from '@/generated/prisma'
 import {
     deleteCalonMahasiswa,
+    deleteCalonMahasiswaSinkronisasi,
+    getCalonMahasiswaAllNik,
     getCalonMahasiswaPagination,
     getKodePendaftarId,
     setCalonMahasiswa,
+    setCalonMahasiswaSinkronisasi,
     updateCalonMahasiswa,
 } from '@/services/ManajemenData/CalonMahasiswaServices'
 import {
@@ -111,6 +119,9 @@ import {
     getKecamatanByKabupatenId,
     getProvinsiByCountryId,
 } from '@/services/AreaServices'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { SevimaImportCase, SevimaImportCaseType } from '@/services/SevimaImportCase'
+import { sendWaBroadcast, sendWaText } from '@/services/Whatsapp'
 
 const ManajemenMahasiswaComponent = ({
     countryDataServer,
@@ -141,6 +152,9 @@ const ManajemenMahasiswaComponent = ({
     const [dataDesaInstitusiLama, setDataDesaInstitusiLama] = React.useState<
         Desa[]
     >([])
+    const [dataSinkronisasi, setDataSinkronisasi] = React.useState<
+        { tahunAjaran: string, semester: string }
+    >({ tahunAjaran: '', semester: '' })
     const [dataCalonMahasiswa, setDataCalonMahasiswa] = React.useState<
         CalonMahasiswaRplPage[]
     >([])
@@ -148,6 +162,8 @@ const ManajemenMahasiswaComponent = ({
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
+    const [afterLoad, setAfterLoad] = React.useState<boolean>(false)
+    const [calonMahasiswaNik, setCalonMahasiswaNik] = React.useState<String[]>([])
     const [paginationState, setPaginationState] = React.useState<{
         page: number
         limit: number
@@ -168,9 +184,12 @@ const ManajemenMahasiswaComponent = ({
         hasPrevious: false,
     })
     const [search, setSearch] = React.useState<string>('')
+    const [openDialogSinkronisasi, setOpenDialogSinkronisasi] = React.useState<boolean>(false)
+    const [loadingSinkronisasi, setLoadingSinkronisasi] = React.useState<number>(0)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [titleDialog, setTitleDialog] = React.useState<string>('')
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [countingMahasiswa, setCountingMahasiswa] = React.useState<SevimaImportCaseType[]>([])
     const form = useForm<CalonMahasiswaFormValidation>({
         resolver: zodResolver(CalonMahasiswaSchemaValidation) as any,
         defaultValues: {
@@ -543,8 +562,12 @@ const ManajemenMahasiswaComponent = ({
                 })
         }
     }
+
     React.useEffect(() => {
         setLoading(true)
+        if (calonMahasiswaNik.length === 0) {
+            getCalonMahasiswaAllNik().then(res => setCalonMahasiswaNik(res)).catch(err => console.error(err));
+        }
         getCalonMahasiswaPagination(
             paginationState.page,
             paginationState.limit,
@@ -851,6 +874,45 @@ const ManajemenMahasiswaComponent = ({
             columnVisibility,
         },
     })
+    const tambahkanDataSinkronisasi = async () => {
+        const res = await setCalonMahasiswaSinkronisasi(countingMahasiswa)
+
+        setPaginationState({
+            ...paginationState,
+            page: 1,
+            limit: paginationState.limit,
+            totalElement: countingMahasiswa.length + dataCalonMahasiswa.length,
+            totalPage: Math.ceil(
+                (countingMahasiswa.length + dataCalonMahasiswa.length) / paginationState.limit
+            ),
+        })
+
+        return res
+    }
+    const deleteSinkronisasiData = async () => {
+        Swal.fire({
+            title: 'Ingin Hapus Data Sinkronisasi ?',
+            text: 'Aksi ini tidak dapat di undo',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#f45f24',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setPaginationState({
+                    ...paginationState,
+                    page: 1,
+                    limit: paginationState.limit,
+                    totalElement: paginationState.totalElement - SevimaImportCase().length,
+                    totalPage: Math.ceil((paginationState.totalElement - SevimaImportCase().length) / paginationState.limit),
+                })
+                deleteCalonMahasiswaSinkronisasi(SevimaImportCase().map(x => x.informasiKependudukan.NoNik)).then(res => Swal.fire({
+                    title: "Berhasil", text: "Data Sinkronisasi berhasil dihapus", icon: 'success'
+                }))
+            }
+        })
+    }
 
     return (
         <div className="w-full">
@@ -868,15 +930,27 @@ const ManajemenMahasiswaComponent = ({
                     className="max-w-sm"
                 />
                 <div className="w-full justify-end flex">
+                    <Button
+                        className="mr-2"
+                        onClick={() => { setOpenDialogSinkronisasi(true); setAfterLoad(false) }}
+                    >
+                        Sinkronisasi
+                    </Button>
+                    <Button
+                        className="mr-2"
+                        onClick={() => { deleteSinkronisasiData() }}
+                    >
+                        Hps Sync
+                    </Button>
                     <Button className="mr-2" onClick={() => buatData()}>
                         Tambah
                     </Button>
-                    <Button
+                    {/* <Button
                         className="mr-2"
                         onClick={() => openWindowUploadExcel()}
                     >
                         Upload Excel
-                    </Button>
+                    </Button> */}
                     <Select
                         value={String(paginationState.limit)}
                         onValueChange={(value) =>
@@ -929,10 +1003,10 @@ const ManajemenMahasiswaComponent = ({
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
-                                                          header.column
-                                                              .columnDef.header,
-                                                          header.getContext()
-                                                      )}
+                                                        header.column
+                                                            .columnDef.header,
+                                                        header.getContext()
+                                                    )}
                                             </TableHead>
                                         )
                                     })}
@@ -980,7 +1054,7 @@ const ManajemenMahasiswaComponent = ({
                         1}{' '}
                     -{' '}
                     {paginationState.totalElement <
-                    paginationState.page * paginationState.limit
+                        paginationState.page * paginationState.limit
                         ? paginationState.totalElement
                         : paginationState.page * paginationState.limit}{' '}
                     dari {paginationState.totalElement} Data.
@@ -1088,6 +1162,20 @@ const ManajemenMahasiswaComponent = ({
                 setDataKecamatanInstitusiLama={setDataKecamatanInstitusiLama}
                 dataDesaInstitusiLama={dataDesaInstitusiLama}
                 setDataDesaInstitusiLama={setDataDesaInstitusiLama}
+            />
+            <DialogSinkronisasi
+                openDialogSinkronisasiWindow={openDialogSinkronisasi}
+                setOpenDialogSinkronisasiWindow={setOpenDialogSinkronisasi}
+                loadingSinkronisasiWindow={loadingSinkronisasi}
+                setLoadingSinkronisasiWindow={setLoadingSinkronisasi}
+                dataSinkronisasi={dataSinkronisasi}
+                setDataSinkronisasi={setDataSinkronisasi}
+                afterLoad={afterLoad}
+                setAfterLoad={setAfterLoad}
+                countingMahasiswa={countingMahasiswa}
+                setCountingMahasiswa={setCountingMahasiswa}
+                calonMahasiswaNik={calonMahasiswaNik}
+                tambahkanData={tambahkanDataSinkronisasi}
             />
         </div>
     )
@@ -1276,7 +1364,7 @@ export function SheetManageData({
                                                         disabled={
                                                             loading ||
                                                             selectedData.UniversityId ===
-                                                                ''
+                                                            ''
                                                         }
                                                         value={field.value}
                                                         onValueChange={(
@@ -1520,11 +1608,11 @@ export function SheetManageData({
                                                                         className={cn(
                                                                             'w-[240px] pl-3 text-left font-normal',
                                                                             !field.value &&
-                                                                                'text-muted-foreground'
+                                                                            'text-muted-foreground'
                                                                         )}
                                                                     >
                                                                         {field.value instanceof
-                                                                        Date ? (
+                                                                            Date ? (
                                                                             format(
                                                                                 field.value,
                                                                                 'PPP'
@@ -1555,11 +1643,11 @@ export function SheetManageData({
                                                                         date
                                                                     ) =>
                                                                         date >
-                                                                            new Date() ||
+                                                                        new Date() ||
                                                                         date <
-                                                                            new Date(
-                                                                                '1900-01-01'
-                                                                            )
+                                                                        new Date(
+                                                                            '1900-01-01'
+                                                                        )
                                                                     }
                                                                 />
                                                             </PopoverContent>
@@ -2715,11 +2803,11 @@ export function SheetManageData({
                                                                         className={cn(
                                                                             'w-[240px] pl-3 text-left font-normal',
                                                                             !field.value &&
-                                                                                'text-muted-foreground'
+                                                                            'text-muted-foreground'
                                                                         )}
                                                                     >
                                                                         {field.value instanceof
-                                                                        Date ? (
+                                                                            Date ? (
                                                                             format(
                                                                                 field.value,
                                                                                 'PPP'
@@ -2780,11 +2868,11 @@ export function SheetManageData({
                                                                         className={cn(
                                                                             'w-[240px] pl-3 text-left font-normal',
                                                                             !field.value &&
-                                                                                'text-muted-foreground'
+                                                                            'text-muted-foreground'
                                                                         )}
                                                                     >
                                                                         {field.value instanceof
-                                                                        Date ? (
+                                                                            Date ? (
                                                                             format(
                                                                                 field.value,
                                                                                 'PPP'
@@ -2848,7 +2936,7 @@ export function SheetManageData({
                                                                 ) =>
                                                                     field.onChange(
                                                                         value ===
-                                                                            '1'
+                                                                        '1'
                                                                     )
                                                                 }
                                                             >
@@ -2899,7 +2987,7 @@ export function SheetManageData({
                                                                 ) =>
                                                                     field.onChange(
                                                                         value ===
-                                                                            '1'
+                                                                        '1'
                                                                     )
                                                                 }
                                                             >
@@ -3703,5 +3791,328 @@ export function SheetManageData({
                 </SheetContent>
             </Sheet>
         </div>
+    )
+}
+
+export function DialogSinkronisasi({
+    openDialogSinkronisasiWindow,
+    setOpenDialogSinkronisasiWindow,
+    loadingSinkronisasiWindow,
+    dataSinkronisasi,
+    setDataSinkronisasi,
+    setLoadingSinkronisasiWindow,
+    afterLoad,
+    setAfterLoad,
+    countingMahasiswa,
+    setCountingMahasiswa,
+    calonMahasiswaNik,
+    tambahkanData
+}: {
+    openDialogSinkronisasiWindow: boolean
+    setOpenDialogSinkronisasiWindow: React.Dispatch<React.SetStateAction<boolean>>
+    loadingSinkronisasiWindow: number
+    setLoadingSinkronisasiWindow: React.Dispatch<React.SetStateAction<number>>
+    dataSinkronisasi: {
+        tahunAjaran: string, semester: string
+    }
+    setDataSinkronisasi: React.Dispatch<React.SetStateAction<{
+        tahunAjaran: string, semester: string
+    }>>
+    afterLoad: boolean
+    setAfterLoad: React.Dispatch<React.SetStateAction<boolean>>,
+    countingMahasiswa: SevimaImportCaseType[]
+    setCountingMahasiswa: React.Dispatch<React.SetStateAction<SevimaImportCaseType[]>>,
+    calonMahasiswaNik: String[]
+    tambahkanData: () => void
+}) {
+    const [load, setLoad] = React.useState<boolean>(false)
+    const [successLoad, setSuccessLoad] = React.useState<boolean>(false)
+    const [loadSinkronisasi, setLoadSinkronisasi] = React.useState<boolean>(false)
+
+    // Tabel Comparison 
+    const [pagination, setPagination] = React.useState({
+        pageIndex: 0,
+        pageSize: 5,
+    })
+
+    const columns: ColumnDef<SevimaImportCaseType>[] = [
+        {
+            accessorKey: 'NoUjian',
+            header: 'NoUjian',
+            cell: ({ row }) => (
+                <div className="capitalize">{row.original.pendaftaran.NoUjian}</div>
+            ),
+        },
+        {
+            accessorKey: 'Nim',
+            header: 'Nim',
+            cell: ({ row }) => (
+                <div className="capitalize">{row.original.daftarUlang.Nim}</div>
+            ),
+        },
+        {
+            accessorKey: 'Nama',
+            header: 'Nama',
+            cell: ({ row }) => (
+                <div className="capitalize">{row.original.user.Nama}</div>
+            ),
+        },
+    ]
+    const table = useReactTable({
+        data: countingMahasiswa,
+        columns,
+        state: {
+            pagination,
+        },
+        onPaginationChange: setPagination,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+    })
+    const { pageIndex, pageSize } = table.getState().pagination
+    const totalRows = countingMahasiswa.length
+    const from = totalRows === 0 ? 0 : pageIndex * pageSize + 1
+    const to = Math.min(totalRows, (pageIndex + 1) * pageSize)
+    const pageCount = table.getPageCount()
+
+    const startLoading = async () => {
+        setLoad(true);
+        setSuccessLoad(false);
+        setLoadingSinkronisasiWindow(0);
+
+        // Paralel dengan loading bar; 
+        let temp: SevimaImportCaseType[] = []
+        SevimaImportCase().map(res => {
+            if (!calonMahasiswaNik.includes(res.informasiKependudukan.NoNik)) {
+                temp.push(res)
+            }
+        })
+        setCountingMahasiswa(temp)
+
+        //add loading bar
+        for (let i = 0; i <= 100; i++) {
+            await new Promise(resolve => setTimeout(resolve, 50));
+            setLoadingSinkronisasiWindow(i);
+
+            if (i === 20 || i === 75 || i === 100) {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+            }
+        }
+        setLoad(false)
+        setAfterLoad(true)
+        setLoadingSinkronisasiWindow(100);
+    };
+    return (
+        <Dialog open={openDialogSinkronisasiWindow} onOpenChange={setOpenDialogSinkronisasiWindow}>
+            <DialogContent className="max-w-[90vw] max-h-[85vh] overflow-y-scroll">
+                <DialogHeader>
+                    <DialogTitle>{load ? <RefreshCw /> : "Sinkronisasi"}</DialogTitle>
+                    {
+                        load ? (<h3 className='font-bold'>Proses Sinkronisasi</h3>) : (
+                            <DialogDescription>
+                                Sinkronisasi data pengguna berdasarkan sistem Sevima
+                            </DialogDescription>
+                        )
+                    }
+                </DialogHeader>
+                <div className="flex flex-col gap-4 mt-2">
+                    {
+                        successLoad ? (
+                            <div className='w-full items-center justify-center gap-2'>
+                                <div className="w-full flex justify-center gap-2">
+                                    <CheckCircle2 className="w-20 h-20 text-green-600" /></div>
+
+                                <h3 className="text-xl font-semibold text-center">
+                                    Proses Sinkronisasi Berhasil
+                                </h3>
+
+                                <p className="text-muted-foreground text-center text-normal">
+                                    {countingMahasiswa.length} Mahasiswa berhasil disinkronisasi
+                                </p>
+                            </div>
+                        ) : load ? (
+                            <React.Fragment>
+                                <div>{loadingSinkronisasiWindow} %</div>
+                                <Progress value={loadingSinkronisasiWindow} className="h-4 [&>div]:bg-orange-500" />
+                            </React.Fragment>
+                        ) : <></>
+                    }<div className="rounded-md border">
+                        {
+                            afterLoad ? (
+                                <React.Fragment>
+                                    <Table>
+                                        <TableHeader>
+                                            {table.getHeaderGroups().map((headerGroup) => (
+                                                <TableRow key={headerGroup.id}>
+                                                    {headerGroup.headers.map((header) => (
+                                                        <TableHead key={header.id}>
+                                                            {header.isPlaceholder
+                                                                ? null
+                                                                : flexRender(
+                                                                    header.column.columnDef.header,
+                                                                    header.getContext()
+                                                                )}
+                                                        </TableHead>
+                                                    ))}
+                                                </TableRow>
+                                            ))}
+                                        </TableHeader>
+
+                                        <TableBody>
+                                            {table.getRowModel().rows?.length ? (
+                                                table.getRowModel().rows.map((row) => (
+                                                    <TableRow
+                                                        key={row.id}
+                                                        data-state={row.getIsSelected() && "selected"}
+                                                    >
+                                                        {row.getVisibleCells().map((cell) => (
+                                                            <TableCell key={cell.id}>
+                                                                {flexRender(
+                                                                    cell.column.columnDef.cell,
+                                                                    cell.getContext()
+                                                                )}
+                                                            </TableCell>
+                                                        ))}
+                                                    </TableRow>
+                                                ))
+                                            ) : (
+                                                <TableRow>
+                                                    <TableCell
+                                                        colSpan={columns.length}
+                                                        className="h-24 text-center"
+                                                    >
+                                                        Tidak Ada Data.
+                                                    </TableCell>
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                    </Table>
+                                    <div className="flex items-center justify-end space-x-2 py-4">
+                                        <div className="flex-1 text-sm text-muted-foreground">
+                                            {totalRows > 0 ? (
+                                                <>
+                                                    Menampilkan {from} - {to} dari {totalRows} Data. Halaman{" "}
+                                                    {pageIndex + 1} dari {pageCount}
+                                                </>
+                                            ) : (
+                                                <>Tidak ada data.</>
+                                            )}
+                                        </div>
+
+                                        <div className="flex items-center space-x-2 mt-4">
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => table.previousPage()}
+                                                disabled={!table.getCanPreviousPage()}
+                                            >
+                                                <ChevronLeft className="w-4 h-4" />
+                                            </Button>
+
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => table.nextPage()}
+                                                disabled={!table.getCanNextPage()}
+                                            >
+                                                <ChevronRight className="w-4 h-4" />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                            ) : !load && !afterLoad && !successLoad ? (
+                                <div className='flex flex-col gap-2'>
+                                    <Select
+                                        value={dataSinkronisasi.tahunAjaran}
+                                        onValueChange={(value) => setDataSinkronisasi({ ...dataSinkronisasi, tahunAjaran: value })}
+                                    >
+                                        <SelectTrigger className='w-full'>
+                                            <SelectValue placeholder="Pilih Tahun" />
+                                        </SelectTrigger>
+                                        <SelectContent className='w-full'>
+                                            <SelectGroup>
+                                                <SelectLabel>
+                                                    Pilih Tahun
+                                                </SelectLabel>
+                                                {['2024', '2025', '2026'].map(
+                                                    (l, idx) => (
+                                                        <SelectItem
+                                                            value={String(l)}
+                                                            key={idx}
+                                                        >
+                                                            {l}
+                                                        </SelectItem>
+                                                    )
+                                                )}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                    <Select
+                                        value={dataSinkronisasi.semester}
+                                        onValueChange={(value) => setDataSinkronisasi({ ...dataSinkronisasi, semester: value })}
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Pilih Semester" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>
+                                                    Pilih Semester
+                                                </SelectLabel>
+                                                {['Ganjil', 'Genap'].map(
+                                                    (l, idx) => (
+                                                        <SelectItem
+                                                            value={String(l)}
+                                                            key={idx}
+                                                        >
+                                                            {l}
+                                                        </SelectItem>
+                                                    )
+                                                )}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            ) : <></>
+                        }
+                    </div>
+                </div>
+                {
+                    successLoad ? (
+                        <Button
+                            className="mr-2"
+                            onClick={() => setOpenDialogSinkronisasiWindow(false)}
+                        >
+                            Tutup
+                        </Button>
+                    ) : afterLoad ? (
+                        <Button
+                            disabled={loadSinkronisasi}
+                            className="mr-2"
+                            onClick={async () => {
+                                setLoadSinkronisasi(true)
+                                await tambahkanData()
+                                setAfterLoad(false);
+                                setSuccessLoad(true)
+                                setLoadSinkronisasi(false)
+                            }}
+                        >
+                            Tambahkan Data
+                        </Button>
+                    ) : !load ? (
+                        <DialogFooter className="flex items-center">
+                            <Button
+                                className="mr-2"
+                                disabled={dataSinkronisasi.semester == '' || dataSinkronisasi.tahunAjaran == ''}
+                                onClick={() => startLoading()}
+                            >
+                                Mulai Sinkronisasi
+                            </Button>
+                        </DialogFooter>
+                    ) : <></>
+                }
+            </DialogContent>
+        </Dialog>
     )
 }

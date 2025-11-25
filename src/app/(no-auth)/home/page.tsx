@@ -3,10 +3,8 @@ import About from '@/components/website/halaman_utama/About'
 import Advantages from '@/components/website/halaman_utama/Advantages'
 import Community from '@/components/website/halaman_utama/Community'
 import Events from '@/components/website/halaman_utama/Events'
-import FocusTopics from '@/components/website/halaman_utama/FocusTopics'
 import Hero from '@/components/website/halaman_utama/Hero'
 import News from '@/components/website/halaman_utama/News'
-import Resources from '@/components/website/halaman_utama/Resources'
 import { prisma } from '@/lib/prisma'
 
 const Page = async () => {
