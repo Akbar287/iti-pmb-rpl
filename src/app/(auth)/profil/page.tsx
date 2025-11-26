@@ -1,10 +1,9 @@
 import Profil from '@/components/auth/profil'
-import { PrismaClient } from '@/generated/prisma'
 import { getSession } from '@/provider/api'
 import React from 'react'
+import { prisma } from '@/lib/prisma'
 
 const Page = async () => {
-    const prisma = new PrismaClient()
     const session = await getSession()
 
     const data = await prisma.user.findFirst({

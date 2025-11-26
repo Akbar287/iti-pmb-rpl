@@ -6,8 +6,6 @@ import { fonnteClient } from '@/config/fonnet'
 
 const app = new Hono().basePath('/api/protected/whatsapp')
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-
 app.use('*', withApiAuth)
 
 app.post('/', async (c) => {
