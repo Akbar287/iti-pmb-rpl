@@ -195,6 +195,14 @@ exports.Prisma.BuktiFormScalarFieldEnum = {
   UpdatedAt: 'UpdatedAt'
 };
 
+exports.Prisma.BuktiFormPagesScalarFieldEnum = {
+  BuktiFormPagesId: 'BuktiFormPagesId',
+  BuktiFormId: 'BuktiFormId',
+  Prompt: 'Prompt',
+  Result: 'Result',
+  Think: 'Think'
+};
+
 exports.Prisma.BuktiFormEvaluasiDiriScalarFieldEnum = {
   BuktiFormId: 'BuktiFormId',
   EvaluasiDiriId: 'EvaluasiDiriId'
@@ -259,7 +267,19 @@ exports.Prisma.HasilAssesmenScalarFieldEnum = {
   Nilai: 'Nilai',
   TanggalAssesmen: 'TanggalAssesmen',
   CreatedAt: 'CreatedAt',
-  UpdatedAt: 'UpdatedAt'
+  UpdatedAt: 'UpdatedAt',
+  Ai: 'Ai'
+};
+
+exports.Prisma.HasilAssesmenAiScalarFieldEnum = {
+  HasilAssesmenAiId: 'HasilAssesmenAiId',
+  HasilAssesmenId: 'HasilAssesmenId',
+  Valid: 'Valid',
+  Autentik: 'Autentik',
+  Terkini: 'Terkini',
+  Memadai: 'Memadai',
+  Assesmen: 'Assesmen',
+  Nilai: 'Nilai'
 };
 
 exports.Prisma.InformasiKependudukanScalarFieldEnum = {
@@ -552,6 +572,7 @@ exports.Prisma.SkRektorScalarFieldEnum = {
   NamaFile: 'NamaFile',
   FileData: 'FileData',
   NamaDokumen: 'NamaDokumen',
+  Catatan: 'Catatan',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
 };
@@ -577,7 +598,20 @@ exports.Prisma.SkorAssesmenScalarFieldEnum = {
   Diakui: 'Diakui',
   NilaiHuruf: 'NilaiHuruf',
   CreatedAt: 'CreatedAt',
-  UpdatedAt: 'UpdatedAt'
+  UpdatedAt: 'UpdatedAt',
+  Ai: 'Ai'
+};
+
+exports.Prisma.SkorAssesmenAiScalarFieldEnum = {
+  SkorAssesmenAiId: 'SkorAssesmenAiId',
+  SkorAssesmenId: 'SkorAssesmenId',
+  Portofolio: 'Portofolio',
+  Tulis: 'Tulis',
+  Wawancara: 'Wawancara',
+  Demo: 'Demo',
+  SkorRataRata: 'SkorRataRata',
+  Diakui: 'Diakui',
+  NilaiHuruf: 'NilaiHuruf'
 };
 
 exports.Prisma.StatusMahasiswaAssesmentScalarFieldEnum = {
@@ -859,6 +893,7 @@ exports.Prisma.ModelName = {
   AsesorPraktisi: 'AsesorPraktisi',
   AssesorMahasiswa: 'AssesorMahasiswa',
   BuktiForm: 'BuktiForm',
+  BuktiFormPages: 'BuktiFormPages',
   BuktiFormEvaluasiDiri: 'BuktiFormEvaluasiDiri',
   CapaianPembelajaran: 'CapaianPembelajaran',
   Country: 'Country',
@@ -866,6 +901,7 @@ exports.Prisma.ModelName = {
   Desa: 'Desa',
   EvaluasiDiri: 'EvaluasiDiri',
   HasilAssesmen: 'HasilAssesmen',
+  HasilAssesmenAi: 'HasilAssesmenAi',
   InformasiKependudukan: 'InformasiKependudukan',
   InstitusiLama: 'InstitusiLama',
   JenisDokumen: 'JenisDokumen',
@@ -901,6 +937,7 @@ exports.Prisma.ModelName = {
   SkRektorAssesor: 'SkRektorAssesor',
   SkRektorMahasiswa: 'SkRektorMahasiswa',
   SkorAssesmen: 'SkorAssesmen',
+  SkorAssesmenAi: 'SkorAssesmenAi',
   StatusMahasiswaAssesment: 'StatusMahasiswaAssesment',
   StatusMahasiswaAssesmentHistory: 'StatusMahasiswaAssesmentHistory',
   TipeAsesor: 'TipeAsesor',

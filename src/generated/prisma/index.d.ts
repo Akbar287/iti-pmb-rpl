@@ -49,6 +49,11 @@ export type AssesorMahasiswa = $Result.DefaultSelection<Prisma.$AssesorMahasiswa
  */
 export type BuktiForm = $Result.DefaultSelection<Prisma.$BuktiFormPayload>
 /**
+ * Model BuktiFormPages
+ * 
+ */
+export type BuktiFormPages = $Result.DefaultSelection<Prisma.$BuktiFormPagesPayload>
+/**
  * Model BuktiFormEvaluasiDiri
  * 
  */
@@ -83,6 +88,11 @@ export type EvaluasiDiri = $Result.DefaultSelection<Prisma.$EvaluasiDiriPayload>
  * 
  */
 export type HasilAssesmen = $Result.DefaultSelection<Prisma.$HasilAssesmenPayload>
+/**
+ * Model HasilAssesmenAi
+ * 
+ */
+export type HasilAssesmenAi = $Result.DefaultSelection<Prisma.$HasilAssesmenAiPayload>
 /**
  * Model InformasiKependudukan
  * 
@@ -258,6 +268,11 @@ export type SkRektorMahasiswa = $Result.DefaultSelection<Prisma.$SkRektorMahasis
  * 
  */
 export type SkorAssesmen = $Result.DefaultSelection<Prisma.$SkorAssesmenPayload>
+/**
+ * Model SkorAssesmenAi
+ * 
+ */
+export type SkorAssesmenAi = $Result.DefaultSelection<Prisma.$SkorAssesmenAiPayload>
 /**
  * Model StatusMahasiswaAssesment
  * 
@@ -684,6 +699,16 @@ export class PrismaClient<
   get buktiForm(): Prisma.BuktiFormDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.buktiFormPages`: Exposes CRUD operations for the **BuktiFormPages** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BuktiFormPages
+    * const buktiFormPages = await prisma.buktiFormPages.findMany()
+    * ```
+    */
+  get buktiFormPages(): Prisma.BuktiFormPagesDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.buktiFormEvaluasiDiri`: Exposes CRUD operations for the **BuktiFormEvaluasiDiri** model.
     * Example usage:
     * ```ts
@@ -752,6 +777,16 @@ export class PrismaClient<
     * ```
     */
   get hasilAssesmen(): Prisma.HasilAssesmenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.hasilAssesmenAi`: Exposes CRUD operations for the **HasilAssesmenAi** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HasilAssesmenAis
+    * const hasilAssesmenAis = await prisma.hasilAssesmenAi.findMany()
+    * ```
+    */
+  get hasilAssesmenAi(): Prisma.HasilAssesmenAiDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.informasiKependudukan`: Exposes CRUD operations for the **InformasiKependudukan** model.
@@ -1102,6 +1137,16 @@ export class PrismaClient<
     * ```
     */
   get skorAssesmen(): Prisma.SkorAssesmenDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.skorAssesmenAi`: Exposes CRUD operations for the **SkorAssesmenAi** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SkorAssesmenAis
+    * const skorAssesmenAis = await prisma.skorAssesmenAi.findMany()
+    * ```
+    */
+  get skorAssesmenAi(): Prisma.SkorAssesmenAiDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.statusMahasiswaAssesment`: Exposes CRUD operations for the **StatusMahasiswaAssesment** model.
@@ -1733,6 +1778,7 @@ export namespace Prisma {
     AsesorPraktisi: 'AsesorPraktisi',
     AssesorMahasiswa: 'AssesorMahasiswa',
     BuktiForm: 'BuktiForm',
+    BuktiFormPages: 'BuktiFormPages',
     BuktiFormEvaluasiDiri: 'BuktiFormEvaluasiDiri',
     CapaianPembelajaran: 'CapaianPembelajaran',
     Country: 'Country',
@@ -1740,6 +1786,7 @@ export namespace Prisma {
     Desa: 'Desa',
     EvaluasiDiri: 'EvaluasiDiri',
     HasilAssesmen: 'HasilAssesmen',
+    HasilAssesmenAi: 'HasilAssesmenAi',
     InformasiKependudukan: 'InformasiKependudukan',
     InstitusiLama: 'InstitusiLama',
     JenisDokumen: 'JenisDokumen',
@@ -1775,6 +1822,7 @@ export namespace Prisma {
     SkRektorAssesor: 'SkRektorAssesor',
     SkRektorMahasiswa: 'SkRektorMahasiswa',
     SkorAssesmen: 'SkorAssesmen',
+    SkorAssesmenAi: 'SkorAssesmenAi',
     StatusMahasiswaAssesment: 'StatusMahasiswaAssesment',
     StatusMahasiswaAssesmentHistory: 'StatusMahasiswaAssesmentHistory',
     TipeAsesor: 'TipeAsesor',
@@ -1809,7 +1857,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita"
+      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormPages" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "hasilAssesmenAi" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "skorAssesmenAi" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2331,6 +2379,80 @@ export namespace Prisma {
           }
         }
       }
+      BuktiFormPages: {
+        payload: Prisma.$BuktiFormPagesPayload<ExtArgs>
+        fields: Prisma.BuktiFormPagesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BuktiFormPagesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BuktiFormPagesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>
+          }
+          findFirst: {
+            args: Prisma.BuktiFormPagesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BuktiFormPagesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>
+          }
+          findMany: {
+            args: Prisma.BuktiFormPagesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>[]
+          }
+          create: {
+            args: Prisma.BuktiFormPagesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>
+          }
+          createMany: {
+            args: Prisma.BuktiFormPagesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BuktiFormPagesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>[]
+          }
+          delete: {
+            args: Prisma.BuktiFormPagesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>
+          }
+          update: {
+            args: Prisma.BuktiFormPagesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>
+          }
+          deleteMany: {
+            args: Prisma.BuktiFormPagesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BuktiFormPagesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BuktiFormPagesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>[]
+          }
+          upsert: {
+            args: Prisma.BuktiFormPagesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiFormPagesPayload>
+          }
+          aggregate: {
+            args: Prisma.BuktiFormPagesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBuktiFormPages>
+          }
+          groupBy: {
+            args: Prisma.BuktiFormPagesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BuktiFormPagesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BuktiFormPagesCountArgs<ExtArgs>
+            result: $Utils.Optional<BuktiFormPagesCountAggregateOutputType> | number
+          }
+        }
+      }
       BuktiFormEvaluasiDiri: {
         payload: Prisma.$BuktiFormEvaluasiDiriPayload<ExtArgs>
         fields: Prisma.BuktiFormEvaluasiDiriFieldRefs
@@ -2846,6 +2968,80 @@ export namespace Prisma {
           count: {
             args: Prisma.HasilAssesmenCountArgs<ExtArgs>
             result: $Utils.Optional<HasilAssesmenCountAggregateOutputType> | number
+          }
+        }
+      }
+      HasilAssesmenAi: {
+        payload: Prisma.$HasilAssesmenAiPayload<ExtArgs>
+        fields: Prisma.HasilAssesmenAiFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HasilAssesmenAiFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HasilAssesmenAiFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>
+          }
+          findFirst: {
+            args: Prisma.HasilAssesmenAiFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HasilAssesmenAiFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>
+          }
+          findMany: {
+            args: Prisma.HasilAssesmenAiFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>[]
+          }
+          create: {
+            args: Prisma.HasilAssesmenAiCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>
+          }
+          createMany: {
+            args: Prisma.HasilAssesmenAiCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HasilAssesmenAiCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>[]
+          }
+          delete: {
+            args: Prisma.HasilAssesmenAiDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>
+          }
+          update: {
+            args: Prisma.HasilAssesmenAiUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>
+          }
+          deleteMany: {
+            args: Prisma.HasilAssesmenAiDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HasilAssesmenAiUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HasilAssesmenAiUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>[]
+          }
+          upsert: {
+            args: Prisma.HasilAssesmenAiUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HasilAssesmenAiPayload>
+          }
+          aggregate: {
+            args: Prisma.HasilAssesmenAiAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHasilAssesmenAi>
+          }
+          groupBy: {
+            args: Prisma.HasilAssesmenAiGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HasilAssesmenAiGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HasilAssesmenAiCountArgs<ExtArgs>
+            result: $Utils.Optional<HasilAssesmenAiCountAggregateOutputType> | number
           }
         }
       }
@@ -5439,6 +5635,80 @@ export namespace Prisma {
           }
         }
       }
+      SkorAssesmenAi: {
+        payload: Prisma.$SkorAssesmenAiPayload<ExtArgs>
+        fields: Prisma.SkorAssesmenAiFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SkorAssesmenAiFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SkorAssesmenAiFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>
+          }
+          findFirst: {
+            args: Prisma.SkorAssesmenAiFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SkorAssesmenAiFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>
+          }
+          findMany: {
+            args: Prisma.SkorAssesmenAiFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>[]
+          }
+          create: {
+            args: Prisma.SkorAssesmenAiCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>
+          }
+          createMany: {
+            args: Prisma.SkorAssesmenAiCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SkorAssesmenAiCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>[]
+          }
+          delete: {
+            args: Prisma.SkorAssesmenAiDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>
+          }
+          update: {
+            args: Prisma.SkorAssesmenAiUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>
+          }
+          deleteMany: {
+            args: Prisma.SkorAssesmenAiDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SkorAssesmenAiUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SkorAssesmenAiUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>[]
+          }
+          upsert: {
+            args: Prisma.SkorAssesmenAiUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkorAssesmenAiPayload>
+          }
+          aggregate: {
+            args: Prisma.SkorAssesmenAiAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSkorAssesmenAi>
+          }
+          groupBy: {
+            args: Prisma.SkorAssesmenAiGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SkorAssesmenAiGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SkorAssesmenAiCountArgs<ExtArgs>
+            result: $Utils.Optional<SkorAssesmenAiCountAggregateOutputType> | number
+          }
+        }
+      }
       StatusMahasiswaAssesment: {
         payload: Prisma.$StatusMahasiswaAssesmentPayload<ExtArgs>
         fields: Prisma.StatusMahasiswaAssesmentFieldRefs
@@ -6944,6 +7214,7 @@ export namespace Prisma {
     asesorPraktisi?: AsesorPraktisiOmit
     assesorMahasiswa?: AssesorMahasiswaOmit
     buktiForm?: BuktiFormOmit
+    buktiFormPages?: BuktiFormPagesOmit
     buktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriOmit
     capaianPembelajaran?: CapaianPembelajaranOmit
     country?: CountryOmit
@@ -6951,6 +7222,7 @@ export namespace Prisma {
     desa?: DesaOmit
     evaluasiDiri?: EvaluasiDiriOmit
     hasilAssesmen?: HasilAssesmenOmit
+    hasilAssesmenAi?: HasilAssesmenAiOmit
     informasiKependudukan?: InformasiKependudukanOmit
     institusiLama?: InstitusiLamaOmit
     jenisDokumen?: JenisDokumenOmit
@@ -6986,6 +7258,7 @@ export namespace Prisma {
     skRektorAssesor?: SkRektorAssesorOmit
     skRektorMahasiswa?: SkRektorMahasiswaOmit
     skorAssesmen?: SkorAssesmenOmit
+    skorAssesmenAi?: SkorAssesmenAiOmit
     statusMahasiswaAssesment?: StatusMahasiswaAssesmentOmit
     statusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryOmit
     tipeAsesor?: TipeAsesorOmit
@@ -7255,10 +7528,12 @@ export namespace Prisma {
 
   export type BuktiFormCountOutputType = {
     BuktiFormEvaluasiDiri: number
+    BuktiFormPages: number
   }
 
   export type BuktiFormCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     BuktiFormEvaluasiDiri?: boolean | BuktiFormCountOutputTypeCountBuktiFormEvaluasiDiriArgs
+    BuktiFormPages?: boolean | BuktiFormCountOutputTypeCountBuktiFormPagesArgs
   }
 
   // Custom InputTypes
@@ -7277,6 +7552,13 @@ export namespace Prisma {
    */
   export type BuktiFormCountOutputTypeCountBuktiFormEvaluasiDiriArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BuktiFormEvaluasiDiriWhereInput
+  }
+
+  /**
+   * BuktiFormCountOutputType without action
+   */
+  export type BuktiFormCountOutputTypeCountBuktiFormPagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuktiFormPagesWhereInput
   }
 
 
@@ -7410,6 +7692,37 @@ export namespace Prisma {
    */
   export type EvaluasiDiriCountOutputTypeCountHasilAssesmenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: HasilAssesmenWhereInput
+  }
+
+
+  /**
+   * Count Type HasilAssesmenCountOutputType
+   */
+
+  export type HasilAssesmenCountOutputType = {
+    HasilAssesmenAi: number
+  }
+
+  export type HasilAssesmenCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    HasilAssesmenAi?: boolean | HasilAssesmenCountOutputTypeCountHasilAssesmenAiArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * HasilAssesmenCountOutputType without action
+   */
+  export type HasilAssesmenCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenCountOutputType
+     */
+    select?: HasilAssesmenCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * HasilAssesmenCountOutputType without action
+   */
+  export type HasilAssesmenCountOutputTypeCountHasilAssesmenAiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HasilAssesmenAiWhereInput
   }
 
 
@@ -8078,6 +8391,37 @@ export namespace Prisma {
    */
   export type SkRektorCountOutputTypeCountSkRektorMahasiswaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SkRektorMahasiswaWhereInput
+  }
+
+
+  /**
+   * Count Type SkorAssesmenCountOutputType
+   */
+
+  export type SkorAssesmenCountOutputType = {
+    SkorAssesmenAi: number
+  }
+
+  export type SkorAssesmenCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SkorAssesmenAi?: boolean | SkorAssesmenCountOutputTypeCountSkorAssesmenAiArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SkorAssesmenCountOutputType without action
+   */
+  export type SkorAssesmenCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenCountOutputType
+     */
+    select?: SkorAssesmenCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SkorAssesmenCountOutputType without action
+   */
+  export type SkorAssesmenCountOutputTypeCountSkorAssesmenAiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkorAssesmenAiWhereInput
   }
 
 
@@ -15507,6 +15851,7 @@ export namespace Prisma {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
     JenisDokumen?: boolean | JenisDokumenDefaultArgs<ExtArgs>
     BuktiFormEvaluasiDiri?: boolean | BuktiForm$BuktiFormEvaluasiDiriArgs<ExtArgs>
+    BuktiFormPages?: boolean | BuktiForm$BuktiFormPagesArgs<ExtArgs>
     _count?: boolean | BuktiFormCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["buktiForm"]>
 
@@ -15552,6 +15897,7 @@ export namespace Prisma {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
     JenisDokumen?: boolean | JenisDokumenDefaultArgs<ExtArgs>
     BuktiFormEvaluasiDiri?: boolean | BuktiForm$BuktiFormEvaluasiDiriArgs<ExtArgs>
+    BuktiFormPages?: boolean | BuktiForm$BuktiFormPagesArgs<ExtArgs>
     _count?: boolean | BuktiFormCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type BuktiFormIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15569,6 +15915,7 @@ export namespace Prisma {
       Pendaftaran: Prisma.$PendaftaranPayload<ExtArgs>
       JenisDokumen: Prisma.$JenisDokumenPayload<ExtArgs>
       BuktiFormEvaluasiDiri: Prisma.$BuktiFormEvaluasiDiriPayload<ExtArgs>[]
+      BuktiFormPages: Prisma.$BuktiFormPagesPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       BuktiFormId: string
@@ -15976,6 +16323,7 @@ export namespace Prisma {
     Pendaftaran<T extends PendaftaranDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PendaftaranDefaultArgs<ExtArgs>>): Prisma__PendaftaranClient<$Result.GetResult<Prisma.$PendaftaranPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     JenisDokumen<T extends JenisDokumenDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JenisDokumenDefaultArgs<ExtArgs>>): Prisma__JenisDokumenClient<$Result.GetResult<Prisma.$JenisDokumenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     BuktiFormEvaluasiDiri<T extends BuktiForm$BuktiFormEvaluasiDiriArgs<ExtArgs> = {}>(args?: Subset<T, BuktiForm$BuktiFormEvaluasiDiriArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuktiFormEvaluasiDiriPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    BuktiFormPages<T extends BuktiForm$BuktiFormPagesArgs<ExtArgs> = {}>(args?: Subset<T, BuktiForm$BuktiFormPagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16433,6 +16781,30 @@ export namespace Prisma {
   }
 
   /**
+   * BuktiForm.BuktiFormPages
+   */
+  export type BuktiForm$BuktiFormPagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    where?: BuktiFormPagesWhereInput
+    orderBy?: BuktiFormPagesOrderByWithRelationInput | BuktiFormPagesOrderByWithRelationInput[]
+    cursor?: BuktiFormPagesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BuktiFormPagesScalarFieldEnum | BuktiFormPagesScalarFieldEnum[]
+  }
+
+  /**
    * BuktiForm without action
    */
   export type BuktiFormDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16448,6 +16820,1064 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: BuktiFormInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BuktiFormPages
+   */
+
+  export type AggregateBuktiFormPages = {
+    _count: BuktiFormPagesCountAggregateOutputType | null
+    _min: BuktiFormPagesMinAggregateOutputType | null
+    _max: BuktiFormPagesMaxAggregateOutputType | null
+  }
+
+  export type BuktiFormPagesMinAggregateOutputType = {
+    BuktiFormPagesId: string | null
+    BuktiFormId: string | null
+    Prompt: string | null
+    Result: string | null
+    Think: string | null
+  }
+
+  export type BuktiFormPagesMaxAggregateOutputType = {
+    BuktiFormPagesId: string | null
+    BuktiFormId: string | null
+    Prompt: string | null
+    Result: string | null
+    Think: string | null
+  }
+
+  export type BuktiFormPagesCountAggregateOutputType = {
+    BuktiFormPagesId: number
+    BuktiFormId: number
+    Prompt: number
+    Result: number
+    Think: number
+    _all: number
+  }
+
+
+  export type BuktiFormPagesMinAggregateInputType = {
+    BuktiFormPagesId?: true
+    BuktiFormId?: true
+    Prompt?: true
+    Result?: true
+    Think?: true
+  }
+
+  export type BuktiFormPagesMaxAggregateInputType = {
+    BuktiFormPagesId?: true
+    BuktiFormId?: true
+    Prompt?: true
+    Result?: true
+    Think?: true
+  }
+
+  export type BuktiFormPagesCountAggregateInputType = {
+    BuktiFormPagesId?: true
+    BuktiFormId?: true
+    Prompt?: true
+    Result?: true
+    Think?: true
+    _all?: true
+  }
+
+  export type BuktiFormPagesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuktiFormPages to aggregate.
+     */
+    where?: BuktiFormPagesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiFormPages to fetch.
+     */
+    orderBy?: BuktiFormPagesOrderByWithRelationInput | BuktiFormPagesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BuktiFormPagesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiFormPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiFormPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BuktiFormPages
+    **/
+    _count?: true | BuktiFormPagesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BuktiFormPagesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BuktiFormPagesMaxAggregateInputType
+  }
+
+  export type GetBuktiFormPagesAggregateType<T extends BuktiFormPagesAggregateArgs> = {
+        [P in keyof T & keyof AggregateBuktiFormPages]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBuktiFormPages[P]>
+      : GetScalarType<T[P], AggregateBuktiFormPages[P]>
+  }
+
+
+
+
+  export type BuktiFormPagesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuktiFormPagesWhereInput
+    orderBy?: BuktiFormPagesOrderByWithAggregationInput | BuktiFormPagesOrderByWithAggregationInput[]
+    by: BuktiFormPagesScalarFieldEnum[] | BuktiFormPagesScalarFieldEnum
+    having?: BuktiFormPagesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BuktiFormPagesCountAggregateInputType | true
+    _min?: BuktiFormPagesMinAggregateInputType
+    _max?: BuktiFormPagesMaxAggregateInputType
+  }
+
+  export type BuktiFormPagesGroupByOutputType = {
+    BuktiFormPagesId: string
+    BuktiFormId: string
+    Prompt: string
+    Result: string | null
+    Think: string | null
+    _count: BuktiFormPagesCountAggregateOutputType | null
+    _min: BuktiFormPagesMinAggregateOutputType | null
+    _max: BuktiFormPagesMaxAggregateOutputType | null
+  }
+
+  type GetBuktiFormPagesGroupByPayload<T extends BuktiFormPagesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BuktiFormPagesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BuktiFormPagesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BuktiFormPagesGroupByOutputType[P]>
+            : GetScalarType<T[P], BuktiFormPagesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BuktiFormPagesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    BuktiFormPagesId?: boolean
+    BuktiFormId?: boolean
+    Prompt?: boolean
+    Result?: boolean
+    Think?: boolean
+    BuktiForm?: boolean | BuktiFormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buktiFormPages"]>
+
+  export type BuktiFormPagesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    BuktiFormPagesId?: boolean
+    BuktiFormId?: boolean
+    Prompt?: boolean
+    Result?: boolean
+    Think?: boolean
+    BuktiForm?: boolean | BuktiFormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buktiFormPages"]>
+
+  export type BuktiFormPagesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    BuktiFormPagesId?: boolean
+    BuktiFormId?: boolean
+    Prompt?: boolean
+    Result?: boolean
+    Think?: boolean
+    BuktiForm?: boolean | BuktiFormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buktiFormPages"]>
+
+  export type BuktiFormPagesSelectScalar = {
+    BuktiFormPagesId?: boolean
+    BuktiFormId?: boolean
+    Prompt?: boolean
+    Result?: boolean
+    Think?: boolean
+  }
+
+  export type BuktiFormPagesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"BuktiFormPagesId" | "BuktiFormId" | "Prompt" | "Result" | "Think", ExtArgs["result"]["buktiFormPages"]>
+  export type BuktiFormPagesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    BuktiForm?: boolean | BuktiFormDefaultArgs<ExtArgs>
+  }
+  export type BuktiFormPagesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    BuktiForm?: boolean | BuktiFormDefaultArgs<ExtArgs>
+  }
+  export type BuktiFormPagesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    BuktiForm?: boolean | BuktiFormDefaultArgs<ExtArgs>
+  }
+
+  export type $BuktiFormPagesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BuktiFormPages"
+    objects: {
+      BuktiForm: Prisma.$BuktiFormPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      BuktiFormPagesId: string
+      BuktiFormId: string
+      Prompt: string
+      Result: string | null
+      Think: string | null
+    }, ExtArgs["result"]["buktiFormPages"]>
+    composites: {}
+  }
+
+  type BuktiFormPagesGetPayload<S extends boolean | null | undefined | BuktiFormPagesDefaultArgs> = $Result.GetResult<Prisma.$BuktiFormPagesPayload, S>
+
+  type BuktiFormPagesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BuktiFormPagesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BuktiFormPagesCountAggregateInputType | true
+    }
+
+  export interface BuktiFormPagesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BuktiFormPages'], meta: { name: 'BuktiFormPages' } }
+    /**
+     * Find zero or one BuktiFormPages that matches the filter.
+     * @param {BuktiFormPagesFindUniqueArgs} args - Arguments to find a BuktiFormPages
+     * @example
+     * // Get one BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BuktiFormPagesFindUniqueArgs>(args: SelectSubset<T, BuktiFormPagesFindUniqueArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BuktiFormPages that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BuktiFormPagesFindUniqueOrThrowArgs} args - Arguments to find a BuktiFormPages
+     * @example
+     * // Get one BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BuktiFormPagesFindUniqueOrThrowArgs>(args: SelectSubset<T, BuktiFormPagesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BuktiFormPages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiFormPagesFindFirstArgs} args - Arguments to find a BuktiFormPages
+     * @example
+     * // Get one BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BuktiFormPagesFindFirstArgs>(args?: SelectSubset<T, BuktiFormPagesFindFirstArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BuktiFormPages that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiFormPagesFindFirstOrThrowArgs} args - Arguments to find a BuktiFormPages
+     * @example
+     * // Get one BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BuktiFormPagesFindFirstOrThrowArgs>(args?: SelectSubset<T, BuktiFormPagesFindFirstOrThrowArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BuktiFormPages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiFormPagesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.findMany()
+     * 
+     * // Get first 10 BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.findMany({ take: 10 })
+     * 
+     * // Only select the `BuktiFormPagesId`
+     * const buktiFormPagesWithBuktiFormPagesIdOnly = await prisma.buktiFormPages.findMany({ select: { BuktiFormPagesId: true } })
+     * 
+     */
+    findMany<T extends BuktiFormPagesFindManyArgs>(args?: SelectSubset<T, BuktiFormPagesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BuktiFormPages.
+     * @param {BuktiFormPagesCreateArgs} args - Arguments to create a BuktiFormPages.
+     * @example
+     * // Create one BuktiFormPages
+     * const BuktiFormPages = await prisma.buktiFormPages.create({
+     *   data: {
+     *     // ... data to create a BuktiFormPages
+     *   }
+     * })
+     * 
+     */
+    create<T extends BuktiFormPagesCreateArgs>(args: SelectSubset<T, BuktiFormPagesCreateArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BuktiFormPages.
+     * @param {BuktiFormPagesCreateManyArgs} args - Arguments to create many BuktiFormPages.
+     * @example
+     * // Create many BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BuktiFormPagesCreateManyArgs>(args?: SelectSubset<T, BuktiFormPagesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BuktiFormPages and returns the data saved in the database.
+     * @param {BuktiFormPagesCreateManyAndReturnArgs} args - Arguments to create many BuktiFormPages.
+     * @example
+     * // Create many BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BuktiFormPages and only return the `BuktiFormPagesId`
+     * const buktiFormPagesWithBuktiFormPagesIdOnly = await prisma.buktiFormPages.createManyAndReturn({
+     *   select: { BuktiFormPagesId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BuktiFormPagesCreateManyAndReturnArgs>(args?: SelectSubset<T, BuktiFormPagesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BuktiFormPages.
+     * @param {BuktiFormPagesDeleteArgs} args - Arguments to delete one BuktiFormPages.
+     * @example
+     * // Delete one BuktiFormPages
+     * const BuktiFormPages = await prisma.buktiFormPages.delete({
+     *   where: {
+     *     // ... filter to delete one BuktiFormPages
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BuktiFormPagesDeleteArgs>(args: SelectSubset<T, BuktiFormPagesDeleteArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BuktiFormPages.
+     * @param {BuktiFormPagesUpdateArgs} args - Arguments to update one BuktiFormPages.
+     * @example
+     * // Update one BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BuktiFormPagesUpdateArgs>(args: SelectSubset<T, BuktiFormPagesUpdateArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BuktiFormPages.
+     * @param {BuktiFormPagesDeleteManyArgs} args - Arguments to filter BuktiFormPages to delete.
+     * @example
+     * // Delete a few BuktiFormPages
+     * const { count } = await prisma.buktiFormPages.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BuktiFormPagesDeleteManyArgs>(args?: SelectSubset<T, BuktiFormPagesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BuktiFormPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiFormPagesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BuktiFormPagesUpdateManyArgs>(args: SelectSubset<T, BuktiFormPagesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BuktiFormPages and returns the data updated in the database.
+     * @param {BuktiFormPagesUpdateManyAndReturnArgs} args - Arguments to update many BuktiFormPages.
+     * @example
+     * // Update many BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BuktiFormPages and only return the `BuktiFormPagesId`
+     * const buktiFormPagesWithBuktiFormPagesIdOnly = await prisma.buktiFormPages.updateManyAndReturn({
+     *   select: { BuktiFormPagesId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BuktiFormPagesUpdateManyAndReturnArgs>(args: SelectSubset<T, BuktiFormPagesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BuktiFormPages.
+     * @param {BuktiFormPagesUpsertArgs} args - Arguments to update or create a BuktiFormPages.
+     * @example
+     * // Update or create a BuktiFormPages
+     * const buktiFormPages = await prisma.buktiFormPages.upsert({
+     *   create: {
+     *     // ... data to create a BuktiFormPages
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BuktiFormPages we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BuktiFormPagesUpsertArgs>(args: SelectSubset<T, BuktiFormPagesUpsertArgs<ExtArgs>>): Prisma__BuktiFormPagesClient<$Result.GetResult<Prisma.$BuktiFormPagesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BuktiFormPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiFormPagesCountArgs} args - Arguments to filter BuktiFormPages to count.
+     * @example
+     * // Count the number of BuktiFormPages
+     * const count = await prisma.buktiFormPages.count({
+     *   where: {
+     *     // ... the filter for the BuktiFormPages we want to count
+     *   }
+     * })
+    **/
+    count<T extends BuktiFormPagesCountArgs>(
+      args?: Subset<T, BuktiFormPagesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BuktiFormPagesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BuktiFormPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiFormPagesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BuktiFormPagesAggregateArgs>(args: Subset<T, BuktiFormPagesAggregateArgs>): Prisma.PrismaPromise<GetBuktiFormPagesAggregateType<T>>
+
+    /**
+     * Group by BuktiFormPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiFormPagesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BuktiFormPagesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BuktiFormPagesGroupByArgs['orderBy'] }
+        : { orderBy?: BuktiFormPagesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BuktiFormPagesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBuktiFormPagesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BuktiFormPages model
+   */
+  readonly fields: BuktiFormPagesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BuktiFormPages.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BuktiFormPagesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    BuktiForm<T extends BuktiFormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BuktiFormDefaultArgs<ExtArgs>>): Prisma__BuktiFormClient<$Result.GetResult<Prisma.$BuktiFormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BuktiFormPages model
+   */
+  interface BuktiFormPagesFieldRefs {
+    readonly BuktiFormPagesId: FieldRef<"BuktiFormPages", 'String'>
+    readonly BuktiFormId: FieldRef<"BuktiFormPages", 'String'>
+    readonly Prompt: FieldRef<"BuktiFormPages", 'String'>
+    readonly Result: FieldRef<"BuktiFormPages", 'String'>
+    readonly Think: FieldRef<"BuktiFormPages", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BuktiFormPages findUnique
+   */
+  export type BuktiFormPagesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiFormPages to fetch.
+     */
+    where: BuktiFormPagesWhereUniqueInput
+  }
+
+  /**
+   * BuktiFormPages findUniqueOrThrow
+   */
+  export type BuktiFormPagesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiFormPages to fetch.
+     */
+    where: BuktiFormPagesWhereUniqueInput
+  }
+
+  /**
+   * BuktiFormPages findFirst
+   */
+  export type BuktiFormPagesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiFormPages to fetch.
+     */
+    where?: BuktiFormPagesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiFormPages to fetch.
+     */
+    orderBy?: BuktiFormPagesOrderByWithRelationInput | BuktiFormPagesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuktiFormPages.
+     */
+    cursor?: BuktiFormPagesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiFormPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiFormPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuktiFormPages.
+     */
+    distinct?: BuktiFormPagesScalarFieldEnum | BuktiFormPagesScalarFieldEnum[]
+  }
+
+  /**
+   * BuktiFormPages findFirstOrThrow
+   */
+  export type BuktiFormPagesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiFormPages to fetch.
+     */
+    where?: BuktiFormPagesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiFormPages to fetch.
+     */
+    orderBy?: BuktiFormPagesOrderByWithRelationInput | BuktiFormPagesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuktiFormPages.
+     */
+    cursor?: BuktiFormPagesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiFormPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiFormPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuktiFormPages.
+     */
+    distinct?: BuktiFormPagesScalarFieldEnum | BuktiFormPagesScalarFieldEnum[]
+  }
+
+  /**
+   * BuktiFormPages findMany
+   */
+  export type BuktiFormPagesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiFormPages to fetch.
+     */
+    where?: BuktiFormPagesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiFormPages to fetch.
+     */
+    orderBy?: BuktiFormPagesOrderByWithRelationInput | BuktiFormPagesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BuktiFormPages.
+     */
+    cursor?: BuktiFormPagesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiFormPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiFormPages.
+     */
+    skip?: number
+    distinct?: BuktiFormPagesScalarFieldEnum | BuktiFormPagesScalarFieldEnum[]
+  }
+
+  /**
+   * BuktiFormPages create
+   */
+  export type BuktiFormPagesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BuktiFormPages.
+     */
+    data: XOR<BuktiFormPagesCreateInput, BuktiFormPagesUncheckedCreateInput>
+  }
+
+  /**
+   * BuktiFormPages createMany
+   */
+  export type BuktiFormPagesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BuktiFormPages.
+     */
+    data: BuktiFormPagesCreateManyInput | BuktiFormPagesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BuktiFormPages createManyAndReturn
+   */
+  export type BuktiFormPagesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * The data used to create many BuktiFormPages.
+     */
+    data: BuktiFormPagesCreateManyInput | BuktiFormPagesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BuktiFormPages update
+   */
+  export type BuktiFormPagesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BuktiFormPages.
+     */
+    data: XOR<BuktiFormPagesUpdateInput, BuktiFormPagesUncheckedUpdateInput>
+    /**
+     * Choose, which BuktiFormPages to update.
+     */
+    where: BuktiFormPagesWhereUniqueInput
+  }
+
+  /**
+   * BuktiFormPages updateMany
+   */
+  export type BuktiFormPagesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BuktiFormPages.
+     */
+    data: XOR<BuktiFormPagesUpdateManyMutationInput, BuktiFormPagesUncheckedUpdateManyInput>
+    /**
+     * Filter which BuktiFormPages to update
+     */
+    where?: BuktiFormPagesWhereInput
+    /**
+     * Limit how many BuktiFormPages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BuktiFormPages updateManyAndReturn
+   */
+  export type BuktiFormPagesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * The data used to update BuktiFormPages.
+     */
+    data: XOR<BuktiFormPagesUpdateManyMutationInput, BuktiFormPagesUncheckedUpdateManyInput>
+    /**
+     * Filter which BuktiFormPages to update
+     */
+    where?: BuktiFormPagesWhereInput
+    /**
+     * Limit how many BuktiFormPages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BuktiFormPages upsert
+   */
+  export type BuktiFormPagesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BuktiFormPages to update in case it exists.
+     */
+    where: BuktiFormPagesWhereUniqueInput
+    /**
+     * In case the BuktiFormPages found by the `where` argument doesn't exist, create a new BuktiFormPages with this data.
+     */
+    create: XOR<BuktiFormPagesCreateInput, BuktiFormPagesUncheckedCreateInput>
+    /**
+     * In case the BuktiFormPages was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BuktiFormPagesUpdateInput, BuktiFormPagesUncheckedUpdateInput>
+  }
+
+  /**
+   * BuktiFormPages delete
+   */
+  export type BuktiFormPagesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
+    /**
+     * Filter which BuktiFormPages to delete.
+     */
+    where: BuktiFormPagesWhereUniqueInput
+  }
+
+  /**
+   * BuktiFormPages deleteMany
+   */
+  export type BuktiFormPagesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuktiFormPages to delete
+     */
+    where?: BuktiFormPagesWhereInput
+    /**
+     * Limit how many BuktiFormPages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BuktiFormPages without action
+   */
+  export type BuktiFormPagesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiFormPages
+     */
+    select?: BuktiFormPagesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BuktiFormPages
+     */
+    omit?: BuktiFormPagesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiFormPagesInclude<ExtArgs> | null
   }
 
 
@@ -23084,6 +24514,7 @@ export namespace Prisma {
     TanggalAssesmen: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    Ai: boolean | null
   }
 
   export type HasilAssesmenMaxAggregateOutputType = {
@@ -23098,6 +24529,7 @@ export namespace Prisma {
     TanggalAssesmen: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    Ai: boolean | null
   }
 
   export type HasilAssesmenCountAggregateOutputType = {
@@ -23112,6 +24544,7 @@ export namespace Prisma {
     TanggalAssesmen: number
     CreatedAt: number
     UpdatedAt: number
+    Ai: number
     _all: number
   }
 
@@ -23136,6 +24569,7 @@ export namespace Prisma {
     TanggalAssesmen?: true
     CreatedAt?: true
     UpdatedAt?: true
+    Ai?: true
   }
 
   export type HasilAssesmenMaxAggregateInputType = {
@@ -23150,6 +24584,7 @@ export namespace Prisma {
     TanggalAssesmen?: true
     CreatedAt?: true
     UpdatedAt?: true
+    Ai?: true
   }
 
   export type HasilAssesmenCountAggregateInputType = {
@@ -23164,6 +24599,7 @@ export namespace Prisma {
     TanggalAssesmen?: true
     CreatedAt?: true
     UpdatedAt?: true
+    Ai?: true
     _all?: true
   }
 
@@ -23265,6 +24701,7 @@ export namespace Prisma {
     TanggalAssesmen: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    Ai: boolean
     _count: HasilAssesmenCountAggregateOutputType | null
     _avg: HasilAssesmenAvgAggregateOutputType | null
     _sum: HasilAssesmenSumAggregateOutputType | null
@@ -23298,7 +24735,10 @@ export namespace Prisma {
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
+    HasilAssesmenAi?: boolean | HasilAssesmen$HasilAssesmenAiArgs<ExtArgs>
+    _count?: boolean | HasilAssesmenCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["hasilAssesmen"]>
 
   export type HasilAssesmenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -23313,6 +24753,7 @@ export namespace Prisma {
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["hasilAssesmen"]>
 
@@ -23328,6 +24769,7 @@ export namespace Prisma {
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["hasilAssesmen"]>
 
@@ -23343,11 +24785,14 @@ export namespace Prisma {
     TanggalAssesmen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
   }
 
-  export type HasilAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"HasilAssesmenId" | "EvaluasiDiriId" | "Valid" | "Autentik" | "Terkini" | "Memadai" | "Assesmen" | "Nilai" | "TanggalAssesmen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["hasilAssesmen"]>
+  export type HasilAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"HasilAssesmenId" | "EvaluasiDiriId" | "Valid" | "Autentik" | "Terkini" | "Memadai" | "Assesmen" | "Nilai" | "TanggalAssesmen" | "CreatedAt" | "UpdatedAt" | "Ai", ExtArgs["result"]["hasilAssesmen"]>
   export type HasilAssesmenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
+    HasilAssesmenAi?: boolean | HasilAssesmen$HasilAssesmenAiArgs<ExtArgs>
+    _count?: boolean | HasilAssesmenCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type HasilAssesmenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     EvaluasiDiri?: boolean | EvaluasiDiriDefaultArgs<ExtArgs>
@@ -23360,6 +24805,7 @@ export namespace Prisma {
     name: "HasilAssesmen"
     objects: {
       EvaluasiDiri: Prisma.$EvaluasiDiriPayload<ExtArgs>
+      HasilAssesmenAi: Prisma.$HasilAssesmenAiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       HasilAssesmenId: string
@@ -23373,6 +24819,7 @@ export namespace Prisma {
       TanggalAssesmen: Date | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
+      Ai: boolean
     }, ExtArgs["result"]["hasilAssesmen"]>
     composites: {}
   }
@@ -23768,6 +25215,7 @@ export namespace Prisma {
   export interface Prisma__HasilAssesmenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     EvaluasiDiri<T extends EvaluasiDiriDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EvaluasiDiriDefaultArgs<ExtArgs>>): Prisma__EvaluasiDiriClient<$Result.GetResult<Prisma.$EvaluasiDiriPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    HasilAssesmenAi<T extends HasilAssesmen$HasilAssesmenAiArgs<ExtArgs> = {}>(args?: Subset<T, HasilAssesmen$HasilAssesmenAiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -23808,6 +25256,7 @@ export namespace Prisma {
     readonly TanggalAssesmen: FieldRef<"HasilAssesmen", 'DateTime'>
     readonly CreatedAt: FieldRef<"HasilAssesmen", 'DateTime'>
     readonly UpdatedAt: FieldRef<"HasilAssesmen", 'DateTime'>
+    readonly Ai: FieldRef<"HasilAssesmen", 'Boolean'>
   }
     
 
@@ -24204,6 +25653,30 @@ export namespace Prisma {
   }
 
   /**
+   * HasilAssesmen.HasilAssesmenAi
+   */
+  export type HasilAssesmen$HasilAssesmenAiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    where?: HasilAssesmenAiWhereInput
+    orderBy?: HasilAssesmenAiOrderByWithRelationInput | HasilAssesmenAiOrderByWithRelationInput[]
+    cursor?: HasilAssesmenAiWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HasilAssesmenAiScalarFieldEnum | HasilAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
    * HasilAssesmen without action
    */
   export type HasilAssesmenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -24219,6 +25692,1103 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: HasilAssesmenInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HasilAssesmenAi
+   */
+
+  export type AggregateHasilAssesmenAi = {
+    _count: HasilAssesmenAiCountAggregateOutputType | null
+    _min: HasilAssesmenAiMinAggregateOutputType | null
+    _max: HasilAssesmenAiMaxAggregateOutputType | null
+  }
+
+  export type HasilAssesmenAiMinAggregateOutputType = {
+    HasilAssesmenAiId: string | null
+    HasilAssesmenId: string | null
+    Valid: string | null
+    Autentik: string | null
+    Terkini: string | null
+    Memadai: string | null
+    Assesmen: string | null
+    Nilai: string | null
+  }
+
+  export type HasilAssesmenAiMaxAggregateOutputType = {
+    HasilAssesmenAiId: string | null
+    HasilAssesmenId: string | null
+    Valid: string | null
+    Autentik: string | null
+    Terkini: string | null
+    Memadai: string | null
+    Assesmen: string | null
+    Nilai: string | null
+  }
+
+  export type HasilAssesmenAiCountAggregateOutputType = {
+    HasilAssesmenAiId: number
+    HasilAssesmenId: number
+    Valid: number
+    Autentik: number
+    Terkini: number
+    Memadai: number
+    Assesmen: number
+    Nilai: number
+    _all: number
+  }
+
+
+  export type HasilAssesmenAiMinAggregateInputType = {
+    HasilAssesmenAiId?: true
+    HasilAssesmenId?: true
+    Valid?: true
+    Autentik?: true
+    Terkini?: true
+    Memadai?: true
+    Assesmen?: true
+    Nilai?: true
+  }
+
+  export type HasilAssesmenAiMaxAggregateInputType = {
+    HasilAssesmenAiId?: true
+    HasilAssesmenId?: true
+    Valid?: true
+    Autentik?: true
+    Terkini?: true
+    Memadai?: true
+    Assesmen?: true
+    Nilai?: true
+  }
+
+  export type HasilAssesmenAiCountAggregateInputType = {
+    HasilAssesmenAiId?: true
+    HasilAssesmenId?: true
+    Valid?: true
+    Autentik?: true
+    Terkini?: true
+    Memadai?: true
+    Assesmen?: true
+    Nilai?: true
+    _all?: true
+  }
+
+  export type HasilAssesmenAiAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HasilAssesmenAi to aggregate.
+     */
+    where?: HasilAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HasilAssesmenAis to fetch.
+     */
+    orderBy?: HasilAssesmenAiOrderByWithRelationInput | HasilAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HasilAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HasilAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HasilAssesmenAis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HasilAssesmenAis
+    **/
+    _count?: true | HasilAssesmenAiCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HasilAssesmenAiMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HasilAssesmenAiMaxAggregateInputType
+  }
+
+  export type GetHasilAssesmenAiAggregateType<T extends HasilAssesmenAiAggregateArgs> = {
+        [P in keyof T & keyof AggregateHasilAssesmenAi]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHasilAssesmenAi[P]>
+      : GetScalarType<T[P], AggregateHasilAssesmenAi[P]>
+  }
+
+
+
+
+  export type HasilAssesmenAiGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HasilAssesmenAiWhereInput
+    orderBy?: HasilAssesmenAiOrderByWithAggregationInput | HasilAssesmenAiOrderByWithAggregationInput[]
+    by: HasilAssesmenAiScalarFieldEnum[] | HasilAssesmenAiScalarFieldEnum
+    having?: HasilAssesmenAiScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HasilAssesmenAiCountAggregateInputType | true
+    _min?: HasilAssesmenAiMinAggregateInputType
+    _max?: HasilAssesmenAiMaxAggregateInputType
+  }
+
+  export type HasilAssesmenAiGroupByOutputType = {
+    HasilAssesmenAiId: string
+    HasilAssesmenId: string
+    Valid: string
+    Autentik: string
+    Terkini: string
+    Memadai: string
+    Assesmen: string
+    Nilai: string
+    _count: HasilAssesmenAiCountAggregateOutputType | null
+    _min: HasilAssesmenAiMinAggregateOutputType | null
+    _max: HasilAssesmenAiMaxAggregateOutputType | null
+  }
+
+  type GetHasilAssesmenAiGroupByPayload<T extends HasilAssesmenAiGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HasilAssesmenAiGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HasilAssesmenAiGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HasilAssesmenAiGroupByOutputType[P]>
+            : GetScalarType<T[P], HasilAssesmenAiGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HasilAssesmenAiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    HasilAssesmenAiId?: boolean
+    HasilAssesmenId?: boolean
+    Valid?: boolean
+    Autentik?: boolean
+    Terkini?: boolean
+    Memadai?: boolean
+    Assesmen?: boolean
+    Nilai?: boolean
+    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["hasilAssesmenAi"]>
+
+  export type HasilAssesmenAiSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    HasilAssesmenAiId?: boolean
+    HasilAssesmenId?: boolean
+    Valid?: boolean
+    Autentik?: boolean
+    Terkini?: boolean
+    Memadai?: boolean
+    Assesmen?: boolean
+    Nilai?: boolean
+    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["hasilAssesmenAi"]>
+
+  export type HasilAssesmenAiSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    HasilAssesmenAiId?: boolean
+    HasilAssesmenId?: boolean
+    Valid?: boolean
+    Autentik?: boolean
+    Terkini?: boolean
+    Memadai?: boolean
+    Assesmen?: boolean
+    Nilai?: boolean
+    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["hasilAssesmenAi"]>
+
+  export type HasilAssesmenAiSelectScalar = {
+    HasilAssesmenAiId?: boolean
+    HasilAssesmenId?: boolean
+    Valid?: boolean
+    Autentik?: boolean
+    Terkini?: boolean
+    Memadai?: boolean
+    Assesmen?: boolean
+    Nilai?: boolean
+  }
+
+  export type HasilAssesmenAiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"HasilAssesmenAiId" | "HasilAssesmenId" | "Valid" | "Autentik" | "Terkini" | "Memadai" | "Assesmen" | "Nilai", ExtArgs["result"]["hasilAssesmenAi"]>
+  export type HasilAssesmenAiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+  }
+  export type HasilAssesmenAiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+  }
+  export type HasilAssesmenAiIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    HasilAssesmen?: boolean | HasilAssesmenDefaultArgs<ExtArgs>
+  }
+
+  export type $HasilAssesmenAiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HasilAssesmenAi"
+    objects: {
+      HasilAssesmen: Prisma.$HasilAssesmenPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      HasilAssesmenAiId: string
+      HasilAssesmenId: string
+      Valid: string
+      Autentik: string
+      Terkini: string
+      Memadai: string
+      Assesmen: string
+      Nilai: string
+    }, ExtArgs["result"]["hasilAssesmenAi"]>
+    composites: {}
+  }
+
+  type HasilAssesmenAiGetPayload<S extends boolean | null | undefined | HasilAssesmenAiDefaultArgs> = $Result.GetResult<Prisma.$HasilAssesmenAiPayload, S>
+
+  type HasilAssesmenAiCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HasilAssesmenAiFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HasilAssesmenAiCountAggregateInputType | true
+    }
+
+  export interface HasilAssesmenAiDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HasilAssesmenAi'], meta: { name: 'HasilAssesmenAi' } }
+    /**
+     * Find zero or one HasilAssesmenAi that matches the filter.
+     * @param {HasilAssesmenAiFindUniqueArgs} args - Arguments to find a HasilAssesmenAi
+     * @example
+     * // Get one HasilAssesmenAi
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HasilAssesmenAiFindUniqueArgs>(args: SelectSubset<T, HasilAssesmenAiFindUniqueArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HasilAssesmenAi that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HasilAssesmenAiFindUniqueOrThrowArgs} args - Arguments to find a HasilAssesmenAi
+     * @example
+     * // Get one HasilAssesmenAi
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HasilAssesmenAiFindUniqueOrThrowArgs>(args: SelectSubset<T, HasilAssesmenAiFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HasilAssesmenAi that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HasilAssesmenAiFindFirstArgs} args - Arguments to find a HasilAssesmenAi
+     * @example
+     * // Get one HasilAssesmenAi
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HasilAssesmenAiFindFirstArgs>(args?: SelectSubset<T, HasilAssesmenAiFindFirstArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HasilAssesmenAi that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HasilAssesmenAiFindFirstOrThrowArgs} args - Arguments to find a HasilAssesmenAi
+     * @example
+     * // Get one HasilAssesmenAi
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HasilAssesmenAiFindFirstOrThrowArgs>(args?: SelectSubset<T, HasilAssesmenAiFindFirstOrThrowArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HasilAssesmenAis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HasilAssesmenAiFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HasilAssesmenAis
+     * const hasilAssesmenAis = await prisma.hasilAssesmenAi.findMany()
+     * 
+     * // Get first 10 HasilAssesmenAis
+     * const hasilAssesmenAis = await prisma.hasilAssesmenAi.findMany({ take: 10 })
+     * 
+     * // Only select the `HasilAssesmenAiId`
+     * const hasilAssesmenAiWithHasilAssesmenAiIdOnly = await prisma.hasilAssesmenAi.findMany({ select: { HasilAssesmenAiId: true } })
+     * 
+     */
+    findMany<T extends HasilAssesmenAiFindManyArgs>(args?: SelectSubset<T, HasilAssesmenAiFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HasilAssesmenAi.
+     * @param {HasilAssesmenAiCreateArgs} args - Arguments to create a HasilAssesmenAi.
+     * @example
+     * // Create one HasilAssesmenAi
+     * const HasilAssesmenAi = await prisma.hasilAssesmenAi.create({
+     *   data: {
+     *     // ... data to create a HasilAssesmenAi
+     *   }
+     * })
+     * 
+     */
+    create<T extends HasilAssesmenAiCreateArgs>(args: SelectSubset<T, HasilAssesmenAiCreateArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HasilAssesmenAis.
+     * @param {HasilAssesmenAiCreateManyArgs} args - Arguments to create many HasilAssesmenAis.
+     * @example
+     * // Create many HasilAssesmenAis
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HasilAssesmenAiCreateManyArgs>(args?: SelectSubset<T, HasilAssesmenAiCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HasilAssesmenAis and returns the data saved in the database.
+     * @param {HasilAssesmenAiCreateManyAndReturnArgs} args - Arguments to create many HasilAssesmenAis.
+     * @example
+     * // Create many HasilAssesmenAis
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HasilAssesmenAis and only return the `HasilAssesmenAiId`
+     * const hasilAssesmenAiWithHasilAssesmenAiIdOnly = await prisma.hasilAssesmenAi.createManyAndReturn({
+     *   select: { HasilAssesmenAiId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HasilAssesmenAiCreateManyAndReturnArgs>(args?: SelectSubset<T, HasilAssesmenAiCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HasilAssesmenAi.
+     * @param {HasilAssesmenAiDeleteArgs} args - Arguments to delete one HasilAssesmenAi.
+     * @example
+     * // Delete one HasilAssesmenAi
+     * const HasilAssesmenAi = await prisma.hasilAssesmenAi.delete({
+     *   where: {
+     *     // ... filter to delete one HasilAssesmenAi
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HasilAssesmenAiDeleteArgs>(args: SelectSubset<T, HasilAssesmenAiDeleteArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HasilAssesmenAi.
+     * @param {HasilAssesmenAiUpdateArgs} args - Arguments to update one HasilAssesmenAi.
+     * @example
+     * // Update one HasilAssesmenAi
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HasilAssesmenAiUpdateArgs>(args: SelectSubset<T, HasilAssesmenAiUpdateArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HasilAssesmenAis.
+     * @param {HasilAssesmenAiDeleteManyArgs} args - Arguments to filter HasilAssesmenAis to delete.
+     * @example
+     * // Delete a few HasilAssesmenAis
+     * const { count } = await prisma.hasilAssesmenAi.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HasilAssesmenAiDeleteManyArgs>(args?: SelectSubset<T, HasilAssesmenAiDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HasilAssesmenAis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HasilAssesmenAiUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HasilAssesmenAis
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HasilAssesmenAiUpdateManyArgs>(args: SelectSubset<T, HasilAssesmenAiUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HasilAssesmenAis and returns the data updated in the database.
+     * @param {HasilAssesmenAiUpdateManyAndReturnArgs} args - Arguments to update many HasilAssesmenAis.
+     * @example
+     * // Update many HasilAssesmenAis
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HasilAssesmenAis and only return the `HasilAssesmenAiId`
+     * const hasilAssesmenAiWithHasilAssesmenAiIdOnly = await prisma.hasilAssesmenAi.updateManyAndReturn({
+     *   select: { HasilAssesmenAiId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HasilAssesmenAiUpdateManyAndReturnArgs>(args: SelectSubset<T, HasilAssesmenAiUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HasilAssesmenAi.
+     * @param {HasilAssesmenAiUpsertArgs} args - Arguments to update or create a HasilAssesmenAi.
+     * @example
+     * // Update or create a HasilAssesmenAi
+     * const hasilAssesmenAi = await prisma.hasilAssesmenAi.upsert({
+     *   create: {
+     *     // ... data to create a HasilAssesmenAi
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HasilAssesmenAi we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HasilAssesmenAiUpsertArgs>(args: SelectSubset<T, HasilAssesmenAiUpsertArgs<ExtArgs>>): Prisma__HasilAssesmenAiClient<$Result.GetResult<Prisma.$HasilAssesmenAiPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HasilAssesmenAis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HasilAssesmenAiCountArgs} args - Arguments to filter HasilAssesmenAis to count.
+     * @example
+     * // Count the number of HasilAssesmenAis
+     * const count = await prisma.hasilAssesmenAi.count({
+     *   where: {
+     *     // ... the filter for the HasilAssesmenAis we want to count
+     *   }
+     * })
+    **/
+    count<T extends HasilAssesmenAiCountArgs>(
+      args?: Subset<T, HasilAssesmenAiCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HasilAssesmenAiCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HasilAssesmenAi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HasilAssesmenAiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HasilAssesmenAiAggregateArgs>(args: Subset<T, HasilAssesmenAiAggregateArgs>): Prisma.PrismaPromise<GetHasilAssesmenAiAggregateType<T>>
+
+    /**
+     * Group by HasilAssesmenAi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HasilAssesmenAiGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HasilAssesmenAiGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HasilAssesmenAiGroupByArgs['orderBy'] }
+        : { orderBy?: HasilAssesmenAiGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HasilAssesmenAiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHasilAssesmenAiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HasilAssesmenAi model
+   */
+  readonly fields: HasilAssesmenAiFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HasilAssesmenAi.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HasilAssesmenAiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    HasilAssesmen<T extends HasilAssesmenDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HasilAssesmenDefaultArgs<ExtArgs>>): Prisma__HasilAssesmenClient<$Result.GetResult<Prisma.$HasilAssesmenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HasilAssesmenAi model
+   */
+  interface HasilAssesmenAiFieldRefs {
+    readonly HasilAssesmenAiId: FieldRef<"HasilAssesmenAi", 'String'>
+    readonly HasilAssesmenId: FieldRef<"HasilAssesmenAi", 'String'>
+    readonly Valid: FieldRef<"HasilAssesmenAi", 'String'>
+    readonly Autentik: FieldRef<"HasilAssesmenAi", 'String'>
+    readonly Terkini: FieldRef<"HasilAssesmenAi", 'String'>
+    readonly Memadai: FieldRef<"HasilAssesmenAi", 'String'>
+    readonly Assesmen: FieldRef<"HasilAssesmenAi", 'String'>
+    readonly Nilai: FieldRef<"HasilAssesmenAi", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HasilAssesmenAi findUnique
+   */
+  export type HasilAssesmenAiFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which HasilAssesmenAi to fetch.
+     */
+    where: HasilAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * HasilAssesmenAi findUniqueOrThrow
+   */
+  export type HasilAssesmenAiFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which HasilAssesmenAi to fetch.
+     */
+    where: HasilAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * HasilAssesmenAi findFirst
+   */
+  export type HasilAssesmenAiFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which HasilAssesmenAi to fetch.
+     */
+    where?: HasilAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HasilAssesmenAis to fetch.
+     */
+    orderBy?: HasilAssesmenAiOrderByWithRelationInput | HasilAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HasilAssesmenAis.
+     */
+    cursor?: HasilAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HasilAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HasilAssesmenAis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HasilAssesmenAis.
+     */
+    distinct?: HasilAssesmenAiScalarFieldEnum | HasilAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
+   * HasilAssesmenAi findFirstOrThrow
+   */
+  export type HasilAssesmenAiFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which HasilAssesmenAi to fetch.
+     */
+    where?: HasilAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HasilAssesmenAis to fetch.
+     */
+    orderBy?: HasilAssesmenAiOrderByWithRelationInput | HasilAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HasilAssesmenAis.
+     */
+    cursor?: HasilAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HasilAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HasilAssesmenAis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HasilAssesmenAis.
+     */
+    distinct?: HasilAssesmenAiScalarFieldEnum | HasilAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
+   * HasilAssesmenAi findMany
+   */
+  export type HasilAssesmenAiFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which HasilAssesmenAis to fetch.
+     */
+    where?: HasilAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HasilAssesmenAis to fetch.
+     */
+    orderBy?: HasilAssesmenAiOrderByWithRelationInput | HasilAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HasilAssesmenAis.
+     */
+    cursor?: HasilAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HasilAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HasilAssesmenAis.
+     */
+    skip?: number
+    distinct?: HasilAssesmenAiScalarFieldEnum | HasilAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
+   * HasilAssesmenAi create
+   */
+  export type HasilAssesmenAiCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HasilAssesmenAi.
+     */
+    data: XOR<HasilAssesmenAiCreateInput, HasilAssesmenAiUncheckedCreateInput>
+  }
+
+  /**
+   * HasilAssesmenAi createMany
+   */
+  export type HasilAssesmenAiCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HasilAssesmenAis.
+     */
+    data: HasilAssesmenAiCreateManyInput | HasilAssesmenAiCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HasilAssesmenAi createManyAndReturn
+   */
+  export type HasilAssesmenAiCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * The data used to create many HasilAssesmenAis.
+     */
+    data: HasilAssesmenAiCreateManyInput | HasilAssesmenAiCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HasilAssesmenAi update
+   */
+  export type HasilAssesmenAiUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HasilAssesmenAi.
+     */
+    data: XOR<HasilAssesmenAiUpdateInput, HasilAssesmenAiUncheckedUpdateInput>
+    /**
+     * Choose, which HasilAssesmenAi to update.
+     */
+    where: HasilAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * HasilAssesmenAi updateMany
+   */
+  export type HasilAssesmenAiUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HasilAssesmenAis.
+     */
+    data: XOR<HasilAssesmenAiUpdateManyMutationInput, HasilAssesmenAiUncheckedUpdateManyInput>
+    /**
+     * Filter which HasilAssesmenAis to update
+     */
+    where?: HasilAssesmenAiWhereInput
+    /**
+     * Limit how many HasilAssesmenAis to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HasilAssesmenAi updateManyAndReturn
+   */
+  export type HasilAssesmenAiUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * The data used to update HasilAssesmenAis.
+     */
+    data: XOR<HasilAssesmenAiUpdateManyMutationInput, HasilAssesmenAiUncheckedUpdateManyInput>
+    /**
+     * Filter which HasilAssesmenAis to update
+     */
+    where?: HasilAssesmenAiWhereInput
+    /**
+     * Limit how many HasilAssesmenAis to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HasilAssesmenAi upsert
+   */
+  export type HasilAssesmenAiUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HasilAssesmenAi to update in case it exists.
+     */
+    where: HasilAssesmenAiWhereUniqueInput
+    /**
+     * In case the HasilAssesmenAi found by the `where` argument doesn't exist, create a new HasilAssesmenAi with this data.
+     */
+    create: XOR<HasilAssesmenAiCreateInput, HasilAssesmenAiUncheckedCreateInput>
+    /**
+     * In case the HasilAssesmenAi was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HasilAssesmenAiUpdateInput, HasilAssesmenAiUncheckedUpdateInput>
+  }
+
+  /**
+   * HasilAssesmenAi delete
+   */
+  export type HasilAssesmenAiDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter which HasilAssesmenAi to delete.
+     */
+    where: HasilAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * HasilAssesmenAi deleteMany
+   */
+  export type HasilAssesmenAiDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HasilAssesmenAis to delete
+     */
+    where?: HasilAssesmenAiWhereInput
+    /**
+     * Limit how many HasilAssesmenAis to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HasilAssesmenAi without action
+   */
+  export type HasilAssesmenAiDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HasilAssesmenAi
+     */
+    select?: HasilAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HasilAssesmenAi
+     */
+    omit?: HasilAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HasilAssesmenAiInclude<ExtArgs> | null
   }
 
 
@@ -58784,6 +61354,7 @@ export namespace Prisma {
     NamaFile: string | null
     FileData: Bytes | null
     NamaDokumen: string | null
+    Catatan: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -58797,6 +61368,7 @@ export namespace Prisma {
     NamaFile: string | null
     FileData: Bytes | null
     NamaDokumen: string | null
+    Catatan: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -58810,6 +61382,7 @@ export namespace Prisma {
     NamaFile: number
     FileData: number
     NamaDokumen: number
+    Catatan: number
     CreatedAt: number
     UpdatedAt: number
     _all: number
@@ -58833,6 +61406,7 @@ export namespace Prisma {
     NamaFile?: true
     FileData?: true
     NamaDokumen?: true
+    Catatan?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -58846,6 +61420,7 @@ export namespace Prisma {
     NamaFile?: true
     FileData?: true
     NamaDokumen?: true
+    Catatan?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -58859,6 +61434,7 @@ export namespace Prisma {
     NamaFile?: true
     FileData?: true
     NamaDokumen?: true
+    Catatan?: true
     CreatedAt?: true
     UpdatedAt?: true
     _all?: true
@@ -58959,6 +61535,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
     _count: SkRektorCountAggregateOutputType | null
@@ -58991,6 +61568,7 @@ export namespace Prisma {
     NamaFile?: boolean
     FileData?: boolean
     NamaDokumen?: boolean
+    Catatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
@@ -59008,6 +61586,7 @@ export namespace Prisma {
     NamaFile?: boolean
     FileData?: boolean
     NamaDokumen?: boolean
+    Catatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
@@ -59022,6 +61601,7 @@ export namespace Prisma {
     NamaFile?: boolean
     FileData?: boolean
     NamaDokumen?: boolean
+    Catatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
@@ -59036,11 +61616,12 @@ export namespace Prisma {
     NamaFile?: boolean
     FileData?: boolean
     NamaDokumen?: boolean
+    Catatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "FileData" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
+  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "FileData" | "NamaDokumen" | "Catatan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
   export type SkRektorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
     SkRektorAssesor?: boolean | SkRektor$SkRektorAssesorArgs<ExtArgs>
@@ -59070,6 +61651,7 @@ export namespace Prisma {
       NamaFile: string
       FileData: Prisma.Bytes
       NamaDokumen: string
+      Catatan: string | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
     }, ExtArgs["result"]["skRektor"]>
@@ -59506,6 +62088,7 @@ export namespace Prisma {
     readonly NamaFile: FieldRef<"SkRektor", 'String'>
     readonly FileData: FieldRef<"SkRektor", 'Bytes'>
     readonly NamaDokumen: FieldRef<"SkRektor", 'String'>
+    readonly Catatan: FieldRef<"SkRektor", 'String'>
     readonly CreatedAt: FieldRef<"SkRektor", 'DateTime'>
     readonly UpdatedAt: FieldRef<"SkRektor", 'DateTime'>
   }
@@ -62064,6 +64647,7 @@ export namespace Prisma {
     NilaiHuruf: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    Ai: boolean | null
   }
 
   export type SkorAssesmenMaxAggregateOutputType = {
@@ -62078,6 +64662,7 @@ export namespace Prisma {
     NilaiHuruf: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    Ai: boolean | null
   }
 
   export type SkorAssesmenCountAggregateOutputType = {
@@ -62092,6 +64677,7 @@ export namespace Prisma {
     NilaiHuruf: number
     CreatedAt: number
     UpdatedAt: number
+    Ai: number
     _all: number
   }
 
@@ -62124,6 +64710,7 @@ export namespace Prisma {
     NilaiHuruf?: true
     CreatedAt?: true
     UpdatedAt?: true
+    Ai?: true
   }
 
   export type SkorAssesmenMaxAggregateInputType = {
@@ -62138,6 +64725,7 @@ export namespace Prisma {
     NilaiHuruf?: true
     CreatedAt?: true
     UpdatedAt?: true
+    Ai?: true
   }
 
   export type SkorAssesmenCountAggregateInputType = {
@@ -62152,6 +64740,7 @@ export namespace Prisma {
     NilaiHuruf?: true
     CreatedAt?: true
     UpdatedAt?: true
+    Ai?: true
     _all?: true
   }
 
@@ -62253,6 +64842,7 @@ export namespace Prisma {
     NilaiHuruf: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
+    Ai: boolean
     _count: SkorAssesmenCountAggregateOutputType | null
     _avg: SkorAssesmenAvgAggregateOutputType | null
     _sum: SkorAssesmenSumAggregateOutputType | null
@@ -62286,7 +64876,10 @@ export namespace Prisma {
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+    SkorAssesmenAi?: boolean | SkorAssesmen$SkorAssesmenAiArgs<ExtArgs>
+    _count?: boolean | SkorAssesmenCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skorAssesmen"]>
 
   export type SkorAssesmenSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -62301,6 +64894,7 @@ export namespace Prisma {
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skorAssesmen"]>
 
@@ -62316,6 +64910,7 @@ export namespace Prisma {
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skorAssesmen"]>
 
@@ -62331,11 +64926,14 @@ export namespace Prisma {
     NilaiHuruf?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
+    Ai?: boolean
   }
 
-  export type SkorAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkorAssesmenId" | "MataKuliahMahasiswaId" | "Portofolio" | "Tulis" | "Wawancara" | "Demo" | "SkorRataRata" | "Diakui" | "NilaiHuruf" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skorAssesmen"]>
+  export type SkorAssesmenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkorAssesmenId" | "MataKuliahMahasiswaId" | "Portofolio" | "Tulis" | "Wawancara" | "Demo" | "SkorRataRata" | "Diakui" | "NilaiHuruf" | "CreatedAt" | "UpdatedAt" | "Ai", ExtArgs["result"]["skorAssesmen"]>
   export type SkorAssesmenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+    SkorAssesmenAi?: boolean | SkorAssesmen$SkorAssesmenAiArgs<ExtArgs>
+    _count?: boolean | SkorAssesmenCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SkorAssesmenIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
@@ -62348,6 +64946,7 @@ export namespace Prisma {
     name: "SkorAssesmen"
     objects: {
       MataKuliahMahasiswa: Prisma.$MataKuliahMahasiswaPayload<ExtArgs>
+      SkorAssesmenAi: Prisma.$SkorAssesmenAiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       SkorAssesmenId: string
@@ -62361,6 +64960,7 @@ export namespace Prisma {
       NilaiHuruf: string | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
+      Ai: boolean
     }, ExtArgs["result"]["skorAssesmen"]>
     composites: {}
   }
@@ -62756,6 +65356,7 @@ export namespace Prisma {
   export interface Prisma__SkorAssesmenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     MataKuliahMahasiswa<T extends MataKuliahMahasiswaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswaDefaultArgs<ExtArgs>>): Prisma__MataKuliahMahasiswaClient<$Result.GetResult<Prisma.$MataKuliahMahasiswaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    SkorAssesmenAi<T extends SkorAssesmen$SkorAssesmenAiArgs<ExtArgs> = {}>(args?: Subset<T, SkorAssesmen$SkorAssesmenAiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -62796,6 +65397,7 @@ export namespace Prisma {
     readonly NilaiHuruf: FieldRef<"SkorAssesmen", 'String'>
     readonly CreatedAt: FieldRef<"SkorAssesmen", 'DateTime'>
     readonly UpdatedAt: FieldRef<"SkorAssesmen", 'DateTime'>
+    readonly Ai: FieldRef<"SkorAssesmen", 'Boolean'>
   }
     
 
@@ -63192,6 +65794,30 @@ export namespace Prisma {
   }
 
   /**
+   * SkorAssesmen.SkorAssesmenAi
+   */
+  export type SkorAssesmen$SkorAssesmenAiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    where?: SkorAssesmenAiWhereInput
+    orderBy?: SkorAssesmenAiOrderByWithRelationInput | SkorAssesmenAiOrderByWithRelationInput[]
+    cursor?: SkorAssesmenAiWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkorAssesmenAiScalarFieldEnum | SkorAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
    * SkorAssesmen without action
    */
   export type SkorAssesmenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -63207,6 +65833,1116 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SkorAssesmenInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SkorAssesmenAi
+   */
+
+  export type AggregateSkorAssesmenAi = {
+    _count: SkorAssesmenAiCountAggregateOutputType | null
+    _min: SkorAssesmenAiMinAggregateOutputType | null
+    _max: SkorAssesmenAiMaxAggregateOutputType | null
+  }
+
+  export type SkorAssesmenAiMinAggregateOutputType = {
+    SkorAssesmenAiId: string | null
+    SkorAssesmenId: string | null
+    Portofolio: string | null
+    Tulis: string | null
+    Wawancara: string | null
+    Demo: string | null
+    SkorRataRata: string | null
+    Diakui: string | null
+    NilaiHuruf: string | null
+  }
+
+  export type SkorAssesmenAiMaxAggregateOutputType = {
+    SkorAssesmenAiId: string | null
+    SkorAssesmenId: string | null
+    Portofolio: string | null
+    Tulis: string | null
+    Wawancara: string | null
+    Demo: string | null
+    SkorRataRata: string | null
+    Diakui: string | null
+    NilaiHuruf: string | null
+  }
+
+  export type SkorAssesmenAiCountAggregateOutputType = {
+    SkorAssesmenAiId: number
+    SkorAssesmenId: number
+    Portofolio: number
+    Tulis: number
+    Wawancara: number
+    Demo: number
+    SkorRataRata: number
+    Diakui: number
+    NilaiHuruf: number
+    _all: number
+  }
+
+
+  export type SkorAssesmenAiMinAggregateInputType = {
+    SkorAssesmenAiId?: true
+    SkorAssesmenId?: true
+    Portofolio?: true
+    Tulis?: true
+    Wawancara?: true
+    Demo?: true
+    SkorRataRata?: true
+    Diakui?: true
+    NilaiHuruf?: true
+  }
+
+  export type SkorAssesmenAiMaxAggregateInputType = {
+    SkorAssesmenAiId?: true
+    SkorAssesmenId?: true
+    Portofolio?: true
+    Tulis?: true
+    Wawancara?: true
+    Demo?: true
+    SkorRataRata?: true
+    Diakui?: true
+    NilaiHuruf?: true
+  }
+
+  export type SkorAssesmenAiCountAggregateInputType = {
+    SkorAssesmenAiId?: true
+    SkorAssesmenId?: true
+    Portofolio?: true
+    Tulis?: true
+    Wawancara?: true
+    Demo?: true
+    SkorRataRata?: true
+    Diakui?: true
+    NilaiHuruf?: true
+    _all?: true
+  }
+
+  export type SkorAssesmenAiAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkorAssesmenAi to aggregate.
+     */
+    where?: SkorAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkorAssesmenAis to fetch.
+     */
+    orderBy?: SkorAssesmenAiOrderByWithRelationInput | SkorAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SkorAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkorAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkorAssesmenAis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SkorAssesmenAis
+    **/
+    _count?: true | SkorAssesmenAiCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SkorAssesmenAiMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SkorAssesmenAiMaxAggregateInputType
+  }
+
+  export type GetSkorAssesmenAiAggregateType<T extends SkorAssesmenAiAggregateArgs> = {
+        [P in keyof T & keyof AggregateSkorAssesmenAi]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSkorAssesmenAi[P]>
+      : GetScalarType<T[P], AggregateSkorAssesmenAi[P]>
+  }
+
+
+
+
+  export type SkorAssesmenAiGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkorAssesmenAiWhereInput
+    orderBy?: SkorAssesmenAiOrderByWithAggregationInput | SkorAssesmenAiOrderByWithAggregationInput[]
+    by: SkorAssesmenAiScalarFieldEnum[] | SkorAssesmenAiScalarFieldEnum
+    having?: SkorAssesmenAiScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SkorAssesmenAiCountAggregateInputType | true
+    _min?: SkorAssesmenAiMinAggregateInputType
+    _max?: SkorAssesmenAiMaxAggregateInputType
+  }
+
+  export type SkorAssesmenAiGroupByOutputType = {
+    SkorAssesmenAiId: string
+    SkorAssesmenId: string
+    Portofolio: string
+    Tulis: string
+    Wawancara: string
+    Demo: string
+    SkorRataRata: string
+    Diakui: string
+    NilaiHuruf: string
+    _count: SkorAssesmenAiCountAggregateOutputType | null
+    _min: SkorAssesmenAiMinAggregateOutputType | null
+    _max: SkorAssesmenAiMaxAggregateOutputType | null
+  }
+
+  type GetSkorAssesmenAiGroupByPayload<T extends SkorAssesmenAiGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SkorAssesmenAiGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SkorAssesmenAiGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SkorAssesmenAiGroupByOutputType[P]>
+            : GetScalarType<T[P], SkorAssesmenAiGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SkorAssesmenAiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SkorAssesmenAiId?: boolean
+    SkorAssesmenId?: boolean
+    Portofolio?: boolean
+    Tulis?: boolean
+    Wawancara?: boolean
+    Demo?: boolean
+    SkorRataRata?: boolean
+    Diakui?: boolean
+    NilaiHuruf?: boolean
+    SkorAssesmen?: boolean | SkorAssesmenDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skorAssesmenAi"]>
+
+  export type SkorAssesmenAiSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SkorAssesmenAiId?: boolean
+    SkorAssesmenId?: boolean
+    Portofolio?: boolean
+    Tulis?: boolean
+    Wawancara?: boolean
+    Demo?: boolean
+    SkorRataRata?: boolean
+    Diakui?: boolean
+    NilaiHuruf?: boolean
+    SkorAssesmen?: boolean | SkorAssesmenDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skorAssesmenAi"]>
+
+  export type SkorAssesmenAiSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    SkorAssesmenAiId?: boolean
+    SkorAssesmenId?: boolean
+    Portofolio?: boolean
+    Tulis?: boolean
+    Wawancara?: boolean
+    Demo?: boolean
+    SkorRataRata?: boolean
+    Diakui?: boolean
+    NilaiHuruf?: boolean
+    SkorAssesmen?: boolean | SkorAssesmenDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skorAssesmenAi"]>
+
+  export type SkorAssesmenAiSelectScalar = {
+    SkorAssesmenAiId?: boolean
+    SkorAssesmenId?: boolean
+    Portofolio?: boolean
+    Tulis?: boolean
+    Wawancara?: boolean
+    Demo?: boolean
+    SkorRataRata?: boolean
+    Diakui?: boolean
+    NilaiHuruf?: boolean
+  }
+
+  export type SkorAssesmenAiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkorAssesmenAiId" | "SkorAssesmenId" | "Portofolio" | "Tulis" | "Wawancara" | "Demo" | "SkorRataRata" | "Diakui" | "NilaiHuruf", ExtArgs["result"]["skorAssesmenAi"]>
+  export type SkorAssesmenAiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SkorAssesmen?: boolean | SkorAssesmenDefaultArgs<ExtArgs>
+  }
+  export type SkorAssesmenAiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SkorAssesmen?: boolean | SkorAssesmenDefaultArgs<ExtArgs>
+  }
+  export type SkorAssesmenAiIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    SkorAssesmen?: boolean | SkorAssesmenDefaultArgs<ExtArgs>
+  }
+
+  export type $SkorAssesmenAiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SkorAssesmenAi"
+    objects: {
+      SkorAssesmen: Prisma.$SkorAssesmenPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      SkorAssesmenAiId: string
+      SkorAssesmenId: string
+      Portofolio: string
+      Tulis: string
+      Wawancara: string
+      Demo: string
+      SkorRataRata: string
+      Diakui: string
+      NilaiHuruf: string
+    }, ExtArgs["result"]["skorAssesmenAi"]>
+    composites: {}
+  }
+
+  type SkorAssesmenAiGetPayload<S extends boolean | null | undefined | SkorAssesmenAiDefaultArgs> = $Result.GetResult<Prisma.$SkorAssesmenAiPayload, S>
+
+  type SkorAssesmenAiCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SkorAssesmenAiFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SkorAssesmenAiCountAggregateInputType | true
+    }
+
+  export interface SkorAssesmenAiDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SkorAssesmenAi'], meta: { name: 'SkorAssesmenAi' } }
+    /**
+     * Find zero or one SkorAssesmenAi that matches the filter.
+     * @param {SkorAssesmenAiFindUniqueArgs} args - Arguments to find a SkorAssesmenAi
+     * @example
+     * // Get one SkorAssesmenAi
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SkorAssesmenAiFindUniqueArgs>(args: SelectSubset<T, SkorAssesmenAiFindUniqueArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SkorAssesmenAi that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SkorAssesmenAiFindUniqueOrThrowArgs} args - Arguments to find a SkorAssesmenAi
+     * @example
+     * // Get one SkorAssesmenAi
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SkorAssesmenAiFindUniqueOrThrowArgs>(args: SelectSubset<T, SkorAssesmenAiFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkorAssesmenAi that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkorAssesmenAiFindFirstArgs} args - Arguments to find a SkorAssesmenAi
+     * @example
+     * // Get one SkorAssesmenAi
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SkorAssesmenAiFindFirstArgs>(args?: SelectSubset<T, SkorAssesmenAiFindFirstArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkorAssesmenAi that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkorAssesmenAiFindFirstOrThrowArgs} args - Arguments to find a SkorAssesmenAi
+     * @example
+     * // Get one SkorAssesmenAi
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SkorAssesmenAiFindFirstOrThrowArgs>(args?: SelectSubset<T, SkorAssesmenAiFindFirstOrThrowArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkorAssesmenAis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkorAssesmenAiFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SkorAssesmenAis
+     * const skorAssesmenAis = await prisma.skorAssesmenAi.findMany()
+     * 
+     * // Get first 10 SkorAssesmenAis
+     * const skorAssesmenAis = await prisma.skorAssesmenAi.findMany({ take: 10 })
+     * 
+     * // Only select the `SkorAssesmenAiId`
+     * const skorAssesmenAiWithSkorAssesmenAiIdOnly = await prisma.skorAssesmenAi.findMany({ select: { SkorAssesmenAiId: true } })
+     * 
+     */
+    findMany<T extends SkorAssesmenAiFindManyArgs>(args?: SelectSubset<T, SkorAssesmenAiFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SkorAssesmenAi.
+     * @param {SkorAssesmenAiCreateArgs} args - Arguments to create a SkorAssesmenAi.
+     * @example
+     * // Create one SkorAssesmenAi
+     * const SkorAssesmenAi = await prisma.skorAssesmenAi.create({
+     *   data: {
+     *     // ... data to create a SkorAssesmenAi
+     *   }
+     * })
+     * 
+     */
+    create<T extends SkorAssesmenAiCreateArgs>(args: SelectSubset<T, SkorAssesmenAiCreateArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SkorAssesmenAis.
+     * @param {SkorAssesmenAiCreateManyArgs} args - Arguments to create many SkorAssesmenAis.
+     * @example
+     * // Create many SkorAssesmenAis
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SkorAssesmenAiCreateManyArgs>(args?: SelectSubset<T, SkorAssesmenAiCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SkorAssesmenAis and returns the data saved in the database.
+     * @param {SkorAssesmenAiCreateManyAndReturnArgs} args - Arguments to create many SkorAssesmenAis.
+     * @example
+     * // Create many SkorAssesmenAis
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SkorAssesmenAis and only return the `SkorAssesmenAiId`
+     * const skorAssesmenAiWithSkorAssesmenAiIdOnly = await prisma.skorAssesmenAi.createManyAndReturn({
+     *   select: { SkorAssesmenAiId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SkorAssesmenAiCreateManyAndReturnArgs>(args?: SelectSubset<T, SkorAssesmenAiCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SkorAssesmenAi.
+     * @param {SkorAssesmenAiDeleteArgs} args - Arguments to delete one SkorAssesmenAi.
+     * @example
+     * // Delete one SkorAssesmenAi
+     * const SkorAssesmenAi = await prisma.skorAssesmenAi.delete({
+     *   where: {
+     *     // ... filter to delete one SkorAssesmenAi
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SkorAssesmenAiDeleteArgs>(args: SelectSubset<T, SkorAssesmenAiDeleteArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SkorAssesmenAi.
+     * @param {SkorAssesmenAiUpdateArgs} args - Arguments to update one SkorAssesmenAi.
+     * @example
+     * // Update one SkorAssesmenAi
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SkorAssesmenAiUpdateArgs>(args: SelectSubset<T, SkorAssesmenAiUpdateArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SkorAssesmenAis.
+     * @param {SkorAssesmenAiDeleteManyArgs} args - Arguments to filter SkorAssesmenAis to delete.
+     * @example
+     * // Delete a few SkorAssesmenAis
+     * const { count } = await prisma.skorAssesmenAi.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SkorAssesmenAiDeleteManyArgs>(args?: SelectSubset<T, SkorAssesmenAiDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkorAssesmenAis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkorAssesmenAiUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SkorAssesmenAis
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SkorAssesmenAiUpdateManyArgs>(args: SelectSubset<T, SkorAssesmenAiUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkorAssesmenAis and returns the data updated in the database.
+     * @param {SkorAssesmenAiUpdateManyAndReturnArgs} args - Arguments to update many SkorAssesmenAis.
+     * @example
+     * // Update many SkorAssesmenAis
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SkorAssesmenAis and only return the `SkorAssesmenAiId`
+     * const skorAssesmenAiWithSkorAssesmenAiIdOnly = await prisma.skorAssesmenAi.updateManyAndReturn({
+     *   select: { SkorAssesmenAiId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SkorAssesmenAiUpdateManyAndReturnArgs>(args: SelectSubset<T, SkorAssesmenAiUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SkorAssesmenAi.
+     * @param {SkorAssesmenAiUpsertArgs} args - Arguments to update or create a SkorAssesmenAi.
+     * @example
+     * // Update or create a SkorAssesmenAi
+     * const skorAssesmenAi = await prisma.skorAssesmenAi.upsert({
+     *   create: {
+     *     // ... data to create a SkorAssesmenAi
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SkorAssesmenAi we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SkorAssesmenAiUpsertArgs>(args: SelectSubset<T, SkorAssesmenAiUpsertArgs<ExtArgs>>): Prisma__SkorAssesmenAiClient<$Result.GetResult<Prisma.$SkorAssesmenAiPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SkorAssesmenAis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkorAssesmenAiCountArgs} args - Arguments to filter SkorAssesmenAis to count.
+     * @example
+     * // Count the number of SkorAssesmenAis
+     * const count = await prisma.skorAssesmenAi.count({
+     *   where: {
+     *     // ... the filter for the SkorAssesmenAis we want to count
+     *   }
+     * })
+    **/
+    count<T extends SkorAssesmenAiCountArgs>(
+      args?: Subset<T, SkorAssesmenAiCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SkorAssesmenAiCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SkorAssesmenAi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkorAssesmenAiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SkorAssesmenAiAggregateArgs>(args: Subset<T, SkorAssesmenAiAggregateArgs>): Prisma.PrismaPromise<GetSkorAssesmenAiAggregateType<T>>
+
+    /**
+     * Group by SkorAssesmenAi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkorAssesmenAiGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SkorAssesmenAiGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SkorAssesmenAiGroupByArgs['orderBy'] }
+        : { orderBy?: SkorAssesmenAiGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SkorAssesmenAiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSkorAssesmenAiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SkorAssesmenAi model
+   */
+  readonly fields: SkorAssesmenAiFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SkorAssesmenAi.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SkorAssesmenAiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    SkorAssesmen<T extends SkorAssesmenDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SkorAssesmenDefaultArgs<ExtArgs>>): Prisma__SkorAssesmenClient<$Result.GetResult<Prisma.$SkorAssesmenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SkorAssesmenAi model
+   */
+  interface SkorAssesmenAiFieldRefs {
+    readonly SkorAssesmenAiId: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly SkorAssesmenId: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly Portofolio: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly Tulis: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly Wawancara: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly Demo: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly SkorRataRata: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly Diakui: FieldRef<"SkorAssesmenAi", 'String'>
+    readonly NilaiHuruf: FieldRef<"SkorAssesmenAi", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SkorAssesmenAi findUnique
+   */
+  export type SkorAssesmenAiFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which SkorAssesmenAi to fetch.
+     */
+    where: SkorAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * SkorAssesmenAi findUniqueOrThrow
+   */
+  export type SkorAssesmenAiFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which SkorAssesmenAi to fetch.
+     */
+    where: SkorAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * SkorAssesmenAi findFirst
+   */
+  export type SkorAssesmenAiFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which SkorAssesmenAi to fetch.
+     */
+    where?: SkorAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkorAssesmenAis to fetch.
+     */
+    orderBy?: SkorAssesmenAiOrderByWithRelationInput | SkorAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkorAssesmenAis.
+     */
+    cursor?: SkorAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkorAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkorAssesmenAis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkorAssesmenAis.
+     */
+    distinct?: SkorAssesmenAiScalarFieldEnum | SkorAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
+   * SkorAssesmenAi findFirstOrThrow
+   */
+  export type SkorAssesmenAiFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which SkorAssesmenAi to fetch.
+     */
+    where?: SkorAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkorAssesmenAis to fetch.
+     */
+    orderBy?: SkorAssesmenAiOrderByWithRelationInput | SkorAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkorAssesmenAis.
+     */
+    cursor?: SkorAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkorAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkorAssesmenAis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkorAssesmenAis.
+     */
+    distinct?: SkorAssesmenAiScalarFieldEnum | SkorAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
+   * SkorAssesmenAi findMany
+   */
+  export type SkorAssesmenAiFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter, which SkorAssesmenAis to fetch.
+     */
+    where?: SkorAssesmenAiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkorAssesmenAis to fetch.
+     */
+    orderBy?: SkorAssesmenAiOrderByWithRelationInput | SkorAssesmenAiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SkorAssesmenAis.
+     */
+    cursor?: SkorAssesmenAiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkorAssesmenAis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkorAssesmenAis.
+     */
+    skip?: number
+    distinct?: SkorAssesmenAiScalarFieldEnum | SkorAssesmenAiScalarFieldEnum[]
+  }
+
+  /**
+   * SkorAssesmenAi create
+   */
+  export type SkorAssesmenAiCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SkorAssesmenAi.
+     */
+    data: XOR<SkorAssesmenAiCreateInput, SkorAssesmenAiUncheckedCreateInput>
+  }
+
+  /**
+   * SkorAssesmenAi createMany
+   */
+  export type SkorAssesmenAiCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SkorAssesmenAis.
+     */
+    data: SkorAssesmenAiCreateManyInput | SkorAssesmenAiCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SkorAssesmenAi createManyAndReturn
+   */
+  export type SkorAssesmenAiCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * The data used to create many SkorAssesmenAis.
+     */
+    data: SkorAssesmenAiCreateManyInput | SkorAssesmenAiCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SkorAssesmenAi update
+   */
+  export type SkorAssesmenAiUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SkorAssesmenAi.
+     */
+    data: XOR<SkorAssesmenAiUpdateInput, SkorAssesmenAiUncheckedUpdateInput>
+    /**
+     * Choose, which SkorAssesmenAi to update.
+     */
+    where: SkorAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * SkorAssesmenAi updateMany
+   */
+  export type SkorAssesmenAiUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SkorAssesmenAis.
+     */
+    data: XOR<SkorAssesmenAiUpdateManyMutationInput, SkorAssesmenAiUncheckedUpdateManyInput>
+    /**
+     * Filter which SkorAssesmenAis to update
+     */
+    where?: SkorAssesmenAiWhereInput
+    /**
+     * Limit how many SkorAssesmenAis to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkorAssesmenAi updateManyAndReturn
+   */
+  export type SkorAssesmenAiUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * The data used to update SkorAssesmenAis.
+     */
+    data: XOR<SkorAssesmenAiUpdateManyMutationInput, SkorAssesmenAiUncheckedUpdateManyInput>
+    /**
+     * Filter which SkorAssesmenAis to update
+     */
+    where?: SkorAssesmenAiWhereInput
+    /**
+     * Limit how many SkorAssesmenAis to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SkorAssesmenAi upsert
+   */
+  export type SkorAssesmenAiUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SkorAssesmenAi to update in case it exists.
+     */
+    where: SkorAssesmenAiWhereUniqueInput
+    /**
+     * In case the SkorAssesmenAi found by the `where` argument doesn't exist, create a new SkorAssesmenAi with this data.
+     */
+    create: XOR<SkorAssesmenAiCreateInput, SkorAssesmenAiUncheckedCreateInput>
+    /**
+     * In case the SkorAssesmenAi was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SkorAssesmenAiUpdateInput, SkorAssesmenAiUncheckedUpdateInput>
+  }
+
+  /**
+   * SkorAssesmenAi delete
+   */
+  export type SkorAssesmenAiDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
+    /**
+     * Filter which SkorAssesmenAi to delete.
+     */
+    where: SkorAssesmenAiWhereUniqueInput
+  }
+
+  /**
+   * SkorAssesmenAi deleteMany
+   */
+  export type SkorAssesmenAiDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkorAssesmenAis to delete
+     */
+    where?: SkorAssesmenAiWhereInput
+    /**
+     * Limit how many SkorAssesmenAis to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkorAssesmenAi without action
+   */
+  export type SkorAssesmenAiDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkorAssesmenAi
+     */
+    select?: SkorAssesmenAiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkorAssesmenAi
+     */
+    omit?: SkorAssesmenAiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkorAssesmenAiInclude<ExtArgs> | null
   }
 
 
@@ -84506,6 +88242,17 @@ export namespace Prisma {
   export type BuktiFormScalarFieldEnum = (typeof BuktiFormScalarFieldEnum)[keyof typeof BuktiFormScalarFieldEnum]
 
 
+  export const BuktiFormPagesScalarFieldEnum: {
+    BuktiFormPagesId: 'BuktiFormPagesId',
+    BuktiFormId: 'BuktiFormId',
+    Prompt: 'Prompt',
+    Result: 'Result',
+    Think: 'Think'
+  };
+
+  export type BuktiFormPagesScalarFieldEnum = (typeof BuktiFormPagesScalarFieldEnum)[keyof typeof BuktiFormPagesScalarFieldEnum]
+
+
   export const BuktiFormEvaluasiDiriScalarFieldEnum: {
     BuktiFormId: 'BuktiFormId',
     EvaluasiDiriId: 'EvaluasiDiriId'
@@ -84588,10 +88335,25 @@ export namespace Prisma {
     Nilai: 'Nilai',
     TanggalAssesmen: 'TanggalAssesmen',
     CreatedAt: 'CreatedAt',
-    UpdatedAt: 'UpdatedAt'
+    UpdatedAt: 'UpdatedAt',
+    Ai: 'Ai'
   };
 
   export type HasilAssesmenScalarFieldEnum = (typeof HasilAssesmenScalarFieldEnum)[keyof typeof HasilAssesmenScalarFieldEnum]
+
+
+  export const HasilAssesmenAiScalarFieldEnum: {
+    HasilAssesmenAiId: 'HasilAssesmenAiId',
+    HasilAssesmenId: 'HasilAssesmenId',
+    Valid: 'Valid',
+    Autentik: 'Autentik',
+    Terkini: 'Terkini',
+    Memadai: 'Memadai',
+    Assesmen: 'Assesmen',
+    Nilai: 'Nilai'
+  };
+
+  export type HasilAssesmenAiScalarFieldEnum = (typeof HasilAssesmenAiScalarFieldEnum)[keyof typeof HasilAssesmenAiScalarFieldEnum]
 
 
   export const InformasiKependudukanScalarFieldEnum: {
@@ -84977,6 +88739,7 @@ export namespace Prisma {
     NamaFile: 'NamaFile',
     FileData: 'FileData',
     NamaDokumen: 'NamaDokumen',
+    Catatan: 'Catatan',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
   };
@@ -85011,10 +88774,26 @@ export namespace Prisma {
     Diakui: 'Diakui',
     NilaiHuruf: 'NilaiHuruf',
     CreatedAt: 'CreatedAt',
-    UpdatedAt: 'UpdatedAt'
+    UpdatedAt: 'UpdatedAt',
+    Ai: 'Ai'
   };
 
   export type SkorAssesmenScalarFieldEnum = (typeof SkorAssesmenScalarFieldEnum)[keyof typeof SkorAssesmenScalarFieldEnum]
+
+
+  export const SkorAssesmenAiScalarFieldEnum: {
+    SkorAssesmenAiId: 'SkorAssesmenAiId',
+    SkorAssesmenId: 'SkorAssesmenId',
+    Portofolio: 'Portofolio',
+    Tulis: 'Tulis',
+    Wawancara: 'Wawancara',
+    Demo: 'Demo',
+    SkorRataRata: 'SkorRataRata',
+    Diakui: 'Diakui',
+    NilaiHuruf: 'NilaiHuruf'
+  };
+
+  export type SkorAssesmenAiScalarFieldEnum = (typeof SkorAssesmenAiScalarFieldEnum)[keyof typeof SkorAssesmenAiScalarFieldEnum]
 
 
   export const StatusMahasiswaAssesmentScalarFieldEnum: {
@@ -85973,6 +89752,7 @@ export namespace Prisma {
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
     JenisDokumen?: XOR<JenisDokumenScalarRelationFilter, JenisDokumenWhereInput>
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriListRelationFilter
+    BuktiFormPages?: BuktiFormPagesListRelationFilter
   }
 
   export type BuktiFormOrderByWithRelationInput = {
@@ -85987,6 +89767,7 @@ export namespace Prisma {
     Pendaftaran?: PendaftaranOrderByWithRelationInput
     JenisDokumen?: JenisDokumenOrderByWithRelationInput
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriOrderByRelationAggregateInput
+    BuktiFormPages?: BuktiFormPagesOrderByRelationAggregateInput
   }
 
   export type BuktiFormWhereUniqueInput = Prisma.AtLeast<{
@@ -86004,6 +89785,7 @@ export namespace Prisma {
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
     JenisDokumen?: XOR<JenisDokumenScalarRelationFilter, JenisDokumenWhereInput>
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriListRelationFilter
+    BuktiFormPages?: BuktiFormPagesListRelationFilter
   }, "BuktiFormId">
 
   export type BuktiFormOrderByWithAggregationInput = {
@@ -86032,6 +89814,61 @@ export namespace Prisma {
     NamaDokumen?: StringWithAggregatesFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
+  }
+
+  export type BuktiFormPagesWhereInput = {
+    AND?: BuktiFormPagesWhereInput | BuktiFormPagesWhereInput[]
+    OR?: BuktiFormPagesWhereInput[]
+    NOT?: BuktiFormPagesWhereInput | BuktiFormPagesWhereInput[]
+    BuktiFormPagesId?: StringFilter<"BuktiFormPages"> | string
+    BuktiFormId?: StringFilter<"BuktiFormPages"> | string
+    Prompt?: StringFilter<"BuktiFormPages"> | string
+    Result?: StringNullableFilter<"BuktiFormPages"> | string | null
+    Think?: StringNullableFilter<"BuktiFormPages"> | string | null
+    BuktiForm?: XOR<BuktiFormScalarRelationFilter, BuktiFormWhereInput>
+  }
+
+  export type BuktiFormPagesOrderByWithRelationInput = {
+    BuktiFormPagesId?: SortOrder
+    BuktiFormId?: SortOrder
+    Prompt?: SortOrder
+    Result?: SortOrderInput | SortOrder
+    Think?: SortOrderInput | SortOrder
+    BuktiForm?: BuktiFormOrderByWithRelationInput
+  }
+
+  export type BuktiFormPagesWhereUniqueInput = Prisma.AtLeast<{
+    BuktiFormPagesId?: string
+    AND?: BuktiFormPagesWhereInput | BuktiFormPagesWhereInput[]
+    OR?: BuktiFormPagesWhereInput[]
+    NOT?: BuktiFormPagesWhereInput | BuktiFormPagesWhereInput[]
+    BuktiFormId?: StringFilter<"BuktiFormPages"> | string
+    Prompt?: StringFilter<"BuktiFormPages"> | string
+    Result?: StringNullableFilter<"BuktiFormPages"> | string | null
+    Think?: StringNullableFilter<"BuktiFormPages"> | string | null
+    BuktiForm?: XOR<BuktiFormScalarRelationFilter, BuktiFormWhereInput>
+  }, "BuktiFormPagesId">
+
+  export type BuktiFormPagesOrderByWithAggregationInput = {
+    BuktiFormPagesId?: SortOrder
+    BuktiFormId?: SortOrder
+    Prompt?: SortOrder
+    Result?: SortOrderInput | SortOrder
+    Think?: SortOrderInput | SortOrder
+    _count?: BuktiFormPagesCountOrderByAggregateInput
+    _max?: BuktiFormPagesMaxOrderByAggregateInput
+    _min?: BuktiFormPagesMinOrderByAggregateInput
+  }
+
+  export type BuktiFormPagesScalarWhereWithAggregatesInput = {
+    AND?: BuktiFormPagesScalarWhereWithAggregatesInput | BuktiFormPagesScalarWhereWithAggregatesInput[]
+    OR?: BuktiFormPagesScalarWhereWithAggregatesInput[]
+    NOT?: BuktiFormPagesScalarWhereWithAggregatesInput | BuktiFormPagesScalarWhereWithAggregatesInput[]
+    BuktiFormPagesId?: StringWithAggregatesFilter<"BuktiFormPages"> | string
+    BuktiFormId?: StringWithAggregatesFilter<"BuktiFormPages"> | string
+    Prompt?: StringWithAggregatesFilter<"BuktiFormPages"> | string
+    Result?: StringNullableWithAggregatesFilter<"BuktiFormPages"> | string | null
+    Think?: StringNullableWithAggregatesFilter<"BuktiFormPages"> | string | null
   }
 
   export type BuktiFormEvaluasiDiriWhereInput = {
@@ -86429,7 +90266,9 @@ export namespace Prisma {
     TanggalAssesmen?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
+    Ai?: BoolFilter<"HasilAssesmen"> | boolean
     EvaluasiDiri?: XOR<EvaluasiDiriScalarRelationFilter, EvaluasiDiriWhereInput>
+    HasilAssesmenAi?: HasilAssesmenAiListRelationFilter
   }
 
   export type HasilAssesmenOrderByWithRelationInput = {
@@ -86444,7 +90283,9 @@ export namespace Prisma {
     TanggalAssesmen?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
+    Ai?: SortOrder
     EvaluasiDiri?: EvaluasiDiriOrderByWithRelationInput
+    HasilAssesmenAi?: HasilAssesmenAiOrderByRelationAggregateInput
   }
 
   export type HasilAssesmenWhereUniqueInput = Prisma.AtLeast<{
@@ -86462,7 +90303,9 @@ export namespace Prisma {
     TanggalAssesmen?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
+    Ai?: BoolFilter<"HasilAssesmen"> | boolean
     EvaluasiDiri?: XOR<EvaluasiDiriScalarRelationFilter, EvaluasiDiriWhereInput>
+    HasilAssesmenAi?: HasilAssesmenAiListRelationFilter
   }, "HasilAssesmenId" | "EvaluasiDiriId">
 
   export type HasilAssesmenOrderByWithAggregationInput = {
@@ -86477,6 +90320,7 @@ export namespace Prisma {
     TanggalAssesmen?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
+    Ai?: SortOrder
     _count?: HasilAssesmenCountOrderByAggregateInput
     _avg?: HasilAssesmenAvgOrderByAggregateInput
     _max?: HasilAssesmenMaxOrderByAggregateInput
@@ -86499,6 +90343,77 @@ export namespace Prisma {
     TanggalAssesmen?: DateTimeNullableWithAggregatesFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"HasilAssesmen"> | Date | string | null
+    Ai?: BoolWithAggregatesFilter<"HasilAssesmen"> | boolean
+  }
+
+  export type HasilAssesmenAiWhereInput = {
+    AND?: HasilAssesmenAiWhereInput | HasilAssesmenAiWhereInput[]
+    OR?: HasilAssesmenAiWhereInput[]
+    NOT?: HasilAssesmenAiWhereInput | HasilAssesmenAiWhereInput[]
+    HasilAssesmenAiId?: StringFilter<"HasilAssesmenAi"> | string
+    HasilAssesmenId?: StringFilter<"HasilAssesmenAi"> | string
+    Valid?: StringFilter<"HasilAssesmenAi"> | string
+    Autentik?: StringFilter<"HasilAssesmenAi"> | string
+    Terkini?: StringFilter<"HasilAssesmenAi"> | string
+    Memadai?: StringFilter<"HasilAssesmenAi"> | string
+    Assesmen?: StringFilter<"HasilAssesmenAi"> | string
+    Nilai?: StringFilter<"HasilAssesmenAi"> | string
+    HasilAssesmen?: XOR<HasilAssesmenScalarRelationFilter, HasilAssesmenWhereInput>
+  }
+
+  export type HasilAssesmenAiOrderByWithRelationInput = {
+    HasilAssesmenAiId?: SortOrder
+    HasilAssesmenId?: SortOrder
+    Valid?: SortOrder
+    Autentik?: SortOrder
+    Terkini?: SortOrder
+    Memadai?: SortOrder
+    Assesmen?: SortOrder
+    Nilai?: SortOrder
+    HasilAssesmen?: HasilAssesmenOrderByWithRelationInput
+  }
+
+  export type HasilAssesmenAiWhereUniqueInput = Prisma.AtLeast<{
+    HasilAssesmenAiId?: string
+    HasilAssesmenId?: string
+    AND?: HasilAssesmenAiWhereInput | HasilAssesmenAiWhereInput[]
+    OR?: HasilAssesmenAiWhereInput[]
+    NOT?: HasilAssesmenAiWhereInput | HasilAssesmenAiWhereInput[]
+    Valid?: StringFilter<"HasilAssesmenAi"> | string
+    Autentik?: StringFilter<"HasilAssesmenAi"> | string
+    Terkini?: StringFilter<"HasilAssesmenAi"> | string
+    Memadai?: StringFilter<"HasilAssesmenAi"> | string
+    Assesmen?: StringFilter<"HasilAssesmenAi"> | string
+    Nilai?: StringFilter<"HasilAssesmenAi"> | string
+    HasilAssesmen?: XOR<HasilAssesmenScalarRelationFilter, HasilAssesmenWhereInput>
+  }, "HasilAssesmenAiId" | "HasilAssesmenId">
+
+  export type HasilAssesmenAiOrderByWithAggregationInput = {
+    HasilAssesmenAiId?: SortOrder
+    HasilAssesmenId?: SortOrder
+    Valid?: SortOrder
+    Autentik?: SortOrder
+    Terkini?: SortOrder
+    Memadai?: SortOrder
+    Assesmen?: SortOrder
+    Nilai?: SortOrder
+    _count?: HasilAssesmenAiCountOrderByAggregateInput
+    _max?: HasilAssesmenAiMaxOrderByAggregateInput
+    _min?: HasilAssesmenAiMinOrderByAggregateInput
+  }
+
+  export type HasilAssesmenAiScalarWhereWithAggregatesInput = {
+    AND?: HasilAssesmenAiScalarWhereWithAggregatesInput | HasilAssesmenAiScalarWhereWithAggregatesInput[]
+    OR?: HasilAssesmenAiScalarWhereWithAggregatesInput[]
+    NOT?: HasilAssesmenAiScalarWhereWithAggregatesInput | HasilAssesmenAiScalarWhereWithAggregatesInput[]
+    HasilAssesmenAiId?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
+    HasilAssesmenId?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
+    Valid?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
+    Autentik?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
+    Terkini?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
+    Memadai?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
+    Assesmen?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
+    Nilai?: StringWithAggregatesFilter<"HasilAssesmenAi"> | string
   }
 
   export type InformasiKependudukanWhereInput = {
@@ -88526,6 +92441,7 @@ export namespace Prisma {
     NamaFile?: StringFilter<"SkRektor"> | string
     FileData?: BytesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringFilter<"SkRektor"> | string
+    Catatan?: StringNullableFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     TipeSkRektor?: XOR<TipeSkRektorScalarRelationFilter, TipeSkRektorWhereInput>
@@ -88542,6 +92458,7 @@ export namespace Prisma {
     NamaFile?: SortOrder
     FileData?: SortOrder
     NamaDokumen?: SortOrder
+    Catatan?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     TipeSkRektor?: TipeSkRektorOrderByWithRelationInput
@@ -88561,6 +92478,7 @@ export namespace Prisma {
     NamaFile?: StringFilter<"SkRektor"> | string
     FileData?: BytesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringFilter<"SkRektor"> | string
+    Catatan?: StringNullableFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     TipeSkRektor?: XOR<TipeSkRektorScalarRelationFilter, TipeSkRektorWhereInput>
@@ -88577,6 +92495,7 @@ export namespace Prisma {
     NamaFile?: SortOrder
     FileData?: SortOrder
     NamaDokumen?: SortOrder
+    Catatan?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     _count?: SkRektorCountOrderByAggregateInput
@@ -88598,6 +92517,7 @@ export namespace Prisma {
     NamaFile?: StringWithAggregatesFilter<"SkRektor"> | string
     FileData?: BytesWithAggregatesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringWithAggregatesFilter<"SkRektor"> | string
+    Catatan?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
   }
@@ -88705,7 +92625,9 @@ export namespace Prisma {
     NilaiHuruf?: StringNullableFilter<"SkorAssesmen"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
+    Ai?: BoolFilter<"SkorAssesmen"> | boolean
     MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
+    SkorAssesmenAi?: SkorAssesmenAiListRelationFilter
   }
 
   export type SkorAssesmenOrderByWithRelationInput = {
@@ -88720,7 +92642,9 @@ export namespace Prisma {
     NilaiHuruf?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
+    Ai?: SortOrder
     MataKuliahMahasiswa?: MataKuliahMahasiswaOrderByWithRelationInput
+    SkorAssesmenAi?: SkorAssesmenAiOrderByRelationAggregateInput
   }
 
   export type SkorAssesmenWhereUniqueInput = Prisma.AtLeast<{
@@ -88738,7 +92662,9 @@ export namespace Prisma {
     NilaiHuruf?: StringNullableFilter<"SkorAssesmen"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
+    Ai?: BoolFilter<"SkorAssesmen"> | boolean
     MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
+    SkorAssesmenAi?: SkorAssesmenAiListRelationFilter
   }, "SkorAssesmenId" | "MataKuliahMahasiswaId">
 
   export type SkorAssesmenOrderByWithAggregationInput = {
@@ -88753,6 +92679,7 @@ export namespace Prisma {
     NilaiHuruf?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
+    Ai?: SortOrder
     _count?: SkorAssesmenCountOrderByAggregateInput
     _avg?: SkorAssesmenAvgOrderByAggregateInput
     _max?: SkorAssesmenMaxOrderByAggregateInput
@@ -88775,6 +92702,82 @@ export namespace Prisma {
     NilaiHuruf?: StringNullableWithAggregatesFilter<"SkorAssesmen"> | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"SkorAssesmen"> | Date | string | null
+    Ai?: BoolWithAggregatesFilter<"SkorAssesmen"> | boolean
+  }
+
+  export type SkorAssesmenAiWhereInput = {
+    AND?: SkorAssesmenAiWhereInput | SkorAssesmenAiWhereInput[]
+    OR?: SkorAssesmenAiWhereInput[]
+    NOT?: SkorAssesmenAiWhereInput | SkorAssesmenAiWhereInput[]
+    SkorAssesmenAiId?: StringFilter<"SkorAssesmenAi"> | string
+    SkorAssesmenId?: StringFilter<"SkorAssesmenAi"> | string
+    Portofolio?: StringFilter<"SkorAssesmenAi"> | string
+    Tulis?: StringFilter<"SkorAssesmenAi"> | string
+    Wawancara?: StringFilter<"SkorAssesmenAi"> | string
+    Demo?: StringFilter<"SkorAssesmenAi"> | string
+    SkorRataRata?: StringFilter<"SkorAssesmenAi"> | string
+    Diakui?: StringFilter<"SkorAssesmenAi"> | string
+    NilaiHuruf?: StringFilter<"SkorAssesmenAi"> | string
+    SkorAssesmen?: XOR<SkorAssesmenScalarRelationFilter, SkorAssesmenWhereInput>
+  }
+
+  export type SkorAssesmenAiOrderByWithRelationInput = {
+    SkorAssesmenAiId?: SortOrder
+    SkorAssesmenId?: SortOrder
+    Portofolio?: SortOrder
+    Tulis?: SortOrder
+    Wawancara?: SortOrder
+    Demo?: SortOrder
+    SkorRataRata?: SortOrder
+    Diakui?: SortOrder
+    NilaiHuruf?: SortOrder
+    SkorAssesmen?: SkorAssesmenOrderByWithRelationInput
+  }
+
+  export type SkorAssesmenAiWhereUniqueInput = Prisma.AtLeast<{
+    SkorAssesmenAiId?: string
+    SkorAssesmenId?: string
+    AND?: SkorAssesmenAiWhereInput | SkorAssesmenAiWhereInput[]
+    OR?: SkorAssesmenAiWhereInput[]
+    NOT?: SkorAssesmenAiWhereInput | SkorAssesmenAiWhereInput[]
+    Portofolio?: StringFilter<"SkorAssesmenAi"> | string
+    Tulis?: StringFilter<"SkorAssesmenAi"> | string
+    Wawancara?: StringFilter<"SkorAssesmenAi"> | string
+    Demo?: StringFilter<"SkorAssesmenAi"> | string
+    SkorRataRata?: StringFilter<"SkorAssesmenAi"> | string
+    Diakui?: StringFilter<"SkorAssesmenAi"> | string
+    NilaiHuruf?: StringFilter<"SkorAssesmenAi"> | string
+    SkorAssesmen?: XOR<SkorAssesmenScalarRelationFilter, SkorAssesmenWhereInput>
+  }, "SkorAssesmenAiId" | "SkorAssesmenId">
+
+  export type SkorAssesmenAiOrderByWithAggregationInput = {
+    SkorAssesmenAiId?: SortOrder
+    SkorAssesmenId?: SortOrder
+    Portofolio?: SortOrder
+    Tulis?: SortOrder
+    Wawancara?: SortOrder
+    Demo?: SortOrder
+    SkorRataRata?: SortOrder
+    Diakui?: SortOrder
+    NilaiHuruf?: SortOrder
+    _count?: SkorAssesmenAiCountOrderByAggregateInput
+    _max?: SkorAssesmenAiMaxOrderByAggregateInput
+    _min?: SkorAssesmenAiMinOrderByAggregateInput
+  }
+
+  export type SkorAssesmenAiScalarWhereWithAggregatesInput = {
+    AND?: SkorAssesmenAiScalarWhereWithAggregatesInput | SkorAssesmenAiScalarWhereWithAggregatesInput[]
+    OR?: SkorAssesmenAiScalarWhereWithAggregatesInput[]
+    NOT?: SkorAssesmenAiScalarWhereWithAggregatesInput | SkorAssesmenAiScalarWhereWithAggregatesInput[]
+    SkorAssesmenAiId?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    SkorAssesmenId?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    Portofolio?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    Tulis?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    Wawancara?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    Demo?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    SkorRataRata?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    Diakui?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
+    NilaiHuruf?: StringWithAggregatesFilter<"SkorAssesmenAi"> | string
   }
 
   export type StatusMahasiswaAssesmentWhereInput = {
@@ -90560,6 +94563,7 @@ export namespace Prisma {
     Pendaftaran: PendaftaranCreateNestedOneWithoutBuktiFormInput
     JenisDokumen: JenisDokumenCreateNestedOneWithoutBuktiFormInput
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriCreateNestedManyWithoutBuktiFormInput
+    BuktiFormPages?: BuktiFormPagesCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormUncheckedCreateInput = {
@@ -90572,6 +94576,7 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedCreateNestedManyWithoutBuktiFormInput
+    BuktiFormPages?: BuktiFormPagesUncheckedCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormUpdateInput = {
@@ -90584,6 +94589,7 @@ export namespace Prisma {
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutBuktiFormNestedInput
     JenisDokumen?: JenisDokumenUpdateOneRequiredWithoutBuktiFormNestedInput
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUpdateManyWithoutBuktiFormNestedInput
+    BuktiFormPages?: BuktiFormPagesUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type BuktiFormUncheckedUpdateInput = {
@@ -90596,6 +94602,7 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutBuktiFormNestedInput
+    BuktiFormPages?: BuktiFormPagesUncheckedUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type BuktiFormCreateManyInput = {
@@ -90627,6 +94634,61 @@ export namespace Prisma {
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type BuktiFormPagesCreateInput = {
+    BuktiFormPagesId?: string
+    Prompt: string
+    Result?: string | null
+    Think?: string | null
+    BuktiForm: BuktiFormCreateNestedOneWithoutBuktiFormPagesInput
+  }
+
+  export type BuktiFormPagesUncheckedCreateInput = {
+    BuktiFormPagesId?: string
+    BuktiFormId: string
+    Prompt: string
+    Result?: string | null
+    Think?: string | null
+  }
+
+  export type BuktiFormPagesUpdateInput = {
+    BuktiFormPagesId?: StringFieldUpdateOperationsInput | string
+    Prompt?: StringFieldUpdateOperationsInput | string
+    Result?: NullableStringFieldUpdateOperationsInput | string | null
+    Think?: NullableStringFieldUpdateOperationsInput | string | null
+    BuktiForm?: BuktiFormUpdateOneRequiredWithoutBuktiFormPagesNestedInput
+  }
+
+  export type BuktiFormPagesUncheckedUpdateInput = {
+    BuktiFormPagesId?: StringFieldUpdateOperationsInput | string
+    BuktiFormId?: StringFieldUpdateOperationsInput | string
+    Prompt?: StringFieldUpdateOperationsInput | string
+    Result?: NullableStringFieldUpdateOperationsInput | string | null
+    Think?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BuktiFormPagesCreateManyInput = {
+    BuktiFormPagesId?: string
+    BuktiFormId: string
+    Prompt: string
+    Result?: string | null
+    Think?: string | null
+  }
+
+  export type BuktiFormPagesUpdateManyMutationInput = {
+    BuktiFormPagesId?: StringFieldUpdateOperationsInput | string
+    Prompt?: StringFieldUpdateOperationsInput | string
+    Result?: NullableStringFieldUpdateOperationsInput | string | null
+    Think?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BuktiFormPagesUncheckedUpdateManyInput = {
+    BuktiFormPagesId?: StringFieldUpdateOperationsInput | string
+    BuktiFormId?: StringFieldUpdateOperationsInput | string
+    Prompt?: StringFieldUpdateOperationsInput | string
+    Result?: NullableStringFieldUpdateOperationsInput | string | null
+    Think?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BuktiFormEvaluasiDiriCreateInput = {
@@ -91024,7 +95086,9 @@ export namespace Prisma {
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
     EvaluasiDiri: EvaluasiDiriCreateNestedOneWithoutHasilAssesmenInput
+    HasilAssesmenAi?: HasilAssesmenAiCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenUncheckedCreateInput = {
@@ -91039,6 +95103,8 @@ export namespace Prisma {
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
+    HasilAssesmenAi?: HasilAssesmenAiUncheckedCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenUpdateInput = {
@@ -91052,7 +95118,9 @@ export namespace Prisma {
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
     EvaluasiDiri?: EvaluasiDiriUpdateOneRequiredWithoutHasilAssesmenNestedInput
+    HasilAssesmenAi?: HasilAssesmenAiUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenUncheckedUpdateInput = {
@@ -91067,6 +95135,8 @@ export namespace Prisma {
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    HasilAssesmenAi?: HasilAssesmenAiUncheckedUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenCreateManyInput = {
@@ -91081,6 +95151,7 @@ export namespace Prisma {
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
   }
 
   export type HasilAssesmenUpdateManyMutationInput = {
@@ -91094,6 +95165,7 @@ export namespace Prisma {
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type HasilAssesmenUncheckedUpdateManyInput = {
@@ -91108,6 +95180,83 @@ export namespace Prisma {
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type HasilAssesmenAiCreateInput = {
+    HasilAssesmenAiId?: string
+    Valid: string
+    Autentik: string
+    Terkini: string
+    Memadai: string
+    Assesmen: string
+    Nilai: string
+    HasilAssesmen: HasilAssesmenCreateNestedOneWithoutHasilAssesmenAiInput
+  }
+
+  export type HasilAssesmenAiUncheckedCreateInput = {
+    HasilAssesmenAiId?: string
+    HasilAssesmenId: string
+    Valid: string
+    Autentik: string
+    Terkini: string
+    Memadai: string
+    Assesmen: string
+    Nilai: string
+  }
+
+  export type HasilAssesmenAiUpdateInput = {
+    HasilAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Valid?: StringFieldUpdateOperationsInput | string
+    Autentik?: StringFieldUpdateOperationsInput | string
+    Terkini?: StringFieldUpdateOperationsInput | string
+    Memadai?: StringFieldUpdateOperationsInput | string
+    Assesmen?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+    HasilAssesmen?: HasilAssesmenUpdateOneRequiredWithoutHasilAssesmenAiNestedInput
+  }
+
+  export type HasilAssesmenAiUncheckedUpdateInput = {
+    HasilAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
+    Valid?: StringFieldUpdateOperationsInput | string
+    Autentik?: StringFieldUpdateOperationsInput | string
+    Terkini?: StringFieldUpdateOperationsInput | string
+    Memadai?: StringFieldUpdateOperationsInput | string
+    Assesmen?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HasilAssesmenAiCreateManyInput = {
+    HasilAssesmenAiId?: string
+    HasilAssesmenId: string
+    Valid: string
+    Autentik: string
+    Terkini: string
+    Memadai: string
+    Assesmen: string
+    Nilai: string
+  }
+
+  export type HasilAssesmenAiUpdateManyMutationInput = {
+    HasilAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Valid?: StringFieldUpdateOperationsInput | string
+    Autentik?: StringFieldUpdateOperationsInput | string
+    Terkini?: StringFieldUpdateOperationsInput | string
+    Memadai?: StringFieldUpdateOperationsInput | string
+    Assesmen?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HasilAssesmenAiUncheckedUpdateManyInput = {
+    HasilAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
+    Valid?: StringFieldUpdateOperationsInput | string
+    Autentik?: StringFieldUpdateOperationsInput | string
+    Terkini?: StringFieldUpdateOperationsInput | string
+    Memadai?: StringFieldUpdateOperationsInput | string
+    Assesmen?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
   }
 
   export type InformasiKependudukanCreateInput = {
@@ -93208,6 +97357,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
@@ -93224,6 +97374,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutSkRektorInput
@@ -93238,6 +97389,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
@@ -93254,6 +97406,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutSkRektorNestedInput
@@ -93269,6 +97422,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -93281,6 +97435,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -93294,6 +97449,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -93377,7 +97533,9 @@ export namespace Prisma {
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
     MataKuliahMahasiswa: MataKuliahMahasiswaCreateNestedOneWithoutSkorAssesmenInput
+    SkorAssesmenAi?: SkorAssesmenAiCreateNestedManyWithoutSkorAssesmenInput
   }
 
   export type SkorAssesmenUncheckedCreateInput = {
@@ -93392,6 +97550,8 @@ export namespace Prisma {
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
+    SkorAssesmenAi?: SkorAssesmenAiUncheckedCreateNestedManyWithoutSkorAssesmenInput
   }
 
   export type SkorAssesmenUpdateInput = {
@@ -93405,7 +97565,9 @@ export namespace Prisma {
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
     MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateOneRequiredWithoutSkorAssesmenNestedInput
+    SkorAssesmenAi?: SkorAssesmenAiUpdateManyWithoutSkorAssesmenNestedInput
   }
 
   export type SkorAssesmenUncheckedUpdateInput = {
@@ -93420,6 +97582,8 @@ export namespace Prisma {
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    SkorAssesmenAi?: SkorAssesmenAiUncheckedUpdateManyWithoutSkorAssesmenNestedInput
   }
 
   export type SkorAssesmenCreateManyInput = {
@@ -93434,6 +97598,7 @@ export namespace Prisma {
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
   }
 
   export type SkorAssesmenUpdateManyMutationInput = {
@@ -93447,6 +97612,7 @@ export namespace Prisma {
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SkorAssesmenUncheckedUpdateManyInput = {
@@ -93461,6 +97627,90 @@ export namespace Prisma {
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SkorAssesmenAiCreateInput = {
+    SkorAssesmenAiId?: string
+    Portofolio: string
+    Tulis: string
+    Wawancara: string
+    Demo: string
+    SkorRataRata: string
+    Diakui: string
+    NilaiHuruf: string
+    SkorAssesmen: SkorAssesmenCreateNestedOneWithoutSkorAssesmenAiInput
+  }
+
+  export type SkorAssesmenAiUncheckedCreateInput = {
+    SkorAssesmenAiId?: string
+    SkorAssesmenId: string
+    Portofolio: string
+    Tulis: string
+    Wawancara: string
+    Demo: string
+    SkorRataRata: string
+    Diakui: string
+    NilaiHuruf: string
+  }
+
+  export type SkorAssesmenAiUpdateInput = {
+    SkorAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: StringFieldUpdateOperationsInput | string
+    Tulis?: StringFieldUpdateOperationsInput | string
+    Wawancara?: StringFieldUpdateOperationsInput | string
+    Demo?: StringFieldUpdateOperationsInput | string
+    SkorRataRata?: StringFieldUpdateOperationsInput | string
+    Diakui?: StringFieldUpdateOperationsInput | string
+    NilaiHuruf?: StringFieldUpdateOperationsInput | string
+    SkorAssesmen?: SkorAssesmenUpdateOneRequiredWithoutSkorAssesmenAiNestedInput
+  }
+
+  export type SkorAssesmenAiUncheckedUpdateInput = {
+    SkorAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: StringFieldUpdateOperationsInput | string
+    Tulis?: StringFieldUpdateOperationsInput | string
+    Wawancara?: StringFieldUpdateOperationsInput | string
+    Demo?: StringFieldUpdateOperationsInput | string
+    SkorRataRata?: StringFieldUpdateOperationsInput | string
+    Diakui?: StringFieldUpdateOperationsInput | string
+    NilaiHuruf?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkorAssesmenAiCreateManyInput = {
+    SkorAssesmenAiId?: string
+    SkorAssesmenId: string
+    Portofolio: string
+    Tulis: string
+    Wawancara: string
+    Demo: string
+    SkorRataRata: string
+    Diakui: string
+    NilaiHuruf: string
+  }
+
+  export type SkorAssesmenAiUpdateManyMutationInput = {
+    SkorAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: StringFieldUpdateOperationsInput | string
+    Tulis?: StringFieldUpdateOperationsInput | string
+    Wawancara?: StringFieldUpdateOperationsInput | string
+    Demo?: StringFieldUpdateOperationsInput | string
+    SkorRataRata?: StringFieldUpdateOperationsInput | string
+    Diakui?: StringFieldUpdateOperationsInput | string
+    NilaiHuruf?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkorAssesmenAiUncheckedUpdateManyInput = {
+    SkorAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: StringFieldUpdateOperationsInput | string
+    Tulis?: StringFieldUpdateOperationsInput | string
+    Wawancara?: StringFieldUpdateOperationsInput | string
+    Demo?: StringFieldUpdateOperationsInput | string
+    SkorRataRata?: StringFieldUpdateOperationsInput | string
+    Diakui?: StringFieldUpdateOperationsInput | string
+    NilaiHuruf?: StringFieldUpdateOperationsInput | string
   }
 
   export type StatusMahasiswaAssesmentCreateInput = {
@@ -95333,7 +99583,17 @@ export namespace Prisma {
     none?: BuktiFormEvaluasiDiriWhereInput
   }
 
+  export type BuktiFormPagesListRelationFilter = {
+    every?: BuktiFormPagesWhereInput
+    some?: BuktiFormPagesWhereInput
+    none?: BuktiFormPagesWhereInput
+  }
+
   export type BuktiFormEvaluasiDiriOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BuktiFormPagesOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -95383,6 +99643,30 @@ export namespace Prisma {
   export type BuktiFormScalarRelationFilter = {
     is?: BuktiFormWhereInput
     isNot?: BuktiFormWhereInput
+  }
+
+  export type BuktiFormPagesCountOrderByAggregateInput = {
+    BuktiFormPagesId?: SortOrder
+    BuktiFormId?: SortOrder
+    Prompt?: SortOrder
+    Result?: SortOrder
+    Think?: SortOrder
+  }
+
+  export type BuktiFormPagesMaxOrderByAggregateInput = {
+    BuktiFormPagesId?: SortOrder
+    BuktiFormId?: SortOrder
+    Prompt?: SortOrder
+    Result?: SortOrder
+    Think?: SortOrder
+  }
+
+  export type BuktiFormPagesMinOrderByAggregateInput = {
+    BuktiFormPagesId?: SortOrder
+    BuktiFormId?: SortOrder
+    Prompt?: SortOrder
+    Result?: SortOrder
+    Think?: SortOrder
   }
 
   export type EvaluasiDiriScalarRelationFilter = {
@@ -95660,6 +99944,16 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type HasilAssesmenAiListRelationFilter = {
+    every?: HasilAssesmenAiWhereInput
+    some?: HasilAssesmenAiWhereInput
+    none?: HasilAssesmenAiWhereInput
+  }
+
+  export type HasilAssesmenAiOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type HasilAssesmenCountOrderByAggregateInput = {
     HasilAssesmenId?: SortOrder
     EvaluasiDiriId?: SortOrder
@@ -95672,6 +99966,7 @@ export namespace Prisma {
     TanggalAssesmen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    Ai?: SortOrder
   }
 
   export type HasilAssesmenAvgOrderByAggregateInput = {
@@ -95690,6 +99985,7 @@ export namespace Prisma {
     TanggalAssesmen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    Ai?: SortOrder
   }
 
   export type HasilAssesmenMinOrderByAggregateInput = {
@@ -95704,6 +100000,7 @@ export namespace Prisma {
     TanggalAssesmen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    Ai?: SortOrder
   }
 
   export type HasilAssesmenSumOrderByAggregateInput = {
@@ -95724,6 +100021,44 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type HasilAssesmenScalarRelationFilter = {
+    is?: HasilAssesmenWhereInput
+    isNot?: HasilAssesmenWhereInput
+  }
+
+  export type HasilAssesmenAiCountOrderByAggregateInput = {
+    HasilAssesmenAiId?: SortOrder
+    HasilAssesmenId?: SortOrder
+    Valid?: SortOrder
+    Autentik?: SortOrder
+    Terkini?: SortOrder
+    Memadai?: SortOrder
+    Assesmen?: SortOrder
+    Nilai?: SortOrder
+  }
+
+  export type HasilAssesmenAiMaxOrderByAggregateInput = {
+    HasilAssesmenAiId?: SortOrder
+    HasilAssesmenId?: SortOrder
+    Valid?: SortOrder
+    Autentik?: SortOrder
+    Terkini?: SortOrder
+    Memadai?: SortOrder
+    Assesmen?: SortOrder
+    Nilai?: SortOrder
+  }
+
+  export type HasilAssesmenAiMinOrderByAggregateInput = {
+    HasilAssesmenAiId?: SortOrder
+    HasilAssesmenId?: SortOrder
+    Valid?: SortOrder
+    Autentik?: SortOrder
+    Terkini?: SortOrder
+    Memadai?: SortOrder
+    Assesmen?: SortOrder
+    Nilai?: SortOrder
   }
 
   export type InformasiKependudukanCountOrderByAggregateInput = {
@@ -97180,6 +101515,7 @@ export namespace Prisma {
     NamaFile?: SortOrder
     FileData?: SortOrder
     NamaDokumen?: SortOrder
+    Catatan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -97197,6 +101533,7 @@ export namespace Prisma {
     NamaFile?: SortOrder
     FileData?: SortOrder
     NamaDokumen?: SortOrder
+    Catatan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -97210,6 +101547,7 @@ export namespace Prisma {
     NamaFile?: SortOrder
     FileData?: SortOrder
     NamaDokumen?: SortOrder
+    Catatan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -97268,6 +101606,16 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
   }
 
+  export type SkorAssesmenAiListRelationFilter = {
+    every?: SkorAssesmenAiWhereInput
+    some?: SkorAssesmenAiWhereInput
+    none?: SkorAssesmenAiWhereInput
+  }
+
+  export type SkorAssesmenAiOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SkorAssesmenCountOrderByAggregateInput = {
     SkorAssesmenId?: SortOrder
     MataKuliahMahasiswaId?: SortOrder
@@ -97280,6 +101628,7 @@ export namespace Prisma {
     NilaiHuruf?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    Ai?: SortOrder
   }
 
   export type SkorAssesmenAvgOrderByAggregateInput = {
@@ -97302,6 +101651,7 @@ export namespace Prisma {
     NilaiHuruf?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    Ai?: SortOrder
   }
 
   export type SkorAssesmenMinOrderByAggregateInput = {
@@ -97316,6 +101666,7 @@ export namespace Prisma {
     NilaiHuruf?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
+    Ai?: SortOrder
   }
 
   export type SkorAssesmenSumOrderByAggregateInput = {
@@ -97324,6 +101675,47 @@ export namespace Prisma {
     Wawancara?: SortOrder
     Demo?: SortOrder
     SkorRataRata?: SortOrder
+  }
+
+  export type SkorAssesmenScalarRelationFilter = {
+    is?: SkorAssesmenWhereInput
+    isNot?: SkorAssesmenWhereInput
+  }
+
+  export type SkorAssesmenAiCountOrderByAggregateInput = {
+    SkorAssesmenAiId?: SortOrder
+    SkorAssesmenId?: SortOrder
+    Portofolio?: SortOrder
+    Tulis?: SortOrder
+    Wawancara?: SortOrder
+    Demo?: SortOrder
+    SkorRataRata?: SortOrder
+    Diakui?: SortOrder
+    NilaiHuruf?: SortOrder
+  }
+
+  export type SkorAssesmenAiMaxOrderByAggregateInput = {
+    SkorAssesmenAiId?: SortOrder
+    SkorAssesmenId?: SortOrder
+    Portofolio?: SortOrder
+    Tulis?: SortOrder
+    Wawancara?: SortOrder
+    Demo?: SortOrder
+    SkorRataRata?: SortOrder
+    Diakui?: SortOrder
+    NilaiHuruf?: SortOrder
+  }
+
+  export type SkorAssesmenAiMinOrderByAggregateInput = {
+    SkorAssesmenAiId?: SortOrder
+    SkorAssesmenId?: SortOrder
+    Portofolio?: SortOrder
+    Tulis?: SortOrder
+    Wawancara?: SortOrder
+    Demo?: SortOrder
+    SkorRataRata?: SortOrder
+    Diakui?: SortOrder
+    NilaiHuruf?: SortOrder
   }
 
   export type StatusMahasiswaAssesmentCountOrderByAggregateInput = {
@@ -98651,11 +103043,25 @@ export namespace Prisma {
     connect?: BuktiFormEvaluasiDiriWhereUniqueInput | BuktiFormEvaluasiDiriWhereUniqueInput[]
   }
 
+  export type BuktiFormPagesCreateNestedManyWithoutBuktiFormInput = {
+    create?: XOR<BuktiFormPagesCreateWithoutBuktiFormInput, BuktiFormPagesUncheckedCreateWithoutBuktiFormInput> | BuktiFormPagesCreateWithoutBuktiFormInput[] | BuktiFormPagesUncheckedCreateWithoutBuktiFormInput[]
+    connectOrCreate?: BuktiFormPagesCreateOrConnectWithoutBuktiFormInput | BuktiFormPagesCreateOrConnectWithoutBuktiFormInput[]
+    createMany?: BuktiFormPagesCreateManyBuktiFormInputEnvelope
+    connect?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+  }
+
   export type BuktiFormEvaluasiDiriUncheckedCreateNestedManyWithoutBuktiFormInput = {
     create?: XOR<BuktiFormEvaluasiDiriCreateWithoutBuktiFormInput, BuktiFormEvaluasiDiriUncheckedCreateWithoutBuktiFormInput> | BuktiFormEvaluasiDiriCreateWithoutBuktiFormInput[] | BuktiFormEvaluasiDiriUncheckedCreateWithoutBuktiFormInput[]
     connectOrCreate?: BuktiFormEvaluasiDiriCreateOrConnectWithoutBuktiFormInput | BuktiFormEvaluasiDiriCreateOrConnectWithoutBuktiFormInput[]
     createMany?: BuktiFormEvaluasiDiriCreateManyBuktiFormInputEnvelope
     connect?: BuktiFormEvaluasiDiriWhereUniqueInput | BuktiFormEvaluasiDiriWhereUniqueInput[]
+  }
+
+  export type BuktiFormPagesUncheckedCreateNestedManyWithoutBuktiFormInput = {
+    create?: XOR<BuktiFormPagesCreateWithoutBuktiFormInput, BuktiFormPagesUncheckedCreateWithoutBuktiFormInput> | BuktiFormPagesCreateWithoutBuktiFormInput[] | BuktiFormPagesUncheckedCreateWithoutBuktiFormInput[]
+    connectOrCreate?: BuktiFormPagesCreateOrConnectWithoutBuktiFormInput | BuktiFormPagesCreateOrConnectWithoutBuktiFormInput[]
+    createMany?: BuktiFormPagesCreateManyBuktiFormInputEnvelope
+    connect?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
   }
 
   export type BytesFieldUpdateOperationsInput = {
@@ -98692,6 +103098,20 @@ export namespace Prisma {
     deleteMany?: BuktiFormEvaluasiDiriScalarWhereInput | BuktiFormEvaluasiDiriScalarWhereInput[]
   }
 
+  export type BuktiFormPagesUpdateManyWithoutBuktiFormNestedInput = {
+    create?: XOR<BuktiFormPagesCreateWithoutBuktiFormInput, BuktiFormPagesUncheckedCreateWithoutBuktiFormInput> | BuktiFormPagesCreateWithoutBuktiFormInput[] | BuktiFormPagesUncheckedCreateWithoutBuktiFormInput[]
+    connectOrCreate?: BuktiFormPagesCreateOrConnectWithoutBuktiFormInput | BuktiFormPagesCreateOrConnectWithoutBuktiFormInput[]
+    upsert?: BuktiFormPagesUpsertWithWhereUniqueWithoutBuktiFormInput | BuktiFormPagesUpsertWithWhereUniqueWithoutBuktiFormInput[]
+    createMany?: BuktiFormPagesCreateManyBuktiFormInputEnvelope
+    set?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    disconnect?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    delete?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    connect?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    update?: BuktiFormPagesUpdateWithWhereUniqueWithoutBuktiFormInput | BuktiFormPagesUpdateWithWhereUniqueWithoutBuktiFormInput[]
+    updateMany?: BuktiFormPagesUpdateManyWithWhereWithoutBuktiFormInput | BuktiFormPagesUpdateManyWithWhereWithoutBuktiFormInput[]
+    deleteMany?: BuktiFormPagesScalarWhereInput | BuktiFormPagesScalarWhereInput[]
+  }
+
   export type BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutBuktiFormNestedInput = {
     create?: XOR<BuktiFormEvaluasiDiriCreateWithoutBuktiFormInput, BuktiFormEvaluasiDiriUncheckedCreateWithoutBuktiFormInput> | BuktiFormEvaluasiDiriCreateWithoutBuktiFormInput[] | BuktiFormEvaluasiDiriUncheckedCreateWithoutBuktiFormInput[]
     connectOrCreate?: BuktiFormEvaluasiDiriCreateOrConnectWithoutBuktiFormInput | BuktiFormEvaluasiDiriCreateOrConnectWithoutBuktiFormInput[]
@@ -98704,6 +103124,34 @@ export namespace Prisma {
     update?: BuktiFormEvaluasiDiriUpdateWithWhereUniqueWithoutBuktiFormInput | BuktiFormEvaluasiDiriUpdateWithWhereUniqueWithoutBuktiFormInput[]
     updateMany?: BuktiFormEvaluasiDiriUpdateManyWithWhereWithoutBuktiFormInput | BuktiFormEvaluasiDiriUpdateManyWithWhereWithoutBuktiFormInput[]
     deleteMany?: BuktiFormEvaluasiDiriScalarWhereInput | BuktiFormEvaluasiDiriScalarWhereInput[]
+  }
+
+  export type BuktiFormPagesUncheckedUpdateManyWithoutBuktiFormNestedInput = {
+    create?: XOR<BuktiFormPagesCreateWithoutBuktiFormInput, BuktiFormPagesUncheckedCreateWithoutBuktiFormInput> | BuktiFormPagesCreateWithoutBuktiFormInput[] | BuktiFormPagesUncheckedCreateWithoutBuktiFormInput[]
+    connectOrCreate?: BuktiFormPagesCreateOrConnectWithoutBuktiFormInput | BuktiFormPagesCreateOrConnectWithoutBuktiFormInput[]
+    upsert?: BuktiFormPagesUpsertWithWhereUniqueWithoutBuktiFormInput | BuktiFormPagesUpsertWithWhereUniqueWithoutBuktiFormInput[]
+    createMany?: BuktiFormPagesCreateManyBuktiFormInputEnvelope
+    set?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    disconnect?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    delete?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    connect?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
+    update?: BuktiFormPagesUpdateWithWhereUniqueWithoutBuktiFormInput | BuktiFormPagesUpdateWithWhereUniqueWithoutBuktiFormInput[]
+    updateMany?: BuktiFormPagesUpdateManyWithWhereWithoutBuktiFormInput | BuktiFormPagesUpdateManyWithWhereWithoutBuktiFormInput[]
+    deleteMany?: BuktiFormPagesScalarWhereInput | BuktiFormPagesScalarWhereInput[]
+  }
+
+  export type BuktiFormCreateNestedOneWithoutBuktiFormPagesInput = {
+    create?: XOR<BuktiFormCreateWithoutBuktiFormPagesInput, BuktiFormUncheckedCreateWithoutBuktiFormPagesInput>
+    connectOrCreate?: BuktiFormCreateOrConnectWithoutBuktiFormPagesInput
+    connect?: BuktiFormWhereUniqueInput
+  }
+
+  export type BuktiFormUpdateOneRequiredWithoutBuktiFormPagesNestedInput = {
+    create?: XOR<BuktiFormCreateWithoutBuktiFormPagesInput, BuktiFormUncheckedCreateWithoutBuktiFormPagesInput>
+    connectOrCreate?: BuktiFormCreateOrConnectWithoutBuktiFormPagesInput
+    upsert?: BuktiFormUpsertWithoutBuktiFormPagesInput
+    connect?: BuktiFormWhereUniqueInput
+    update?: XOR<XOR<BuktiFormUpdateToOneWithWhereWithoutBuktiFormPagesInput, BuktiFormUpdateWithoutBuktiFormPagesInput>, BuktiFormUncheckedUpdateWithoutBuktiFormPagesInput>
   }
 
   export type BuktiFormCreateNestedOneWithoutBuktiFormEvaluasiDiriInput = {
@@ -99038,6 +103486,20 @@ export namespace Prisma {
     connect?: EvaluasiDiriWhereUniqueInput
   }
 
+  export type HasilAssesmenAiCreateNestedManyWithoutHasilAssesmenInput = {
+    create?: XOR<HasilAssesmenAiCreateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput> | HasilAssesmenAiCreateWithoutHasilAssesmenInput[] | HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput[]
+    connectOrCreate?: HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput | HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput[]
+    createMany?: HasilAssesmenAiCreateManyHasilAssesmenInputEnvelope
+    connect?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+  }
+
+  export type HasilAssesmenAiUncheckedCreateNestedManyWithoutHasilAssesmenInput = {
+    create?: XOR<HasilAssesmenAiCreateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput> | HasilAssesmenAiCreateWithoutHasilAssesmenInput[] | HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput[]
+    connectOrCreate?: HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput | HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput[]
+    createMany?: HasilAssesmenAiCreateManyHasilAssesmenInputEnvelope
+    connect?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -99052,6 +103514,48 @@ export namespace Prisma {
     upsert?: EvaluasiDiriUpsertWithoutHasilAssesmenInput
     connect?: EvaluasiDiriWhereUniqueInput
     update?: XOR<XOR<EvaluasiDiriUpdateToOneWithWhereWithoutHasilAssesmenInput, EvaluasiDiriUpdateWithoutHasilAssesmenInput>, EvaluasiDiriUncheckedUpdateWithoutHasilAssesmenInput>
+  }
+
+  export type HasilAssesmenAiUpdateManyWithoutHasilAssesmenNestedInput = {
+    create?: XOR<HasilAssesmenAiCreateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput> | HasilAssesmenAiCreateWithoutHasilAssesmenInput[] | HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput[]
+    connectOrCreate?: HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput | HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput[]
+    upsert?: HasilAssesmenAiUpsertWithWhereUniqueWithoutHasilAssesmenInput | HasilAssesmenAiUpsertWithWhereUniqueWithoutHasilAssesmenInput[]
+    createMany?: HasilAssesmenAiCreateManyHasilAssesmenInputEnvelope
+    set?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    disconnect?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    delete?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    connect?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    update?: HasilAssesmenAiUpdateWithWhereUniqueWithoutHasilAssesmenInput | HasilAssesmenAiUpdateWithWhereUniqueWithoutHasilAssesmenInput[]
+    updateMany?: HasilAssesmenAiUpdateManyWithWhereWithoutHasilAssesmenInput | HasilAssesmenAiUpdateManyWithWhereWithoutHasilAssesmenInput[]
+    deleteMany?: HasilAssesmenAiScalarWhereInput | HasilAssesmenAiScalarWhereInput[]
+  }
+
+  export type HasilAssesmenAiUncheckedUpdateManyWithoutHasilAssesmenNestedInput = {
+    create?: XOR<HasilAssesmenAiCreateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput> | HasilAssesmenAiCreateWithoutHasilAssesmenInput[] | HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput[]
+    connectOrCreate?: HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput | HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput[]
+    upsert?: HasilAssesmenAiUpsertWithWhereUniqueWithoutHasilAssesmenInput | HasilAssesmenAiUpsertWithWhereUniqueWithoutHasilAssesmenInput[]
+    createMany?: HasilAssesmenAiCreateManyHasilAssesmenInputEnvelope
+    set?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    disconnect?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    delete?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    connect?: HasilAssesmenAiWhereUniqueInput | HasilAssesmenAiWhereUniqueInput[]
+    update?: HasilAssesmenAiUpdateWithWhereUniqueWithoutHasilAssesmenInput | HasilAssesmenAiUpdateWithWhereUniqueWithoutHasilAssesmenInput[]
+    updateMany?: HasilAssesmenAiUpdateManyWithWhereWithoutHasilAssesmenInput | HasilAssesmenAiUpdateManyWithWhereWithoutHasilAssesmenInput[]
+    deleteMany?: HasilAssesmenAiScalarWhereInput | HasilAssesmenAiScalarWhereInput[]
+  }
+
+  export type HasilAssesmenCreateNestedOneWithoutHasilAssesmenAiInput = {
+    create?: XOR<HasilAssesmenCreateWithoutHasilAssesmenAiInput, HasilAssesmenUncheckedCreateWithoutHasilAssesmenAiInput>
+    connectOrCreate?: HasilAssesmenCreateOrConnectWithoutHasilAssesmenAiInput
+    connect?: HasilAssesmenWhereUniqueInput
+  }
+
+  export type HasilAssesmenUpdateOneRequiredWithoutHasilAssesmenAiNestedInput = {
+    create?: XOR<HasilAssesmenCreateWithoutHasilAssesmenAiInput, HasilAssesmenUncheckedCreateWithoutHasilAssesmenAiInput>
+    connectOrCreate?: HasilAssesmenCreateOrConnectWithoutHasilAssesmenAiInput
+    upsert?: HasilAssesmenUpsertWithoutHasilAssesmenAiInput
+    connect?: HasilAssesmenWhereUniqueInput
+    update?: XOR<XOR<HasilAssesmenUpdateToOneWithWhereWithoutHasilAssesmenAiInput, HasilAssesmenUpdateWithoutHasilAssesmenAiInput>, HasilAssesmenUncheckedUpdateWithoutHasilAssesmenAiInput>
   }
 
   export type PendaftaranCreateNestedOneWithoutInformasiKependudukanInput = {
@@ -101310,12 +105814,68 @@ export namespace Prisma {
     connect?: MataKuliahMahasiswaWhereUniqueInput
   }
 
+  export type SkorAssesmenAiCreateNestedManyWithoutSkorAssesmenInput = {
+    create?: XOR<SkorAssesmenAiCreateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput> | SkorAssesmenAiCreateWithoutSkorAssesmenInput[] | SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput[]
+    connectOrCreate?: SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput | SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput[]
+    createMany?: SkorAssesmenAiCreateManySkorAssesmenInputEnvelope
+    connect?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+  }
+
+  export type SkorAssesmenAiUncheckedCreateNestedManyWithoutSkorAssesmenInput = {
+    create?: XOR<SkorAssesmenAiCreateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput> | SkorAssesmenAiCreateWithoutSkorAssesmenInput[] | SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput[]
+    connectOrCreate?: SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput | SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput[]
+    createMany?: SkorAssesmenAiCreateManySkorAssesmenInputEnvelope
+    connect?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+  }
+
   export type MataKuliahMahasiswaUpdateOneRequiredWithoutSkorAssesmenNestedInput = {
     create?: XOR<MataKuliahMahasiswaCreateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput>
     connectOrCreate?: MataKuliahMahasiswaCreateOrConnectWithoutSkorAssesmenInput
     upsert?: MataKuliahMahasiswaUpsertWithoutSkorAssesmenInput
     connect?: MataKuliahMahasiswaWhereUniqueInput
     update?: XOR<XOR<MataKuliahMahasiswaUpdateToOneWithWhereWithoutSkorAssesmenInput, MataKuliahMahasiswaUpdateWithoutSkorAssesmenInput>, MataKuliahMahasiswaUncheckedUpdateWithoutSkorAssesmenInput>
+  }
+
+  export type SkorAssesmenAiUpdateManyWithoutSkorAssesmenNestedInput = {
+    create?: XOR<SkorAssesmenAiCreateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput> | SkorAssesmenAiCreateWithoutSkorAssesmenInput[] | SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput[]
+    connectOrCreate?: SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput | SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput[]
+    upsert?: SkorAssesmenAiUpsertWithWhereUniqueWithoutSkorAssesmenInput | SkorAssesmenAiUpsertWithWhereUniqueWithoutSkorAssesmenInput[]
+    createMany?: SkorAssesmenAiCreateManySkorAssesmenInputEnvelope
+    set?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    disconnect?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    delete?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    connect?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    update?: SkorAssesmenAiUpdateWithWhereUniqueWithoutSkorAssesmenInput | SkorAssesmenAiUpdateWithWhereUniqueWithoutSkorAssesmenInput[]
+    updateMany?: SkorAssesmenAiUpdateManyWithWhereWithoutSkorAssesmenInput | SkorAssesmenAiUpdateManyWithWhereWithoutSkorAssesmenInput[]
+    deleteMany?: SkorAssesmenAiScalarWhereInput | SkorAssesmenAiScalarWhereInput[]
+  }
+
+  export type SkorAssesmenAiUncheckedUpdateManyWithoutSkorAssesmenNestedInput = {
+    create?: XOR<SkorAssesmenAiCreateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput> | SkorAssesmenAiCreateWithoutSkorAssesmenInput[] | SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput[]
+    connectOrCreate?: SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput | SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput[]
+    upsert?: SkorAssesmenAiUpsertWithWhereUniqueWithoutSkorAssesmenInput | SkorAssesmenAiUpsertWithWhereUniqueWithoutSkorAssesmenInput[]
+    createMany?: SkorAssesmenAiCreateManySkorAssesmenInputEnvelope
+    set?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    disconnect?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    delete?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    connect?: SkorAssesmenAiWhereUniqueInput | SkorAssesmenAiWhereUniqueInput[]
+    update?: SkorAssesmenAiUpdateWithWhereUniqueWithoutSkorAssesmenInput | SkorAssesmenAiUpdateWithWhereUniqueWithoutSkorAssesmenInput[]
+    updateMany?: SkorAssesmenAiUpdateManyWithWhereWithoutSkorAssesmenInput | SkorAssesmenAiUpdateManyWithWhereWithoutSkorAssesmenInput[]
+    deleteMany?: SkorAssesmenAiScalarWhereInput | SkorAssesmenAiScalarWhereInput[]
+  }
+
+  export type SkorAssesmenCreateNestedOneWithoutSkorAssesmenAiInput = {
+    create?: XOR<SkorAssesmenCreateWithoutSkorAssesmenAiInput, SkorAssesmenUncheckedCreateWithoutSkorAssesmenAiInput>
+    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutSkorAssesmenAiInput
+    connect?: SkorAssesmenWhereUniqueInput
+  }
+
+  export type SkorAssesmenUpdateOneRequiredWithoutSkorAssesmenAiNestedInput = {
+    create?: XOR<SkorAssesmenCreateWithoutSkorAssesmenAiInput, SkorAssesmenUncheckedCreateWithoutSkorAssesmenAiInput>
+    connectOrCreate?: SkorAssesmenCreateOrConnectWithoutSkorAssesmenAiInput
+    upsert?: SkorAssesmenUpsertWithoutSkorAssesmenAiInput
+    connect?: SkorAssesmenWhereUniqueInput
+    update?: XOR<XOR<SkorAssesmenUpdateToOneWithWhereWithoutSkorAssesmenAiInput, SkorAssesmenUpdateWithoutSkorAssesmenAiInput>, SkorAssesmenUncheckedUpdateWithoutSkorAssesmenAiInput>
   }
 
   export type StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutStatusMahasiswaAssesmentInput = {
@@ -104150,6 +108710,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BuktiFormPagesCreateWithoutBuktiFormInput = {
+    BuktiFormPagesId?: string
+    Prompt: string
+    Result?: string | null
+    Think?: string | null
+  }
+
+  export type BuktiFormPagesUncheckedCreateWithoutBuktiFormInput = {
+    BuktiFormPagesId?: string
+    Prompt: string
+    Result?: string | null
+    Think?: string | null
+  }
+
+  export type BuktiFormPagesCreateOrConnectWithoutBuktiFormInput = {
+    where: BuktiFormPagesWhereUniqueInput
+    create: XOR<BuktiFormPagesCreateWithoutBuktiFormInput, BuktiFormPagesUncheckedCreateWithoutBuktiFormInput>
+  }
+
+  export type BuktiFormPagesCreateManyBuktiFormInputEnvelope = {
+    data: BuktiFormPagesCreateManyBuktiFormInput | BuktiFormPagesCreateManyBuktiFormInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PendaftaranUpsertWithoutBuktiFormInput = {
     update: XOR<PendaftaranUpdateWithoutBuktiFormInput, PendaftaranUncheckedUpdateWithoutBuktiFormInput>
     create: XOR<PendaftaranCreateWithoutBuktiFormInput, PendaftaranUncheckedCreateWithoutBuktiFormInput>
@@ -104270,6 +108854,97 @@ export namespace Prisma {
     EvaluasiDiriId?: StringFilter<"BuktiFormEvaluasiDiri"> | string
   }
 
+  export type BuktiFormPagesUpsertWithWhereUniqueWithoutBuktiFormInput = {
+    where: BuktiFormPagesWhereUniqueInput
+    update: XOR<BuktiFormPagesUpdateWithoutBuktiFormInput, BuktiFormPagesUncheckedUpdateWithoutBuktiFormInput>
+    create: XOR<BuktiFormPagesCreateWithoutBuktiFormInput, BuktiFormPagesUncheckedCreateWithoutBuktiFormInput>
+  }
+
+  export type BuktiFormPagesUpdateWithWhereUniqueWithoutBuktiFormInput = {
+    where: BuktiFormPagesWhereUniqueInput
+    data: XOR<BuktiFormPagesUpdateWithoutBuktiFormInput, BuktiFormPagesUncheckedUpdateWithoutBuktiFormInput>
+  }
+
+  export type BuktiFormPagesUpdateManyWithWhereWithoutBuktiFormInput = {
+    where: BuktiFormPagesScalarWhereInput
+    data: XOR<BuktiFormPagesUpdateManyMutationInput, BuktiFormPagesUncheckedUpdateManyWithoutBuktiFormInput>
+  }
+
+  export type BuktiFormPagesScalarWhereInput = {
+    AND?: BuktiFormPagesScalarWhereInput | BuktiFormPagesScalarWhereInput[]
+    OR?: BuktiFormPagesScalarWhereInput[]
+    NOT?: BuktiFormPagesScalarWhereInput | BuktiFormPagesScalarWhereInput[]
+    BuktiFormPagesId?: StringFilter<"BuktiFormPages"> | string
+    BuktiFormId?: StringFilter<"BuktiFormPages"> | string
+    Prompt?: StringFilter<"BuktiFormPages"> | string
+    Result?: StringNullableFilter<"BuktiFormPages"> | string | null
+    Think?: StringNullableFilter<"BuktiFormPages"> | string | null
+  }
+
+  export type BuktiFormCreateWithoutBuktiFormPagesInput = {
+    BuktiFormId?: string
+    NamaFile: string
+    FileData: Bytes
+    NamaDokumen: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Pendaftaran: PendaftaranCreateNestedOneWithoutBuktiFormInput
+    JenisDokumen: JenisDokumenCreateNestedOneWithoutBuktiFormInput
+    BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriCreateNestedManyWithoutBuktiFormInput
+  }
+
+  export type BuktiFormUncheckedCreateWithoutBuktiFormPagesInput = {
+    BuktiFormId?: string
+    PendaftaranId: string
+    JenisDokumenId: string
+    NamaFile: string
+    FileData: Bytes
+    NamaDokumen: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedCreateNestedManyWithoutBuktiFormInput
+  }
+
+  export type BuktiFormCreateOrConnectWithoutBuktiFormPagesInput = {
+    where: BuktiFormWhereUniqueInput
+    create: XOR<BuktiFormCreateWithoutBuktiFormPagesInput, BuktiFormUncheckedCreateWithoutBuktiFormPagesInput>
+  }
+
+  export type BuktiFormUpsertWithoutBuktiFormPagesInput = {
+    update: XOR<BuktiFormUpdateWithoutBuktiFormPagesInput, BuktiFormUncheckedUpdateWithoutBuktiFormPagesInput>
+    create: XOR<BuktiFormCreateWithoutBuktiFormPagesInput, BuktiFormUncheckedCreateWithoutBuktiFormPagesInput>
+    where?: BuktiFormWhereInput
+  }
+
+  export type BuktiFormUpdateToOneWithWhereWithoutBuktiFormPagesInput = {
+    where?: BuktiFormWhereInput
+    data: XOR<BuktiFormUpdateWithoutBuktiFormPagesInput, BuktiFormUncheckedUpdateWithoutBuktiFormPagesInput>
+  }
+
+  export type BuktiFormUpdateWithoutBuktiFormPagesInput = {
+    BuktiFormId?: StringFieldUpdateOperationsInput | string
+    NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    NamaDokumen?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Pendaftaran?: PendaftaranUpdateOneRequiredWithoutBuktiFormNestedInput
+    JenisDokumen?: JenisDokumenUpdateOneRequiredWithoutBuktiFormNestedInput
+    BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUpdateManyWithoutBuktiFormNestedInput
+  }
+
+  export type BuktiFormUncheckedUpdateWithoutBuktiFormPagesInput = {
+    BuktiFormId?: StringFieldUpdateOperationsInput | string
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    JenisDokumenId?: StringFieldUpdateOperationsInput | string
+    NamaFile?: StringFieldUpdateOperationsInput | string
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    NamaDokumen?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutBuktiFormNestedInput
+  }
+
   export type BuktiFormCreateWithoutBuktiFormEvaluasiDiriInput = {
     BuktiFormId?: string
     NamaFile: string
@@ -104279,6 +108954,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutBuktiFormInput
     JenisDokumen: JenisDokumenCreateNestedOneWithoutBuktiFormInput
+    BuktiFormPages?: BuktiFormPagesCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormUncheckedCreateWithoutBuktiFormEvaluasiDiriInput = {
@@ -104290,6 +108966,7 @@ export namespace Prisma {
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    BuktiFormPages?: BuktiFormPagesUncheckedCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormCreateOrConnectWithoutBuktiFormEvaluasiDiriInput = {
@@ -104344,6 +109021,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutBuktiFormNestedInput
     JenisDokumen?: JenisDokumenUpdateOneRequiredWithoutBuktiFormNestedInput
+    BuktiFormPages?: BuktiFormPagesUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type BuktiFormUncheckedUpdateWithoutBuktiFormEvaluasiDiriInput = {
@@ -104355,6 +109033,7 @@ export namespace Prisma {
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    BuktiFormPages?: BuktiFormPagesUncheckedUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type EvaluasiDiriUpsertWithoutBuktiFormEvaluasiDiriInput = {
@@ -104955,6 +109634,8 @@ export namespace Prisma {
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
+    HasilAssesmenAi?: HasilAssesmenAiCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenUncheckedCreateWithoutEvaluasiDiriInput = {
@@ -104968,6 +109649,8 @@ export namespace Prisma {
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
+    HasilAssesmenAi?: HasilAssesmenAiUncheckedCreateNestedManyWithoutHasilAssesmenInput
   }
 
   export type HasilAssesmenCreateOrConnectWithoutEvaluasiDiriInput = {
@@ -105097,6 +109780,7 @@ export namespace Prisma {
     TanggalAssesmen?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"HasilAssesmen"> | Date | string | null
+    Ai?: BoolFilter<"HasilAssesmen"> | boolean
   }
 
   export type EvaluasiDiriCreateWithoutHasilAssesmenInput = {
@@ -105124,6 +109808,36 @@ export namespace Prisma {
   export type EvaluasiDiriCreateOrConnectWithoutHasilAssesmenInput = {
     where: EvaluasiDiriWhereUniqueInput
     create: XOR<EvaluasiDiriCreateWithoutHasilAssesmenInput, EvaluasiDiriUncheckedCreateWithoutHasilAssesmenInput>
+  }
+
+  export type HasilAssesmenAiCreateWithoutHasilAssesmenInput = {
+    HasilAssesmenAiId?: string
+    Valid: string
+    Autentik: string
+    Terkini: string
+    Memadai: string
+    Assesmen: string
+    Nilai: string
+  }
+
+  export type HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput = {
+    HasilAssesmenAiId?: string
+    Valid: string
+    Autentik: string
+    Terkini: string
+    Memadai: string
+    Assesmen: string
+    Nilai: string
+  }
+
+  export type HasilAssesmenAiCreateOrConnectWithoutHasilAssesmenInput = {
+    where: HasilAssesmenAiWhereUniqueInput
+    create: XOR<HasilAssesmenAiCreateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput>
+  }
+
+  export type HasilAssesmenAiCreateManyHasilAssesmenInputEnvelope = {
+    data: HasilAssesmenAiCreateManyHasilAssesmenInput | HasilAssesmenAiCreateManyHasilAssesmenInput[]
+    skipDuplicates?: boolean
   }
 
   export type EvaluasiDiriUpsertWithoutHasilAssesmenInput = {
@@ -105157,6 +109871,112 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutEvaluasiDiriNestedInput
+  }
+
+  export type HasilAssesmenAiUpsertWithWhereUniqueWithoutHasilAssesmenInput = {
+    where: HasilAssesmenAiWhereUniqueInput
+    update: XOR<HasilAssesmenAiUpdateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedUpdateWithoutHasilAssesmenInput>
+    create: XOR<HasilAssesmenAiCreateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedCreateWithoutHasilAssesmenInput>
+  }
+
+  export type HasilAssesmenAiUpdateWithWhereUniqueWithoutHasilAssesmenInput = {
+    where: HasilAssesmenAiWhereUniqueInput
+    data: XOR<HasilAssesmenAiUpdateWithoutHasilAssesmenInput, HasilAssesmenAiUncheckedUpdateWithoutHasilAssesmenInput>
+  }
+
+  export type HasilAssesmenAiUpdateManyWithWhereWithoutHasilAssesmenInput = {
+    where: HasilAssesmenAiScalarWhereInput
+    data: XOR<HasilAssesmenAiUpdateManyMutationInput, HasilAssesmenAiUncheckedUpdateManyWithoutHasilAssesmenInput>
+  }
+
+  export type HasilAssesmenAiScalarWhereInput = {
+    AND?: HasilAssesmenAiScalarWhereInput | HasilAssesmenAiScalarWhereInput[]
+    OR?: HasilAssesmenAiScalarWhereInput[]
+    NOT?: HasilAssesmenAiScalarWhereInput | HasilAssesmenAiScalarWhereInput[]
+    HasilAssesmenAiId?: StringFilter<"HasilAssesmenAi"> | string
+    HasilAssesmenId?: StringFilter<"HasilAssesmenAi"> | string
+    Valid?: StringFilter<"HasilAssesmenAi"> | string
+    Autentik?: StringFilter<"HasilAssesmenAi"> | string
+    Terkini?: StringFilter<"HasilAssesmenAi"> | string
+    Memadai?: StringFilter<"HasilAssesmenAi"> | string
+    Assesmen?: StringFilter<"HasilAssesmenAi"> | string
+    Nilai?: StringFilter<"HasilAssesmenAi"> | string
+  }
+
+  export type HasilAssesmenCreateWithoutHasilAssesmenAiInput = {
+    HasilAssesmenId?: string
+    Valid?: boolean
+    Autentik?: boolean
+    Terkini?: boolean
+    Memadai?: boolean
+    Assesmen?: string | null
+    Nilai?: number
+    TanggalAssesmen?: Date | string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Ai: boolean
+    EvaluasiDiri: EvaluasiDiriCreateNestedOneWithoutHasilAssesmenInput
+  }
+
+  export type HasilAssesmenUncheckedCreateWithoutHasilAssesmenAiInput = {
+    HasilAssesmenId?: string
+    EvaluasiDiriId: string
+    Valid?: boolean
+    Autentik?: boolean
+    Terkini?: boolean
+    Memadai?: boolean
+    Assesmen?: string | null
+    Nilai?: number
+    TanggalAssesmen?: Date | string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Ai: boolean
+  }
+
+  export type HasilAssesmenCreateOrConnectWithoutHasilAssesmenAiInput = {
+    where: HasilAssesmenWhereUniqueInput
+    create: XOR<HasilAssesmenCreateWithoutHasilAssesmenAiInput, HasilAssesmenUncheckedCreateWithoutHasilAssesmenAiInput>
+  }
+
+  export type HasilAssesmenUpsertWithoutHasilAssesmenAiInput = {
+    update: XOR<HasilAssesmenUpdateWithoutHasilAssesmenAiInput, HasilAssesmenUncheckedUpdateWithoutHasilAssesmenAiInput>
+    create: XOR<HasilAssesmenCreateWithoutHasilAssesmenAiInput, HasilAssesmenUncheckedCreateWithoutHasilAssesmenAiInput>
+    where?: HasilAssesmenWhereInput
+  }
+
+  export type HasilAssesmenUpdateToOneWithWhereWithoutHasilAssesmenAiInput = {
+    where?: HasilAssesmenWhereInput
+    data: XOR<HasilAssesmenUpdateWithoutHasilAssesmenAiInput, HasilAssesmenUncheckedUpdateWithoutHasilAssesmenAiInput>
+  }
+
+  export type HasilAssesmenUpdateWithoutHasilAssesmenAiInput = {
+    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
+    Valid?: BoolFieldUpdateOperationsInput | boolean
+    Autentik?: BoolFieldUpdateOperationsInput | boolean
+    Terkini?: BoolFieldUpdateOperationsInput | boolean
+    Memadai?: BoolFieldUpdateOperationsInput | boolean
+    Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
+    Nilai?: FloatFieldUpdateOperationsInput | number
+    TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    EvaluasiDiri?: EvaluasiDiriUpdateOneRequiredWithoutHasilAssesmenNestedInput
+  }
+
+  export type HasilAssesmenUncheckedUpdateWithoutHasilAssesmenAiInput = {
+    HasilAssesmenId?: StringFieldUpdateOperationsInput | string
+    EvaluasiDiriId?: StringFieldUpdateOperationsInput | string
+    Valid?: BoolFieldUpdateOperationsInput | boolean
+    Autentik?: BoolFieldUpdateOperationsInput | boolean
+    Terkini?: BoolFieldUpdateOperationsInput | boolean
+    Memadai?: BoolFieldUpdateOperationsInput | boolean
+    Assesmen?: NullableStringFieldUpdateOperationsInput | string | null
+    Nilai?: FloatFieldUpdateOperationsInput | number
+    TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PendaftaranCreateWithoutInformasiKependudukanInput = {
@@ -105492,6 +110312,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutBuktiFormInput
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriCreateNestedManyWithoutBuktiFormInput
+    BuktiFormPages?: BuktiFormPagesCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormUncheckedCreateWithoutJenisDokumenInput = {
@@ -105503,6 +110324,7 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedCreateNestedManyWithoutBuktiFormInput
+    BuktiFormPages?: BuktiFormPagesUncheckedCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormCreateOrConnectWithoutJenisDokumenInput = {
@@ -107116,6 +111938,8 @@ export namespace Prisma {
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
+    SkorAssesmenAi?: SkorAssesmenAiCreateNestedManyWithoutSkorAssesmenInput
   }
 
   export type SkorAssesmenUncheckedCreateWithoutMataKuliahMahasiswaInput = {
@@ -107129,6 +111953,8 @@ export namespace Prisma {
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
+    SkorAssesmenAi?: SkorAssesmenAiUncheckedCreateNestedManyWithoutSkorAssesmenInput
   }
 
   export type SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput = {
@@ -107326,6 +112152,7 @@ export namespace Prisma {
     NilaiHuruf?: StringNullableFilter<"SkorAssesmen"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
+    Ai?: BoolFilter<"SkorAssesmen"> | boolean
   }
 
   export type PermissionCreateWithoutUserHasPermissionsInput = {
@@ -108132,6 +112959,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     JenisDokumen: JenisDokumenCreateNestedOneWithoutBuktiFormInput
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriCreateNestedManyWithoutBuktiFormInput
+    BuktiFormPages?: BuktiFormPagesCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormUncheckedCreateWithoutPendaftaranInput = {
@@ -108143,6 +112971,7 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedCreateNestedManyWithoutBuktiFormInput
+    BuktiFormPages?: BuktiFormPagesUncheckedCreateNestedManyWithoutBuktiFormInput
   }
 
   export type BuktiFormCreateOrConnectWithoutPendaftaranInput = {
@@ -110287,6 +115116,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutSkRektorInput
@@ -110301,6 +115131,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutSkRektorInput
@@ -110345,6 +115176,7 @@ export namespace Prisma {
     NamaFile?: StringFilter<"SkRektor"> | string
     FileData?: BytesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringFilter<"SkRektor"> | string
+    Catatan?: StringNullableFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
   }
@@ -110461,6 +115293,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
@@ -110476,6 +115309,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutSkRektorInput
@@ -110530,6 +115364,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
@@ -110545,6 +115380,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutSkRektorNestedInput
@@ -110589,6 +115425,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
@@ -110604,6 +115441,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutSkRektorInput
@@ -110698,6 +115536,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
@@ -110713,6 +115552,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutSkRektorNestedInput
@@ -110820,6 +115660,38 @@ export namespace Prisma {
     create: XOR<MataKuliahMahasiswaCreateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput>
   }
 
+  export type SkorAssesmenAiCreateWithoutSkorAssesmenInput = {
+    SkorAssesmenAiId?: string
+    Portofolio: string
+    Tulis: string
+    Wawancara: string
+    Demo: string
+    SkorRataRata: string
+    Diakui: string
+    NilaiHuruf: string
+  }
+
+  export type SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput = {
+    SkorAssesmenAiId?: string
+    Portofolio: string
+    Tulis: string
+    Wawancara: string
+    Demo: string
+    SkorRataRata: string
+    Diakui: string
+    NilaiHuruf: string
+  }
+
+  export type SkorAssesmenAiCreateOrConnectWithoutSkorAssesmenInput = {
+    where: SkorAssesmenAiWhereUniqueInput
+    create: XOR<SkorAssesmenAiCreateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput>
+  }
+
+  export type SkorAssesmenAiCreateManySkorAssesmenInputEnvelope = {
+    data: SkorAssesmenAiCreateManySkorAssesmenInput | SkorAssesmenAiCreateManySkorAssesmenInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MataKuliahMahasiswaUpsertWithoutSkorAssesmenInput = {
     update: XOR<MataKuliahMahasiswaUpdateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedUpdateWithoutSkorAssesmenInput>
     create: XOR<MataKuliahMahasiswaCreateWithoutSkorAssesmenInput, MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput>
@@ -110855,6 +115727,113 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+  }
+
+  export type SkorAssesmenAiUpsertWithWhereUniqueWithoutSkorAssesmenInput = {
+    where: SkorAssesmenAiWhereUniqueInput
+    update: XOR<SkorAssesmenAiUpdateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedUpdateWithoutSkorAssesmenInput>
+    create: XOR<SkorAssesmenAiCreateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedCreateWithoutSkorAssesmenInput>
+  }
+
+  export type SkorAssesmenAiUpdateWithWhereUniqueWithoutSkorAssesmenInput = {
+    where: SkorAssesmenAiWhereUniqueInput
+    data: XOR<SkorAssesmenAiUpdateWithoutSkorAssesmenInput, SkorAssesmenAiUncheckedUpdateWithoutSkorAssesmenInput>
+  }
+
+  export type SkorAssesmenAiUpdateManyWithWhereWithoutSkorAssesmenInput = {
+    where: SkorAssesmenAiScalarWhereInput
+    data: XOR<SkorAssesmenAiUpdateManyMutationInput, SkorAssesmenAiUncheckedUpdateManyWithoutSkorAssesmenInput>
+  }
+
+  export type SkorAssesmenAiScalarWhereInput = {
+    AND?: SkorAssesmenAiScalarWhereInput | SkorAssesmenAiScalarWhereInput[]
+    OR?: SkorAssesmenAiScalarWhereInput[]
+    NOT?: SkorAssesmenAiScalarWhereInput | SkorAssesmenAiScalarWhereInput[]
+    SkorAssesmenAiId?: StringFilter<"SkorAssesmenAi"> | string
+    SkorAssesmenId?: StringFilter<"SkorAssesmenAi"> | string
+    Portofolio?: StringFilter<"SkorAssesmenAi"> | string
+    Tulis?: StringFilter<"SkorAssesmenAi"> | string
+    Wawancara?: StringFilter<"SkorAssesmenAi"> | string
+    Demo?: StringFilter<"SkorAssesmenAi"> | string
+    SkorRataRata?: StringFilter<"SkorAssesmenAi"> | string
+    Diakui?: StringFilter<"SkorAssesmenAi"> | string
+    NilaiHuruf?: StringFilter<"SkorAssesmenAi"> | string
+  }
+
+  export type SkorAssesmenCreateWithoutSkorAssesmenAiInput = {
+    SkorAssesmenId?: string
+    Portofolio?: number
+    Tulis?: number
+    Wawancara?: number
+    Demo?: number
+    SkorRataRata?: number
+    Diakui?: boolean
+    NilaiHuruf?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Ai: boolean
+    MataKuliahMahasiswa: MataKuliahMahasiswaCreateNestedOneWithoutSkorAssesmenInput
+  }
+
+  export type SkorAssesmenUncheckedCreateWithoutSkorAssesmenAiInput = {
+    SkorAssesmenId?: string
+    MataKuliahMahasiswaId: string
+    Portofolio?: number
+    Tulis?: number
+    Wawancara?: number
+    Demo?: number
+    SkorRataRata?: number
+    Diakui?: boolean
+    NilaiHuruf?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Ai: boolean
+  }
+
+  export type SkorAssesmenCreateOrConnectWithoutSkorAssesmenAiInput = {
+    where: SkorAssesmenWhereUniqueInput
+    create: XOR<SkorAssesmenCreateWithoutSkorAssesmenAiInput, SkorAssesmenUncheckedCreateWithoutSkorAssesmenAiInput>
+  }
+
+  export type SkorAssesmenUpsertWithoutSkorAssesmenAiInput = {
+    update: XOR<SkorAssesmenUpdateWithoutSkorAssesmenAiInput, SkorAssesmenUncheckedUpdateWithoutSkorAssesmenAiInput>
+    create: XOR<SkorAssesmenCreateWithoutSkorAssesmenAiInput, SkorAssesmenUncheckedCreateWithoutSkorAssesmenAiInput>
+    where?: SkorAssesmenWhereInput
+  }
+
+  export type SkorAssesmenUpdateToOneWithWhereWithoutSkorAssesmenAiInput = {
+    where?: SkorAssesmenWhereInput
+    data: XOR<SkorAssesmenUpdateWithoutSkorAssesmenAiInput, SkorAssesmenUncheckedUpdateWithoutSkorAssesmenAiInput>
+  }
+
+  export type SkorAssesmenUpdateWithoutSkorAssesmenAiInput = {
+    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: FloatFieldUpdateOperationsInput | number
+    Tulis?: FloatFieldUpdateOperationsInput | number
+    Wawancara?: FloatFieldUpdateOperationsInput | number
+    Demo?: FloatFieldUpdateOperationsInput | number
+    SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateOneRequiredWithoutSkorAssesmenNestedInput
+  }
+
+  export type SkorAssesmenUncheckedUpdateWithoutSkorAssesmenAiInput = {
+    SkorAssesmenId?: StringFieldUpdateOperationsInput | string
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: FloatFieldUpdateOperationsInput | number
+    Tulis?: FloatFieldUpdateOperationsInput | number
+    Wawancara?: FloatFieldUpdateOperationsInput | number
+    Demo?: FloatFieldUpdateOperationsInput | number
+    SkorRataRata?: FloatFieldUpdateOperationsInput | number
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type StatusMahasiswaAssesmentHistoryCreateWithoutStatusMahasiswaAssesmentInput = {
@@ -113972,6 +118951,13 @@ export namespace Prisma {
     EvaluasiDiriId: string
   }
 
+  export type BuktiFormPagesCreateManyBuktiFormInput = {
+    BuktiFormPagesId?: string
+    Prompt: string
+    Result?: string | null
+    Think?: string | null
+  }
+
   export type BuktiFormEvaluasiDiriUpdateWithoutBuktiFormInput = {
     EvaluasiDiri?: EvaluasiDiriUpdateOneRequiredWithoutBuktiFormEvaluasiDiriNestedInput
   }
@@ -113982,6 +118968,27 @@ export namespace Prisma {
 
   export type BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutBuktiFormInput = {
     EvaluasiDiriId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BuktiFormPagesUpdateWithoutBuktiFormInput = {
+    BuktiFormPagesId?: StringFieldUpdateOperationsInput | string
+    Prompt?: StringFieldUpdateOperationsInput | string
+    Result?: NullableStringFieldUpdateOperationsInput | string | null
+    Think?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BuktiFormPagesUncheckedUpdateWithoutBuktiFormInput = {
+    BuktiFormPagesId?: StringFieldUpdateOperationsInput | string
+    Prompt?: StringFieldUpdateOperationsInput | string
+    Result?: NullableStringFieldUpdateOperationsInput | string | null
+    Think?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BuktiFormPagesUncheckedUpdateManyWithoutBuktiFormInput = {
+    BuktiFormPagesId?: StringFieldUpdateOperationsInput | string
+    Prompt?: StringFieldUpdateOperationsInput | string
+    Result?: NullableStringFieldUpdateOperationsInput | string | null
+    Think?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EvaluasiDiriCreateManyCapaianPembelajaranInput = {
@@ -114091,6 +119098,7 @@ export namespace Prisma {
     TanggalAssesmen?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
   }
 
   export type BuktiFormEvaluasiDiriUpdateWithoutEvaluasiDiriInput = {
@@ -114116,6 +119124,8 @@ export namespace Prisma {
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    HasilAssesmenAi?: HasilAssesmenAiUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenUncheckedUpdateWithoutEvaluasiDiriInput = {
@@ -114129,6 +119139,8 @@ export namespace Prisma {
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    HasilAssesmenAi?: HasilAssesmenAiUncheckedUpdateManyWithoutHasilAssesmenNestedInput
   }
 
   export type HasilAssesmenUncheckedUpdateManyWithoutEvaluasiDiriInput = {
@@ -114142,6 +119154,47 @@ export namespace Prisma {
     TanggalAssesmen?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type HasilAssesmenAiCreateManyHasilAssesmenInput = {
+    HasilAssesmenAiId?: string
+    Valid: string
+    Autentik: string
+    Terkini: string
+    Memadai: string
+    Assesmen: string
+    Nilai: string
+  }
+
+  export type HasilAssesmenAiUpdateWithoutHasilAssesmenInput = {
+    HasilAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Valid?: StringFieldUpdateOperationsInput | string
+    Autentik?: StringFieldUpdateOperationsInput | string
+    Terkini?: StringFieldUpdateOperationsInput | string
+    Memadai?: StringFieldUpdateOperationsInput | string
+    Assesmen?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HasilAssesmenAiUncheckedUpdateWithoutHasilAssesmenInput = {
+    HasilAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Valid?: StringFieldUpdateOperationsInput | string
+    Autentik?: StringFieldUpdateOperationsInput | string
+    Terkini?: StringFieldUpdateOperationsInput | string
+    Memadai?: StringFieldUpdateOperationsInput | string
+    Assesmen?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HasilAssesmenAiUncheckedUpdateManyWithoutHasilAssesmenInput = {
+    HasilAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Valid?: StringFieldUpdateOperationsInput | string
+    Autentik?: StringFieldUpdateOperationsInput | string
+    Terkini?: StringFieldUpdateOperationsInput | string
+    Memadai?: StringFieldUpdateOperationsInput | string
+    Assesmen?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
   }
 
   export type BuktiFormCreateManyJenisDokumenInput = {
@@ -114163,6 +119216,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutBuktiFormNestedInput
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUpdateManyWithoutBuktiFormNestedInput
+    BuktiFormPages?: BuktiFormPagesUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type BuktiFormUncheckedUpdateWithoutJenisDokumenInput = {
@@ -114174,6 +119228,7 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutBuktiFormNestedInput
+    BuktiFormPages?: BuktiFormPagesUncheckedUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type BuktiFormUncheckedUpdateManyWithoutJenisDokumenInput = {
@@ -114430,6 +119485,7 @@ export namespace Prisma {
     NilaiHuruf?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    Ai: boolean
   }
 
   export type EvaluasiDiriUpdateWithoutMataKuliahMahasiswaInput = {
@@ -114498,6 +119554,8 @@ export namespace Prisma {
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    SkorAssesmenAi?: SkorAssesmenAiUpdateManyWithoutSkorAssesmenNestedInput
   }
 
   export type SkorAssesmenUncheckedUpdateWithoutMataKuliahMahasiswaInput = {
@@ -114511,6 +119569,8 @@ export namespace Prisma {
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
+    SkorAssesmenAi?: SkorAssesmenAiUncheckedUpdateManyWithoutSkorAssesmenNestedInput
   }
 
   export type SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaInput = {
@@ -114524,6 +119584,7 @@ export namespace Prisma {
     NilaiHuruf?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Ai?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AssesorMahasiswaCreateManyPendaftaranInput = {
@@ -114741,6 +119802,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisDokumen?: JenisDokumenUpdateOneRequiredWithoutBuktiFormNestedInput
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUpdateManyWithoutBuktiFormNestedInput
+    BuktiFormPages?: BuktiFormPagesUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type BuktiFormUncheckedUpdateWithoutPendaftaranInput = {
@@ -114752,6 +119814,7 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BuktiFormEvaluasiDiri?: BuktiFormEvaluasiDiriUncheckedUpdateManyWithoutBuktiFormNestedInput
+    BuktiFormPages?: BuktiFormPagesUncheckedUpdateManyWithoutBuktiFormNestedInput
   }
 
   export type BuktiFormUncheckedUpdateManyWithoutPendaftaranInput = {
@@ -115538,6 +120601,7 @@ export namespace Prisma {
     NamaFile: string
     FileData: Bytes
     NamaDokumen: string
+    Catatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -115550,6 +120614,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutSkRektorNestedInput
@@ -115564,6 +120629,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutSkRektorNestedInput
@@ -115578,6 +120644,7 @@ export namespace Prisma {
     NamaFile?: StringFieldUpdateOperationsInput | string
     FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -115612,6 +120679,50 @@ export namespace Prisma {
 
   export type SkRektorMahasiswaUncheckedUpdateManyWithoutSkRektorInput = {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkorAssesmenAiCreateManySkorAssesmenInput = {
+    SkorAssesmenAiId?: string
+    Portofolio: string
+    Tulis: string
+    Wawancara: string
+    Demo: string
+    SkorRataRata: string
+    Diakui: string
+    NilaiHuruf: string
+  }
+
+  export type SkorAssesmenAiUpdateWithoutSkorAssesmenInput = {
+    SkorAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: StringFieldUpdateOperationsInput | string
+    Tulis?: StringFieldUpdateOperationsInput | string
+    Wawancara?: StringFieldUpdateOperationsInput | string
+    Demo?: StringFieldUpdateOperationsInput | string
+    SkorRataRata?: StringFieldUpdateOperationsInput | string
+    Diakui?: StringFieldUpdateOperationsInput | string
+    NilaiHuruf?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkorAssesmenAiUncheckedUpdateWithoutSkorAssesmenInput = {
+    SkorAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: StringFieldUpdateOperationsInput | string
+    Tulis?: StringFieldUpdateOperationsInput | string
+    Wawancara?: StringFieldUpdateOperationsInput | string
+    Demo?: StringFieldUpdateOperationsInput | string
+    SkorRataRata?: StringFieldUpdateOperationsInput | string
+    Diakui?: StringFieldUpdateOperationsInput | string
+    NilaiHuruf?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkorAssesmenAiUncheckedUpdateManyWithoutSkorAssesmenInput = {
+    SkorAssesmenAiId?: StringFieldUpdateOperationsInput | string
+    Portofolio?: StringFieldUpdateOperationsInput | string
+    Tulis?: StringFieldUpdateOperationsInput | string
+    Wawancara?: StringFieldUpdateOperationsInput | string
+    Demo?: StringFieldUpdateOperationsInput | string
+    SkorRataRata?: StringFieldUpdateOperationsInput | string
+    Diakui?: StringFieldUpdateOperationsInput | string
+    NilaiHuruf?: StringFieldUpdateOperationsInput | string
   }
 
   export type StatusMahasiswaAssesmentHistoryCreateManyStatusMahasiswaAssesmentInput = {

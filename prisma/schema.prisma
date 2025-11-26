@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../src/generated/prisma"
   binaryTargets = ["native", "darwin"]
 }
 
@@ -186,8 +186,20 @@ model BuktiForm {
   Pendaftaran           Pendaftaran             @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
   JenisDokumen          JenisDokumen            @relation(fields: [JenisDokumenId], references: [JenisDokumenId], onDelete: Cascade)
   BuktiFormEvaluasiDiri BuktiFormEvaluasiDiri[]
+  BuktiFormPages        BuktiFormPages[]
 
   @@map("bukti_form")
+}
+
+model BuktiFormPages {
+  BuktiFormPagesId String    @id @default(uuid()) @map("bukti_form_pages_id")
+  BuktiFormId      String    @map("bukti_form_id")
+  Prompt           String    @map("prompt")
+  Result           String?   @map("result")
+  Think            String?   @map("think")
+  BuktiForm        BuktiForm @relation(fields: [BuktiFormId], references: [BuktiFormId], onDelete: Cascade)
+
+  @@map("bukti_form_pages")
 }
 
 model BuktiFormEvaluasiDiri {
@@ -271,20 +283,36 @@ model EvaluasiDiri {
 }
 
 model HasilAssesmen {
-  HasilAssesmenId String       @id @default(uuid()) @map("hasil_assesmen_id")
-  EvaluasiDiriId  String       @unique() @map("evaluasi_diri_id")
-  Valid           Boolean      @default(false) @map("valid")
-  Autentik        Boolean      @default(false) @map("autentik")
-  Terkini         Boolean      @default(false) @map("terkini")
-  Memadai         Boolean      @default(false) @map("memadai")
-  Assesmen        String?      @map("assesmen")
-  Nilai           Float        @default(0) @map("nilai")
-  TanggalAssesmen DateTime?    @map("tanggal_assesmen")
-  CreatedAt       DateTime?    @map("created_at")
-  UpdatedAt       DateTime?    @map("updated_at")
-  EvaluasiDiri    EvaluasiDiri @relation(fields: [EvaluasiDiriId], references: [EvaluasiDiriId], onDelete: Cascade)
+  HasilAssesmenId String            @id @default(uuid()) @map("hasil_assesmen_id")
+  EvaluasiDiriId  String            @unique() @map("evaluasi_diri_id")
+  Valid           Boolean           @default(false) @map("valid")
+  Autentik        Boolean           @default(false) @map("autentik")
+  Terkini         Boolean           @default(false) @map("terkini")
+  Memadai         Boolean           @default(false) @map("memadai")
+  Assesmen        String?           @map("assesmen")
+  Nilai           Float             @default(0) @map("nilai")
+  TanggalAssesmen DateTime?         @map("tanggal_assesmen")
+  CreatedAt       DateTime?         @map("created_at")
+  UpdatedAt       DateTime?         @map("updated_at")
+  Ai              Boolean           @map("ai")
+  EvaluasiDiri    EvaluasiDiri      @relation(fields: [EvaluasiDiriId], references: [EvaluasiDiriId], onDelete: Cascade)
+  HasilAssesmenAi HasilAssesmenAi[]
 
   @@map("hasil_assesmen")
+}
+
+model HasilAssesmenAi {
+  HasilAssesmenAiId String        @id @default(uuid()) @map("hasil_assesmen_ai_id")
+  HasilAssesmenId   String        @unique() @map("hasil_assesmen_id")
+  Valid             String        @map("valid")
+  Autentik          String        @map("autentik")
+  Terkini           String        @map("terkini")
+  Memadai           String        @map("memadai")
+  Assesmen          String        @map("assesmen")
+  Nilai             String        @map("nilai")
+  HasilAssesmen     HasilAssesmen @relation(fields: [HasilAssesmenId], references: [HasilAssesmenId], onDelete: Cascade)
+
+  @@map("hasil_assesmen_ai")
 }
 
 model InformasiKependudukan {
@@ -721,6 +749,7 @@ model SkRektor {
   NamaFile          String              @map("nama_file")
   FileData          Bytes               @map("file_data")
   NamaDokumen       String              @map("nama_dokumen")
+  Catatan           String?             @map("catatan")
   CreatedAt         DateTime?           @map("created_at")
   UpdatedAt         DateTime?           @map("updated_at")
   TipeSkRektor      TipeSkRektor        @relation(fields: [TipeSkRektorId], references: [TipeSkRektorId], onDelete: Cascade)
@@ -764,9 +793,26 @@ model SkorAssesmen {
   NilaiHuruf            String?             @map("nilai_huruf")
   CreatedAt             DateTime?           @map("created_at")
   UpdatedAt             DateTime?           @map("updated_at")
+  Ai                    Boolean             @map("ai")
   MataKuliahMahasiswa   MataKuliahMahasiswa @relation(fields: [MataKuliahMahasiswaId], references: [MataKuliahMahasiswaId], onDelete: Cascade)
+  SkorAssesmenAi        SkorAssesmenAi[]
 
   @@map("skor_assesmen")
+}
+
+model SkorAssesmenAi {
+  SkorAssesmenAiId String       @id @default(uuid()) @map("skor_assesmen_ai_id")
+  SkorAssesmenId   String       @unique @map("skor_assesmen_id")
+  Portofolio       String       @map("portofolio")
+  Tulis            String       @map("tulis")
+  Wawancara        String       @map("wawancara")
+  Demo             String       @map("demo")
+  SkorRataRata     String       @map("skor_rata_rata")
+  Diakui           String       @map("diakui")
+  NilaiHuruf       String       @map("nilai_huruf")
+  SkorAssesmen     SkorAssesmen @relation(fields: [SkorAssesmenId], references: [SkorAssesmenId], onDelete: Cascade)
+
+  @@map("skor_assesmen_ai")
 }
 
 model StatusMahasiswaAssesment {

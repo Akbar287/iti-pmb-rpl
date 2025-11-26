@@ -30,6 +30,7 @@ const menu: MenuStoreProps[] = [
             'PMB',
             'Akademik',
             'Kaprodi',
+            'Wakil Rektor',
         ],
         title: 'Dashboard',
         url: '/',
@@ -95,6 +96,24 @@ const menu: MenuStoreProps[] = [
                 title: 'Desa',
                 url: '/manajemen-area/desa',
             },
+        ],
+    },
+    {
+        namaRole: ['Wakil Rektor'],
+        title: 'Approval',
+        url: '/approval',
+        icon: Database,
+        items: [
+            {
+                namaRole: ['Wakil Rektor'],
+                title: 'Persetujuan 2 Asesor',
+                url: '/approval/asesor',
+            },
+            {
+                namaRole: ['Wakil Rektor'],
+                title: 'Persetujuan Hasil',
+                url: '/approval/hasil',
+            }
         ],
     },
     {

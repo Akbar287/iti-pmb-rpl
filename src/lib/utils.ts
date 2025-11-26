@@ -1,7 +1,6 @@
 import { SettingKegiatanTypes } from "@/types/WebsiteTypes";
 import { clsx, type ClassValue } from "clsx"
 import { format } from "date-fns";
-import React from "react";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
