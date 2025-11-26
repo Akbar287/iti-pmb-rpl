@@ -5,7 +5,7 @@ export const StatusKeikutsertaan = z.enum(['Peserta', 'Panitia', 'Pembicara'])
 export const KonferensiSkemaValidation = z.object({
     MahasiswaKonferensiId: z.string().optional(),
     PendaftaranId: z.string(),
-    Tahun: z.coerce
+    Tahun: z
         .number()
         .int()
         .min(1900, { message: 'Tahun terlalu kecil' })

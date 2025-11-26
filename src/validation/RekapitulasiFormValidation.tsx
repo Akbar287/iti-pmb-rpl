@@ -4,24 +4,24 @@ export const SkorAssesmenSchemaValidation = z.object({
     SkorAssesmenId: z.string(),
     MataKuliahMahasiswaId: z.string(),
     Portofolio: z
-        .number({ invalid_type_error: 'Skor Portofolio harus angka.' })
+        .number({ error: (issue) => issue.input === undefined ? "Skor Portofolio harus diisi" : 'Skor Portofolio harus angka.' })
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
     Tulis: z
-        .number({ invalid_type_error: 'Skor Tulis harus angka.' })
+        .number({ error: (issue) => issue.input === undefined ? "Skor Tulis harus diisi"  : 'Skor Tulis harus angka.' })
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
     Wawancara: z
-        .number({ invalid_type_error: 'Skor Wawancara harus angka.' })
+        .number({ error: (issue) => issue.input === undefined ? "Skor Wawancara harus diisi"  : 'Skor Wawancara harus angka.' })
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
     Demo: z
-        .number({ invalid_type_error: 'Skor Demo harus angka.' })
+        .number({ error: (issue) => issue.input === undefined ? "Skor Demo harus diisi" : 'Skor Demo harus angka.' })
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
-    Diakui: z.boolean({ required_error: "Status 'Diakui' harus ditentukan." }),
+    Diakui: z.boolean({ error: (issue) => issue.input === undefined ? "Status 'Diakui' harus ditentukan." : 'Status harus berupa pilihan' }),
     SkorRataRata: z
-        .number({ invalid_type_error: 'Skor Rata-Rata harus angka.' })
+        .number({ error: (issue) => issue.input === undefined ? "Skor Rata-Rata harus diisi" : 'Skor Rata-Rata harus angka.' })
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
     NilaiHuruf: z

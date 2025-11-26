@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const KejuaraanPiagamSkemaValidation = z.object({
     MahasiswaPiagamId: z.string().optional(),
     PendaftaranId: z.string(),
-    Tahun: z.coerce
+    Tahun: z
         .number()
         .int()
         .min(1900, { message: 'Tahun terlalu kecil' })

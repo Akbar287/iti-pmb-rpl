@@ -6,6 +6,7 @@ import Events from '@/components/website/halaman_utama/Events'
 import Hero from '@/components/website/halaman_utama/Hero'
 import News from '@/components/website/halaman_utama/News'
 import { prisma } from '@/lib/prisma'
+import { AIChatbot } from '@/components/ai-chatbot'
 
 const Page = async () => {
     const dbData = await prisma.settingMainPage.findFirst({
@@ -145,6 +146,7 @@ const Page = async () => {
                 {/* <Resources />
                 <FocusTopics /> */}
             </div>
+            <AIChatbot />
         </React.Fragment>
     )
 }

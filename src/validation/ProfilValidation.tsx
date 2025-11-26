@@ -19,7 +19,7 @@ export const UserCreateSkemaValidation = z.object({
         .email('Email tidak valid')
         .nonempty('Email tidak boleh kosong'),
     TempatLahir: z.string().nonempty('Tempat Lahir tidakk boleh kosong'),
-    TanggalLahir: z.coerce.date(),
+    TanggalLahir: z.date(),
     JenisKelamin: JenisKelaminEnum.default('PRIA').optional(),
     PendidikanTerakhir: JenjangEnum.default('TIDAK_TAMAT_SD').optional(),
     Agama: z.string(),

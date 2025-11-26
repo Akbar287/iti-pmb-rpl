@@ -1,11 +1,13 @@
 "use client"
 
 import { useState } from 'react'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Send, Sparkles } from 'lucide-react'
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+
+import { Send, Sparkles, X } from 'lucide-react'
 
 interface Message {
   id: string
@@ -71,20 +73,32 @@ export function AIChatbot() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-[85vw] max-h-[85vh] w-full h-full md:max-w-full md:max-h-full md:w-screen md:h-screen sm:max-w-full sm:max-h-full sm:w-screen sm:h-screen p-0 gap-0 border-0 overflow-hidden">
+            <VisuallyHidden>
+            <DialogTitle>RPL Chatbot</DialogTitle>
+          </VisuallyHidden>
           <div className="relative w-full h-full flex flex-col">
             <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 opacity-20 blur-xl animate-spin-slow pointer-events-none"></div>
             <div className="absolute inset-[1px] bg-background rounded-lg"></div>
 
+            <DialogClose asChild>
+              <button
+                className="absolute right-4 top-4 z-20 rounded-full p-2 bg-background/80 hover:scale-110 duration-110 teansform transition bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 shadow-md border"
+
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </DialogClose>
+
             <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 p-6 border-b">
-                <div className="relative">
+                <div className="relative cursor-pointer" onClick={() => setOpen(false)}>
                   <div className="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center animate-gradient">
                     <span className="text-white font-bold">AI</span>
                   </div>
                   <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-yellow-300 animate-pulse" />
                 </div>
                 <h2 className="text-xl font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
-                  AI Assistant
+                  RPL Chatbot
                 </h2>
               </div>
 
@@ -112,11 +126,10 @@ export function AIChatbot() {
                       className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
                     >
                       <div
-                        className={`max-w-[80%] rounded-2xl px-4 py-3 ${
-                          message.role === 'user'
+                        className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.role === 'user'
                             ? 'bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white'
                             : 'bg-secondary text-secondary-foreground'
-                        }`}
+                          }`}
                       >
                         <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                       </div>

@@ -7,7 +7,6 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
-import { NumericFormat } from 'react-number-format'
 import {
     Select,
     SelectContent,
@@ -66,6 +65,7 @@ import {
     setMahasiswaKonferensi,
     updateMahasiswaKonferensi,
 } from '@/services/KelengkapanDokumen/KonferensiSeminarService'
+import z from 'zod'
 
 const Konferensi = ({
     dataMahasiswa,
@@ -88,7 +88,7 @@ const Konferensi = ({
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [titleDialog, setTitleDialog] = React.useState<string>('')
-    const form = useForm<KonferensiFormValidation>({
+    const form = useForm<z.input<typeof KonferensiSkemaValidation>, any, z.output<typeof KonferensiSkemaValidation>>({
         resolver: zodResolver(KonferensiSkemaValidation),
         defaultValues: {
             MahasiswaKonferensiId: '',
@@ -342,7 +342,7 @@ function DialogOrangTua({
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     title: string
     loading: boolean
-    form: UseFormReturn<KonferensiFormValidation>
+    form: UseFormReturn<z.input<typeof KonferensiSkemaValidation>, any, z.output<typeof KonferensiSkemaValidation>>
 }) {
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -463,6 +463,8 @@ function DialogOrangTua({
                                                     type="number"
                                                     placeholder="Contoh: 2023"
                                                     {...field}
+                                                    value={field.value as number}
+                                                    onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
                                                 />
                                             </FormControl>
                                             <FormDescription>

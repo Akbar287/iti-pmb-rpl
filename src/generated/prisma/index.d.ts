@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library.js';
+import * as runtime from './runtime/client.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -512,7 +512,7 @@ export const SistemKuliah: typeof $Enums.SistemKuliah
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -544,13 +544,6 @@ export class PrismaClient<
    * Disconnect from the database
    */
   $disconnect(): $Utils.JsPromise<void>;
-
-  /**
-   * Add a middleware
-   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
-   * @see https://pris.ly/d/extensions
-   */
-  $use(cb: Prisma.Middleware): void
 
 /**
    * Executes a prepared raw query and returns the number of affected rows.
@@ -615,7 +608,6 @@ export class PrismaClient<
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
-
 
   $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
     extArgs: ExtArgs
@@ -1340,14 +1332,6 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics
-   */
-  export type Metrics = runtime.Metrics
-  export type Metric<T> = runtime.Metric<T>
-  export type MetricHistogram = runtime.MetricHistogram
-  export type MetricHistogramBucket = runtime.MetricHistogramBucket
-
-  /**
   * Extensions
   */
   export import Extension = $Extensions.UserArgs
@@ -1358,11 +1342,12 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.6.0
-   * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+   * Prisma Client JS version: 7.0.1
+   * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
    */
   export type PrismaVersion = {
     client: string
+    engine: string
   }
 
   export const prismaVersion: PrismaVersion
@@ -1372,6 +1357,7 @@ export namespace Prisma {
    */
 
 
+  export import Bytes = runtime.Bytes
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
   export import JsonValue = runtime.JsonValue
@@ -1813,9 +1799,6 @@ export namespace Prisma {
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 
-  export type Datasources = {
-    db?: Datasource
-  }
 
   interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
     returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
@@ -6891,30 +6874,30 @@ export namespace Prisma {
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
     /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasources?: Datasources
-    /**
-     * Overwrites the datasource url from your schema.prisma file
-     */
-    datasourceUrl?: string
-    /**
      * @default "colorless"
      */
     errorFormat?: ErrorFormat
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -6929,6 +6912,14 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory
+    /**
+     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
+     */
+    accelerateUrl?: string
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -7023,10 +7014,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -7066,25 +7062,6 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
-
-  /**
-   * These options are being passed into the middleware as "params"
-   */
-  export type MiddlewareParams = {
-    model?: ModelName
-    action: PrismaAction
-    args: any
-    dataPath: string[]
-    runInTransaction: boolean
-  }
-
-  /**
-   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
-   */
-  export type Middleware<T = any> = (
-    params: MiddlewareParams,
-    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
-  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -15354,7 +15331,7 @@ export namespace Prisma {
     PendaftaranId: string | null
     JenisDokumenId: string | null
     NamaFile: string | null
-    FileData: Uint8Array | null
+    FileData: Bytes | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -15365,7 +15342,7 @@ export namespace Prisma {
     PendaftaranId: string | null
     JenisDokumenId: string | null
     NamaFile: string | null
-    FileData: Uint8Array | null
+    FileData: Bytes | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -15495,7 +15472,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -15598,7 +15575,7 @@ export namespace Prisma {
       PendaftaranId: string
       JenisDokumenId: string
       NamaFile: string
-      FileData: Uint8Array
+      FileData: Prisma.Bytes
       NamaDokumen: string
       CreatedAt: Date | null
       UpdatedAt: Date | null
@@ -58805,7 +58782,7 @@ export namespace Prisma {
     TahunSk: number | null
     NomorSk: string | null
     NamaFile: string | null
-    FileData: Uint8Array | null
+    FileData: Bytes | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -58818,7 +58795,7 @@ export namespace Prisma {
     TahunSk: number | null
     NomorSk: string | null
     NamaFile: string | null
-    FileData: Uint8Array | null
+    FileData: Bytes | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -58980,7 +58957,7 @@ export namespace Prisma {
     TahunSk: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -59091,7 +59068,7 @@ export namespace Prisma {
       TahunSk: number
       NomorSk: string
       NamaFile: string
-      FileData: Uint8Array
+      FileData: Prisma.Bytes
       NamaDokumen: string
       CreatedAt: Date | null
       UpdatedAt: Date | null
@@ -72059,7 +72036,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin | null
     PendidikanTerakhir: $Enums.Jenjang | null
-    Avatar: Uint8Array | null
+    Avatar: Bytes | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -72080,7 +72057,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin | null
     PendidikanTerakhir: $Enums.Jenjang | null
-    Avatar: Uint8Array | null
+    Avatar: Bytes | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -72260,7 +72237,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin
     PendidikanTerakhir: $Enums.Jenjang
-    Avatar: Uint8Array | null
+    Avatar: Bytes | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -72418,7 +72395,7 @@ export namespace Prisma {
       TanggalLahir: Date | null
       JenisKelamin: $Enums.JenisKelamin
       PendidikanTerakhir: $Enums.Jenjang
-      Avatar: Uint8Array | null
+      Avatar: Prisma.Bytes | null
       Agama: string | null
       Telepon: string | null
       NomorWa: string | null
@@ -76567,13 +76544,13 @@ export namespace Prisma {
   export type SettingMainPageMinAggregateOutputType = {
     SettingMainPageId: string | null
     UniversityId: string | null
-    BackgroundFileUtama: Uint8Array | null
+    BackgroundFileUtama: Bytes | null
     TextMainPage1: string | null
     TextMainPage2: string | null
     TextMainPage3: string | null
     SelayangPandangText: string | null
     SelayangPandangDeskripsi: string | null
-    SelayangPandangBackgroundFile: Uint8Array | null
+    SelayangPandangBackgroundFile: Bytes | null
     WhyText: string | null
     WhyDeskripsi: string | null
     CommunityText: string | null
@@ -76589,13 +76566,13 @@ export namespace Prisma {
   export type SettingMainPageMaxAggregateOutputType = {
     SettingMainPageId: string | null
     UniversityId: string | null
-    BackgroundFileUtama: Uint8Array | null
+    BackgroundFileUtama: Bytes | null
     TextMainPage1: string | null
     TextMainPage2: string | null
     TextMainPage3: string | null
     SelayangPandangText: string | null
     SelayangPandangDeskripsi: string | null
-    SelayangPandangBackgroundFile: Uint8Array | null
+    SelayangPandangBackgroundFile: Bytes | null
     WhyText: string | null
     WhyDeskripsi: string | null
     CommunityText: string | null
@@ -76774,13 +76751,13 @@ export namespace Prisma {
   export type SettingMainPageGroupByOutputType = {
     SettingMainPageId: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -76940,13 +76917,13 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       SettingMainPageId: string
       UniversityId: string
-      BackgroundFileUtama: Uint8Array
+      BackgroundFileUtama: Prisma.Bytes
       TextMainPage1: string
       TextMainPage2: string
       TextMainPage3: string
       SelayangPandangText: string
       SelayangPandangDeskripsi: string
-      SelayangPandangBackgroundFile: Uint8Array
+      SelayangPandangBackgroundFile: Prisma.Bytes
       WhyText: string
       WhyDeskripsi: string
       CommunityText: string
@@ -79083,14 +79060,14 @@ export namespace Prisma {
     SettingCommunityId: string | null
     SettingMainPageId: string | null
     Title: string | null
-    Gambar: Uint8Array | null
+    Gambar: Bytes | null
   }
 
   export type SettingCommunityMaxAggregateOutputType = {
     SettingCommunityId: string | null
     SettingMainPageId: string | null
     Title: string | null
-    Gambar: Uint8Array | null
+    Gambar: Bytes | null
   }
 
   export type SettingCommunityCountAggregateOutputType = {
@@ -79200,7 +79177,7 @@ export namespace Prisma {
     SettingCommunityId: string
     SettingMainPageId: string
     Title: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     _count: SettingCommunityCountAggregateOutputType | null
     _min: SettingCommunityMinAggregateOutputType | null
     _max: SettingCommunityMaxAggregateOutputType | null
@@ -79271,7 +79248,7 @@ export namespace Prisma {
       SettingCommunityId: string
       SettingMainPageId: string
       Title: string
-      Gambar: Uint8Array
+      Gambar: Prisma.Bytes
     }, ExtArgs["result"]["settingCommunity"]>
     composites: {}
   }
@@ -82247,7 +82224,7 @@ export namespace Prisma {
     Jabatan: string | null
     JurusanTahun: string | null
     Testimoni: string | null
-    Foto: Uint8Array | null
+    Foto: Bytes | null
   }
 
   export type SettingTestimonyMaxAggregateOutputType = {
@@ -82257,7 +82234,7 @@ export namespace Prisma {
     Jabatan: string | null
     JurusanTahun: string | null
     Testimoni: string | null
-    Foto: Uint8Array | null
+    Foto: Bytes | null
   }
 
   export type SettingTestimonyCountAggregateOutputType = {
@@ -82382,7 +82359,7 @@ export namespace Prisma {
     Jabatan: string
     JurusanTahun: string
     Testimoni: string
-    Foto: Uint8Array
+    Foto: Bytes
     _count: SettingTestimonyCountAggregateOutputType | null
     _min: SettingTestimonyMinAggregateOutputType | null
     _max: SettingTestimonyMaxAggregateOutputType | null
@@ -82468,7 +82445,7 @@ export namespace Prisma {
       Jabatan: string
       JurusanTahun: string
       Testimoni: string
-      Foto: Uint8Array
+      Foto: Prisma.Bytes
     }, ExtArgs["result"]["settingTestimony"]>
     composites: {}
   }
@@ -83330,7 +83307,7 @@ export namespace Prisma {
     SettingMainPageId: string | null
     Title: string | null
     Deskripsi: string | null
-    Gambar: Uint8Array | null
+    Gambar: Bytes | null
     Populer: boolean | null
     Waktu: Date | null
   }
@@ -83341,7 +83318,7 @@ export namespace Prisma {
     SettingMainPageId: string | null
     Title: string | null
     Deskripsi: string | null
-    Gambar: Uint8Array | null
+    Gambar: Bytes | null
     Populer: boolean | null
     Waktu: Date | null
   }
@@ -83471,7 +83448,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer: boolean
     Waktu: Date
     _count: SettingBeritaCountAggregateOutputType | null
@@ -83569,7 +83546,7 @@ export namespace Prisma {
       SettingMainPageId: string
       Title: string
       Deskripsi: string
-      Gambar: Uint8Array
+      Gambar: Prisma.Bytes
       Populer: boolean
       Waktu: Date
     }, ExtArgs["result"]["settingBerita"]>
@@ -85989,7 +85966,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
-    FileData?: BytesFilter<"BuktiForm"> | Uint8Array
+    FileData?: BytesFilter<"BuktiForm"> | Bytes
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -86020,7 +85997,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
-    FileData?: BytesFilter<"BuktiForm"> | Uint8Array
+    FileData?: BytesFilter<"BuktiForm"> | Bytes
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -86051,7 +86028,7 @@ export namespace Prisma {
     PendaftaranId?: StringWithAggregatesFilter<"BuktiForm"> | string
     JenisDokumenId?: StringWithAggregatesFilter<"BuktiForm"> | string
     NamaFile?: StringWithAggregatesFilter<"BuktiForm"> | string
-    FileData?: BytesWithAggregatesFilter<"BuktiForm"> | Uint8Array
+    FileData?: BytesWithAggregatesFilter<"BuktiForm"> | Bytes
     NamaDokumen?: StringWithAggregatesFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
@@ -88547,7 +88524,7 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
-    FileData?: BytesFilter<"SkRektor"> | Uint8Array
+    FileData?: BytesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
@@ -88582,7 +88559,7 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
-    FileData?: BytesFilter<"SkRektor"> | Uint8Array
+    FileData?: BytesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
@@ -88619,7 +88596,7 @@ export namespace Prisma {
     TahunSk?: IntWithAggregatesFilter<"SkRektor"> | number
     NomorSk?: StringWithAggregatesFilter<"SkRektor"> | string
     NamaFile?: StringWithAggregatesFilter<"SkRektor"> | string
-    FileData?: BytesWithAggregatesFilter<"SkRektor"> | Uint8Array
+    FileData?: BytesWithAggregatesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringWithAggregatesFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
@@ -89316,7 +89293,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableFilter<"User"> | Uint8Array | null
+    Avatar?: BytesNullableFilter<"User"> | Bytes | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -89373,7 +89350,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableFilter<"User"> | Uint8Array | null
+    Avatar?: BytesNullableFilter<"User"> | Bytes | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -89427,7 +89404,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminWithAggregatesFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangWithAggregatesFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableWithAggregatesFilter<"User"> | Uint8Array | null
+    Avatar?: BytesNullableWithAggregatesFilter<"User"> | Bytes | null
     Agama?: StringNullableWithAggregatesFilter<"User"> | string | null
     Telepon?: StringNullableWithAggregatesFilter<"User"> | string | null
     NomorWa?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -89589,13 +89566,13 @@ export namespace Prisma {
     NOT?: SettingMainPageWhereInput | SettingMainPageWhereInput[]
     SettingMainPageId?: StringFilter<"SettingMainPage"> | string
     UniversityId?: StringFilter<"SettingMainPage"> | string
-    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Uint8Array
+    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Bytes
     TextMainPage1?: StringFilter<"SettingMainPage"> | string
     TextMainPage2?: StringFilter<"SettingMainPage"> | string
     TextMainPage3?: StringFilter<"SettingMainPage"> | string
     SelayangPandangText?: StringFilter<"SettingMainPage"> | string
     SelayangPandangDeskripsi?: StringFilter<"SettingMainPage"> | string
-    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Bytes
     WhyText?: StringFilter<"SettingMainPage"> | string
     WhyDeskripsi?: StringFilter<"SettingMainPage"> | string
     CommunityText?: StringFilter<"SettingMainPage"> | string
@@ -89650,13 +89627,13 @@ export namespace Prisma {
     OR?: SettingMainPageWhereInput[]
     NOT?: SettingMainPageWhereInput | SettingMainPageWhereInput[]
     UniversityId?: StringFilter<"SettingMainPage"> | string
-    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Uint8Array
+    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Bytes
     TextMainPage1?: StringFilter<"SettingMainPage"> | string
     TextMainPage2?: StringFilter<"SettingMainPage"> | string
     TextMainPage3?: StringFilter<"SettingMainPage"> | string
     SelayangPandangText?: StringFilter<"SettingMainPage"> | string
     SelayangPandangDeskripsi?: StringFilter<"SettingMainPage"> | string
-    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Bytes
     WhyText?: StringFilter<"SettingMainPage"> | string
     WhyDeskripsi?: StringFilter<"SettingMainPage"> | string
     CommunityText?: StringFilter<"SettingMainPage"> | string
@@ -89707,13 +89684,13 @@ export namespace Prisma {
     NOT?: SettingMainPageScalarWhereWithAggregatesInput | SettingMainPageScalarWhereWithAggregatesInput[]
     SettingMainPageId?: StringWithAggregatesFilter<"SettingMainPage"> | string
     UniversityId?: StringWithAggregatesFilter<"SettingMainPage"> | string
-    BackgroundFileUtama?: BytesWithAggregatesFilter<"SettingMainPage"> | Uint8Array
+    BackgroundFileUtama?: BytesWithAggregatesFilter<"SettingMainPage"> | Bytes
     TextMainPage1?: StringWithAggregatesFilter<"SettingMainPage"> | string
     TextMainPage2?: StringWithAggregatesFilter<"SettingMainPage"> | string
     TextMainPage3?: StringWithAggregatesFilter<"SettingMainPage"> | string
     SelayangPandangText?: StringWithAggregatesFilter<"SettingMainPage"> | string
     SelayangPandangDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
-    SelayangPandangBackgroundFile?: BytesWithAggregatesFilter<"SettingMainPage"> | Uint8Array
+    SelayangPandangBackgroundFile?: BytesWithAggregatesFilter<"SettingMainPage"> | Bytes
     WhyText?: StringWithAggregatesFilter<"SettingMainPage"> | string
     WhyDeskripsi?: StringWithAggregatesFilter<"SettingMainPage"> | string
     CommunityText?: StringWithAggregatesFilter<"SettingMainPage"> | string
@@ -89806,7 +89783,7 @@ export namespace Prisma {
     SettingCommunityId?: StringFilter<"SettingCommunity"> | string
     SettingMainPageId?: StringFilter<"SettingCommunity"> | string
     Title?: StringFilter<"SettingCommunity"> | string
-    Gambar?: BytesFilter<"SettingCommunity"> | Uint8Array
+    Gambar?: BytesFilter<"SettingCommunity"> | Bytes
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
   }
 
@@ -89825,7 +89802,7 @@ export namespace Prisma {
     NOT?: SettingCommunityWhereInput | SettingCommunityWhereInput[]
     SettingMainPageId?: StringFilter<"SettingCommunity"> | string
     Title?: StringFilter<"SettingCommunity"> | string
-    Gambar?: BytesFilter<"SettingCommunity"> | Uint8Array
+    Gambar?: BytesFilter<"SettingCommunity"> | Bytes
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
   }, "SettingCommunityId">
 
@@ -89846,7 +89823,7 @@ export namespace Prisma {
     SettingCommunityId?: StringWithAggregatesFilter<"SettingCommunity"> | string
     SettingMainPageId?: StringWithAggregatesFilter<"SettingCommunity"> | string
     Title?: StringWithAggregatesFilter<"SettingCommunity"> | string
-    Gambar?: BytesWithAggregatesFilter<"SettingCommunity"> | Uint8Array
+    Gambar?: BytesWithAggregatesFilter<"SettingCommunity"> | Bytes
   }
 
   export type SettingWhyWhereInput = {
@@ -89969,7 +89946,7 @@ export namespace Prisma {
     Jabatan?: StringFilter<"SettingTestimony"> | string
     JurusanTahun?: StringFilter<"SettingTestimony"> | string
     Testimoni?: StringFilter<"SettingTestimony"> | string
-    Foto?: BytesFilter<"SettingTestimony"> | Uint8Array
+    Foto?: BytesFilter<"SettingTestimony"> | Bytes
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
   }
 
@@ -89994,7 +89971,7 @@ export namespace Prisma {
     Jabatan?: StringFilter<"SettingTestimony"> | string
     JurusanTahun?: StringFilter<"SettingTestimony"> | string
     Testimoni?: StringFilter<"SettingTestimony"> | string
-    Foto?: BytesFilter<"SettingTestimony"> | Uint8Array
+    Foto?: BytesFilter<"SettingTestimony"> | Bytes
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
   }, "SettingTestimonyId">
 
@@ -90021,7 +89998,7 @@ export namespace Prisma {
     Jabatan?: StringWithAggregatesFilter<"SettingTestimony"> | string
     JurusanTahun?: StringWithAggregatesFilter<"SettingTestimony"> | string
     Testimoni?: StringWithAggregatesFilter<"SettingTestimony"> | string
-    Foto?: BytesWithAggregatesFilter<"SettingTestimony"> | Uint8Array
+    Foto?: BytesWithAggregatesFilter<"SettingTestimony"> | Bytes
   }
 
   export type SettingBeritaWhereInput = {
@@ -90033,7 +90010,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFilter<"SettingBerita"> | string
     Title?: StringFilter<"SettingBerita"> | string
     Deskripsi?: StringFilter<"SettingBerita"> | string
-    Gambar?: BytesFilter<"SettingBerita"> | Uint8Array
+    Gambar?: BytesFilter<"SettingBerita"> | Bytes
     Populer?: BoolFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
@@ -90062,7 +90039,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFilter<"SettingBerita"> | string
     Title?: StringFilter<"SettingBerita"> | string
     Deskripsi?: StringFilter<"SettingBerita"> | string
-    Gambar?: BytesFilter<"SettingBerita"> | Uint8Array
+    Gambar?: BytesFilter<"SettingBerita"> | Bytes
     Populer?: BoolFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
@@ -90092,7 +90069,7 @@ export namespace Prisma {
     SettingMainPageId?: StringWithAggregatesFilter<"SettingBerita"> | string
     Title?: StringWithAggregatesFilter<"SettingBerita"> | string
     Deskripsi?: StringWithAggregatesFilter<"SettingBerita"> | string
-    Gambar?: BytesWithAggregatesFilter<"SettingBerita"> | Uint8Array
+    Gambar?: BytesWithAggregatesFilter<"SettingBerita"> | Bytes
     Populer?: BoolWithAggregatesFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeWithAggregatesFilter<"SettingBerita"> | Date | string
   }
@@ -90576,7 +90553,7 @@ export namespace Prisma {
   export type BuktiFormCreateInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -90590,7 +90567,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -90600,7 +90577,7 @@ export namespace Prisma {
   export type BuktiFormUpdateInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -90614,7 +90591,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -90626,7 +90603,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -90635,7 +90612,7 @@ export namespace Prisma {
   export type BuktiFormUpdateManyMutationInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -90646,7 +90623,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -93229,7 +93206,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -93245,7 +93222,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -93259,7 +93236,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -93275,7 +93252,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -93290,7 +93267,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -93302,7 +93279,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -93315,7 +93292,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -94024,7 +94001,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -94051,7 +94028,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -94076,7 +94053,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94103,7 +94080,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94129,7 +94106,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -94149,7 +94126,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94170,7 +94147,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -94330,13 +94307,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -94359,13 +94336,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedCreateInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -94386,13 +94363,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -94415,13 +94392,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -94443,13 +94420,13 @@ export namespace Prisma {
   export type SettingMainPageCreateManyInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -94464,13 +94441,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateManyMutationInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -94486,13 +94463,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateManyInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -94583,7 +94560,7 @@ export namespace Prisma {
   export type SettingCommunityCreateInput = {
     SettingCommunityId?: string
     Title: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingCommunityInput
   }
 
@@ -94591,13 +94568,13 @@ export namespace Prisma {
     SettingCommunityId?: string
     SettingMainPageId: string
     Title: string
-    Gambar: Uint8Array
+    Gambar: Bytes
   }
 
   export type SettingCommunityUpdateInput = {
     SettingCommunityId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingCommunityNestedInput
   }
 
@@ -94605,27 +94582,27 @@ export namespace Prisma {
     SettingCommunityId?: StringFieldUpdateOperationsInput | string
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingCommunityCreateManyInput = {
     SettingCommunityId?: string
     SettingMainPageId: string
     Title: string
-    Gambar: Uint8Array
+    Gambar: Bytes
   }
 
   export type SettingCommunityUpdateManyMutationInput = {
     SettingCommunityId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingCommunityUncheckedUpdateManyInput = {
     SettingCommunityId?: StringFieldUpdateOperationsInput | string
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingWhyCreateInput = {
@@ -94744,7 +94721,7 @@ export namespace Prisma {
     Jabatan: string
     JurusanTahun: string
     Testimoni: string
-    Foto: Uint8Array
+    Foto: Bytes
     SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingTestimonyInput
   }
 
@@ -94755,7 +94732,7 @@ export namespace Prisma {
     Jabatan: string
     JurusanTahun: string
     Testimoni: string
-    Foto: Uint8Array
+    Foto: Bytes
   }
 
   export type SettingTestimonyUpdateInput = {
@@ -94764,7 +94741,7 @@ export namespace Prisma {
     Jabatan?: StringFieldUpdateOperationsInput | string
     JurusanTahun?: StringFieldUpdateOperationsInput | string
     Testimoni?: StringFieldUpdateOperationsInput | string
-    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    Foto?: BytesFieldUpdateOperationsInput | Bytes
     SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingTestimonyNestedInput
   }
 
@@ -94775,7 +94752,7 @@ export namespace Prisma {
     Jabatan?: StringFieldUpdateOperationsInput | string
     JurusanTahun?: StringFieldUpdateOperationsInput | string
     Testimoni?: StringFieldUpdateOperationsInput | string
-    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    Foto?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingTestimonyCreateManyInput = {
@@ -94785,7 +94762,7 @@ export namespace Prisma {
     Jabatan: string
     JurusanTahun: string
     Testimoni: string
-    Foto: Uint8Array
+    Foto: Bytes
   }
 
   export type SettingTestimonyUpdateManyMutationInput = {
@@ -94794,7 +94771,7 @@ export namespace Prisma {
     Jabatan?: StringFieldUpdateOperationsInput | string
     JurusanTahun?: StringFieldUpdateOperationsInput | string
     Testimoni?: StringFieldUpdateOperationsInput | string
-    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    Foto?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingTestimonyUncheckedUpdateManyInput = {
@@ -94804,14 +94781,14 @@ export namespace Prisma {
     Jabatan?: StringFieldUpdateOperationsInput | string
     JurusanTahun?: StringFieldUpdateOperationsInput | string
     Testimoni?: StringFieldUpdateOperationsInput | string
-    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    Foto?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingBeritaCreateInput = {
     SettingBeritaId?: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
     SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingBeritaInput
@@ -94824,7 +94801,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
   }
@@ -94833,7 +94810,7 @@ export namespace Prisma {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
     SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput
@@ -94846,7 +94823,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -94857,7 +94834,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
   }
@@ -94866,7 +94843,7 @@ export namespace Prisma {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -94877,7 +94854,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -95339,10 +95316,10 @@ export namespace Prisma {
   }
 
   export type BytesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Bytes
   }
 
   export type JenisDokumenScalarRelationFilter = {
@@ -95394,10 +95371,10 @@ export namespace Prisma {
   }
 
   export type BytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBytesFilter<$PrismaModel>
     _max?: NestedBytesFilter<$PrismaModel>
@@ -97666,10 +97643,10 @@ export namespace Prisma {
   }
 
   export type BytesNullableFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
   }
 
   export type MahasiswaListRelationFilter = {
@@ -97766,10 +97743,10 @@ export namespace Prisma {
   }
 
   export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
@@ -98682,7 +98659,7 @@ export namespace Prisma {
   }
 
   export type BytesFieldUpdateOperationsInput = {
-    set?: Uint8Array
+    set?: Bytes
   }
 
   export type PendaftaranUpdateOneRequiredWithoutBuktiFormNestedInput = {
@@ -101856,7 +101833,7 @@ export namespace Prisma {
   }
 
   export type NullableBytesFieldUpdateOperationsInput = {
-    set?: Uint8Array | null
+    set?: Bytes | null
   }
 
   export type AlamatUpdateOneRequiredWithoutUserNestedInput = {
@@ -102633,17 +102610,17 @@ export namespace Prisma {
   }
 
   export type NestedBytesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Bytes
   }
 
   export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBytesFilter<$PrismaModel>
     _max?: NestedBytesFilter<$PrismaModel>
@@ -102851,10 +102828,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesNullableFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
   }
 
   export type NestedEnumJenisKelaminWithAggregatesFilter<$PrismaModel = never> = {
@@ -102868,10 +102845,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
-    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
@@ -102981,7 +102958,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -103006,7 +102983,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -103148,7 +103125,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableFilter<"User"> | Uint8Array | null
+    Avatar?: BytesNullableFilter<"User"> | Bytes | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -103193,7 +103170,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -103219,7 +103196,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -103414,7 +103391,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -103440,7 +103417,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -104296,7 +104273,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutBuktiFormEvaluasiDiriInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -104309,7 +104286,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -104361,7 +104338,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutBuktiFormEvaluasiDiriInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -104374,7 +104351,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -105509,7 +105486,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutJenisDokumenInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -105521,7 +105498,7 @@ export namespace Prisma {
     BuktiFormId?: string
     PendaftaranId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -105562,7 +105539,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
-    FileData?: BytesFilter<"BuktiForm"> | Uint8Array
+    FileData?: BytesFilter<"BuktiForm"> | Bytes
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -105751,7 +105728,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -105777,7 +105754,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -105887,7 +105864,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -105913,7 +105890,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107383,7 +107360,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -107409,7 +107386,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -107478,7 +107455,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107504,7 +107481,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107553,7 +107530,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -107579,7 +107556,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -107650,7 +107627,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -107676,7 +107653,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -108149,7 +108126,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutPendaftaranInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -108161,7 +108138,7 @@ export namespace Prisma {
     BuktiFormId?: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -110308,7 +110285,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -110322,7 +110299,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -110366,7 +110343,7 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
-    FileData?: BytesFilter<"SkRektor"> | Uint8Array
+    FileData?: BytesFilter<"SkRektor"> | Bytes
     NamaDokumen?: StringFilter<"SkRektor"> | string
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
@@ -110482,7 +110459,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -110497,7 +110474,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -110551,7 +110528,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -110566,7 +110543,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -110610,7 +110587,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -110625,7 +110602,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -110719,7 +110696,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -110734,7 +110711,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -111305,13 +111282,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateWithoutUniversityInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -111332,13 +111309,13 @@ export namespace Prisma {
 
   export type SettingMainPageUncheckedCreateWithoutUniversityInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -111530,13 +111507,13 @@ export namespace Prisma {
     NOT?: SettingMainPageScalarWhereInput | SettingMainPageScalarWhereInput[]
     SettingMainPageId?: StringFilter<"SettingMainPage"> | string
     UniversityId?: StringFilter<"SettingMainPage"> | string
-    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Uint8Array
+    BackgroundFileUtama?: BytesFilter<"SettingMainPage"> | Bytes
     TextMainPage1?: StringFilter<"SettingMainPage"> | string
     TextMainPage2?: StringFilter<"SettingMainPage"> | string
     TextMainPage3?: StringFilter<"SettingMainPage"> | string
     SelayangPandangText?: StringFilter<"SettingMainPage"> | string
     SelayangPandangDeskripsi?: StringFilter<"SettingMainPage"> | string
-    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFilter<"SettingMainPage"> | Bytes
     WhyText?: StringFilter<"SettingMainPage"> | string
     WhyDeskripsi?: StringFilter<"SettingMainPage"> | string
     CommunityText?: StringFilter<"SettingMainPage"> | string
@@ -112161,7 +112138,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -112187,7 +112164,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -112227,7 +112204,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -112253,7 +112230,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -112332,7 +112309,7 @@ export namespace Prisma {
     SettingBeritaId?: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
     SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingBeritaInput
@@ -112343,7 +112320,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
   }
@@ -112383,7 +112360,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFilter<"SettingBerita"> | string
     Title?: StringFilter<"SettingBerita"> | string
     Deskripsi?: StringFilter<"SettingBerita"> | string
-    Gambar?: BytesFilter<"SettingBerita"> | Uint8Array
+    Gambar?: BytesFilter<"SettingBerita"> | Bytes
     Populer?: BoolFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
   }
@@ -112454,13 +112431,13 @@ export namespace Prisma {
   export type SettingCommunityCreateWithoutSettingMainPageInput = {
     SettingCommunityId?: string
     Title: string
-    Gambar: Uint8Array
+    Gambar: Bytes
   }
 
   export type SettingCommunityUncheckedCreateWithoutSettingMainPageInput = {
     SettingCommunityId?: string
     Title: string
-    Gambar: Uint8Array
+    Gambar: Bytes
   }
 
   export type SettingCommunityCreateOrConnectWithoutSettingMainPageInput = {
@@ -112527,7 +112504,7 @@ export namespace Prisma {
     Jabatan: string
     JurusanTahun: string
     Testimoni: string
-    Foto: Uint8Array
+    Foto: Bytes
   }
 
   export type SettingTestimonyUncheckedCreateWithoutSettingMainPageInput = {
@@ -112536,7 +112513,7 @@ export namespace Prisma {
     Jabatan: string
     JurusanTahun: string
     Testimoni: string
-    Foto: Uint8Array
+    Foto: Bytes
   }
 
   export type SettingTestimonyCreateOrConnectWithoutSettingMainPageInput = {
@@ -112553,7 +112530,7 @@ export namespace Prisma {
     SettingBeritaId?: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
     KategoriBerita: KategoriBeritaCreateNestedOneWithoutSettingBeritaInput
@@ -112564,7 +112541,7 @@ export namespace Prisma {
     KategoriBeritaId: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
   }
@@ -112657,7 +112634,7 @@ export namespace Prisma {
     SettingCommunityId?: StringFilter<"SettingCommunity"> | string
     SettingMainPageId?: StringFilter<"SettingCommunity"> | string
     Title?: StringFilter<"SettingCommunity"> | string
-    Gambar?: BytesFilter<"SettingCommunity"> | Uint8Array
+    Gambar?: BytesFilter<"SettingCommunity"> | Bytes
   }
 
   export type SettingWhyUpsertWithWhereUniqueWithoutSettingMainPageInput = {
@@ -112740,7 +112717,7 @@ export namespace Prisma {
     Jabatan?: StringFilter<"SettingTestimony"> | string
     JurusanTahun?: StringFilter<"SettingTestimony"> | string
     Testimoni?: StringFilter<"SettingTestimony"> | string
-    Foto?: BytesFilter<"SettingTestimony"> | Uint8Array
+    Foto?: BytesFilter<"SettingTestimony"> | Bytes
   }
 
   export type SettingBeritaUpsertWithWhereUniqueWithoutSettingMainPageInput = {
@@ -112778,13 +112755,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateWithoutSettingKegiatanInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -112806,13 +112783,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedCreateWithoutSettingKegiatanInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -112871,13 +112848,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateWithoutSettingKegiatanInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -112899,13 +112876,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateWithoutSettingKegiatanInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -112925,13 +112902,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateWithoutSettingCommunityInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -112953,13 +112930,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedCreateWithoutSettingCommunityInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -112995,13 +112972,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateWithoutSettingCommunityInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113023,13 +113000,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateWithoutSettingCommunityInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113049,13 +113026,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateWithoutSettingWhyInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113077,13 +113054,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedCreateWithoutSettingWhyInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113119,13 +113096,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateWithoutSettingWhyInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113147,13 +113124,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateWithoutSettingWhyInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113173,13 +113150,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateWithoutSettingNumberInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113201,13 +113178,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedCreateWithoutSettingNumberInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113243,13 +113220,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateWithoutSettingNumberInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113271,13 +113248,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateWithoutSettingNumberInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113297,13 +113274,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateWithoutSettingTestimonyInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113325,13 +113302,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedCreateWithoutSettingTestimonyInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113367,13 +113344,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateWithoutSettingTestimonyInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113395,13 +113372,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateWithoutSettingTestimonyInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113421,13 +113398,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateWithoutSettingBeritaInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113449,13 +113426,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedCreateWithoutSettingBeritaInput = {
     SettingMainPageId?: string
     UniversityId: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -113508,13 +113485,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateWithoutSettingBeritaInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113536,13 +113513,13 @@ export namespace Prisma {
   export type SettingMainPageUncheckedUpdateWithoutSettingBeritaInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     UniversityId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -113616,7 +113593,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Uint8Array | null
+    Avatar?: Bytes | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -113718,7 +113695,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -113743,7 +113720,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -113768,7 +113745,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -114171,7 +114148,7 @@ export namespace Prisma {
     BuktiFormId?: string
     PendaftaranId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -114180,7 +114157,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutJenisDokumenInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -114192,7 +114169,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -114203,7 +114180,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -114562,7 +114539,7 @@ export namespace Prisma {
     BuktiFormId?: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -114758,7 +114735,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutPendaftaranInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -114770,7 +114747,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -114781,7 +114758,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -115559,7 +115536,7 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Uint8Array
+    FileData: Bytes
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -115571,7 +115548,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -115585,7 +115562,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -115599,7 +115576,7 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Uint8Array
+    FileData?: BytesFieldUpdateOperationsInput | Bytes
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -115743,13 +115720,13 @@ export namespace Prisma {
 
   export type SettingMainPageCreateManyUniversityInput = {
     SettingMainPageId?: string
-    BackgroundFileUtama: Uint8Array
+    BackgroundFileUtama: Bytes
     TextMainPage1: string
     TextMainPage2: string
     TextMainPage3: string
     SelayangPandangText: string
     SelayangPandangDeskripsi: string
-    SelayangPandangBackgroundFile: Uint8Array
+    SelayangPandangBackgroundFile: Bytes
     WhyText: string
     WhyDeskripsi: string
     CommunityText: string
@@ -115868,13 +115845,13 @@ export namespace Prisma {
 
   export type SettingMainPageUpdateWithoutUniversityInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -115895,13 +115872,13 @@ export namespace Prisma {
 
   export type SettingMainPageUncheckedUpdateWithoutUniversityInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -115922,13 +115899,13 @@ export namespace Prisma {
 
   export type SettingMainPageUncheckedUpdateManyWithoutUniversityInput = {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
-    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Uint8Array
+    BackgroundFileUtama?: BytesFieldUpdateOperationsInput | Bytes
     TextMainPage1?: StringFieldUpdateOperationsInput | string
     TextMainPage2?: StringFieldUpdateOperationsInput | string
     TextMainPage3?: StringFieldUpdateOperationsInput | string
     SelayangPandangText?: StringFieldUpdateOperationsInput | string
     SelayangPandangDeskripsi?: StringFieldUpdateOperationsInput | string
-    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Uint8Array
+    SelayangPandangBackgroundFile?: BytesFieldUpdateOperationsInput | Bytes
     WhyText?: StringFieldUpdateOperationsInput | string
     WhyDeskripsi?: StringFieldUpdateOperationsInput | string
     CommunityText?: StringFieldUpdateOperationsInput | string
@@ -116152,7 +116129,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
   }
@@ -116161,7 +116138,7 @@ export namespace Prisma {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
     SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput
@@ -116172,7 +116149,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -116182,7 +116159,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -116200,7 +116177,7 @@ export namespace Prisma {
   export type SettingCommunityCreateManySettingMainPageInput = {
     SettingCommunityId?: string
     Title: string
-    Gambar: Uint8Array
+    Gambar: Bytes
   }
 
   export type SettingWhyCreateManySettingMainPageInput = {
@@ -116223,7 +116200,7 @@ export namespace Prisma {
     Jabatan: string
     JurusanTahun: string
     Testimoni: string
-    Foto: Uint8Array
+    Foto: Bytes
   }
 
   export type SettingBeritaCreateManySettingMainPageInput = {
@@ -116231,7 +116208,7 @@ export namespace Prisma {
     KategoriBeritaId: string
     Title: string
     Deskripsi: string
-    Gambar: Uint8Array
+    Gambar: Bytes
     Populer?: boolean
     Waktu: Date | string
   }
@@ -116269,19 +116246,19 @@ export namespace Prisma {
   export type SettingCommunityUpdateWithoutSettingMainPageInput = {
     SettingCommunityId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingCommunityUncheckedUpdateWithoutSettingMainPageInput = {
     SettingCommunityId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingCommunityUncheckedUpdateManyWithoutSettingMainPageInput = {
     SettingCommunityId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingWhyUpdateWithoutSettingMainPageInput = {
@@ -116332,7 +116309,7 @@ export namespace Prisma {
     Jabatan?: StringFieldUpdateOperationsInput | string
     JurusanTahun?: StringFieldUpdateOperationsInput | string
     Testimoni?: StringFieldUpdateOperationsInput | string
-    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    Foto?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingTestimonyUncheckedUpdateWithoutSettingMainPageInput = {
@@ -116341,7 +116318,7 @@ export namespace Prisma {
     Jabatan?: StringFieldUpdateOperationsInput | string
     JurusanTahun?: StringFieldUpdateOperationsInput | string
     Testimoni?: StringFieldUpdateOperationsInput | string
-    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    Foto?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingTestimonyUncheckedUpdateManyWithoutSettingMainPageInput = {
@@ -116350,14 +116327,14 @@ export namespace Prisma {
     Jabatan?: StringFieldUpdateOperationsInput | string
     JurusanTahun?: StringFieldUpdateOperationsInput | string
     Testimoni?: StringFieldUpdateOperationsInput | string
-    Foto?: BytesFieldUpdateOperationsInput | Uint8Array
+    Foto?: BytesFieldUpdateOperationsInput | Bytes
   }
 
   export type SettingBeritaUpdateWithoutSettingMainPageInput = {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
     KategoriBerita?: KategoriBeritaUpdateOneRequiredWithoutSettingBeritaNestedInput
@@ -116368,7 +116345,7 @@ export namespace Prisma {
     KategoriBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -116378,7 +116355,7 @@ export namespace Prisma {
     KategoriBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Uint8Array
+    Gambar?: BytesFieldUpdateOperationsInput | Bytes
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }

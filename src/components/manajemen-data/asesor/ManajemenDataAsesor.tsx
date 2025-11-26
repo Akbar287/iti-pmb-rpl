@@ -1025,9 +1025,7 @@ const ManajemenDataAsesor = ({
                                                             >
                                                                 <Calendar
                                                                     mode="single"
-                                                                    selected={
-                                                                        field.value
-                                                                    }
+                                                                    selected={field.value ?? undefined} 
                                                                     onSelect={
                                                                         field.onChange
                                                                     }
@@ -1118,7 +1116,7 @@ const ManajemenDataAsesor = ({
                                                                     loading
                                                                 }
                                                                 value={
-                                                                    field.value
+                                                                    field.value ?? undefined
                                                                 }
                                                                 onValueChange={(
                                                                     value

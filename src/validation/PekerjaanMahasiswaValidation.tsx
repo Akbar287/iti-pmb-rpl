@@ -9,10 +9,12 @@ export const MahasiswaRiwayatPekerjaanSkemaValidation = z.object({
         .min(1, { message: 'Posisi jabatan tidak boleh kosong' }),
     Alamat: z.string().optional().nullable(),
     UraianTugas: z.string().optional().nullable(),
-    MulaiBekerja: z.coerce.date({
-        required_error: 'Tanggal mulai bekerja harus diisi',
+    MulaiBekerja: z.date({
+        error: (issue) => issue.input === undefined 
+    ?  'Tanggal mulai bekerja harus diisi'
+    : "Not a string" 
     }),
-    SelesaiBekerja: z.coerce.date().optional().nullable(),
+    SelesaiBekerja: z.date().optional().nullable(),
     CreatedAt: z.date().optional().nullable(),
     UpdatedAt: z.date().optional().nullable(),
 })

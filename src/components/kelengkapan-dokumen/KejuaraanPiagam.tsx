@@ -83,7 +83,7 @@ const KejuaraanPiagam = ({
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [titleDialog, setTitleDialog] = React.useState<string>('')
-    const form = useForm<KejuaraanPiagamFormValidation>({
+    const form = useForm({
         resolver: zodResolver(KejuaraanPiagamSkemaValidation),
         defaultValues: {
             MahasiswaPiagamId: undefined,

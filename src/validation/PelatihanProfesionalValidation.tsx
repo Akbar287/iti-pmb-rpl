@@ -5,8 +5,8 @@ export const PelatihanProfesionalSkemaValidation = z.object({
     PendaftaranId: z.string(),
     NamaPelatihan: z.string().min(1, { message: 'Nama Pelatihan wajib diisi' }),
     Penyelenggara: z.string().min(1, { message: 'Penyelenggara wajib diisi' }),
-    Mulai: z.coerce.date({ required_error: 'Tanggal mulai wajib diisi' }),
-    Selesai: z.coerce.date().optional(),
+    Mulai: z.date({ error: (issue) => issue.input === undefined ? 'Tanggal mulai wajib diisi' : '' }),
+    Selesai: z.date().optional(),
 })
 
 export type PelatihanProfesionalFormValidation = z.infer<

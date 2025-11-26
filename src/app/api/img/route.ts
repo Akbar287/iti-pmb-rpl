@@ -41,7 +41,7 @@ app.get('/', async (c) => {
                     )
                 }
 
-                return c.body(data.BackgroundFileUtama, 200, {
+                return c.body(data.BackgroundFileUtama as unknown as Uint8Array<ArrayBuffer>, 200, {
                     'Content-Type': 'image/png',
                     'Content-Length': String(data.BackgroundFileUtama.length),
                 })
@@ -69,7 +69,7 @@ app.get('/', async (c) => {
                     )
                 }
 
-                return c.body(data.SelayangPandangBackgroundFile, 200, {
+                return c.body(data.SelayangPandangBackgroundFile as unknown as Uint8Array<ArrayBuffer>, 200, {
                     'Content-Type': 'image/png',
                     'Content-Length': String(
                         data.SelayangPandangBackgroundFile.length
@@ -96,7 +96,7 @@ app.get('/', async (c) => {
                     )
                 }
 
-                return c.body(data.Gambar, 200, {
+                return c.body(data.Gambar as unknown as Uint8Array<ArrayBuffer>, 200, {
                     'Content-Type': 'image/png',
                     'Content-Length': String(data.Gambar.length),
                 })
@@ -121,7 +121,7 @@ app.get('/', async (c) => {
                     )
                 }
 
-                return c.body(data.Gambar, 200, {
+                return c.body(data.Gambar as unknown as Uint8Array<ArrayBuffer>, 200, {
                     'Content-Type': 'image/png',
                     'Content-Length': String(data.Gambar.length),
                 })
@@ -146,7 +146,7 @@ app.get('/', async (c) => {
                     )
                 }
 
-                return c.body(data.Foto, 200, {
+                return c.body(data.Foto as unknown as Uint8Array<ArrayBuffer>, 200, {
                     'Content-Type': 'image/png',
                     'Content-Length': String(data.Foto.length),
                 })

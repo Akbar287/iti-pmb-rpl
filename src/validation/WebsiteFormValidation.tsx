@@ -85,12 +85,10 @@ export const SettingKegiatanSkemaValidasi = z.object({
         .min(1, 'Id SettingMainPage tidak boleh kosong'),
     SettingKegiatanId: z.string(),
     WaktuMulai: z.date({
-        required_error: 'Waktu harus diisi',
-        invalid_type_error: 'Format waktu tidak valid',
+        error: (issue) => issue.input === undefined ? 'Waktu harus diisi' : 'Format waktu tidak valid',
     }),
     WaktuSelesai: z.date({
-        required_error: 'Waktu harus diisi',
-        invalid_type_error: 'Format waktu tidak valid',
+        error: (issue) => issue.input === undefined ? 'Waktu harus diisi' : 'Format waktu tidak valid',
     }),
 })
 
@@ -113,8 +111,7 @@ export const SettingBeritaSkemaValidasi = z.object({
     Color: z.string().min(1, 'Color tidak boleh kosong'),
     Deskripsi: z.string().min(1, 'Deskripsi tidak boleh kosong'),
     Waktu: z.date({
-        required_error: 'Waktu harus diisi',
-        invalid_type_error: 'Format waktu tidak valid',
+        error: (issue) => issue.input === undefined ? 'Waktu harus diisi' : 'Format waktu tidak valid'
     }),
 })
 
@@ -164,7 +161,7 @@ function decodeBase64ToUtf8(b64: string): string {
 
 export const SettingWhySkemaValidasi = z.object({
     Icon: z
-        .string({ required_error: 'Icon tidak boleh kosong' })
+        .string({ error: (issue) => issue.input === undefined ? 'Icon tidak boleh kosong' : 'icon harus string' })
         .refine((v) => v.startsWith(DATA_URL_PREFIX), {
             message: `Ikon harus berformat lengkap "${DATA_URL_PREFIX}<BASE64>"`,
         })

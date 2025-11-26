@@ -1634,7 +1634,7 @@ export function SheetManageData({
                                                                 <Calendar
                                                                     mode="single"
                                                                     selected={
-                                                                        field.value
+                                                                        field.value ?? undefined
                                                                     }
                                                                     onSelect={
                                                                         field.onChange
@@ -1726,7 +1726,7 @@ export function SheetManageData({
                                                                     loading
                                                                 }
                                                                 value={
-                                                                    field.value
+                                                                    field.value ?? undefined
                                                                 }
                                                                 onValueChange={(
                                                                     value
@@ -1863,7 +1863,7 @@ export function SheetManageData({
                                                                     loading
                                                                 }
                                                                 value={
-                                                                    field.value
+                                                                    field.value ?? undefined
                                                                 }
                                                                 onValueChange={(
                                                                     value
@@ -3057,7 +3057,7 @@ export function SheetManageData({
                                                                     loading
                                                                 }
                                                                 value={
-                                                                    field.value
+                                                                    field.value ?? undefined
                                                                 }
                                                                 onValueChange={(
                                                                     value

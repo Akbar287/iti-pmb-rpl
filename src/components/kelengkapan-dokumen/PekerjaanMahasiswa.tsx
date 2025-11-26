@@ -6,7 +6,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from '../ui/card'
@@ -44,7 +43,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from '../ui/dialog'
-import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { toast } from 'sonner'
 import { Textarea } from '../ui/textarea'
@@ -75,6 +73,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { format } from 'date-fns'
 import { Calendar } from '../ui/calendar'
 import { Checkbox } from '../ui/checkbox'
+import z from 'zod'
 
 const RiwayatPekerjaanMahasiswa = ({
     dataMahasiswa,
@@ -98,7 +97,7 @@ const RiwayatPekerjaanMahasiswa = ({
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [titleDialog, setTitleDialog] = React.useState<string>('')
     const [masihLatihan, setMasihLatihan] = React.useState(false)
-    const form = useForm<MahasiswaRiwayatPekerjaanFormValidation>({
+    const form = useForm<MahasiswaRiwayatPekerjaanFormValidation, any, MahasiswaRiwayatPekerjaanFormValidation>({
         resolver: zodResolver(MahasiswaRiwayatPekerjaanSkemaValidation),
         defaultValues: {
             MahasiswaRiwayatPekerjaanId: '',
@@ -415,7 +414,7 @@ function DialogRiwayatPekerjaanMahasiswa({
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     title: string
     loading: boolean
-    form: UseFormReturn<MahasiswaRiwayatPekerjaanFormValidation>
+    form: UseFormReturn<MahasiswaRiwayatPekerjaanFormValidation, any, MahasiswaRiwayatPekerjaanFormValidation>
     masihLatihan: boolean
     setMasihLatihan: React.Dispatch<React.SetStateAction<boolean>>
 }) {

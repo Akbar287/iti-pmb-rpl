@@ -51,7 +51,7 @@ const AlamatSchema = z.object({
 const UserSchema = z.object({
     UserId: z.string(),
     Nama: z.string().min(1, 'Nama is required'),
-    Email: z.string().email('Email tidak valid'),
+    Email: z.email('Email tidak valid'),
     TempatLahir: z.string().min(1, 'Tempat Lahir is required'),
     TanggalLahir: z
         .date()
@@ -126,7 +126,6 @@ const OrangTuaSchema = z.object({
         }),
     PenghasilanOrangTua: z.number().min(0, 'Penghasilan tidak boleh negatif'),
     EmailOrangTua: z
-        .string()
         .email('Email Orang Tua tidak valid')
         .or(z.literal('')), // Allow empty if optional
     NomorHpOrangTua: z
