@@ -80,13 +80,12 @@ import {
     getAsesorMahasiswaPaginationFromAsesorRole,
     updateAsesorMahasiswa,
 } from '@/services/Asesor/PenunjukanAsesorService'
-import { MultiSelect } from '../ui/multi-select'
 import {
     ResponseAsesorFromProdi,
     ResponsePenunjukanAsesor,
 } from '@/types/PenunjukanAsesor'
 import { Badge } from '../ui/badge'
-import { setStatusAsessmenOlehAsesor } from '@/services/Status/StatusService'
+import { setStatusPersetujuanPenunjukanAsesor } from '@/services/Status/StatusService'
 import { Session } from 'next-auth'
 
 const PenunjukanAsesorComponent = ({
@@ -152,11 +151,11 @@ const PenunjukanAsesorComponent = ({
     const [search, setSearch] = React.useState<string>('')
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [loading, setLoading] = React.useState<boolean>(false)
-    const [asesorSelected, setAsesorSelected] = React.useState<string[]>([])
     const form = useForm<AsesorMahasiswaFormValidation>({
         resolver: zodResolver(AsesorMahasiswaSkemaValidation) as any,
         defaultValues: {
-            Asesor: [],
+            AsesorPertama: '',
+            AsesorKedua: '',
             ProgramStudiId: '',
             PendaftaranId: '',
             KodePendaftar: '',
@@ -166,45 +165,31 @@ const PenunjukanAsesorComponent = ({
     })
     const onSubmit = async (data: AsesorMahasiswaFormValidation) => {
         setLoading(true)
-        if (asesorSelected.length === 0) {
-            toast.error('Silakan pilih Asesor terlebih dahulu')
-            setLoading(false)
-            return
-        }
         if (dataAsesor.length === 0) {
             toast.error(
                 'Asesor Program Studi ' +
-                    selectedData.NamaProgramStudi +
-                    ' belum diatur'
+                selectedData.NamaProgramStudi +
+                ' belum diatur'
             )
             setLoading(false)
             return
         }
-        let temp: {
-            AssesorMahasiswaId: string
-            AsesorId: string
-            Urutan: number
-            Confirmation: boolean
-        }[] = []
-        asesorSelected.forEach((a, idx) => {
-            let tempAsesor = dataAsesor.find((x) => x.AsesorId === a)
-            if (tempAsesor) {
-                temp.push({
-                    AssesorMahasiswaId: '',
-                    AsesorId: a,
-                    Urutan: idx + 1,
-                    Confirmation: true,
-                })
-            }
-        })
+        if(data.AsesorKedua == data.AsesorPertama) {
+            toast.error(
+                'Asesor Pertama dan Kedua tidak boleh sama !'
+            )
+            setLoading(false)
+            return
+        }
         await updateAsesorMahasiswa({
-            Asesor: temp,
+            AsesorPertamaId: data.AsesorPertama,
+            AsesorKeduaId: data.AsesorKedua,
             ProgramStudiId: data.ProgramStudiId,
             KodePendaftar: data.KodePendaftar,
             PendaftaranId: data.PendaftaranId,
         })
             .then(async (res) => {
-                await setStatusAsessmenOlehAsesor(data.PendaftaranId)
+                await setStatusPersetujuanPenunjukanAsesor(data.PendaftaranId)
                 toast('Data Asesor Mahasiswa berhasil diubah')
                 let idx = dataAsesorMahasiswa.findIndex(
                     (r) => r.PendaftaranId === data.PendaftaranId
@@ -212,7 +197,7 @@ const PenunjukanAsesorComponent = ({
                 setDataAsesorMahasiswa(
                     replaceItemAtIndex(dataAsesorMahasiswa, idx, {
                         ...res,
-                        Status: 'Asessmen Oleh Asesor',
+                        Status: 'Persetujuan Wakil Rektor',
                     })
                 )
                 setOpenDialog(false)
@@ -263,7 +248,7 @@ const PenunjukanAsesorComponent = ({
             if (dataAsesor.length === 0 && selectedData.ProgramStudiId !== '') {
                 getAsesorFromProdiId(selectedData.ProgramStudiId)
                     .then((res) => setDataAsesor(res))
-                    .catch((err) => {})
+                    .catch((err) => { })
             }
         } else if (roleName === 'Asesor') {
             getAsesorMahasiswaPaginationFromAsesorRole(
@@ -323,18 +308,8 @@ const PenunjukanAsesorComponent = ({
         form.reset()
         setLoading(true)
         setOpenDialog(true)
-        setAsesorSelected(jd.Asesor.map((a) => a.AsesorId))
-        form.setValue(
-            'Asesor',
-            jd.Asesor.map((a) => ({
-                AssesorMahasiswaId: a.AssesorMahasiswaId,
-                AsesorId: a.AsesorId,
-                NamaTipeAsesor: a.NamaTipeAsesor,
-                NamaAsesor: a.NamaAsesor,
-                Urutan: a.Urutan,
-                Confirmation: a.Confirmation,
-            }))
-        )
+        form.setValue('AsesorPertama', jd.AsesorPertamaId)
+        form.setValue('AsesorKedua', jd.AsesorKeduaId)
         form.setValue('KodePendaftar', jd.KodePendaftar)
         form.setValue('NamaMahasiswa', jd.NamaMahasiswa)
         form.setValue('ProgramStudiId', jd.ProgramStudiId)
@@ -364,7 +339,8 @@ const PenunjukanAsesorComponent = ({
                     if (temp) {
                         setDataAsesorMahasiswa(
                             replaceItemAtIndex(dataAsesorMahasiswa, idx, {
-                                Asesor: [],
+                                AsesorPertamaId: temp.AsesorPertamaId,
+                                AsesorKeduaId: temp.AsesorKeduaId,
                                 PendaftaranId: temp.PendaftaranId,
                                 KodePendaftar: temp.KodePendaftar,
                                 NamaProgramStudi: temp.NamaProgramStudi,
@@ -419,8 +395,7 @@ const PenunjukanAsesorComponent = ({
             header: 'Nama Asesor 1',
             cell: ({ row }) => (
                 <div className="capitalize">
-                    {row.original.Asesor.find((x) => x.Urutan === 1)
-                        ?.NamaAsesor ?? '-'}
+                    {dataAsesor.find(y => y.AsesorId === row.original.AsesorPertamaId)?.Nama ?? (<Badge variant={'default'}>Belum Ada</Badge>)}
                 </div>
             ),
         },
@@ -429,8 +404,7 @@ const PenunjukanAsesorComponent = ({
             header: 'Nama Asesor 2',
             cell: ({ row }) => (
                 <div className="capitalize">
-                    {row.original.Asesor.find((x) => x.Urutan === 2)
-                        ?.NamaAsesor ?? '-'}
+                    {dataAsesor.find(y => y.AsesorId === row.original.AsesorKeduaId)?.Nama ?? (<Badge variant={'default'}>Belum Ada</Badge>)}
                 </div>
             ),
         },
@@ -461,25 +435,20 @@ const PenunjukanAsesorComponent = ({
                             {role?.Name.match('Kaprodi') && (
                                 <>
                                     {jd.Status === 'Penunjukan Asesor' ||
-                                        jd.Status === 'Pengisian Data Diri' ||
-                                        (jd.Asesor.length !== 0 &&
+                                        ((jd.AsesorPertamaId && jd.AsesorKeduaId) &&
                                             jd.Status ===
-                                                'Penunjukan Asesor' && (
+                                            'Penunjukan Asesor' && (
                                                 <DropdownMenuSeparator />
                                             ))}
-                                    {(jd.Status === 'Penunjukan Asesor' ||
-                                        jd.Status ===
-                                            'Pengisian Data Diri') && (
-                                        <DropdownMenuItem
-                                            onClick={() => ubahData(jd)}
-                                        >
-                                            Atur Asesor
-                                        </DropdownMenuItem>
-                                    )}
-                                    {jd.Asesor.length !== 0 &&
-                                        (jd.Status === 'Penunjukan Asesor' ||
-                                            jd.Status ===
-                                                'Pengisian Data Diri') && (
+                                    {jd.Status === 'Penunjukan Asesor' && (
+                                            <DropdownMenuItem
+                                                onClick={() => ubahData(jd)}
+                                            >
+                                                Atur Asesor
+                                            </DropdownMenuItem>
+                                        )}
+                                    {(jd.AsesorPertamaId && jd.AsesorKeduaId) &&
+                                        (jd.Status === 'Penunjukan Asesor')&& (
                                             <DropdownMenuItem
                                                 onClick={() => hapusData(jd)}
                                             >
@@ -630,7 +599,7 @@ const PenunjukanAsesorComponent = ({
                                     selectedData.ProgramStudiId
                                 )
                                     .then((res) => setDataAsesor(res))
-                                    .catch((err) => {})
+                                    .catch((err) => { })
                             }
                         }}
                     >
@@ -695,12 +664,12 @@ const PenunjukanAsesorComponent = ({
                                                                 {header.isPlaceholder
                                                                     ? null
                                                                     : flexRender(
-                                                                          header
-                                                                              .column
-                                                                              .columnDef
-                                                                              .header,
-                                                                          header.getContext()
-                                                                      )}
+                                                                        header
+                                                                            .column
+                                                                            .columnDef
+                                                                            .header,
+                                                                        header.getContext()
+                                                                    )}
                                                             </TableHead>
                                                         )
                                                     }
@@ -758,10 +727,10 @@ const PenunjukanAsesorComponent = ({
                                 1}{' '}
                             -{' '}
                             {paginationState.totalElement <
-                            paginationState.page * paginationState.limit
+                                paginationState.page * paginationState.limit
                                 ? paginationState.totalElement
                                 : paginationState.page *
-                                  paginationState.limit}{' '}
+                                paginationState.limit}{' '}
                             dari {paginationState.totalElement} Data.
                         </div>
                         <div className="flex items-center space-x-2 mt-4">
@@ -853,8 +822,6 @@ const PenunjukanAsesorComponent = ({
                     form={form}
                     universityDataServer={universityDataServer}
                     selectedData={selectedData}
-                    asesorSelected={asesorSelected}
-                    setAsesorSelected={setAsesorSelected}
                     dataAsesor={dataAsesor}
                     setDataAsesor={setDataAsesor}
                 />
@@ -930,11 +897,11 @@ const PenunjukanAsesorComponent = ({
                                                     {header.isPlaceholder
                                                         ? null
                                                         : flexRender(
-                                                              header.column
-                                                                  .columnDef
-                                                                  .header,
-                                                              header.getContext()
-                                                          )}
+                                                            header.column
+                                                                .columnDef
+                                                                .header,
+                                                            header.getContext()
+                                                        )}
                                                 </TableHead>
                                             )
                                         })}
@@ -986,7 +953,7 @@ const PenunjukanAsesorComponent = ({
                             1}{' '}
                         -{' '}
                         {paginationState.totalElement <
-                        paginationState.page * paginationState.limit
+                            paginationState.page * paginationState.limit
                             ? paginationState.totalElement
                             : paginationState.page * paginationState.limit}{' '}
                         dari {paginationState.totalElement} Data.
@@ -1139,11 +1106,11 @@ const PenunjukanAsesorComponent = ({
                                                     {header.isPlaceholder
                                                         ? null
                                                         : flexRender(
-                                                              header.column
-                                                                  .columnDef
-                                                                  .header,
-                                                              header.getContext()
-                                                          )}
+                                                            header.column
+                                                                .columnDef
+                                                                .header,
+                                                            header.getContext()
+                                                        )}
                                                 </TableHead>
                                             )
                                         })}
@@ -1195,7 +1162,7 @@ const PenunjukanAsesorComponent = ({
                             1}{' '}
                         -{' '}
                         {paginationState.totalElement <
-                        paginationState.page * paginationState.limit
+                            paginationState.page * paginationState.limit
                             ? paginationState.totalElement
                             : paginationState.page * paginationState.limit}{' '}
                         dari {paginationState.totalElement} Data.
@@ -1299,8 +1266,6 @@ export function SheetManageData({
     form,
     universityDataServer,
     selectedData,
-    asesorSelected,
-    setAsesorSelected,
     dataAsesor,
     setDataAsesor,
 }: {
@@ -1323,8 +1288,6 @@ export function SheetManageData({
         NamaProgramStudi: string
         NamaUniversity: string
     }
-    asesorSelected: string[]
-    setAsesorSelected: React.Dispatch<React.SetStateAction<string[]>>
     dataAsesor: ResponseAsesorFromProdi[]
     setDataAsesor: React.Dispatch<
         React.SetStateAction<ResponseAsesorFromProdi[]>
@@ -1352,7 +1315,7 @@ export function SheetManageData({
                             <form
                                 onSubmit={form.handleSubmit(
                                     onSubmit,
-                                    (err) => {}
+                                    (err) => { }
                                 )}
                             >
                                 <SheetHeader>
@@ -1455,17 +1418,91 @@ export function SheetManageData({
                                                     </FormItem>
                                                 )}
                                             />
-                                            <MultiSelect
-                                                options={dataAsesor.map(
-                                                    (p) => ({
-                                                        label: p.Nama,
-                                                        value: p.AsesorId,
-                                                    })
+                                            <FormField
+                                                control={form.control}
+                                                name="AsesorPertama"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Nama Asessor Pertama
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                disabled={loading || dataAsesor.length === 0}
+                                                                value={field.value ?? ''}
+                                                                onValueChange={
+                                                                    field.onChange
+                                                                }
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Asessor Pertama" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectGroup>
+                                                                        {
+                                                                            dataAsesor.map(x => (
+                                                                                <SelectItem
+                                                                                    value={
+                                                                                        x.AsesorId
+                                                                                    }
+                                                                                >
+                                                                                    {x.Nama} ({x.BebanKerja} Asess)
+                                                                                </SelectItem>
+                                                                            ))
+                                                                        }
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Nama Asessor Pertama
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
                                                 )}
-                                                selected={asesorSelected}
-                                                onChange={setAsesorSelected}
-                                                placeholder="Pilih Asesor"
-                                                className="w-full"
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="AsesorKedua"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Nama Asessor Kedua
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                disabled={loading || dataAsesor.length === 0}
+                                                                value={field.value ?? ''}
+                                                                onValueChange={
+                                                                    field.onChange
+                                                                }
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Asessor Kedua" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectGroup>
+                                                                        {
+                                                                            dataAsesor.map(x => (
+                                                                                <SelectItem
+                                                                                    value={
+                                                                                        x.AsesorId
+                                                                                    }
+                                                                                >
+                                                                                    {x.Nama} ({x.BebanKerja} Asess)
+                                                                                </SelectItem>
+                                                                            ))
+                                                                        }
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Nama Asessor Kedua
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
                                             />
                                         </div>
                                     </div>

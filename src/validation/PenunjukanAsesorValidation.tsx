@@ -1,16 +1,8 @@
 import { z } from 'zod'
 
-export const AsesorSkemaValidation = z.object({
-    AssesorMahasiswaId: z.string(),
-    AsesorId: z.string(),
-    NamaTipeAsesor: z.string().min(1, 'Nama TipeAsesor perlu diisi'),
-    NamaAsesor: z.string().min(1, 'Nama Asesor perlu diisi'),
-    Urutan: z.number().min(0, 'Urutan dimulai dari 0'),
-    Confirmation: z.boolean(),
-})
-
 export const AsesorMahasiswaSkemaValidation = z.object({
-    Asesor: z.array(AsesorSkemaValidation),
+    AsesorPertama: z.string(),
+    AsesorKedua: z.string(),
     ProgramStudiId: z.string(),
     PendaftaranId: z.string(),
     KodePendaftar: z.string().min(1, 'Kode Pendaftar perlu diisi'),

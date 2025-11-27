@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PersetujuanAsesor({universityDataServer}: {universityDataServer:{
+export default function PersetujuanHasilComponent({universityDataServer}: {universityDataServer:{
     Nama: string;
     UniversityId: string;
     ProgramStudi: {
@@ -9,6 +9,6 @@ export default function PersetujuanAsesor({universityDataServer}: {universityDat
     }[];
 }[]}) {
   return (
-    <div>PersetujuanAsesor</div>
+    <div>PersetujuanHasil</div>
   )
 }

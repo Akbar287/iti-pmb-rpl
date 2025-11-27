@@ -2,6 +2,7 @@ export type ResponseAsesorFromProdi = {
     AsesorId: string
     UserId: string
     Nama: string
+    BebanKerja: number
     AssesorMahasiswa: {
         Confirmation: boolean
     }[]
@@ -36,26 +37,16 @@ export type ResponseMhsFromAsesorSession = {
 }
 
 export type RequestPenunjukanAsesor = {
-    Asesor: {
-        AssesorMahasiswaId: string
-        AsesorId: string
-        Urutan: number
-        Confirmation: boolean
-    }[]
+    AsesorPertamaId: string
+    AsesorKeduaId: string
     PendaftaranId: string
     ProgramStudiId: string
     KodePendaftar: string
 }
 
 export type ResponsePenunjukanAsesor = {
-    Asesor: {
-        AssesorMahasiswaId: string
-        AsesorId: string
-        NamaTipeAsesor: string
-        NamaAsesor: string
-        Urutan: number
-        Confirmation: boolean
-    }[]
+    AsesorPertamaId: string
+    AsesorKeduaId: string
     ProgramStudiId: string
     PendaftaranId: string
     KodePendaftar: string
@@ -94,4 +85,32 @@ export type ResponseAsesorMahasiswa = {
     PI: string
     NA: string
     NM: string
+}
+
+export type ResponsePenunjukanAsesorForWarek = {
+    AsesorPertamaId: string
+    NamaAsesorPertama: string
+    BebanAsesorPertama: number
+    AsesorKeduaId: string
+    NamaAsesorKedua: string
+    BebanAsesorKedua: number
+    PendaftaranId: string
+    KodePendaftar: string
+    NamaProgramStudi: string
+    NamaMahasiswa: string
+    Status: string
+}
+
+export const ResponsePenunjukanAsesorForWarekValue = {
+    AsesorPertamaId: '',
+    NamaAsesorPertama: '',
+    BebanAsesorPertama: 0,
+    AsesorKeduaId: '',
+    NamaAsesorKedua: '',
+    BebanAsesorKedua: 0,
+    PendaftaranId: '',
+    KodePendaftar: '',
+    NamaProgramStudi: '',
+    NamaMahasiswa: '',
+    Status: '',
 }

@@ -1,0 +1,288 @@
+import { Prisma } from '@/generated/prisma'
+import { prisma } from '@/lib/prisma'
+import { withApiAuth } from '@/middlewares/api-auth'
+import { ResponsePenunjukanAsesorForWarek } from '@/types/PenunjukanAsesor'
+import { Hono } from 'hono'
+import { handle } from 'hono/vercel'
+
+const app = new Hono().basePath('/api/protected/approval/asesor')
+
+app.use('*', withApiAuth)
+
+app.get('/', async (c) => {
+    const page = parseInt(c.req.query('page') || '1', 10)
+    const limit = parseInt(c.req.query('limit') || '10', 10)
+    const search = c.req.query('search') || ''
+
+    let where: Prisma.DaftarUlangWhereInput = search
+        ? {
+            Pendaftaran: {
+                StatusMahasiswaAssesmentHistory: {
+                    some: {
+                        Aktif: true,
+                        StatusMahasiswaAssesment: {
+                            NamaStatus: "Persetujuan Penunjukan Asesor",
+                        },
+                    },
+                },
+                OR: [
+                    {
+                        Mahasiswa: {
+                            User: {
+                                Nama: {
+                                    contains: search,
+                                    mode: "insensitive",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        KodePendaftar: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        AssesorMahasiswa: {
+                            some: {
+                                Asesor: {
+                                    User: {
+                                        Nama: {
+                                            contains: search,
+                                            mode: "insensitive",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        }
+        : {
+            Pendaftaran: {
+                StatusMahasiswaAssesmentHistory: {
+                    some: {
+                        Aktif: true,
+                        StatusMahasiswaAssesment: {
+                            NamaStatus: "Persetujuan Penunjukan Asesor",
+                        },
+                    },
+                },
+            },
+        };
+
+    const [data, total] = await Promise.all([
+        prisma.daftarUlang.findMany({
+            select: {
+                Pendaftaran: {
+                    select: {
+                        StatusMahasiswaAssesmentHistory: {
+                            select: {
+                                Aktif: true,
+                                StatusMahasiswaAssesment: {
+                                    select: {
+                                        NamaStatus: true
+                                    }
+                                }
+                            }
+                        },
+                        KodePendaftar: true,
+                        PendaftaranId: true,
+                        Mahasiswa: {
+                            select: {
+                                User: {
+                                    select: {
+                                        UserId: true,
+                                        Nama: true,
+                                    },
+                                },
+                                MahasiswaId: true,
+                            }
+                        },
+                        AssesorMahasiswa: {
+                            select: {
+                                AssesorMahasiswaId: true,
+                                Urutan: true,
+                                Confirmation: true,
+                                Asesor: {
+                                    select: {
+                                        AssesorMahasiswa: {
+                                            select: { AssesorMahasiswaId: true }
+                                        },
+                                        AsesorId: true,
+                                        TipeAsesor: {
+                                            select: {
+                                                TipeAsesorId: true,
+                                                Nama: true,
+                                            }
+                                        },
+                                        User: {
+                                            select: {
+                                                UserId: true,
+                                                Nama: true,
+                                            },
+                                        },
+                                    },
+                                }
+                            },
+                        },
+                    }
+                },
+                ProgramStudi: {
+                    select: {
+                        ProgramStudiId: true,
+                        Nama: true,
+                    },
+                }
+            },
+            where,
+            skip: (page - 1) * limit,
+            take: limit,
+            orderBy: { Pendaftaran: { KodePendaftar: 'asc' } },
+        }),
+
+        prisma.daftarUlang.count({
+            where,
+        }),
+    ])
+    const responses: ResponsePenunjukanAsesorForWarek[] = data.map(item => ({
+        AsesorPertamaId: item.Pendaftaran.AssesorMahasiswa.find(c => c.Urutan == 1)?.Asesor.AsesorId ?? '',
+        NamaAsesorPertama: item.Pendaftaran.AssesorMahasiswa.find(c => c.Urutan == 1)?.Asesor.User.Nama ?? '',
+        BebanAsesorPertama: item.Pendaftaran.AssesorMahasiswa.find(c => c.Urutan == 1)?.Asesor.AssesorMahasiswa.length ?? 0,
+        AsesorKeduaId: item.Pendaftaran.AssesorMahasiswa.find(c => c.Urutan == 2)?.Asesor.AsesorId ?? '',
+        NamaAsesorKedua: item.Pendaftaran.AssesorMahasiswa.find(c => c.Urutan == 2)?.Asesor.User.Nama ?? '',
+        BebanAsesorKedua: item.Pendaftaran.AssesorMahasiswa.find(c => c.Urutan == 2)?.Asesor.AssesorMahasiswa.length ?? 0,
+        Status: item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
+        KodePendaftar: item.Pendaftaran.KodePendaftar,
+        ProgramStudiId: item.ProgramStudi.ProgramStudiId,
+        PendaftaranId: item.Pendaftaran.PendaftaranId,
+        NamaProgramStudi: item.ProgramStudi.Nama,
+        NamaMahasiswa: item.Pendaftaran.Mahasiswa.User.Nama,
+    }))
+
+    return c.json<{
+        data: ResponsePenunjukanAsesorForWarek[]
+        page: number
+        limit: number
+        totalElement: number
+        totalPage: number
+        isFirst: boolean
+        isLast: boolean
+        hasNext: boolean
+        hasPrevious: boolean
+    }>({
+        page: page,
+        limit: limit,
+        data: responses,
+        totalElement: total,
+        totalPage: Math.ceil(total / limit),
+        isFirst: page === 1,
+        isLast:
+            page === Math.ceil(total / limit) ||
+            Math.ceil(total / limit) === 0,
+        hasNext: page < Math.ceil(total / limit),
+        hasPrevious: page > 1,
+    })
+})
+
+app.post('/', async (c) => {
+    const body: {
+        pendaftaranId: string
+        approval: string
+        catatan: string
+    } = await c.req.json()
+
+    const asesorMahasiswa = await prisma.pendaftaran.findFirst({
+        where: { PendaftaranId: body.pendaftaranId }, select: {
+            AssesorMahasiswa: {
+                select: {
+                    AssesorMahasiswaId: true,
+                    AsesorId: true,
+                    Urutan: true,
+                    Confirmation: true,
+                    SkRektorAssesor: {
+                        select: {
+                            SkRektor: {
+                                select: {
+                                    SkRektorId: true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    if (!asesorMahasiswa) return c.json(null);
+
+    if (body.approval) {
+        const AssesorMahasiswaIdBatch = asesorMahasiswa.AssesorMahasiswa.map(x => x.AssesorMahasiswaId)
+
+        await prisma.assesorMahasiswa.updateMany({
+            where: {
+                AssesorMahasiswaId: {
+                    in: AssesorMahasiswaIdBatch,
+                },
+            },
+            data: {
+                Confirmation: true,
+            },
+        });
+
+    }
+
+    const TipeSkRektor = await prisma.tipeSkRektor.findFirst({
+        where: {
+            Nama: 'Asesor'
+        }, select: {TipeSkRektorId: true}
+    })
+    if (!TipeSkRektor) return c.json(null);
+
+    for (const x of asesorMahasiswa.AssesorMahasiswa) {
+        if (x.SkRektorAssesor.length > 0) {
+            const sk = x.SkRektorAssesor[0].SkRektor;
+            await prisma.skRektor.update({
+                where: {
+                    SkRektorId: sk.SkRektorId,
+                },
+                data: {
+                    Catatan: body.catatan,
+                    UpdatedAt: new Date(),
+                },
+            });
+        } else {
+            const temp = await prisma.skRektor.create({
+                data: {
+                    TipeSkRektorId: TipeSkRektor.TipeSkRektorId,
+                    NamaSk: "",
+                    TahunSk: 2020,
+                    NomorSk: "",
+                    NamaFile: "",
+                    NamaDokumen: "",
+                    FileData: Buffer.alloc(0),
+                    Catatan: body.catatan,
+                    CreatedAt: new Date(),
+                    UpdatedAt: new Date(),
+                },
+            });
+
+            await prisma.skRektorAssesor.create({
+                data: {
+                    SkRektorId: temp.SkRektorId,
+                    AssesorMahasiswaId: x.AssesorMahasiswaId,
+                },
+            });
+        }
+    }
+
+    return c.json({
+        status: 'success',
+        message: 'approval success',
+        data: []
+    })
+})
+
+export const GET = handle(app)
+export const POST = handle(app)

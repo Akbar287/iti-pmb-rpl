@@ -364,6 +364,12 @@ app.post('/', async (c) => {
 
     const result = await streamText({
         model: ollama("gpt-oss:20b"),
+        temperature: 0,
+        topK: 20,
+        topP: 0.8,
+        maxOutputTokens: 300,
+        presencePenalty: 0,
+        frequencyPenalty: 0,
         messages: [
             {
                 role: "user",
@@ -562,15 +568,10 @@ Berdasarkan data di atas, hasilkan penilaian dengan format JSON PERSIS seperti i
     "nilai": "jelaskan penilaian yang didapat",
   }
 }
-
-Aturan:
-- Fokus hanya pada kategori: valid, autentik, terkini, memadai.
-- Pertimbangkan profisiensi mahasiswa:
-  - "TIDAK PERNAH" → bukti kemungkinan tidak memadai.
-  - "BAIK" → bukti harus menunjukkan kompetensi cukup.
-  - "BAIK SEKALI" → bukti harus kuat dan konsisten.
-- Gunakan ringkasan Qwen, daftar angka penting, serta detail transkrip (jika relevan).
-- Jawab HANYA dengan JSON valid tanpa teks lain di luar JSON.
+IMPORTANT:
+- gunakan penalaran minimum.
+- jangan tampilkan langkah berpikir.
+- langsung keluarkan JSON valid.
 `.trim();
 
 }

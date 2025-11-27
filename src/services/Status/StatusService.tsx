@@ -33,6 +33,58 @@ export async function setStatusAsessmenMandiri(PendaftaranId: string): Promise<{
     if (!res.ok) throw new Error('Failed to change status')
     return res.json()
 }
+// New
+export async function setStatusPenunjukanAsesor(
+    PendaftaranId: string
+): Promise<{
+    status: string
+    data: any
+    message: string
+}> {
+    const params = new URLSearchParams({
+        p: String(PendaftaranId),
+        j: String('pa'),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/status?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to change status')
+    return res.json()
+}
+export async function setStatusPersetujuanPenunjukanAsesor(
+    PendaftaranId: string
+): Promise<{
+    status: string
+    data: any
+    message: string
+}> {
+    const params = new URLSearchParams({
+        p: String(PendaftaranId),
+        j: String('ppa'),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/status?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to change status')
+    return res.json()
+}
+export async function setStatusPenerbitanSkPenunjukanAsesor(
+    PendaftaranId: string
+): Promise<{
+    status: string
+    data: any
+    message: string
+}> {
+    const params = new URLSearchParams({
+        p: String(PendaftaranId),
+        j: String('pspa'),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/status?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to change status')
+    return res.json()
+}
 export async function setStatusAsessmenOlehAsesor(
     PendaftaranId: string
 ): Promise<{
@@ -50,6 +102,7 @@ export async function setStatusAsessmenOlehAsesor(
     if (!res.ok) throw new Error('Failed to change status')
     return res.json()
 }
+// end New
 export async function setStatusRekapitulasiAsessmen(
     PendaftaranId: string
 ): Promise<{
@@ -99,6 +152,25 @@ export async function setStatusHasilFinalAsessmen(
     if (!res.ok) throw new Error('Failed to change status')
     return res.json()
 }
+// NEw
+export async function setStatusPersetujuanHasilFinalAsessmen(
+    PendaftaranId: string
+): Promise<{
+    status: string
+    data: any
+    message: string
+}> {
+    const params = new URLSearchParams({
+        p: String(PendaftaranId),
+        j: String('phfa'),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/status?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to change status')
+    return res.json()
+}
+//End New
 export async function setStatusPenerbitanSKAsessmen(
     PendaftaranId: string
 ): Promise<{
@@ -116,7 +188,7 @@ export async function setStatusPenerbitanSKAsessmen(
     if (!res.ok) throw new Error('Failed to change status')
     return res.json()
 }
-export async function setStatusPenunjukanAsesor(
+export async function setStatusSinkronisasiHasilAsessmen(
     PendaftaranId: string
 ): Promise<{
     status: string
@@ -125,7 +197,24 @@ export async function setStatusPenunjukanAsesor(
 }> {
     const params = new URLSearchParams({
         p: String(PendaftaranId),
-        j: String('pa'),
+        j: String('sha'),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/status?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to change status')
+    return res.json()
+}
+export async function setStatusSelesai(
+    PendaftaranId: string
+): Promise<{
+    status: string
+    data: any
+    message: string
+}> {
+    const params = new URLSearchParams({
+        p: String(PendaftaranId),
+        j: String('done'),
     })
     const res = await fetch(
         `${BASE_URL}/api/protected/status?${params.toString()}`

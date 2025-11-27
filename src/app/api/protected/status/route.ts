@@ -17,7 +17,6 @@ app.get('/', async (c) => {
     const pendaftaran = await prisma.pendaftaran.findFirst({
         where: { PendaftaranId: pendaftaranId },
     })
-
     if (pendaftaran && jenis) {
         const statusByJenis: Record<string, string[]> = {
             pdd: ['Pengisian Data Diri'],
@@ -27,16 +26,33 @@ app.get('/', async (c) => {
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
             ],
+            ppa: [
+                'Pengisian Data Diri',
+                'Asessmen Mandiri',
+                'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor'
+            ],
+            pspa: [
+                'Pengisian Data Diri',
+                'Asessmen Mandiri',
+                'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor'
+            ],
             aoa: [
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
-                'Asessmen Oleh Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
+                'Asessmen Oleh Asesor'
             ],
             ra: [
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
             ],
@@ -44,6 +60,8 @@ app.get('/', async (c) => {
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
@@ -52,21 +70,67 @@ app.get('/', async (c) => {
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
                 'Hasil Final Asessmen',
+            ],
+            phfa: [
+                'Pengisian Data Diri',
+                'Asessmen Mandiri',
+                'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
+                'Asessmen Oleh Asesor',
+                'Rekapitulasi Asessmen',
+                'Sanggahan',
+                'Hasil Final Asessmen',
+                'Persetujuan Hasil Final'
             ],
             psa: [
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
                 'Hasil Final Asessmen',
+                'Persetujuan Hasil Final',
                 'Penerbitan SK Asessmen',
             ],
+            sha: [
+                'Pengisian Data Diri',
+                'Asessmen Mandiri',
+                'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
+                'Asessmen Oleh Asesor',
+                'Rekapitulasi Asessmen',
+                'Sanggahan',
+                'Hasil Final Asessmen',
+                'Persetujuan Hasil Final',
+                'Penerbitan SK Asessmen',
+                'Sinkronisasi Hasil Asessmen'
+            ],
+            done: [
+                'Pengisian Data Diri',
+                'Asessmen Mandiri',
+                'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Penerbitan SK Penugasan Asesor',
+                'Asessmen Oleh Asesor',
+                'Rekapitulasi Asessmen',
+                'Sanggahan',
+                'Hasil Final Asessmen',
+                'Persetujuan Hasil Final',
+                'Penerbitan SK Asessmen',
+                'Sinkronisasi Hasil Asessmen',
+                'Selesai'
+            ]
         }
 
         const selected = {
@@ -77,11 +141,16 @@ app.get('/', async (c) => {
             'Pengisian Data Diri',
             'Asessmen Mandiri',
             'Penunjukan Asesor',
+            'Persetujuan Penunjukan Asesor',
+            'Penerbitan SK Penugasan Asesor',
             'Asessmen Oleh Asesor',
             'Rekapitulasi Asessmen',
             'Sanggahan',
             'Hasil Final Asessmen',
+            'Persetujuan Hasil Final',
             'Penerbitan SK Asessmen',
+            'Sinkronisasi Hasil Asessmen',
+            'Selesai'
         ]
 
         const lastStatus = selected.add[selected.add.length - 1]

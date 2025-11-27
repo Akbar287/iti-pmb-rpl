@@ -1,4 +1,4 @@
-import PersetujuanHasil from '@/components/approval/PersetujuanHasil'
+import PersetujuanHasilComponent from '@/components/approval/PersetujuanHasilComponent'
 import { prisma } from '@/lib/prisma'
 import { getSession } from '@/provider/api'
 import React from 'react'
@@ -21,7 +21,7 @@ const Page = async () => {
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Persetujuan Hasil Asessmen</h1>
-            <PersetujuanHasil universityDataServer={universityDataServer} />
+            <PersetujuanHasilComponent universityDataServer={universityDataServer} />
         </div>
     )
 }
