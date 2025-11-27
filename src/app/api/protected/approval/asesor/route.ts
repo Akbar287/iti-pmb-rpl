@@ -236,46 +236,62 @@ app.post('/', async (c) => {
     const TipeSkRektor = await prisma.tipeSkRektor.findFirst({
         where: {
             Nama: 'Asesor'
-        }, select: {TipeSkRektorId: true}
+        }, select: { TipeSkRektorId: true }
     })
-    if (!TipeSkRektor) return c.json(null);
+    if (!TipeSkRektor) {
+        return c.json(
+            { status: "error", message: "Tipe SK Rektor 'Asesor' tidak ditemukan", data: [] },
+            { status: 400 }
+        );
+    }
 
-    for (const x of asesorMahasiswa.AssesorMahasiswa) {
-        if (x.SkRektorAssesor.length > 0) {
-            const sk = x.SkRektorAssesor[0].SkRektor;
-            await prisma.skRektor.update({
-                where: {
-                    SkRektorId: sk.SkRektorId,
-                },
+    if (!asesorMahasiswa || asesorMahasiswa.AssesorMahasiswa.length === 0) {
+        return c.json(
+            { status: "error", message: "Asesor Mahasiswa belum ada relasi", data: [] },
+            { status: 400 }
+        );
+    }
+
+    const skIds = asesorMahasiswa.AssesorMahasiswa.flatMap((am) =>
+        am.SkRektorAssesor.map((sra) => sra.SkRektor.SkRektorId)
+    );
+
+    const uniqueSkIds = [...new Set(skIds)];
+
+    const baseSkData = {
+        TipeSkRektorId: TipeSkRektor.TipeSkRektorId,
+        NamaSk: "",
+        TahunSk: 2020,
+        NomorSk: "",
+        NamaFile: "",
+        NamaDokumen: "",
+        FileData: Buffer.alloc(0),
+        Catatan: body.catatan,
+        UpdatedAt: new Date(),
+    } as const;
+
+    await prisma.$transaction(async (tx) => {
+        if (uniqueSkIds.length === 0) {
+            const sk = await tx.skRektor.create({
                 data: {
-                    Catatan: body.catatan,
-                    UpdatedAt: new Date(),
-                },
-            });
-        } else {
-            const temp = await prisma.skRektor.create({
-                data: {
-                    TipeSkRektorId: TipeSkRektor.TipeSkRektorId,
-                    NamaSk: "",
-                    TahunSk: 2020,
-                    NomorSk: "",
-                    NamaFile: "",
-                    NamaDokumen: "",
-                    FileData: Buffer.alloc(0),
-                    Catatan: body.catatan,
+                    ...baseSkData,
                     CreatedAt: new Date(),
-                    UpdatedAt: new Date(),
                 },
             });
 
-            await prisma.skRektorAssesor.create({
-                data: {
-                    SkRektorId: temp.SkRektorId,
-                    AssesorMahasiswaId: x.AssesorMahasiswaId,
-                },
+            const relasi = asesorMahasiswa.AssesorMahasiswa.map((am) => ({
+                AssesorMahasiswaId: am.AssesorMahasiswaId,
+                SkRektorId: sk.SkRektorId,
+            }));
+
+            await tx.skRektorAssesor.createMany({ data: relasi });
+        } else {
+            await tx.skRektor.update({
+                where: { SkRektorId: uniqueSkIds[0] },
+                data: baseSkData,
             });
         }
-    }
+    });
 
     return c.json({
         status: 'success',

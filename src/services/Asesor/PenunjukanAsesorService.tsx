@@ -84,6 +84,14 @@ export async function getAsesorFromProdiId(
     return res.json()
 }
 
+export async function getAllAsesor(): Promise<ResponseAsesorFromProdi[]> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asesor/penunjukan-asesor?jenis=get-all-asesor`
+    )
+    if (!res.ok) throw new Error('Failed to fetch asesor')
+    return res.json()
+}
+
 export async function getMahasiswaFromAsesorId(
     asesorId: string
 ): Promise<ResponseMhsFromAsesor[]> {

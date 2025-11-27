@@ -5,9 +5,10 @@ import { handle } from 'hono/vercel'
 import mime from 'mime'
 import { v4 as uuidv4 } from 'uuid'
 import { ResponseAsesorMahasiswa, ResponseSkRektorAsesor, ResponseSkRektorAsesorDetail } from '@/types/PenunjukanAsesor'
+import { cookies } from 'next/headers'
 
 const app = new Hono().basePath('/api/protected/asesor/sk')
-
+const BASE_URL = process.env.BACKEND_API_BASE_URL
 app.use('*', withApiAuth)
 
 app.get('/', async (c) => {
@@ -463,10 +464,10 @@ app.post('/', async (c) => {
     const body = await c.req.parseBody()
 
     const file = body.files
-    const NamaSk = body.NamaSk
-    const TahunSk = body.TahunSk
+    const NamaSk: string = body.NamaSk as string
+    const TahunSk: string = body.TahunSk as string
     const NomorSk = body.NomorSk
-    const ArrayRelation: string[] = JSON.parse(body.ArrayRelation as string)
+    const PendaftaranId: string = body.PendaftaranId as string
 
     const tipeAsesor = await prisma.tipeSkRektor.findFirst({
         where: { Nama: 'Asesor' },
@@ -487,6 +488,13 @@ app.post('/', async (c) => {
     if (!NomorSk) {
         return c.json(
             { status: 'error', message: 'Nomor SK Perlu diisi', data: [] },
+            { status: 400 }
+        )
+    }
+
+    if (!PendaftaranId) {
+        return c.json(
+            { status: 'error', message: 'PendaftaranId Perlu diisi', data: [] },
             { status: 400 }
         )
     }
@@ -540,19 +548,103 @@ app.post('/', async (c) => {
         )
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const originalFileName = file.name
-    const filename = `${uuidv4()}.${fileExt}`
-    const data = await prisma.skRektor.create({
+    const asessorMahasiswa = await prisma.assesorMahasiswa.findMany({
+        where: { PendaftaranId },
+        select: {
+            AssesorMahasiswaId: true,
+            Asesor: {
+                select: {
+                    User: {
+                        select: {
+                            Nama: true,
+                            NomorWa: true
+                        }
+                    }
+                }
+            },
+            Pendaftaran: {
+                select: {
+                    Mahasiswa: {
+                        select: {
+                            User: {
+                                select: {
+                                    Nama: true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            PendaftaranId: true,
+            Urutan: true,
+            Confirmation: true,
+            SkRektorAssesor: {
+                select: {
+                    SkRektor: {
+                        select: {
+                            SkRektorId: true,
+                        },
+                    },
+                },
+            },
+        },
+    });
+
+    if (asessorMahasiswa.length === 0) {
+        return c.json(
+            {
+                status: "error",
+                message: "Asesor Mahasiswa belum ada relasi",
+                data: [],
+            },
+            { status: 400 },
+        );
+    }
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const originalFileName = file.name;
+    const filename = `${uuidv4()}.${fileExt}`;
+
+    // Kumpulkan semua SkRektorId dari relasi
+    const skRektorIds = asessorMahasiswa.flatMap((x) =>
+        x.SkRektorAssesor.map((y) => y.SkRektor.SkRektorId),
+    );
+
+    // Unikkan (jaga-jaga kalau duplicate)
+    const uniqueSkRektorIds = [...new Set(skRektorIds)];
+
+    if (uniqueSkRektorIds.length === 0) {
+        return c.json(
+            {
+                status: "error",
+                message: "Belum ada SK Rektor yang terkait dengan asesor mahasiswa ini",
+                data: [],
+            },
+            { status: 400 },
+        );
+    }
+
+    if (uniqueSkRektorIds.length > 1) {
+        console.warn(
+            "Peringatan: ditemukan lebih dari satu SkRektorId untuk satu Pendaftaran",
+            uniqueSkRektorIds,
+        );
+    }
+
+    const skRektorId = uniqueSkRektorIds[0];
+
+    const updatedSk = await prisma.skRektor.update({
+        where: {
+            SkRektorId: skRektorId,
+        },
         data: {
             TipeSkRektorId: tipeAsesor.TipeSkRektorId,
             NamaSk: NamaSk as string,
-            TahunSk: parseInt(TahunSk as string),
+            TahunSk: parseInt(TahunSk as string, 10),
             NomorSk: NomorSk as string,
             NamaFile: filename,
             FileData: buffer,
             NamaDokumen: originalFileName,
-            CreatedAt: new Date(),
             UpdatedAt: new Date(),
         },
         select: {
@@ -564,30 +656,42 @@ app.post('/', async (c) => {
             NamaDokumen: true,
             CreatedAt: true,
             UpdatedAt: true,
-            _count: {
-                select: {
-                    SkRektorAssesor: true,
-                },
-            },
         },
-    })
+    });
 
-    await prisma.skRektorAssesor.createMany({
-        data: ArrayRelation.map((a) => ({
-            SkRektorId: data.SkRektorId,
-            AssesorMahasiswaId: a,
-        })),
-    })
+    // Wa ke Asessor
+    const cookieHeader = cookies().toString();
+
+    await Promise.all(
+        asessorMahasiswa.map(async (x) => {
+            const target = x.Asesor.User.NomorWa ?? x.Asesor.User.NomorWa ?? "";
+            if (!target) return;
+
+            const params = new URLSearchParams({
+                target: String(target),
+                message: `Halo, ${x.Asesor.User.Nama}. Anda sudah ditunjuk untuk melakukan asessmen terhadap mahasiswa yang bernama ${x.Pendaftaran.Mahasiswa.User.Nama}. Selain itu, SK Rektor untuk asess mahasiswa tersebut sudah terbit dengan Nomor SK ${updatedSk.NomorSk} dengan Nama SK ${updatedSk.NamaSk}. Anda bisa unduh melalui Sistem Informasi RPL Terpadu ITI. Sekian, Terima Kasih.`,
+                jenis: "sendWaText",
+            });
+
+            await fetch(`${BASE_URL}/api/protected/whatsapp?${params.toString()}`, {
+                method: "POST",
+                headers: {
+                    cookie: cookieHeader,
+                    "Content-Type": "application/json",
+                },
+            });
+        }),
+    );
+
 
     return c.json<ResponseSkRektorAsesor>({
-        SkRektorId: data.SkRektorId,
-        NamaSk: data.NamaSk,
-        TahunSk: data.TahunSk,
-        NomorSk: data.NomorSk,
-        NamaFile: data.NamaFile,
-        NamaDokumen: data.NamaDokumen,
-        AsesorRelation: data._count.SkRektorAssesor,
-    })
+        SkRektorId: updatedSk.SkRektorId,
+        NamaSk: updatedSk.NamaSk,
+        TahunSk: updatedSk.TahunSk,
+        NomorSk: updatedSk.NomorSk,
+        NamaFile: updatedSk.NamaFile,
+        NamaDokumen: updatedSk.NamaDokumen,
+    });
 })
 
 app.delete('/', async (c) => {

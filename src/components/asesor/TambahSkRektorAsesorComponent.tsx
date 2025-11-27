@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -17,7 +18,6 @@ import {
     TableBody,
     TableCell,
     TableHead,
-    TableHeader,
     TableRow,
 } from '../ui/table'
 import {
@@ -25,87 +25,45 @@ import {
     SkRektorSkemaValidasiTipe,
 } from '@/validation/SkRektorAsesorValidation'
 import {
-    getAsesorMahasiswaPagination,
+    getFileBlobByNamafile,
     setSkRektorAsesor,
 } from '@/services/Asesor/SkRektor'
 import { Input } from '../ui/input'
-import { Checkbox } from '../ui/checkbox'
 import { Button } from '../ui/button'
-import { ChevronLeft, ChevronRight, PenIcon } from 'lucide-react'
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from '../ui/select'
-import { useRouter } from 'next/navigation'
-import { ResponseAsesorMahasiswa } from '@/types/PenunjukanAsesor'
-const TambahSkRektorAsesorComponent = () => {
-    const router = useRouter()
+import { PenIcon } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
+import { setStatusAsessmenOlehAsesor } from '@/services/Status/StatusService'
+
+const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
+    status: { NamaStatus: string; Urutan: number; Aktif: boolean}[]
+    dataServer: {
+        PendaftaranId: string;
+        NamaProgramStudi: string;
+        NamaMahasiswa: string
+        NamaAsesorPertama: string;
+        NamaAsesorKedua: string;
+        NamaFile: string;
+        NamaDokumen: string;
+        SkRektorId: string;
+        NamaSk: string;
+        TahunSk: string;
+        NomorSk: string;
+        Catatan: string
+    }
+}) => {
+
     const [loading, setLoading] = React.useState<boolean>(false)
-    const [asesorSelected, setAsesorSelected] = React.useState<
-        ResponseAsesorMahasiswa[]
-    >([])
-    const [search, setSearch] = React.useState<string>('')
-    const [paginationState, setPaginationState] = React.useState<{
-        page: number
-        limit: number
-        totalElement: number
-        totalPage: number
-        isFirst: boolean
-        isLast: boolean
-        hasNext: boolean
-        hasPrevious: boolean
-    }>({
-        page: 1,
-        limit: 5,
-        totalElement: 0,
-        totalPage: 0,
-        isFirst: false,
-        isLast: false,
-        hasNext: false,
-        hasPrevious: false,
-    })
     const form = useForm<SkRektorSkemaValidasiTipe>({
         resolver: zodResolver(SkRektorSkemaValidasi),
         defaultValues: {
             data: new File([], ''),
-            NamaSk: '',
-            TahunSk: '',
-            NomorSk: '',
-            ArrayRelation: [],
+            NamaSk: dataServer.NamaSk,
+            TahunSk: dataServer.TahunSk,
+            NomorSk: dataServer.NomorSk,
         },
     })
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
 
-    React.useEffect(() => {
-        setLoading(true)
-        getAsesorMahasiswaPagination(
-            paginationState.page,
-            paginationState.limit,
-            search
-        )
-            .then((res) => {
-                setAsesorSelected(res.data)
-                setLoading(false)
-                setPaginationState({
-                    page: res.page,
-                    limit: res.limit,
-                    totalElement: res.totalElement,
-                    totalPage: res.totalPage,
-                    isFirst: res.isFirst,
-                    isLast: res.isLast,
-                    hasNext: res.hasNext,
-                    hasPrevious: res.hasPrevious,
-                })
-            })
-            .catch((err) => {
-                setLoading(false)
-            })
-    }, [paginationState.page, paginationState.limit, search])
     const onSubmit = async (data: SkRektorSkemaValidasiTipe) => {
         setLoading(true)
 
@@ -114,20 +72,30 @@ const TambahSkRektorAsesorComponent = () => {
             data.NamaSk,
             data.TahunSk,
             data.NomorSk,
-            data.ArrayRelation
+            dataServer?.PendaftaranId ?? ''
         )
-            .then((res) => {
+            .then(async (res) => {
                 toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                setLoading(false)
-                if (pdfPreview) URL.revokeObjectURL(pdfPreview)
-                setPdfPreview(null)
-                router.push('/asesor/sk-rektor')
+                let r = status.find(x => x.NamaStatus == 'Penerbitan SK Penugasan Asesor')
+                if(r) {
+                    if(r.Aktif) {
+                        console.log('Hai')
+                        await setStatusAsessmenOlehAsesor(dataServer?.PendaftaranId ?? '')
+                    }
+                }
             })
             .catch((err) => {
                 toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
+            }).finally(() => {
                 setLoading(false)
             })
     }
+
+    React.useEffect(() => {
+        if (dataServer) getFileBlobByNamafile(dataServer.NamaFile).then(res => {
+            setPdfPreview(res)
+        }).catch(err => { })
+    }, [])
 
     return (
         <div className="w-full">
@@ -142,283 +110,140 @@ const TambahSkRektorAsesorComponent = () => {
                     ></iframe>
                 )}
             </div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-1 md:gap-3">
-                        <FormField
-                            control={form.control}
-                            name="TahunSk"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Tahun SK</FormLabel>
-                                    <FormControl>
-                                        <Input readOnly={loading} {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Tahun Surat Keterangan
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="NamaSk"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nama SK</FormLabel>
-                                    <FormControl>
-                                        <Input readOnly={loading} {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Nama Surat Keterangan
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="NomorSk"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nomor SK</FormLabel>
-                                    <FormControl>
-                                        <Input readOnly={loading} {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Nomor Surat Keterangan
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="data"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Unggah SK Disini</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="file"
-                                            accept="application/pdf"
-                                            onChange={(e) => {
-                                                const file = e.target.files?.[0]
-                                                if (file) {
-                                                    field.onChange(file)
-                                                    setPdfPreview(
-                                                        URL.createObjectURL(
-                                                            file
-                                                        )
-                                                    )
-                                                }
-                                            }}
-                                        />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Upload SK (PDF)
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                    <div className="grid grid-cols-1">
-                        <div className="flex items-center py-4">
-                            {/* <Input
-                                placeholder="Cari Data ..."
-                                value={search}
-                                onChange={(event) =>
-                                    setSearch(event.target.value)
-                                }
-                                className="max-w-sm"
-                            /> */}
-                            <h1 className="text-2xl font-bold mb-4">Relasi</h1>
-                            <div className="w-full justify-end flex">
-                                <Select
-                                    value={String(paginationState.limit)}
-                                    onValueChange={(value) =>
-                                        setPaginationState({
-                                            ...paginationState,
-                                            limit: Number(value),
-                                        })
-                                    }
-                                >
-                                    <SelectTrigger className="w-[100px]">
-                                        <SelectValue placeholder="Pilih Limit Data" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>
-                                                Pilih Limit Data
-                                            </SelectLabel>
-                                            {[5, 10, 20, 50, 75, 100].map(
-                                                (l, idx) => (
-                                                    <SelectItem
-                                                        value={String(l)}
-                                                        key={idx}
-                                                    >
-                                                        {l}
-                                                    </SelectItem>
-                                                )
-                                            )}
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        </div>
+
+            <div className="grid grid-cols-1 mt-5">
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Informasi Asesor</CardTitle>
+                        <CardDescription>Informasi mengenai Mahasiswa dan Asesor</CardDescription>
+                    </CardHeader>
+                    <CardContent>
                         <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Nama Asesor</TableHead>
-                                    <TableHead>Nama Mahasiswa</TableHead>
-                                    <TableHead>Aksi</TableHead>
-                                </TableRow>
-                            </TableHeader>
                             <TableBody>
-                                {asesorSelected.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={3}>
-                                            <div className="my-2 flex w-full justify-center">
-                                                Tidak Ada Relasi
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                    asesorSelected.map((y) => (
-                                        <TableRow className="my-2" key={y.AIM}>
-                                            <TableCell>{y.NA}</TableCell>
-                                            <TableCell>{y.NM}</TableCell>
-                                            <TableCell>
-                                                <Checkbox
-                                                    disabled={loading}
-                                                    id={y.AIM}
-                                                    checked={(
-                                                        form.watch(
-                                                            'ArrayRelation'
-                                                        ) || []
-                                                    ).some(
-                                                        (item) => item === y.AIM
-                                                    )}
-                                                    onCheckedChange={(
-                                                        checked
-                                                    ) => {
-                                                        if (checked) {
-                                                            form.setValue(
-                                                                'ArrayRelation',
-                                                                [
-                                                                    ...(form.watch(
-                                                                        'ArrayRelation'
-                                                                    ) || []),
-                                                                    y.AIM,
-                                                                ]
-                                                            )
-                                                        } else {
-                                                            form.setValue(
-                                                                'ArrayRelation',
-                                                                (
-                                                                    form.watch(
-                                                                        'ArrayRelation'
-                                                                    ) || []
-                                                                ).filter(
-                                                                    (f) =>
-                                                                        f !==
-                                                                        y.AIM
-                                                                )
-                                                            )
-                                                        }
-                                                    }}
-                                                />
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                )}
+                                <TableRow>
+                                    <TableHead>Nama Mahasiswa</TableHead>
+                                    <TableCell>{dataServer.NamaMahasiswa ?? ''}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHead>Program Studi</TableHead>
+                                    <TableCell>{dataServer.NamaProgramStudi ?? ''}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHead>Nama Asesor Pertama</TableHead>
+                                    <TableCell>{dataServer.NamaAsesorPertama}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableHead>Nama Asesor Kedua</TableHead>
+                                    <TableCell>{dataServer.NamaAsesorKedua}</TableCell>
+                                </TableRow>
                             </TableBody>
                         </Table>
-                        <div className="flex items-center justify-end space-x-2 py-4">
-                            <div className="flex-1 text-sm text-muted-foreground">
-                                Menampilkan{' '}
-                                {paginationState.page * paginationState.limit -
-                                    paginationState.limit +
-                                    1}{' '}
-                                -{' '}
-                                {paginationState.totalElement <
-                                paginationState.page * paginationState.limit
-                                    ? paginationState.totalElement
-                                    : paginationState.page *
-                                      paginationState.limit}{' '}
-                                dari {paginationState.totalElement} Data.
-                            </div>
-                            <div className="flex items-center space-x-2 mt-4">
-                                <Button
-                                    variant="outline"
-                                    type="button"
-                                    size="sm"
-                                    onClick={() => {
-                                        setPaginationState({
-                                            ...paginationState,
-                                            page: paginationState.page - 1,
-                                        })
-                                    }}
-                                    disabled={!paginationState.hasPrevious}
-                                >
-                                    <ChevronLeft className="w-4 h-4" />
-                                </Button>
-
-                                {Array.from(
-                                    { length: paginationState.totalPage },
-                                    (_, i) => i + 1
-                                ).map((p) => (
+                    </CardContent>
+                </Card>
+            </div>
+            <div className="grid grid-cols-1 mt-5">
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Form Upload SK</CardTitle>
+                                <CardDescription>Informasi mengenai Mahasiswa dan Asesor</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-5'>
+                                    <FormField
+                                        control={form.control}
+                                        name="TahunSk"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Tahun SK</FormLabel>
+                                                <FormControl>
+                                                    <Input readOnly={loading} {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Tahun Surat Keterangan
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="NamaSk"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Nama SK</FormLabel>
+                                                <FormControl>
+                                                    <Input readOnly={loading} {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Nama Surat Keterangan
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="NomorSk"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Nomor SK</FormLabel>
+                                                <FormControl>
+                                                    <Input readOnly={loading} {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Nomor Surat Keterangan
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="data"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Unggah SK Disini</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="file"
+                                                        accept="application/pdf"
+                                                        onChange={(e) => {
+                                                            const file = e.target.files?.[0]
+                                                            if (file) {
+                                                                field.onChange(file)
+                                                                setPdfPreview(
+                                                                    URL.createObjectURL(
+                                                                        file
+                                                                    )
+                                                                )
+                                                            }
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Upload SK (PDF)
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="flex justify-center w-full mt-5">
                                     <Button
-                                        key={p}
-                                        type="button"
-                                        variant={
-                                            p === paginationState.page
-                                                ? 'default'
-                                                : 'outline'
-                                        }
-                                        size="sm"
-                                        onClick={() => {
-                                            if (paginationState.page !== p) {
-                                                setPaginationState({
-                                                    ...paginationState,
-                                                    page: p,
-                                                })
-                                            }
-                                        }}
+                                        disabled={loading}
+                                        type="submit"
+                                        className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
                                     >
-                                        {p}
+                                        <PenIcon /> Simpan
                                     </Button>
-                                ))}
-
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    type="button"
-                                    onClick={() => {
-                                        setPaginationState({
-                                            ...paginationState,
-                                            page: paginationState.page + 1,
-                                        })
-                                    }}
-                                    disabled={!paginationState.hasNext}
-                                >
-                                    <ChevronRight className="w-4 h-4" />
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-center w-full">
-                        <Button
-                            type="submit"
-                            className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
-                        >
-                            <PenIcon /> Tambah
-                        </Button>
-                    </div>
-                </form>
-            </Form>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </form>
+                </Form>
+            </div>
         </div>
     )
 }

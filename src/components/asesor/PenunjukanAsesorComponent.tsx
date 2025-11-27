@@ -74,6 +74,7 @@ import {
 } from '@/validation/PenunjukanAsesorValidation'
 import {
     deleteAsesorMahasiswa,
+    getAllAsesor,
     getAsesorFromProdiId,
     getAsesorMahasiswaPagination,
     getAsesorMahasiswaPaginationFromAkademikRole,
@@ -87,6 +88,7 @@ import {
 import { Badge } from '../ui/badge'
 import { setStatusPersetujuanPenunjukanAsesor } from '@/services/Status/StatusService'
 import { Session } from 'next-auth'
+import { useRouter } from 'next/navigation'
 
 const PenunjukanAsesorComponent = ({
     universityDataServer,
@@ -102,6 +104,7 @@ const PenunjukanAsesorComponent = ({
         }[]
     }[]
 }) => {
+    const router = useRouter()
     const [dataAsesorMahasiswa, setDataAsesorMahasiswa] = React.useState<
         ResponsePenunjukanAsesor[]
     >([])
@@ -297,6 +300,12 @@ const PenunjukanAsesorComponent = ({
                 .catch((err) => {
                     setLoading(false)
                 })
+
+                if (dataAsesor.length === 0) {
+                getAllAsesor()
+                    .then((res) => setDataAsesor(res))
+                    .catch((err) => { })
+            }
         }
     }, [
         paginationState.page,
@@ -447,12 +456,27 @@ const PenunjukanAsesorComponent = ({
                                                 Atur Asesor
                                             </DropdownMenuItem>
                                         )}
-                                    {(jd.AsesorPertamaId && jd.AsesorKeduaId) &&
+                                    {/* {(jd.AsesorPertamaId && jd.AsesorKeduaId) &&
                                         (jd.Status === 'Penunjukan Asesor')&& (
                                             <DropdownMenuItem
                                                 onClick={() => hapusData(jd)}
                                             >
                                                 Hapus Semua Asesor
+                                            </DropdownMenuItem>
+                                        )} */}
+                                </>
+                            )}
+                            {role?.Name.match('Akademik') && (
+                                <>
+                                    {(jd.Status ===
+                                            'Penerbitan SK Penugasan Asesor' && (
+                                                <DropdownMenuSeparator />
+                                            ))}
+                                    {jd.Status === 'Penerbitan SK Penugasan Asesor' && (
+                                            <DropdownMenuItem
+                                                onClick={() => router.push('/asesor/penunjukan-asesor/' + jd.PendaftaranId)}
+                                            >
+                                                Upload SK
                                             </DropdownMenuItem>
                                         )}
                                 </>

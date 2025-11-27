@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024 //10 MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024 
 const ACCEPTED_FILE_TYPES = [
     'application/pdf',
     'application/msword',
@@ -37,11 +37,6 @@ export const SkRektorSkemaValidasi = z.object({
             error: (issue) => issue.input === undefined ? 'Nomor SK tidak boleh kosong.' : 'Nomor SK harus berupa string',
         })
         .min(1, 'Nomor SK tidak boleh kosong.'),
-    ArrayRelation: z
-        .array(z.string(), {
-            error: (issue) => issue.input === undefined ? 'Relasi tidak boleh kosong.' : 'Relasi tidak harus berupa string',
-        })
-        .min(1, 'Pilih setidaknya satu relasi.'),
 })
 
 export type SkRektorSkemaValidasiTipe = z.infer<typeof SkRektorSkemaValidasi>

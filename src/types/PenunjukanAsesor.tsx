@@ -62,7 +62,6 @@ export type ResponseSkRektorAsesor = {
     NomorSk: string
     NamaFile: string
     NamaDokumen: string
-    AsesorRelation: number
 }
 
 export type ResponseSkRektorAsesorDetail = {

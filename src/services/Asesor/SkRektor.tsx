@@ -94,14 +94,14 @@ export async function setSkRektorAsesor(
     NamaSk: string,
     TahunSk: string,
     NomorSk: string,
-    ArrayRelation: string[]
+    PendaftaranId: string
 ): Promise<ResponseSkRektorAsesor> {
     const formData = new FormData()
     formData.append('files', data)
     formData.append('NamaSk', NamaSk)
     formData.append('TahunSk', TahunSk)
     formData.append('NomorSk', NomorSk)
-    formData.append('ArrayRelation', JSON.stringify(ArrayRelation))
+    formData.append('PendaftaranId', PendaftaranId)
 
     const res = await fetch(`${BASE_URL}/api/protected/asesor/sk`, {
         method: 'POST',

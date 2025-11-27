@@ -161,32 +161,19 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                 })
         }
     }, [paginationState.page, paginationState.limit, search])
-    const buatData = () => {
-        router.push('/asesor/sk-rektor/buat-data')
-    }
-    const hapusData = (jd: ResponseSkRektorAsesor) => {
+
+    const editData = (jd: ResponseSkRektorAsesor) => {
         Swal.fire({
-            title: 'Ingin Hapus SK Rektor Asesor ' + jd.NamaSk + ' ?',
-            text: 'Aksi ini tidak dapat di undo',
+            title: 'Ingin Ubah SK Rektor Asesor ' + jd.NamaSk + ' ?',
+            text: 'Mengubah SK Rektor tidak akan merubah nama asesor maupun status yang sudah berjalan.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#f45f24',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Hapus!',
+            confirmButtonText: 'Ya, Ubah!',
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteSkRektorAsesor(jd.SkRektorId).then(() => {
-                    setDataSkRektor([
-                        ...dataSkRektor.filter(
-                            (x) => x.SkRektorId !== jd.SkRektorId
-                        ),
-                    ])
-                    Swal.fire({
-                        title: 'Terhapus!',
-                        text: 'Asesor Mahasiswa sudah dihapus.',
-                        icon: 'success',
-                    })
-                })
+                router.push('/asesor/penunjukan-asesor/' + jd.SkRektorId)
             }
         })
     }
@@ -259,9 +246,9 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                                 <React.Fragment>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem
-                                        onClick={() => hapusData(jd)}
+                                        onClick={() => editData(jd)}
                                     >
-                                        Hapus SK Asesor
+                                        Ubah SK Asesor
                                     </DropdownMenuItem>
                                 </React.Fragment>
                             )}
@@ -298,11 +285,6 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                     className="max-w-sm"
                 />
                 <div className="w-full justify-end flex">
-                    {role?.Name.match('Akademik') && (
-                        <Button className="mr-2" onClick={() => buatData()}>
-                            Tambah
-                        </Button>
-                    )}
                     <Select
                         value={String(paginationState.limit)}
                         onValueChange={(value) =>

@@ -11,6 +11,46 @@ app.use('*', withApiAuth)
 
 app.get('/', async (c) => {
     const jenis = c.req.query('jenis')
+    if (jenis === 'get-all-asesor') {
+        const data = await prisma.asesor.findMany({
+            select: {
+                AsesorId: true,
+                TipeAsesor: {
+                    select: {
+                        TipeAsesorId: true,
+                        Nama: true,
+                    },
+                },
+                User: {
+                    select: {
+                        UserId: true,
+                        Nama: true,
+                    },
+                },
+                AssesorMahasiswa: {
+                    select: {
+                        Confirmation: true,
+                    },
+                },
+            },
+        })
+
+        const response: ResponseAsesorFromProdi[] =
+            data?.map((item) => ({
+                AsesorId: item.AsesorId,
+                UserId: item.User.UserId,
+                Nama: item.User.Nama,
+                AssesorMahasiswa: item?.AssesorMahasiswa.map((mhs) => ({
+                    Confirmation: mhs.Confirmation,
+                })),
+                TipeAsesor: {
+                    Nama: item.TipeAsesor.Nama,
+                    TipeAsesorId: item.TipeAsesor.TipeAsesorId,
+                },
+                BebanKerja: item.AssesorMahasiswa.length
+            })) ?? []
+        return c.json<ResponseAsesorFromProdi[]>(response, 200)
+    }
     if (jenis === 'get-asesor-from-prodiId') {
         const prodiId = c.req.query('prodiId')
 
@@ -235,11 +275,28 @@ app.get('/', async (c) => {
         const page = parseInt(c.req.query('page') || '1', 10)
         const limit = parseInt(c.req.query('limit') || '10', 10)
         const search = c.req.query('search') || ''
+        const emptyBuffer = Buffer.alloc(0);
 
         let where: Prisma.PendaftaranWhereInput = search ? {
             AssesorMahasiswa: {
                 some: {
-                    SkRektorAssesor: { none: {} },
+                    SkRektorAssesor: {
+                        some: {
+                            SkRektor: {
+                                FileData: emptyBuffer
+                            }
+                        }
+                    },
+                    Pendaftaran: {
+                        StatusMahasiswaAssesmentHistory: {
+                            some: {
+                                Aktif: true,
+                                StatusMahasiswaAssesment: {
+                                    NamaStatus: "Penerbitan SK Penugasan Asesor",
+                                },
+                            },
+                        },
+                    },
                     OR: [
                         {
                             Asesor: {
@@ -278,7 +335,23 @@ app.get('/', async (c) => {
             : {
                 AssesorMahasiswa: {
                     some: {
-                        SkRektorAssesor: { none: {} },
+                        SkRektorAssesor: {
+                            some: {
+                                SkRektor: {
+                                    FileData: emptyBuffer
+                                }
+                            }
+                        },
+                        Pendaftaran: {
+                            StatusMahasiswaAssesmentHistory: {
+                                some: {
+                                    Aktif: true,
+                                    StatusMahasiswaAssesment: {
+                                        NamaStatus: "Penerbitan SK Penugasan Asesor",
+                                    },
+                                },
+                            },
+                        },
                     }
                 }
             }
@@ -770,7 +843,7 @@ app.post('/', async (c) => {
         Urutan: 2,
         CreatedAt: new Date(),
         UpdatedAt: new Date(),
-    }, ]
+    },]
 
     await prisma.assesorMahasiswa.createMany({ data: temp })
 
