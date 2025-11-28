@@ -14,154 +14,199 @@ app.get('/', async (c) => {
     const session = await getSession()
     const jenis = c.req.query('jenis')
     const r = c.req.query('r')
-    const role = await prisma.role.findFirst({select: {Name: true}, where: {RoleId: r}})
+    const role = await prisma.role.findFirst({ select: { Name: true }, where: { RoleId: r } })
 
     if (session && role) {
-        if(role.Name === 'Mahasiswa') {
-            if(jenis === 'get-sanggahan') {
+        if (role.Name === 'Mahasiswa') {
+            if (jenis === 'get-sanggahan') {
                 const page = parseInt(c.req.query('page') || '1', 10)
                 const limit = parseInt(c.req.query('limit') || '10', 10)
                 const search = c.req.query('search') || ''
-        
-                let where: Prisma.PendaftaranWhereInput = search
-                        ? {
-                            AND: [
-                                {
+
+                let where: Prisma.AssesorMahasiswaWhereInput = search
+                    ? {
+                        AND: [
+                            {
+                                Pendaftaran: {
                                     Mahasiswa: {
-                                        UserId: session.user.id
-                                    }
-                                },
-                                {
-                                    StatusMahasiswaAssesmentHistory:{
-                                        some: {
-                                            AND: [
-                                                {
-                                                    StatusMahasiswaAssesment : {
-                                                        NamaStatus: "Hasil Final Asessmen"
-                                                    },
-                                                },
-                                                {
-                                                    Aktif: true
-                                                }
-                                            ]
+                                        User: {
+                                            UserId: session.user.id,
                                         }
                                     }
+                                }
+                            },
+                            {
+                                Pendaftaran: {
+                                    OR: [
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Hasil Final Asessmen",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Persetujuan Hasil Final",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    ]
                                 },
-                                {
+                            },
+                            {
+                                Pendaftaran: {
                                     OR: [
                                         {
                                             KodePendaftar: {
-                                                        contains: search,
-                                                        mode: 'insensitive',
-                                                    },
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
                                         },
                                         {
                                             NoUjian: {
-                                                        contains: search,
-                                                        mode: 'insensitive',
-                                                    },
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
                                         },
                                         {
                                             Periode: {
-                                                        contains: search,
-                                                        mode: 'insensitive',
-                                                    },
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
                                         },
                                     ]
-                                }
-                            ]
-                        }
-                    : {
-                        AND: [
-                            {
-                                Mahasiswa: {
-                                        UserId: session.user.id
-                                    }
-                            },
-                            {
-                                StatusMahasiswaAssesmentHistory:{
-                                    some: {
-                                        AND: [
-                                            {
-                                                StatusMahasiswaAssesment : {
-                                                    NamaStatus: "Hasil Final Asessmen"
-                                                },
-                                            },
-                                            {
-                                                Aktif: true
-                                            }
-                                        ]
-                                    }
                                 }
                             }
                         ]
                     }
-        
+                    : {
+                        AND: [
+                            {
+                                Pendaftaran: {
+                                    Mahasiswa: {
+                                        User: {
+                                            UserId: session.user.id,
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                Pendaftaran: {
+                                    OR: [
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Hasil Final Asessmen",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Persetujuan Hasil Final",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    ]
+                                },
+                            },
+                        ]
+                    }
+
                 const [data, total] = await Promise.all([
-                    prisma.pendaftaran.findMany({
+                    prisma.assesorMahasiswa.findMany({
+                        distinct: ['PendaftaranId'],
                         where,
                         skip: (page - 1) * limit,
                         take: limit,
-                        orderBy: {KodePendaftar: 'asc'},
+                        orderBy: { Pendaftaran: { KodePendaftar: 'asc' } },
                         select: {
-                            AssesorMahasiswa: {
+                            Urutan: true,
+                            Asesor: {
                                 select: {
-                                    Urutan: true,
-                                    Asesor: {
+                                    User: {
                                         select: {
-                                            User: {
+                                            Nama: true
+                                        }
+                                    }
+                                }
+                            },
+                            Pendaftaran: {
+                                select: {
+                                    AssesorMahasiswa: {
+                                        select: {
+                                            Urutan: true,
+                                            Asesor: {
                                                 select: {
-                                                    Nama: true
+                                                    User: {
+                                                        select: {
+                                                            Nama: true
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                        }
+                                    },
+                                    PendaftaranId: true,
+                                    KodePendaftar: true,
+                                    NoUjian: true,
+                                    Periode: true,
+                                    StatusMahasiswaAssesmentHistory: {
+                                        select: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
+                                                select: {
+                                                    NamaStatus: true
                                                 }
                                             }
                                         }
-                                    }
-                                }
-                            },
-                            PendaftaranId: true,
-                            KodePendaftar: true,
-                            NoUjian: true,
-                            Periode: true,
-                            StatusMahasiswaAssesmentHistory: {
-                                select: {
-                                    Aktif: true,
-                                    StatusMahasiswaAssesment: {
+                                    },
+                                    DaftarUlang: {
                                         select: {
-                                            NamaStatus: true
-                                        }
-                                    }
-                                }
-                            },
-                            DaftarUlang: {
-                                select: {
-                                    ProgramStudi: {
-                                        select: {
-                                            ProgramStudiId: true,
-                                            Nama: true,
+                                            ProgramStudi: {
+                                                select: {
+                                                    ProgramStudiId: true,
+                                                    Nama: true,
+                                                },
+                                            },
                                         },
                                     },
-                                },
-                            },
+                                }
+                            }
                         },
-                    }), 
-                    prisma.pendaftaran.count({
+                    }),
+                    prisma.assesorMahasiswa.count({
                         where,
                     }),
                 ])
-    
+
                 const response: ResponseFinalAsessmenPaginationType[] = data.map(item => ({
-                    PendaftaranId: item.PendaftaranId,
-                    NamaProgramStudi: item.DaftarUlang.length > 0 ? item.DaftarUlang[0].ProgramStudi.Nama : '',
-                    KodePendaftar: item.KodePendaftar,
-                    NoUjian: item.NoUjian,
-                    Periode: item.Periode,
-                    Status: item.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? item.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
-                    Asesor: item.AssesorMahasiswa.map(x => ({
+                    PendaftaranId: item.Pendaftaran.PendaftaranId,
+                    NamaProgramStudi: item.Pendaftaran.DaftarUlang.length > 0 ? item.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama : '',
+                    KodePendaftar: item.Pendaftaran.KodePendaftar,
+                    NoUjian: item.Pendaftaran.NoUjian,
+                    Periode: item.Pendaftaran.Periode,
+                    Status: item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? item.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
+                    Asesor: item.Pendaftaran.AssesorMahasiswa.map(x => ({
                         Nama: x.Asesor.User.Nama,
                         Urutan: x.Urutan
                     }))
                 }))
-        
+
                 return c.json<{
                     data: ResponseFinalAsessmenPaginationType[]
                     page: number
@@ -187,169 +232,134 @@ app.get('/', async (c) => {
                 })
             }
         }
-        if(role.Name === 'Asesor') {
-            if(jenis === 'get-sanggahan') {
+        if (role.Name === 'Asesor') {
+            if (jenis === 'get-sanggahan') {
                 const page = parseInt(c.req.query('page') || '1', 10)
                 const limit = parseInt(c.req.query('limit') || '10', 10)
                 const search = c.req.query('search') || ''
-        
-                let where: Prisma.AsesorWhereInput = search
-                        ? {
-                            AND: [
-                                {
-                                    UserId: session.user.id
-                                },
-                                {
-                                    AssesorMahasiswa:{
-                                        some: {
-                                            Pendaftaran: {
-                                                OR: [
-                                                    {
-                                                        StatusMahasiswaAssesmentHistory:{
-                                                            some: {
-                                                                AND: [
-                                                                    {
-                                                                        StatusMahasiswaAssesment : {
-                                                                            NamaStatus: "Hasil Final Asessmen"
-                                                                        },
-                                                                    },
-                                                                    {
-                                                                        Aktif: true
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }, 
-                                                    },
-                                                        {
-                                                            KodePendaftar: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        }, 
-                                                        {
-                                                            NoUjian: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        },
-                                                        {
-                                                            Periode: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        }
-                                                    
-                                                ]
-                                            }
-                                        }
+
+                let where: Prisma.AssesorMahasiswaWhereInput = search
+                    ? {
+                        AND: [
+                            {
+                                Asesor: {
+                                    User: {
+                                        UserId: session.user.id
                                     }
-                                },
-                                {
+                                }
+                            },
+                            {
+                                Pendaftaran: {
+                                    StatusMahasiswaAssesmentHistory: {
+                                        some: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
+                                                NamaStatus: "Hasil Final Asessmen",
+                                            },
+                                        },
+                                    },
                                     OR: [
                                         {
-                                            User: {
-                                                Nama: {
-                                                    contains: search,
-                                                    mode: 'insensitive',
-                                                },
+                                            KodePendaftar: {
+                                                contains: search,
+                                                mode: 'insensitive',
                                             },
                                         },
                                         {
-                                            AssesorMahasiswa: {
-                                                some: {
-                                                    Pendaftaran: {
-                                                        Mahasiswa: {
-                                                            User: {
-                                                                Nama: {
-                                                                    contains: search,
-                                                                    mode: 'insensitive',
-                                                                },
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                            NoUjian: {
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
+                                        },
+                                        {
+                                            Periode: {
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
+                                        },
+                                        {
+                                            Mahasiswa: {
+                                                User: {
+                                                    Nama: {
+                                                        contains: search,
+                                                        mode: 'insensitive',
+                                                    },
+                                                },
                                             }
-                                        }
+                                        },
+
                                     ]
-                                }
-                            ]
-                        }
+                                },
+                            },
+                        ]
+                    }
                     : {
                         AND: [
                             {
-                                UserId: session.user.id
+                                Asesor: {
+                                    User: {
+                                        UserId: session.user.id
+                                    }
+                                }
                             },
                             {
-                                    AssesorMahasiswa:{
+                                Pendaftaran: {
+                                    StatusMahasiswaAssesmentHistory: {
                                         some: {
-                                            Pendaftaran: {
-                                                StatusMahasiswaAssesmentHistory:{
-                                                    some: {
-                                                        AND: [
-                                                            {
-                                                                StatusMahasiswaAssesment : {
-                                                                    NamaStatus: "Hasil Final Asessmen"
-                                                                },
-                                                            },
-                                                            {
-                                                                Aktif: true
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
+                                                NamaStatus: "Hasil Final Asessmen",
+                                            },
+                                        },
+                                    },
+                                }
+                            }
                         ]
                     }
-        
+
                 const [data, total] = await Promise.all([
-                    prisma.asesor.findFirst({
+                    prisma.assesorMahasiswa.findMany({
+                        distinct: ['PendaftaranId'],
                         where,
                         skip: (page - 1) * limit,
                         take: limit,
-                        orderBy: {CreatedAt: 'desc'},
+                        orderBy: { CreatedAt: 'desc' },
                         select: {
-                            AssesorMahasiswa: {
+                            Urutan: true,
+                            Confirmation: true,
+                            Pendaftaran: {
                                 select: {
-                                    Urutan: true,
-                                    Confirmation: true,
-                                    Pendaftaran: {
+                                    AssesorMahasiswa: { select: { Urutan: true, Asesor: { select: { User: { select: { Nama: true } } } } } },
+                                    KodePendaftar: true,
+                                    NoUjian: true,
+                                    Periode: true,
+                                    PendaftaranId: true,
+                                    StatusMahasiswaAssesmentHistory: {
                                         select: {
-                                            AssesorMahasiswa: {select: {Urutan: true, Asesor: {select: {User: {select: {Nama: true}}}}}},
-                                            KodePendaftar: true,
-                                            NoUjian: true,
-                                            Periode: true,
-                                            PendaftaranId: true,
-                                            StatusMahasiswaAssesmentHistory: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
                                                 select: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        select: {
-                                                            NamaStatus: true
-                                                        }
-                                                    }
+                                                    NamaStatus: true
                                                 }
-                                            },
-                                            DaftarUlang: {
+                                            }
+                                        }
+                                    },
+                                    DaftarUlang: {
+                                        select: {
+                                            ProgramStudi: {
                                                 select: {
-                                                    ProgramStudi: {
-                                                        select: {
-                                                            ProgramStudiId: true,
-                                                            Nama: true,
-                                                        },
-                                                    },
+                                                    ProgramStudiId: true,
+                                                    Nama: true,
                                                 },
                                             },
-                                            Mahasiswa: {
+                                        },
+                                    },
+                                    Mahasiswa: {
+                                        select: {
+                                            User: {
                                                 select: {
-                                                    User: {
-                                                        select: {
-                                                            UserId: true,
-                                                            Nama: true,
-                                                        },
-                                                    },
+                                                    UserId: true,
+                                                    Nama: true,
                                                 },
                                             },
                                         },
@@ -357,13 +367,13 @@ app.get('/', async (c) => {
                                 },
                             },
                         },
-                    }), 
-                    prisma.asesor.count({
+                    }),
+                    prisma.assesorMahasiswa.count({
                         where,
                     }),
                 ])
 
-                const response: ResponseFinalAsessmenAsesorPaginationType[] = data?.AssesorMahasiswa.map(am => ({
+                const response: ResponseFinalAsessmenAsesorPaginationType[] = data?.map(am => ({
                     PendaftaranId: am.Pendaftaran.PendaftaranId ?? '',
                     Nama: am.Pendaftaran.Mahasiswa.User.Nama ?? '',
                     NamaProgramStudi: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama ?? '',
@@ -402,131 +412,88 @@ app.get('/', async (c) => {
                 })
             }
         }
-        if(role.Name === 'Akademik') {
-            if(jenis === 'get-sanggahan') {
+        if (role.Name === 'Akademik') {
+            if (jenis === 'get-sanggahan') {
                 const page = parseInt(c.req.query('page') || '1', 10)
                 const limit = parseInt(c.req.query('limit') || '10', 10)
                 const search = c.req.query('search') || ''
-        
-                let where: Prisma.AsesorWhereInput = search
-                        ? {
+
+                let where: Prisma.AssesorMahasiswaWhereInput = search
+                    ? {
+                        Pendaftaran: {
                             AND: [
                                 {
-                                    AssesorMahasiswa:{
+                                    StatusMahasiswaAssesmentHistory: {
                                         some: {
-                                            Pendaftaran: {
-                                                OR: [
-                                                    {
-                                                        StatusMahasiswaAssesmentHistory:{
-                                                            some: {
-                                                                AND: [
-                                                                    {
-                                                                        StatusMahasiswaAssesment : {
-                                                                            NamaStatus: "Hasil Final Asessmen"
-                                                                        },
-                                                                    },
-                                                                    {
-                                                                        Aktif: true
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }, 
-                                                    },
-                                                        {
-                                                            KodePendaftar: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        }, 
-                                                        {
-                                                            NoUjian: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        },
-                                                        {
-                                                            Periode: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        }
-                                                    
-                                                ]
-                                            }
-                                        }
-                                    }
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
+                                                NamaStatus: "Hasil Final Asessmen",
+                                            },
+                                        },
+                                    },
                                 },
                                 {
                                     OR: [
                                         {
-                                            User: {
-                                                Nama: {
-                                                    contains: search,
-                                                    mode: 'insensitive',
-                                                },
+                                            KodePendaftar: {
+                                                contains: search,
+                                                mode: 'insensitive',
                                             },
                                         },
                                         {
-                                            AssesorMahasiswa: {
-                                                some: {
-                                                    Pendaftaran: {
-                                                        Mahasiswa: {
-                                                            User: {
-                                                                Nama: {
-                                                                    contains: search,
-                                                                    mode: 'insensitive',
-                                                                },
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                            NoUjian: {
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
+                                        },
+                                        {
+                                            Periode: {
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
+                                        },
+                                        {
+                                            Mahasiswa: {
+                                                User: {
+                                                    Nama: {
+                                                        contains: search,
+                                                        mode: 'insensitive',
+                                                    },
+                                                },
+                                            },
                                         }
                                     ]
                                 }
                             ]
                         }
-                    : {
-                        AND: [
-                            {
-                                    AssesorMahasiswa:{
-                                        some: {
-                                            Pendaftaran: {
-                                                StatusMahasiswaAssesmentHistory:{
-                                                    some: {
-                                                        AND: [
-                                                            {
-                                                                StatusMahasiswaAssesment : {
-                                                                    NamaStatus: "Hasil Final Asessmen"
-                                                                },
-                                                            },
-                                                            {
-                                                                Aktif: true
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                        ]
                     }
-        
+                    : {
+                        Pendaftaran: {
+                            StatusMahasiswaAssesmentHistory: {
+                                some: {
+                                    Aktif: true,
+                                    StatusMahasiswaAssesment: {
+                                        NamaStatus: "Hasil Final Asessmen",
+                                    },
+                                },
+                            }
+                        }
+                    }
+
                 const [data, total] = await Promise.all([
-                    prisma.asesor.findFirst({
+                    prisma.assesorMahasiswa.findMany({
+                        distinct: ['PendaftaranId'],
                         where,
                         skip: (page - 1) * limit,
                         take: limit,
-                        orderBy: {CreatedAt: 'desc'},
+                        orderBy: { CreatedAt: 'desc' },
                         select: {
-                            AssesorMahasiswa: {
-                                select: {
+                            
                                     Urutan: true,
                                     Confirmation: true,
                                     Pendaftaran: {
                                         select: {
-                                            AssesorMahasiswa: {select: {Urutan: true, Asesor: {select: {User: {select: {Nama: true}}}}}},
+                                            AssesorMahasiswa: { select: { Urutan: true, Asesor: { select: { User: { select: { Nama: true } } } } } },
                                             KodePendaftar: true,
                                             NoUjian: true,
                                             Periode: true,
@@ -562,17 +529,15 @@ app.get('/', async (c) => {
                                                 },
                                             },
                                         },
-                                    },
-                                },
                             },
                         },
-                    }), 
-                    prisma.asesor.count({
+                    }),
+                    prisma.assesorMahasiswa.count({
                         where,
                     }),
                 ])
 
-                const response: ResponseFinalAsessmenAsesorPaginationType[] = data?.AssesorMahasiswa.map(am => ({
+                const response: ResponseFinalAsessmenAsesorPaginationType[] = data?.map(am => ({
                     PendaftaranId: am.Pendaftaran.PendaftaranId ?? '',
                     Nama: am.Pendaftaran.Mahasiswa.User.Nama ?? '',
                     NamaProgramStudi: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama ?? '',

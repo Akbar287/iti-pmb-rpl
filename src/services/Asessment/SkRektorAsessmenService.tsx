@@ -1,3 +1,4 @@
+import { SkRektor } from '@/generated/prisma'
 import { ResponseSkRektorAsessmenType } from '@/types/FinalAsessmen'
 import { Pagination } from '@/types/Pagination'
 
@@ -82,7 +83,9 @@ export async function setFile(
     NamaSk: string,
     TahunSk: string,
     NomorSk: string
-): Promise<Response> {
+): Promise<{
+    status: string; message: string; data: SkRektor
+}> {
     const formData = new FormData()
     formData.append('files', data)
     formData.append('PendaftaranId', PendaftaranId)
@@ -90,8 +93,10 @@ export async function setFile(
     formData.append('TahunSk', TahunSk)
     formData.append('NomorSk', NomorSk)
 
-    return await fetch(`${BASE_URL}/api/protected/asessment/sk-rektor`, {
+    const res = await fetch(`${BASE_URL}/api/protected/asessment/sk-rektor`, {
         method: 'POST',
         body: formData,
     })
+    if (!res.ok) throw new Error('Failed to fetch sk rektor')
+    return res.json()
 }

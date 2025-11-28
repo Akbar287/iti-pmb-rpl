@@ -1,5 +1,4 @@
 import HasilAsessmenIdComponent from '@/components/hasil-asessmen/HasilAsessmenIdComponent'
-import RekapitulasiIdComponent from '@/components/rekapitulasi/RekapitulasiIdComponent'
 import { prisma } from '@/lib/prisma'
 import { ResponseFinalAsessmenAsesorDetailType } from '@/types/FinalAsessmen'
 import React from 'react'
@@ -15,6 +14,21 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             NoUjian: true,
             Gelombang: true,
             SistemKuliah: true,
+            SkRektorMahasiswa: {
+                select: {
+                    SkRektor: {
+                        select: {
+                            SkRektorId: true,
+                            NamaSk: true,
+                            TahunSk: true,
+                            NomorSk: true,
+                            NamaFile: true,
+                            NamaDokumen: true,
+                            Catatan: true
+                        }
+                    }
+                }
+            },
             Mahasiswa: {
                 select: {
                     User: {
@@ -55,6 +69,18 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             Akreditasi: true,
                         },
                     },
+                },
+            },
+            StatusMahasiswaAssesmentHistory: {
+                select: {
+                    StatusMahasiswaAssesmentId: true,
+                    Tanggal: true,
+                    Aktif: true,
+                    StatusMahasiswaAssesment: {
+                        select: {
+                            NamaStatus: true
+                        }
+                    }
                 },
             },
             MataKuliahMahasiswa: {
@@ -119,8 +145,18 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         },
         where: { PendaftaranId: id },
     })
-
+    
+    const temp = data?.SkRektorMahasiswa;
     const dataServer: ResponseFinalAsessmenAsesorDetailType = {
+        SkRektor: {
+            SkRektorId: temp ? temp.length > 0 ? temp[0].SkRektor.SkRektorId ?? '' : '' : '',
+            NamaSk:  temp ? temp.length > 0 ? temp[0].SkRektor.NamaSk ?? '' : '' : '',
+            TahunSk: temp ? temp.length > 0 ? temp[0].SkRektor.TahunSk ?? 0 : 0 : 0,
+            NomorSk:  temp ? temp.length > 0 ? temp[0].SkRektor.NomorSk ?? '' : '' : '',
+            NamaFile:  temp ? temp.length > 0 ? temp[0].SkRektor.NamaFile ?? '' : '' : '',
+            NamaDokumen:  temp ? temp.length > 0 ? temp[0].SkRektor.NamaDokumen ?? '' : '' : '',
+            Catatan: temp ? temp.length > 0 ? temp[0].SkRektor.Catatan ?? '' : '' : '',
+        },
         Nama: data?.Mahasiswa.User.Nama ?? '',
         Email: data?.Mahasiswa.User.Email ?? '',
         NomorHp: data?.Mahasiswa.User.NomorHp ?? '',
@@ -314,12 +350,17 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         })),
     }
 
+    const res = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
+    const stats : {
+        StatusMahasiswaAssesmentId: string; NamaStatus: string
+    } = res ? {StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus} : {StatusMahasiswaAssesmentId: '', NamaStatus: ''};
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">
                 Detail Hasil Final Asessmen Mahasiswa
             </h1>
-            <HasilAsessmenIdComponent dataServer={dataServer} />
+            <HasilAsessmenIdComponent stats={stats} dataServer={dataServer} />
         </div>
     )
 }

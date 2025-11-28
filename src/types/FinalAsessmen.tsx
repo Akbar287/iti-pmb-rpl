@@ -108,6 +108,15 @@ export type ResponseFinalAsessmenAsesorDetailType = {
         Akreditasi: string
     }
     MataKuliahMahasiswa: ResponseFinalAsessmenAsesorDetailMKMType[]
+    SkRektor: {
+        SkRektorId: string,
+        NamaSk: string,
+        TahunSk: number,
+        NomorSk: string,
+        NamaFile: string,
+        NamaDokumen: string,
+        Catatan: string
+    }
 }
 
 export type ResponseSkRektorAsessmenType = {

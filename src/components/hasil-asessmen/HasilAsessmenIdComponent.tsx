@@ -16,6 +16,16 @@ import {
     VisibilityState,
 } from '@tanstack/react-table'
 import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '../ui/form'
+import { Input } from '../ui/input'
+import {
     Select,
     SelectContent,
     SelectGroup,
@@ -52,6 +62,7 @@ import {
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
 import {
+    CheckCircle2Icon,
     ChevronLeft,
     ChevronRight,
     MoreHorizontal,
@@ -71,11 +82,19 @@ import {
     SheetTitle,
 } from '../ui/sheet'
 import { Separator } from '../ui/separator'
+import { Role } from '@/generated/prisma'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
+import { useForm } from 'react-hook-form'
+import { SkRektorAsessmenSkemaValidasi, SkRektorAsessmenSkemaValidasiTipe } from '@/validation/SkAsessmenValidation'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { setStatusPersetujuanHasilFinalAsessmen } from '@/services/Status/StatusService'
+import { getFileSkAsessmenBlobByNamafile, setFile } from '@/services/Asessment/SkRektorAsessmenService'
 
 const HasilAsessmenIdComponent = ({
-    dataServer,
+    dataServer, stats
 }: {
     dataServer: ResponseFinalAsessmenAsesorDetailType
+    stats: { StatusMahasiswaAssesmentId: string; NamaStatus: string }
 }) => {
     const [dataPage, setDataPage] = React.useState<
         ResponseFinalAsessmenAsesorDetailMKMType[]
@@ -84,7 +103,10 @@ const HasilAsessmenIdComponent = ({
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
+    const [statusServer, setStatusServer] = React.useState<{StatusMahasiswaAssesmentId: string; NamaStatus: string}>(stats)
+    const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [role, setRole] = React.useState<Role | null>(null)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [paginationState, setPaginationState] = React.useState<{
         page: number
@@ -105,6 +127,66 @@ const HasilAsessmenIdComponent = ({
         hasNext: false,
         hasPrevious: false,
     })
+
+    const form = useForm<SkRektorAsessmenSkemaValidasiTipe>({
+        resolver: zodResolver(SkRektorAsessmenSkemaValidasi),
+        defaultValues: {
+            data: new File([], ''),
+            NamaSk: '',
+            TahunSk: '',
+            NomorSk: '',
+        },
+    })
+
+    const onSubmit = async (data: SkRektorAsessmenSkemaValidasiTipe) => {
+        setLoading(true)
+        await setFile(
+            data.data,
+            dataServer.PendaftaranId,
+            data.NamaSk,
+            data.TahunSk,
+            data.NomorSk
+        )
+            .then((res) => {
+                setStatusPersetujuanHasilFinalAsessmen(dataServer.PendaftaranId).then(
+                    (res) => {
+                        toast('Data SK Asesor Mahasiswa berhasil disimpan')
+                        setStatusServer({StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40k', NamaStatus: 'Persetujuan Hasil Final'})
+                        setLoading(false)
+                    }
+                )
+                setLoading(false)
+            })
+            .catch((err) => {
+                toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
+                setLoading(false)
+            })
+    }
+
+    React.useEffect(() => {
+        if (role === null) {
+            setLoading(true)
+            const r = localStorage.getItem('pmb.iti.role')
+            if (r) {
+                setRole(JSON.parse(r))
+                setLoading(false)
+                if (dataServer.SkRektor.SkRektorId !== '') {
+                    getFileSkAsessmenBlobByNamafile(dataServer.SkRektor.NamaFile)
+                        .then((res) => {
+                            setPdfPreview(res)
+                            form.setValue('NamaSk', dataServer.SkRektor.NamaSk)
+                            form.setValue(
+                                'TahunSk',
+                                String(dataServer.SkRektor.TahunSk)
+                            )
+                            form.setValue('NomorSk', dataServer.SkRektor.NomorSk)
+                        })
+                        .catch((err) => { })
+                }
+            }
+            setLoading(false)
+        }
+    }, [])
 
     React.useEffect(() => {
         const startIndex2 = (paginationState.page - 1) * paginationState.limit
@@ -138,6 +220,7 @@ const HasilAsessmenIdComponent = ({
             })
         }
     }, [paginationState.page, paginationState.limit])
+
     const [detailData, setDetailData] = React.useState<{
         SkorAssesmenId: string
         MataKuliahMahasiswaId: string
@@ -278,7 +361,6 @@ const HasilAsessmenIdComponent = ({
             },
         },
     ]
-
     const table = useReactTable({
         data: dataPage,
         columns,
@@ -298,6 +380,17 @@ const HasilAsessmenIdComponent = ({
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3">
+            {
+                role?.Name === 'Akademik' && statusServer.NamaStatus == 'Persetujuan Hasil Final' ? (
+                    <Alert>
+                        <CheckCircle2Icon />
+                        <AlertTitle>Sedang Menunggu Approval Wakil Rektor</AlertTitle>
+                        <AlertDescription>
+                            Saat ini Proses sedang Menunggu Approval Wakil Rektor
+                        </AlertDescription>
+                    </Alert>
+                ) : <></>
+            }
             <Card className="w-full">
                 <CardHeader>
                     <CardTitle>Informasi Pendaftaran Mahasiswa</CardTitle>
@@ -528,12 +621,12 @@ const HasilAsessmenIdComponent = ({
                                                                         {header.isPlaceholder
                                                                             ? null
                                                                             : flexRender(
-                                                                                  header
-                                                                                      .column
-                                                                                      .columnDef
-                                                                                      .header,
-                                                                                  header.getContext()
-                                                                              )}
+                                                                                header
+                                                                                    .column
+                                                                                    .columnDef
+                                                                                    .header,
+                                                                                header.getContext()
+                                                                            )}
                                                                     </TableHead>
                                                                 )
                                                             }
@@ -596,10 +689,10 @@ const HasilAsessmenIdComponent = ({
                                         1}{' '}
                                     -{' '}
                                     {paginationState.totalElement <
-                                    paginationState.page * paginationState.limit
+                                        paginationState.page * paginationState.limit
                                         ? paginationState.totalElement
                                         : paginationState.page *
-                                          paginationState.limit}{' '}
+                                        paginationState.limit}{' '}
                                     dari {paginationState.totalElement} Data.
                                 </div>
                                 <div className="flex items-center space-x-2 mt-4">
@@ -663,6 +756,162 @@ const HasilAsessmenIdComponent = ({
                     </div>
                 </CardContent>
             </Card>
+            {role?.Name === 'Akademik' && pdfPreview ? (
+                <div>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Dokumen SK</CardTitle>
+                            <CardDescription>
+                                Dokumen Surat Keputusan
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="grid grid-cols-1 gap-2 mb-3">
+                                <iframe
+                                    src={pdfPreview || ''}
+                                    title="PDF Preview"
+                                    width="100%"
+                                    height="500px"
+                                    className="border rounded"
+                                ></iframe>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            ) : <></>}
+            {
+                role?.Name === 'Akademik' && (
+                    <Card className="w-full">
+                        <CardHeader>
+                            <CardTitle>Surat Keputusan</CardTitle>
+                            <CardDescription>
+                                Surat Keputusan Asessmen Mahasiswa
+                            </CardDescription>
+                            <CardAction></CardAction>
+                        </CardHeader>
+                        <CardContent>
+                            <Form {...form}>
+                                <form onSubmit={form.handleSubmit(onSubmit)}>
+                                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-1 md:gap-3">
+                                        <FormField
+                                            control={form.control}
+                                            name="TahunSk"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Tahun SK
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            readOnly={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Tahun Surat Keterangan
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="NamaSk"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Nama SK
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            readOnly={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Nama Surat Keterangan
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="NomorSk"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Nomor SK
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            readOnly={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
+                                                            {...field}
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Nomor Surat Keterangan
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="data"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Unggah SK Disini
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            type="file"
+                                                            disabled={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
+                                                            accept="application/pdf"
+                                                            onChange={(e) => {
+                                                                const file =
+                                                                    e.target
+                                                                        .files?.[0]
+                                                                if (file) {
+                                                                    field.onChange(
+                                                                        file
+                                                                    )
+                                                                    setPdfPreview(
+                                                                        URL.createObjectURL(
+                                                                            file
+                                                                        )
+                                                                    )
+                                                                }
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Upload SK (PDF)
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                    {
+                                         statusServer.NamaStatus == 'Hasil Final Asessmen' && (
+                                    <div className="flex justify-center w-full my-5">
+                                        <Button
+                                            type="submit"
+                                            className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
+                                        >
+                                            <PenIcon /> Simpan
+                                        </Button>
+                                    </div>
+                                         )
+                                    }
+                                </form>
+                            </Form>
+                        </CardContent>
+                    </Card>
+                )
+            }
             <SheetManageData
                 openDialog={openDialog}
                 setOpenDialog={setOpenDialog}
