@@ -2,10 +2,17 @@
 import React from 'react'
 import { Label } from '@/components/ui/label'
 import {
+    AlertCircleIcon,
+    ChevronDown,
     ChevronLeft,
     ChevronRight,
     ListIcon,
+    Maximize2,
+    Minimize2,
     PenLine,
+    Send,
+    Sparkles,
+    Square,
     Timer,
     X,
 } from 'lucide-react'
@@ -28,7 +35,7 @@ import {
 } from '../ui/dialog'
 import { Badge } from '../ui/badge'
 import { replaceItemAtIndex, truncateText } from '@/lib/utils'
-import { BuktiForm, ProfiensiPengetahuan } from '@/generated/prisma'
+import { ProfiensiPengetahuan } from '@/generated/prisma'
 import {
     Card,
     CardContent,
@@ -45,11 +52,18 @@ import { Input } from '../ui/input'
 import { setAsessmentMahasiswaFromAsesor } from '@/services/Asessment/AsessmentMahasiswaService'
 import { Skeleton } from '../ui/skeleton'
 import { getFileBlobByNamafile } from '@/services/UploadDokumenService'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
+import { ScrollArea } from '../ui/scroll-area'
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
+import { ChatMessageDTO, streamChat } from '@/services/Ai/AiServices'
+
+type WindowSize = 'medium' | 'large' | 'fullscreen'
 
 const AsessmentIdComponent = ({
-    dataServer,
+    dataServer, nama
 }: {
-    dataServer: AsessmenAsesorTypes
+    dataServer: AsessmenAsesorTypes,
+    nama: string
 }) => {
     const [data, setData] = React.useState(dataServer)
     const [dataPdf, setDataPdf] = React.useState<{
@@ -63,6 +77,8 @@ const AsessmentIdComponent = ({
     } | null>(null)
     const [openDialogPdfPreview, setOpenDialogPdfPreview] =
         React.useState<boolean>(false)
+
+    
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
     const [index, setIndex] = React.useState<number>(0)
     const [activeCapaian, setActiveCapaian] = React.useState<string | null>(
@@ -85,64 +101,64 @@ const AsessmentIdComponent = ({
             data[index].CapaianPembelajaran.length === 0
                 ? ''
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .HasilAssesmenId
-                : '',
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .HasilAssesmenId
+                    : '',
         EvaluasiDiriId:
             data[index].CapaianPembelajaran.length === 0
                 ? ''
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.EvaluasiDiriId
-                : '',
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.EvaluasiDiriId
+                    : '',
         Valid:
             data[index].CapaianPembelajaran.length === 0
                 ? false
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .Valid
-                : false,
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .Valid
+                    : false,
         Autentik:
             data[index].CapaianPembelajaran.length === 0
                 ? false
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .Autentik
-                : false,
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .Autentik
+                    : false,
         Terkini:
             data[index].CapaianPembelajaran.length === 0
                 ? false
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .Terkini
-                : false,
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .Terkini
+                    : false,
         Memadai:
             data[index].CapaianPembelajaran.length === 0
                 ? false
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .Memadai
-                : false,
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .Memadai
+                    : false,
         Assesmen:
             data[index].CapaianPembelajaran.length === 0
                 ? ''
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .Assesmen
-                : '',
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .Assesmen
+                    : '',
         Nilai:
             data[index].CapaianPembelajaran.length === 0
                 ? 0
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .Nilai
-                : 0,
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .Nilai
+                    : 0,
         TanggalAssesmen:
             data[index].CapaianPembelajaran.length === 0
                 ? new Date()
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
-                      .TanggalAssesmen
-                : new Date(),
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.HasilAsessment
+                        .TanggalAssesmen
+                    : new Date(),
     })
     const setFormDefault = () => {
         setForm({
@@ -150,65 +166,65 @@ const AsessmentIdComponent = ({
                 data[index].CapaianPembelajaran.length === 0
                     ? ''
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .EvaluasiDiriId
-                    : '',
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .EvaluasiDiriId
+                        : '',
             HasilAssesmenId:
                 data[index].CapaianPembelajaran.length === 0
                     ? ''
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.HasilAssesmenId
-                    : '',
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.HasilAssesmenId
+                        : '',
             Valid:
                 data[index].CapaianPembelajaran.length === 0
                     ? false
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.Valid
-                    : false,
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.Valid
+                        : false,
             Autentik:
                 data[index].CapaianPembelajaran.length === 0
                     ? false
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.Autentik
-                    : false,
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.Autentik
+                        : false,
             Terkini:
                 data[index].CapaianPembelajaran.length === 0
                     ? false
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.Terkini
-                    : false,
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.Terkini
+                        : false,
             Memadai:
                 data[index].CapaianPembelajaran.length === 0
                     ? false
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.Memadai
-                    : false,
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.Memadai
+                        : false,
             Assesmen:
                 data[index].CapaianPembelajaran.length === 0
                     ? ''
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.Assesmen
-                    : '',
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.Assesmen
+                        : '',
             Nilai:
                 data[index].CapaianPembelajaran.length === 0
                     ? 0
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.Nilai
-                    : 0,
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.Nilai
+                        : 0,
             TanggalAssesmen:
                 data[index].CapaianPembelajaran.length === 0
                     ? new Date()
                     : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                          .HasilAsessment.TanggalAssesmen
-                    : new Date(),
+                        ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                            .HasilAsessment.TanggalAssesmen
+                        : new Date(),
         })
     }
     const [loading, setLoading] = React.useState<boolean>(false)
@@ -221,7 +237,7 @@ const AsessmentIdComponent = ({
                 data[index + 1].CapaianPembelajaran.length === 0
                     ? null
                     : data[index + 1].CapaianPembelajaran[0]
-                          .CapaianPembelajaranId || null
+                        .CapaianPembelajaranId || null
             )
             setFormDefault()
         }
@@ -233,7 +249,7 @@ const AsessmentIdComponent = ({
                 data[index - 1].CapaianPembelajaran.length === 0
                     ? null
                     : data[index - 1].CapaianPembelajaran[0]
-                          .CapaianPembelajaranId || null
+                        .CapaianPembelajaranId || null
             )
             setFormDefault()
         }
@@ -297,7 +313,22 @@ const AsessmentIdComponent = ({
                                     Assesmen: res.Assesmen,
                                     Nilai: res.Nilai,
                                     TanggalAssesmen: res.TanggalAssesmen,
+                                    Ai: res.Ai
                                 },
+                                HasilAsessmentAi: {
+                                    Valid: data[index].CapaianPembelajaran[idx]
+                                        .EvaluasiDiri?.HasilAsessmentAi?.Valid ?? '',
+                                    Autentik: data[index].CapaianPembelajaran[idx]
+                                        .EvaluasiDiri?.HasilAsessmentAi?.Autentik ?? '',
+                                    Terkini: data[index].CapaianPembelajaran[idx]
+                                        .EvaluasiDiri?.HasilAsessmentAi?.Terkini ?? '',
+                                    Memadai: data[index].CapaianPembelajaran[idx]
+                                        .EvaluasiDiri?.HasilAsessmentAi?.Memadai ?? '',
+                                    Assesmen: data[index].CapaianPembelajaran[idx]
+                                        .EvaluasiDiri?.HasilAsessmentAi?.Assesmen ?? '',
+                                    Nilai: data[index].CapaianPembelajaran[idx]
+                                        .EvaluasiDiri?.HasilAsessmentAi?.Nilai ?? '',
+                                }
                             },
                         }
                     )
@@ -332,6 +363,133 @@ const AsessmentIdComponent = ({
         setOpenDialogPdfPreview(true)
     }
 
+    // AI
+    const scrollRef = React.useRef<HTMLDivElement | null>(null);
+    const [shouldAutoScroll, setShouldAutoScroll] = React.useState(true);
+    const [showScrollDown, setShowScrollDown] = React.useState(false);
+
+    const [openAi, setOpenAi] = React.useState<boolean>(false)
+    const [messagesAi, setMessagesAi] = React.useState<{
+        id: string
+        role: 'user' | 'assistant'
+        content: string
+        timestamp: Date
+    }[]>([])
+    const [inputAi, setInputAi] = React.useState<string>('')
+    const [windowSize, setWindowSize] = React.useState<WindowSize>('large')
+    const [isLoadingAi, setIsLoadingAi] = React.useState<boolean>(false)
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault()
+            handleSubmit()
+        }
+    }
+    const handleSubmit = async () => {
+        if (!inputAi.trim() || isLoadingAi) return
+
+        const now = new Date()
+        const userMessage = {
+            id: now.getTime().toString(),
+            role: 'user' as const,
+            content: inputAi.trim(),
+            timestamp: now,
+        }
+
+        const historyWithUser = [...messagesAi, userMessage]
+
+        setMessagesAi(historyWithUser)
+        setInputAi('')
+        setIsLoadingAi(true)
+
+        const assistantId = (now.getTime() + 1).toString()
+        const assistantMessage = {
+            id: assistantId,
+            role: 'assistant' as const,
+            content: '',
+            timestamp: new Date(),
+        }
+
+        setMessagesAi((prev) => [...prev, assistantMessage])
+
+        try {
+            const dtoMessages: ChatMessageDTO[] = historyWithUser.map((m) => ({
+                role: m.role,
+                content: m.content,
+            }))
+
+            await streamChat(form.HasilAssesmenId, dtoMessages, (chunk) => {
+                setMessagesAi((prev) =>
+                    prev.map((msg) =>
+                        msg.id === assistantId
+                            ? { ...msg, content: msg.content + chunk.replace(/\*\*(.*?)\*\*/g, "$1").replace(/\*(.*?)\*/g, "$1") }
+                            : msg,
+                    ),
+                )
+            })
+        } catch (err) {
+            console.error('Chat error', err)
+            setMessagesAi((prev) =>
+                prev.map((msg) =>
+                    msg.id === assistantId
+                        ? {
+                            ...msg,
+                            content:
+                                msg.content ||
+                                'Maaf, terjadi kesalahan saat memproses permintaan Anda.',
+                        }
+                        : msg,
+                ),
+            )
+        } finally {
+            setIsLoadingAi(false)
+        }
+    }
+    const toggleWindowSize = () => {
+        const sizes: WindowSize[] = ['medium', 'large', 'fullscreen']
+        const currentIndex = sizes.indexOf(windowSize)
+        const nextIndex = (currentIndex + 1) % sizes.length
+        setWindowSize(sizes[nextIndex])
+    }
+    const getWindowSizeClasses = () => {
+        switch (windowSize) {
+            case 'medium':
+                return 'max-w-2xl max-h-[600px] w-full h-[70vh]'
+            case 'large':
+                return 'max-w-5xl  max-h-[700px] w-full h-[80vh]'
+            case 'fullscreen':
+                return 'max-w-[85vw] max-h-[85vh] w-full h-full md:max-w-full md:max-h-full md:w-screen md:h-screen sm:max-w-full sm:max-h-full sm:w-screen sm:h-screen p-0 gap-0 border-0 overflow-hidden'
+            default:
+                return 'max-w-5xl max-h-[700px] w-full h-[70vh]'
+        }
+    }
+    const handleScroll = () => {
+        const el = scrollRef.current;
+        if (!el) return;
+
+        const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+        const isAtBottom = distanceFromBottom < 60;
+
+        setShouldAutoScroll(isAtBottom);
+        setShowScrollDown(!isAtBottom);
+    };
+    const handleScrollToBottom = () => {
+        const el = scrollRef.current;
+        if (!el) return;
+
+        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+        setShouldAutoScroll(true);
+        setShowScrollDown(false);
+    };
+    // End Ai
+
+    React.useEffect(() => {
+        if (!shouldAutoScroll) return;
+        const el = scrollRef.current;
+        if (!el) return;
+
+        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+    }, [messagesAi, shouldAutoScroll]);
+
     return (
         <React.Fragment>
             <SidebarInset className="mr-[300px]">
@@ -345,12 +503,12 @@ const AsessmentIdComponent = ({
                                         activeCapaian
                                 ) !== undefined
                                     ? 'Urutan #' +
-                                      data[index].CapaianPembelajaran.find(
-                                          (cp) =>
-                                              cp.CapaianPembelajaranId ===
-                                              activeCapaian
-                                      )?.Urutan +
-                                      ' '
+                                    data[index].CapaianPembelajaran.find(
+                                        (cp) =>
+                                            cp.CapaianPembelajaranId ===
+                                            activeCapaian
+                                    )?.Urutan +
+                                    ' '
                                     : 'Silakan Pilih Capaian Pembelajaran '}
 
                                 {data[index].CapaianPembelajaran.find(
@@ -376,10 +534,10 @@ const AsessmentIdComponent = ({
                                         activeCapaian
                                 ) !== undefined
                                     ? data[index].CapaianPembelajaran.find(
-                                          (cp) =>
-                                              cp.CapaianPembelajaranId ===
-                                              activeCapaian
-                                      )?.Nama
+                                        (cp) =>
+                                            cp.CapaianPembelajaranId ===
+                                            activeCapaian
+                                    )?.Nama
                                     : 'Capaian Pembelajaran akan muncul disini'}
                             </div>
                         </CardContent>
@@ -392,57 +550,54 @@ const AsessmentIdComponent = ({
                             ) : (
                                 <form className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-4">
                                     <label
-                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${
-                                            data[
-                                                index
-                                            ].CapaianPembelajaran.find(
-                                                (cp) =>
-                                                    cp.CapaianPembelajaranId ===
-                                                    activeCapaian
-                                            )?.EvaluasiDiri
-                                                ?.ProfiensiPengetahuan ===
+                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${data[
+                                            index
+                                        ].CapaianPembelajaran.find(
+                                            (cp) =>
+                                                cp.CapaianPembelajaranId ===
+                                                activeCapaian
+                                        )?.EvaluasiDiri
+                                            ?.ProfiensiPengetahuan ===
                                             ProfiensiPengetahuan.TIDAK_PERNAH
-                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-600 dark:border-gray-300 dark:text-gray-100'
-                                                : 'border-gray-300'
-                                        }`}
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-600 dark:border-gray-300 dark:text-gray-100'
+                                            : 'border-gray-300'
+                                            }`}
                                     >
                                         <div className="text-lg text-center font-medium">
                                             Tidak Pernah
                                         </div>
                                     </label>
                                     <label
-                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${
-                                            data[
-                                                index
-                                            ].CapaianPembelajaran.find(
-                                                (cp) =>
-                                                    cp.CapaianPembelajaranId ===
-                                                    activeCapaian
-                                            )?.EvaluasiDiri
-                                                ?.ProfiensiPengetahuan ===
+                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${data[
+                                            index
+                                        ].CapaianPembelajaran.find(
+                                            (cp) =>
+                                                cp.CapaianPembelajaranId ===
+                                                activeCapaian
+                                        )?.EvaluasiDiri
+                                            ?.ProfiensiPengetahuan ===
                                             ProfiensiPengetahuan.BAIK
-                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-600 dark:border-gray-300 dark:text-gray-100'
-                                                : 'border-gray-300'
-                                        }`}
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-600 dark:border-gray-300 dark:text-gray-100'
+                                            : 'border-gray-300'
+                                            }`}
                                     >
                                         <div className="text-lg text-center font-medium">
                                             Baik
                                         </div>
                                     </label>
                                     <label
-                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${
-                                            data[
-                                                index
-                                            ].CapaianPembelajaran.find(
-                                                (cp) =>
-                                                    cp.CapaianPembelajaranId ===
-                                                    activeCapaian
-                                            )?.EvaluasiDiri
-                                                ?.ProfiensiPengetahuan ===
+                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${data[
+                                            index
+                                        ].CapaianPembelajaran.find(
+                                            (cp) =>
+                                                cp.CapaianPembelajaranId ===
+                                                activeCapaian
+                                        )?.EvaluasiDiri
+                                            ?.ProfiensiPengetahuan ===
                                             ProfiensiPengetahuan.SANGAT_BAIK
-                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-600 dark:border-gray-300 dark:text-gray-100'
-                                                : 'border-gray-300'
-                                        }`}
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-600 dark:border-gray-300 dark:text-gray-100'
+                                            : 'border-gray-300'
+                                            }`}
                                     >
                                         <div className="text-lg text-center font-medium">
                                             Sangat Baik
@@ -470,10 +625,10 @@ const AsessmentIdComponent = ({
                                         Silakan anda pilih Capaian Pembelajaran
                                     </h1>
                                 ) : data[index].CapaianPembelajaran.find(
-                                      (cp) =>
-                                          cp.CapaianPembelajaranId ===
-                                          activeCapaian
-                                  )?.EvaluasiDiri?.BuktiForm.length === 0 ? (
+                                    (cp) =>
+                                        cp.CapaianPembelajaranId ===
+                                        activeCapaian
+                                )?.EvaluasiDiri?.BuktiForm.length === 0 ? (
                                     <h1>
                                         Calon Mahasiswa Tidak Upload Dokumen
                                         Apapun
@@ -523,15 +678,40 @@ const AsessmentIdComponent = ({
                         </CardContent>
                     </Card>
                     <Card className="my-3">
-                        <CardHeader>
+                        <CardHeader className='relative'>
                             <CardTitle>Formulir Asessmen Asesor</CardTitle>
                             <CardDescription>
                                 Silakan Isi Form Untuk Asessmen Capaian
                                 Pembelajaran ini.
                             </CardDescription>
+                            <button
+                                onClick={() => setOpenAi(true)}
+                                className="absolute top-0 right-5 z-50 group"
+                                aria-label="Open AI Chat"
+                            >
+                                <div className="relative">
+                                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 blur-md opacity-75 group-hover:opacity-100 animate-spin-slow"></div>
+                                    <div className="relative w-12 h-12 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 animate-gradient">
+                                        <span className="text-white font-bold text-lg">AI</span>
+                                        <Sparkles className="absolute -top-1 -right-1 w-5 h-5 text-yellow-300 animate-pulse" />
+                                    </div>
+                                </div>
+                            </button>
                         </CardHeader>
                         <CardContent className="w-full ">
                             <div className="grid grid-cols-1 gap-3">
+                                <Alert variant="destructive">
+                                    <AlertCircleIcon />
+                                    <AlertTitle>Form ini diisi oleh AI Asessmen</AlertTitle>
+                                    <AlertDescription>
+                                        <p>AI bisa membuat kesalahan, Asesor mohon untuk cek kembali hasil penilaian.</p>
+                                        <ul className="list-inside list-disc text-sm">
+                                            <li>Cek Dokumen Bukti Dukung</li>
+                                            <li>Pastikan Capaian Pembelajaran sesuai</li>
+                                            <li>Verifikasi kembali hasil penilaian AI</li>
+                                        </ul>
+                                    </AlertDescription>
+                                </Alert>
                                 <Textarea
                                     value={form.Assesmen}
                                     onChange={(val) =>
@@ -546,14 +726,15 @@ const AsessmentIdComponent = ({
                             <Separator className="my-3" />
                             <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-3">
                                 <label
-                                    className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
-                        ${
-                            form.Valid
-                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                : 'hover:shadow-md'
-                        }
-                        ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    className={`relative border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
+        ${form.Valid
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                            : 'hover:shadow-md'
+                                        }
+        ${loading ? 'opacity-50 cursor-not-allowed' : ''}
+    `}
                                 >
+
                                     <input
                                         type="checkbox"
                                         className="mr-2 hidden"
@@ -562,25 +743,23 @@ const AsessmentIdComponent = ({
                                         onChange={(e) =>
                                             setForm({
                                                 ...form,
-                                                Valid: form.Valid
-                                                    ? false
-                                                    : true,
+                                                Valid: !form.Valid,
                                             })
                                         }
                                     />
+
                                     <div className="font-semibold">Valid</div>
                                     <div className="text-sm text-muted-foreground">
-                                        Hubungan antara Syarat bukti dari MK
-                                        dengan bukti dasar penilaian.
+                                        Hubungan antara Syarat bukti dari MK dengan bukti dasar penilaian.
                                     </div>
                                 </label>
+
                                 <label
                                     className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
-                        ${
-                            form.Autentik
-                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                : 'hover:shadow-md'
-                        }
+                        ${form.Autentik
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                            : 'hover:shadow-md'
+                                        }
                         ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     <input
@@ -606,11 +785,10 @@ const AsessmentIdComponent = ({
                                 </label>
                                 <label
                                     className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
-                        ${
-                            form.Terkini
-                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                : 'hover:shadow-md'
-                        }
+                        ${form.Terkini
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                            : 'hover:shadow-md'
+                                        }
                         ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     <input
@@ -635,11 +813,10 @@ const AsessmentIdComponent = ({
                                 </label>
                                 <label
                                     className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
-                        ${
-                            form.Memadai
-                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                : 'hover:shadow-md'
-                        }
+                        ${form.Memadai
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                            : 'hover:shadow-md'
+                                        }
                         ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     <input
@@ -677,17 +854,17 @@ const AsessmentIdComponent = ({
                                             ...form,
                                             Nilai:
                                                 parseInt(e.target.value, 10) >
-                                                100
+                                                    100
                                                     ? 100
                                                     : parseInt(
-                                                          e.target.value,
-                                                          10
-                                                      ) < 0
-                                                    ? 0
-                                                    : parseInt(
-                                                          e.target.value,
-                                                          10
-                                                      ),
+                                                        e.target.value,
+                                                        10
+                                                    ) < 0
+                                                        ? 0
+                                                        : parseInt(
+                                                            e.target.value,
+                                                            10
+                                                        ),
                                         })
                                     }
                                 />
@@ -709,7 +886,7 @@ const AsessmentIdComponent = ({
                                     ) : (
                                         <>
                                             <PenLine />
-                                            Simpan{' '}
+                                            Reviewed
                                         </>
                                     )}
                                 </Button>
@@ -810,26 +987,25 @@ const AsessmentIdComponent = ({
                                         }
                                     }}
                                     key={cp.CapaianPembelajaranId}
-                                    className={`${
-                                        loading && 'cursor-not-allowed'
-                                    } flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+                                    className={`${loading && 'cursor-not-allowed'
+                                        } flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
                                 >
                                     <div className="flex w-full items-center gap-2">
                                         <span>Urutan #{cp.Urutan}</span>{' '}
                                         <span className="ml-auto text-xs">
                                             <Badge
                                                 className={
-                                                    cp.EvaluasiDiri
+                                                    !cp.EvaluasiDiri
                                                         ?.HasilAsessment
-                                                        .HasilAssesmenId !== ''
-                                                        ? `bg-green-500`
-                                                        : `bg-red-500`
+                                                        .Ai
+                                                        ? `bg-green-600`
+                                                        : `bg-yellow-600`
                                                 }
                                             >
-                                                {cp.EvaluasiDiri?.HasilAsessment
-                                                    .HasilAssesmenId !== ''
-                                                    ? `Sudah`
-                                                    : `Belum`}
+                                                {!cp.EvaluasiDiri?.HasilAsessment
+                                                    .Ai
+                                                    ? `Reviewed`
+                                                    : `Peer Review AI`}
                                             </Badge>
                                         </span>
                                     </div>
@@ -860,6 +1036,143 @@ const AsessmentIdComponent = ({
                 pdfPreview={pdfPreview}
                 setPdfPreview={setPdfPreview}
             />
+            <Dialog open={openAi} onOpenChange={setOpenAi}>
+                <DialogContent className={`${getWindowSizeClasses()} p-0 gap-0 border-0 overflow-hidden transition-all duration-300 flex flex-col`}>
+                    <VisuallyHidden>
+                        <DialogTitle>RPL Chatbot</DialogTitle>
+                        <DialogDescription>
+                            AI assistant untuk sistem RPL.
+                        </DialogDescription>
+                    </VisuallyHidden>
+                    <div className="relative w-full h-full flex flex-1 flex-col">
+                        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 opacity-20 blur-xl animate-spin-slow pointer-events-none"></div>
+                        <div className="absolute inset-[1px] bg-background rounded-lg"></div>
+
+                        <div className="relative z-10 flex flex-col h-full min-h-0">
+                            <div className="flex items-center justify-between gap-3 p-4 border-b bg-background/50 backdrop-blur-sm">
+                                <div className="flex items-center gap-3">
+                                    <div className="relative">
+                                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center animate-gradient">
+                                            <span className="text-white font-bold">AI</span>
+                                        </div>
+                                        <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-yellow-300 animate-pulse" />
+                                    </div>
+                                    <h2 className="text-xl font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
+                                        AI Asessment
+                                    </h2>
+                                </div>
+
+                                <div className="flex items-center gap-1">
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 rounded-full hover:bg-secondary"
+                                        onClick={toggleWindowSize}
+                                        title={`Switch to ${windowSize === 'medium' ? 'large' : windowSize === 'large' ? 'fullscreen' : 'medium'} size`}
+                                    >
+                                        {windowSize === 'fullscreen' ? (
+                                            <Minimize2 className="h-4 w-4" />
+                                        ) : windowSize === 'large' ? (
+                                            <Maximize2 className="h-4 w-4" />
+                                        ) : (
+                                            <Square className="h-4 w-4" />
+                                        )}
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 rounded-full hover:bg-secondary"
+                                        onClick={() => setOpenAi(false)}
+                                    >
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            </div>
+
+                            <ScrollArea className="flex-1 p-6 overflow-y-auto" >
+                                <div className='h-full max-h-[90vh]' ref={scrollRef} onScroll={handleScroll}>
+                                    <div className="space-y-4 pb-10">
+                                        {messagesAi.length === 0 && (
+                                            <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-center space-y-4">
+                                                <div className="relative">
+                                                    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center animate-gradient">
+                                                        <Sparkles className="w-10 h-10 text-white animate-pulse" />
+                                                    </div>
+                                                </div>
+                                                <h3 className="text-2xl font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
+                                                    Halo {nama}, Ada yang bisa AI bantu?
+                                                </h3>
+                                                <p className="text-muted-foreground max-w-md">
+                                                    Tanyakan apa saja kepada AI Asessmen. Saya siap membantu Anda!
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        {messagesAi.map((message) => (
+                                            <div
+                                                key={message.id}
+                                                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                                            >
+                                                <div
+                                                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.role === 'user'
+                                                        ? 'bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white'
+                                                        : 'bg-secondary text-secondary-foreground'
+                                                        }`}
+                                                >
+                                                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+
+                                        {isLoadingAi && (
+                                            <div className="flex justify-start animate-fade-in">
+                                                <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-secondary">
+                                                    <div className="flex gap-1">
+                                                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                                                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                                                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-500 to-pink-500 animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {showScrollDown && (
+                                        <button
+                                            type="button"
+                                            onClick={handleScrollToBottom}
+                                            className="absolute right-4 bottom-4 flex items-center gap-1 rounded-full bg-background/95 border shadow-md px-3 py-1.5 text-xs text-muted-foreground hover:bg-background hover:text-foreground transition"
+                                        >
+                                            <ChevronDown className="w-4 h-4" />
+                                            <span>Scroll ke bawah</span>
+                                        </button>
+                                    )}
+                                </div>
+                            </ScrollArea>
+
+                            <div className="p-6 border-t">
+                                <div className="flex gap-2">
+                                    <Textarea
+                                        value={inputAi}
+                                        onChange={(e) => setInputAi(e.target.value)}
+                                        onKeyDown={handleKeyDown}
+                                        placeholder="Ketik pesan Anda..."
+                                        className="min-h-[60px] resize-none focus-visible:ring-2 focus-visible:ring-purple-500 transition-all"
+                                        disabled={isLoadingAi}
+                                    />
+                                    <Button
+                                        onClick={handleSubmit}
+                                        disabled={!inputAi.trim() || isLoadingAi}
+                                        size="icon"
+                                        className="h-[60px] w-[60px] bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-90 transition-all hover:scale-105"
+                                    >
+                                        <Send className="h-5 w-5" />
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </React.Fragment>
     )
 }
@@ -927,9 +1240,9 @@ function DialogMataKuliahMahasiswaRpl({
                                                         .length === 0
                                                         ? null
                                                         : data[idx]
-                                                              .CapaianPembelajaran[0]
-                                                              .CapaianPembelajaranId ||
-                                                              null
+                                                            .CapaianPembelajaran[0]
+                                                            .CapaianPembelajaranId ||
+                                                        null
                                                 )
                                             }
                                             setOpenDialog(false)

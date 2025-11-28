@@ -39,6 +39,15 @@ export type AsessmenAsesorTypes = {
                 Assesmen: string
                 Nilai: number
                 TanggalAssesmen: Date
+                Ai: boolean
+            }
+            HasilAsessmentAi: {
+                Valid: string
+                Autentik: string
+                Terkini: string
+                Memadai: string
+                Assesmen: string
+                Nilai: string
             }
             BuktiForm: {
                 Jenis: string
@@ -63,6 +72,28 @@ export type SkorAsessmenTypes = {
         Jenjang: string | null
         Akreditasi: string
         MataKuliahMahasiswa: {
+            EvaluasiDiri: {
+                NamaCp: string
+                ProfisiensiPengetahuan: ProfiensiPengetahuan,
+                Valid: boolean
+                Autentik: boolean
+                Terkini: boolean
+                Memadai: boolean
+                Assesmen: string
+                Nilai: number
+                Justifikasi: {
+                    Valid: string
+                    Autentik: string
+                    Terkini: string
+                    Memadai: string
+                    Assesmen: string
+                    Nilai: string
+                }
+                BuktiForm: {
+                    NamaDokumen: string
+                    Result: string
+                }[]
+            }[]
             MataKuliahMahasiswaId: string
             Rpl: string
             Keterangan: string
@@ -84,6 +115,7 @@ export type SkorAsessmenTypes = {
                 Diakui: boolean
                 SkorRataRata: number
                 NilaiHuruf: string | null
+                Ai: boolean
             }
         }[]
     }

@@ -1,11 +1,15 @@
 import AsessmentIdComponent from '@/components/asessment/AsessmentIdComponent'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/provider/api'
 import { AsessmenAsesorTypes } from '@/types/AsessmentTypes'
 import React from 'react'
 
 export default async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
+    const session = await getSession();
+
+    const nama = session?.user?.name || '';
 
     const data = await prisma.pendaftaran.findFirst({
         where: {
@@ -59,6 +63,17 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                                                     Assesmen: true,
                                                     Nilai: true,
                                                     TanggalAssesmen: true,
+                                                    Ai: true,
+                                                    HasilAssesmenAi: {
+                                                        select: {
+                                                            Valid: true,
+                                                            Autentik: true,
+                                                            Terkini: true,
+                                                            Memadai: true,
+                                                            Assesmen: true,
+                                                            Nilai: true,
+                                                        },
+                                                    },
                                                 },
                                             },
                                             BuktiFormEvaluasiDiri: {
@@ -180,6 +195,13 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                                                     : cp?.EvaluasiDiri[0]
                                                           .HasilAssesmen[0]
                                                           .Assesmen ?? '',
+                                            Ai:
+                                                cp.EvaluasiDiri[0].HasilAssesmen
+                                                    .length === 0
+                                                    ? false
+                                                    : cp?.EvaluasiDiri[0]
+                                                          .HasilAssesmen[0]
+                                                          .Ai ?? false,
                                             Nilai:
                                                 cp.EvaluasiDiri[0].HasilAssesmen
                                                     .length === 0
@@ -195,6 +217,55 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                                                           .HasilAssesmen[0]
                                                           .TanggalAssesmen ??
                                                       new Date(),
+                                        },
+                                        HasilAsessmentAi: {
+                                            Valid:
+                                                cp.EvaluasiDiri[0].HasilAssesmen
+                                                    .length === 0
+                                                    ? ''
+                                                    : cp?.EvaluasiDiri[0]
+                                                          .HasilAssesmen[0]
+                                                          .HasilAssesmenAi[0].Valid ?? '',
+                                            Autentik:
+                                                cp.EvaluasiDiri[0].HasilAssesmen
+                                                    .length === 0
+                                                    ? ''
+                                                    : cp?.EvaluasiDiri[0]
+                                                          .HasilAssesmen[0]
+                                                          .HasilAssesmenAi[0]
+                                                          .Autentik ?? '',
+                                            Terkini:
+                                                cp.EvaluasiDiri[0].HasilAssesmen
+                                                    .length === 0
+                                                    ? ''
+                                                    : cp?.EvaluasiDiri[0]
+                                                          .HasilAssesmen[0]
+                                                          .HasilAssesmenAi[0]
+                                                          .Terkini ?? '',
+                                            Memadai:
+                                                cp.EvaluasiDiri[0].HasilAssesmen
+                                                    .length === 0
+                                                    ? ''
+                                                    : cp?.EvaluasiDiri[0]
+                                                          .HasilAssesmen[0]
+                                                          .HasilAssesmenAi[0]
+                                                          .Memadai ?? '',
+                                            Assesmen:
+                                                cp.EvaluasiDiri[0].HasilAssesmen
+                                                    .length === 0
+                                                    ? ''
+                                                    : cp?.EvaluasiDiri[0]
+                                                          .HasilAssesmen[0]
+                                                          .HasilAssesmenAi[0]
+                                                          .Assesmen ?? '',
+                                            Nilai:
+                                                cp.EvaluasiDiri[0].HasilAssesmen
+                                                    .length === 0
+                                                    ? ''
+                                                    : cp?.EvaluasiDiri[0]
+                                                          .HasilAssesmen[0]
+                                                          .HasilAssesmenAi[0]
+                                                          .Nilai ?? '',
                                         },
                                         BuktiForm:
                                             cp?.EvaluasiDiri[0]
@@ -241,7 +312,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     } as React.CSSProperties
                 }
             >
-                <AsessmentIdComponent dataServer={dataServer} />
+                <AsessmentIdComponent nama={nama} dataServer={dataServer} />
             </SidebarProvider>
         </div>
     )

@@ -1,11 +1,14 @@
 import RekapitulasiIdComponent from '@/components/rekapitulasi/RekapitulasiIdComponent'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { prisma } from '@/lib/prisma'
+import { getSession } from '@/provider/api'
 import { SkorAsessmenTypes } from '@/types/AsessmentTypes'
 import React from 'react'
 
 export default async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
+    const session = await getSession();
+    const nama = session?.user?.name || '';
     const data = await prisma.pendaftaran.findFirst({
         select: {
             PendaftaranId: true,
@@ -38,6 +41,50 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             Silabus: true,
                         },
                     },
+                    EvaluasiDiri: {
+                        select: {
+                            CapaianPembelajaran: {
+                                select: {
+                                    Nama: true
+                                }
+                            },
+                            ProfiensiPengetahuan: true,
+                            HasilAssesmen: {
+                                select: {
+                                    Valid: true,
+                                    Autentik: true,
+                                    Terkini: true,
+                                    Memadai: true,
+                                    Assesmen: true,
+                                    Nilai: true,
+                                    HasilAssesmenAi: {
+                                        select: {
+                                            Valid: true,
+                                            Autentik: true,
+                                            Terkini: true,
+                                            Memadai: true,
+                                            Assesmen: true,
+                                            Nilai: true,
+                                        }
+                                    }
+                                }
+                            },
+                            BuktiFormEvaluasiDiri: {
+                                select: {
+                                    BuktiForm: {
+                                        select: {
+                                            NamaDokumen: true,
+                                            BuktiFormPages: {
+                                                select: {
+                                                    Result: true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    },
                     SkorAssesmen: {
                         select: {
                             SkorAssesmenId: true,
@@ -49,6 +96,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             Diakui: true,
                             SkorRataRata: true,
                             NilaiHuruf: true,
+                            Ai: true
                         },
                     },
                 },
@@ -81,6 +129,28 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                         Semester: mkm.MataKuliah.Semester,
                         Silabus: mkm.MataKuliah.Silabus,
                     },
+                    EvaluasiDiri: mkm.EvaluasiDiri.map(ed => ({
+                        NamaCp: ed.CapaianPembelajaran.Nama ,
+                        ProfisiensiPengetahuan: ed.ProfiensiPengetahuan,
+                        Valid: ed.HasilAssesmen[0].Valid ?? false,
+                        Autentik: ed.HasilAssesmen[0].Autentik ?? false,
+                        Terkini: ed.HasilAssesmen[0].Terkini ?? false,
+                        Memadai: ed.HasilAssesmen[0].Memadai ?? false,
+                        Assesmen: ed.HasilAssesmen[0].Assesmen ?? '',
+                        Nilai: ed.HasilAssesmen[0].Nilai ?? 0,
+                        Justifikasi: {
+                            Valid: ed.HasilAssesmen[0].HasilAssesmenAi[0].Valid ?? '',
+                            Autentik: ed.HasilAssesmen[0].HasilAssesmenAi[0].Autentik ?? '',
+                            Terkini: ed.HasilAssesmen[0].HasilAssesmenAi[0].Terkini ?? '',
+                            Memadai: ed.HasilAssesmen[0].HasilAssesmenAi[0].Memadai ?? '',
+                            Assesmen: ed.HasilAssesmen[0].HasilAssesmenAi[0].Assesmen ?? '',
+                            Nilai: ed.HasilAssesmen[0].HasilAssesmenAi[0].Nilai ?? '',
+                        },
+                        BuktiForm: ed.BuktiFormEvaluasiDiri.map(x => ({
+                            NamaDokumen: x.BuktiForm.NamaDokumen,
+                            Result: x.BuktiForm.BuktiFormPages[0].Result ?? ''
+                        }))
+                    })),
                     SkorAsessmen: {
                         SkorAssesmenId:
                             mkm.SkorAssesmen.length === 0
@@ -90,7 +160,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             mkm.SkorAssesmen.length === 0
                                 ? ''
                                 : mkm.SkorAssesmen[0].MataKuliahMahasiswaId ??
-                                  '',
+                                '',
                         Portofolio:
                             mkm.SkorAssesmen.length === 0
                                 ? 0
@@ -119,6 +189,10 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             mkm.SkorAssesmen.length === 0
                                 ? ''
                                 : mkm.SkorAssesmen[0].NilaiHuruf ?? '',
+                        Ai:
+                            mkm.SkorAssesmen.length === 0
+                                ? false
+                                : mkm.SkorAssesmen[0].Ai ?? false,
                     },
                 })
             ),
@@ -137,7 +211,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     } as React.CSSProperties
                 }
             >
-                <RekapitulasiIdComponent dataServer={dataServer} />
+                <RekapitulasiIdComponent dataServer={dataServer} nama={nama} />
             </SidebarProvider>
         </div>
     )

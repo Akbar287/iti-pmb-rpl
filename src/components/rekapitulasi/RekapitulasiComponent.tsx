@@ -53,6 +53,12 @@ const RekapitulasiComponent = () => {
     const [dataMahasiswa, setDataMahasiswa] = React.useState<
         ResponseMhsFromAsesorSession[]
     >([])
+    const [role, setRole] = React.useState<{
+            GuardName: string
+            Icon: string
+            Name: string
+            RoleId: string
+        } | null>(null)
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -118,32 +124,129 @@ const RekapitulasiComponent = () => {
     }
 
     React.useEffect(() => {
-        setLoading(true)
-        getMahasiswaFromAsesorRekapitulasi(
-            paginationState.page,
-            paginationState.limit,
-            search
-        )
-            .then((res) => {
-                setDataMahasiswa(res.data)
-                setLoading(false)
-                setPaginationState({
-                    page: res.page,
-                    limit: res.limit,
-                    totalElement: res.totalElement,
-                    totalPage: res.totalPage,
-                    isFirst: res.isFirst,
-                    isLast: res.isLast,
-                    hasNext: res.hasNext,
-                    hasPrevious: res.hasPrevious,
+        let temp: {
+            GuardName: string
+            Icon: string
+            Name: string
+            RoleId: string
+        } | null = null
+        if (!role) {
+            const rolelogin = localStorage.getItem('pmb.iti.role')
+            if (rolelogin) {
+                temp = JSON.parse(rolelogin)
+                setRole(temp)
+            }
+        }
+        if (temp) {
+            setLoading(true)
+            getMahasiswaFromAsesorRekapitulasi(
+                paginationState.page,
+                paginationState.limit,
+                search,
+                temp.Name
+            )
+                .then((res) => {
+                    setDataMahasiswa(res.data)
+                    setLoading(false)
+                    setPaginationState({
+                        page: res.page,
+                        limit: res.limit,
+                        totalElement: res.totalElement,
+                        totalPage: res.totalPage,
+                        isFirst: res.isFirst,
+                        isLast: res.isLast,
+                        hasNext: res.hasNext,
+                        hasPrevious: res.hasPrevious,
+                    })
                 })
-            })
-            .catch((err) => {
-                setLoading(false)
-            })
+                .catch((err) => {
+                    console.error(err)
+                    toast.error('Failed to fetch mahasiswa from asesor')
+                }).finally(() => {
+                    setLoading(false)
+                })
+        }
     }, [paginationState.page, search, paginationState.limit])
 
-    const columns: ColumnDef<ResponseMhsFromAsesorSession>[] = [
+    const columns: ColumnDef<ResponseMhsFromAsesorSession>[] = role?.Name === 'Mahasiswa' ? [
+        {
+            accessorKey: 'Nama',
+            header: 'Nama',
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue('Nama')}</div>
+            ),
+        },
+        {
+            accessorKey: 'NamaProgramStudi',
+            header: 'Program Studi',
+            cell: ({ row }) => (
+                <div className="capitalize">
+                    {row.getValue('NamaProgramStudi')}
+                </div>
+            ),
+        },
+        {
+            accessorKey: 'Confirmation',
+            header: 'Terkonfirmasi',
+            cell: ({ row }) => (
+                <div className="capitalize">
+                    {row.getValue('Confirmation') ? (
+                        <Badge>Konfirm</Badge>
+                    ) : (
+                        <Badge>Tidak</Badge>
+                    )}
+                </div>
+            ),
+        },
+        {
+            accessorKey: 'TotalAsessmen',
+            header: 'Total Asessmen MK',
+            cell: ({ row }) => (
+                <div className="capitalize">
+                    {row.getValue('TotalAsessmen')}
+                </div>
+            ),
+        },
+        {
+            accessorKey: 'TotalEval',
+            header: 'Total MK',
+            cell: ({ row }) => (
+                <div className="capitalize">{row.getValue('TotalEval')}</div>
+            ),
+        },
+        {
+            id: 'actions',
+            enableHiding: false,
+            cell: ({ row }) => {
+                const jd = row.original
+                return (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                onClick={() => {
+                                    navigator.clipboard.writeText(
+                                        jd.PendaftaranId
+                                    )
+                                    toast(
+                                        'Pendaftaran Mahasiswa ID dicopy ke clipboard'
+                                    )
+                                }}
+                            >
+                                Copy Pendaftaran Mahasiswa ID
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                )
+            },
+        },
+    ] : [
         {
             accessorKey: 'Nama',
             header: 'Nama',
@@ -225,9 +328,11 @@ const RekapitulasiComponent = () => {
                             >
                                 Copy Pendaftaran Mahasiswa ID
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            {jd.Status === 'Rekapitulasi Asessmen' &&
-                                jd.TotalEval !== jd.TotalAsessmen && (
+                            {
+                                role?.Name == 'Asesor' && <DropdownMenuSeparator />
+                            }
+                            {role?.Name == 'Asesor' && jd.Status === 'Rekapitulasi Asessmen' &&
+                                 (
                                     <DropdownMenuItem
                                         onClick={() =>
                                             startAsessment(jd.PendaftaranId)

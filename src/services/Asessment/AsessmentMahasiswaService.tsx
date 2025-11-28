@@ -56,6 +56,7 @@ export async function setSkorAsessmenFromAsesor(
     Diakui: boolean
     SkorRataRata: number
     NilaiHuruf: string | null
+    Ai: boolean
 }> {
     const res = await fetch(
         `${BASE_URL}/api/protected/asessment/asessmen-mahasiswa`,
@@ -92,7 +93,7 @@ export async function setAsessmentMahasiswaFromAsesor(
     Memadai: boolean,
     Assesmen: string,
     Nilai: number,
-    TanggalAssesmen: Date
+    TanggalAssesmen: Date,
 ): Promise<{
     HasilAssesmenId: string
     EvaluasiDiriId: string
@@ -103,6 +104,7 @@ export async function setAsessmentMahasiswaFromAsesor(
     Assesmen: string
     Nilai: number
     TanggalAssesmen: Date
+    Ai: boolean
 }> {
     const res = await fetch(
         `${BASE_URL}/api/protected/asessment/asessmen-mahasiswa`,
@@ -133,12 +135,14 @@ export async function setAsessmentMahasiswaFromAsesor(
 export async function getMahasiswaFromAsesorRekapitulasi(
     page: number,
     limit: number,
-    search: string
+    search: string, 
+    roleName: string
 ): Promise<Pagination<ResponseMhsFromAsesorSession[]>> {
     const params = new URLSearchParams()
     params.append('page', String(page))
     params.append('limit', String(limit))
     params.append('search', search)
+    params.append('_r', roleName)
     const res = await fetch(
         `${BASE_URL}/api/protected/asessment/asessmen-mahasiswa?jenis=get-mhs-from-asesor-rekapitulasi&${params.toString()}`
     )

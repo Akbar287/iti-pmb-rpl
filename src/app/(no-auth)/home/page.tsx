@@ -72,8 +72,6 @@ const Page = async () => {
 
     const jenisKegiatan = await prisma.jenisKegiatan.findMany()
 
-    // console.dir(dbData, { depth: null })
-
     return (
         <React.Fragment>
             <Hero

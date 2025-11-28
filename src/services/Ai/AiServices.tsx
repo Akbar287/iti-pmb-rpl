@@ -1,44 +1,62 @@
-export async function fileToBase64(file: File): Promise<string> {
-  const buffer = await file.arrayBuffer();
-  return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+
+export type ChatMessageDTO = {
+  role: 'user' | 'assistant' | 'system'
+  content: string
 }
 
-export async function streamAnalyzeImages(opts: {
-  prompt: string;
-  files: File[];
-  onToken: (chunk: string) => void;
-}): Promise<string> {
-  const { prompt, files, onToken } = opts;
+// AI Asessment
+export async function streamChat(
+  HasilAsessmentId: string,
+  messages: ChatMessageDTO[],
+  onChunk: (chunk: string) => void,
+) {
+  const res = await fetch(`${BASE_URL}/api/protected/ai?_h=${HasilAsessmentId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ messages }),
+  })
 
-  const imagesBase64: string[] = [];
-  for (const file of files) {
-    const base64 = await fileToBase64(file);
-    imagesBase64.push(base64);
-  }
+  if (!res.body) throw new Error('Response body is null')
 
-  const res = await fetch("http://localhost:3001/api/analyze-images-stream", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ prompt, imagesBase64 }),
-  });
-
-  if (!res.body) {
-    throw new Error("Response has no body");
-  }
-
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-
-  let fullText = "";
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
 
   while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-
-    const chunk = decoder.decode(value, { stream: true });
-    fullText += chunk;
-    onToken(chunk); 
+    const { value, done } = await reader.read()
+    if (done) break
+    const textChunk = decoder.decode(value, { stream: true })
+    if (textChunk) onChunk(textChunk)
   }
+}
 
-  return fullText;
+// Rekapitulasi
+export async function streamChatRekapitulasi(
+  SkorAsessmentId: string,
+  messages: ChatMessageDTO[],
+  onChunk: (chunk: string) => void,
+) {
+  const res = await fetch(`${BASE_URL}/api/protected/ai?_s=${SkorAsessmentId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ messages }),
+  })
+
+  if (!res.body) throw new Error('Response body is null')
+
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) break
+    const textChunk = decoder.decode(value, { stream: true })
+    if (textChunk) onChunk(textChunk)
+  }
 }

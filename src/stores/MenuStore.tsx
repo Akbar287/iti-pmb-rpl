@@ -179,7 +179,7 @@ const menu: MenuStoreProps[] = [
         icon: BookTextIcon,
         items: [
             {
-                namaRole: ['Kaprodi', 'Asesor', 'Akademik'],
+                namaRole: ['Kaprodi', 'Akademik'],
                 title: 'Penunjukan Asesor',
                 url: '/asesor/penunjukan-asesor',
             },

@@ -214,7 +214,7 @@ const AsessmentComponent = () => {
             header: 'Urutan',
             cell: ({ row }) => (
                 <div className="capitalize">
-                    Asesor Ke {row.getValue('Urutan')}
+                    Anda adalah Asesor ke {row.getValue('Urutan')}
                 </div>
             ),
         },

@@ -73,7 +73,7 @@ export function AIChatbot() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-[85vw] max-h-[85vh] w-full h-full md:max-w-full md:max-h-full md:w-screen md:h-screen sm:max-w-full sm:max-h-full sm:w-screen sm:h-screen p-0 gap-0 border-0 overflow-hidden">
-            <VisuallyHidden>
+          <VisuallyHidden>
             <DialogTitle>RPL Chatbot</DialogTitle>
           </VisuallyHidden>
           <div className="relative w-full h-full flex flex-col">
