@@ -14,6 +14,7 @@ import { Button } from '../ui/button'
 import {
     ChevronRight,
     InfoIcon,
+    MessageCircleQuestionIcon,
     MinusIcon,
     PenIcon,
     PenLine,
@@ -66,12 +67,17 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { setSkorAsessmenFromAsesor } from '@/services/Asessment/AsessmentMahasiswaService'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog'
+import { ScrollArea } from '../ui/scroll-area'
 
 const SanggahanIdComponent = ({
     dataServer,
+    stats
 }: {
     dataServer: SanggahanAsessmenTypes
+    stats: { StatusMahasiswaAssesmentId: string; NamaStatus: string }
 }) => {
+    const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>({ StatusMahasiswaAssesmentId: stats.StatusMahasiswaAssesmentId, NamaStatus: stats.NamaStatus })
     const [role, setRole] = React.useState<Role | null>(null)
     const [yakin, setYakin] = React.useState<boolean>(false)
     React.useEffect(() => {
@@ -86,6 +92,7 @@ const SanggahanIdComponent = ({
         }
     }, [])
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
+    const [openDialogQuestion, setOpenDialogQuestion] = React.useState<boolean>(false)
     const [data, setData] = React.useState(dataServer)
     const [loading, setLoading] = React.useState<boolean>(false)
     const [form, setForm] = React.useState<{
@@ -128,6 +135,36 @@ const SanggahanIdComponent = ({
             NilaiHuruf: null,
         },
     })
+    const { control, setValue, watch } = formPerbaikan
+
+    const portofolio = watch("Portofolio")
+    const tulis = watch("Tulis")
+    const wawancara = watch("Wawancara")
+    const demo = watch("Demo")
+
+    React.useEffect(() => {
+        const scoresRaw = [portofolio, tulis, wawancara, demo]
+
+        const scores = scoresRaw
+            .map((s) => (typeof s === "string" ? parseInt(s) : s))
+            .filter((s) => typeof s === "number" && !isNaN(s))
+
+        if (scores.length === 0) {
+            setValue("SkorRataRata", 0, { shouldDirty: true })
+            setValue("NilaiHuruf", "E", { shouldDirty: true })
+            return
+        }
+
+        const sum = scores.reduce((acc, cur) => acc + cur, 0)
+        let avg = Math.round(sum / scores.length)
+
+        if (avg < 0) avg = 0
+        if (avg > 100) avg = 100
+
+        setValue("SkorRataRata", avg, { shouldDirty: true })
+        setValue("NilaiHuruf", convertScoreToGrade(avg), { shouldDirty: true })
+
+    }, [portofolio, tulis, wawancara, demo, setValue])
 
     const continueToFinal = () => {
         Swal.fire({
@@ -153,6 +190,7 @@ const SanggahanIdComponent = ({
                             ' dilanjutkan ke Proses Hasil Final Asessmen.',
                         icon: 'success',
                     })
+                    setStatusServer({ StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40f', NamaStatus: 'Hasil Final Asessmen' })
                 })
             }
         })
@@ -249,7 +287,7 @@ const SanggahanIdComponent = ({
                                 idx,
                                 {
                                     ...data.ProgramStudi.MataKuliahMahasiswa[
-                                        idx
+                                    idx
                                     ],
                                     SkorAsessmen: {
                                         SkorAssesmenId: res.SkorAssesmenId,
@@ -282,10 +320,9 @@ const SanggahanIdComponent = ({
         <div className="grid grid-cols-1 gap-5">
             <Card className="w-full">
                 <CardHeader>
-                    <CardTitle>Nilai Skor Asessmen Anda</CardTitle>
+                    <CardTitle>Informasi</CardTitle>
                     <CardDescription>
-                        Ini adalah nilai skor anda. lakukan sanggahan jika ada
-                        yang dirasa kurang.
+                        Informasi mengenai Pendaftaran dan Program Studi
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -338,20 +375,22 @@ const SanggahanIdComponent = ({
                     <InfoIcon />
                     <AlertTitle>Sanggahan Mahasiswa</AlertTitle>
                     <AlertDescription>
-                        Mahasiswa Menyanggah MK yang dipilih. Silakan untuk
-                        mempelajari ulang dan/atau menghubungi mahasiswa jika
-                        ada pertanyaan Alasan Menyanggah lebih lanjut
+                        {statusServer.NamaStatus === 'Sanggahan' ? 'Mahasiswa Menyanggah MK yang dipilih. Silakan untuk mempelajari ulang dan/atau menghubungi mahasiswa jika ada pertanyaan Alasan Menyanggah lebih lanjut' : 'Sanggahan sudah ditandai Selesai dan diterukan ke proses Hasil Final Asessmen'}
+                        
                     </AlertDescription>
                 </Alert>
             ) : data.SanggahanAssesmen.SanggahanAssesmenId !== '' ? (
                 <Alert>
                     <InfoIcon />
-                    <AlertTitle>Sanggahan Diterima</AlertTitle>
+                    <AlertTitle>{statusServer.NamaStatus === 'Sanggahan' ? 'Sanggahan Diterima' : 'Sanggahan Selesai'} </AlertTitle>
                     <AlertDescription>
-                        Sanggahan Anda sedang dipelajari oleh Asesor.
+                        {
+                            statusServer.NamaStatus === 'Sanggahan' ? 'Sanggahan Anda sedang dipelajari oleh Asesor.' : 'Sanggahan Anda sudah ditandai Selesai dan dilanjutkan ke Proses Hasil Final Asessmen'
+                        }
+                        
                     </AlertDescription>
                 </Alert>
-            ) : (
+            ) : statusServer.NamaStatus === 'Sanggahan' ? (
                 <Card className="w-full">
                     <CardHeader>
                         <CardTitle>Tidak Ada Sanggahan ? </CardTitle>
@@ -368,7 +407,7 @@ const SanggahanIdComponent = ({
                             disabled={
                                 loading ||
                                 data.SanggahanAssesmen.SanggahanAssesmenId !==
-                                    ''
+                                ''
                             }
                             onClick={() => continueToFinal()}
                         >
@@ -385,7 +424,7 @@ const SanggahanIdComponent = ({
                         </Button>
                     </CardContent>
                 </Card>
-            )}
+            ) : <></>}
             <Card className="w-full">
                 <CardHeader>
                     <CardTitle>Form Sanggahan</CardTitle>
@@ -425,16 +464,14 @@ const SanggahanIdComponent = ({
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <label
                                 className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
-                                            ${
-                                                form.ProsesBanding
-                                                    ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                                    : 'hover:shadow-md'
-                                            }
-                                            ${
-                                                loading
-                                                    ? 'opacity-50 cursor-not-allowed'
-                                                    : ''
-                                            }`}
+                                            ${form.ProsesBanding
+                                        ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                        : 'hover:shadow-md'
+                                    }
+                                            ${loading
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
                             >
                                 <input
                                     type="checkbox"
@@ -462,16 +499,14 @@ const SanggahanIdComponent = ({
                             </label>
                             <label
                                 className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
-                                            ${
-                                                form.DiskusiBanding
-                                                    ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                                    : 'hover:shadow-md'
-                                            }
-                                            ${
-                                                loading
-                                                    ? 'opacity-50 cursor-not-allowed'
-                                                    : ''
-                                            }`}
+                                            ${form.DiskusiBanding
+                                        ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                        : 'hover:shadow-md'
+                                    }
+                                            ${loading
+                                        ? 'opacity-50 cursor-not-allowed'
+                                        : ''
+                                    }`}
                             >
                                 <input
                                     type="checkbox"
@@ -502,12 +537,23 @@ const SanggahanIdComponent = ({
                             <div className="flex flex-col">
                                 <h1 className="font-bold">Pihak Lain</h1>
                                 <p className="font-mono text-sm dark:text-gray-400 text-gray-600">
-                                    Apakah anda melibatkan pihak lain dalam
-                                    menyanggah hasil asessmen ?
+                                    {
+                                        role?.Name === 'Mahasiswa' ? 'Apakah anda melibatkan pihak lain dalam menyanggah hasil asessmen ?' : 'Mahasiswa menyertakan Pihak Lain dalam menyanggah hasil asessmen'
+                                    }
                                 </p>
                             </div>
-                            {role?.Name === 'Mahasiswa' && (
+                            {role?.Name === 'Mahasiswa' ? (
                                 <div className="flex justify-end w-full">
+                                    <Button
+                                        className="mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                        size={'sm'}
+                                        disabled={
+                                            loading
+                                        }
+                                        onClick={() => setOpenDialogQuestion(true)}
+                                    >
+                                        <MessageCircleQuestionIcon />
+                                    </Button>
                                     <Button
                                         className="mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                                         size={'sm'}
@@ -529,7 +575,7 @@ const SanggahanIdComponent = ({
                                                                 .getTime()
                                                                 .toString() +
                                                             Math.random() *
-                                                                100000,
+                                                            100000,
                                                         NamaPihak: '',
                                                         JabatanPihak: null,
                                                         InstansiPihak: null,
@@ -569,6 +615,19 @@ const SanggahanIdComponent = ({
                                         <MinusIcon />
                                     </Button>
                                 </div>
+                            ) : (
+                                <div className="flex justify-end w-full">
+                                    <Button
+                                        className="mr-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                        size={'sm'}
+                                        disabled={
+                                            loading
+                                        }
+                                        onClick={() => setOpenDialogQuestion(true)}
+                                    >
+                                        <MessageCircleQuestionIcon />
+                                    </Button>
+                                </div>
                             )}
                         </div>
                         <div className="grid grid-cols-1 gap-3">
@@ -590,12 +649,12 @@ const SanggahanIdComponent = ({
                                                     <TableCell>
                                                         <Input
                                                             className=""
-                                                            disabled={
+                                                            readOnly={
                                                                 loading ||
                                                                 data
                                                                     .SanggahanAssesmen
                                                                     .SanggahanAssesmenId !==
-                                                                    ''
+                                                                ''
                                                             }
                                                             value={
                                                                 sap.NamaPihak
@@ -610,7 +669,7 @@ const SanggahanIdComponent = ({
                                                                             {
                                                                                 ...form
                                                                                     .SanggahanAssesmenPihak[
-                                                                                    index
+                                                                                index
                                                                                 ],
                                                                                 NamaPihak:
                                                                                     e
@@ -625,12 +684,12 @@ const SanggahanIdComponent = ({
                                                     <TableCell>
                                                         <Input
                                                             className=""
-                                                            disabled={
+                                                            readOnly={
                                                                 loading ||
                                                                 data
                                                                     .SanggahanAssesmen
                                                                     .SanggahanAssesmenId !==
-                                                                    ''
+                                                                ''
                                                             }
                                                             value={
                                                                 sap.JabatanPihak ??
@@ -646,7 +705,7 @@ const SanggahanIdComponent = ({
                                                                             {
                                                                                 ...form
                                                                                     .SanggahanAssesmenPihak[
-                                                                                    index
+                                                                                index
                                                                                 ],
                                                                                 JabatanPihak:
                                                                                     e
@@ -661,12 +720,12 @@ const SanggahanIdComponent = ({
                                                     <TableCell>
                                                         <Input
                                                             className=""
-                                                            disabled={
+                                                            readOnly={
                                                                 loading ||
                                                                 data
                                                                     .SanggahanAssesmen
                                                                     .SanggahanAssesmenId !==
-                                                                    ''
+                                                                ''
                                                             }
                                                             value={
                                                                 sap.InstansiPihak ??
@@ -682,7 +741,7 @@ const SanggahanIdComponent = ({
                                                                             {
                                                                                 ...form
                                                                                     .SanggahanAssesmenPihak[
-                                                                                    index
+                                                                                index
                                                                                 ],
                                                                                 InstansiPihak:
                                                                                     e
@@ -747,11 +806,15 @@ const SanggahanIdComponent = ({
                                         <TableHead>Tulis</TableHead>
                                         <TableHead>Wawancara</TableHead>
                                         <TableHead>Demo</TableHead>
+                                        {
+                                            statusServer.NamaStatus === 'Sanggahan' && (
                                         <TableHead rowSpan={2}>
                                             {role?.Name.match('Asesor')
                                                 ? 'Perbaiki'
                                                 : 'Sanggah'}
                                         </TableHead>
+                                            )
+                                        }
                                     </TableRow>
                                 </TableHeader>
                                 {role?.Name.match('Mahasiswa') ? (
@@ -844,6 +907,8 @@ const SanggahanIdComponent = ({
                                                                     .NilaiHuruf
                                                             }
                                                         </TableCell>
+                                                        {
+                                                            statusServer.NamaStatus === 'Sanggahan' && (
                                                         <TableCell>
                                                             {role?.Name.match(
                                                                 'Asesor'
@@ -880,7 +945,7 @@ const SanggahanIdComponent = ({
                                                                         data
                                                                             .SanggahanAssesmen
                                                                             .SanggahanAssesmenId !==
-                                                                            ''
+                                                                        ''
                                                                     }
                                                                     id={
                                                                         temp
@@ -940,6 +1005,8 @@ const SanggahanIdComponent = ({
                                                                 />
                                                             )}
                                                         </TableCell>
+                                                            )
+                                                        }
                                                     </TableRow>
                                                 )
                                             }
@@ -1035,6 +1102,8 @@ const SanggahanIdComponent = ({
                                                                     .NilaiHuruf
                                                             }
                                                         </TableCell>
+                                                        {
+                                                            statusServer.NamaStatus === 'Sanggahan' && (
                                                         <TableCell>
                                                             {role?.Name.match(
                                                                 'Asesor'
@@ -1071,7 +1140,7 @@ const SanggahanIdComponent = ({
                                                                         data
                                                                             .SanggahanAssesmen
                                                                             .SanggahanAssesmenId !==
-                                                                            ''
+                                                                        ''
                                                                     }
                                                                     id={
                                                                         temp
@@ -1131,6 +1200,8 @@ const SanggahanIdComponent = ({
                                                                 />
                                                             )}
                                                         </TableCell>
+                                                            )
+                                                        }
                                                     </TableRow>
                                                 )
                                             }
@@ -1143,34 +1214,34 @@ const SanggahanIdComponent = ({
                         </div>
                     </div>
                 </CardContent>
-                {data.SanggahanAssesmen.SanggahanAssesmenId === '' &&
-                    role?.Name === 'Mahasiswa' && (
-                        <CardFooter className="flex-col gap-2">
-                            <Button
-                                className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                size={'lg'}
-                                disabled={
-                                    loading ||
-                                    data.SanggahanAssesmen
-                                        .SanggahanAssesmenId !== ''
-                                }
-                                onClick={() => save()}
-                            >
-                                {loading ? (
-                                    <>
-                                        <Timer /> Loading
-                                    </>
-                                ) : (
-                                    <>
-                                        <PenLine />
-                                        Simpan
-                                    </>
-                                )}
-                            </Button>
-                        </CardFooter>
-                    )}
+                {data.SanggahanAssesmen.SanggahanAssesmenId === '' && statusServer.NamaStatus === 'Sanggahan' &&
+                    role?.Name === 'Mahasiswa' ? (
+                    <CardFooter className="flex-col gap-2">
+                        <Button
+                            className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                            size={'lg'}
+                            disabled={
+                                loading ||
+                                data.SanggahanAssesmen
+                                    .SanggahanAssesmenId !== ''
+                            }
+                            onClick={() => save()}
+                        >
+                            {loading ? (
+                                <>
+                                    <Timer /> Loading
+                                </>
+                            ) : (
+                                <>
+                                    <PenLine />
+                                    Simpan
+                                </>
+                            )}
+                        </Button>
+                    </CardFooter>
+                ) : <></>}
             </Card>
-            {role?.Name.match('Asesor') && (
+            {role?.Name.match('Asesor') && statusServer.NamaStatus === 'Sanggahan' ? (
                 <Card className="w-full">
                     <CardHeader>
                         <CardTitle>Sanggahan Selesai ?</CardTitle>
@@ -1217,7 +1288,17 @@ const SanggahanIdComponent = ({
                         </Button>
                     </CardContent>
                 </Card>
-            )}
+            ): role?.Name.match('Asesor') ? (<Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Sanggahan Selesai</CardTitle>
+                        <CardDescription>
+                            Status sudah diteruskan ke Hasil Final Asessmen
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                        <p>Sanggahan sudah Diselesaikan</p>
+                    </CardContent>
+                </Card>) : <></>}
             <SheetManageData
                 openDialog={openDialog}
                 setOpenDialog={setOpenDialog}
@@ -1225,6 +1306,65 @@ const SanggahanIdComponent = ({
                 loading={loading}
                 form={formPerbaikan}
             />
+            <Dialog open={openDialogQuestion} onOpenChange={setOpenDialogQuestion}>
+                <DialogContent className="w-[80vw] h-[80vh] max-w-[80vw] flex flex-col">
+                    <DialogHeader>
+                        <DialogTitle>Panduan</DialogTitle>
+                        <DialogDescription>
+                            Panduan Menyertakan Pihak Lain untuk Mendukung Sanggahan Asessmen
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <ScrollArea className="flex-1 pr-4 overflow-hidden">
+                        <div className="grid grid-cols-1 items-start gap-4 text-sm leading-relaxed">
+
+                            <div className="space-y-2">
+                                <h3 className="font-semibold">Pihak yang Disarankan untuk Mendukung Sanggahan</h3>
+                                <p>
+                                    Seseorang yang dapat Anda sertakan untuk mendukung sanggahan asesmen sebaiknya berasal
+                                    dari pihak yang dapat memberikan verifikasi objektif terhadap pengalaman, kompetensi,
+                                    atau bukti yang Anda ajukan, seperti:
+                                </p>
+
+                                <ul className="list-disc ml-6 space-y-1">
+                                    <li>Dosen pembimbing tempat Anda menempuh pendidikan sebelumnya</li>
+                                    <li>Manajer di tempat Anda bekerja</li>
+                                    <li>Atasan langsung yang mengetahui kinerja dan tugas Anda</li>
+                                    <li>Rekan kerja yang pernah berkolaborasi dalam proyek relevan</li>
+                                    <li>Instruktur atau pelatih profesional yang pernah membimbing Anda</li>
+                                    <li>Pihak institusi atau lembaga pelatihan yang mengeluarkan sertifikat Anda</li>
+                                    <li>Tokoh profesional yang dapat mengonfirmasi kompetensi atau pengalaman Anda</li>
+                                </ul>
+                            </div>
+
+                            <div className="space-y-2">
+                                <h3 className="font-semibold">Kriteria Individu yang Anda Sertakan</h3>
+                                <p>
+                                    Pastikan individu yang Anda sertakan memenuhi kriteria berikut agar keterangannya dapat
+                                    dijadikan pertimbangan oleh asesor:
+                                </p>
+
+                                <ul className="list-disc ml-6 space-y-1">
+                                    <li>Memiliki hubungan profesional yang jelas dengan Anda</li>
+                                    <li>Dapat memberikan penjelasan objektif mengenai kompetensi yang Anda sanggah</li>
+                                    <li>Memahami konteks pekerjaan atau pembelajaran Anda</li>
+                                    <li>Mampu memberikan verifikasi tertulis atau lisan jika diminta oleh asesor</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </ScrollArea>
+
+                    <DialogFooter className="sm:justify-start">
+                        <DialogClose asChild>
+                            <Button type="button" variant="default">
+                                Tutup
+                            </Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
         </div>
     )
 }
@@ -1390,16 +1530,14 @@ export function SheetManageData({
                                             render={({ field }) => (
                                                 <label
                                                     className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
-                                                                                        ${
-                                                                                            field.value
-                                                                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                                                                                : 'hover:shadow-md'
-                                                                                        }
-                                                                                        ${
-                                                                                            loading
-                                                                                                ? 'opacity-50 cursor-not-allowed'
-                                                                                                : ''
-                                                                                        }`}
+                                                                                        ${field.value
+                                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                                            : 'hover:shadow-md'
+                                                        }
+                                                                                        ${loading
+                                                            ? 'opacity-50 cursor-not-allowed'
+                                                            : ''
+                                                        }`}
                                                 >
                                                     <input
                                                         type="checkbox"
@@ -1431,16 +1569,8 @@ export function SheetManageData({
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
-                                                            readOnly={loading}
+                                                            readOnly
                                                             value={field.value}
-                                                            onChange={(e) =>
-                                                                field.onChange(
-                                                                    parseInt(
-                                                                        e.target
-                                                                            .value
-                                                                    )
-                                                                )
-                                                            }
                                                         />
                                                     </FormControl>
                                                     <FormDescription>
@@ -1461,13 +1591,10 @@ export function SheetManageData({
                                                     </FormLabel>
                                                     <FormControl>
                                                         <Input
-                                                            readOnly={loading}
+                                                            readOnly
                                                             value={
                                                                 field.value ??
                                                                 ''
-                                                            }
-                                                            onChange={
-                                                                field.onChange
                                                             }
                                                             onBlur={
                                                                 field.onBlur
@@ -1506,4 +1633,11 @@ export function SheetManageData({
             </Sheet>
         </div>
     )
+}
+function convertScoreToGrade(score: number): string {
+    if (score >= 86 && score <= 100) return "A";
+    if (score >= 76 && score <= 85) return "B";
+    if (score >= 66 && score <= 75) return "C";
+    if (score >= 56 && score <= 65) return "D";
+    return "E"; // 0–55
 }

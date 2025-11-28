@@ -18,6 +18,12 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                 select: {
                     StatusMahasiswaAssesmentId: true,
                     Tanggal: true,
+                    Aktif: true,
+                    StatusMahasiswaAssesment: {
+                        select: {
+                            NamaStatus: true
+                        }
+                    }
                 },
             },
             Mahasiswa: {
@@ -102,6 +108,11 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         },
         where: { PendaftaranId: id },
     })
+
+    const res = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
+    const stats : {
+        StatusMahasiswaAssesmentId: string; NamaStatus: string
+    } = res ? {StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus} : {StatusMahasiswaAssesmentId: '', NamaStatus: ''};
 
     const status = await prisma.statusMahasiswaAssesment.findFirst({
         select: { StatusMahasiswaAssesmentId: true },
@@ -264,14 +275,12 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         },
     }
 
-    console.dir(dataServer, { depth: null })
-
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">
                 Sanggahan Asessmen Mahasiswa
             </h1>
-            <SanggahanIdComponent dataServer={dataServer} />
+            <SanggahanIdComponent stats={stats} dataServer={dataServer} />
         </div>
     )
 }

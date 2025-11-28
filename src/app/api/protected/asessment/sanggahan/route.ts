@@ -5,7 +5,8 @@ import { getSession } from '@/provider/api'
 import { ResponseSanggahanAsesorPaginationType, ResponseSanggahanMhsPaginationType } from '@/types/SanggahanTypes'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
-
+import { cookies } from 'next/headers'
+const BASE_URL = process.env.BACKEND_API_BASE_URL
 const app = new Hono().basePath('/api/protected/asessment/sanggahan')
 
 app.use('*', withApiAuth)
@@ -14,95 +15,87 @@ app.get('/', async (c) => {
     const session = await getSession()
     const jenis = c.req.query('jenis')
     const r = c.req.query('r')
-    const role = await prisma.role.findFirst({select: {Name: true}, where: {RoleId: r}})
+    const role = await prisma.role.findFirst({ select: { Name: true }, where: { RoleId: r } })
 
     if (session && role) {
-        if(role.Name === 'Mahasiswa') {
-            if(jenis === 'get-sanggahan') {
+        if (role.Name === 'Mahasiswa') {
+            if (jenis === 'get-sanggahan') {
                 const page = parseInt(c.req.query('page') || '1', 10)
                 const limit = parseInt(c.req.query('limit') || '10', 10)
                 const search = c.req.query('search') || ''
-        
+
                 let where: Prisma.PendaftaranWhereInput = search
-                        ? {
-                            AND: [
-                                {
-                                    Mahasiswa: {
-                                        UserId: session.user.id
+                    ? {
+                        AND: [
+                            {
+                                Mahasiswa: {
+                                    User: {
+                                        UserId: session.user.id,
                                     }
-                                },
-                                {
-                                    StatusMahasiswaAssesmentHistory:{
-                                        some: {
-                                            AND: [
-                                                {
-                                                    StatusMahasiswaAssesment : {
-                                                        NamaStatus: "Sanggahan"
-                                                    },
-                                                },
-                                                {
-                                                    Aktif: true
-                                                }
-                                            ]
-                                        }
-                                    }
-                                },
-                                {
-                                    OR: [
-                                        {
-                                            KodePendaftar: {
-                                                        contains: search,
-                                                        mode: 'insensitive',
-                                                    },
-                                        },
-                                        {
-                                            NoUjian: {
-                                                        contains: search,
-                                                        mode: 'insensitive',
-                                                    },
-                                        },
-                                        {
-                                            Periode: {
-                                                        contains: search,
-                                                        mode: 'insensitive',
-                                                    },
-                                        },
-                                    ]
                                 }
-                            ]
-                        }
+                            },
+                            {
+                                StatusMahasiswaAssesmentHistory: {
+                                    some: {
+                                        Aktif: true,
+                                        StatusMahasiswaAssesment: {
+                                            NamaStatus: "Sanggahan",
+                                        },
+                                    },
+                                },
+                            },
+                            {
+                                OR: [
+                                    {
+                                        KodePendaftar: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        },
+                                    },
+                                    {
+                                        NoUjian: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        },
+                                    },
+                                    {
+                                        Periode: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        },
+                                    },
+                                ]
+                            }
+                        ]
+                    }
                     : {
                         AND: [
                             {
                                 Mahasiswa: {
-                                        UserId: session.user.id
-                                    }
-                            },
-                            {
-                                StatusMahasiswaAssesmentHistory:{
-                                    some: {
-                                        AND: [
-                                            {
-                                                StatusMahasiswaAssesment : {
-                                                    NamaStatus: "Sanggahan"
-                                                },
-                                            },
-                                            {
-                                                Aktif: true
-                                            }
-                                        ]
+                                    User: {
+                                        UserId: session.user.id,
                                     }
                                 }
-                            }
+                            },
+                            {
+                                StatusMahasiswaAssesmentHistory: {
+                                    some: {
+                                        Aktif: true,
+                                        StatusMahasiswaAssesment: {
+                                            NamaStatus: "Sanggahan",
+                                        },
+                                    },
+                                },
+                            },
                         ]
                     }
-        
+
                 const [data, total] = await Promise.all([
                     prisma.pendaftaran.findMany({
                         where,
                         skip: (page - 1) * limit,
                         take: limit,
-                        orderBy: {KodePendaftar: 'asc'},
+                        orderBy: { KodePendaftar: 'asc' },
                         select: {
                             SanggahanAssesmen: {
                                 select: {
@@ -141,12 +134,12 @@ app.get('/', async (c) => {
                                 },
                             },
                         },
-                    }), 
+                    }),
                     prisma.pendaftaran.count({
                         where,
                     }),
                 ])
-    
+
                 const response: ResponseSanggahanMhsPaginationType[] = data.map(item => ({
                     PendaftaranId: item.PendaftaranId,
                     NamaProgramStudi: item.DaftarUlang.length > 0 ? item.DaftarUlang[0].ProgramStudi.Nama : '',
@@ -159,7 +152,7 @@ app.get('/', async (c) => {
                     SanggahanProsesBanding: item.SanggahanAssesmen.length === 0 ? false : item.SanggahanAssesmen[0].ProsesBanding ?? false,
                     SanggahanDiskusiBanding: item.SanggahanAssesmen.length === 0 ? false : item.SanggahanAssesmen[0].DiskusiBanding ?? false,
                 }))
-        
+
                 return c.json<{
                     data: ResponseSanggahanMhsPaginationType[]
                     page: number
@@ -185,192 +178,170 @@ app.get('/', async (c) => {
                 })
             }
         }
-        if(role.Name === 'Asesor') {
-            if(jenis === 'get-sanggahan') {
+        if (role.Name === 'Asesor') {
+            if (jenis === 'get-sanggahan') {
                 const page = parseInt(c.req.query('page') || '1', 10)
                 const limit = parseInt(c.req.query('limit') || '10', 10)
                 const search = c.req.query('search') || ''
-        
-                let where: Prisma.AsesorWhereInput = search
-                        ? {
-                            AND: [
-                                {
-                                    UserId: session.user.id
-                                },
-                                {
-                                    AssesorMahasiswa:{
-                                        some: {
-                                            Pendaftaran: {
-                                                OR: [
-                                                    {
-                                                        StatusMahasiswaAssesmentHistory:{
-                                                            some: {
-                                                                AND: [
-                                                                    {
-                                                                        StatusMahasiswaAssesment : {
-                                                                            NamaStatus: "Sanggahan"
-                                                                        },
-                                                                    },
-                                                                    {
-                                                                        Aktif: true
-                                                                    }
-                                                                ]
-                                                            }
-                                                        }, 
-                                                    },
-                                                        {
-                                                            KodePendaftar: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        }, 
-                                                        {
-                                                            NoUjian: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        },
-                                                        {
-                                                            Periode: {
-                                                                contains: search,
-                                                                mode: 'insensitive',
-                                                            },
-                                                        }
-                                                    
-                                                ]
-                                            }
-                                        }
+
+                let where: Prisma.AssesorMahasiswaWhereInput = search
+                    ? {
+                        AND: [
+                            {
+                                Asesor: {
+                                    User: {
+                                        UserId: session.user.id
                                     }
-                                },
-                                {
-                                    OR: [
+                                }
+                            },
+                            {
+                                Pendaftaran: {
+                                    AND: [
                                         {
-                                            User: {
-                                                Nama: {
-                                                    contains: search,
-                                                    mode: 'insensitive',
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Sanggahan",
+                                                    },
                                                 },
                                             },
                                         },
                                         {
-                                            AssesorMahasiswa: {
-                                                some: {
-                                                    Pendaftaran: {
-                                                        Mahasiswa: {
-                                                            User: {
-                                                                Nama: {
-                                                                    contains: search,
-                                                                    mode: 'insensitive',
-                                                                },
-                                                            }
-                                                        }
-                                                    }
+                                            OR: [
+                                                {
+                                                    KodePendaftar: {
+                                                        contains: search,
+                                                        mode: 'insensitive',
+                                                    },
+                                                },
+                                                {
+                                                    NoUjian: {
+                                                        contains: search,
+                                                        mode: 'insensitive',
+                                                    },
+                                                },
+                                                {
+                                                    Periode: {
+                                                        contains: search,
+                                                        mode: 'insensitive',
+                                                    },
                                                 }
-                                            }
+                                            ]
                                         }
                                     ]
+
                                 }
-                            ]
-                        }
+                            },
+                            {
+                                Pendaftaran: {
+                                    Mahasiswa: {
+                                        User: {
+                                            Nama: {
+                                                contains: search,
+                                                mode: 'insensitive',
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
                     : {
                         AND: [
                             {
-                                UserId: session.user.id
+                                Asesor: {
+                                    User: {
+                                        UserId: session.user.id
+                                    }
+                                }
                             },
                             {
-                                    AssesorMahasiswa:{
-                                        some: {
-                                            Pendaftaran: {
-                                                StatusMahasiswaAssesmentHistory:{
-                                                    some: {
-                                                        AND: [
-                                                            {
-                                                                StatusMahasiswaAssesment : {
-                                                                    NamaStatus: "Sanggahan"
-                                                                },
-                                                            },
-                                                            {
-                                                                Aktif: true
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                        ]
-                    }
-        
-                const [data, total] = await Promise.all([
-                    prisma.asesor.findFirst({
-                        where,
-                        skip: (page - 1) * limit,
-                        take: limit,
-                        orderBy: {CreatedAt: 'desc'},
-                        select: {
-                            AssesorMahasiswa: {
-                                select: {
-                                    Urutan: true,
-                                    Confirmation: true,
-                                    Pendaftaran: {
-                                        select: {
-                                            KodePendaftar: true,
-                                            NoUjian: true,
-                                            Periode: true,
-                                            _count: {
-                                                select: {MataKuliahMahasiswa: true}
-                                            },
-                                            PendaftaranId: true,
-                                            SanggahanAssesmen: {
-                                                select: {
-                                                    SanggahanAssesmenId: true,
-                                                    ProsesBanding: true, 
-                                                    DiskusiBanding: true
-                                                }
-                                            },
+                                Pendaftaran: {
+                                    AND: [
+                                        {
                                             StatusMahasiswaAssesmentHistory: {
-                                                select: {
+                                                some: {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
-                                                        select: {
-                                                            NamaStatus: true
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            DaftarUlang: {
-                                                select: {
-                                                    ProgramStudi: {
-                                                        select: {
-                                                            ProgramStudiId: true,
-                                                            Nama: true,
-                                                        },
+                                                        NamaStatus: "Sanggahan",
                                                     },
                                                 },
                                             },
-                                            Mahasiswa: {
+                                        },
+                                    ]
+
+                                }
+                            },
+                        ]
+                    }
+
+                const [data, total] = await Promise.all([
+                    prisma.assesorMahasiswa.findMany({
+                        where,
+                        skip: (page - 1) * limit,
+                        take: limit,
+                        orderBy: { CreatedAt: 'desc' },
+                        select: {
+                            Urutan: true,
+                            Confirmation: true,
+                            Pendaftaran: {
+                                select: {
+                                    KodePendaftar: true,
+                                    NoUjian: true,
+                                    Periode: true,
+                                    _count: {
+                                        select: { MataKuliahMahasiswa: true }
+                                    },
+                                    PendaftaranId: true,
+                                    SanggahanAssesmen: {
+                                        select: {
+                                            SanggahanAssesmenId: true,
+                                            ProsesBanding: true,
+                                            DiskusiBanding: true
+                                        }
+                                    },
+                                    StatusMahasiswaAssesmentHistory: {
+                                        select: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
                                                 select: {
-                                                    User: {
-                                                        select: {
-                                                            UserId: true,
-                                                            Nama: true,
-                                                        },
-                                                    },
+                                                    NamaStatus: true
+                                                }
+                                            }
+                                        }
+                                    },
+                                    DaftarUlang: {
+                                        select: {
+                                            ProgramStudi: {
+                                                select: {
+                                                    ProgramStudiId: true,
+                                                    Nama: true,
                                                 },
                                             },
                                         },
                                     },
+                                    Mahasiswa: {
+                                        select: {
+                                            User: {
+                                                select: {
+                                                    UserId: true,
+                                                    Nama: true,
+                                                },
+                                            },
+                                        },
+                                    },
+
                                 },
                             },
                         },
-                    }), 
-                    prisma.asesor.count({
+                    }),
+                    prisma.assesorMahasiswa.count({
                         where,
                     }),
                 ])
 
-                const response: ResponseSanggahanAsesorPaginationType[] = data?.AssesorMahasiswa.map(am => ({
+                const response: ResponseSanggahanAsesorPaginationType[] = data.map(am => ({
                     PendaftaranId: am.Pendaftaran.PendaftaranId ?? '',
                     Nama: am.Pendaftaran.Mahasiswa.User.Nama ?? '',
                     NamaProgramStudi: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama ?? '',
@@ -382,7 +353,7 @@ app.get('/', async (c) => {
                     SanggahanAssesmenId: am.Pendaftaran.SanggahanAssesmen.length === 0 ? '' : am.Pendaftaran.SanggahanAssesmen[0].SanggahanAssesmenId ?? '',
                     SanggahanProsesBanding: am.Pendaftaran.SanggahanAssesmen.length === 0 ? false : am.Pendaftaran.SanggahanAssesmen[0].ProsesBanding ?? false,
                     SanggahanDiskusiBanding: am.Pendaftaran.SanggahanAssesmen.length === 0 ? false : am.Pendaftaran.SanggahanAssesmen[0].DiskusiBanding ?? false,
-                })) ?? []
+                }))
 
                 return c.json<{
                     data: ResponseSanggahanAsesorPaginationType[]
@@ -450,7 +421,7 @@ app.post('/', async (c) => {
             UpdatedAt: Date | null
         }[]
     } = await c.req.json()
-    
+
     const sanggahan = await prisma.sanggahanAssesmen.upsert({
         select: {
             SanggahanAssesmenId: true,
@@ -459,12 +430,40 @@ app.post('/', async (c) => {
             DiskusiBanding: true,
             CreatedAt: true,
             UpdatedAt: true,
+            Pendaftaran: {
+                select: {
+                    NoUjian: true,
+                    Mahasiswa: {
+                        select: {
+                            User: {
+                                select: {
+                                    Nama: true
+                                }
+                            }
+                        }
+                    },
+                    AssesorMahasiswa: {
+                        select: {
+                            Asesor: {
+                                select: {
+                                    User: {
+                                        select: {
+                                            NomorWa: true,
+                                            Nama: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             SanggahanAssesmenMk: {
                 select: {
                     SanggahanAssesmenId: true
                 }
-            }, 
-            SanggahanAssesmenPihak: {select: {SanggahanAssesmenPihakId: true}}
+            },
+            SanggahanAssesmenPihak: { select: { SanggahanAssesmenPihakId: true } }
         },
         where: {
             PendaftaranId: body.PendaftaranId,
@@ -483,8 +482,8 @@ app.post('/', async (c) => {
         },
     });
 
-    if(sanggahan.SanggahanAssesmenPihak.length > 0) {
-        await prisma.sanggahanAssesmenPihak.deleteMany({where: {SanggahanAssesmenId: sanggahan.SanggahanAssesmenId}})
+    if (sanggahan.SanggahanAssesmenPihak.length > 0) {
+        await prisma.sanggahanAssesmenPihak.deleteMany({ where: { SanggahanAssesmenId: sanggahan.SanggahanAssesmenId } })
     }
     const sap = await prisma.sanggahanAssesmenPihak.createManyAndReturn({
         data: body.SanggahanAssesmenPihak.map(sap => ({
@@ -497,8 +496,8 @@ app.post('/', async (c) => {
         }))
     })
 
-    if(sanggahan.SanggahanAssesmenMk.length > 0) {
-        await prisma.sanggahanAssesmenMk.deleteMany({where: {SanggahanAssesmenId: sanggahan.SanggahanAssesmenId}})
+    if (sanggahan.SanggahanAssesmenMk.length > 0) {
+        await prisma.sanggahanAssesmenMk.deleteMany({ where: { SanggahanAssesmenId: sanggahan.SanggahanAssesmenId } })
     }
     const sam = await prisma.sanggahanAssesmenMk.createManyAndReturn({
         data: body.SanggahanAssesmenMk.map(sam => ({
@@ -509,6 +508,30 @@ app.post('/', async (c) => {
             UpdatedAt: new Date(),
         }))
     })
+
+    // Kirim Pemberitahuan Sanggahan by WA ke Asesor
+    const cookieHeader = cookies().toString();
+    
+        await Promise.all(
+            sanggahan.Pendaftaran.AssesorMahasiswa.map(async (x) => {
+                const target = x.Asesor.User.NomorWa ?? x.Asesor.User.NomorWa ?? "";
+                if (!target) return;
+    
+                const params = new URLSearchParams({
+                    target: String(target),
+                    message: `Halo, ${x.Asesor.User.Nama}. Mahasiswa ${sanggahan.Pendaftaran.Mahasiswa.User.Nama} dengan Nomor Ujian ${sanggahan.Pendaftaran.NoUjian} telah mengajukan sanggahan pada ${sanggahan.CreatedAt}. Mohon untuk menindaklanjuti sanggahan tersebut melalui Sistem Informasi RPL Terpadu. Terima Kasih.`,
+                    jenis: "sendWaText",
+                });
+    
+                await fetch(`${BASE_URL}/api/protected/whatsapp?${params.toString()}`, {
+                    method: "POST",
+                    headers: {
+                        cookie: cookieHeader,
+                        "Content-Type": "application/json",
+                    },
+                });
+            }),
+        );
 
     return c.json<{
         SanggahanAssesmenId: string
@@ -535,42 +558,43 @@ app.post('/', async (c) => {
             UpdatedAt: Date | null
         }[]
     }>({
-            SanggahanAssesmenId: sanggahan.SanggahanAssesmenId,
-            PendaftaranId: sanggahan.PendaftaranId,
-            ProsesBanding: sanggahan.ProsesBanding,
-            DiskusiBanding: sanggahan.DiskusiBanding,
-            CreatedAt: sanggahan.CreatedAt,
-            UpdatedAt: sanggahan.UpdatedAt,
-            SanggahanAssesmenMk: sam.map(s => ({
-                SanggahanAssesmenMkId: s.SanggahanAssesmenMkId,
-                SanggahanAssesmenId: s.SanggahanAssesmenId,
-                MataKuliahMahasiswaId: s.MataKuliahMahasiswaId,
-                Keterangan: s.Keterangan,
-                CreatedAt: s.CreatedAt,
-                UpdatedAt: s.UpdatedAt,
-            })),
-            SanggahanAssesmenPihak: sap.map(s => ({
-                SanggahanAssesmenPihakId: s.SanggahanAssesmenPihakId,
-                SanggahanAssesmenId: s.SanggahanAssesmenId,
-                NamaPihak: s.NamaPihak,
-                JabatanPihak: s.JabatanPihak,
-                InstansiPihak: s.InstansiPihak,
-                CreatedAt: s.CreatedAt,
-                UpdatedAt: s.UpdatedAt,
-            }))
+        SanggahanAssesmenId: sanggahan.SanggahanAssesmenId,
+        PendaftaranId: sanggahan.PendaftaranId,
+        ProsesBanding: sanggahan.ProsesBanding,
+        DiskusiBanding: sanggahan.DiskusiBanding,
+        CreatedAt: sanggahan.CreatedAt,
+        UpdatedAt: sanggahan.UpdatedAt,
+        SanggahanAssesmenMk: sam.map(s => ({
+            SanggahanAssesmenMkId: s.SanggahanAssesmenMkId,
+            SanggahanAssesmenId: s.SanggahanAssesmenId,
+            MataKuliahMahasiswaId: s.MataKuliahMahasiswaId,
+            Keterangan: s.Keterangan,
+            CreatedAt: s.CreatedAt,
+            UpdatedAt: s.UpdatedAt,
+        })),
+        SanggahanAssesmenPihak: sap.map(s => ({
+            SanggahanAssesmenPihakId: s.SanggahanAssesmenPihakId,
+            SanggahanAssesmenId: s.SanggahanAssesmenId,
+            NamaPihak: s.NamaPihak,
+            JabatanPihak: s.JabatanPihak,
+            InstansiPihak: s.InstansiPihak,
+            CreatedAt: s.CreatedAt,
+            UpdatedAt: s.UpdatedAt,
+        }))
     }, 200)
 })
 app.put('/', async (c) => {
     const body: {
-            HasilAssesmenId: string
-            EvaluasiDiriId: string
-            Valid: boolean
-            Autentik: boolean
-            Terkini: boolean
-            Memadai: boolean
-            Assesmen: string
-            Nilai: number
-            TanggalAssesmen: Date
+        HasilAssesmenId: string
+        EvaluasiDiriId: string
+        Valid: boolean
+        Autentik: boolean
+        Terkini: boolean
+        Memadai: boolean
+        Assesmen: string
+        Nilai: number
+        TanggalAssesmen: Date
+        Ai: boolean
     } = await c.req.json()
 
     const ha = await prisma.hasilAssesmen.upsert({
@@ -585,6 +609,7 @@ app.put('/', async (c) => {
             Assesmen: body.Assesmen,
             Nilai: body.Nilai,
             TanggalAssesmen: body.TanggalAssesmen,
+            Ai: body.Ai,
             UpdatedAt: new Date()
         },
         create: {
@@ -596,31 +621,32 @@ app.put('/', async (c) => {
             Assesmen: body.Assesmen,
             Nilai: body.Nilai,
             TanggalAssesmen: body.TanggalAssesmen,
+            Ai: body.Ai,
             CreatedAt: new Date(),
             UpdatedAt: new Date()
         },
     });
 
     return c.json<{
-            HasilAssesmenId: string
-            EvaluasiDiriId: string
-            Valid: boolean
-            Autentik: boolean
-            Terkini: boolean
-            Memadai: boolean
-            Assesmen: string
-            Nilai: number
-            TanggalAssesmen: Date
+        HasilAssesmenId: string
+        EvaluasiDiriId: string
+        Valid: boolean
+        Autentik: boolean
+        Terkini: boolean
+        Memadai: boolean
+        Assesmen: string
+        Nilai: number
+        TanggalAssesmen: Date
     }>({
-            HasilAssesmenId: ha.HasilAssesmenId,
-            EvaluasiDiriId: ha.EvaluasiDiriId,
-            Valid: ha.Valid,
-            Autentik: ha.Autentik,
-            Terkini: ha.Terkini,
-            Memadai: ha.Memadai,
-            Assesmen: ha.Assesmen ?? '',
-            Nilai: ha.Nilai,
-            TanggalAssesmen: ha.TanggalAssesmen ?? new Date(),
+        HasilAssesmenId: ha.HasilAssesmenId,
+        EvaluasiDiriId: ha.EvaluasiDiriId,
+        Valid: ha.Valid,
+        Autentik: ha.Autentik,
+        Terkini: ha.Terkini,
+        Memadai: ha.Memadai,
+        Assesmen: ha.Assesmen ?? '',
+        Nilai: ha.Nilai,
+        TanggalAssesmen: ha.TanggalAssesmen ?? new Date(),
     }, 200)
 })
 

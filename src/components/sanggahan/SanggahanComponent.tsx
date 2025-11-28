@@ -198,7 +198,7 @@ const SanggahanComponent = () => {
             header: 'NoUjian',
             cell: ({ row }) => (
                 <div className="capitalize">
-                    Asesor Ke {row.getValue('NoUjian')}
+                    {row.getValue('NoUjian')}
                 </div>
             ),
         },
@@ -249,16 +249,18 @@ const SanggahanComponent = () => {
                             >
                                 Copy Pendaftaran Mahasiswa ID
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            {jd.Status === 'Sanggahan' && (
-                                <DropdownMenuItem
-                                    onClick={() =>
-                                        startAsessment(jd.PendaftaranId)
-                                    }
-                                >
-                                    Lihat Nilai Asessmen
-                                </DropdownMenuItem>
-                            )}
+                            {role?.Name === 'Mahasiswa' || (role?.Name === 'Asesor' && row.original.SanggahanAssesmenId !== '') ? (
+                                <React.Fragment>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem
+                                        onClick={() =>
+                                            startAsessment(jd.PendaftaranId)
+                                        }
+                                    >
+                                        {role?.Name === 'Asesor' ? "Menindaklanjuti Sanggahan" :"Lihat Nilai Asessmen"}
+                                    </DropdownMenuItem>
+                                </React.Fragment>
+                            ) : <></>}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -354,10 +356,10 @@ const SanggahanComponent = () => {
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
-                                                          header.column
-                                                              .columnDef.header,
-                                                          header.getContext()
-                                                      )}
+                                                        header.column
+                                                            .columnDef.header,
+                                                        header.getContext()
+                                                    )}
                                             </TableHead>
                                         )
                                     })}
@@ -405,7 +407,7 @@ const SanggahanComponent = () => {
                         1}{' '}
                     -{' '}
                     {paginationState.totalElement <
-                    paginationState.page * paginationState.limit
+                        paginationState.page * paginationState.limit
                         ? paginationState.totalElement
                         : paginationState.page * paginationState.limit}{' '}
                     dari {paginationState.totalElement} Data.
