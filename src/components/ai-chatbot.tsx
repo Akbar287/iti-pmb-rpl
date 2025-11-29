@@ -157,9 +157,9 @@ export function AIChatbot() {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className={`${getWindowSizeClasses()} p-0 gap-0 border-0 overflow-hidden transition-all duration-300 flex flex-col`}>
           <VisuallyHidden>
-            <DialogTitle>RPL Chatbot</DialogTitle>
+            <DialogTitle>RPL</DialogTitle>
             <DialogDescription>
-              AI Chatbot untuk sistem RPL.
+              AI untuk sistem RPL.
             </DialogDescription>
           </VisuallyHidden>
           <div className="relative w-full h-full flex flex-1 flex-col">
@@ -176,7 +176,7 @@ export function AIChatbot() {
                     <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-yellow-300 animate-pulse" />
                   </div>
                   <h2 className="text-xl font-semibold bg-linear-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
-                    AI Asessment
+                    AI Chat
                   </h2>
                 </div>
 
@@ -221,7 +221,7 @@ export function AIChatbot() {
                           Halo, Ada yang bisa AI bantu?
                         </h3>
                         <p className="text-muted-foreground max-w-md">
-                          Tanyakan apa saja mengenai RPL di ITI kepada AI Asessmen. Saya siap membantu Anda!
+                          Tanyakan apa saja mengenai RPL di ITI kepada AI Chat. Saya siap membantu Anda!
                         </p>
                       </div>
                     )}
