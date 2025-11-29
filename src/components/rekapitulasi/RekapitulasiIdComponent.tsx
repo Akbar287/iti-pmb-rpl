@@ -466,8 +466,8 @@ const RekapitulasiIdComponent = ({
                                         aria-label="Open AI Chat"
                                     >
                                         <div className="relative">
-                                            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 blur-md opacity-75 group-hover:opacity-100 animate-spin-slow"></div>
-                                            <div className="relative w-12 h-12 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 animate-gradient">
+                                            <div className="absolute inset-0 rounded-full bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 blur-md opacity-75 group-hover:opacity-100 animate-spin-slow"></div>
+                                            <div className="relative w-12 h-12 rounded-xl bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 animate-gradient">
                                                 <span className="text-white font-bold text-lg">AI</span>
                                                 <Sparkles className="absolute -top-1 -right-1 w-5 h-5 text-yellow-300 animate-pulse" />
                                             </div>
@@ -990,19 +990,19 @@ const RekapitulasiIdComponent = ({
                         </DialogDescription>
                     </VisuallyHidden>
                     <div className="relative w-full h-full flex flex-1 flex-col">
-                        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 opacity-20 blur-xl animate-spin-slow pointer-events-none"></div>
-                        <div className="absolute inset-[1px] bg-background rounded-lg"></div>
+                        <div className="absolute inset-0 rounded-lg bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 opacity-20 blur-xl animate-spin-slow pointer-events-none"></div>
+                        <div className="absolute inset-px bg-background rounded-lg"></div>
 
                         <div className="relative z-10 flex flex-col h-full min-h-0">
                             <div className="flex items-center justify-between gap-3 p-4 border-b bg-background/50 backdrop-blur-sm">
                                 <div className="flex items-center gap-3">
                                     <div className="relative">
-                                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center animate-gradient">
+                                        <div className="w-10 h-10 rounded-full bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center animate-gradient">
                                             <span className="text-white font-bold">AI</span>
                                         </div>
                                         <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-yellow-300 animate-pulse" />
                                     </div>
-                                    <h2 className="text-xl font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
+                                    <h2 className="text-xl font-semibold bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent animate-gradient">
                                         AI Asessment
                                     </h2>
                                 </div>
@@ -1040,11 +1040,11 @@ const RekapitulasiIdComponent = ({
                                         {messagesAi.length === 0 && (
                                             <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-center space-y-4">
                                                 <div className="relative">
-                                                    <div className="w-20 h-20 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center animate-gradient">
+                                                    <div className="w-20 h-20 rounded-full bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 flex items-center justify-center animate-gradient">
                                                         <Sparkles className="w-10 h-10 text-white animate-pulse" />
                                                     </div>
                                                 </div>
-                                                <h3 className="text-2xl font-semibold bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
+                                                <h3 className="text-2xl font-semibold bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
                                                     Halo { nama }, Ada yang bisa AI bantu?
                                                 </h3>
                                                 <p className="text-muted-foreground max-w-md">
@@ -1060,7 +1060,7 @@ const RekapitulasiIdComponent = ({
                                             >
                                                 <div
                                                     className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.role === 'user'
-                                                        ? 'bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 text-white'
+                                                        ? 'bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 text-white'
                                                         : 'bg-secondary text-secondary-foreground'
                                                         }`}
                                                 >
@@ -1073,9 +1073,9 @@ const RekapitulasiIdComponent = ({
                                             <div className="flex justify-start animate-fade-in">
                                                 <div className="max-w-[80%] rounded-2xl px-4 py-3 bg-secondary">
                                                     <div className="flex gap-1">
-                                                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                                                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                                                        <span className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-500 to-pink-500 animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                                                        <span className="w-2 h-2 rounded-full bg-lineaar-to-r from-pink-500 to-purple-500 animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                                                        <span className="w-2 h-2 rounded-full bg-lineaar-to-r from-purple-500 to-cyan-500 animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                                                        <span className="w-2 h-2 rounded-full bg-lineaar-to-r from-cyan-500 to-pink-500 animate-bounce" style={{ animationDelay: '300ms' }}></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1108,7 +1108,7 @@ const RekapitulasiIdComponent = ({
                                         onClick={handleSubmit}
                                         disabled={!inputAi.trim() || isLoadingAi}
                                         size="icon"
-                                        className="h-[60px] w-[60px] bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-90 transition-all hover:scale-105"
+                                        className="h-[60px] w-[60px] bg-lineaar-to-r from-pink-500 via-purple-500 to-cyan-500 hover:opacity-90 transition-all hover:scale-105"
                                     >
                                         <Send className="h-5 w-5" />
                                     </Button>

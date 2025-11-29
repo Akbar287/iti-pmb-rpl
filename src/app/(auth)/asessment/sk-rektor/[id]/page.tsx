@@ -1,8 +1,7 @@
-import SkIdRektorAsessmentComponent from '@/components/asessment/SkIdRektorAsessmentComponent'
-import { prisma } from '@/lib/prisma'
-import { SkorAsessmenTypes } from '@/types/AsessmentTypes'
-import { ResponseFinalAsessmenAsesorDetailType } from '@/types/FinalAsessmen'
 import React from 'react'
+import SkIdRektorAsessmentComponent from '@/components/asessment/SkIdRektorAsessmentComponent'
+import { ResponseFinalAsessmenAsesorDetailType } from '@/types/FinalAsessmen'
+import { prisma } from '@/lib/prisma'
 
 export default async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
@@ -23,6 +22,21 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             NoUjian: true,
             Gelombang: true,
             SistemKuliah: true,
+            SkRektorMahasiswa: {
+                select: {
+                    SkRektor: {
+                        select: {
+                            SkRektorId: true,
+                            NamaSk: true,
+                            TahunSk: true,
+                            NomorSk: true,
+                            NamaFile: true,
+                            NamaDokumen: true,
+                            Catatan: true
+                        }
+                    },
+                }
+            },
             Mahasiswa: {
                 select: {
                     User: {
@@ -63,6 +77,18 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             Akreditasi: true,
                         },
                     },
+                },
+            },
+            StatusMahasiswaAssesmentHistory: {
+                select: {
+                    StatusMahasiswaAssesmentId: true,
+                    Tanggal: true,
+                    Aktif: true,
+                    StatusMahasiswaAssesment: {
+                        select: {
+                            NamaStatus: true
+                        }
+                    }
                 },
             },
             MataKuliahMahasiswa: {
@@ -130,6 +156,15 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
 
     const dataServer: ResponseFinalAsessmenAsesorDetailType = {
         Nama: data?.Mahasiswa.User.Nama ?? '',
+        SkRektor: {
+            SkRektorId: data ? data.SkRektorMahasiswa.length > 0 ? data.SkRektorMahasiswa[0].SkRektor.SkRektorId ?? '' : '' : '',
+            NamaSk: data ? data.SkRektorMahasiswa.length > 0 ? data.SkRektorMahasiswa[0].SkRektor.NamaSk ?? '' : '' : '',
+            TahunSk: data ? data.SkRektorMahasiswa.length > 0 ? data.SkRektorMahasiswa[0].SkRektor.TahunSk ?? 0 : 0 : 0,
+            NomorSk: data ? data.SkRektorMahasiswa.length > 0 ? data.SkRektorMahasiswa[0].SkRektor.NomorSk ?? '' : '' : '',
+            NamaFile: data ? data.SkRektorMahasiswa.length > 0 ? data.SkRektorMahasiswa[0].SkRektor.NamaFile ?? '' : '' : '',
+            NamaDokumen: data ? data.SkRektorMahasiswa.length > 0 ? data.SkRektorMahasiswa[0].SkRektor.NamaDokumen ?? '' : '' : '',
+            Catatan: data ? data.SkRektorMahasiswa.length > 0 ? data.SkRektorMahasiswa[0].SkRektor.Catatan ?? '' : '' : '',
+        },
         Email: data?.Mahasiswa.User.Email ?? '',
         NomorHp: data?.Mahasiswa.User.NomorHp ?? '',
         Agama: data?.Mahasiswa.User.Agama ?? '',
@@ -322,6 +357,11 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         })),
     }
 
+    const res = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
+    const stats : {
+        StatusMahasiswaAssesmentId: string; NamaStatus: string
+    } = res ? {StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus} : {StatusMahasiswaAssesmentId: '', NamaStatus: ''};
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">
@@ -330,6 +370,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             <SkIdRektorAsessmentComponent
                 dataServer={dataServer}
                 fileSkRektor={fileSkRektor}
+                stats={stats}
             />
         </div>
     )

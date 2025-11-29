@@ -126,6 +126,23 @@ export type ResponseSkRektorAsessmenType = {
     PendaftaranId: string
     KodePendaftar: string
     Nim: string
+    ProgramStudi:string 
+    NomorSk: string
     SkRektor: boolean
     NamaFile: string
+    Status: string
+}
+
+export const ResponseSkRektorAsessmenTypeValue = {
+    Nama: '',
+    Email: '',
+    NomorHp: '',
+    PendaftaranId: '',
+    KodePendaftar: '',
+    Nim: '',
+    ProgramStudi:'' ,
+    NomorSk: '',
+    SkRektor: false,
+    NamaFile: '',
+    Status: '',
 }

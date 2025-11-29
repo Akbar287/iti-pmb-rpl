@@ -25,11 +25,12 @@ import {
 } from '@/validation/SkAsessmenValidation'
 import {
     getFileSkAsessmenBlobByNamafile,
+    sendWaHasilAsessmenToMahasiswa,
     setFile,
 } from '@/services/Asessment/SkRektorAsessmenService'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
-import { PenIcon } from 'lucide-react'
+import { CloudUploadIcon, PenIcon } from 'lucide-react'
 import {
     Form,
     FormControl,
@@ -40,12 +41,15 @@ import {
     FormMessage,
 } from '../ui/form'
 import { Input } from '../ui/input'
-import { setStatusPenerbitanSKAsessmen } from '@/services/Status/StatusService'
+import { setStatusSinkronisasiHasilAsessmen } from '@/services/Status/StatusService'
 import { formatDateToIndonesian } from '@/lib/utils'
+import { Textarea } from '../ui/textarea'
+import { Label } from '../ui/label'
 
 const SkIdRektorAsessmentComponent = ({
     dataServer,
     fileSkRektor,
+    stats
 }: {
     dataServer: ResponseFinalAsessmenAsesorDetailType
     fileSkRektor: {
@@ -61,7 +65,11 @@ const SkIdRektorAsessmentComponent = ({
             NamaDokumen: string
         }
     } | null
+    stats: { StatusMahasiswaAssesmentId: string; NamaStatus: string }
 }) => {
+    const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>({
+        StatusMahasiswaAssesmentId: stats.StatusMahasiswaAssesmentId, NamaStatus: stats.NamaStatus
+    })
     const [role, setRole] = React.useState<{
         GuardName: string
         Icon: string
@@ -98,7 +106,7 @@ const SkIdRektorAsessmentComponent = ({
                     )
                     form.setValue('NomorSk', fileSkRektor.SkRektor.NomorSk)
                 })
-                .catch((err) => {})
+                .catch((err) => { })
         }
     }, [])
     const onSubmit = async (data: SkRektorAsessmenSkemaValidasiTipe) => {
@@ -112,18 +120,22 @@ const SkIdRektorAsessmentComponent = ({
             data.NomorSk
         )
             .then((res) => {
-                setStatusPenerbitanSKAsessmen(dataServer.PendaftaranId).then(
-                    (res) => {
-                        toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                        setLoading(false)
-                    }
-                )
+                toast('Data SK Asesor Mahasiswa berhasil disimpan')
                 setLoading(false)
             })
             .catch((err) => {
                 toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
                 setLoading(false)
             })
+    }
+    const publication = async () => {
+        await setStatusSinkronisasiHasilAsessmen(dataServer.PendaftaranId).then(async res => {
+            toast('SK Hasil Asessmen dipublikasikan')
+            await sendWaHasilAsessmenToMahasiswa(dataServer.PendaftaranId)
+            setStatusServer({ StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40l', NamaStatus: 'Sinkronisasi Hasil Asessmen' })
+        }).catch(err => {
+            toast('Gagal mempublikasikan SK Hasil Asessmen. Error: ' + err)
+        })
     }
 
     return (
@@ -158,8 +170,8 @@ const SkIdRektorAsessmentComponent = ({
                                         <TableCell>
                                             {dataServer.TanggalLahir
                                                 ? formatDateToIndonesian(
-                                                      dataServer.TanggalLahir.toString()
-                                                  )
+                                                    dataServer.TanggalLahir.toString()
+                                                )
                                                 : '-'}
                                         </TableCell>
                                     </TableRow>
@@ -437,13 +449,36 @@ const SkIdRektorAsessmentComponent = ({
                                             )}
                                         />
                                     </div>
-                                    <div className="flex justify-center w-full my-5">
-                                        <Button
-                                            type="submit"
-                                            className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
-                                        >
-                                            <PenIcon /> Simpan
-                                        </Button>
+                                    {
+                                        dataServer.SkRektor.Catatan !== '' && (
+                                            <div className='grid grid-cols-1 gap-2 pt-3'>
+                                                <Label htmlFor='cat'>Catatan Dari Wakil Rektor</Label>
+                                                <Textarea id="cat" defaultValue={dataServer.SkRektor.Catatan} />
+                                            </div>
+                                        )
+                                    }
+                                    <div className="flex justify-center w-full my-5 gap-5">
+                                        {
+                                            statusServer.NamaStatus == 'Penerbitan SK Asessmen' || statusServer.NamaStatus == 'Hasil Final Asessmen' ? (
+                                                <Button
+                                                    type="submit"
+                                                    className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-full lg:w-1/3 md:w-1/2"
+                                                >
+                                                    <PenIcon /> Simpan
+                                                </Button>
+                                            ) : <></>
+                                        }
+                                        {
+                                            statusServer.NamaStatus == 'Penerbitan SK Asessmen' && (
+                                                <Button
+                                                    type="button"
+                                                    onClick={() => publication()}
+                                                    className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-full lg:w-1/3 md:w-1/2"
+                                                >
+                                                    <CloudUploadIcon /> Publikasikan
+                                                </Button>
+                                            )
+                                        }
                                     </div>
                                 </form>
                             </Form>

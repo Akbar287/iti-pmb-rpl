@@ -113,3 +113,33 @@ export const ResponsePenunjukanAsesorForWarekValue = {
     NamaMahasiswa: '',
     Status: '',
 }
+
+export type ResponseHasilAsessmenForWarek = {
+    PendaftaranId: string
+    KodePendaftar: string
+    NamaProgramStudi: string
+    NamaMahasiswa: string
+    TotalMk: number
+    Sk: {
+        NamaSk: string
+        NomorSk: string
+        TahunSk: number
+        NamaDokumen: string
+        NamaFile: string
+    }
+}
+    
+export const ResponseHasilAsessmenForWarekValue = {
+    PendaftaranId: '',
+    KodePendaftar: '',
+    NamaProgramStudi: '',
+    NamaMahasiswa: '',
+    TotalMk: 0,
+    Sk: {
+        NamaSk: '',
+        NomorSk: '',
+        TahunSk: 0,
+        NamaDokumen: '',
+        NamaFile: '',
+    }
+}

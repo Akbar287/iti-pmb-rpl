@@ -359,6 +359,16 @@ const menu: MenuStoreProps[] = [
                 title: 'Sk. Rektor',
                 url: '/asessment/sk-rektor',
             },
+            {
+                namaRole: [ 'Akademik'],
+                title: 'Sinkronisasi',
+                url: '/asessment/sinkronisasi',
+            },
+            {
+                namaRole: [ 'Akademik'],
+                title: 'Selesai',
+                url: '/asessment/selesai',
+            },
         ],
     },
 ]

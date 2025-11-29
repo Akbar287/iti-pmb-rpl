@@ -1,27 +1,12 @@
-import PersetujuanHasilComponent from '@/components/approval/PersetujuanHasilComponent'
-import { prisma } from '@/lib/prisma'
-import { getSession } from '@/provider/api'
 import React from 'react'
+import PersetujuanHasilComponent from '@/components/approval/PersetujuanHasilComponent'
 
 const Page = async () => {
-    const session = await getSession()
-    const universityDataServer = await prisma.university.findMany({
-        select: {
-            UniversityId: true,
-            Nama: true,
-            ProgramStudi: {
-                select: {
-                    ProgramStudiId: true,
-                    Nama: true,
-                },
-            },
-        },
-    })
 
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Persetujuan Hasil Asessmen</h1>
-            <PersetujuanHasilComponent universityDataServer={universityDataServer} />
+            <PersetujuanHasilComponent />
         </div>
     )
 }

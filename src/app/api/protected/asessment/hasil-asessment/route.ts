@@ -58,6 +58,16 @@ app.get('/', async (c) => {
                                                 },
                                             },
                                         },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Penerbitan SK Asessmen",
+                                                    },
+                                                },
+                                            },
+                                        },
                                     ]
                                 },
                             },
@@ -117,6 +127,16 @@ app.get('/', async (c) => {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
                                                         NamaStatus: "Persetujuan Hasil Final",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Penerbitan SK Asessmen",
                                                     },
                                                 },
                                             },
@@ -250,14 +270,42 @@ app.get('/', async (c) => {
                             },
                             {
                                 Pendaftaran: {
-                                    StatusMahasiswaAssesmentHistory: {
-                                        some: {
-                                            Aktif: true,
-                                            StatusMahasiswaAssesment: {
-                                                NamaStatus: "Hasil Final Asessmen",
+                                    OR: [
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Hasil Final Asessmen",
+                                                    },
+                                                },
                                             },
                                         },
-                                    },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Persetujuan Hasil Final",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Penerbitan SK Asessmen",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    ]
+                                }
+                            },
+                            {
+                                Pendaftaran: {
                                     OR: [
                                         {
                                             KodePendaftar: {
@@ -304,14 +352,38 @@ app.get('/', async (c) => {
                             },
                             {
                                 Pendaftaran: {
-                                    StatusMahasiswaAssesmentHistory: {
-                                        some: {
-                                            Aktif: true,
-                                            StatusMahasiswaAssesment: {
-                                                NamaStatus: "Hasil Final Asessmen",
+                                    OR: [
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Hasil Final Asessmen",
+                                                    },
+                                                },
                                             },
                                         },
-                                    },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Persetujuan Hasil Final",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                        {
+                                            StatusMahasiswaAssesmentHistory: {
+                                                some: {
+                                                    Aktif: true,
+                                                    StatusMahasiswaAssesment: {
+                                                        NamaStatus: "Penerbitan SK Asessmen",
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    ]
                                 }
                             }
                         ]
@@ -488,47 +560,47 @@ app.get('/', async (c) => {
                         take: limit,
                         orderBy: { CreatedAt: 'desc' },
                         select: {
-                            
-                                    Urutan: true,
-                                    Confirmation: true,
-                                    Pendaftaran: {
+
+                            Urutan: true,
+                            Confirmation: true,
+                            Pendaftaran: {
+                                select: {
+                                    AssesorMahasiswa: { select: { Urutan: true, Asesor: { select: { User: { select: { Nama: true } } } } } },
+                                    KodePendaftar: true,
+                                    NoUjian: true,
+                                    Periode: true,
+                                    PendaftaranId: true,
+                                    StatusMahasiswaAssesmentHistory: {
                                         select: {
-                                            AssesorMahasiswa: { select: { Urutan: true, Asesor: { select: { User: { select: { Nama: true } } } } } },
-                                            KodePendaftar: true,
-                                            NoUjian: true,
-                                            Periode: true,
-                                            PendaftaranId: true,
-                                            StatusMahasiswaAssesmentHistory: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
                                                 select: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        select: {
-                                                            NamaStatus: true
-                                                        }
-                                                    }
+                                                    NamaStatus: true
                                                 }
-                                            },
-                                            DaftarUlang: {
+                                            }
+                                        }
+                                    },
+                                    DaftarUlang: {
+                                        select: {
+                                            ProgramStudi: {
                                                 select: {
-                                                    ProgramStudi: {
-                                                        select: {
-                                                            ProgramStudiId: true,
-                                                            Nama: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                            Mahasiswa: {
-                                                select: {
-                                                    User: {
-                                                        select: {
-                                                            UserId: true,
-                                                            Nama: true,
-                                                        },
-                                                    },
+                                                    ProgramStudiId: true,
+                                                    Nama: true,
                                                 },
                                             },
                                         },
+                                    },
+                                    Mahasiswa: {
+                                        select: {
+                                            User: {
+                                                select: {
+                                                    UserId: true,
+                                                    Nama: true,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
                             },
                         },
                     }),
