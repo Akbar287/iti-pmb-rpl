@@ -333,8 +333,8 @@ Jika ada lebih dari satu halaman, anggap semua gambar yang diberikan adalah bagi
 
 Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
 `;
-    const imagesBase64 = await pdfToBase64Images(buffer);
-    const limitedImages = imagesBase64.slice(0, 5);
+    const base64Pdf = buffer.toString('base64');
+
     const result = await streamText({
         model: gateway('alibaba/qwen3-vl-instruct'),
         messages: [
@@ -343,15 +343,18 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
                 content: [
                     {
                         type: "text",
-                        text: `${prompt}`,
+                        text: prompt,
                     },
-                    ...limitedImages.map((img) => ({
-                        type: "image" as const,
-                        image: img,
-                    })),
+                    {
+                        type: "file",
+                        mediaType: "application/pdf",
+                        data: base64Pdf,
+                    },
                 ],
             },
         ],
+        temperature: 0,
+        maxOutputTokens: 1500,
     });
 
     let fullText = ""
