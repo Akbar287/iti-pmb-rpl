@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
 import { BuktiFormTypes } from '@/types/BuktiFormUploadDokumenTypes'
 import { streamText, gateway } from 'ai'
-import { ollama } from 'ollama-ai-provider-v2'
 import { pdfToBase64Images } from '@/lib/pdfToBase64Images'
 
 const app = new Hono().basePath('/api/protected/upload-dokumen')

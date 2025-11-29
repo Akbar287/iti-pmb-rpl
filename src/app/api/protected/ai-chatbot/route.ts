@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
-import { streamText, CoreMessage } from "ai";
-import { ollama } from "ollama-ai-provider-v2";
+import { streamText, CoreMessage, gateway } from "ai";
 import { handle } from 'hono/vercel'
 
 const app = new Hono().basePath('/api/protected/ai-chatbot')
@@ -18,7 +17,7 @@ app.post('/', async (c) => {
     ]
 
     const result = await streamText({
-        model: ollama('gpt-oss:20b'),
+        model: gateway('groq/gpt-oss-20b'),
         temperature: 0,
         topK: 20,
         topP: 0.8,

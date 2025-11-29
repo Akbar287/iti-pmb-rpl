@@ -1,7 +1,6 @@
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { streamText, CoreMessage, gateway } from "ai";
-import { ollama } from "ollama-ai-provider-v2";
 import { handle } from 'hono/vercel'
 import { prisma } from "@/lib/prisma"
 import { ProfiensiPengetahuan } from '@/generated/prisma';
