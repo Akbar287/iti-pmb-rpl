@@ -5,7 +5,7 @@ import mime from 'mime'
 import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
 import { BuktiFormTypes } from '@/types/BuktiFormUploadDokumenTypes'
-import { streamText } from 'ai'
+import { streamText, gateway } from 'ai'
 import { ollama } from 'ollama-ai-provider-v2'
 import { pdfToBase64Images } from '@/lib/pdfToBase64Images'
 
@@ -337,7 +337,7 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
     const imagesBase64 = await pdfToBase64Images(buffer);
     const limitedImages = imagesBase64.slice(0, 5);
     const result = await streamText({
-        model: ollama("qwen3-vl:235b-cloud"),
+        model: gateway('alibaba/qwen3-vl-instruct'),
         messages: [
             {
                 role: "user",

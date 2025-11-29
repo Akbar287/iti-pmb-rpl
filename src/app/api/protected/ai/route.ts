@@ -1,6 +1,6 @@
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
-import { streamText, CoreMessage } from "ai";
+import { streamText, CoreMessage, gateway } from "ai";
 import { ollama } from "ollama-ai-provider-v2";
 import { handle } from 'hono/vercel'
 import { prisma } from "@/lib/prisma"
@@ -198,7 +198,7 @@ app.post('/', async (c) => {
         ]
 
         const result = await streamText({
-            model: ollama('gpt-oss:20b'),
+            model: gateway('groq/gpt-oss-20b'),
             temperature: 0,
             topK: 20,
             topP: 0.8,
@@ -329,7 +329,7 @@ ${contextText}
         ]
 
         const result = await streamText({
-            model: ollama('gpt-oss:20b'),
+            model: gateway('groq/gpt-oss-20b'),
             temperature: 0,
             topK: 20,
             topP: 0.8,
@@ -371,7 +371,7 @@ ${contextText}
         ]
 
         const result = await streamText({
-            model: ollama('gpt-oss:20b'),
+            model: gateway('groq/gpt-oss-20b'),
             temperature: 0,
             topK: 20,
             topP: 0.8,
