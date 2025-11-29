@@ -60,3 +60,29 @@ export async function streamChatRekapitulasi(
     if (textChunk) onChunk(textChunk)
   }
 }
+
+// AI Chatbot / No Auth
+export async function streamChatbot(
+  messages: ChatMessageDTO[],
+  onChunk: (chunk: string) => void,
+) {
+  const res = await fetch(`${BASE_URL}/api/protected/ai-chatbot`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ messages }),
+  })
+
+  if (!res.body) throw new Error('Response body is null')
+
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) break
+    const textChunk = decoder.decode(value, { stream: true })
+    if (textChunk) onChunk(textChunk)
+  }
+}
