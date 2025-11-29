@@ -21,16 +21,10 @@ type WindowSize = 'medium' | 'large' | 'fullscreen'
 
 export function AIChatbot() {
   const [open, setOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-
 
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const [shouldAutoScroll, setShouldAutoScroll] = React.useState(true);
   const [showScrollDown, setShowScrollDown] = React.useState(false);
-
-  const [openAi, setOpenAi] = React.useState<boolean>(false)
   const [messagesAi, setMessagesAi] = React.useState<{
     id: string
     role: 'user' | 'assistant'
@@ -206,7 +200,7 @@ export function AIChatbot() {
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 rounded-full hover:bg-secondary"
-                    onClick={() => setOpenAi(false)}
+                    onClick={() => setOpen(false)}
                   >
                     <X className="h-4 w-4" />
                   </Button>
