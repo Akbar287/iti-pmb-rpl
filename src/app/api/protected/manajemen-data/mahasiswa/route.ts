@@ -18,6 +18,7 @@ import { handle } from 'hono/vercel'
 import crypto from 'crypto'
 import { SevimaImportCaseType } from '@/services/SevimaImportCase'
 import { cookies } from 'next/headers'
+import { nomorWaHasPermission } from '@/config/constraint'
 
 const app = new Hono().basePath('/api/protected/manajemen-data/mahasiswa')
 const BASE_URL = process.env.BACKEND_API_BASE_URL
@@ -184,13 +185,13 @@ app.get('/', async (c) => {
                                                                             true,
                                                                         Nama: true,
                                                                         Country:
-                                                                            {
-                                                                                select: {
-                                                                                    CountryId:
-                                                                                        true,
-                                                                                    Nama: true,
-                                                                                },
+                                                                        {
+                                                                            select: {
+                                                                                CountryId:
+                                                                                    true,
+                                                                                Nama: true,
                                                                             },
+                                                                        },
                                                                     },
                                                                 },
                                                             },
@@ -350,7 +351,7 @@ app.get('/', async (c) => {
                     data?.InformasiKependudukan.length === 0
                         ? ''
                         : data?.InformasiKependudukan?.[0]
-                              .InformasiKependudukanId ?? '',
+                            .InformasiKependudukanId ?? '',
             },
             PekerjaanMahasiswa:
                 data?.PekerjaanMahasiswa?.map((p) => ({
@@ -382,7 +383,7 @@ app.get('/', async (c) => {
                     data?.InstitusiLama.length === 0
                         ? Jenjang.TIDAK_TAMAT_SD
                         : data?.InstitusiLama?.[0].Jenjang ??
-                          Jenjang.TIDAK_TAMAT_SD,
+                        Jenjang.TIDAK_TAMAT_SD,
                 JenisInstitusi:
                     data?.InstitusiLama.length === 0
                         ? ''
@@ -428,27 +429,27 @@ app.get('/', async (c) => {
                         data?.InstitusiLama.length === 0
                             ? ''
                             : data?.InstitusiLama?.[0].Alamat?.Desa.DesaId ??
-                              '',
+                            '',
                     KecamatanId:
                         data?.InstitusiLama.length === 0
                             ? ''
                             : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
-                                  .KecamatanId ?? '',
+                                .KecamatanId ?? '',
                     KabupatenId:
                         data?.InstitusiLama.length === 0
                             ? ''
                             : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
-                                  .Kabupaten.KabupatenId ?? '',
+                                .Kabupaten.KabupatenId ?? '',
                     ProvinsiId:
                         data?.InstitusiLama.length === 0
                             ? ''
                             : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
-                                  .Kabupaten.Provinsi.ProvinsiId ?? '',
+                                .Kabupaten.Provinsi.ProvinsiId ?? '',
                     CountryId:
                         data?.InstitusiLama.length === 0
                             ? ''
                             : data?.InstitusiLama?.[0].Alamat?.Desa.Kecamatan
-                                  .Kabupaten.Provinsi.Country.CountryId ?? '',
+                                .Kabupaten.Provinsi.Country.CountryId ?? '',
                 },
             },
         }
@@ -456,46 +457,46 @@ app.get('/', async (c) => {
     } else if (page && limit && !Get && !kodePendaftarId) {
         let where: Prisma.PendaftaranWhereInput = search
             ? {
-                  OR: [
-                      {
-                          KodePendaftar: {
-                              contains: search,
-                              mode: 'insensitive',
-                          },
-                      },
-                      { NoUjian: { contains: search, mode: 'insensitive' } },
-                      {
-                          Mahasiswa: {
-                              User: {
-                                  Nama: {
-                                      contains: search,
-                                      mode: 'insensitive',
-                                  },
-                              },
-                          },
-                      },
-                      {
-                          InformasiKependudukan: {
-                              some: {
-                                  OR: [
-                                      {
-                                          NoNik: {
-                                              contains: search,
-                                              mode: 'insensitive',
-                                          },
-                                      },
-                                      {
-                                          NoKk: {
-                                              contains: search,
-                                              mode: 'insensitive',
-                                          },
-                                      },
-                                  ],
-                              },
-                          },
-                      },
-                  ],
-              }
+                OR: [
+                    {
+                        KodePendaftar: {
+                            contains: search,
+                            mode: 'insensitive',
+                        },
+                    },
+                    { NoUjian: { contains: search, mode: 'insensitive' } },
+                    {
+                        Mahasiswa: {
+                            User: {
+                                Nama: {
+                                    contains: search,
+                                    mode: 'insensitive',
+                                },
+                            },
+                        },
+                    },
+                    {
+                        InformasiKependudukan: {
+                            some: {
+                                OR: [
+                                    {
+                                        NoNik: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        },
+                                    },
+                                    {
+                                        NoKk: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            }
             : {}
 
         const [data, total] = await Promise.all([
@@ -531,7 +532,7 @@ app.get('/', async (c) => {
                                 select: {
                                     Nama: true,
                                     Userlogin: {
-                                        select: {   
+                                        select: {
                                             Username: true,
                                             Credential: true,
                                         }
@@ -605,8 +606,8 @@ app.get('/', async (c) => {
 
 app.post('/', async (c) => {
     const Get = c.req.query('jenis')
-    
-    if(Get === 'set-user') {
+
+    if (Get === 'set-user') {
         const body: CalonMahasiswaRplRequestResponseDTO = await c.req.json()
         const provinsi = body.Alamat.NamaProvinsi.trim()
         const kabupaten = body.Alamat.NamaKabupaten.trim()
@@ -649,7 +650,7 @@ app.post('/', async (c) => {
                     KodePos: body.Alamat.KodePos,
                 },
             })
-    
+
             // User
             const user = await prisma.user.create({
                 data: {
@@ -672,7 +673,7 @@ app.post('/', async (c) => {
                     DeletedAt: null,
                 },
             })
-    
+
             // Userlogin
             const dataUsername = generateShortStrongPassword({
                 KodePendaftar: body.Pendaftaran.KodePendaftar,
@@ -680,7 +681,7 @@ app.post('/', async (c) => {
                 JalurPendaftaran: body.Pendaftaran.JalurPendaftaran,
                 Nim: body.DaftarUlang.Nim,
             })
-    
+
             await prisma.userlogin.create({
                 data: {
                     UserId: user.UserId,
@@ -692,7 +693,7 @@ app.post('/', async (c) => {
                     Credential: 'credential',
                 },
             })
-    
+
             // Role
             const mhsRole = await prisma.role.findFirst({
                 where: { Name: { equals: 'Mahasiswa', mode: 'insensitive' } },
@@ -706,7 +707,7 @@ app.post('/', async (c) => {
                     },
                 })
             }
-    
+
             // Mahasiswa
             const mahasiswa = await prisma.mahasiswa.create({
                 data: {
@@ -716,7 +717,7 @@ app.post('/', async (c) => {
                     UpdatedAt: new Date(),
                 },
             })
-    
+
             // Pendaftaran
             const pendaftaran = await prisma.pendaftaran.create({
                 data: {
@@ -731,7 +732,7 @@ app.post('/', async (c) => {
                     UpdatedAt: new Date(),
                 },
             })
-    
+
             const statusPertama = await prisma.statusMahasiswaAssesment.findFirst({
                 select: { StatusMahasiswaAssesmentId: true },
                 where: {
@@ -751,7 +752,7 @@ app.post('/', async (c) => {
                     Aktif: true,
                 },
             })
-    
+
             // Informasi Kependudukan
             await prisma.informasiKependudukan.create({
                 data: {
@@ -763,7 +764,7 @@ app.post('/', async (c) => {
                     UpdatedAt: new Date(),
                 },
             })
-    
+
             // Pesantren
             await prisma.pesantren.create({
                 data: {
@@ -774,7 +775,7 @@ app.post('/', async (c) => {
                     UpdatedAt: new Date(),
                 },
             })
-    
+
             // Orang Tua
             await prisma.orangTua.createMany({
                 data: body.OrangTua.map((ot) => ({
@@ -789,7 +790,7 @@ app.post('/', async (c) => {
                     UpdatedAt: new Date(),
                 })),
             })
-    
+
             const alamatInstitusi = await prisma.alamat.create({
                 data: {
                     Alamat: body.InstitusiLama.AlamatInstitusi.Alamat,
@@ -814,7 +815,7 @@ app.post('/', async (c) => {
                     NilaiLulusan: body.InstitusiLama.NilaiLulusan,
                 },
             })
-    
+
             // Daftar Ulang
             const prodi = await prisma.programStudi.findFirst({
                 where: {
@@ -844,7 +845,7 @@ app.post('/', async (c) => {
                     TanggalDaftarUlang: body.DaftarUlang.TanggalDaftarUlang,
                 },
             })
-    
+
             const response: CalonMahasiswaRplPage = {
                 KodePendaftar: pendaftaran.KodePendaftar,
                 NoNik: body.InformasiKependudukan.NoNik,
@@ -856,7 +857,7 @@ app.post('/', async (c) => {
                 Gelombang: pendaftaran.Gelombang,
                 NamaProdi: body.ProgramStudi.NamaProgramStudi,
             }
-    
+
             return c.json<CalonMahasiswaRplPage>(response)
         } else {
             return c.json(
@@ -868,11 +869,11 @@ app.post('/', async (c) => {
                 400
             )
         }
-    } else if(Get === 'set-user-sinkronisasi') {
+    } else if (Get === 'set-user-sinkronisasi') {
         const body: SevimaImportCaseType[] = await c.req.json()
 
         const results = await Promise.all(
-            body.map(u => createMahasiswaUser(u))
+            body.map(u => createMahasiswaUser(u, {username: 'name'}))
         )
 
         const filtered = results.filter(r => r !== null)
@@ -927,7 +928,7 @@ app.put('/', async (c) => {
         where: {
             Credential: 'credential',
             UserId: user.UserId,
-        }, 
+        },
         select: {
             Username: true,
         }
@@ -1171,13 +1172,13 @@ app.put('/', async (c) => {
 app.delete('/', async (c) => {
     const jenis = c.req.query('jenis');
 
-    if(jenis === 'manual') {
+    if (jenis === 'manual') {
         const id = c.req.query('id')
-        if(!id) {
+        if (!id) {
             return c.json({ error: "ID tidak boleh kosong" }, 400)
         }
         deleteOnce(id)
-    } else if(jenis === 'sinkronisasi') {
+    } else if (jenis === 'sinkronisasi') {
         // Delete by NIK
         const ids = c.req.queries('id')
 
@@ -1198,233 +1199,235 @@ export const POST = handle(app)
 export const PUT = handle(app)
 export const DELETE = handle(app)
 
-async function createMahasiswaUser(body: SevimaImportCaseType) {
-        const provinsi = body.alamat.ProvinsiId
-        const kabupaten = body.alamat.KabupatenId
-        const kecamatan = body.alamat.KecamatanId
-        const desa = body.alamat.DesaId
-        let checkAlamatRequestToDb = await prisma.desa.findFirst({
-            where: {
-                DesaId: desa,
-                Kecamatan: {
-                    KecamatanId: kecamatan,
-                    Kabupaten: {
-                        KabupatenId: kabupaten,
-                        Provinsi: {
-                            ProvinsiId: provinsi,
-                        },
+async function createMahasiswaUser(body: SevimaImportCaseType, options?: {username: string}) {
+    const provinsi = body.alamat.ProvinsiId
+    const kabupaten = body.alamat.KabupatenId
+    const kecamatan = body.alamat.KecamatanId
+    const desa = body.alamat.DesaId
+    let checkAlamatRequestToDb = await prisma.desa.findFirst({
+        where: {
+            DesaId: desa,
+            Kecamatan: {
+                KecamatanId: kecamatan,
+                Kabupaten: {
+                    KabupatenId: kabupaten,
+                    Provinsi: {
+                        ProvinsiId: provinsi,
                     },
                 },
             },
-            select: {
-                DesaId: true,
+        },
+        select: {
+            DesaId: true,
+        },
+    })
+    if (checkAlamatRequestToDb) {
+        const alamat = await prisma.alamat.create({
+            data: {
+                Alamat: body.alamat.Alamat,
+                DesaId: checkAlamatRequestToDb?.DesaId,
+                KodePos: body.alamat.KodePos,
             },
         })
-        if (checkAlamatRequestToDb) {
-            const alamat = await prisma.alamat.create({
-                data: {
-                    Alamat: body.alamat.Alamat,
-                    DesaId: checkAlamatRequestToDb?.DesaId,
-                    KodePos: body.alamat.KodePos,
-                },
-            })
-    
-            // User
-            const user = await prisma.user.create({
-                data: {
-                    AlamatId: alamat.AlamatId,
-                    Nama: body.user.Nama,
-                    Email: body.user.Email,
-                    EmailVerifiedAt: new Date(),
-                    TempatLahir: body.user.TempatLahir,
-                    TanggalLahir: body.user.TanggalLahir,
-                    JenisKelamin: body.user.JenisKelamin,
-                    PendidikanTerakhir: body.user.PendidikanTerakhir,
-                    Avatar: null,
-                    Agama: body.user.Agama,
-                    Telepon: body.user.Telepon,
-                    NomorWa: body.user.NomorWa,
-                    NomorHp: body.user.NomorHp,
-                    RememberToken: crypto.randomBytes(32).toString('hex'),
-                    CreatedAt: new Date(),
-                    UpdatedAt: new Date(),
-                    DeletedAt: null,
-                },
-            })
-    
-            // Userlogin
-            const dataUsername = generateShortStrongPassword({
+
+        // User
+        const user = await prisma.user.create({
+            data: {
+                AlamatId: alamat.AlamatId,
+                Nama: body.user.Nama,
+                Email: body.user.Email,
+                EmailVerifiedAt: new Date(),
+                TempatLahir: body.user.TempatLahir,
+                TanggalLahir: body.user.TanggalLahir,
+                JenisKelamin: body.user.JenisKelamin,
+                PendidikanTerakhir: body.user.PendidikanTerakhir,
+                Avatar: null,
+                Agama: body.user.Agama,
+                Telepon: body.user.Telepon,
+                NomorWa: body.user.NomorWa,
+                NomorHp: body.user.NomorHp,
+                RememberToken: crypto.randomBytes(32).toString('hex'),
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+                DeletedAt: null,
+            },
+        })
+
+        // Userlogin
+        const dataUsername = (options) ?
+            generateShortStrongPassword({
                 KodePendaftar: body.pendaftaran.KodePendaftar,
                 NoUjian: body.pendaftaran.NoUjian,
                 JalurPendaftaran: body.pendaftaran.JalurPendaftaran,
                 Nim: body.daftarUlang.Nim,
-            })
-    
-            await prisma.userlogin.create({
+            }) : body.user.Nama.toLowerCase();
+
+        await prisma.userlogin.create({
+            data: {
+                UserId: user.UserId,
+                Username: dataUsername,
+                Password: await bcrypt.hash(
+                    dataUsername,
+                    await bcrypt.genSalt(10)
+                ),
+                Credential: 'credential',
+            },
+        })
+
+        // Role
+        const mhsRole = await prisma.role.findFirst({
+            where: { Name: { equals: 'Mahasiswa', mode: 'insensitive' } },
+            select: { RoleId: true },
+        })
+        if (mhsRole) {
+            await prisma.userHasRoles.create({
                 data: {
+                    RoleId: mhsRole?.RoleId,
                     UserId: user.UserId,
-                    Username: dataUsername,
-                    Password: await bcrypt.hash(
-                        dataUsername,
-                        await bcrypt.genSalt(10)
-                    ),
-                    Credential: 'credential',
                 },
             })
-    
-            // Role
-            const mhsRole = await prisma.role.findFirst({
-                where: { Name: { equals: 'Mahasiswa', mode: 'insensitive' } },
-                select: { RoleId: true },
-            })
-            if (mhsRole) {
-                await prisma.userHasRoles.create({
-                    data: {
-                        RoleId: mhsRole?.RoleId,
-                        UserId: user.UserId,
-                    },
-                })
-            }
-    
-            // Mahasiswa
-            const mahasiswa = await prisma.mahasiswa.create({
-                data: {
-                    UserId: user.UserId,
-                    StatusPerkawinan: body.statusPerkawinan,
-                    CreatedAt: new Date(),
-                    UpdatedAt: new Date(),
+        }
+
+        // Mahasiswa
+        const mahasiswa = await prisma.mahasiswa.create({
+            data: {
+                UserId: user.UserId,
+                StatusPerkawinan: body.statusPerkawinan,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            },
+        })
+
+        // Pendaftaran
+        const pendaftaran = await prisma.pendaftaran.create({
+            data: {
+                MahasiswaId: mahasiswa.MahasiswaId,
+                KodePendaftar: body.pendaftaran.KodePendaftar,
+                NoUjian: body.pendaftaran.NoUjian,
+                Periode: body.pendaftaran.Periode,
+                Gelombang: body.pendaftaran.Gelombang,
+                SistemKuliah: body.pendaftaran.SistemKuliah,
+                JalurPendaftaran: body.pendaftaran.JalurPendaftaran,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            },
+        })
+
+        const statusPertama = await prisma.statusMahasiswaAssesment.findFirst({
+            select: { StatusMahasiswaAssesmentId: true },
+            where: {
+                NamaStatus: 'Pengisian Data Diri',
+            },
+        })
+        if (!statusPertama) {
+            return null;
+        }
+        await prisma.statusMahasiswaAssesmentHistory.create({
+            data: {
+                StatusMahasiswaAssesmentId:
+                    statusPertama.StatusMahasiswaAssesmentId,
+                Tanggal: new Date(),
+                PendaftaranId: pendaftaran.PendaftaranId,
+                Keterangan: '',
+                Aktif: true,
+            },
+        })
+
+        // Informasi Kependudukan
+        await prisma.informasiKependudukan.create({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                NoKk: body.informasiKependudukan.NoKk,
+                NoNik: body.informasiKependudukan.NoNik,
+                Suku: body.informasiKependudukan.Suku,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            },
+        })
+
+        // Pesantren
+        await prisma.pesantren.create({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                NamaPesantren: body.pesantren.NamaPesantren,
+                LamaPesantren: body.pesantren.LamaPesantren,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            },
+        })
+
+        // Orang Tua
+        await prisma.orangTua.createMany({
+            data: body.orangTua.map((ot) => ({
+                PendaftaranId: pendaftaran.PendaftaranId,
+                Nama: ot.NamaOrangTua,
+                Pekerjaan: ot.PekerjaanOrangTua,
+                JenisOrtu: ot.JenisOrtu,
+                Penghasilan: ot.PenghasilanOrangTua,
+                Email: ot.EmailOrangTua,
+                NomorHp: ot.NomorHpOrangTua,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            })),
+        })
+
+        const alamatInstitusi = await prisma.alamat.create({
+            data: {
+                Alamat: 'Jalan XYZ No. 123',
+                KodePos: '12345',
+                DesaId: '15142712-a893-456e-9480-67b894d6192c',
+            },
+        })
+        await prisma.institusiLama.create({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                AlamatId:
+                    alamatInstitusi !== null
+                        ? alamatInstitusi.AlamatId
+                        : alamat.AlamatId,
+                Jenjang: body.institusiLama.Jenjang,
+                JenisInstitusi: body.institusiLama.JenisInstitusi,
+                NamaInstitusi: body.institusiLama.NamaInstitusi,
+                Jurusan: body.institusiLama.Jurusan,
+                Nisn: body.institusiLama.Nisn,
+                Npsn: body.institusiLama.Npsn,
+                TahunLulus: body.institusiLama.TahunLulus,
+                NilaiLulusan: 9,
+            },
+        })
+
+        // Daftar Ulang
+        const prodi = await prisma.programStudi.findFirst({
+            where: {
+                Nama: {
+                    equals: body.programStudi.NamaProgramStudi,
+                    mode: 'insensitive',
                 },
-            })
-    
-            // Pendaftaran
-            const pendaftaran = await prisma.pendaftaran.create({
-                data: {
-                    MahasiswaId: mahasiswa.MahasiswaId,
-                    KodePendaftar: body.pendaftaran.KodePendaftar,
-                    NoUjian: body.pendaftaran.NoUjian,
-                    Periode: body.pendaftaran.Periode,
-                    Gelombang: body.pendaftaran.Gelombang,
-                    SistemKuliah: body.pendaftaran.SistemKuliah,
-                    JalurPendaftaran: body.pendaftaran.JalurPendaftaran,
-                    CreatedAt: new Date(),
-                    UpdatedAt: new Date(),
-                },
-            })
-    
-            const statusPertama = await prisma.statusMahasiswaAssesment.findFirst({
-                select: { StatusMahasiswaAssesmentId: true },
-                where: {
-                    NamaStatus: 'Pengisian Data Diri',
-                },
-            })
-            if (!statusPertama) {
-                return null;
-            }
-            await prisma.statusMahasiswaAssesmentHistory.create({
-                data: {
-                    StatusMahasiswaAssesmentId:
-                        statusPertama.StatusMahasiswaAssesmentId,
-                    Tanggal: new Date(),
-                    PendaftaranId: pendaftaran.PendaftaranId,
-                    Keterangan: '',
-                    Aktif: true,
-                },
-            })
-    
-            // Informasi Kependudukan
-            await prisma.informasiKependudukan.create({
-                data: {
-                    PendaftaranId: pendaftaran.PendaftaranId,
-                    NoKk: body.informasiKependudukan.NoKk,
-                    NoNik: body.informasiKependudukan.NoNik,
-                    Suku: body.informasiKependudukan.Suku,
-                    CreatedAt: new Date(),
-                    UpdatedAt: new Date(),
-                },
-            })
-    
-            // Pesantren
-            await prisma.pesantren.create({
-                data: {
-                    PendaftaranId: pendaftaran.PendaftaranId,
-                    NamaPesantren: body.pesantren.NamaPesantren,
-                    LamaPesantren: body.pesantren.LamaPesantren,
-                    CreatedAt: new Date(),
-                    UpdatedAt: new Date(),
-                },
-            })
-    
-            // Orang Tua
-            await prisma.orangTua.createMany({
-                data: body.orangTua.map((ot) => ({
-                    PendaftaranId: pendaftaran.PendaftaranId,
-                    Nama: ot.NamaOrangTua,
-                    Pekerjaan: ot.PekerjaanOrangTua,
-                    JenisOrtu: ot.JenisOrtu,
-                    Penghasilan: ot.PenghasilanOrangTua,
-                    Email: ot.EmailOrangTua,
-                    NomorHp: ot.NomorHpOrangTua,
-                    CreatedAt: new Date(),
-                    UpdatedAt: new Date(),
-                })),
-            })
-    
-            const alamatInstitusi = await prisma.alamat.create({
-                data: {
-                    Alamat: 'Jalan XYZ No. 123',
-                    KodePos: '12345',
-                    DesaId: '15142712-a893-456e-9480-67b894d6192c',
-                },
-            })
-            await prisma.institusiLama.create({
-                data: {
-                    PendaftaranId: pendaftaran.PendaftaranId,
-                    AlamatId:
-                        alamatInstitusi !== null
-                            ? alamatInstitusi.AlamatId
-                            : alamat.AlamatId,
-                    Jenjang: body.institusiLama.Jenjang,
-                    JenisInstitusi: body.institusiLama.JenisInstitusi,
-                    NamaInstitusi: body.institusiLama.NamaInstitusi,
-                    Jurusan: body.institusiLama.Jurusan,
-                    Nisn: body.institusiLama.Nisn,
-                    Npsn: body.institusiLama.Npsn,
-                    TahunLulus: body.institusiLama.TahunLulus,
-                    NilaiLulusan: 9,
-                },
-            })
-    
-            // Daftar Ulang
-            const prodi = await prisma.programStudi.findFirst({
-                where: {
-                    Nama: {
-                        equals: body.programStudi.NamaProgramStudi,
-                        mode: 'insensitive',
-                    },
-                },
-                select: {
-                    ProgramStudiId: true,
-                },
-            })
-            if (!prodi) {
-                throw new Error('Program Studi not found')
-            }
-            await prisma.daftarUlang.create({
-                data: {
-                    PendaftaranId: pendaftaran.PendaftaranId,
-                    ProgramStudiId: prodi.ProgramStudiId,
-                    Nim: body.daftarUlang.Nim,
-                    JenjangKkniDituju: body.daftarUlang.JenjangKkniDituju,
-                    KipK: body.daftarUlang.KipK,
-                    Aktif: body.daftarUlang.Aktif,
-                    MengisiBiodata: body.daftarUlang.MengisiBiodata,
-                    Finalisasi: body.daftarUlang.Finalisasi,
-                    TanggalDaftar: body.daftarUlang.TanggalDaftar,
-                    TanggalDaftarUlang: body.daftarUlang.TanggalDaftarUlang,
-                },
-            })
-    
-            // Kirim Ke Notifikasi Wa Mahasiswa ;
+            },
+            select: {
+                ProgramStudiId: true,
+            },
+        })
+        if (!prodi) {
+            throw new Error('Program Studi not found')
+        }
+        await prisma.daftarUlang.create({
+            data: {
+                PendaftaranId: pendaftaran.PendaftaranId,
+                ProgramStudiId: prodi.ProgramStudiId,
+                Nim: body.daftarUlang.Nim,
+                JenjangKkniDituju: body.daftarUlang.JenjangKkniDituju,
+                KipK: body.daftarUlang.KipK,
+                Aktif: body.daftarUlang.Aktif,
+                MengisiBiodata: body.daftarUlang.MengisiBiodata,
+                Finalisasi: body.daftarUlang.Finalisasi,
+                TanggalDaftar: body.daftarUlang.TanggalDaftar,
+                TanggalDaftarUlang: body.daftarUlang.TanggalDaftarUlang,
+            },
+        })
+
+        // Kirim Ke Notifikasi Wa Mahasiswa ;
+        if (nomorWaHasPermission.includes(body.user.NomorWa)) {
             const params = new URLSearchParams({
                 target: String(body.user.NomorWa),
                 message: String("Selamat datang di Sistem Informasi RPL Terpadu Institut Teknologi Indonesia. " +
@@ -1437,31 +1440,32 @@ async function createMahasiswaUser(body: SevimaImportCaseType) {
             const cookieHeader = cookies().toString()
             await fetch(
                 `${BASE_URL}/api/protected/whatsapp?${params.toString()}`, {
-                    method: 'POST',
-                    headers: {
-                        cookie: cookieHeader,
-                        'Content-Type': 'application/json',
-                    }
+                method: 'POST',
+                headers: {
+                    cookie: cookieHeader,
+                    'Content-Type': 'application/json',
                 }
-            )
-            
-            const res: CalonMahasiswaRplPage = {
-                KodePendaftar: pendaftaran.KodePendaftar,
-                NoNik: body.informasiKependudukan.NoNik,
-                Nim: body.daftarUlang.Nim,
-                Username: dataUsername,
-                Nama: user.Nama,
-                NoUjian: pendaftaran.NoUjian,
-                Periode: pendaftaran.Periode,
-                Gelombang: pendaftaran.Gelombang,
-                NamaProdi: body.programStudi.NamaProgramStudi,
             }
-
-            return res;
-    
-        } else {
-            return null;
+            )
         }
+
+        const res: CalonMahasiswaRplPage = {
+            KodePendaftar: pendaftaran.KodePendaftar,
+            NoNik: body.informasiKependudukan.NoNik,
+            Nim: body.daftarUlang.Nim,
+            Username: dataUsername,
+            Nama: user.Nama,
+            NoUjian: pendaftaran.NoUjian,
+            Periode: pendaftaran.Periode,
+            Gelombang: pendaftaran.Gelombang,
+            NamaProdi: body.programStudi.NamaProgramStudi,
+        }
+
+        return res;
+
+    } else {
+        return null;
+    }
 }
 
 async function deleteWithNik(Nik: string) {
@@ -1487,7 +1491,7 @@ async function deleteWithNik(Nik: string) {
                         },
                     },
                     InformasiKependudukan: {
-                        select: {InformasiKependudukanId :true}
+                        select: { InformasiKependudukanId: true }
                     }
                 }
             },
@@ -1587,7 +1591,7 @@ async function deleteWithNik(Nik: string) {
         })
     }
 }
-async function deleteOnce (PendaftaranId: string) {
+async function deleteOnce(PendaftaranId: string) {
     const idForAll = await prisma.pendaftaran.findFirst({
         select: {
             DaftarUlang: { select: { DaftarUlangId: true } },
@@ -1740,7 +1744,7 @@ function shuffle(s: string): string {
     const arr = s.split('')
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1))
-        ;[arr[i], arr[j]] = [arr[j], arr[i]]
+            ;[arr[i], arr[j]] = [arr[j], arr[i]]
     }
     return arr.join('')
 }
