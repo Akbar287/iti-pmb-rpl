@@ -10,6 +10,7 @@ import LayoutAuth from '@/components/layout/layout-auth'
 import LayoutNoauth from '@/components/layout/layout-noauth'
 import QueryProviders from '@/provider/query-providers'
 import { RouteProgress } from '@/lib/router-progress'
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const spectralSans = Spectral({
     variable: '--font-spectral',
@@ -160,6 +161,7 @@ export default async function RootLayout({
                         </ThemeProvider>
                     </Providers>
                 </QueryProviders>
+                <SpeedInsights />
             </body>
         </html>
     )

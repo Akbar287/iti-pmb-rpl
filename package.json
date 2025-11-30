@@ -36,6 +36,7 @@
     "@tanstack/react-table": "^8.21.3",
     "@types/nprogress": "^0.2.3",
     "@types/uuid": "^10.0.0",
+    "@vercel/speed-insights": "^1.2.0",
     "ai": "^5.0.102",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.1",
