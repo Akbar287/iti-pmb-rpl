@@ -1254,13 +1254,13 @@ async function createMahasiswaUser(body: SevimaImportCaseType, options?: {userna
         })
 
         // Userlogin
-        const dataUsername = (options) ?
+        const dataUsername = (options) ? body.user.Nama.toLowerCase() :
             generateShortStrongPassword({
                 KodePendaftar: body.pendaftaran.KodePendaftar,
                 NoUjian: body.pendaftaran.NoUjian,
                 JalurPendaftaran: body.pendaftaran.JalurPendaftaran,
                 Nim: body.daftarUlang.Nim,
-            }) : body.user.Nama.toLowerCase();
+            })
 
         await prisma.userlogin.create({
             data: {

@@ -124,16 +124,16 @@ export function SevimaImportCase() {
         },
         "user": {
           "UserId": "",
-          "Nama": "MTIUI002",
+          "Nama": "MTIUI001",
           "Email": "mtiui001@email.com",
           "TempatLahir": "Medan",
           "TanggalLahir": new Date("2000-08-26T00:00:00Z"),
           "JenisKelamin": JenisKelamin.PRIA,
           "PendidikanTerakhir": Jenjang.S1,
           "Agama": "Kristen",
-          "Telepon": "08696829903",
+          "Telepon": "081288748757",
           "NomorWa": "081288748757",
-          "NomorHp": "08206906350"
+          "NomorHp": "081288748757"
         },
         "pendaftaran": {
           "PendaftaranId": "",
@@ -219,9 +219,9 @@ export function SevimaImportCase() {
           "JenisKelamin": JenisKelamin.PRIA,
           "PendidikanTerakhir": Jenjang.S1,
           "Agama": "Konghucu",
-          "Telepon": "08553531377",
-          "NomorWa": "08326424332",
-          "NomorHp": "08245610739"
+          "Telepon": "081213749554",
+          "NomorWa": "081213749554",
+          "NomorHp": "081213749554"
         },
         "pendaftaran": {
           "PendaftaranId": "",
@@ -307,9 +307,9 @@ export function SevimaImportCase() {
           "JenisKelamin": JenisKelamin.PRIA,
           "PendidikanTerakhir": Jenjang.S1,
           "Agama": "Kristen",
-          "Telepon": "08974358849",
-          "NomorWa": "08882087390",
-          "NomorHp": "08464098245"
+          "Telepon": "085162692387",
+          "NomorWa": "085162692387",
+          "NomorHp": "085162692387"
         },
         "pendaftaran": {
           "PendaftaranId": "",
@@ -395,9 +395,9 @@ export function SevimaImportCase() {
           "JenisKelamin": JenisKelamin.PRIA,
           "PendidikanTerakhir": Jenjang.S1,
           "Agama": "Islam",
-          "Telepon": "08159786792",
-          "NomorWa": "08345794015",
-          "NomorHp": "08514432614"
+          "Telepon": "081267567750",
+          "NomorWa": "081267567750",
+          "NomorHp": "081267567750"
         },
         "pendaftaran": {
           "PendaftaranId": "",
@@ -1708,7 +1708,7 @@ export function SevimaImportCase() {
         },
         "user": {
           "UserId": "",
-          "Nama": "MTIUI0019",
+          "Nama": "MTIUI019",
           "Email": "mtiui019@email.com",
           "TempatLahir": "Jakarta",
           "TanggalLahir": new Date("1987-02-15T00:00:00Z"),
