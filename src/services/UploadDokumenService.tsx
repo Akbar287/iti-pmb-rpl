@@ -1,4 +1,5 @@
 import { BuktiFormTypes } from '@/types/BuktiFormUploadDokumenTypes'
+import { pdfFileToBase64Images } from "@/lib/pdfClient";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -58,6 +59,12 @@ export async function setFile(
     formData.append('JenisDokumenId', JenisDokumenId)
     formData.append('PendaftaranId', PendaftaranId)
 
+    let pagesBase64: string[] = [];
+    if (data.type === "application/pdf") {
+        pagesBase64 = await pdfFileToBase64Images(data, { maxPages: 5 });
+    }
+
+    console.log("Send ... ")
     return await fetch(`${BASE_URL}/api/protected/upload-dokumen`, {
         method: 'POST',
         body: formData,

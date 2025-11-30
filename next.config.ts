@@ -4,6 +4,18 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['localhost', 'https://pmb-rpl.vercel.app/'],
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...(config.resolve.fallback || {}),
+        canvas: false,
+      };
+    } else {
+      config.externals = [...(config.externals || []), "canvas"];
+    }
+
+    return config;
+  },
 };
 
 export default nextConfig;

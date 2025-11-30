@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
 import { BuktiFormTypes } from '@/types/BuktiFormUploadDokumenTypes'
 import { streamText, gateway } from 'ai'
-import { pdfToBase64Images } from '@/lib/pdfToBase64Images'
 
 const app = new Hono().basePath('/api/protected/upload-dokumen')
 
@@ -333,10 +332,25 @@ Jika ada lebih dari satu halaman, anggap semua gambar yang diberikan adalah bagi
 
 Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
 `;
-    const base64Pdf = buffer.toString('base64');
+
+    let pagesBase64: string[] = [];
+    const pagesRaw = body.pagesBase64;
+
+    if (typeof pagesRaw === "string" && pagesRaw.length > 0) {
+        try {
+            pagesBase64 = JSON.parse(pagesRaw);
+            if (!Array.isArray(pagesBase64)) pagesBase64 = [];
+        } catch (e) {
+            console.error("Invalid pagesBase64 JSON:", e);
+        }
+    }
+
+
+    // Limit to max 5 images for AI input
+    const limitedImages = pagesBase64.slice(0, 5);
 
     const result = await streamText({
-        model: gateway('alibaba/qwen3-vl-instruct'),
+        model: gateway("alibaba/qwen3-vl-instruct"),
         messages: [
             {
                 role: "user",
@@ -345,17 +359,17 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
                         type: "text",
                         text: prompt,
                     },
-                    {
-                        type: "file",
-                        mediaType: "application/pdf",
-                        data: base64Pdf,
-                    },
+                    ...limitedImages.map((img) => ({
+                        type: "image" as const,
+                        image: img,
+                    })),
                 ],
             },
         ],
         temperature: 0,
         maxOutputTokens: 1500,
     });
+
 
     let fullText = ""
     for await (const chunk of result.textStream) {
@@ -408,3 +422,5 @@ app.delete('/', async (c) => {
 export const GET = handle(app)
 export const POST = handle(app)
 export const DELETE = handle(app)
+
+
