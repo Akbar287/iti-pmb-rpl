@@ -81,6 +81,7 @@ export default function PersetujuanHasilComponent() {
     ])
   
     const sendApproval = async () => {
+      setLoading(true)
       await setPersetujuanHasilFinal(
         dataSelected.PendaftaranId,
         approval.approval,
@@ -94,6 +95,7 @@ export default function PersetujuanHasilComponent() {
         await setStatusHasilFinalAsessmen(dataSelected.PendaftaranId)
       }).finally(() => {
         setOpenDialog(false)
+        setLoading(false)
       })
     }
     const columns: ColumnDef<ResponseHasilAsessmenForWarek>[] = [
@@ -607,7 +609,7 @@ export function SheetManageData({
                 </div>
               </div>
               <SheetFooter>
-                <Button onClick={() => sendApproval()} disabled={loading}>
+                <Button onClick={() => sendApproval()} className='hover:scale-105 active:scale-95 transition-all duration-150' disabled={loading}>
                   {loading ? (
                     <>
                       <Timer />

@@ -519,10 +519,10 @@ ${coursesText}${truncatedNote}
 [Bukti ${idx + 1}]
 - NamaDokumen: ${b.nama}
 
-Ringkasan Dokumen (hasil Qwen):
+Ringkasan Dokumen (hasil AI OCR):
 ${b.summary}
 
-Angka-angka penting (hasil ekstraksi Qwen, sudah difilter confidence tinggi dan dibatasi jumlahnya):
+Angka-angka penting (hasil ekstraksi AI OCR, sudah difilter confidence tinggi dan dibatasi jumlahnya):
 ${angkaText}
 
 Detail Transkrip / Riwayat Akademik (jika relevan):
@@ -544,7 +544,7 @@ Data self-assessment:
 - Nama Capaian Pembelajaran  : ${input.cpl}
 - Profisiensi yang dipilih   : ${input.profisiensi} (TIDAK PERNAH / BAIK / BAIK SEKALI)
 
-Daftar bukti dukung dan hasil analisis Qwen:
+Daftar bukti dukung dan hasil analisis AI OCR:
 
 ${buktiText}
 

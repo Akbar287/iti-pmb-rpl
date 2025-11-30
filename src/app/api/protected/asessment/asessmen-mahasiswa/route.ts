@@ -662,7 +662,7 @@ app.post('/', async (c) => {
             NilaiHuruf: body.NilaiHuruf,
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
-            Ai: true,
+            Ai: false,
         },
     })
 

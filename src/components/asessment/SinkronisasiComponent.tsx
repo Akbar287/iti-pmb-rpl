@@ -403,7 +403,7 @@ export default function SinkronisasiComponent({ dataServer }: {
                                             <div className="text-7xl font-bold bg-linear-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
                                                 {progress}
                                             </div>
-                                            <div className="text-xl font-semibold text-white/80 mt-2">%</div>
+                                            <div className="text-xl font-semibold text-gray-700 dark:text-white/80 mt-2">%</div>
                                         </div>
 
                                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -432,7 +432,7 @@ export default function SinkronisasiComponent({ dataServer }: {
                                         </div>
                                     </div>
 
-                                    <p className="mt-6 text-sm text-white/70 font-medium">
+                                    <p className="mt-6 text-sm text-gray-700 dark:text-white/70 font-medium">
                                         {afterSinkronisasi ? selectedPendaftaranIds.length + ' data telah di sinkronisasi' : 'Loading...'}
                                     </p>
                                 </div>

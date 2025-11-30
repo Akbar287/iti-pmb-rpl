@@ -68,6 +68,7 @@ import {
     MoreHorizontal,
     PenIcon,
     Timer,
+    TimerIcon,
     X,
 } from 'lucide-react'
 import { Skeleton } from '../ui/skeleton'
@@ -760,7 +761,7 @@ const HasilAsessmenIdComponent = ({
                 <div>
                     <Card>
                         <CardHeader>
-                            <CardTitle>Dokumen SK</CardTitle>
+                            <CardTitle>Dokumen Draft SK</CardTitle>
                             <CardDescription>
                                 Dokumen Surat Keputusan
                             </CardDescription>
@@ -783,9 +784,9 @@ const HasilAsessmenIdComponent = ({
                 role?.Name === 'Akademik' && (
                     <Card className="w-full">
                         <CardHeader>
-                            <CardTitle>Surat Keputusan</CardTitle>
+                            <CardTitle>Draft Surat Keputusan</CardTitle>
                             <CardDescription>
-                                Surat Keputusan Asessmen Mahasiswa
+                                Draft Surat Keputusan Asessmen Mahasiswa
                             </CardDescription>
                             <CardAction></CardAction>
                         </CardHeader>
@@ -900,8 +901,19 @@ const HasilAsessmenIdComponent = ({
                                         <Button
                                             type="submit"
                                             className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
+                                            disabled={loading}
                                         >
-                                            <PenIcon /> Simpan
+                                            {
+                                                loading ? (
+                                                    <>
+                                                    <TimerIcon /> Loading
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                    <PenIcon /> Simpan
+                                                    </>
+                                                )
+                                            }
                                         </Button>
                                     </div>
                                          )

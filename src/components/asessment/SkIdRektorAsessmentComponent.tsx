@@ -30,7 +30,7 @@ import {
 } from '@/services/Asessment/SkRektorAsessmenService'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
-import { CloudUploadIcon, PenIcon } from 'lucide-react'
+import { CloudUploadIcon, PenIcon, TimerIcon } from 'lucide-react'
 import {
     Form,
     FormControl,
@@ -453,7 +453,7 @@ const SkIdRektorAsessmentComponent = ({
                                         dataServer.SkRektor.Catatan !== '' && (
                                             <div className='grid grid-cols-1 gap-2 pt-3'>
                                                 <Label htmlFor='cat'>Catatan Dari Wakil Rektor</Label>
-                                                <Textarea id="cat" defaultValue={dataServer.SkRektor.Catatan} />
+                                                <Textarea readOnly id="cat" defaultValue={dataServer.SkRektor.Catatan} />
                                             </div>
                                         )
                                     }
@@ -462,9 +462,16 @@ const SkIdRektorAsessmentComponent = ({
                                             statusServer.NamaStatus == 'Penerbitan SK Asessmen' || statusServer.NamaStatus == 'Hasil Final Asessmen' ? (
                                                 <Button
                                                     type="submit"
+                                                    disabled={loading}
                                                     className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-full lg:w-1/3 md:w-1/2"
                                                 >
-                                                    <PenIcon /> Simpan
+                                                    {
+                                                        loading ? <>
+                                                            <TimerIcon /> Loading
+                                                        </> : <>
+                                                        <PenIcon /> Simpan
+                                                        </>
+                                                    }
                                                 </Button>
                                             ) : <></>
                                         }
@@ -473,9 +480,16 @@ const SkIdRektorAsessmentComponent = ({
                                                 <Button
                                                     type="button"
                                                     onClick={() => publication()}
+                                                    disabled={loading}
                                                     className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-full lg:w-1/3 md:w-1/2"
                                                 >
-                                                    <CloudUploadIcon /> Publikasikan
+                                                    {
+                                                        loading ? <>
+                                                            <TimerIcon /> Loading
+                                                        </> : <>
+                                                        <CloudUploadIcon /> Publikasikan
+                                                        </>
+                                                    }
                                                 </Button>
                                             )
                                         }

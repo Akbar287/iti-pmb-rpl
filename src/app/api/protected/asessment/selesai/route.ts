@@ -9,164 +9,149 @@ const app = new Hono().basePath('/api/protected/asessment/selesai')
 
 app.use('*', withApiAuth)
 
-app.get('/', async (c) => { 
+app.get('/', async (c) => {
     const page = parseInt(c.req.query('page') || '1', 10)
     const limit = parseInt(c.req.query('limit') || '10', 10)
     const search = c.req.query('search') || ''
 
-    let where: Prisma.AssesorMahasiswaWhereInput = search
+    let where: Prisma.PendaftaranWhereInput = search
         ? {
             AND: [
                 {
-                    Pendaftaran: {
-                        OR: [
-                            {
-                                StatusMahasiswaAssesmentHistory: {
-                                    some: {
-                                        Aktif: true,
-                                        StatusMahasiswaAssesment: {
-                                            NamaStatus: "Selesai",
-                                        },
-                                    },
-                                },
+                    StatusMahasiswaAssesmentHistory: {
+                        some: {
+                            Aktif: true,
+                            StatusMahasiswaAssesment: {
+                                NamaStatus: "Selesai",
                             },
-                        ]
-                    }
+                        },
+                    },
                 },
                 {
-                    Pendaftaran: {
-                        OR: [
-                            {
-                                Mahasiswa: {
-                                    User: {
+
+                    OR: [
+                        {
+                            Mahasiswa: {
+                                User: {
+                                    Nama: {
+                                        contains: search,
+                                        mode: 'insensitive',
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            KodePendaftar: {
+                                contains: search,
+                                mode: 'insensitive',
+                            },
+                        },
+                        {
+                            DaftarUlang: {
+                                some: {
+                                    Nim: {
+                                        contains: search,
+                                        mode: 'insensitive',
+                                    },
+                                    ProgramStudi: {
                                         Nama: {
                                             contains: search,
                                             mode: 'insensitive',
                                         }
-                                    }
-                                }
-                            },
-                            {
-                                KodePendaftar: {
-                                    contains: search,
-                                    mode: 'insensitive',
-                                },
-                            },
-                            {
-                                DaftarUlang: {
-                                    some: {
-                                        Nim: {
-                                            contains: search,
-                                            mode: 'insensitive',
-                                        },
-                                        ProgramStudi: {
-                                            Nama: {
-                                                contains: search,
-                                                mode: 'insensitive',
-                                            }
-                                        },
                                     },
-                                }
+                                },
                             }
-                        ]
-                    }
+                        }
+                    ]
+
                 }
             ]
         } : {
             AND: [
                 {
-                    Pendaftaran: {
-                        OR: [
-                            {
-                                StatusMahasiswaAssesmentHistory: {
-                                    some: {
-                                        Aktif: true,
-                                        StatusMahasiswaAssesment: {
-                                            NamaStatus: "Selesai",
-                                        },
-                                    },
-                                },
+
+                    StatusMahasiswaAssesmentHistory: {
+                        some: {
+                            Aktif: true,
+                            StatusMahasiswaAssesment: {
+                                NamaStatus: "Selesai",
                             },
-                        ]
-                    }
+                        },
+                    },
+
                 },
             ],
         }
     const [data, total] = await Promise.all([
-        prisma.assesorMahasiswa.findMany({
-            distinct: ['PendaftaranId'],
+        prisma.pendaftaran.findMany({
             where,
             skip: (page - 1) * limit,
             take: limit,
-            orderBy: { Pendaftaran: { KodePendaftar: 'asc' } },
+            orderBy: { KodePendaftar: 'asc' },
             select: {
                 PendaftaranId: true,
-                Pendaftaran: {
+                KodePendaftar: true,
+                SkRektorMahasiswa: {
                     select: {
-                        KodePendaftar: true,
-                        SkRektorMahasiswa: {
+                        SkRektor: {
                             select: {
-                                SkRektor: {
-                                    select: {
-                                        NamaFile: true,
-                                        NomorSk: true,
-                                    },
-                                },
+                                NamaFile: true,
+                                NomorSk: true,
                             },
                         },
-                        StatusMahasiswaAssesmentHistory: {
+                    },
+                },
+                StatusMahasiswaAssesmentHistory: {
+                    select: {
+                        Aktif: true,
+                        StatusMahasiswaAssesment: {
                             select: {
-                                Aktif: true,
-                                StatusMahasiswaAssesment: {
-                                    select: {
-                                        NamaStatus: true,
-                                    },
-                                },
+                                NamaStatus: true,
                             },
                         },
-                        DaftarUlang: {
+                    },
+                },
+                DaftarUlang: {
+                    select: {
+                        Nim: true,
+                        ProgramStudi: {
                             select: {
-                                Nim: true,
-                                ProgramStudi: {
-                                    select: {
-                                        Nama: true,
-                                    },
-                                }
+                                Nama: true,
+                            },
+                        }
+                    },
+                },
+                Mahasiswa: {
+                    select: {
+                        User: {
+                            select: {
+                                Nama: true,
+                                Email: true,
+                                NomorHp: true,
                             },
                         },
-                        Mahasiswa: {
-                            select: {
-                                User: {
-                                    select: {
-                                        Nama: true,
-                                        Email: true,
-                                        NomorHp: true,
-                                    },
-                                },
-                            },
-                        },
-                    }
+                    },
                 },
             },
         }),
-        prisma.assesorMahasiswa.count({
+        prisma.pendaftaran.count({
             where,
         }),
     ])
 
     const response: ResponseSkRektorAsessmenType[] =
         data?.map((am) => ({
-            Nama: am.Pendaftaran.Mahasiswa.User.Nama,
-            Email: am.Pendaftaran.Mahasiswa.User.Email,
-            Status: am.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? am.Pendaftaran.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
-            ProgramStudi: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama ?? '',
-            NomorSk: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? am.Pendaftaran.SkRektorMahasiswa[0].SkRektor.NomorSk ?? '' : '',
-            NamaFile: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? am.Pendaftaran.SkRektorMahasiswa[0].SkRektor.NamaFile ?? '' : '',
-            NomorHp: am.Pendaftaran.Mahasiswa.User.NomorHp ?? '',
+            Nama: am.Mahasiswa.User.Nama,
+            Email: am.Mahasiswa.User.Email,
+            Status: am.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? am.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
+            ProgramStudi: am.DaftarUlang.length === 0 ? '' : am.DaftarUlang[0].ProgramStudi.Nama ?? '',
+            NomorSk: am.SkRektorMahasiswa.length > 0 ? am.SkRektorMahasiswa[0].SkRektor.NomorSk ?? '' : '',
+            NamaFile: am.SkRektorMahasiswa.length > 0 ? am.SkRektorMahasiswa[0].SkRektor.NamaFile ?? '' : '',
+            NomorHp: am.Mahasiswa.User.NomorHp ?? '',
             PendaftaranId: am.PendaftaranId,
-            KodePendaftar: am.Pendaftaran.KodePendaftar,
-            Nim: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].Nim ?? '',
-            SkRektor: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? true : false,
+            KodePendaftar: am.KodePendaftar,
+            Nim: am.DaftarUlang.length === 0 ? '' : am.DaftarUlang[0].Nim ?? '',
+            SkRektor: am.SkRektorMahasiswa.length > 0 ? true : false,
         })) ?? []
 
     return c.json<{

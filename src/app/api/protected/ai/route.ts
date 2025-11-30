@@ -200,11 +200,7 @@ app.post('/', async (c) => {
         const result = await streamText({
             model: gateway(AiAsessmenCp ? AiAsessmenCp :'groq/gpt-oss-20b'),
             temperature: 0,
-            topK: 20,
-            topP: 0.8,
-            maxOutputTokens: 300,
-            presencePenalty: 0,
-            frequencyPenalty: 0,
+            topP: 0.9,
             messages: aiMessages,
         })
 
@@ -369,11 +365,7 @@ ${contextText}
         const result = await streamText({
             model: gateway('groq/gpt-oss-20b'),
             temperature: 0,
-            topK: 20,
-            topP: 0.8,
-            maxOutputTokens: 300,
-            presencePenalty: 0,
-            frequencyPenalty: 0,
+            topP: 0.9,
             messages: aiMessages,
         })
 
@@ -431,7 +423,7 @@ function buildBuktiSection(
             }
             const summary = parsed?.summary ?? '(ringkasan tidak tersedia / parsing gagal)'
 
-            return `Bukti ${idx + 1}: ${nama}; Ringkasan AI Qwen: ${summary}`
+            return `Bukti ${idx + 1}: ${nama}; Ringkasan AI OCR: ${summary}`
         })
         .join('\n\n')
 }
@@ -469,14 +461,16 @@ ${ai
 - Nilai    : ${ai.Nilai}`
             : '- (belum ada justifikasi AI yang tersimpan)'}
 
-4. Ringkasan Bukti Dukung (tabel BuktiForm + BuktiFormPages.Result/Qwen)
+4. Ringkasan Bukti Dukung (tabel BuktiForm + BuktiFormPages.Result/AI OCR)
 ${buktiText}
 
 PETUNJUK UNTUK MODEL:
 - Anggap seluruh data di atas sebagai "ground truth" sistem.
 - Jangan mengubah nilai angka (Valid/Autentik/Terkini/Memadai/Nilai) kecuali asesor secara eksplisit meminta usulan revisi.
-- Jika menjelaskan, selalu rujuk pada data di atas (misalnya: sebut nama dokumen, ringkasan Qwen, alasan valid/autentik, dsb.).
+- Jika menjelaskan, selalu rujuk pada data di atas (misalnya: sebut nama dokumen, ringkasan AI OCR, alasan valid/autentik, dsb.).
 - Jawaban kamu harus menjelaskan untuk asesor manusia, bukan mengeluarkan JSON baru.
+- Jawaban jangan dibuat tabel, namun bentuk paragraf atau point.
+- Jawaban jangan ada asterisk untuk penekanan huruf melalui penebalan atau cetak miring.  
 `.trim()
 }
 // End AI Asessmen CP -> Asessor
@@ -586,6 +580,8 @@ PETUNJUK UNTUK MODEL:
 - Jika asesor bertanya tentang Capaian Pembelajaran tertentu, jelaskan berdasarkan bagian "Rekap Per Capaian Pembelajaran".
 - Jika asesor meminta penjelasan kenapa Nilai Huruf/Diakui seperti itu, rujuk baik ke skor total maupun rekap Capaian Pembelajaran dan justifikasi AI yang sudah ada.
 - Jawab dengan bahasa Indonesia yang jelas dan profesional, bukan dalam format JSON, kecuali diminta sebaliknya.
+- Jawaban jangan dibuat tabel, namun bentuk paragraf atau point.
+- Jawaban jangan ada asterisk untuk penekanan huruf melalui penebalan atau cetak miring.  
 `.trim()
 }
 // End AI Asessmen Rekapitulasi -> Asessor
