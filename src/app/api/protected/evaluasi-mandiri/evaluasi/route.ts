@@ -8,10 +8,9 @@ import {
     ResponseSetEvaluasiDiri,
 } from '@/types/DaftarUlangProdi'
 import { QwenDocResult } from '@/types/qwen'
-import { streamText } from 'ai'
+import { streamText, gateway } from 'ai'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
-import { ollama } from 'ollama-ai-provider-v2'
 import { normalizeJson } from "@/lib/NormalizedAiResult"
 
 const app = new Hono().basePath('/api/protected/evaluasi-mandiri/evaluasi')
@@ -363,7 +362,7 @@ app.post('/', async (c) => {
     }))
 
     const result = await streamText({
-        model: ollama("gpt-oss:20b"),
+        model: gateway("gpt-oss:20b"),
         temperature: 0,
         topK: 20,
         topP: 0.8,
