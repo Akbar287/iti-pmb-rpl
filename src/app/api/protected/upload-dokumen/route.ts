@@ -366,8 +366,6 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
                 ],
             },
         ],
-        temperature: 0,
-        maxOutputTokens: 1500,
     });
 
 
