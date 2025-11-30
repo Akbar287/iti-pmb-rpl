@@ -12,6 +12,7 @@ import { streamText, gateway } from 'ai'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { normalizeJson } from "@/lib/NormalizedAiResult"
+import { AiJustifikasiOcr } from '@/config/ai'
 
 const app = new Hono().basePath('/api/protected/evaluasi-mandiri/evaluasi')
 
@@ -362,13 +363,9 @@ app.post('/', async (c) => {
     }))
 
     const result = await streamText({
-        model: gateway("gpt-oss:20b"),
+        model: gateway(AiJustifikasiOcr ? AiJustifikasiOcr : "gpt-oss:20b"),
         temperature: 0,
-        topK: 20,
-        topP: 0.8,
-        maxOutputTokens: 300,
-        presencePenalty: 0,
-        frequencyPenalty: 0,
+        topP: 0.9,
         messages: [
             {
                 role: "user",

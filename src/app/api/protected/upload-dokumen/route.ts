@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
 import { BuktiFormTypes } from '@/types/BuktiFormUploadDokumenTypes'
 import { streamText, gateway } from 'ai'
+import { AiOcr, maksimalPagesAiOcr } from '@/config/ai'
 
 const app = new Hono().basePath('/api/protected/upload-dokumen')
 
@@ -345,12 +346,12 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
         }
     }
 
-
-    // Limit to max 5 images for AI input
-    const limitedImages = pagesBase64.slice(0, 5);
+    const limitedImages = pagesBase64.slice(0, Math.min(maksimalPagesAiOcr, pagesBase64.length));
 
     const result = await streamText({
-        model: gateway("alibaba/qwen3-vl-instruct"),
+        model: gateway(AiOcr ? AiOcr : "alibaba/qwen3-vl-instruct"),
+        topP: 0.9,
+        temperature: 0,
         messages: [
             {
                 role: "user",

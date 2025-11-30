@@ -4,6 +4,7 @@ import { streamText, CoreMessage, gateway } from "ai";
 import { handle } from 'hono/vercel'
 import { prisma } from "@/lib/prisma"
 import { ProfiensiPengetahuan } from '@/generated/prisma';
+import { AiAsessmenCp, AiAsessmenRekapitulasi } from '@/config/ai';
 
 const app = new Hono().basePath('/api/protected/ai')
 
@@ -197,7 +198,7 @@ app.post('/', async (c) => {
         ]
 
         const result = await streamText({
-            model: gateway('groq/gpt-oss-20b'),
+            model: gateway(AiAsessmenCp ? AiAsessmenCp :'groq/gpt-oss-20b'),
             temperature: 0,
             topK: 20,
             topP: 0.8,
@@ -328,13 +329,9 @@ ${contextText}
         ]
 
         const result = await streamText({
-            model: gateway('groq/gpt-oss-20b'),
+            model: gateway(AiAsessmenRekapitulasi ? AiAsessmenRekapitulasi : 'groq/gpt-oss-20b'),
             temperature: 0,
-            topK: 20,
-            topP: 0.8,
-            maxOutputTokens: 300,
-            presencePenalty: 0,
-            frequencyPenalty: 0,
+            topP: 0.9,
             messages: aiMessages,
         })
 

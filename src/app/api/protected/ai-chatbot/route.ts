@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { streamText, CoreMessage, gateway } from "ai";
 import { handle } from 'hono/vercel'
+import { AiChatNoAuth } from "@/config/ai"
 
 const app = new Hono().basePath('/api/protected/ai-chatbot')
 
@@ -17,13 +18,9 @@ app.post('/', async (c) => {
     ]
 
     const result = await streamText({
-        model: gateway('groq/gpt-oss-20b'),
+        model: gateway(AiChatNoAuth ? AiChatNoAuth : 'groq/gpt-oss-20b'),
         temperature: 0,
-        topK: 20,
-        topP: 0.8,
-        maxOutputTokens: 300,
-        presencePenalty: 0,
-        frequencyPenalty: 0,
+        topP: 0.9,
         messages: aiMessages,
     })
 
