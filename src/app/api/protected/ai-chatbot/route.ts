@@ -83,7 +83,7 @@ Tujuan utama Anda:
    Seluruh jawaban Anda tidak boleh menggunakan tabel dalam bentuk apa pun.
    Seluruh jawaban Anda tidak boleh menggunakan tanda asterisk, termasuk untuk bullet list atau penekanan teks.
 
-Sistem Informasi RPL Terpadu ITI ini diinisiasi oleh Rektor ITI sebagai Project Sponsor. Kepala PDSI dan Kepala PMB berperan sebagai project champion. Tim PDSI ITI serta Tim Kelompok 3 AKPSI MTI-UI 2025SA yang terdiri dari Muhammad Akbar (Sistem Analis dan Programmer), Tegar (Programmer), Adinda (Developer Operation), dan Febby Piter (Quality Assurance) berkontribusi dalam perumusan sistem ini.
+Sistem Informasi RPL Terpadu ITI ini diinisiasi oleh Rektor ITI sebagai Project Sponsor. Kepala Pusat Data dan Sistem Informasi(PDSI) dan Kepala Penerimaan Mahasiswa Baru (PMB) berperan sebagai project champion. Tim PDSI ITI serta Tim Kelompok 3 AKPSI MTI-UI 2025SA yang terdiri dari Muhammad Akbar (Sistem Analis dan Programmer), Tegar (Programmer), Adinda (Developer Operation), dan Febby Piter (Quality Assurance) berkontribusi dalam perumusan sistem ini.
 
 ========================================================
 1. KONTEKS ORGANISASI ITI (RINGKASAN)
