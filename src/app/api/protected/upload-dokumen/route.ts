@@ -334,19 +334,21 @@ Jika ada lebih dari satu halaman, anggap semua gambar yang diberikan adalah bagi
 Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
 `;
 
-    let pagesBase64: string[] = [];
-    const pagesRaw = body.pagesBase64;
+    const pdfBs64 = Buffer.from(buffer).toString('base64');
 
-    if (typeof pagesRaw === "string" && pagesRaw.length > 0) {
-        try {
-            pagesBase64 = JSON.parse(pagesRaw);
-            if (!Array.isArray(pagesBase64)) pagesBase64 = [];
-        } catch (e) {
-            console.error("Invalid pagesBase64 JSON:", e);
-        }
-    }
+    // let pagesBase64: string[] = [];
+    // const pagesRaw = body.pagesBase64;
 
-    const limitedImages = pagesBase64.slice(0, Math.min(maksimalPagesAiOcr, pagesBase64.length));
+    // if (typeof pagesRaw === "string" && pagesRaw.length > 0) {
+    //     try {
+    //         pagesBase64 = JSON.parse(pagesRaw);
+    //         if (!Array.isArray(pagesBase64)) pagesBase64 = [];
+    //     } catch (e) {
+    //         console.error("Invalid pagesBase64 JSON:", e);
+    //     }
+    // }
+
+    // const limitedImages = pagesBase64.slice(0, Math.min(maksimalPagesAiOcr, pagesBase64.length));
 
     const result = await streamText({
         model: gateway(AiOcr ? AiOcr : "alibaba/qwen3-vl-instruct"),
@@ -360,14 +362,35 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
                         type: "text",
                         text: prompt,
                     },
-                    ...limitedImages.map((img) => ({
-                        type: "image" as const,
-                        image: img,
-                    })),
+                    {
+                        type: 'file',
+                        mediaType: 'application/pdf',
+                        data: pdfBs64
+                    }
                 ],
             },
         ],
     });
+    // const result = await streamText({
+    //     model: gateway(AiOcr ? AiOcr : "alibaba/qwen3-vl-instruct"),
+    //     topP: 0.9,
+    //     temperature: 0,
+    //     messages: [
+    //         {
+    //             role: "user",
+    //             content: [
+    //                 {
+    //                     type: "text",
+    //                     text: prompt,
+    //                 },
+    //                 ...limitedImages.map((img) => ({
+    //                     type: "image" as const,
+    //                     image: img,
+    //                 })),
+    //             ],
+    //         },
+    //     ],
+    // });
 
 
     let fullText = ""
