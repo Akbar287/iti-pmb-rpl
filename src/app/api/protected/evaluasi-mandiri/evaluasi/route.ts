@@ -348,7 +348,7 @@ app.post('/', async (c) => {
     buktiForm.forEach(x => x.BuktiForm.BuktiFormPages.forEach(y => {
         let r = y.Result
         if (r) {
-            let s: QwenDocResult = JSON.parse(r)
+            let s: QwenDocResult = normalizeJson<QwenDocResult>(r)
             temp.push({
                 nama: x.BuktiForm.JenisDokumen.Jenis,
                 summary: s.summary,

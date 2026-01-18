@@ -64,7 +64,6 @@ export async function setFile(
         pagesBase64 = await pdfFileToBase64Images(data, { maxPages: 5 });
     }
 
-    console.log("Send ... ")
     return await fetch(`${BASE_URL}/api/protected/upload-dokumen`, {
         method: 'POST',
         body: formData,
