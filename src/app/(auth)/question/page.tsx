@@ -1,10 +1,9 @@
 import React from 'react'
+import QnAComponent from '@/components/qna/QnAComponent'
 
 const Page = () => {
     return (
-        <div>
-            <h1>Q&A</h1>
-        </div>
+        <QnAComponent />
     )
 }
 

@@ -326,6 +326,16 @@ const menu: MenuStoreProps[] = [
                 title: 'API Key',
                 url: '/manajemen-sistem/api-key',
             },
+            {
+                namaRole: ['Admin'],
+                title: 'Data Q&A',
+                url: '/manajemen-sistem/qna',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Tickets',
+                url: '/manajemen-sistem/tickets',
+            },
         ],
     },
     {
@@ -360,12 +370,12 @@ const menu: MenuStoreProps[] = [
                 url: '/asessment/sk-rektor',
             },
             {
-                namaRole: [ 'Akademik'],
+                namaRole: ['Akademik'],
                 title: 'Sinkronisasi',
                 url: '/asessment/sinkronisasi',
             },
             {
-                namaRole: [ 'Akademik'],
+                namaRole: ['Akademik'],
                 title: 'Selesai',
                 url: '/asessment/selesai',
             },
@@ -398,9 +408,9 @@ const useCountStore = create<State & Actions>((set, get) => ({
             items:
                 m.items !== null
                     ? m.items.map((mi) => ({
-                          title: mi.title,
-                          url: mi.url,
-                      }))
+                        title: mi.title,
+                        url: mi.url,
+                    }))
                     : null,
         })),
 }))

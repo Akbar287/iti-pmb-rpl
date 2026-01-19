@@ -79,8 +79,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const data = {
         navSecondary: [
             {
-                title: 'Dukungan',
-                url: '/dukungan',
+                title: 'Tiket Bantuan',
+                url: '/tickets',
                 icon: LifeBuoy,
             },
             {

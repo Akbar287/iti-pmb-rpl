@@ -24,37 +24,48 @@ export default function LayoutBreadcrumb() {
         setIsClient(true)
     }, [])
 
-    const breadcrumbs = [
+    const breadcrumbs: React.ReactNode[] = []
+
+    // Add Home item
+    breadcrumbs.push(
         <BreadcrumbItem key="home">
             <BreadcrumbLink asChild>
                 <Link href="/">Home</Link>
             </BreadcrumbLink>
-            {pathSegments.length > 0 && <BreadcrumbSeparator />}
-        </BreadcrumbItem>,
-        ...pathSegments.map((segment, index) => {
-            const href = '/' + pathSegments.slice(0, index + 1).join('/')
-            const isLast = index === pathSegments.length - 1
+        </BreadcrumbItem>
+    )
 
-            const label = /^\d+$/.test(segment)
-                ? `ID ${toTitleCase(pathSegments[index - 1] || 'Item')}`
-                : toTitleCase(segment)
+    // Add separator after Home if there are more segments
+    if (pathSegments.length > 0) {
+        breadcrumbs.push(<BreadcrumbSeparator key="home-sep" />)
+    }
 
-            return (
-                <BreadcrumbItem key={href}>
-                    {isLast ? (
-                        <BreadcrumbPage>{label}</BreadcrumbPage>
-                    ) : (
-                        <>
-                            <BreadcrumbLink asChild>
-                                <Link href={href}>{label}</Link>
-                            </BreadcrumbLink>
-                            <BreadcrumbSeparator />
-                        </>
-                    )}
-                </BreadcrumbItem>
-            )
-        }),
-    ]
+    // Add path segments
+    pathSegments.forEach((segment, index) => {
+        const href = '/' + pathSegments.slice(0, index + 1).join('/')
+        const isLast = index === pathSegments.length - 1
+
+        const label = /^\d+$/.test(segment)
+            ? `ID ${toTitleCase(pathSegments[index - 1] || 'Item')}`
+            : toTitleCase(segment)
+
+        breadcrumbs.push(
+            <BreadcrumbItem key={href}>
+                {isLast ? (
+                    <BreadcrumbPage>{label}</BreadcrumbPage>
+                ) : (
+                    <BreadcrumbLink asChild>
+                        <Link href={href}>{label}</Link>
+                    </BreadcrumbLink>
+                )}
+            </BreadcrumbItem>
+        )
+
+        // Add separator if not the last segment
+        if (!isLast) {
+            breadcrumbs.push(<BreadcrumbSeparator key={`${href}-sep`} />)
+        }
+    })
 
     return isClient ? (
         <Breadcrumb>

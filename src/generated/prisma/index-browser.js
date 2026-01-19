@@ -804,6 +804,36 @@ exports.Prisma.SettingBeritaScalarFieldEnum = {
   Waktu: 'Waktu'
 };
 
+exports.Prisma.QuestionAndAskScalarFieldEnum = {
+  QuestionAndAskId: 'QuestionAndAskId',
+  Question: 'Question',
+  Answer: 'Answer',
+  CreatedAt: 'CreatedAt',
+  UpdatedAt: 'UpdatedAt'
+};
+
+exports.Prisma.TicketsScalarFieldEnum = {
+  TicketsId: 'TicketsId',
+  UserId: 'UserId',
+  RoleId: 'RoleId',
+  KepadaRoleId: 'KepadaRoleId',
+  Subject: 'Subject',
+  Message: 'Message',
+  Status: 'Status',
+  CreatedAt: 'CreatedAt',
+  UpdatedAt: 'UpdatedAt'
+};
+
+exports.Prisma.TicketsFileScalarFieldEnum = {
+  TicketsFileId: 'TicketsFileId',
+  TicketsId: 'TicketsId',
+  NamaFile: 'NamaFile',
+  FileData: 'FileData',
+  NamaDokumen: 'NamaDokumen',
+  CreatedAt: 'CreatedAt',
+  UpdatedAt: 'UpdatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -885,6 +915,17 @@ exports.JenisKelamin = exports.$Enums.JenisKelamin = {
   WANITA: 'WANITA'
 };
 
+exports.StatusTiketBantuan = exports.$Enums.StatusTiketBantuan = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  REOPEN: 'REOPEN',
+  SOLVED: 'SOLVED',
+  ON_HOLD: 'ON_HOLD',
+  PENDING: 'PENDING',
+  RESOLVED: 'RESOLVED',
+  CLOSED: 'CLOSED'
+};
+
 exports.Prisma.ModelName = {
   Alamat: 'Alamat',
   Asesor: 'Asesor',
@@ -956,7 +997,10 @@ exports.Prisma.ModelName = {
   SettingWhy: 'SettingWhy',
   SettingNumber: 'SettingNumber',
   SettingTestimony: 'SettingTestimony',
-  SettingBerita: 'SettingBerita'
+  SettingBerita: 'SettingBerita',
+  QuestionAndAsk: 'QuestionAndAsk',
+  Tickets: 'Tickets',
+  TicketsFile: 'TicketsFile'
 };
 
 /**

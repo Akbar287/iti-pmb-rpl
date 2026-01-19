@@ -31,6 +31,17 @@ enum Jenjang {
   S3
 }
 
+enum StatusTiketBantuan {
+  OPEN
+  IN_PROGRESS
+  REOPEN
+  SOLVED
+  ON_HOLD
+  PENDING
+  RESOLVED
+  CLOSED
+}
+
 enum StatusMataKuliahMahasiswa {
   DRAFT
   EVALUASI_MANDIRI
@@ -687,6 +698,8 @@ model Role {
   UpdatedAt          DateTime?            @map("updated_at")
   UserHasRoles       UserHasRoles[]
   RoleHasPermissions RoleHasPermissions[]
+  Tickets            Tickets[]            @relation("RoleTickets")
+  KepadaRoleTickets  Tickets[]            @relation("KepadaRoleTickets")
 
   @@unique([Name, GuardName])
   @@map("roles")
@@ -943,6 +956,7 @@ model User {
   UserHasRoles       UserHasRoles[]
   Userlogin          Userlogin[]
   Asesor             Asesor[]
+  tickets            Tickets[]
 
   @@map("user")
 }
@@ -1086,4 +1100,47 @@ model SettingBerita {
   KategoriBerita  KategoriBerita  @relation(fields: [KategoriBeritaId], references: [KategoriBeritaId], onDelete: Cascade)
 
   @@map("setting_berita")
+}
+
+model QuestionAndAsk {
+  QuestionAndAskId String   @id @default(uuid()) @map("question_and_ask_id")
+  Question         String   @map("question")
+  Answer           String   @map("answer")
+  CreatedAt        DateTime @default(now()) @map("created_at")
+  UpdatedAt        DateTime @default(now()) @map("updated_at")
+
+  @@map("question_and_ask")
+}
+
+model Tickets {
+  TicketsId    String             @id @default(uuid()) @map("tickets_id")
+  UserId       String             @map("user_id")
+  RoleId       String             @map("role_id")
+  KepadaRoleId String             @map("kepada_role_id")
+  Subject      String             @map("subject")
+  Message      String             @map("message")
+  Status       StatusTiketBantuan @map("status")
+  CreatedAt    DateTime           @default(now()) @map("created_at")
+  UpdatedAt    DateTime           @default(now()) @map("updated_at")
+
+  User         User          @relation(fields: [UserId], references: [UserId], onDelete: Cascade)
+  Role         Role          @relation("RoleTickets", fields: [RoleId], references: [RoleId], onDelete: Cascade)
+  KepadaRole   Role          @relation("KepadaRoleTickets", fields: [KepadaRoleId], references: [RoleId], onDelete: Cascade)
+  ticketsFiles TicketsFile[]
+
+  @@map("tickets")
+}
+
+model TicketsFile {
+  TicketsFileId String   @id @default(uuid()) @map("tickets_file_id")
+  TicketsId     String   @map("tickets_id")
+  NamaFile      String   @map("nama_file")
+  FileData      Bytes    @map("file_data")
+  NamaDokumen   String   @map("nama_dokumen")
+  CreatedAt     DateTime @default(now()) @map("created_at")
+  UpdatedAt     DateTime @default(now()) @map("updated_at")
+
+  Tickets Tickets @relation(fields: [TicketsId], references: [TicketsId], onDelete: Cascade)
+
+  @@map("tickets_file")
 }
