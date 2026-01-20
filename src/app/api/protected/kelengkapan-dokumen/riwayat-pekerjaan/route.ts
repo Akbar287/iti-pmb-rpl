@@ -12,18 +12,23 @@ app.get('/', async (c) => {
     const id = c.req.query('id')
     const pendaftaranId = c.req.query('pendaftaranId')
     let data = null
+
+    console.log(id)
+    console.log(pendaftaranId)
     if (pendaftaranId) {
         data = await prisma.mahasiswaRiwayatPekerjaan.findMany({
             where: {
                 PendaftaranId: pendaftaranId,
             },
         })
+        return c.json(data)
+    } else if (id) {
+        data = await prisma.mahasiswaRiwayatPekerjaan.findFirst({ where: { MahasiswaRiwayatPekerjaanId: id }, })
+        return c.json(data)
     } else {
-        data = id
-            ? await prisma.mahasiswaRiwayatPekerjaan.findFirst({where: { MahasiswaRiwayatPekerjaanId: id },}) : await prisma.mahasiswaRiwayatPekerjaan.findMany()
+        return c.json([])
     }
 
-    return c.json(data)
 })
 
 app.post('/', async (c) => {

@@ -13,17 +13,20 @@ app.get('/', async (c) => {
     const pendaftaranId = c.req.query('pendaftaranId')
 
     let data = null;
-    if(pendaftaranId) {
+    if (pendaftaranId) {
         data = await prisma.orangTua.findMany({
             where: {
                 PendaftaranId: pendaftaranId
             }
         });
+        return c.json(data)
+    } else if (id) {
+        data = await prisma.orangTua.findFirst({ where: { OrangTuaId: id } })
+        return c.json(data)
     } else {
-        data = (id) ? await prisma.orangTua.findFirst({where: {OrangTuaId: id}}) : await prisma.orangTua.findMany()
+        return c.json([])
     }
 
-    return c.json(data)
 })
 
 app.post('/', async (c) => {
@@ -31,15 +34,15 @@ app.post('/', async (c) => {
 
     const data = await prisma.orangTua.create({
         data: {
-            PendaftaranId: body.PendaftaranId ,
-            Nama: body.Nama ,
-            Pekerjaan: body.Pekerjaan ,
-            JenisOrtu: body.JenisOrtu ,
-            Penghasilan: body.Penghasilan ,
-            Email: body.Email ,
-            NomorHp: body.NomorHp ,
-            CreatedAt: new Date() ,
-            UpdatedAt: new Date() ,
+            PendaftaranId: body.PendaftaranId,
+            Nama: body.Nama,
+            Pekerjaan: body.Pekerjaan,
+            JenisOrtu: body.JenisOrtu,
+            Penghasilan: body.Penghasilan,
+            Email: body.Email,
+            NomorHp: body.NomorHp,
+            CreatedAt: new Date(),
+            UpdatedAt: new Date(),
         }
     })
 
@@ -51,14 +54,14 @@ app.put('/', async (c) => {
 
     const data = await prisma.orangTua.update({
         data: {
-            PendaftaranId: body.PendaftaranId ,
-            Nama: body.Nama ,
-            Pekerjaan: body.Pekerjaan ,
-            JenisOrtu: body.JenisOrtu ,
-            Penghasilan: body.Penghasilan ,
-            Email: body.Email ,
-            NomorHp: body.NomorHp ,
-            UpdatedAt: new Date() ,
+            PendaftaranId: body.PendaftaranId,
+            Nama: body.Nama,
+            Pekerjaan: body.Pekerjaan,
+            JenisOrtu: body.JenisOrtu,
+            Penghasilan: body.Penghasilan,
+            Email: body.Email,
+            NomorHp: body.NomorHp,
+            UpdatedAt: new Date(),
         },
         where: {
             OrangTuaId: body.OrangTuaId

@@ -13,17 +13,19 @@ app.get('/', async (c) => {
     const pendaftaranId = c.req.query('pendaftaranId')
 
     let data = null;
-    if(pendaftaranId) {
+    if (pendaftaranId) {
         data = await prisma.mahasiswaPelatihanProfessional.findMany({
             where: {
                 PendaftaranId: pendaftaranId
             }
         });
+        return c.json(data)
+    } else if (id) {
+        data = await prisma.mahasiswaPelatihanProfessional.findFirst({ where: { MahasiswaPelatihanProfessionalId: id } })
+        return c.json(data)
     } else {
-        data = (id) ? await prisma.mahasiswaPelatihanProfessional.findFirst({where: {MahasiswaPelatihanProfessionalId: id}}) : await prisma.mahasiswaPelatihanProfessional.findMany()
+        return c.json([])
     }
-
-    return c.json(data)
 })
 
 app.post('/', async (c) => {

@@ -13,14 +13,18 @@ app.get('/', async (c) => {
     const pendaftaranId = c.req.query('pendaftaranId')
 
     let data = null;
-    if(pendaftaranId) {
+    if (pendaftaranId) {
         data = await prisma.mahasiswaOrganisasiProfesi.findMany({
             where: {
                 PendaftaranId: pendaftaranId
             }
         });
+        return c.json(data)
+    } else if (id) {
+        data = await prisma.mahasiswaOrganisasiProfesi.findFirst({ where: { MahasiswaOrganisasiProfesiId: id }, })
+        return c.json(data)
     } else {
-        data = (id) ? await prisma.mahasiswaOrganisasiProfesi.findFirst({where: {MahasiswaOrganisasiProfesiId: id}}) : await prisma.mahasiswaOrganisasiProfesi.findMany()
+        return c.json([])
     }
 
     return c.json(data)

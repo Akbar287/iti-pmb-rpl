@@ -18,12 +18,14 @@ app.get('/', async (c) => {
                 PendaftaranId: pendaftaranId,
             },
         })
+        return c.json(data)
+    } else if (id) {
+        data = await prisma.mahasiswaPendidikan.findFirst({ where: { MahasiswaPendidikanId: id }, })
+        return c.json(data)
     } else {
-        data = id
-            ? await prisma.mahasiswaPendidikan.findFirst({where: { MahasiswaPendidikanId: id },}) : await prisma.mahasiswaPendidikan.findMany()
+        return c.json([])
     }
 
-    return c.json(data)
 })
 
 app.post('/', async (c) => {
