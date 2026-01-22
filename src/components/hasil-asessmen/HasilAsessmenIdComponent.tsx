@@ -83,7 +83,7 @@ import {
     SheetTitle,
 } from '../ui/sheet'
 import { Separator } from '../ui/separator'
-import { Role } from '@/generated/prisma'
+import { KeteranganMataKuliah, Role } from '@/generated/prisma'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { useForm } from 'react-hook-form'
 import { SkRektorAsessmenSkemaValidasi, SkRektorAsessmenSkemaValidasiTipe } from '@/validation/SkAsessmenValidation'
@@ -104,7 +104,7 @@ const HasilAsessmenIdComponent = ({
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
-    const [statusServer, setStatusServer] = React.useState<{StatusMahasiswaAssesmentId: string; NamaStatus: string}>(stats)
+    const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>(stats)
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
     const [loading, setLoading] = React.useState<boolean>(false)
     const [role, setRole] = React.useState<Role | null>(null)
@@ -152,7 +152,7 @@ const HasilAsessmenIdComponent = ({
                 setStatusPersetujuanHasilFinalAsessmen(dataServer.PendaftaranId).then(
                     (res) => {
                         toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                        setStatusServer({StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40k', NamaStatus: 'Persetujuan Hasil Final'})
+                        setStatusServer({ StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40k', NamaStatus: 'Persetujuan Hasil Final' })
                         setLoading(false)
                     }
                 )
@@ -223,6 +223,7 @@ const HasilAsessmenIdComponent = ({
     }, [paginationState.page, paginationState.limit])
 
     const [detailData, setDetailData] = React.useState<{
+        Keterangan: KeteranganMataKuliah | null
         SkorAssesmenId: string
         MataKuliahMahasiswaId: string
         Portofolio: number
@@ -232,6 +233,21 @@ const HasilAsessmenIdComponent = ({
         Diakui: boolean
         SkorRataRata: number
         NilaiHuruf: string | null
+        TranskripNilai: {
+            NilaiAsessment: string
+            Diakui: boolean
+            TranskripNilaiId: string
+            PendaftaranId: string
+            KodeMataKuliah: string
+            NamaMataKuliah: string
+            Sks: number
+            KodeMataKuliahTujuan: string
+            NamaMataKuliahTujuan: string
+            SksTujuan: number
+            Nilai: string
+            CreatedAt: Date
+            UpdatedAt: Date
+        },
         HasilAssesmen: {
             HasilAssesmenId: string
             Nama: string
@@ -245,6 +261,7 @@ const HasilAsessmenIdComponent = ({
             TanggalAssesmen: Date | null
         }[]
     }>({
+        Keterangan: null,
         SkorAssesmenId: '',
         MataKuliahMahasiswaId: '',
         Portofolio: 0,
@@ -255,9 +272,25 @@ const HasilAsessmenIdComponent = ({
         SkorRataRata: 0,
         NilaiHuruf: null,
         HasilAssesmen: [],
+        TranskripNilai: {
+            NilaiAsessment: '',
+            Diakui: false,
+            TranskripNilaiId: '',
+            PendaftaranId: '',
+            KodeMataKuliah: '',
+            NamaMataKuliah: '',
+            Sks: 0,
+            KodeMataKuliahTujuan: '',
+            NamaMataKuliahTujuan: '',
+            SksTujuan: 0,
+            Nilai: '',
+            CreatedAt: new Date,
+            UpdatedAt: new Date
+        },
     })
     const see_detail = (data: ResponseFinalAsessmenAsesorDetailMKMType) => {
         setDetailData({
+            Keterangan: data.Keterangan,
             SkorAssesmenId: data.SkorAssesmen.SkorAssesmenId ?? '',
             MataKuliahMahasiswaId:
                 data.SkorAssesmen.MataKuliahMahasiswaId ?? '',
@@ -268,6 +301,21 @@ const HasilAsessmenIdComponent = ({
             Diakui: data.SkorAssesmen.Diakui ?? false,
             SkorRataRata: data.SkorAssesmen.SkorRataRata ?? 0,
             NilaiHuruf: data.SkorAssesmen.NilaiHuruf ?? null,
+            TranskripNilai: {
+                NilaiAsessment: data.TranskripNilai.NilaiAsessment,
+                Diakui: data.TranskripNilai.Diakui,
+                TranskripNilaiId: data.TranskripNilai.TranskripNilaiId,
+                PendaftaranId: data.TranskripNilai.PendaftaranId,
+                KodeMataKuliah: data.TranskripNilai.KodeMataKuliah,
+                NamaMataKuliah: data.TranskripNilai.NamaMataKuliah,
+                Sks: data.TranskripNilai.Sks,
+                KodeMataKuliahTujuan: data.MataKuliah.Kode,
+                NamaMataKuliahTujuan: data.MataKuliah.Nama,
+                SksTujuan: data.MataKuliah.Sks,
+                Nilai: data.TranskripNilai.Nilai,
+                CreatedAt: data.TranskripNilai.CreatedAt,
+                UpdatedAt: data.TranskripNilai.UpdatedAt,
+            },
             HasilAssesmen: data.MataKuliah.CapaianPembelajaran.map((cp) => ({
                 HasilAssesmenId: cp.EvaluasiDiri.HasilAsessment.HasilAssesmenId,
                 Nama: cp.Nama,
@@ -314,7 +362,7 @@ const HasilAsessmenIdComponent = ({
             header: 'Nilai Huruf',
             cell: ({ row }) => (
                 <div className="capitalize">
-                    {row.original.SkorAssesmen.NilaiHuruf}
+                    {row.original.Keterangan === 'Transfer_SKS' ? row.original.TranskripNilai.NilaiAsessment : row.original.SkorAssesmen.NilaiHuruf}
                 </div>
             ),
         },
@@ -323,7 +371,7 @@ const HasilAsessmenIdComponent = ({
             header: 'Skor Rata-Rata',
             cell: ({ row }) => (
                 <div className="capitalize">
-                    {row.original.SkorAssesmen.SkorRataRata}
+                    {row.original.Keterangan === 'Transfer_SKS' ? '-' : row.original.SkorAssesmen.SkorRataRata}
                 </div>
             ),
         },
@@ -896,27 +944,27 @@ const HasilAsessmenIdComponent = ({
                                         />
                                     </div>
                                     {
-                                         statusServer.NamaStatus == 'Hasil Final Asessmen' && (
-                                    <div className="flex justify-center w-full my-5">
-                                        <Button
-                                            type="submit"
-                                            className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
-                                            disabled={loading}
-                                        >
-                                            {
-                                                loading ? (
-                                                    <>
-                                                    <TimerIcon /> Loading
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                    <PenIcon /> Simpan
-                                                    </>
-                                                )
-                                            }
-                                        </Button>
-                                    </div>
-                                         )
+                                        statusServer.NamaStatus == 'Hasil Final Asessmen' && (
+                                            <div className="flex justify-center w-full my-5">
+                                                <Button
+                                                    type="submit"
+                                                    className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
+                                                    disabled={loading}
+                                                >
+                                                    {
+                                                        loading ? (
+                                                            <>
+                                                                <TimerIcon /> Loading
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <PenIcon /> Simpan
+                                                            </>
+                                                        )
+                                                    }
+                                                </Button>
+                                            </div>
+                                        )
                                     }
                                 </form>
                             </Form>
@@ -946,6 +994,7 @@ export function SheetManageData({
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
     dataDetail: {
+        Keterangan: KeteranganMataKuliah | null
         SkorAssesmenId: string
         MataKuliahMahasiswaId: string
         Portofolio: number
@@ -955,6 +1004,21 @@ export function SheetManageData({
         Diakui: boolean
         SkorRataRata: number
         NilaiHuruf: string | null
+        TranskripNilai: {
+            NilaiAsessment: string,
+            Diakui: boolean,
+            TranskripNilaiId: string,
+            PendaftaranId: string,
+            KodeMataKuliah: string,
+            NamaMataKuliah: string,
+            Sks: number,
+            KodeMataKuliahTujuan: string
+            NamaMataKuliahTujuan: string
+            SksTujuan: number
+            Nilai: string,
+            CreatedAt: Date,
+            UpdatedAt: Date
+        },
         HasilAssesmen: {
             HasilAssesmenId: string
             Nama: string
@@ -985,68 +1049,189 @@ export function SheetManageData({
                     <div className="w-full grid grid-cols-1 gap-3 px-4">
                         <div className="container mx-auto">
                             <div className="grid grid-cols-1 gap-3">
-                                <Card>
-                                    <CardHeader>
-                                        <CardTitle>Skor Asessmen</CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <Table>
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell>Demo</TableCell>
-                                                    <TableCell>
-                                                        {dataDetail.Demo}
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        Portfolio
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {dataDetail.Portofolio}
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>Tulis</TableCell>
-                                                    <TableCell>
-                                                        {dataDetail.Tulis}
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        Wawancara
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {dataDetail.Wawancara}
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        Skor Rata-rata
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {
-                                                            dataDetail.SkorRataRata
-                                                        }
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        Diakui
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        {dataDetail.Diakui
-                                                            ? 'Ya'
-                                                            : 'Tidak'}
-                                                    </TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </CardContent>
-                                </Card>
+                                {
+                                    dataDetail.Keterangan === 'Transfer_SKS' ? (
+                                        <Card>
+                                            <CardHeader>
+                                                <CardTitle>Skor Asessmen</CardTitle>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <Table>
+                                                    <TableBody>
+                                                        <TableRow>
+                                                            <TableCell>Nilai</TableCell>
+                                                            <TableCell>
+                                                                {dataDetail.TranskripNilai.NilaiAsessment}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>
+                                                                Diakui
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {dataDetail.TranskripNilai.Diakui
+                                                                    ? 'Ya'
+                                                                    : 'Tidak'}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    </TableBody>
+                                                </Table>
+                                            </CardContent>
+                                        </Card>
+                                    ) : (
+                                        <Card>
+                                            <CardHeader>
+                                                <CardTitle>Skor Asessmen</CardTitle>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <Table>
+                                                    <TableBody>
+                                                        <TableRow>
+                                                            <TableCell>Demo</TableCell>
+                                                            <TableCell>
+                                                                {dataDetail.Demo}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>
+                                                                Portfolio
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {dataDetail.Portofolio}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>Tulis</TableCell>
+                                                            <TableCell>
+                                                                {dataDetail.Tulis}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>
+                                                                Wawancara
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {dataDetail.Wawancara}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>
+                                                                Skor Rata-rata
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {
+                                                                    dataDetail.SkorRataRata
+                                                                }
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell>
+                                                                Diakui
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {dataDetail.Diakui
+                                                                    ? 'Ya'
+                                                                    : 'Tidak'}
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    </TableBody>
+                                                </Table>
+                                            </CardContent>
+                                        </Card>
+                                    )
+                                }
                                 <Separator className="my-2" />
                                 <div className="grid grid-cols-1 gap-3">
-                                    {dataDetail.HasilAssesmen.sort(
+                                    {dataDetail.Keterangan === 'Transfer_SKS' ? (
+                                        <>
+                                            <Card>
+                                                <CardHeader>
+                                                    <CardTitle>
+                                                        Mata Kuliah PT. Asal
+                                                    </CardTitle>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <Table>
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    Kode MK
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <div className="w-full text-wrap">
+                                                                        {dataDetail.TranskripNilai.KodeMataKuliah}
+                                                                    </div>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    Nama MK
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {dataDetail.TranskripNilai.NamaMataKuliah}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    SKS
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {dataDetail.TranskripNilai.Sks}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    Nilai
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {dataDetail.TranskripNilai.Nilai}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    </Table>
+                                                </CardContent>
+                                            </Card>
+                                            <Card>
+                                                <CardHeader>
+                                                    <CardTitle>
+                                                        Mata Kuliah PT. Tujuan
+                                                    </CardTitle>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <Table>
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    Kode MK
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    <div className="w-full text-wrap">
+                                                                        {dataDetail.TranskripNilai.KodeMataKuliahTujuan}
+                                                                    </div>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    Nama MK
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {dataDetail.TranskripNilai.NamaMataKuliahTujuan}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>
+                                                                    SKS
+                                                                </TableCell>
+                                                                <TableCell>
+                                                                    {dataDetail.TranskripNilai.SksTujuan}
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    </Table>
+                                                </CardContent>
+                                            </Card>
+                                        </>
+                                    ) : dataDetail.HasilAssesmen.sort(
                                         (a, b) => a.Urutan - b.Urutan
                                     ).map((ha) => (
                                         <Card key={ha.HasilAssesmenId}>

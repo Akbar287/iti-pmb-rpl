@@ -177,7 +177,7 @@ const PenunjukanAsesorComponent = ({
             setLoading(false)
             return
         }
-        if(data.AsesorKedua == data.AsesorPertama) {
+        if (data.AsesorKedua == data.AsesorPertama) {
             toast.error(
                 'Asesor Pertama dan Kedua tidak boleh sama !'
             )
@@ -223,7 +223,7 @@ const PenunjukanAsesorComponent = ({
         }
         setLoading(true)
 
-        if (roleName === 'Kaprodi') {
+        if (roleName === 'Kaprodi' || roleName === 'Wakil Rektor') {
             getAsesorMahasiswaPagination(
                 paginationState.page,
                 paginationState.limit,
@@ -301,7 +301,7 @@ const PenunjukanAsesorComponent = ({
                     setLoading(false)
                 })
 
-                if (dataAsesor.length === 0) {
+            if (dataAsesor.length === 0) {
                 getAllAsesor()
                     .then((res) => setDataAsesor(res))
                     .catch((err) => { })
@@ -441,7 +441,7 @@ const PenunjukanAsesorComponent = ({
                             >
                                 Copy Kode Pendaftar ID
                             </DropdownMenuItem>
-                            {role?.Name.match('Kaprodi') && (
+                            {(role?.Name.match('Kaprodi') || role?.Name.match('Wakil Rektor')) && (
                                 <>
                                     {jd.Status === 'Penunjukan Asesor' ||
                                         ((jd.AsesorPertamaId && jd.AsesorKeduaId) &&
@@ -450,12 +450,12 @@ const PenunjukanAsesorComponent = ({
                                                 <DropdownMenuSeparator />
                                             ))}
                                     {jd.Status === 'Penunjukan Asesor' && (
-                                            <DropdownMenuItem
-                                                onClick={() => ubahData(jd)}
-                                            >
-                                                Atur Asesor
-                                            </DropdownMenuItem>
-                                        )}
+                                        <DropdownMenuItem
+                                            onClick={() => ubahData(jd)}
+                                        >
+                                            Atur Asesor
+                                        </DropdownMenuItem>
+                                    )}
                                     {/* {(jd.AsesorPertamaId && jd.AsesorKeduaId) &&
                                         (jd.Status === 'Penunjukan Asesor')&& (
                                             <DropdownMenuItem
@@ -469,16 +469,16 @@ const PenunjukanAsesorComponent = ({
                             {role?.Name.match('Akademik') && (
                                 <>
                                     {(jd.Status ===
-                                            'Penerbitan SK Penugasan Asesor' && (
-                                                <DropdownMenuSeparator />
-                                            ))}
+                                        'Penerbitan SK Penugasan Asesor' && (
+                                            <DropdownMenuSeparator />
+                                        ))}
                                     {jd.Status === 'Penerbitan SK Penugasan Asesor' && (
-                                            <DropdownMenuItem
-                                                onClick={() => router.push('/asesor/penunjukan-asesor/' + jd.PendaftaranId)}
-                                            >
-                                                Upload SK
-                                            </DropdownMenuItem>
-                                        )}
+                                        <DropdownMenuItem
+                                            onClick={() => router.push('/asesor/penunjukan-asesor/' + jd.PendaftaranId)}
+                                        >
+                                            Upload SK
+                                        </DropdownMenuItem>
+                                    )}
                                 </>
                             )}
                         </DropdownMenuContent>
@@ -519,7 +519,7 @@ const PenunjukanAsesorComponent = ({
         )
     }
 
-    if (role.Name === 'Kaprodi') {
+    if (role.Name === 'Kaprodi' || role.Name === 'Wakil Rektor') {
         return (
             <div className="w-full">
                 <div className="flex items-center py-4">
@@ -1466,6 +1466,7 @@ export function SheetManageData({
                                                                         {
                                                                             dataAsesor.map(x => (
                                                                                 <SelectItem
+                                                                                    key={x.AsesorId}
                                                                                     value={
                                                                                         x.AsesorId
                                                                                     }
@@ -1509,6 +1510,7 @@ export function SheetManageData({
                                                                         {
                                                                             dataAsesor.map(x => (
                                                                                 <SelectItem
+                                                                                    key={x.AsesorId}
                                                                                     value={
                                                                                         x.AsesorId
                                                                                     }
@@ -1532,7 +1534,7 @@ export function SheetManageData({
                                     </div>
                                 </div>
                                 <SheetFooter>
-                                    <Button type="submit" disabled={loading}>
+                                    <Button type="submit" className='bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 active:scale-90 transition-all duration-300 ease-in-out cursor-pointer' disabled={loading}>
                                         {loading ? (
                                             <>
                                                 <Timer />

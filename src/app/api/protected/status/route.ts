@@ -11,8 +11,8 @@ app.get('/', async (c) => {
     const jenis = c.req.query('j')
     const pendaftaranId = c.req.query('p')
 
-    if (!jenis) return c.json({status: 'error', data: [], message: 'param j is not define'}, 400)
-    if (!pendaftaranId) return c.json({status: 'error', data: [], message: 'param p is not define'}, 400)
+    if (!jenis) return c.json({ status: 'error', data: [], message: 'param j is not define' }, 400)
+    if (!pendaftaranId) return c.json({ status: 'error', data: [], message: 'param p is not define' }, 400)
 
     const pendaftaran = await prisma.pendaftaran.findFirst({
         where: { PendaftaranId: pendaftaranId },
@@ -241,16 +241,16 @@ app.get('/', async (c) => {
         }
 
         return c.json({
-            status: 'success', 
+            status: 'success',
             data: [],
             message: 'success'
         }, 200)
     }
     return c.json({
-            status: 'error', 
-            data: [],
-            message: 'mhs not found'
-        }, 200)
+        status: 'error',
+        data: [],
+        message: 'mhs not found'
+    }, 200)
 })
 
 export const GET = handle(app)

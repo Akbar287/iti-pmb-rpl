@@ -36,6 +36,18 @@ export type ResponseFinalAsessmenAsesorDetailMKMType = {
     Rpl: boolean
     StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa | null
     Keterangan: KeteranganMataKuliah | null
+    TranskripNilai: {
+        NilaiAsessment: string
+        Diakui: boolean
+        TranskripNilaiId: string
+        PendaftaranId: string
+        KodeMataKuliah: string
+        NamaMataKuliah: string
+        Sks: number
+        Nilai: string
+        CreatedAt: Date
+        UpdatedAt: Date
+    },
     MataKuliah: {
         MataKuliahId: string
         Kode: string
@@ -126,7 +138,7 @@ export type ResponseSkRektorAsessmenType = {
     PendaftaranId: string
     KodePendaftar: string
     Nim: string
-    ProgramStudi:string 
+    ProgramStudi: string
     NomorSk: string
     SkRektor: boolean
     NamaFile: string
@@ -140,7 +152,7 @@ export const ResponseSkRektorAsessmenTypeValue = {
     PendaftaranId: '',
     KodePendaftar: '',
     Nim: '',
-    ProgramStudi:'' ,
+    ProgramStudi: '',
     NomorSk: '',
     SkRektor: false,
     NamaFile: '',

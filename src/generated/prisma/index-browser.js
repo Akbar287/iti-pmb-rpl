@@ -834,6 +834,24 @@ exports.Prisma.TicketsFileScalarFieldEnum = {
   UpdatedAt: 'UpdatedAt'
 };
 
+exports.Prisma.TranskripNilaiScalarFieldEnum = {
+  TranskripNilaiId: 'TranskripNilaiId',
+  PendaftaranId: 'PendaftaranId',
+  KodeMataKuliah: 'KodeMataKuliah',
+  NamaMataKuliah: 'NamaMataKuliah',
+  Sks: 'Sks',
+  Nilai: 'Nilai',
+  CreatedAt: 'CreatedAt',
+  UpdatedAt: 'UpdatedAt'
+};
+
+exports.Prisma.TranskripNilaiRelationScalarFieldEnum = {
+  TranskripNilaiId: 'TranskripNilaiId',
+  MataKuliahMahasiswaId: 'MataKuliahMahasiswaId',
+  Nilai: 'Nilai',
+  Diakui: 'Diakui'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1000,7 +1018,9 @@ exports.Prisma.ModelName = {
   SettingBerita: 'SettingBerita',
   QuestionAndAsk: 'QuestionAndAsk',
   Tickets: 'Tickets',
-  TicketsFile: 'TicketsFile'
+  TicketsFile: 'TicketsFile',
+  TranskripNilai: 'TranskripNilai',
+  TranskripNilaiRelation: 'TranskripNilaiRelation'
 };
 
 /**

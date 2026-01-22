@@ -192,6 +192,13 @@ app.get('/', async (c) => {
                             select: {
                                 MataKuliahMahasiswa: {
                                     select: {
+                                        Keterangan: true,
+                                        transkripNilaiRelations: {
+                                            select: {
+                                                Diakui: true,
+                                                Nilai: true,
+                                            }
+                                        },
                                         _count: {
                                             select: {
                                                 EvaluasiDiri: true,
@@ -255,10 +262,17 @@ app.get('/', async (c) => {
                 data?.map((item) => {
                     ; (temp1 = 0), (temp2 = 0)
                     item.Pendaftaran.MataKuliahMahasiswa.forEach((mkm) => {
-                        temp1 += mkm._count.EvaluasiDiri
-                        mkm.EvaluasiDiri.forEach((ed) => {
-                            temp2 += ed.HasilAssesmen.filter(y => y.Ai == false).length
-                        })
+                        if (mkm.Keterangan === 'Transfer_SKS') {
+                            temp1 += 1
+                            if (mkm.transkripNilaiRelations.length > 0) {
+                                temp2 += 1
+                            }
+                        } else {
+                            temp1 += mkm._count.EvaluasiDiri
+                            mkm.EvaluasiDiri.forEach((ed) => {
+                                temp2 += ed.HasilAssesmen.filter(y => y.Ai == false).length
+                            })
+                        }
                     })
 
                     return {
@@ -485,13 +499,9 @@ app.get('/', async (c) => {
                         Confirmation: true,
                         Pendaftaran: {
                             select: {
-                                _count: {
-                                    select: {
-                                        MataKuliahMahasiswa: true,
-                                    },
-                                },
                                 MataKuliahMahasiswa: {
                                     select: {
+                                        Keterangan: true,
                                         _count: {
                                             select: {
                                                 SkorAssesmen: true,
@@ -573,7 +583,7 @@ app.get('/', async (c) => {
                             )?.StatusMahasiswaAssesment.NamaStatus ?? ''
                             : '',
                         TotalAsessmen: temp[idx],
-                        TotalEval: item.Pendaftaran._count.MataKuliahMahasiswa,
+                        TotalEval: item.Pendaftaran.MataKuliahMahasiswa.filter(x => x.Keterangan === 'Perolehan_SKS').length,
                     }
                 }) ?? []
 

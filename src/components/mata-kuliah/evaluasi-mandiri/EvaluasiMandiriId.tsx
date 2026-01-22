@@ -18,7 +18,7 @@ import {
     SidebarHeader,
     SidebarInset,
 } from '@/components/ui/sidebar'
-import { Button } from '../ui/button'
+import { Button } from '../../ui/button'
 import {
     Dialog,
     DialogContent,
@@ -26,9 +26,9 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from '../ui/dialog'
+} from '../../ui/dialog'
 import { MataKuliahMahasiswaCapaianPembelajaranTypes } from '@/types/DaftarUlangProdi'
-import { Badge } from '../ui/badge'
+import { Badge } from '../../ui/badge'
 import { replaceItemAtIndex, truncateText } from '@/lib/utils'
 import { ProfiensiPengetahuan } from '@/generated/prisma'
 import {
@@ -38,15 +38,16 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from '../ui/card'
-import { Separator } from '../ui/separator'
-import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
+} from '../../ui/card'
+import { Separator } from '../../ui/separator'
+import { Alert, AlertDescription, AlertTitle } from '../../ui/alert'
 import { toast } from 'sonner'
 import { setEvaluasiDiri } from '@/services/EvaluasiMandiri/EvaluasiDiriService'
 
 const EvaluasiMandiriId = ({
     dataServer,
     buktiFormServer,
+    statusPendaftaran
 }: {
     dataServer: MataKuliahMahasiswaCapaianPembelajaranTypes
     buktiFormServer: {
@@ -59,7 +60,25 @@ const EvaluasiMandiriId = ({
         NamaFile: string
         NamaDokumen: string
     }[]
+    statusPendaftaran: string
 }) => {
+    console.log(statusPendaftaran)
+    const DISABLED_STATUSES = [
+        'Penunjukan Asesor',
+        'Persetujuan Penunjukan Asesor',
+        'Penerbitan SK Penugasan Asesor',
+        'Asessmen Oleh Asesor',
+        'Rekapitulasi Asessmen',
+        'Sanggahan',
+        'Hasil Final Asessmen',
+        'Persetujuan Hasil Final',
+        'Penerbitan SK Asessmen',
+        'Sinkronisasi Hasil Asessmen',
+        'Selesai',
+    ]
+
+    const isFormDisabled = statusPendaftaran ? DISABLED_STATUSES.includes(statusPendaftaran) : false
+
     const [data, setData] = React.useState(dataServer)
     const [index, setIndex] = React.useState<number>(0)
     const [activeCapaian, setActiveCapaian] = React.useState<string | null>(
@@ -75,17 +94,17 @@ const EvaluasiMandiriId = ({
             data[index].CapaianPembelajaran.length === 0
                 ? ProfiensiPengetahuan.TIDAK_PERNAH
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri
-                      .ProfiensiPengetahuan
-                : ProfiensiPengetahuan.TIDAK_PERNAH,
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri
+                        .ProfiensiPengetahuan
+                    : ProfiensiPengetahuan.TIDAK_PERNAH,
         BuktiForm:
             data[index].CapaianPembelajaran.length === 0
                 ? []
                 : data[index].CapaianPembelajaran[0].EvaluasiDiri !== null
-                ? data[index].CapaianPembelajaran[0].EvaluasiDiri.BuktiForm.map(
-                      (bf) => String(bf.BuktiFormId)
-                  )
-                : [],
+                    ? data[index].CapaianPembelajaran[0].EvaluasiDiri.BuktiForm.map(
+                        (bf) => String(bf.BuktiFormId)
+                    )
+                    : [],
     })
     const [loading, setLoading] = React.useState<boolean>(false)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
@@ -97,7 +116,7 @@ const EvaluasiMandiriId = ({
                 data[index + 1].CapaianPembelajaran.length === 0
                     ? null
                     : data[index + 1].CapaianPembelajaran[0]
-                          .CapaianPembelajaranId || null
+                        .CapaianPembelajaranId || null
             )
             setForm({
                 ProfiensiPengetahuan: ProfiensiPengetahuan.TIDAK_PERNAH,
@@ -112,7 +131,7 @@ const EvaluasiMandiriId = ({
                 data[index - 1].CapaianPembelajaran.length === 0
                     ? null
                     : data[index - 1].CapaianPembelajaran[0]
-                          .CapaianPembelajaranId || null
+                        .CapaianPembelajaranId || null
             )
             setForm({
                 ProfiensiPengetahuan: ProfiensiPengetahuan.TIDAK_PERNAH,
@@ -175,12 +194,12 @@ const EvaluasiMandiriId = ({
                                         activeCapaian
                                 ) !== undefined
                                     ? 'Urutan #' +
-                                      data[index].CapaianPembelajaran.find(
-                                          (cp) =>
-                                              cp.CapaianPembelajaranId ===
-                                              activeCapaian
-                                      )?.Urutan +
-                                      ' '
+                                    data[index].CapaianPembelajaran.find(
+                                        (cp) =>
+                                            cp.CapaianPembelajaranId ===
+                                            activeCapaian
+                                    )?.Urutan +
+                                    ' '
                                     : 'Silakan Pilih Capaian Pembelajaran '}
 
                                 {data[index].CapaianPembelajaran.find(
@@ -206,10 +225,10 @@ const EvaluasiMandiriId = ({
                                         activeCapaian
                                 ) !== undefined
                                     ? data[index].CapaianPembelajaran.find(
-                                          (cp) =>
-                                              cp.CapaianPembelajaranId ===
-                                              activeCapaian
-                                      )?.Nama
+                                        (cp) =>
+                                            cp.CapaianPembelajaranId ===
+                                            activeCapaian
+                                    )?.Nama
                                     : 'Capaian Pembelajaran akan muncul disini'}
                             </div>
                         </CardContent>
@@ -222,17 +241,16 @@ const EvaluasiMandiriId = ({
                             ) : (
                                 <form className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <label
-                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${
-                                            form.ProfiensiPengetahuan ===
+                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${form.ProfiensiPengetahuan ===
                                             ProfiensiPengetahuan.TIDAK_PERNAH
-                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                                : 'border-gray-300'
-                                        }`}
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                            : 'border-gray-300'
+                                            }`}
                                     >
                                         <input
                                             type="radio"
                                             name="cardOption"
-                                            disabled={loading}
+                                            disabled={loading || isFormDisabled}
                                             value={
                                                 ProfiensiPengetahuan.TIDAK_PERNAH
                                             }
@@ -254,18 +272,17 @@ const EvaluasiMandiriId = ({
                                         </div>
                                     </label>
                                     <label
-                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${
-                                            form.ProfiensiPengetahuan ===
+                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${form.ProfiensiPengetahuan ===
                                             ProfiensiPengetahuan.BAIK
-                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                                : 'border-gray-300'
-                                        }`}
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                            : 'border-gray-300'
+                                            }`}
                                     >
                                         <input
                                             type="radio"
                                             name="cardOption"
                                             value={ProfiensiPengetahuan.BAIK}
-                                            disabled={loading}
+                                            disabled={loading || isFormDisabled}
                                             checked={
                                                 form.ProfiensiPengetahuan ===
                                                 ProfiensiPengetahuan.BAIK
@@ -284,17 +301,16 @@ const EvaluasiMandiriId = ({
                                         </div>
                                     </label>
                                     <label
-                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${
-                                            form.ProfiensiPengetahuan ===
+                                        className={`flex cursor-pointer flex-col rounded-2xl border p-4 shadow transition-all hover:shadow-md ${form.ProfiensiPengetahuan ===
                                             ProfiensiPengetahuan.SANGAT_BAIK
-                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                                : 'border-gray-300'
-                                        }`}
+                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                            : 'border-gray-300'
+                                            }`}
                                     >
                                         <input
                                             type="radio"
                                             name="cardOption"
-                                            disabled={loading}
+                                            disabled={loading || isFormDisabled}
                                             value={
                                                 ProfiensiPengetahuan.SANGAT_BAIK
                                             }
@@ -355,11 +371,10 @@ const EvaluasiMandiriId = ({
                                                 <label
                                                     key={dokumen.BuktiFormId}
                                                     className={`border overflow-hidden rounded-xl p-4 shadow-sm cursor-pointer transition-all
-            ${
-                isChecked
-                    ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                    : 'hover:shadow-md'
-            }
+            ${isChecked
+                                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                                            : 'hover:shadow-md'
+                                                        }
             ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}
           `}
                                                 >
@@ -369,7 +384,8 @@ const EvaluasiMandiriId = ({
                                                         checked={isChecked}
                                                         disabled={
                                                             isDisabled ||
-                                                            loading
+                                                            loading ||
+                                                            isFormDisabled
                                                         }
                                                         onChange={() =>
                                                             setForm({
@@ -379,21 +395,21 @@ const EvaluasiMandiriId = ({
                                                                         dokumen.BuktiFormId
                                                                     )
                                                                         ? form.BuktiForm.filter(
-                                                                              (
-                                                                                  bf
-                                                                              ) =>
-                                                                                  bf !==
-                                                                                  dokumen.BuktiFormId
-                                                                          )
+                                                                            (
+                                                                                bf
+                                                                            ) =>
+                                                                                bf !==
+                                                                                dokumen.BuktiFormId
+                                                                        )
                                                                         : form
-                                                                              .BuktiForm
-                                                                              .length <
-                                                                          3
-                                                                        ? [
-                                                                              ...form.BuktiForm,
-                                                                              dokumen.BuktiFormId,
-                                                                          ]
-                                                                        : form.BuktiForm,
+                                                                            .BuktiForm
+                                                                            .length <
+                                                                            3
+                                                                            ? [
+                                                                                ...form.BuktiForm,
+                                                                                dokumen.BuktiFormId,
+                                                                            ]
+                                                                            : form.BuktiForm,
                                                             })
                                                         }
                                                     />
@@ -428,24 +444,28 @@ const EvaluasiMandiriId = ({
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="w-full flex justify-center items-center">
-                            <Button
-                                className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                type="button"
-                                size={'lg'}
-                                disabled={(!activeCapaian && !index) || loading}
-                                onClick={() => saveEval()}
-                            >
-                                {loading ? (
-                                    <>
-                                        <Timer /> Loading
-                                    </>
-                                ) : (
-                                    <>
-                                        <PenLine />
-                                        Simpan{' '}
-                                    </>
-                                )}
-                            </Button>
+                            {
+                                isFormDisabled ? "Mode Reviewed" : (
+                                    <Button
+                                        className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                        type="button"
+                                        size={'lg'}
+                                        disabled={(!activeCapaian && !index) || loading || isFormDisabled}
+                                        onClick={() => saveEval()}
+                                    >
+                                        {loading ? (
+                                            <>
+                                                <Timer /> Loading
+                                            </>
+                                        ) : (
+                                            <>
+                                                <PenLine />
+                                                Simpan{' '}
+                                            </>
+                                        )}
+                                    </Button>
+                                )
+                            }
                         </CardContent>
                     </Card>
                     <Separator className="my-2" />
@@ -527,9 +547,8 @@ const EvaluasiMandiriId = ({
                                         }
                                     }}
                                     key={cp.CapaianPembelajaranId}
-                                    className={`${
-                                        loading && 'cursor-not-allowed'
-                                    } flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
+                                    className={`${(loading) && 'cursor-not-allowed'
+                                        } flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground`}
                                 >
                                     <div className="flex w-full items-center gap-2">
                                         <span>Urutan #{cp.Urutan}</span>{' '}
@@ -626,9 +645,9 @@ function DialogMataKuliahMahasiswaRpl({
                                                         .length === 0
                                                         ? null
                                                         : data[idx]
-                                                              .CapaianPembelajaran[0]
-                                                              .CapaianPembelajaranId ||
-                                                              null
+                                                            .CapaianPembelajaran[0]
+                                                            .CapaianPembelajaranId ||
+                                                        null
                                                 )
                                                 setForm({
                                                     ProfiensiPengetahuan:

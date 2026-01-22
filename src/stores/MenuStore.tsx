@@ -99,24 +99,6 @@ const menu: MenuStoreProps[] = [
         ],
     },
     {
-        namaRole: ['Wakil Rektor'],
-        title: 'Approval',
-        url: '/approval',
-        icon: Database,
-        items: [
-            {
-                namaRole: ['Wakil Rektor'],
-                title: 'Persetujuan 2 Asesor',
-                url: '/approval/asesor',
-            },
-            {
-                namaRole: ['Wakil Rektor'],
-                title: 'Persetujuan Hasil',
-                url: '/approval/hasil',
-            }
-        ],
-    },
-    {
         namaRole: ['Admin'],
         title: 'Manajemen Institusi',
         url: '/manajemen-institusi',
@@ -173,21 +155,39 @@ const menu: MenuStoreProps[] = [
         ],
     },
     {
-        namaRole: ['Kaprodi', 'Asesor', 'Akademik'],
+        namaRole: ['Kaprodi', 'Asesor', 'Akademik', 'Wakil Rektor'],
         title: 'Asesor',
         url: '/asesor',
         icon: BookTextIcon,
         items: [
             {
-                namaRole: ['Kaprodi', 'Akademik'],
+                namaRole: ['Kaprodi', 'Akademik', 'Wakil Rektor'],
                 title: 'Penunjukan Asesor',
                 url: '/asesor/penunjukan-asesor',
             },
             {
-                namaRole: ['Kaprodi', 'Asesor', 'Akademik'],
+                namaRole: ['Kaprodi', 'Asesor', 'Akademik', 'Wakil Rektor'],
                 title: 'Sk. Rektor',
                 url: '/asesor/sk-rektor',
             },
+        ],
+    },
+    {
+        namaRole: ['Wakil Rektor'],
+        title: 'Approval',
+        url: '/approval',
+        icon: Database,
+        items: [
+            {
+                namaRole: ['Wakil Rektor'],
+                title: 'Persetujuan 2 Asesor',
+                url: '/approval/asesor',
+            },
+            {
+                namaRole: ['Wakil Rektor'],
+                title: 'Persetujuan Hasil',
+                url: '/approval/hasil',
+            }
         ],
     },
     {
@@ -257,10 +257,31 @@ const menu: MenuStoreProps[] = [
     },
     {
         namaRole: ['Mahasiswa'],
-        title: 'Evaluasi Mandiri',
-        url: '/evaluasi-mandiri',
-        icon: FileArchiveIcon,
-        items: null,
+        title: 'Mata Kuliah',
+        url: '/mata-kuliah',
+        icon: BookTextIcon,
+        items: [
+            {
+                namaRole: ['Mahasiswa'],
+                title: 'Pemilihan',
+                url: '/mata-kuliah/pemilihan',
+            },
+            {
+                namaRole: ['Mahasiswa'],
+                title: 'Ekuivalen Check',
+                url: '/mata-kuliah/ekuivalen-check',
+            },
+            {
+                namaRole: ['Mahasiswa'],
+                title: 'Evaluasi Mandiri',
+                url: '/mata-kuliah/evaluasi-mandiri',
+            },
+            {
+                namaRole: ['Mahasiswa'],
+                title: 'Finalisasi',
+                url: '/mata-kuliah/finalisasi',
+            },
+        ],
     },
     {
         namaRole: ['Admin'],

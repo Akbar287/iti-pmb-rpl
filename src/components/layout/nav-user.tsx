@@ -1,5 +1,7 @@
 'use client'
 
+import React from 'react'
+
 import {
     BadgeCheck,
     Bell,
@@ -44,6 +46,11 @@ export function NavUser({
     const router = useRouter()
 
     const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = React.useState(false)
+
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
 
     return (
         <SidebarMenu>
@@ -59,16 +66,18 @@ export function NavUser({
                         <span className="truncate font-semibold">
                             Tema Aplikasi
                         </span>
-                        {theme === 'dark' ? (
-                            <span className="truncate text-xs">Gelap</span>
-                        ) : (
-                            <span className="truncate text-xs">Terang</span>
-                        )}
+                        <span className="truncate text-xs">
+                            {mounted ? (theme === 'dark' ? 'Gelap' : 'Terang') : ''}
+                        </span>
                     </div>
-                    {theme === 'dark' ? (
-                        <MoonStar className="ml-auto size-4" />
+                    {mounted ? (
+                        theme === 'dark' ? (
+                            <MoonStar className="ml-auto size-4" />
+                        ) : (
+                            <SunIcon className="ml-auto size-4" />
+                        )
                     ) : (
-                        <SunIcon className="ml-auto size-4" />
+                        <SunMoonIcon className="ml-auto size-4" />
                     )}
                 </SidebarMenuButton>
                 <DropdownMenu>

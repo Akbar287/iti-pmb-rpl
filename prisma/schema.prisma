@@ -516,6 +516,7 @@ model MataKuliahMahasiswa {
   EvaluasiDiri              EvaluasiDiri[]
   SanggahanAssesmenMk       SanggahanAssesmenMk[]
   SkorAssesmen              SkorAssesmen[]
+  transkripNilaiRelations   TranskripNilaiRelation[]
 
   @@unique([PendaftaranId, MataKuliahId])
   @@map("mata_kuliah_mahasiswa")
@@ -622,6 +623,7 @@ model Pendaftaran {
   SanggahanAssesmen               SanggahanAssesmen[]
   SkRektorMahasiswa               SkRektorMahasiswa[]
   StatusMahasiswaAssesmentHistory StatusMahasiswaAssesmentHistory[]
+  transkripNilais                 TranskripNilai[]
 
   @@map("pendaftaran")
 }
@@ -1143,4 +1145,34 @@ model TicketsFile {
   Tickets Tickets @relation(fields: [TicketsId], references: [TicketsId], onDelete: Cascade)
 
   @@map("tickets_file")
+}
+
+model TranskripNilai {
+  TranskripNilaiId String   @id @default(uuid()) @map("transkrip_nilai_id")
+  PendaftaranId    String   @map("pendaftaran_id")
+  KodeMataKuliah   String   @map("kode_mata_kuliah")
+  NamaMataKuliah   String   @map("nama_mata_kuliah")
+  Sks              Float    @map("sks")
+  Nilai            String   @map("nilai")
+  CreatedAt        DateTime @default(now()) @map("created_at")
+  UpdatedAt        DateTime @default(now()) @map("updated_at")
+
+  Pendaftaran             Pendaftaran              @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
+  transkripNilaiRelations TranskripNilaiRelation[]
+
+  @@map("transkrip_nilai")
+}
+
+model TranskripNilaiRelation {
+  TranskripNilaiId String         @map("transkrip_nilai_id")
+  TranskripNilai   TranskripNilai @relation(fields: [TranskripNilaiId], references: [TranskripNilaiId], onDelete: Cascade)
+
+  MataKuliahMahasiswaId String              @map("mata_kuliah_mahasiswa_id")
+  MataKuliahMahasiswa   MataKuliahMahasiswa @relation(fields: [MataKuliahMahasiswaId], references: [MataKuliahMahasiswaId], onDelete: Cascade)
+
+  Nilai  String  @map("nilai")
+  Diakui Boolean @default(false) @map("diakui")
+
+  @@id([TranskripNilaiId, MataKuliahMahasiswaId])
+  @@map("transkrip_nilai_relation")
 }

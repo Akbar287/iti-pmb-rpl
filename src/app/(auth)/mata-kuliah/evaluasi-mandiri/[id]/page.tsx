@@ -1,4 +1,4 @@
-import EvaluasiMandiriId from '@/components/evaluasi-mandiri/EvaluasiMandiriId'
+import EvaluasiMandiriId from '@/components/mata-kuliah/evaluasi-mandiri/EvaluasiMandiriId'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { prisma } from '@/lib/prisma'
 import { MataKuliahMahasiswaCapaianPembelajaranTypes } from '@/types/DaftarUlangProdi'
@@ -10,6 +10,16 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             PendaftaranId: id,
         },
         select: {
+            StatusMahasiswaAssesmentHistory: {
+                select: {
+                    StatusMahasiswaAssesment: {
+                        select: {
+                            NamaStatus: true
+                        }
+                    },
+                    Aktif: true
+                }
+            },
             MataKuliahMahasiswa: {
                 select: {
                     MataKuliahMahasiswaId: true,
@@ -83,6 +93,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         data?.MataKuliahMahasiswa ?? []
     )
         .sort((a, b) => a.MataKuliah.Kode.localeCompare(b.MataKuliah.Kode))
+        .filter(x => x.Keterangan === 'Perolehan_SKS')
         .map((dkm) => ({
             MataKuliahMahasiswaId: dkm.MataKuliahMahasiswaId,
             PendaftaranId: dkm.PendaftaranId,
@@ -100,63 +111,63 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                 dkm.MataKuliah.CapaianPembelajaran.length == 0
                     ? []
                     : dkm.MataKuliah.CapaianPembelajaran.map((cp) => ({
-                          CapaianPembelajaranId: cp.CapaianPembelajaranId,
-                          MataKuliahId: cp.MataKuliahId,
-                          Nama: cp.Nama,
-                          Urutan: cp.Urutan,
-                          Active: cp.Active,
-                          EvaluasiDiri:
-                              cp.EvaluasiDiri.length === 0
-                                  ? null
-                                  : {
-                                        EvaluasiDiriId:
-                                            cp?.EvaluasiDiri[0].EvaluasiDiriId,
-                                        MataKuliahMahasiswaId:
-                                            cp?.EvaluasiDiri[0]
-                                                .MataKuliahMahasiswaId,
-                                        ProfiensiPengetahuan:
-                                            cp?.EvaluasiDiri[0]
-                                                .ProfiensiPengetahuan,
-                                        TanggalPengesahan:
-                                            cp?.EvaluasiDiri[0]
-                                                .TanggalPengesahan,
-                                        CreatedAt:
-                                            cp?.EvaluasiDiri[0].CreatedAt,
-                                        UpdatedAt:
-                                            cp?.EvaluasiDiri[0].UpdatedAt,
-                                        BuktiForm:
-                                            cp?.EvaluasiDiri[0]
-                                                .BuktiFormEvaluasiDiri.length ==
+                        CapaianPembelajaranId: cp.CapaianPembelajaranId,
+                        MataKuliahId: cp.MataKuliahId,
+                        Nama: cp.Nama,
+                        Urutan: cp.Urutan,
+                        Active: cp.Active,
+                        EvaluasiDiri:
+                            cp.EvaluasiDiri.length === 0
+                                ? null
+                                : {
+                                    EvaluasiDiriId:
+                                        cp?.EvaluasiDiri[0].EvaluasiDiriId,
+                                    MataKuliahMahasiswaId:
+                                        cp?.EvaluasiDiri[0]
+                                            .MataKuliahMahasiswaId,
+                                    ProfiensiPengetahuan:
+                                        cp?.EvaluasiDiri[0]
+                                            .ProfiensiPengetahuan,
+                                    TanggalPengesahan:
+                                        cp?.EvaluasiDiri[0]
+                                            .TanggalPengesahan,
+                                    CreatedAt:
+                                        cp?.EvaluasiDiri[0].CreatedAt,
+                                    UpdatedAt:
+                                        cp?.EvaluasiDiri[0].UpdatedAt,
+                                    BuktiForm:
+                                        cp?.EvaluasiDiri[0]
+                                            .BuktiFormEvaluasiDiri.length ==
                                             0
-                                                ? []
-                                                : cp?.EvaluasiDiri[0].BuktiFormEvaluasiDiri.map(
-                                                      (bf) => ({
-                                                          Jenis: bf.BuktiForm
-                                                              .JenisDokumen
-                                                              .Jenis,
-                                                          NomorDokumen:
-                                                              bf.BuktiForm
-                                                                  .JenisDokumen
-                                                                  .NomorDokumen,
-                                                          BuktiFormId:
-                                                              bf.BuktiForm
-                                                                  .BuktiFormId,
-                                                          PendaftaranId:
-                                                              bf.BuktiForm
-                                                                  .PendaftaranId,
-                                                          JenisDokumenId:
-                                                              bf.BuktiForm
-                                                                  .JenisDokumenId,
-                                                          NamaFile:
-                                                              bf.BuktiForm
-                                                                  .NamaFile,
-                                                          NamaDokumen:
-                                                              bf.BuktiForm
-                                                                  .NamaDokumen,
-                                                      })
-                                                  ),
-                                    },
-                      })),
+                                            ? []
+                                            : cp?.EvaluasiDiri[0].BuktiFormEvaluasiDiri.map(
+                                                (bf) => ({
+                                                    Jenis: bf.BuktiForm
+                                                        .JenisDokumen
+                                                        .Jenis,
+                                                    NomorDokumen:
+                                                        bf.BuktiForm
+                                                            .JenisDokumen
+                                                            .NomorDokumen,
+                                                    BuktiFormId:
+                                                        bf.BuktiForm
+                                                            .BuktiFormId,
+                                                    PendaftaranId:
+                                                        bf.BuktiForm
+                                                            .PendaftaranId,
+                                                    JenisDokumenId:
+                                                        bf.BuktiForm
+                                                            .JenisDokumenId,
+                                                    NamaFile:
+                                                        bf.BuktiForm
+                                                            .NamaFile,
+                                                    NamaDokumen:
+                                                        bf.BuktiForm
+                                                            .NamaDokumen,
+                                                })
+                                            ),
+                                },
+                    })),
         }))
 
     const buktiFormServer = await prisma.buktiForm.findMany({
@@ -182,6 +193,8 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         },
     })
 
+    const statusPendaftaran = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? ''
+
     return (
         <SidebarProvider
             style={
@@ -191,6 +204,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             }
         >
             <EvaluasiMandiriId
+                statusPendaftaran={statusPendaftaran}
                 buktiFormServer={buktiFormServer}
                 dataServer={dataServer}
             />

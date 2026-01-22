@@ -1,6 +1,7 @@
 import SanggahanIdComponent from '@/components/sanggahan/SanggahanIdComponent'
 import { prisma } from '@/lib/prisma'
 import { SanggahanAsessmenTypes } from '@/types/AsessmentTypes'
+import { TranskripNilaiType } from '@/types/EkuivalenCheck'
 import React from 'react'
 
 export default async ({ params }: { params: Promise<{ id: string }> }) => {
@@ -90,6 +91,24 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             Silabus: true,
                         },
                     },
+                    transkripNilaiRelations: {
+                        select: {
+                            Nilai: true,
+                            Diakui: true,
+                            TranskripNilai: {
+                                select: {
+                                    TranskripNilaiId: true,
+                                    PendaftaranId: true,
+                                    KodeMataKuliah: true,
+                                    NamaMataKuliah: true,
+                                    Sks: true,
+                                    Nilai: true,
+                                    CreatedAt: true,
+                                    UpdatedAt: true
+                                }
+                            }
+                        }
+                    },
                     SkorAssesmen: {
                         select: {
                             SkorAssesmenId: true,
@@ -109,10 +128,35 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         where: { PendaftaranId: id },
     })
 
+    const transkripNilai = await prisma.transkripNilai.findMany({
+        where: { PendaftaranId: id },
+        select: {
+            TranskripNilaiId: true,
+            PendaftaranId: true,
+            KodeMataKuliah: true,
+            NamaMataKuliah: true,
+            Sks: true,
+            Nilai: true,
+            CreatedAt: true,
+            UpdatedAt: true
+        }
+    })
+
+    const transkripNilaiServer: TranskripNilaiType[] = transkripNilai.map(x => ({
+        TranskripNilaiId: x.TranskripNilaiId,
+        PendaftaranId: x.PendaftaranId,
+        KodeMataKuliah: x.KodeMataKuliah,
+        NamaMataKuliah: x.NamaMataKuliah,
+        Sks: x.Sks,
+        Nilai: x.Nilai,
+        CreatedAt: x.CreatedAt,
+        UpdatedAt: x.UpdatedAt
+    }))
+
     const res = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
-    const stats : {
+    const stats: {
         StatusMahasiswaAssesmentId: string; NamaStatus: string
-    } = res ? {StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus} : {StatusMahasiswaAssesmentId: '', NamaStatus: ''};
+    } = res ? { StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus } : { StatusMahasiswaAssesmentId: '', NamaStatus: '' };
 
     const status = await prisma.statusMahasiswaAssesment.findFirst({
         select: { StatusMahasiswaAssesmentId: true },
@@ -130,10 +174,10 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                 status?.StatusMahasiswaAssesmentId
         )
             ? data?.StatusMahasiswaAssesmentHistory.find(
-                  (x) =>
-                      x.StatusMahasiswaAssesmentId ===
-                      status?.StatusMahasiswaAssesmentId
-              )?.Tanggal ?? new Date()
+                (x) =>
+                    x.StatusMahasiswaAssesmentId ===
+                    status?.StatusMahasiswaAssesmentId
+            )?.Tanggal ?? new Date()
             : new Date(),
         NoUjian: data?.NoUjian ?? '',
         Periode: data?.Periode ?? '',
@@ -145,70 +189,70 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                 data?.SanggahanAssesmen === undefined
                     ? ''
                     : data?.SanggahanAssesmen.length > 0
-                    ? data.SanggahanAssesmen[0].SanggahanAssesmenId ?? ''
-                    : '',
+                        ? data.SanggahanAssesmen[0].SanggahanAssesmenId ?? ''
+                        : '',
             PendaftaranId:
                 data?.SanggahanAssesmen === undefined
                     ? ''
                     : data?.SanggahanAssesmen.length > 0
-                    ? data.SanggahanAssesmen[0].PendaftaranId ?? ''
-                    : '',
+                        ? data.SanggahanAssesmen[0].PendaftaranId ?? ''
+                        : '',
             ProsesBanding:
                 data?.SanggahanAssesmen === undefined
                     ? false
                     : data?.SanggahanAssesmen.length > 0
-                    ? data.SanggahanAssesmen[0].ProsesBanding ?? false
-                    : false,
+                        ? data.SanggahanAssesmen[0].ProsesBanding ?? false
+                        : false,
             DiskusiBanding:
                 data?.SanggahanAssesmen === undefined
                     ? false
                     : data?.SanggahanAssesmen.length > 0
-                    ? data.SanggahanAssesmen[0].DiskusiBanding ?? false
-                    : false,
+                        ? data.SanggahanAssesmen[0].DiskusiBanding ?? false
+                        : false,
             CreatedAt:
                 data?.SanggahanAssesmen === undefined
                     ? null
                     : data?.SanggahanAssesmen.length > 0
-                    ? data.SanggahanAssesmen[0].CreatedAt ?? null
-                    : null,
+                        ? data.SanggahanAssesmen[0].CreatedAt ?? null
+                        : null,
             UpdatedAt:
                 data?.SanggahanAssesmen === undefined
                     ? null
                     : data?.SanggahanAssesmen.length > 0
-                    ? data.SanggahanAssesmen[0].UpdatedAt ?? null
-                    : null,
+                        ? data.SanggahanAssesmen[0].UpdatedAt ?? null
+                        : null,
             SanggahanAssesmenMk: !data?.SanggahanAssesmen
                 ? []
                 : data?.SanggahanAssesmen.length === 0
-                ? []
-                : data?.SanggahanAssesmen[0].SanggahanAssesmenMk.length === 0
-                ? []
-                : data?.SanggahanAssesmen[0].SanggahanAssesmenMk.map((sa) => ({
-                      SanggahanAssesmenMkId: sa.SanggahanAssesmenMkId ?? '',
-                      SanggahanAssesmenId: sa.SanggahanAssesmenId ?? '',
-                      MataKuliahMahasiswaId: sa.MataKuliahMahasiswaId ?? '',
-                      Keterangan: sa.Keterangan ?? null,
-                      CreatedAt: sa.CreatedAt ?? null,
-                      UpdatedAt: sa.UpdatedAt ?? null,
-                  })),
+                    ? []
+                    : data?.SanggahanAssesmen[0].SanggahanAssesmenMk.length === 0
+                        ? []
+                        : data?.SanggahanAssesmen[0].SanggahanAssesmenMk.map((sa) => ({
+                            SanggahanAssesmenMkId: sa.SanggahanAssesmenMkId ?? '',
+                            SanggahanAssesmenId: sa.SanggahanAssesmenId ?? '',
+                            MataKuliahMahasiswaId: sa.MataKuliahMahasiswaId ?? '',
+                            Keterangan: sa.Keterangan ?? null,
+                            CreatedAt: sa.CreatedAt ?? null,
+                            UpdatedAt: sa.UpdatedAt ?? null,
+                        })),
             SanggahanAssesmenPihak: !data?.SanggahanAssesmen
                 ? []
                 : data?.SanggahanAssesmen.length === 0
-                ? []
-                : data?.SanggahanAssesmen[0].SanggahanAssesmenPihak.length === 0
-                ? []
-                : data?.SanggahanAssesmen[0].SanggahanAssesmenPihak.map(
-                      (sam) => ({
-                          SanggahanAssesmenPihakId:
-                              sam.SanggahanAssesmenPihakId,
-                          SanggahanAssesmenId: sam.SanggahanAssesmenId,
-                          NamaPihak: sam.NamaPihak,
-                          JabatanPihak: sam.JabatanPihak ?? null,
-                          InstansiPihak: sam.InstansiPihak ?? null,
-                          CreatedAt: sam.CreatedAt ?? null,
-                          UpdatedAt: sam.UpdatedAt ?? null,
-                      })
-                  ),
+                    ? []
+                    : data?.SanggahanAssesmen[0].SanggahanAssesmenPihak.length === 0
+                        ? []
+                        : data?.SanggahanAssesmen[0].SanggahanAssesmenPihak.map(
+                            (sam) => ({
+                                SanggahanAssesmenPihakId:
+                                    sam.SanggahanAssesmenPihakId,
+                                SanggahanAssesmenId: sam.SanggahanAssesmenId,
+                                NamaPihak: sam.NamaPihak,
+                                JabatanPihak: sam.JabatanPihak ?? null,
+                                InstansiPihak: sam.InstansiPihak ?? null,
+                                CreatedAt: sam.CreatedAt ?? null,
+                                UpdatedAt: sam.UpdatedAt ?? null,
+                            })
+                        ),
         },
         ProgramStudi: {
             ProgramStudiId:
@@ -231,6 +275,18 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                         Semester: mkm.MataKuliah.Semester,
                         Silabus: mkm.MataKuliah.Silabus,
                     },
+                    TranskripNilai: {
+                        NilaiAsessmen: mkm.transkripNilaiRelations.length === 0 ? '' : mkm.transkripNilaiRelations[0].Nilai,
+                        Diakui: mkm.transkripNilaiRelations.length === 0 ? false : mkm.transkripNilaiRelations[0].Diakui,
+                        TranskripNilaiId: mkm.transkripNilaiRelations.length === 0 ? '' : mkm.transkripNilaiRelations[0].TranskripNilai.TranskripNilaiId,
+                        PendaftaranId: mkm.transkripNilaiRelations.length === 0 ? '' : mkm.transkripNilaiRelations[0].TranskripNilai.PendaftaranId,
+                        KodeMataKuliah: mkm.transkripNilaiRelations.length === 0 ? '' : mkm.transkripNilaiRelations[0].TranskripNilai.KodeMataKuliah,
+                        NamaMataKuliah: mkm.transkripNilaiRelations.length === 0 ? '' : mkm.transkripNilaiRelations[0].TranskripNilai.NamaMataKuliah,
+                        Sks: mkm.transkripNilaiRelations.length === 0 ? 0 : mkm.transkripNilaiRelations[0].TranskripNilai.Sks,
+                        Nilai: mkm.transkripNilaiRelations.length === 0 ? '' : mkm.transkripNilaiRelations[0].TranskripNilai.Nilai,
+                        CreatedAt: mkm.transkripNilaiRelations.length === 0 ? null : mkm.transkripNilaiRelations[0].TranskripNilai.CreatedAt,
+                        UpdatedAt: mkm.transkripNilaiRelations.length === 0 ? null : mkm.transkripNilaiRelations[0].TranskripNilai.UpdatedAt,
+                    },
                     SkorAsessmen: {
                         SkorAssesmenId:
                             mkm.SkorAssesmen.length === 0
@@ -240,7 +296,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                             mkm.SkorAssesmen.length === 0
                                 ? ''
                                 : mkm.SkorAssesmen[0].MataKuliahMahasiswaId ??
-                                  '',
+                                '',
                         Portofolio:
                             mkm.SkorAssesmen.length === 0
                                 ? 0
@@ -280,7 +336,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             <h1 className="text-2xl font-bold mb-4">
                 Sanggahan Asessmen Mahasiswa
             </h1>
-            <SanggahanIdComponent stats={stats} dataServer={dataServer} />
+            <SanggahanIdComponent stats={stats} dataServer={dataServer} transkripNilaiServer={transkripNilaiServer} />
         </div>
     )
 }

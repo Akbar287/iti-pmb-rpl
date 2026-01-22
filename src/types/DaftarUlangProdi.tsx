@@ -100,6 +100,10 @@ export interface DaftarUlangProdiType {
         Rpl: boolean
         StatusMataKuliahMahasiswa: StatusMataKuliahMahasiswa | null
         Keterangan: KeteranganMataKuliah | null
+        MataKuliah: {
+            Nama: string
+            ProgramStudiId: string
+        }
     }[]
     MataKuliah: {
         MataKuliahId: string
@@ -109,6 +113,7 @@ export interface DaftarUlangProdiType {
         Sks: number
         Semester: string | null
         Silabus: string | null
+        Cp: number
     }[]
 }
 export const DaftarUlangProdiValue: DaftarUlangProdiType = {

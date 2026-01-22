@@ -40,9 +40,9 @@ export function formatDateToIndonesian(isoDateTime: string): string {
 
 export function getInitials(programStudi: string): string {
   return programStudi
-    .split(" ")                         
-    .map(word => word[0].toUpperCase()) 
-    .join("");                          
+    .split(" ")
+    .map(word => word[0].toUpperCase())
+    .join("");
 }
 
 
@@ -74,8 +74,8 @@ function formatTime(isoOrDate: string | Date, tz = TZ) {
 type OutputItem = {
   id: string
   title: string
-  date: string         
-  time: string         
+  date: string
+  time: string
   location: string
   category: string
   description: string
@@ -105,6 +105,15 @@ export function convertKegiatan(data: SettingKegiatanTypes[], tz = TZ): OutputIt
       description: item.Deskripsi ?? '',
       _startDate: start,
     }
-  }).sort((a, b) => a._startDate.getTime() - b._startDate.getTime()) 
+  }).sort((a, b) => a._startDate.getTime() - b._startDate.getTime())
     .map(({ _startDate, ...rest }) => rest)
+}
+
+
+export function convertScoreToGrade(score: number): string {
+  if (score >= 86 && score <= 100) return "A";
+  if (score >= 76 && score <= 85) return "B";
+  if (score >= 66 && score <= 75) return "C";
+  if (score >= 56 && score <= 65) return "D";
+  return "E"; // 0–55
 }

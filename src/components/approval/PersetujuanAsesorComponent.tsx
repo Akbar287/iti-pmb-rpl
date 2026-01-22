@@ -15,7 +15,7 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 import { Label } from '../ui/label'
 import { Textarea } from '../ui/textarea'
 import { toast } from 'sonner'
-import { setStatusPenerbitanSkPenunjukanAsesor, setStatusPenunjukanAsesor, setStatusPersetujuanPenunjukanAsesor } from '@/services/Status/StatusService'
+import { setStatusAsessmenOlehAsesor, setStatusPenerbitanSkPenunjukanAsesor, setStatusPenunjukanAsesor, setStatusPersetujuanPenunjukanAsesor } from '@/services/Status/StatusService'
 import { Separator } from '../ui/separator'
 
 const PersetujuanAsesorComponent = () => {
@@ -80,18 +80,20 @@ const PersetujuanAsesorComponent = () => {
   ])
 
   const sendApproval = async () => {
+    setLoading(true)
     await setPersetujuanAsesor(
       dataSelected.PendaftaranId,
       approval.approval,
       approval.catatan
     ).then(async res => {
-      toast.success('Approval sudah disimpan')
+      toast.success('Approval berhasil disimpan')
       setData(data.filter(x => x.PendaftaranId !== dataSelected.PendaftaranId))
-      await setStatusPenerbitanSkPenunjukanAsesor(dataSelected.PendaftaranId)
+      await setStatusAsessmenOlehAsesor(dataSelected.PendaftaranId)
     }).catch(async err => {
       toast.error('Terjadi Kesalahan, periksa koneksi internet')
       await setStatusPenunjukanAsesor(dataSelected.PendaftaranId)
     }).finally(() => {
+      setLoading(false)
       setOpenDialog(false)
     })
   }
@@ -498,7 +500,7 @@ export function SheetManageData({
                     <div className="grid w-full max-w-sm items-center gap-3">
                       <Label htmlFor="bebanasesorpertama">Beban Asesor Pertama</Label>
                       <Input readOnly type="text" id="bebanasesorpertama" placeholder="Beban Asesor Pertama" value={
-                        dataSelected.BebanAsesorPertama ? dataSelected.BebanAsesorPertama + ' Mahasiswa sudah diasses oleh ' + dataSelected?.NamaAsesorPertama: ''
+                        dataSelected.BebanAsesorPertama ? dataSelected.BebanAsesorPertama + ' Mahasiswa sudah diasses oleh ' + dataSelected?.NamaAsesorPertama : ''
                       } />
                     </div>
 
@@ -511,7 +513,7 @@ export function SheetManageData({
 
                     <div className="grid w-full max-w-sm items-center gap-3">
                       <Label htmlFor="bebanasesorKedua">Beban Asesor Kedua</Label>
-                      <Input readOnly type="text" id="bebanasesorKedua" placeholder="Beban Asesor Kedua" value={ dataSelected.BebanAsesorKedua ? dataSelected.BebanAsesorKedua + ' Mahasiswa sudah diasses oleh ' + dataSelected?.NamaAsesorKedua: ''} />
+                      <Input readOnly type="text" id="bebanasesorKedua" placeholder="Beban Asesor Kedua" value={dataSelected.BebanAsesorKedua ? dataSelected.BebanAsesorKedua + ' Mahasiswa sudah diasses oleh ' + dataSelected?.NamaAsesorKedua : ''} />
                     </div>
 
                     <Separator />
@@ -555,7 +557,7 @@ export function SheetManageData({
 
                     <div className="grid w-full max-w-sm items-center gap-3">
                       <Label htmlFor="catatan">Catatan</Label>
-                      <Textarea id="catatan" disabled={loading} placeholder={approval.approval ? 'Catatan untuk Akademik' : 'Catatan untuk Kaprodi'} value={
+                      <Textarea id="catatan" disabled={loading} placeholder={approval.approval ? 'Catatan untuk Asesor' : 'Catatan untuk Kaprodi'} value={
                         approval.catatan ?? ''
                       } onChange={(e) => setApproval({ ...approval, catatan: e.target.value })} />
                     </div>
@@ -563,7 +565,7 @@ export function SheetManageData({
                 </div>
               </div>
               <SheetFooter>
-                <Button onClick={() => sendApproval()} disabled={loading}>
+                <Button onClick={() => sendApproval()} className='bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 active:scale-90 transition-all duration-300 ease-in-out cursor-pointer' disabled={loading}>
                   {loading ? (
                     <>
                       <Timer />

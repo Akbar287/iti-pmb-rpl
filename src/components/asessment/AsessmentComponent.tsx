@@ -89,7 +89,11 @@ const AsessmentComponent = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
 
     const startAsessment = (PendaftaranId: string) => {
-        router.push('/asessment/asessmen-mahasiswa/' + PendaftaranId)
+        router.push('/asessment/asessmen-mahasiswa/asessmen-check?id=' + PendaftaranId)
+    }
+
+    const startEkuivalenCheck = (PendaftaranId: string) => {
+        router.push('/asessment/asessmen-mahasiswa/ekuivalent-check?id=' + PendaftaranId)
     }
 
     const continueRekapitulasi = (dt: ResponseMhsFromAsesorSession) => {
@@ -127,28 +131,25 @@ const AsessmentComponent = () => {
     }
 
     React.useEffect(() => {
-        let temp: {
-            GuardName: string
-            Icon: string
-            Name: string
-            RoleId: string
-        } | null = null
-        if (!role) {
+        let currentRole = role
+        if (!currentRole) {
             const rolelogin = localStorage.getItem('pmb.iti.role')
             if (rolelogin) {
-                temp = JSON.parse(rolelogin)
-                setRole(temp)
+                currentRole = JSON.parse(rolelogin)
+                setRole(currentRole)
             }
         }
-        if (temp) {
+
+        if (currentRole) {
             setLoading(true)
-            if (temp.Name.match('Asesor')) {
+            if (currentRole.Name.match('Asesor')) {
                 getMahasiswaFromAsesor(
                     paginationState.page,
                     paginationState.limit,
                     search
                 )
                     .then((res) => {
+                        console.log(res.data)
                         setDataMahasiswa(res.data)
                         setLoading(false)
                         setPaginationState({
@@ -190,7 +191,7 @@ const AsessmentComponent = () => {
                     })
             }
         }
-    }, [paginationState.page, search, paginationState.limit])
+    }, [paginationState.page, search, paginationState.limit, role])
 
     const columns: ColumnDef<ResponseMhsFromAsesorSession>[] = [
         {
@@ -278,13 +279,22 @@ const AsessmentComponent = () => {
                                 <React.Fragment>
                                     <DropdownMenuSeparator />
                                     {jd.Status === 'Asessmen Oleh Asesor' && (
-                                        <DropdownMenuItem
-                                            onClick={() =>
-                                                startAsessment(jd.PendaftaranId)
-                                            }
-                                        >
-                                            Mulai Asessment
-                                        </DropdownMenuItem>
+                                        <>
+                                            <DropdownMenuItem
+                                                onClick={() =>
+                                                    startEkuivalenCheck(jd.PendaftaranId)
+                                                }
+                                            >
+                                                Mulai Asessment Transfer SKS
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem
+                                                onClick={() =>
+                                                    startAsessment(jd.PendaftaranId)
+                                                }
+                                            >
+                                                Mulai Asessment Perolehan SKS
+                                            </DropdownMenuItem>
+                                        </>
                                     )}
                                     {jd.TotalEval === jd.TotalAsessmen && (
                                         <DropdownMenuItem
@@ -382,10 +392,10 @@ const AsessmentComponent = () => {
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
-                                                          header.column
-                                                              .columnDef.header,
-                                                          header.getContext()
-                                                      )}
+                                                        header.column
+                                                            .columnDef.header,
+                                                        header.getContext()
+                                                    )}
                                             </TableHead>
                                         )
                                     })}
@@ -433,7 +443,7 @@ const AsessmentComponent = () => {
                         1}{' '}
                     -{' '}
                     {paginationState.totalElement <
-                    paginationState.page * paginationState.limit
+                        paginationState.page * paginationState.limit
                         ? paginationState.totalElement
                         : paginationState.page * paginationState.limit}{' '}
                     dari {paginationState.totalElement} Data.

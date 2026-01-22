@@ -17,9 +17,10 @@ app.use('*', withApiAuth)
 app.get('/', async (c) => {
     const id = c.req.query('id')
 
-    if(id === undefined) return c.json({
+    if (id === undefined) return c.json({
         status: 'error', message: 'no queri Found ', data: []
     }, 200)
+
     const pilihMataKuliah = await prisma.mataKuliahMahasiswa.findMany({
         select: {
             MataKuliahMahasiswaId: true,
@@ -45,7 +46,7 @@ app.get('/', async (c) => {
         },
     })
 
-    const mataKuliahPilihan: string[] = pilihMataKuliah.flatMap(x => x.MataKuliahId)
+    const mataKuliahPilihan: string[] = pilihMataKuliah.filter(x => x.Keterangan === 'Perolehan_SKS').flatMap(x => x.MataKuliahId)
 
     const getAllEvaluasiCount = await prisma.mataKuliah.findMany({
         select: {
@@ -65,7 +66,7 @@ app.get('/', async (c) => {
 
     let temp = 0
     let temp1 = 0
-    pilihMataKuliah.forEach((pm) => {
+    pilihMataKuliah.filter(x => x.Keterangan === 'Perolehan_SKS').forEach((pm) => {
         temp += pm._count.EvaluasiDiri
     })
     getAllEvaluasiCount.forEach((pm) => {
@@ -77,7 +78,7 @@ app.get('/', async (c) => {
             AND: [
                 {
                     PendaftaranId: id,
-                }, 
+                },
                 {
                     Pendaftaran: {
                         StatusMahasiswaAssesmentHistory: {
@@ -143,6 +144,11 @@ app.get('/', async (c) => {
                             Sks: true,
                             Semester: true,
                             Silabus: true,
+                            CapaianPembelajaran: {
+                                select: {
+                                    CapaianPembelajaranId: true,
+                                }
+                            },
                             MataKuliahMahasiswa: {
                                 select: {
                                     MataKuliahMahasiswaId: true,
@@ -193,6 +199,7 @@ app.get('/', async (c) => {
                 Sks: mk.Sks,
                 Semester: mk.Semester,
                 Silabus: mk.Silabus,
+                Cp: mk.CapaianPembelajaran.length
             })) || [],
     }
 

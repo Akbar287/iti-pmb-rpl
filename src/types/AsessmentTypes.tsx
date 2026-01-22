@@ -175,6 +175,18 @@ export type SanggahanAsessmenTypes = {
                 Semester: string | null
                 Silabus: string | null
             }
+            TranskripNilai: {
+                NilaiAsessmen: string
+                Diakui: boolean
+                TranskripNilaiId: string
+                PendaftaranId: string
+                KodeMataKuliah: string
+                NamaMataKuliah: string
+                Sks: number
+                Nilai: string
+                CreatedAt: Date | null
+                UpdatedAt: Date | null
+            }
             SkorAsessmen: {
                 SkorAssesmenId: string
                 MataKuliahMahasiswaId: string

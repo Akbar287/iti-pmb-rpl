@@ -261,7 +261,7 @@ const RekapitulasiIdComponent = ({
 
         const scores = scoresRaw
             .map((s) => (typeof s === "string" ? parseInt(s) : s))
-            .filter((s) => typeof s === "number" && !isNaN(s))
+            .filter((s) => typeof s === "number" && !isNaN(s) && s > 0)
 
         if (scores.length === 0) {
             setValue("SkorRataRata", 0, { shouldDirty: true })

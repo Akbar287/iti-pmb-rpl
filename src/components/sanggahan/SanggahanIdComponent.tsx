@@ -33,7 +33,7 @@ import {
 } from '../ui/table'
 import { Separator } from '../ui/separator'
 import { Input } from '../ui/input'
-import { replaceItemAtIndex } from '@/lib/utils'
+import { convertScoreToGrade, replaceItemAtIndex } from '@/lib/utils'
 import { Badge } from '../ui/badge'
 import { Checkbox } from '../ui/checkbox'
 import Swal from 'sweetalert2'
@@ -69,13 +69,19 @@ import { toast } from 'sonner'
 import { setSkorAsessmenFromAsesor } from '@/services/Asessment/AsessmentMahasiswaService'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog'
 import { ScrollArea } from '../ui/scroll-area'
+import { TranskripNilaiType } from '@/types/EkuivalenCheck'
+import { EkuivalenCheckSanggahanFormValidation, EkuivalenCheckSanggahanSchemaValidation } from '@/validation/EkuivalenCheckSanggahanValidation'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select'
+import { createOrUpdateEkuivalenCheck } from '@/services/EkuivalenCheck/EkuivalenCheckServices'
 
 const SanggahanIdComponent = ({
     dataServer,
-    stats
+    stats,
+    transkripNilaiServer
 }: {
     dataServer: SanggahanAsessmenTypes
     stats: { StatusMahasiswaAssesmentId: string; NamaStatus: string }
+    transkripNilaiServer: TranskripNilaiType[]
 }) => {
     const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>({ StatusMahasiswaAssesmentId: stats.StatusMahasiswaAssesmentId, NamaStatus: stats.NamaStatus })
     const [role, setRole] = React.useState<Role | null>(null)
@@ -94,6 +100,7 @@ const SanggahanIdComponent = ({
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [openDialogQuestion, setOpenDialogQuestion] = React.useState<boolean>(false)
     const [data, setData] = React.useState(dataServer)
+    const [jenisRpl, setJenisRpl] = React.useState<string>('')
     const [loading, setLoading] = React.useState<boolean>(false)
     const [form, setForm] = React.useState<{
         SanggahanAssesmenId: string
@@ -135,6 +142,20 @@ const SanggahanIdComponent = ({
             NilaiHuruf: null,
         },
     })
+
+    const formEkuivalen = useForm<EkuivalenCheckSanggahanFormValidation>({
+        resolver: zodResolver(EkuivalenCheckSanggahanSchemaValidation),
+        defaultValues: {
+            TranskripNilaiIdSebelum: '',
+            MataKuliahMahasiswaIdSebelum: '',
+            TranskripNilaiIdSetelah: '',
+            MataKuliahMahasiswaIdSetelah: '',
+            NilaiAsessment: '',
+            Diakui: false,
+        },
+    })
+
+
     const { control, setValue, watch } = formPerbaikan
 
     const portofolio = watch("Portofolio")
@@ -147,7 +168,7 @@ const SanggahanIdComponent = ({
 
         const scores = scoresRaw
             .map((s) => (typeof s === "string" ? parseInt(s) : s))
-            .filter((s) => typeof s === "number" && !isNaN(s))
+            .filter((s) => typeof s === "number" && !isNaN(s) && s !== 0)
 
         if (scores.length === 0) {
             setValue("SkorRataRata", 0, { shouldDirty: true })
@@ -236,21 +257,33 @@ const SanggahanIdComponent = ({
         const temp = data.ProgramStudi.MataKuliahMahasiswa.find(
             (x) => x.MataKuliahMahasiswaId === mkmId
         )
-
         if (temp) {
-            const skor = temp.SkorAsessmen
-            formPerbaikan.setValue('SkorAssesmenId', skor.SkorAssesmenId ?? '')
-            formPerbaikan.setValue(
-                'MataKuliahMahasiswaId',
-                skor.MataKuliahMahasiswaId ?? ''
-            )
-            formPerbaikan.setValue('Portofolio', skor.Portofolio ?? 0)
-            formPerbaikan.setValue('Tulis', skor.Tulis ?? 0)
-            formPerbaikan.setValue('Wawancara', skor.Wawancara ?? 0)
-            formPerbaikan.setValue('Demo', skor.Demo ?? 0)
-            formPerbaikan.setValue('Diakui', skor.Diakui ?? false)
-            formPerbaikan.setValue('SkorRataRata', skor.SkorRataRata ?? 0)
-            formPerbaikan.setValue('NilaiHuruf', skor.NilaiHuruf ?? '')
+            setJenisRpl(temp.Keterangan)
+            if (temp.Keterangan == 'Transfer_SKS') {
+                const skor = temp.TranskripNilai
+                formEkuivalen.setValue('MataKuliahMahasiswaIdSebelum', temp.MataKuliahMahasiswaId)
+                formEkuivalen.setValue('MataKuliahMahasiswaIdSetelah', temp.MataKuliahMahasiswaId)
+                formEkuivalen.setValue('TranskripNilaiIdSebelum', skor.TranskripNilaiId)
+                formEkuivalen.setValue('TranskripNilaiIdSetelah', skor.TranskripNilaiId)
+                formEkuivalen.setValue('Diakui', skor.Diakui ?? false)
+                formEkuivalen.setValue('NilaiAsessment', skor.NilaiAsessmen ?? '')
+
+            }
+            if (temp.Keterangan == 'Perolehan_SKS') {
+                const skor = temp.SkorAsessmen
+                formPerbaikan.setValue('SkorAssesmenId', skor.SkorAssesmenId ?? '')
+                formPerbaikan.setValue(
+                    'MataKuliahMahasiswaId',
+                    skor.MataKuliahMahasiswaId ?? ''
+                )
+                formPerbaikan.setValue('Portofolio', skor.Portofolio ?? 0)
+                formPerbaikan.setValue('Tulis', skor.Tulis ?? 0)
+                formPerbaikan.setValue('Wawancara', skor.Wawancara ?? 0)
+                formPerbaikan.setValue('Demo', skor.Demo ?? 0)
+                formPerbaikan.setValue('Diakui', skor.Diakui ?? false)
+                formPerbaikan.setValue('SkorRataRata', skor.SkorRataRata ?? 0)
+                formPerbaikan.setValue('NilaiHuruf', skor.NilaiHuruf ?? '')
+            }
             setOpenDialog(true)
         }
     }
@@ -316,6 +349,63 @@ const SanggahanIdComponent = ({
         }
     }
 
+    const onSubmitEkuivalen = async (dataSend: EkuivalenCheckSanggahanFormValidation) => {
+        await createOrUpdateEkuivalenCheck({
+            TranskripNilaiIdSebelum: dataSend.TranskripNilaiIdSebelum,
+            MataKuliahMahasiswaIdSebelum: dataSend.MataKuliahMahasiswaIdSebelum,
+            TranskripNilaiIdSetelah: dataSend.TranskripNilaiIdSetelah,
+            MataKuliahMahasiswaIdSetelah: dataSend.MataKuliahMahasiswaIdSetelah,
+            NilaiAsessment: dataSend.NilaiAsessment,
+            Diakui: dataSend.Diakui,
+        }).then(res => {
+
+            let idx = data.ProgramStudi.MataKuliahMahasiswa.findIndex(
+                (d) =>
+                    d.MataKuliahMahasiswaId ===
+                    dataSend.MataKuliahMahasiswaIdSetelah
+            )
+
+            let dataOld = data.ProgramStudi.MataKuliahMahasiswa.find(
+                (d) =>
+                    d.MataKuliahMahasiswaId ===
+                    dataSend.MataKuliahMahasiswaIdSetelah
+            )
+
+            let tn = transkripNilaiServer.find(x => x.TranskripNilaiId === dataSend.TranskripNilaiIdSetelah);
+
+            setData({
+                ...data,
+                ProgramStudi: {
+                    ...data.ProgramStudi,
+                    MataKuliahMahasiswa: replaceItemAtIndex(
+                        data.ProgramStudi.MataKuliahMahasiswa,
+                        idx,
+                        {
+                            ...data.ProgramStudi.MataKuliahMahasiswa[
+                            idx
+                            ],
+                            TranskripNilai: {
+                                NilaiAsessmen: dataSend.NilaiAsessment,
+                                Diakui: dataSend.Diakui,
+                                TranskripNilaiId: dataSend.TranskripNilaiIdSetelah,
+                                PendaftaranId: data.PendaftaranId,
+                                KodeMataKuliah: tn ? tn.KodeMataKuliah : '',
+                                NamaMataKuliah: tn ? tn.KodeMataKuliah : '',
+                                Sks: tn ? tn.Sks : 0,
+                                Nilai: tn ? tn.Nilai : '',
+                                CreatedAt: dataOld ? dataOld.TranskripNilai.CreatedAt : new Date(),
+                                UpdatedAt: new Date()
+                            },
+                        }
+                    ),
+                },
+            })
+            toast('Ekuivalen Berhasil Disimpan')
+            setLoading(false)
+            setOpenDialog(false)
+        }).catch(err => console.error("Error: " + err))
+    }
+
     return (
         <div className="grid grid-cols-1 gap-5">
             <Card className="w-full">
@@ -376,7 +466,7 @@ const SanggahanIdComponent = ({
                     <AlertTitle>Sanggahan Mahasiswa</AlertTitle>
                     <AlertDescription>
                         {statusServer.NamaStatus === 'Sanggahan' ? 'Mahasiswa Menyanggah MK yang dipilih. Silakan untuk mempelajari ulang dan/atau menghubungi mahasiswa jika ada pertanyaan Alasan Menyanggah lebih lanjut' : 'Sanggahan sudah ditandai Selesai dan diterukan ke proses Hasil Final Asessmen'}
-                        
+
                     </AlertDescription>
                 </Alert>
             ) : data.SanggahanAssesmen.SanggahanAssesmenId !== '' ? (
@@ -387,7 +477,7 @@ const SanggahanIdComponent = ({
                         {
                             statusServer.NamaStatus === 'Sanggahan' ? 'Sanggahan Anda sedang dipelajari oleh Asesor.' : 'Sanggahan Anda sudah ditandai Selesai dan dilanjutkan ke Proses Hasil Final Asessmen'
                         }
-                        
+
                     </AlertDescription>
                 </Alert>
             ) : statusServer.NamaStatus === 'Sanggahan' ? (
@@ -448,7 +538,7 @@ const SanggahanIdComponent = ({
                                 <TableRow>
                                     <TableHead>Tanggal Asessmen</TableHead>
                                     <TableCell>
-                                        {data.TanggalAsessmen.toLocaleDateString()}
+                                        {new Date(data.TanggalAsessmen).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}
                                     </TableCell>
                                 </TableRow>
                             </TableBody>
@@ -638,9 +728,11 @@ const SanggahanIdComponent = ({
                             ) : (
                                 <Table>
                                     <TableHeader>
-                                        <TableHead>Nama</TableHead>
-                                        <TableHead>Jabatan</TableHead>
-                                        <TableHead>Instansi</TableHead>
+                                        <TableRow>
+                                            <TableHead>Nama</TableHead>
+                                            <TableHead>Jabatan</TableHead>
+                                            <TableHead>Instansi</TableHead>
+                                        </TableRow>
                                     </TableHeader>
                                     <TableBody>
                                         {form.SanggahanAssesmenPihak.map(
@@ -787,12 +879,12 @@ const SanggahanIdComponent = ({
                                         </TableHead>
                                         <TableHead rowSpan={2}>
                                             <div className={'text-center'}>
-                                                Diakui
+                                                Skor Rata-rata
                                             </div>
                                         </TableHead>
                                         <TableHead rowSpan={2}>
                                             <div className={'text-center'}>
-                                                Skor Rata-rata
+                                                Diakui
                                             </div>
                                         </TableHead>
                                         <TableHead rowSpan={2}>
@@ -808,11 +900,11 @@ const SanggahanIdComponent = ({
                                         <TableHead>Demo</TableHead>
                                         {
                                             statusServer.NamaStatus === 'Sanggahan' && (
-                                        <TableHead rowSpan={2}>
-                                            {role?.Name.match('Asesor')
-                                                ? 'Perbaiki'
-                                                : 'Sanggah'}
-                                        </TableHead>
+                                                <TableHead rowSpan={2}>
+                                                    {role?.Name.match('Asesor')
+                                                        ? 'Perbaiki'
+                                                        : 'Sanggah'}
+                                                </TableHead>
                                             )
                                         }
                                     </TableRow>
@@ -847,35 +939,42 @@ const SanggahanIdComponent = ({
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Portofolio
                                                             }
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Tulis
                                                             }
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Wawancara
                                                             }
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Demo
                                                             }
                                                         </TableCell>
                                                         <TableCell>
-                                                            {temp?.SkorAsessmen
-                                                                .Diakui ? (
+                                                            {
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
+                                                                    ?.SkorAsessmen
+                                                                    .SkorRataRata
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {((temp?.Keterangan === 'Transfer_SKS') ? temp.TranskripNilai.Diakui : temp?.SkorAsessmen
+                                                                .Diakui) ? (
                                                                 <Badge
                                                                     variant={
                                                                         'default'
@@ -895,116 +994,109 @@ const SanggahanIdComponent = ({
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
-                                                                    ?.SkorAsessmen
-                                                                    .SkorRataRata
-                                                            }
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? temp.TranskripNilai.NilaiAsessmen : temp
                                                                     ?.SkorAsessmen
                                                                     .NilaiHuruf
                                                             }
                                                         </TableCell>
                                                         {
                                                             statusServer.NamaStatus === 'Sanggahan' && (
-                                                        <TableCell>
-                                                            {role?.Name.match(
-                                                                'Asesor'
-                                                            ) ? (
-                                                                <Button
-                                                                    className="mt-3 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                                                    type="button"
-                                                                    size={'sm'}
-                                                                    disabled={
-                                                                        loading
-                                                                    }
-                                                                    onClick={() =>
-                                                                        fixMk(
-                                                                            mkm.MataKuliahMahasiswaId
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    {loading ? (
-                                                                        <>
-                                                                            <Timer />{' '}
-                                                                            Loading
-                                                                        </>
+                                                                <TableCell>
+                                                                    {role?.Name.match(
+                                                                        'Asesor'
+                                                                    ) ? (
+                                                                        <Button
+                                                                            className="mt-3 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                                                            type="button"
+                                                                            size={'sm'}
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            onClick={() =>
+                                                                                fixMk(
+                                                                                    mkm.MataKuliahMahasiswaId
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            {loading ? (
+                                                                                <>
+                                                                                    <Timer />{' '}
+                                                                                    Loading
+                                                                                </>
+                                                                            ) : (
+                                                                                <>
+                                                                                    <WrenchIcon />
+                                                                                    Perbaiki
+                                                                                </>
+                                                                            )}
+                                                                        </Button>
                                                                     ) : (
-                                                                        <>
-                                                                            <WrenchIcon />
-                                                                            Perbaiki
-                                                                        </>
-                                                                    )}
-                                                                </Button>
-                                                            ) : (
-                                                                <Checkbox
-                                                                    disabled={
-                                                                        loading ||
-                                                                        data
-                                                                            .SanggahanAssesmen
-                                                                            .SanggahanAssesmenId !==
-                                                                        ''
-                                                                    }
-                                                                    id={
-                                                                        temp
-                                                                            ?.MataKuliah
-                                                                            .Kode
-                                                                    }
-                                                                    checked={form.SanggahanAssesmenMk.some(
-                                                                        (x) =>
-                                                                            x.MataKuliahMahasiswaId ===
-                                                                            mkm.MataKuliahMahasiswaId
-                                                                    )}
-                                                                    onCheckedChange={(
-                                                                        checked
-                                                                    ) => {
-                                                                        if (
-                                                                            checked
-                                                                        ) {
-                                                                            setForm(
-                                                                                {
-                                                                                    ...form,
-                                                                                    SanggahanAssesmenMk:
-                                                                                        [
-                                                                                            ...form.SanggahanAssesmenMk,
-                                                                                            {
-                                                                                                SanggahanAssesmenMkId:
-                                                                                                    '',
-                                                                                                SanggahanAssesmenId:
-                                                                                                    '',
-                                                                                                MataKuliahMahasiswaId:
-                                                                                                    mkm.MataKuliahMahasiswaId,
-                                                                                                Keterangan:
-                                                                                                    mkm.Keterangan,
-                                                                                                CreatedAt:
-                                                                                                    new Date(),
-                                                                                                UpdatedAt:
-                                                                                                    new Date(),
-                                                                                            },
-                                                                                        ],
+                                                                        <Checkbox
+                                                                            disabled={
+                                                                                loading ||
+                                                                                data
+                                                                                    .SanggahanAssesmen
+                                                                                    .SanggahanAssesmenId !==
+                                                                                ''
+                                                                            }
+                                                                            id={
+                                                                                temp
+                                                                                    ?.MataKuliah
+                                                                                    .Kode
+                                                                            }
+                                                                            checked={form.SanggahanAssesmenMk.some(
+                                                                                (x) =>
+                                                                                    x.MataKuliahMahasiswaId ===
+                                                                                    mkm.MataKuliahMahasiswaId
+                                                                            )}
+                                                                            onCheckedChange={(
+                                                                                checked
+                                                                            ) => {
+                                                                                if (
+                                                                                    checked
+                                                                                ) {
+                                                                                    setForm(
+                                                                                        {
+                                                                                            ...form,
+                                                                                            SanggahanAssesmenMk:
+                                                                                                [
+                                                                                                    ...form.SanggahanAssesmenMk,
+                                                                                                    {
+                                                                                                        SanggahanAssesmenMkId:
+                                                                                                            '',
+                                                                                                        SanggahanAssesmenId:
+                                                                                                            '',
+                                                                                                        MataKuliahMahasiswaId:
+                                                                                                            mkm.MataKuliahMahasiswaId,
+                                                                                                        Keterangan:
+                                                                                                            mkm.Keterangan,
+                                                                                                        CreatedAt:
+                                                                                                            new Date(),
+                                                                                                        UpdatedAt:
+                                                                                                            new Date(),
+                                                                                                    },
+                                                                                                ],
+                                                                                        }
+                                                                                    )
+                                                                                } else {
+                                                                                    setForm(
+                                                                                        {
+                                                                                            ...form,
+                                                                                            SanggahanAssesmenMk:
+                                                                                                form.SanggahanAssesmenMk.filter(
+                                                                                                    (
+                                                                                                        x
+                                                                                                    ) =>
+                                                                                                        x.MataKuliahMahasiswaId !==
+                                                                                                        mkm.MataKuliahMahasiswaId
+                                                                                                ),
+                                                                                        }
+                                                                                    )
                                                                                 }
-                                                                            )
-                                                                        } else {
-                                                                            setForm(
-                                                                                {
-                                                                                    ...form,
-                                                                                    SanggahanAssesmenMk:
-                                                                                        form.SanggahanAssesmenMk.filter(
-                                                                                            (
-                                                                                                x
-                                                                                            ) =>
-                                                                                                x.MataKuliahMahasiswaId !==
-                                                                                                mkm.MataKuliahMahasiswaId
-                                                                                        ),
-                                                                                }
-                                                                            )
-                                                                        }
-                                                                    }}
-                                                                />
-                                                            )}
-                                                        </TableCell>
+                                                                            }}
+                                                                        />
+                                                                    )}
+                                                                </TableCell>
                                                             )
                                                         }
                                                     </TableRow>
@@ -1042,35 +1134,42 @@ const SanggahanIdComponent = ({
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Portofolio
                                                             }
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Tulis
                                                             }
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Wawancara
                                                             }
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
                                                                     ?.SkorAsessmen
                                                                     .Demo
                                                             }
                                                         </TableCell>
                                                         <TableCell>
-                                                            {temp?.SkorAsessmen
-                                                                .Diakui ? (
+                                                            {
+                                                                temp?.Keterangan === 'Transfer_SKS' ? '-' : temp
+                                                                    ?.SkorAsessmen
+                                                                    .SkorRataRata
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {((temp?.Keterangan === 'Transfer_SKS') ? temp.TranskripNilai.Diakui : temp?.SkorAsessmen
+                                                                .Diakui) ? (
                                                                 <Badge
                                                                     variant={
                                                                         'default'
@@ -1090,116 +1189,109 @@ const SanggahanIdComponent = ({
                                                         </TableCell>
                                                         <TableCell>
                                                             {
-                                                                temp
-                                                                    ?.SkorAsessmen
-                                                                    .SkorRataRata
-                                                            }
-                                                        </TableCell>
-                                                        <TableCell>
-                                                            {
-                                                                temp
+                                                                temp?.Keterangan === 'Transfer_SKS' ? temp.TranskripNilai.NilaiAsessmen : temp
                                                                     ?.SkorAsessmen
                                                                     .NilaiHuruf
                                                             }
                                                         </TableCell>
                                                         {
                                                             statusServer.NamaStatus === 'Sanggahan' && (
-                                                        <TableCell>
-                                                            {role?.Name.match(
-                                                                'Asesor'
-                                                            ) ? (
-                                                                <Button
-                                                                    className="mt-3 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                                                    type="button"
-                                                                    size={'sm'}
-                                                                    disabled={
-                                                                        loading
-                                                                    }
-                                                                    onClick={() =>
-                                                                        fixMk(
-                                                                            mkm.MataKuliahMahasiswaId
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    {loading ? (
-                                                                        <>
-                                                                            <Timer />{' '}
-                                                                            Loading
-                                                                        </>
+                                                                <TableCell>
+                                                                    {role?.Name.match(
+                                                                        'Asesor'
+                                                                    ) ? (
+                                                                        <Button
+                                                                            className="mt-3 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                                                            type="button"
+                                                                            size={'sm'}
+                                                                            disabled={
+                                                                                loading
+                                                                            }
+                                                                            onClick={() =>
+                                                                                fixMk(
+                                                                                    mkm.MataKuliahMahasiswaId
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            {loading ? (
+                                                                                <>
+                                                                                    <Timer />{' '}
+                                                                                    Loading
+                                                                                </>
+                                                                            ) : (
+                                                                                <>
+                                                                                    <WrenchIcon />
+                                                                                    Perbaiki
+                                                                                </>
+                                                                            )}
+                                                                        </Button>
                                                                     ) : (
-                                                                        <>
-                                                                            <WrenchIcon />
-                                                                            Perbaiki
-                                                                        </>
-                                                                    )}
-                                                                </Button>
-                                                            ) : (
-                                                                <Checkbox
-                                                                    disabled={
-                                                                        loading ||
-                                                                        data
-                                                                            .SanggahanAssesmen
-                                                                            .SanggahanAssesmenId !==
-                                                                        ''
-                                                                    }
-                                                                    id={
-                                                                        temp
-                                                                            ?.MataKuliah
-                                                                            .Kode
-                                                                    }
-                                                                    checked={form.SanggahanAssesmenMk.some(
-                                                                        (x) =>
-                                                                            x.MataKuliahMahasiswaId ===
-                                                                            mkm.MataKuliahMahasiswaId
-                                                                    )}
-                                                                    onCheckedChange={(
-                                                                        checked
-                                                                    ) => {
-                                                                        if (
-                                                                            checked
-                                                                        ) {
-                                                                            setForm(
-                                                                                {
-                                                                                    ...form,
-                                                                                    SanggahanAssesmenMk:
-                                                                                        [
-                                                                                            ...form.SanggahanAssesmenMk,
-                                                                                            {
-                                                                                                SanggahanAssesmenMkId:
-                                                                                                    '',
-                                                                                                SanggahanAssesmenId:
-                                                                                                    '',
-                                                                                                MataKuliahMahasiswaId:
-                                                                                                    mkm.MataKuliahMahasiswaId,
-                                                                                                Keterangan:
-                                                                                                    mkm.Keterangan,
-                                                                                                CreatedAt:
-                                                                                                    new Date(),
-                                                                                                UpdatedAt:
-                                                                                                    new Date(),
-                                                                                            },
-                                                                                        ],
+                                                                        <Checkbox
+                                                                            disabled={
+                                                                                loading ||
+                                                                                data
+                                                                                    .SanggahanAssesmen
+                                                                                    .SanggahanAssesmenId !==
+                                                                                ''
+                                                                            }
+                                                                            id={
+                                                                                temp
+                                                                                    ?.MataKuliah
+                                                                                    .Kode
+                                                                            }
+                                                                            checked={form.SanggahanAssesmenMk.some(
+                                                                                (x) =>
+                                                                                    x.MataKuliahMahasiswaId ===
+                                                                                    mkm.MataKuliahMahasiswaId
+                                                                            )}
+                                                                            onCheckedChange={(
+                                                                                checked
+                                                                            ) => {
+                                                                                if (
+                                                                                    checked
+                                                                                ) {
+                                                                                    setForm(
+                                                                                        {
+                                                                                            ...form,
+                                                                                            SanggahanAssesmenMk:
+                                                                                                [
+                                                                                                    ...form.SanggahanAssesmenMk,
+                                                                                                    {
+                                                                                                        SanggahanAssesmenMkId:
+                                                                                                            '',
+                                                                                                        SanggahanAssesmenId:
+                                                                                                            '',
+                                                                                                        MataKuliahMahasiswaId:
+                                                                                                            mkm.MataKuliahMahasiswaId,
+                                                                                                        Keterangan:
+                                                                                                            mkm.Keterangan,
+                                                                                                        CreatedAt:
+                                                                                                            new Date(),
+                                                                                                        UpdatedAt:
+                                                                                                            new Date(),
+                                                                                                    },
+                                                                                                ],
+                                                                                        }
+                                                                                    )
+                                                                                } else {
+                                                                                    setForm(
+                                                                                        {
+                                                                                            ...form,
+                                                                                            SanggahanAssesmenMk:
+                                                                                                form.SanggahanAssesmenMk.filter(
+                                                                                                    (
+                                                                                                        x
+                                                                                                    ) =>
+                                                                                                        x.MataKuliahMahasiswaId !==
+                                                                                                        mkm.MataKuliahMahasiswaId
+                                                                                                ),
+                                                                                        }
+                                                                                    )
                                                                                 }
-                                                                            )
-                                                                        } else {
-                                                                            setForm(
-                                                                                {
-                                                                                    ...form,
-                                                                                    SanggahanAssesmenMk:
-                                                                                        form.SanggahanAssesmenMk.filter(
-                                                                                            (
-                                                                                                x
-                                                                                            ) =>
-                                                                                                x.MataKuliahMahasiswaId !==
-                                                                                                mkm.MataKuliahMahasiswaId
-                                                                                        ),
-                                                                                }
-                                                                            )
-                                                                        }
-                                                                    }}
-                                                                />
-                                                            )}
-                                                        </TableCell>
+                                                                            }}
+                                                                        />
+                                                                    )}
+                                                                </TableCell>
                                                             )
                                                         }
                                                     </TableRow>
@@ -1288,23 +1380,27 @@ const SanggahanIdComponent = ({
                         </Button>
                     </CardContent>
                 </Card>
-            ): role?.Name.match('Asesor') ? (<Card className="w-full">
-                    <CardHeader>
-                        <CardTitle>Sanggahan Selesai</CardTitle>
-                        <CardDescription>
-                            Status sudah diteruskan ke Hasil Final Asessmen
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="text-center">
-                        <p>Sanggahan sudah Diselesaikan</p>
-                    </CardContent>
-                </Card>) : <></>}
+            ) : role?.Name.match('Asesor') ? (<Card className="w-full">
+                <CardHeader>
+                    <CardTitle>Sanggahan Selesai</CardTitle>
+                    <CardDescription>
+                        Status sudah diteruskan ke Hasil Final Asessmen
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                    <p>Sanggahan sudah Diselesaikan</p>
+                </CardContent>
+            </Card>) : <></>}
             <SheetManageData
                 openDialog={openDialog}
                 setOpenDialog={setOpenDialog}
                 onSubmit={onSubmit}
                 loading={loading}
                 form={formPerbaikan}
+                jenisRpl={jenisRpl}
+                formEkuivalen={formEkuivalen}
+                onSubmitEkuivalen={onSubmitEkuivalen}
+                transkripNilaiServer={transkripNilaiServer}
             />
             <Dialog open={openDialogQuestion} onOpenChange={setOpenDialogQuestion}>
                 <DialogContent className="w-[80vw] h-[80vh] max-w-[80vw] flex flex-col">
@@ -1364,7 +1460,6 @@ const SanggahanIdComponent = ({
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-
         </div>
     )
 }
@@ -1377,12 +1472,20 @@ export function SheetManageData({
     onSubmit,
     loading,
     form,
+    jenisRpl,
+    formEkuivalen,
+    onSubmitEkuivalen,
+    transkripNilaiServer
 }: {
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
     onSubmit: (data: SkorAssesmenFormValidation) => void
     form: UseFormReturn<SkorAssesmenFormValidation>
+    jenisRpl: string,
+    formEkuivalen: UseFormReturn<EkuivalenCheckSanggahanFormValidation>
+    onSubmitEkuivalen: (data: EkuivalenCheckSanggahanFormValidation) => void
+    transkripNilaiServer: TranskripNilaiType[]
 }) {
     return (
         <div className="grid grid-cols-2 gap-2">
@@ -1391,253 +1494,395 @@ export function SheetManageData({
                     side="right"
                     className="w-screen h-screen max-w-full overflow-scroll"
                 >
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)}>
-                            <SheetHeader>
-                                <SheetTitle>Perbaikan</SheetTitle>
-                                <SheetDescription>
-                                    Perbaiki Nilai Mahasiswa
-                                </SheetDescription>
-                            </SheetHeader>
-                            <div className="w-full grid grid-cols-1 gap-3 px-4">
-                                <div className="container mx-auto">
-                                    <div className="grid grid-cols-1 gap-3">
-                                        <FormField
-                                            control={form.control}
-                                            name="Portofolio"
-                                            disabled={loading}
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Portofolio
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            value={field.value}
-                                                            onChange={(e) =>
-                                                                field.onChange(
-                                                                    parseInt(
-                                                                        e.target
-                                                                            .value
+                    {jenisRpl === 'Perolehan_SKS' ? (
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)}>
+                                <SheetHeader>
+                                    <SheetTitle>Perbaikan</SheetTitle>
+                                    <SheetDescription>
+                                        Perbaiki Nilai Mahasiswa
+                                    </SheetDescription>
+                                </SheetHeader>
+                                <div className="w-full grid grid-cols-1 gap-3 px-4">
+                                    <div className="container mx-auto">
+                                        <div className="grid grid-cols-1 gap-3">
+                                            <FormField
+                                                control={form.control}
+                                                name="Portofolio"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Portofolio
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={loading}
+                                                                value={field.value}
+                                                                onChange={(e) =>
+                                                                    field.onChange(
+                                                                        parseInt(
+                                                                            e.target
+                                                                                .value
+                                                                        )
                                                                     )
-                                                                )
-                                                            }
-                                                            onBlur={
-                                                                field.onBlur
-                                                            }
-                                                            name={field.name}
-                                                            ref={field.ref}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Portofolio
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            disabled={loading}
-                                            name="Tulis"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Tulis</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            value={field.value}
-                                                            onChange={(e) =>
-                                                                field.onChange(
-                                                                    parseInt(
-                                                                        e.target
-                                                                            .value
+                                                                }
+                                                                onBlur={
+                                                                    field.onBlur
+                                                                }
+                                                                name={field.name}
+                                                                ref={field.ref}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Portofolio
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                disabled={loading}
+                                                name="Tulis"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Tulis</FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={loading}
+                                                                value={field.value}
+                                                                onChange={(e) =>
+                                                                    field.onChange(
+                                                                        parseInt(
+                                                                            e.target
+                                                                                .value
+                                                                        )
                                                                     )
-                                                                )
-                                                            }
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Tulis
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="Wawancara"
-                                            disabled={loading}
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Wawancara
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            value={field.value}
-                                                            onChange={(e) =>
-                                                                field.onChange(
-                                                                    parseInt(
-                                                                        e.target
-                                                                            .value
+                                                                }
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Tulis
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="Wawancara"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Wawancara
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={loading}
+                                                                value={field.value}
+                                                                onChange={(e) =>
+                                                                    field.onChange(
+                                                                        parseInt(
+                                                                            e.target
+                                                                                .value
+                                                                        )
                                                                     )
-                                                                )
-                                                            }
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Wawancara
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="Demo"
-                                            disabled={loading}
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Demo</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            value={field.value}
-                                                            onChange={(e) =>
-                                                                field.onChange(
-                                                                    parseInt(
-                                                                        e.target
-                                                                            .value
+                                                                }
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Wawancara
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="Demo"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Demo</FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly={loading}
+                                                                value={field.value}
+                                                                onChange={(e) =>
+                                                                    field.onChange(
+                                                                        parseInt(
+                                                                            e.target
+                                                                                .value
+                                                                        )
                                                                     )
-                                                                )
-                                                            }
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Demo
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="Diakui"
-                                            disabled={loading}
-                                            render={({ field }) => (
-                                                <label
-                                                    className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
+                                                                }
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Demo
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="Diakui"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <label
+                                                        className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
                                                                                         ${field.value
-                                                            ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
-                                                            : 'hover:shadow-md'
-                                                        }
+                                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                                                : 'hover:shadow-md'
+                                                            }
                                                                                         ${loading
-                                                            ? 'opacity-50 cursor-not-allowed'
-                                                            : ''
-                                                        }`}
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        className="mr-2 hidden"
-                                                        checked={field.value}
-                                                        disabled={loading}
-                                                        onChange={(e) =>
-                                                            field.onChange(e)
-                                                        }
-                                                    />
-                                                    <div className="font-semibold">
-                                                        Diakui
-                                                    </div>
-                                                    <div className="text-sm text-muted-foreground">
-                                                        Mata Kuliah ini diakui
-                                                        oleh Asesor
-                                                    </div>
-                                                </label>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            disabled={loading}
-                                            name="SkorRataRata"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Skor Rata-Rata
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly
-                                                            value={field.value}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        SkorRataRata
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="NilaiHuruf"
-                                            disabled={loading}
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Nilai Huruf
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly
-                                                            value={
-                                                                field.value ??
-                                                                ''
+                                                                ? 'opacity-50 cursor-not-allowed'
+                                                                : ''
+                                                            }`}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            className="mr-2 hidden"
+                                                            checked={field.value}
+                                                            disabled={loading}
+                                                            onChange={(e) =>
+                                                                field.onChange(e)
                                                             }
-                                                            onBlur={
-                                                                field.onBlur
-                                                            }
-                                                            name={field.name}
-                                                            ref={field.ref}
                                                         />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        NilaiHuruf
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
+                                                        <div className="font-semibold">
+                                                            Diakui
+                                                        </div>
+                                                        <div className="text-sm text-muted-foreground">
+                                                            Mata Kuliah ini diakui
+                                                            oleh Asesor
+                                                        </div>
+                                                    </label>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                disabled={loading}
+                                                name="SkorRataRata"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Skor Rata-Rata
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly
+                                                                value={field.value}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            SkorRataRata
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={form.control}
+                                                name="NilaiHuruf"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Nilai Huruf
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                readOnly
+                                                                value={
+                                                                    field.value ??
+                                                                    ''
+                                                                }
+                                                                onBlur={
+                                                                    field.onBlur
+                                                                }
+                                                                name={field.name}
+                                                                ref={field.ref}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            NilaiHuruf
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <SheetFooter>
-                                <Button type="submit" disabled={loading}>
-                                    {loading ? (
-                                        <>
-                                            <Timer />
-                                            Loading
-                                        </>
-                                    ) : (
-                                        <>
-                                            <PenIcon /> Simpan
-                                        </>
-                                    )}
-                                </Button>
-                            </SheetFooter>
-                        </form>
-                    </Form>
+                                <SheetFooter>
+                                    <Button type="submit" disabled={loading}>
+                                        {loading ? (
+                                            <>
+                                                <Timer />
+                                                Loading
+                                            </>
+                                        ) : (
+                                            <>
+                                                <PenIcon /> Simpan
+                                            </>
+                                        )}
+                                    </Button>
+                                </SheetFooter>
+                            </form>
+                        </Form>
+                    ) : jenisRpl === 'Transfer_SKS' ? (
+                        <Form {...formEkuivalen}>
+                            <form onSubmit={formEkuivalen.handleSubmit(onSubmitEkuivalen)}>
+                                <SheetHeader>
+                                    <SheetTitle>Perbaikan</SheetTitle>
+                                    <SheetDescription>
+                                        Perbaiki Nilai Mahasiswa
+                                    </SheetDescription>
+                                </SheetHeader>
+                                <div className="w-full grid grid-cols-1 gap-3 px-4">
+                                    <div className="container mx-auto">
+                                        <div className="grid grid-cols-1 gap-3">
+                                            <FormField
+                                                control={formEkuivalen.control}
+                                                name="TranskripNilaiIdSetelah"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Mata Kuliah PT. Asal
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                value={field.value}
+                                                                onValueChange={(e) => field.onChange(e)}
+                                                                disabled={loading}
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih Mata Kuliah Transkrip Nilai" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectGroup>
+                                                                        <SelectLabel>Mata Kuliah PT. Asal</SelectLabel>
+                                                                        {
+                                                                            transkripNilaiServer.map((item) => (
+                                                                                <SelectItem key={item.TranskripNilaiId} value={item.TranskripNilaiId}>
+                                                                                    ({item.KodeMataKuliah}) {item.NamaMataKuliah} - ({item.Sks} SKS - {item.Nilai})
+                                                                                </SelectItem>
+                                                                            ))
+                                                                        }
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Mata Kuliah PT. Asal yang dikonversi ke Mata Kuliah PT. Tujuan
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={formEkuivalen.control}
+                                                name="NilaiAsessment"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>
+                                                            Nilai
+                                                        </FormLabel>
+                                                        <FormControl>
+                                                            <Select
+                                                                value={field.value}
+                                                                onValueChange={(e) => field.onChange(e)}
+                                                                disabled={loading}
+                                                            >
+                                                                <SelectTrigger className="w-full">
+                                                                    <SelectValue placeholder="Pilih nilai assessment" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectGroup>
+                                                                        <SelectLabel>Nilai</SelectLabel>
+                                                                        <SelectItem value="A">A</SelectItem>
+                                                                        <SelectItem value="A-">A-</SelectItem>
+                                                                        <SelectItem value="B+">B+</SelectItem>
+                                                                        <SelectItem value="B">B</SelectItem>
+                                                                        <SelectItem value="B-">B-</SelectItem>
+                                                                        <SelectItem value="C+">C+</SelectItem>
+                                                                        <SelectItem value="C">C</SelectItem>
+                                                                        <SelectItem value="C-">C-</SelectItem>
+                                                                        <SelectItem value="D">D</SelectItem>
+                                                                        <SelectItem value="E">E</SelectItem>
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormDescription>
+                                                            Nilai
+                                                        </FormDescription>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                            <FormField
+                                                control={formEkuivalen.control}
+                                                name="Diakui"
+                                                disabled={loading}
+                                                render={({ field }) => (
+                                                    <label
+                                                        className={`border overflow-hidden rounded-xl my-2 p-4 shadow-sm cursor-pointer transition-all
+                                                                                        ${field.value
+                                                                ? 'border-primary/50 bg-primary/20 dark:bg-gray-800 dark:border-gray-300 dark:text-gray-100'
+                                                                : 'hover:shadow-md'
+                                                            }
+                                                                                        ${loading
+                                                                ? 'opacity-50 cursor-not-allowed'
+                                                                : ''
+                                                            }`}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            className="mr-2 hidden"
+                                                            checked={field.value}
+                                                            disabled={loading}
+                                                            onChange={(e) =>
+                                                                field.onChange(e)
+                                                            }
+                                                        />
+                                                        <div className="font-semibold">
+                                                            Diakui
+                                                        </div>
+                                                        <div className="text-sm text-muted-foreground">
+                                                            Mata Kuliah ini diakui
+                                                            oleh Asesor
+                                                        </div>
+                                                    </label>
+                                                )}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <SheetFooter>
+                                    <Button className='hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer' type="submit" disabled={loading}>
+                                        {loading ? (
+                                            <>
+                                                <Timer />
+                                                Loading
+                                            </>
+                                        ) : (
+                                            <>
+                                                <PenIcon /> Simpan
+                                            </>
+                                        )}
+                                    </Button>
+                                </SheetFooter>
+                            </form>
+                        </Form>
+                    ) : (<div></div>)}
                 </SheetContent>
             </Sheet>
         </div>
     )
-}
-function convertScoreToGrade(score: number): string {
-    if (score >= 86 && score <= 100) return "A";
-    if (score >= 76 && score <= 85) return "B";
-    if (score >= 66 && score <= 75) return "C";
-    if (score >= 56 && score <= 65) return "D";
-    return "E"; // 0–55
 }

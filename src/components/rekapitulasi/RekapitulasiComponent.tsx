@@ -21,7 +21,7 @@ import {
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
+import { BookCheck, ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
 import { Input } from '../ui/input'
 import {
     Select,
@@ -47,6 +47,7 @@ import { ResponseMhsFromAsesorSession } from '@/types/PenunjukanAsesor'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2'
 import { setStatusSanggahan } from '@/services/Status/StatusService'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 
 const RekapitulasiComponent = () => {
     const router = useRouter()
@@ -54,11 +55,11 @@ const RekapitulasiComponent = () => {
         ResponseMhsFromAsesorSession[]
     >([])
     const [role, setRole] = React.useState<{
-            GuardName: string
-            Icon: string
-            Name: string
-            RoleId: string
-        } | null>(null)
+        GuardName: string
+        Icon: string
+        Name: string
+        RoleId: string
+    } | null>(null)
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
     const [columnVisibility, setColumnVisibility] =
@@ -124,26 +125,22 @@ const RekapitulasiComponent = () => {
     }
 
     React.useEffect(() => {
-        let temp: {
-            GuardName: string
-            Icon: string
-            Name: string
-            RoleId: string
-        } | null = null
-        if (!role) {
+        let currentRole = role
+        if (!currentRole) {
             const rolelogin = localStorage.getItem('pmb.iti.role')
             if (rolelogin) {
-                temp = JSON.parse(rolelogin)
-                setRole(temp)
+                currentRole = JSON.parse(rolelogin)
+                setRole(currentRole)
             }
         }
-        if (temp) {
+
+        if (currentRole) {
             setLoading(true)
             getMahasiswaFromAsesorRekapitulasi(
                 paginationState.page,
                 paginationState.limit,
                 search,
-                temp.Name
+                currentRole.Name
             )
                 .then((res) => {
                     setDataMahasiswa(res.data)
@@ -166,7 +163,7 @@ const RekapitulasiComponent = () => {
                     setLoading(false)
                 })
         }
-    }, [paginationState.page, search, paginationState.limit])
+    }, [paginationState.page, search, paginationState.limit, role])
 
     const columns: ColumnDef<ResponseMhsFromAsesorSession>[] = role?.Name === 'Mahasiswa' ? [
         {
@@ -332,7 +329,7 @@ const RekapitulasiComponent = () => {
                                 role?.Name == 'Asesor' && <DropdownMenuSeparator />
                             }
                             {role?.Name == 'Asesor' && jd.Status === 'Rekapitulasi Asessmen' &&
-                                 (
+                                (
                                     <DropdownMenuItem
                                         onClick={() =>
                                             startAsessment(jd.PendaftaranId)
@@ -375,6 +372,13 @@ const RekapitulasiComponent = () => {
 
     return (
         <div className="w-full">
+            <Alert>
+                <BookCheck />
+                <AlertTitle>Mata Kuliah!</AlertTitle>
+                <AlertDescription>
+                    Rekapitulasi Asessmen ini adalah Mata Kuliah yang dipilih mahasiswa berdasarkan pilihan Perolehan SKS.
+                </AlertDescription>
+            </Alert>
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Cari Data ..."
@@ -434,10 +438,10 @@ const RekapitulasiComponent = () => {
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
-                                                          header.column
-                                                              .columnDef.header,
-                                                          header.getContext()
-                                                      )}
+                                                        header.column
+                                                            .columnDef.header,
+                                                        header.getContext()
+                                                    )}
                                             </TableHead>
                                         )
                                     })}
@@ -485,7 +489,7 @@ const RekapitulasiComponent = () => {
                         1}{' '}
                     -{' '}
                     {paginationState.totalElement <
-                    paginationState.page * paginationState.limit
+                        paginationState.page * paginationState.limit
                         ? paginationState.totalElement
                         : paginationState.page * paginationState.limit}{' '}
                     dari {paginationState.totalElement} Data.

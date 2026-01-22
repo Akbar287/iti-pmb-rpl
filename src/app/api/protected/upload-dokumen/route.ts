@@ -260,8 +260,9 @@ app.post('/', async (c) => {
     });
 
 
-    // AI Get Info From Doc
-    const prompt = `Kamu adalah asisten AI untuk Sistem Informasi Rekognisi Pembelajaran Lampau (RPL) Terpadu.
+    const isTranskripNilai = jenisDokumen.Jenis.trim().toLowerCase().includes('transkrip');
+
+    const basePrompt = `Kamu adalah asisten AI untuk Sistem Informasi Rekognisi Pembelajaran Lampau (RPL) Terpadu.
 
 Tugas utama kamu:
 1. Melakukan OCR (membaca teks) dari dokumen visual (gambar halaman PDF).
@@ -287,7 +288,23 @@ Aturan penting:
 - Jika teks tidak terbaca dengan jelas, tuliskan nilai sebagai string apa adanya dan tandai "confidence" lebih rendah.
 - Jika kamu ragu tentang jenis angka, tetap masukkan tetapi beri "type": "unknown".
 - Utamakan akurasi OCR angka dan titik/koma desimal (contoh: 3.50 vs 3,50).
+`;
 
+    const transkripInstructions = `
+**INSTRUKSI KHUSUS UNTUK TRANSKRIP NILAI:**
+SANGAT PENTING: Dokumen ini adalah TRANSKRIP NILAI akademik. Kamu WAJIB mengekstrak SETIAP BARIS mata kuliah yang ada di dokumen, TANPA TERKECUALI.
+
+Langkah yang harus kamu lakukan:
+1. Identifikasi SEMUA tabel mata kuliah di dokumen (bisa ada di kolom kiri dan kanan).
+2. Baca SETIAP BARIS dari Semester 1 hingga semester terakhir.
+3. Ekstrak SETIAP mata kuliah dengan lengkap: Kode, Nama Mata Kuliah, SKS, dan Nilai.
+4. Jangan lewatkan satu baris pun. Transkrip biasanya memiliki 40-60 mata kuliah.
+5. Perhatikan format tabel yang mungkin ada di 2 kolom (kiri dan kanan).
+
+JANGAN HANYA MENGEKSTRAK SEBAGIAN! Ekstrak SEMUA dari baris pertama sampai terakhir.
+`;
+
+    const jsonStructure = `
 Struktur output WAJIB dalam JSON dengan format:
 
 {
@@ -305,16 +322,16 @@ Struktur output WAJIB dalam JSON dengan format:
     }
   ],
   "transcript_details": {
-    "exists": true/false,
+    "exists": true,
+    "total_courses_extracted": 0,
     "courses": [
       {
-        "course_name": "nama mata kuliah",
-        "course_code": "kode jika ada",
-        "semester": "misalnya 'Semester 1' atau '2021/2022 Ganjil'",
-        "sks": "jumlah SKS jika ada",
-        "grade_letter": "nilai huruf (A, B+, dst) jika ada",
-        "grade_numeric": "nilai angka jika ada",
-        "context": "baris tabel tempat mata kuliah muncul"
+        "course_name": "nama mata kuliah LENGKAP",
+        "course_code": "kode mata kuliah (contoh: B300001, MK101)",
+        "semester": "Semester 1, Semester 2, dst",
+        "sks": "jumlah SKS (angka)",
+        "grade_letter": "nilai huruf (A, B+, B, C+, C, D, E)",
+        "grade_numeric": "nilai angka jika ada"
       }
     ],
     "gpa": {
@@ -324,8 +341,9 @@ Struktur output WAJIB dalam JSON dengan format:
           "value": "3.45"
         }
       ],
-      "ipk_final": "3.50"
-    }
+      "ipk_final": "nilai IPK kumulatif"
+    },
+    "total_sks": "total SKS keseluruhan"
   }
 }
 
@@ -334,21 +352,11 @@ Jika ada lebih dari satu halaman, anggap semua gambar yang diberikan adalah bagi
 Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
 `;
 
+    const prompt = isTranskripNilai
+        ? basePrompt + transkripInstructions + jsonStructure
+        : basePrompt + jsonStructure;
+
     const pdfBs64 = Buffer.from(buffer).toString('base64');
-
-    // let pagesBase64: string[] = [];
-    // const pagesRaw = body.pagesBase64;
-
-    // if (typeof pagesRaw === "string" && pagesRaw.length > 0) {
-    //     try {
-    //         pagesBase64 = JSON.parse(pagesRaw);
-    //         if (!Array.isArray(pagesBase64)) pagesBase64 = [];
-    //     } catch (e) {
-    //         console.error("Invalid pagesBase64 JSON:", e);
-    //     }
-    // }
-
-    // const limitedImages = pagesBase64.slice(0, Math.min(maksimalPagesAiOcr, pagesBase64.length));
 
     const result = await streamText({
         model: gateway(AiOcr ? AiOcr : "alibaba/qwen3-vl-instruct"),
@@ -371,26 +379,6 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
             },
         ],
     });
-    // const result = await streamText({
-    //     model: gateway(AiOcr ? AiOcr : "alibaba/qwen3-vl-instruct"),
-    //     topP: 0.9,
-    //     temperature: 0,
-    //     messages: [
-    //         {
-    //             role: "user",
-    //             content: [
-    //                 {
-    //                     type: "text",
-    //                     text: prompt,
-    //                 },
-    //                 ...limitedImages.map((img) => ({
-    //                     type: "image" as const,
-    //                     image: img,
-    //                 })),
-    //             ],
-    //         },
-    //     ],
-    // });
 
 
     let fullText = ""
@@ -405,6 +393,67 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
             Think: '',
         },
     });
+
+    const jenisLower = jenisDokumen.Jenis.trim().toLowerCase();
+
+    if (jenisLower.includes('transkrip nilai') || jenisLower.includes('transkrip')) {
+        try {
+            let jsonStart = fullText.indexOf('{');
+            let jsonEnd = fullText.lastIndexOf('}');
+
+            if (jsonStart !== -1 && jsonEnd !== -1) {
+                const jsonStr = fullText.substring(jsonStart, jsonEnd + 1);
+                const parsedResult = JSON.parse(jsonStr);
+
+                const transcriptDetails = parsedResult.transcript_details;
+                const courses = transcriptDetails?.courses || [];
+
+                if (courses.length > 0) {
+                    await prisma.transkripNilai.deleteMany({
+                        where: {
+                            PendaftaranId: PendaftaranId as string,
+                        },
+                    });
+
+                    let insertedCount = 0;
+                    for (const course of courses) {
+                        const kodeMataKuliah = course.course_code || '-';
+                        const namaMataKuliah = course.course_name || '';
+
+                        let sks = 0;
+                        if (course.sks) {
+                            const sksString = String(course.sks);
+                            const sksMatch = sksString.match(/[\d.]+/);
+                            if (sksMatch) {
+                                sks = parseFloat(sksMatch[0]) || 0;
+                            }
+                        }
+
+                        const nilai = course.grade_letter || course.grade_numeric || '-';
+
+                        if (namaMataKuliah && namaMataKuliah.trim() !== '') {
+                            await prisma.transkripNilai.create({
+                                data: {
+                                    PendaftaranId: PendaftaranId as string,
+                                    KodeMataKuliah: kodeMataKuliah,
+                                    NamaMataKuliah: namaMataKuliah,
+                                    Sks: sks,
+                                    Nilai: nilai,
+                                    CreatedAt: new Date(),
+                                    UpdatedAt: new Date(),
+                                },
+                            });
+                            insertedCount++;
+                        }
+                    }
+                } else {
+                }
+            } else {
+            }
+        } catch (parseError) {
+            console.error('Error parsing transcript data:', parseError);
+        }
+    }
 
     return c.json({
         status: 'success',
@@ -427,12 +476,33 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
 app.delete('/', async (c) => {
     const id = c.req.query('id')
 
+    const data = await prisma.buktiForm.findFirst({
+        where: {
+            BuktiFormId: id,
+        },
+    })
+
     await prisma.buktiForm.delete({
         where: {
             BuktiFormId: id,
         },
     })
 
+    if (data) {
+        const jenisDokumen = await prisma.jenisDokumen.findFirst({
+            where: {
+                JenisDokumenId: data.JenisDokumenId,
+            },
+        })
+
+        if (jenisDokumen?.Jenis.toLowerCase().includes('transkrip nilai')) {
+            await prisma.transkripNilai.deleteMany({
+                where: {
+                    PendaftaranId: data.PendaftaranId,
+                },
+            });
+        }
+    }
 
     return c.json({
         status: 'ok',

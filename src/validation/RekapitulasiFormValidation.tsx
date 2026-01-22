@@ -8,11 +8,11 @@ export const SkorAssesmenSchemaValidation = z.object({
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
     Tulis: z
-        .number({ error: (issue) => issue.input === undefined ? "Skor Tulis harus diisi"  : 'Skor Tulis harus angka.' })
+        .number({ error: (issue) => issue.input === undefined ? "Skor Tulis harus diisi" : 'Skor Tulis harus angka.' })
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
     Wawancara: z
-        .number({ error: (issue) => issue.input === undefined ? "Skor Wawancara harus diisi"  : 'Skor Wawancara harus angka.' })
+        .number({ error: (issue) => issue.input === undefined ? "Skor Wawancara harus diisi" : 'Skor Wawancara harus angka.' })
         .min(0, 'Skor tidak boleh kurang dari 0.')
         .max(100, 'Skor tidak boleh lebih dari 100.'),
     Demo: z

@@ -9,7 +9,10 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
     const session = await getSession();
     const nama = session?.user?.name || '';
-    const data = await prisma.pendaftaran.findFirst({
+    const req = await prisma.pendaftaran.findFirst({
+        where: {
+            PendaftaranId: id,
+        },
         select: {
             PendaftaranId: true,
             KodePendaftar: true,
@@ -101,20 +104,25 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     },
                 },
             },
-        },
-        where: { PendaftaranId: id },
+        }
     })
+
+    const data = {
+        ...req,
+        DaftarUlang: req?.DaftarUlang[0],
+        MataKuliahMahasiswa: req?.MataKuliahMahasiswa.filter(item => item.Keterangan === 'Perolehan_SKS')
+    }
 
     const dataServer: SkorAsessmenTypes = {
         PendaftaranId: data?.PendaftaranId ?? '',
         KodePendaftar: data?.KodePendaftar ?? '',
         ProgramStudi: {
             ProgramStudiId:
-                data?.DaftarUlang[0].ProgramStudi.ProgramStudiId ?? '',
-            Nama: data?.DaftarUlang[0].ProgramStudi.Nama ?? '',
-            UniversityId: data?.DaftarUlang[0].ProgramStudi.UniversityId ?? '',
-            Jenjang: data?.DaftarUlang[0].ProgramStudi.Jenjang ?? '',
-            Akreditasi: data?.DaftarUlang[0].ProgramStudi.Akreditasi ?? '',
+                data?.DaftarUlang?.ProgramStudi?.ProgramStudiId ?? '',
+            Nama: data?.DaftarUlang?.ProgramStudi?.Nama ?? '',
+            UniversityId: data?.DaftarUlang?.ProgramStudi?.UniversityId ?? '',
+            Jenjang: data?.DaftarUlang?.ProgramStudi?.Jenjang ?? '',
+            Akreditasi: data?.DaftarUlang?.ProgramStudi?.Akreditasi ?? '',
             MataKuliahMahasiswa: (data?.MataKuliahMahasiswa ?? []).map(
                 (mkm) => ({
                     MataKuliahMahasiswaId: mkm.MataKuliahMahasiswaId,
@@ -130,7 +138,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                         Silabus: mkm.MataKuliah.Silabus,
                     },
                     EvaluasiDiri: mkm.EvaluasiDiri.map(ed => ({
-                        NamaCp: ed.CapaianPembelajaran.Nama ,
+                        NamaCp: ed.CapaianPembelajaran.Nama,
                         ProfisiensiPengetahuan: ed.ProfiensiPengetahuan,
                         Valid: ed.HasilAssesmen[0].Valid ?? false,
                         Autentik: ed.HasilAssesmen[0].Autentik ?? false,

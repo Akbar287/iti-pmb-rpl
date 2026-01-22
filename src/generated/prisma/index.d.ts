@@ -383,6 +383,16 @@ export type Tickets = $Result.DefaultSelection<Prisma.$TicketsPayload>
  * 
  */
 export type TicketsFile = $Result.DefaultSelection<Prisma.$TicketsFilePayload>
+/**
+ * Model TranskripNilai
+ * 
+ */
+export type TranskripNilai = $Result.DefaultSelection<Prisma.$TranskripNilaiPayload>
+/**
+ * Model TranskripNilaiRelation
+ * 
+ */
+export type TranskripNilaiRelation = $Result.DefaultSelection<Prisma.$TranskripNilaiRelationPayload>
 
 /**
  * Enums
@@ -1400,6 +1410,26 @@ export class PrismaClient<
     * ```
     */
   get ticketsFile(): Prisma.TicketsFileDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.transkripNilai`: Exposes CRUD operations for the **TranskripNilai** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TranskripNilais
+    * const transkripNilais = await prisma.transkripNilai.findMany()
+    * ```
+    */
+  get transkripNilai(): Prisma.TranskripNilaiDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.transkripNilaiRelation`: Exposes CRUD operations for the **TranskripNilaiRelation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TranskripNilaiRelations
+    * const transkripNilaiRelations = await prisma.transkripNilaiRelation.findMany()
+    * ```
+    */
+  get transkripNilaiRelation(): Prisma.TranskripNilaiRelationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1907,7 +1937,9 @@ export namespace Prisma {
     SettingBerita: 'SettingBerita',
     QuestionAndAsk: 'QuestionAndAsk',
     Tickets: 'Tickets',
-    TicketsFile: 'TicketsFile'
+    TicketsFile: 'TicketsFile',
+    TranskripNilai: 'TranskripNilai',
+    TranskripNilaiRelation: 'TranskripNilaiRelation'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1923,7 +1955,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormPages" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "hasilAssesmenAi" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "skorAssesmenAi" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita" | "questionAndAsk" | "tickets" | "ticketsFile"
+      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormPages" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "hasilAssesmenAi" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "skorAssesmenAi" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita" | "questionAndAsk" | "tickets" | "ticketsFile" | "transkripNilai" | "transkripNilaiRelation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7403,6 +7435,154 @@ export namespace Prisma {
           }
         }
       }
+      TranskripNilai: {
+        payload: Prisma.$TranskripNilaiPayload<ExtArgs>
+        fields: Prisma.TranskripNilaiFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TranskripNilaiFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TranskripNilaiFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>
+          }
+          findFirst: {
+            args: Prisma.TranskripNilaiFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TranskripNilaiFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>
+          }
+          findMany: {
+            args: Prisma.TranskripNilaiFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>[]
+          }
+          create: {
+            args: Prisma.TranskripNilaiCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>
+          }
+          createMany: {
+            args: Prisma.TranskripNilaiCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TranskripNilaiCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>[]
+          }
+          delete: {
+            args: Prisma.TranskripNilaiDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>
+          }
+          update: {
+            args: Prisma.TranskripNilaiUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>
+          }
+          deleteMany: {
+            args: Prisma.TranskripNilaiDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TranskripNilaiUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TranskripNilaiUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>[]
+          }
+          upsert: {
+            args: Prisma.TranskripNilaiUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiPayload>
+          }
+          aggregate: {
+            args: Prisma.TranskripNilaiAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTranskripNilai>
+          }
+          groupBy: {
+            args: Prisma.TranskripNilaiGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TranskripNilaiGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TranskripNilaiCountArgs<ExtArgs>
+            result: $Utils.Optional<TranskripNilaiCountAggregateOutputType> | number
+          }
+        }
+      }
+      TranskripNilaiRelation: {
+        payload: Prisma.$TranskripNilaiRelationPayload<ExtArgs>
+        fields: Prisma.TranskripNilaiRelationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TranskripNilaiRelationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TranskripNilaiRelationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>
+          }
+          findFirst: {
+            args: Prisma.TranskripNilaiRelationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TranskripNilaiRelationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>
+          }
+          findMany: {
+            args: Prisma.TranskripNilaiRelationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>[]
+          }
+          create: {
+            args: Prisma.TranskripNilaiRelationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>
+          }
+          createMany: {
+            args: Prisma.TranskripNilaiRelationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TranskripNilaiRelationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>[]
+          }
+          delete: {
+            args: Prisma.TranskripNilaiRelationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>
+          }
+          update: {
+            args: Prisma.TranskripNilaiRelationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>
+          }
+          deleteMany: {
+            args: Prisma.TranskripNilaiRelationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TranskripNilaiRelationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TranskripNilaiRelationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>[]
+          }
+          upsert: {
+            args: Prisma.TranskripNilaiRelationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TranskripNilaiRelationPayload>
+          }
+          aggregate: {
+            args: Prisma.TranskripNilaiRelationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTranskripNilaiRelation>
+          }
+          groupBy: {
+            args: Prisma.TranskripNilaiRelationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TranskripNilaiRelationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TranskripNilaiRelationCountArgs<ExtArgs>
+            result: $Utils.Optional<TranskripNilaiRelationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7569,6 +7749,8 @@ export namespace Prisma {
     questionAndAsk?: QuestionAndAskOmit
     tickets?: TicketsOmit
     ticketsFile?: TicketsFileOmit
+    transkripNilai?: TranskripNilaiOmit
+    transkripNilaiRelation?: TranskripNilaiRelationOmit
   }
 
   /* Types for Logging */
@@ -8189,12 +8371,14 @@ export namespace Prisma {
     EvaluasiDiri: number
     SanggahanAssesmenMk: number
     SkorAssesmen: number
+    transkripNilaiRelations: number
   }
 
   export type MataKuliahMahasiswaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     EvaluasiDiri?: boolean | MataKuliahMahasiswaCountOutputTypeCountEvaluasiDiriArgs
     SanggahanAssesmenMk?: boolean | MataKuliahMahasiswaCountOutputTypeCountSanggahanAssesmenMkArgs
     SkorAssesmen?: boolean | MataKuliahMahasiswaCountOutputTypeCountSkorAssesmenArgs
+    transkripNilaiRelations?: boolean | MataKuliahMahasiswaCountOutputTypeCountTranskripNilaiRelationsArgs
   }
 
   // Custom InputTypes
@@ -8229,6 +8413,13 @@ export namespace Prisma {
     where?: SkorAssesmenWhereInput
   }
 
+  /**
+   * MataKuliahMahasiswaCountOutputType without action
+   */
+  export type MataKuliahMahasiswaCountOutputTypeCountTranskripNilaiRelationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TranskripNilaiRelationWhereInput
+  }
+
 
   /**
    * Count Type PendaftaranCountOutputType
@@ -8253,6 +8444,7 @@ export namespace Prisma {
     SanggahanAssesmen: number
     SkRektorMahasiswa: number
     StatusMahasiswaAssesmentHistory: number
+    transkripNilais: number
   }
 
   export type PendaftaranCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8274,6 +8466,7 @@ export namespace Prisma {
     SanggahanAssesmen?: boolean | PendaftaranCountOutputTypeCountSanggahanAssesmenArgs
     SkRektorMahasiswa?: boolean | PendaftaranCountOutputTypeCountSkRektorMahasiswaArgs
     StatusMahasiswaAssesmentHistory?: boolean | PendaftaranCountOutputTypeCountStatusMahasiswaAssesmentHistoryArgs
+    transkripNilais?: boolean | PendaftaranCountOutputTypeCountTranskripNilaisArgs
   }
 
   // Custom InputTypes
@@ -8411,6 +8604,13 @@ export namespace Prisma {
    */
   export type PendaftaranCountOutputTypeCountStatusMahasiswaAssesmentHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: StatusMahasiswaAssesmentHistoryWhereInput
+  }
+
+  /**
+   * PendaftaranCountOutputType without action
+   */
+  export type PendaftaranCountOutputTypeCountTranskripNilaisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TranskripNilaiWhereInput
   }
 
 
@@ -9136,6 +9336,37 @@ export namespace Prisma {
    */
   export type TicketsCountOutputTypeCountTicketsFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TicketsFileWhereInput
+  }
+
+
+  /**
+   * Count Type TranskripNilaiCountOutputType
+   */
+
+  export type TranskripNilaiCountOutputType = {
+    transkripNilaiRelations: number
+  }
+
+  export type TranskripNilaiCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    transkripNilaiRelations?: boolean | TranskripNilaiCountOutputTypeCountTranskripNilaiRelationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TranskripNilaiCountOutputType without action
+   */
+  export type TranskripNilaiCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiCountOutputType
+     */
+    select?: TranskripNilaiCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TranskripNilaiCountOutputType without action
+   */
+  export type TranskripNilaiCountOutputTypeCountTranskripNilaiRelationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TranskripNilaiRelationWhereInput
   }
 
 
@@ -41868,6 +42099,7 @@ export namespace Prisma {
     EvaluasiDiri?: boolean | MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs>
     SanggahanAssesmenMk?: boolean | MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs>
     SkorAssesmen?: boolean | MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs>
+    transkripNilaiRelations?: boolean | MataKuliahMahasiswa$transkripNilaiRelationsArgs<ExtArgs>
     _count?: boolean | MataKuliahMahasiswaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mataKuliahMahasiswa"]>
 
@@ -41915,6 +42147,7 @@ export namespace Prisma {
     EvaluasiDiri?: boolean | MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs>
     SanggahanAssesmenMk?: boolean | MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs>
     SkorAssesmen?: boolean | MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs>
+    transkripNilaiRelations?: boolean | MataKuliahMahasiswa$transkripNilaiRelationsArgs<ExtArgs>
     _count?: boolean | MataKuliahMahasiswaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MataKuliahMahasiswaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -41934,6 +42167,7 @@ export namespace Prisma {
       EvaluasiDiri: Prisma.$EvaluasiDiriPayload<ExtArgs>[]
       SanggahanAssesmenMk: Prisma.$SanggahanAssesmenMkPayload<ExtArgs>[]
       SkorAssesmen: Prisma.$SkorAssesmenPayload<ExtArgs>[]
+      transkripNilaiRelations: Prisma.$TranskripNilaiRelationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       MataKuliahMahasiswaId: string
@@ -42343,6 +42577,7 @@ export namespace Prisma {
     EvaluasiDiri<T extends MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswa$EvaluasiDiriArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EvaluasiDiriPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SanggahanAssesmenMk<T extends MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswa$SanggahanAssesmenMkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SanggahanAssesmenMkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SkorAssesmen<T extends MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswa$SkorAssesmenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkorAssesmenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transkripNilaiRelations<T extends MataKuliahMahasiswa$transkripNilaiRelationsArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswa$transkripNilaiRelationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -42845,6 +43080,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SkorAssesmenScalarFieldEnum | SkorAssesmenScalarFieldEnum[]
+  }
+
+  /**
+   * MataKuliahMahasiswa.transkripNilaiRelations
+   */
+  export type MataKuliahMahasiswa$transkripNilaiRelationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    where?: TranskripNilaiRelationWhereInput
+    orderBy?: TranskripNilaiRelationOrderByWithRelationInput | TranskripNilaiRelationOrderByWithRelationInput[]
+    cursor?: TranskripNilaiRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TranskripNilaiRelationScalarFieldEnum | TranskripNilaiRelationScalarFieldEnum[]
   }
 
   /**
@@ -49393,6 +49652,7 @@ export namespace Prisma {
     SanggahanAssesmen?: boolean | Pendaftaran$SanggahanAssesmenArgs<ExtArgs>
     SkRektorMahasiswa?: boolean | Pendaftaran$SkRektorMahasiswaArgs<ExtArgs>
     StatusMahasiswaAssesmentHistory?: boolean | Pendaftaran$StatusMahasiswaAssesmentHistoryArgs<ExtArgs>
+    transkripNilais?: boolean | Pendaftaran$transkripNilaisArgs<ExtArgs>
     _count?: boolean | PendaftaranCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["pendaftaran"]>
 
@@ -49458,6 +49718,7 @@ export namespace Prisma {
     SanggahanAssesmen?: boolean | Pendaftaran$SanggahanAssesmenArgs<ExtArgs>
     SkRektorMahasiswa?: boolean | Pendaftaran$SkRektorMahasiswaArgs<ExtArgs>
     StatusMahasiswaAssesmentHistory?: boolean | Pendaftaran$StatusMahasiswaAssesmentHistoryArgs<ExtArgs>
+    transkripNilais?: boolean | Pendaftaran$transkripNilaisArgs<ExtArgs>
     _count?: boolean | PendaftaranCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PendaftaranIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -49489,6 +49750,7 @@ export namespace Prisma {
       SanggahanAssesmen: Prisma.$SanggahanAssesmenPayload<ExtArgs>[]
       SkRektorMahasiswa: Prisma.$SkRektorMahasiswaPayload<ExtArgs>[]
       StatusMahasiswaAssesmentHistory: Prisma.$StatusMahasiswaAssesmentHistoryPayload<ExtArgs>[]
+      transkripNilais: Prisma.$TranskripNilaiPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       PendaftaranId: string
@@ -49914,6 +50176,7 @@ export namespace Prisma {
     SanggahanAssesmen<T extends Pendaftaran$SanggahanAssesmenArgs<ExtArgs> = {}>(args?: Subset<T, Pendaftaran$SanggahanAssesmenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SanggahanAssesmenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SkRektorMahasiswa<T extends Pendaftaran$SkRektorMahasiswaArgs<ExtArgs> = {}>(args?: Subset<T, Pendaftaran$SkRektorMahasiswaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkRektorMahasiswaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     StatusMahasiswaAssesmentHistory<T extends Pendaftaran$StatusMahasiswaAssesmentHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Pendaftaran$StatusMahasiswaAssesmentHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StatusMahasiswaAssesmentHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transkripNilais<T extends Pendaftaran$transkripNilaisArgs<ExtArgs> = {}>(args?: Subset<T, Pendaftaran$transkripNilaisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -50778,6 +51041,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StatusMahasiswaAssesmentHistoryScalarFieldEnum | StatusMahasiswaAssesmentHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * Pendaftaran.transkripNilais
+   */
+  export type Pendaftaran$transkripNilaisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    where?: TranskripNilaiWhereInput
+    orderBy?: TranskripNilaiOrderByWithRelationInput | TranskripNilaiOrderByWithRelationInput[]
+    cursor?: TranskripNilaiWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TranskripNilaiScalarFieldEnum | TranskripNilaiScalarFieldEnum[]
   }
 
   /**
@@ -91801,6 +92088,2220 @@ export namespace Prisma {
 
 
   /**
+   * Model TranskripNilai
+   */
+
+  export type AggregateTranskripNilai = {
+    _count: TranskripNilaiCountAggregateOutputType | null
+    _avg: TranskripNilaiAvgAggregateOutputType | null
+    _sum: TranskripNilaiSumAggregateOutputType | null
+    _min: TranskripNilaiMinAggregateOutputType | null
+    _max: TranskripNilaiMaxAggregateOutputType | null
+  }
+
+  export type TranskripNilaiAvgAggregateOutputType = {
+    Sks: number | null
+  }
+
+  export type TranskripNilaiSumAggregateOutputType = {
+    Sks: number | null
+  }
+
+  export type TranskripNilaiMinAggregateOutputType = {
+    TranskripNilaiId: string | null
+    PendaftaranId: string | null
+    KodeMataKuliah: string | null
+    NamaMataKuliah: string | null
+    Sks: number | null
+    Nilai: string | null
+    CreatedAt: Date | null
+    UpdatedAt: Date | null
+  }
+
+  export type TranskripNilaiMaxAggregateOutputType = {
+    TranskripNilaiId: string | null
+    PendaftaranId: string | null
+    KodeMataKuliah: string | null
+    NamaMataKuliah: string | null
+    Sks: number | null
+    Nilai: string | null
+    CreatedAt: Date | null
+    UpdatedAt: Date | null
+  }
+
+  export type TranskripNilaiCountAggregateOutputType = {
+    TranskripNilaiId: number
+    PendaftaranId: number
+    KodeMataKuliah: number
+    NamaMataKuliah: number
+    Sks: number
+    Nilai: number
+    CreatedAt: number
+    UpdatedAt: number
+    _all: number
+  }
+
+
+  export type TranskripNilaiAvgAggregateInputType = {
+    Sks?: true
+  }
+
+  export type TranskripNilaiSumAggregateInputType = {
+    Sks?: true
+  }
+
+  export type TranskripNilaiMinAggregateInputType = {
+    TranskripNilaiId?: true
+    PendaftaranId?: true
+    KodeMataKuliah?: true
+    NamaMataKuliah?: true
+    Sks?: true
+    Nilai?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+  }
+
+  export type TranskripNilaiMaxAggregateInputType = {
+    TranskripNilaiId?: true
+    PendaftaranId?: true
+    KodeMataKuliah?: true
+    NamaMataKuliah?: true
+    Sks?: true
+    Nilai?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+  }
+
+  export type TranskripNilaiCountAggregateInputType = {
+    TranskripNilaiId?: true
+    PendaftaranId?: true
+    KodeMataKuliah?: true
+    NamaMataKuliah?: true
+    Sks?: true
+    Nilai?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+    _all?: true
+  }
+
+  export type TranskripNilaiAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TranskripNilai to aggregate.
+     */
+    where?: TranskripNilaiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilais to fetch.
+     */
+    orderBy?: TranskripNilaiOrderByWithRelationInput | TranskripNilaiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TranskripNilaiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilais from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilais.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TranskripNilais
+    **/
+    _count?: true | TranskripNilaiCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TranskripNilaiAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TranskripNilaiSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TranskripNilaiMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TranskripNilaiMaxAggregateInputType
+  }
+
+  export type GetTranskripNilaiAggregateType<T extends TranskripNilaiAggregateArgs> = {
+        [P in keyof T & keyof AggregateTranskripNilai]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTranskripNilai[P]>
+      : GetScalarType<T[P], AggregateTranskripNilai[P]>
+  }
+
+
+
+
+  export type TranskripNilaiGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TranskripNilaiWhereInput
+    orderBy?: TranskripNilaiOrderByWithAggregationInput | TranskripNilaiOrderByWithAggregationInput[]
+    by: TranskripNilaiScalarFieldEnum[] | TranskripNilaiScalarFieldEnum
+    having?: TranskripNilaiScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TranskripNilaiCountAggregateInputType | true
+    _avg?: TranskripNilaiAvgAggregateInputType
+    _sum?: TranskripNilaiSumAggregateInputType
+    _min?: TranskripNilaiMinAggregateInputType
+    _max?: TranskripNilaiMaxAggregateInputType
+  }
+
+  export type TranskripNilaiGroupByOutputType = {
+    TranskripNilaiId: string
+    PendaftaranId: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt: Date
+    UpdatedAt: Date
+    _count: TranskripNilaiCountAggregateOutputType | null
+    _avg: TranskripNilaiAvgAggregateOutputType | null
+    _sum: TranskripNilaiSumAggregateOutputType | null
+    _min: TranskripNilaiMinAggregateOutputType | null
+    _max: TranskripNilaiMaxAggregateOutputType | null
+  }
+
+  type GetTranskripNilaiGroupByPayload<T extends TranskripNilaiGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TranskripNilaiGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TranskripNilaiGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TranskripNilaiGroupByOutputType[P]>
+            : GetScalarType<T[P], TranskripNilaiGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TranskripNilaiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TranskripNilaiId?: boolean
+    PendaftaranId?: boolean
+    KodeMataKuliah?: boolean
+    NamaMataKuliah?: boolean
+    Sks?: boolean
+    Nilai?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+    Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
+    transkripNilaiRelations?: boolean | TranskripNilai$transkripNilaiRelationsArgs<ExtArgs>
+    _count?: boolean | TranskripNilaiCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transkripNilai"]>
+
+  export type TranskripNilaiSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TranskripNilaiId?: boolean
+    PendaftaranId?: boolean
+    KodeMataKuliah?: boolean
+    NamaMataKuliah?: boolean
+    Sks?: boolean
+    Nilai?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+    Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transkripNilai"]>
+
+  export type TranskripNilaiSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TranskripNilaiId?: boolean
+    PendaftaranId?: boolean
+    KodeMataKuliah?: boolean
+    NamaMataKuliah?: boolean
+    Sks?: boolean
+    Nilai?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+    Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transkripNilai"]>
+
+  export type TranskripNilaiSelectScalar = {
+    TranskripNilaiId?: boolean
+    PendaftaranId?: boolean
+    KodeMataKuliah?: boolean
+    NamaMataKuliah?: boolean
+    Sks?: boolean
+    Nilai?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+  }
+
+  export type TranskripNilaiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"TranskripNilaiId" | "PendaftaranId" | "KodeMataKuliah" | "NamaMataKuliah" | "Sks" | "Nilai" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["transkripNilai"]>
+  export type TranskripNilaiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
+    transkripNilaiRelations?: boolean | TranskripNilai$transkripNilaiRelationsArgs<ExtArgs>
+    _count?: boolean | TranskripNilaiCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TranskripNilaiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
+  }
+  export type TranskripNilaiIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
+  }
+
+  export type $TranskripNilaiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TranskripNilai"
+    objects: {
+      Pendaftaran: Prisma.$PendaftaranPayload<ExtArgs>
+      transkripNilaiRelations: Prisma.$TranskripNilaiRelationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      TranskripNilaiId: string
+      PendaftaranId: string
+      KodeMataKuliah: string
+      NamaMataKuliah: string
+      Sks: number
+      Nilai: string
+      CreatedAt: Date
+      UpdatedAt: Date
+    }, ExtArgs["result"]["transkripNilai"]>
+    composites: {}
+  }
+
+  type TranskripNilaiGetPayload<S extends boolean | null | undefined | TranskripNilaiDefaultArgs> = $Result.GetResult<Prisma.$TranskripNilaiPayload, S>
+
+  type TranskripNilaiCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TranskripNilaiFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TranskripNilaiCountAggregateInputType | true
+    }
+
+  export interface TranskripNilaiDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TranskripNilai'], meta: { name: 'TranskripNilai' } }
+    /**
+     * Find zero or one TranskripNilai that matches the filter.
+     * @param {TranskripNilaiFindUniqueArgs} args - Arguments to find a TranskripNilai
+     * @example
+     * // Get one TranskripNilai
+     * const transkripNilai = await prisma.transkripNilai.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TranskripNilaiFindUniqueArgs>(args: SelectSubset<T, TranskripNilaiFindUniqueArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TranskripNilai that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TranskripNilaiFindUniqueOrThrowArgs} args - Arguments to find a TranskripNilai
+     * @example
+     * // Get one TranskripNilai
+     * const transkripNilai = await prisma.transkripNilai.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TranskripNilaiFindUniqueOrThrowArgs>(args: SelectSubset<T, TranskripNilaiFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TranskripNilai that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiFindFirstArgs} args - Arguments to find a TranskripNilai
+     * @example
+     * // Get one TranskripNilai
+     * const transkripNilai = await prisma.transkripNilai.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TranskripNilaiFindFirstArgs>(args?: SelectSubset<T, TranskripNilaiFindFirstArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TranskripNilai that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiFindFirstOrThrowArgs} args - Arguments to find a TranskripNilai
+     * @example
+     * // Get one TranskripNilai
+     * const transkripNilai = await prisma.transkripNilai.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TranskripNilaiFindFirstOrThrowArgs>(args?: SelectSubset<T, TranskripNilaiFindFirstOrThrowArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TranskripNilais that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TranskripNilais
+     * const transkripNilais = await prisma.transkripNilai.findMany()
+     * 
+     * // Get first 10 TranskripNilais
+     * const transkripNilais = await prisma.transkripNilai.findMany({ take: 10 })
+     * 
+     * // Only select the `TranskripNilaiId`
+     * const transkripNilaiWithTranskripNilaiIdOnly = await prisma.transkripNilai.findMany({ select: { TranskripNilaiId: true } })
+     * 
+     */
+    findMany<T extends TranskripNilaiFindManyArgs>(args?: SelectSubset<T, TranskripNilaiFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TranskripNilai.
+     * @param {TranskripNilaiCreateArgs} args - Arguments to create a TranskripNilai.
+     * @example
+     * // Create one TranskripNilai
+     * const TranskripNilai = await prisma.transkripNilai.create({
+     *   data: {
+     *     // ... data to create a TranskripNilai
+     *   }
+     * })
+     * 
+     */
+    create<T extends TranskripNilaiCreateArgs>(args: SelectSubset<T, TranskripNilaiCreateArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TranskripNilais.
+     * @param {TranskripNilaiCreateManyArgs} args - Arguments to create many TranskripNilais.
+     * @example
+     * // Create many TranskripNilais
+     * const transkripNilai = await prisma.transkripNilai.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TranskripNilaiCreateManyArgs>(args?: SelectSubset<T, TranskripNilaiCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TranskripNilais and returns the data saved in the database.
+     * @param {TranskripNilaiCreateManyAndReturnArgs} args - Arguments to create many TranskripNilais.
+     * @example
+     * // Create many TranskripNilais
+     * const transkripNilai = await prisma.transkripNilai.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TranskripNilais and only return the `TranskripNilaiId`
+     * const transkripNilaiWithTranskripNilaiIdOnly = await prisma.transkripNilai.createManyAndReturn({
+     *   select: { TranskripNilaiId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TranskripNilaiCreateManyAndReturnArgs>(args?: SelectSubset<T, TranskripNilaiCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TranskripNilai.
+     * @param {TranskripNilaiDeleteArgs} args - Arguments to delete one TranskripNilai.
+     * @example
+     * // Delete one TranskripNilai
+     * const TranskripNilai = await prisma.transkripNilai.delete({
+     *   where: {
+     *     // ... filter to delete one TranskripNilai
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TranskripNilaiDeleteArgs>(args: SelectSubset<T, TranskripNilaiDeleteArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TranskripNilai.
+     * @param {TranskripNilaiUpdateArgs} args - Arguments to update one TranskripNilai.
+     * @example
+     * // Update one TranskripNilai
+     * const transkripNilai = await prisma.transkripNilai.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TranskripNilaiUpdateArgs>(args: SelectSubset<T, TranskripNilaiUpdateArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TranskripNilais.
+     * @param {TranskripNilaiDeleteManyArgs} args - Arguments to filter TranskripNilais to delete.
+     * @example
+     * // Delete a few TranskripNilais
+     * const { count } = await prisma.transkripNilai.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TranskripNilaiDeleteManyArgs>(args?: SelectSubset<T, TranskripNilaiDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TranskripNilais.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TranskripNilais
+     * const transkripNilai = await prisma.transkripNilai.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TranskripNilaiUpdateManyArgs>(args: SelectSubset<T, TranskripNilaiUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TranskripNilais and returns the data updated in the database.
+     * @param {TranskripNilaiUpdateManyAndReturnArgs} args - Arguments to update many TranskripNilais.
+     * @example
+     * // Update many TranskripNilais
+     * const transkripNilai = await prisma.transkripNilai.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TranskripNilais and only return the `TranskripNilaiId`
+     * const transkripNilaiWithTranskripNilaiIdOnly = await prisma.transkripNilai.updateManyAndReturn({
+     *   select: { TranskripNilaiId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TranskripNilaiUpdateManyAndReturnArgs>(args: SelectSubset<T, TranskripNilaiUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TranskripNilai.
+     * @param {TranskripNilaiUpsertArgs} args - Arguments to update or create a TranskripNilai.
+     * @example
+     * // Update or create a TranskripNilai
+     * const transkripNilai = await prisma.transkripNilai.upsert({
+     *   create: {
+     *     // ... data to create a TranskripNilai
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TranskripNilai we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TranskripNilaiUpsertArgs>(args: SelectSubset<T, TranskripNilaiUpsertArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TranskripNilais.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiCountArgs} args - Arguments to filter TranskripNilais to count.
+     * @example
+     * // Count the number of TranskripNilais
+     * const count = await prisma.transkripNilai.count({
+     *   where: {
+     *     // ... the filter for the TranskripNilais we want to count
+     *   }
+     * })
+    **/
+    count<T extends TranskripNilaiCountArgs>(
+      args?: Subset<T, TranskripNilaiCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TranskripNilaiCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TranskripNilai.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TranskripNilaiAggregateArgs>(args: Subset<T, TranskripNilaiAggregateArgs>): Prisma.PrismaPromise<GetTranskripNilaiAggregateType<T>>
+
+    /**
+     * Group by TranskripNilai.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TranskripNilaiGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TranskripNilaiGroupByArgs['orderBy'] }
+        : { orderBy?: TranskripNilaiGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TranskripNilaiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTranskripNilaiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TranskripNilai model
+   */
+  readonly fields: TranskripNilaiFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TranskripNilai.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TranskripNilaiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Pendaftaran<T extends PendaftaranDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PendaftaranDefaultArgs<ExtArgs>>): Prisma__PendaftaranClient<$Result.GetResult<Prisma.$PendaftaranPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transkripNilaiRelations<T extends TranskripNilai$transkripNilaiRelationsArgs<ExtArgs> = {}>(args?: Subset<T, TranskripNilai$transkripNilaiRelationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TranskripNilai model
+   */
+  interface TranskripNilaiFieldRefs {
+    readonly TranskripNilaiId: FieldRef<"TranskripNilai", 'String'>
+    readonly PendaftaranId: FieldRef<"TranskripNilai", 'String'>
+    readonly KodeMataKuliah: FieldRef<"TranskripNilai", 'String'>
+    readonly NamaMataKuliah: FieldRef<"TranskripNilai", 'String'>
+    readonly Sks: FieldRef<"TranskripNilai", 'Float'>
+    readonly Nilai: FieldRef<"TranskripNilai", 'String'>
+    readonly CreatedAt: FieldRef<"TranskripNilai", 'DateTime'>
+    readonly UpdatedAt: FieldRef<"TranskripNilai", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TranskripNilai findUnique
+   */
+  export type TranskripNilaiFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilai to fetch.
+     */
+    where: TranskripNilaiWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilai findUniqueOrThrow
+   */
+  export type TranskripNilaiFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilai to fetch.
+     */
+    where: TranskripNilaiWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilai findFirst
+   */
+  export type TranskripNilaiFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilai to fetch.
+     */
+    where?: TranskripNilaiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilais to fetch.
+     */
+    orderBy?: TranskripNilaiOrderByWithRelationInput | TranskripNilaiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TranskripNilais.
+     */
+    cursor?: TranskripNilaiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilais from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilais.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TranskripNilais.
+     */
+    distinct?: TranskripNilaiScalarFieldEnum | TranskripNilaiScalarFieldEnum[]
+  }
+
+  /**
+   * TranskripNilai findFirstOrThrow
+   */
+  export type TranskripNilaiFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilai to fetch.
+     */
+    where?: TranskripNilaiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilais to fetch.
+     */
+    orderBy?: TranskripNilaiOrderByWithRelationInput | TranskripNilaiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TranskripNilais.
+     */
+    cursor?: TranskripNilaiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilais from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilais.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TranskripNilais.
+     */
+    distinct?: TranskripNilaiScalarFieldEnum | TranskripNilaiScalarFieldEnum[]
+  }
+
+  /**
+   * TranskripNilai findMany
+   */
+  export type TranskripNilaiFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilais to fetch.
+     */
+    where?: TranskripNilaiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilais to fetch.
+     */
+    orderBy?: TranskripNilaiOrderByWithRelationInput | TranskripNilaiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TranskripNilais.
+     */
+    cursor?: TranskripNilaiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilais from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilais.
+     */
+    skip?: number
+    distinct?: TranskripNilaiScalarFieldEnum | TranskripNilaiScalarFieldEnum[]
+  }
+
+  /**
+   * TranskripNilai create
+   */
+  export type TranskripNilaiCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TranskripNilai.
+     */
+    data: XOR<TranskripNilaiCreateInput, TranskripNilaiUncheckedCreateInput>
+  }
+
+  /**
+   * TranskripNilai createMany
+   */
+  export type TranskripNilaiCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TranskripNilais.
+     */
+    data: TranskripNilaiCreateManyInput | TranskripNilaiCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TranskripNilai createManyAndReturn
+   */
+  export type TranskripNilaiCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * The data used to create many TranskripNilais.
+     */
+    data: TranskripNilaiCreateManyInput | TranskripNilaiCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TranskripNilai update
+   */
+  export type TranskripNilaiUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TranskripNilai.
+     */
+    data: XOR<TranskripNilaiUpdateInput, TranskripNilaiUncheckedUpdateInput>
+    /**
+     * Choose, which TranskripNilai to update.
+     */
+    where: TranskripNilaiWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilai updateMany
+   */
+  export type TranskripNilaiUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TranskripNilais.
+     */
+    data: XOR<TranskripNilaiUpdateManyMutationInput, TranskripNilaiUncheckedUpdateManyInput>
+    /**
+     * Filter which TranskripNilais to update
+     */
+    where?: TranskripNilaiWhereInput
+    /**
+     * Limit how many TranskripNilais to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TranskripNilai updateManyAndReturn
+   */
+  export type TranskripNilaiUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * The data used to update TranskripNilais.
+     */
+    data: XOR<TranskripNilaiUpdateManyMutationInput, TranskripNilaiUncheckedUpdateManyInput>
+    /**
+     * Filter which TranskripNilais to update
+     */
+    where?: TranskripNilaiWhereInput
+    /**
+     * Limit how many TranskripNilais to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TranskripNilai upsert
+   */
+  export type TranskripNilaiUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TranskripNilai to update in case it exists.
+     */
+    where: TranskripNilaiWhereUniqueInput
+    /**
+     * In case the TranskripNilai found by the `where` argument doesn't exist, create a new TranskripNilai with this data.
+     */
+    create: XOR<TranskripNilaiCreateInput, TranskripNilaiUncheckedCreateInput>
+    /**
+     * In case the TranskripNilai was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TranskripNilaiUpdateInput, TranskripNilaiUncheckedUpdateInput>
+  }
+
+  /**
+   * TranskripNilai delete
+   */
+  export type TranskripNilaiDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+    /**
+     * Filter which TranskripNilai to delete.
+     */
+    where: TranskripNilaiWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilai deleteMany
+   */
+  export type TranskripNilaiDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TranskripNilais to delete
+     */
+    where?: TranskripNilaiWhereInput
+    /**
+     * Limit how many TranskripNilais to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TranskripNilai.transkripNilaiRelations
+   */
+  export type TranskripNilai$transkripNilaiRelationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    where?: TranskripNilaiRelationWhereInput
+    orderBy?: TranskripNilaiRelationOrderByWithRelationInput | TranskripNilaiRelationOrderByWithRelationInput[]
+    cursor?: TranskripNilaiRelationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TranskripNilaiRelationScalarFieldEnum | TranskripNilaiRelationScalarFieldEnum[]
+  }
+
+  /**
+   * TranskripNilai without action
+   */
+  export type TranskripNilaiDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilai
+     */
+    select?: TranskripNilaiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilai
+     */
+    omit?: TranskripNilaiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TranskripNilaiRelation
+   */
+
+  export type AggregateTranskripNilaiRelation = {
+    _count: TranskripNilaiRelationCountAggregateOutputType | null
+    _min: TranskripNilaiRelationMinAggregateOutputType | null
+    _max: TranskripNilaiRelationMaxAggregateOutputType | null
+  }
+
+  export type TranskripNilaiRelationMinAggregateOutputType = {
+    TranskripNilaiId: string | null
+    MataKuliahMahasiswaId: string | null
+    Nilai: string | null
+    Diakui: boolean | null
+  }
+
+  export type TranskripNilaiRelationMaxAggregateOutputType = {
+    TranskripNilaiId: string | null
+    MataKuliahMahasiswaId: string | null
+    Nilai: string | null
+    Diakui: boolean | null
+  }
+
+  export type TranskripNilaiRelationCountAggregateOutputType = {
+    TranskripNilaiId: number
+    MataKuliahMahasiswaId: number
+    Nilai: number
+    Diakui: number
+    _all: number
+  }
+
+
+  export type TranskripNilaiRelationMinAggregateInputType = {
+    TranskripNilaiId?: true
+    MataKuliahMahasiswaId?: true
+    Nilai?: true
+    Diakui?: true
+  }
+
+  export type TranskripNilaiRelationMaxAggregateInputType = {
+    TranskripNilaiId?: true
+    MataKuliahMahasiswaId?: true
+    Nilai?: true
+    Diakui?: true
+  }
+
+  export type TranskripNilaiRelationCountAggregateInputType = {
+    TranskripNilaiId?: true
+    MataKuliahMahasiswaId?: true
+    Nilai?: true
+    Diakui?: true
+    _all?: true
+  }
+
+  export type TranskripNilaiRelationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TranskripNilaiRelation to aggregate.
+     */
+    where?: TranskripNilaiRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilaiRelations to fetch.
+     */
+    orderBy?: TranskripNilaiRelationOrderByWithRelationInput | TranskripNilaiRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TranskripNilaiRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilaiRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilaiRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TranskripNilaiRelations
+    **/
+    _count?: true | TranskripNilaiRelationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TranskripNilaiRelationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TranskripNilaiRelationMaxAggregateInputType
+  }
+
+  export type GetTranskripNilaiRelationAggregateType<T extends TranskripNilaiRelationAggregateArgs> = {
+        [P in keyof T & keyof AggregateTranskripNilaiRelation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTranskripNilaiRelation[P]>
+      : GetScalarType<T[P], AggregateTranskripNilaiRelation[P]>
+  }
+
+
+
+
+  export type TranskripNilaiRelationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TranskripNilaiRelationWhereInput
+    orderBy?: TranskripNilaiRelationOrderByWithAggregationInput | TranskripNilaiRelationOrderByWithAggregationInput[]
+    by: TranskripNilaiRelationScalarFieldEnum[] | TranskripNilaiRelationScalarFieldEnum
+    having?: TranskripNilaiRelationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TranskripNilaiRelationCountAggregateInputType | true
+    _min?: TranskripNilaiRelationMinAggregateInputType
+    _max?: TranskripNilaiRelationMaxAggregateInputType
+  }
+
+  export type TranskripNilaiRelationGroupByOutputType = {
+    TranskripNilaiId: string
+    MataKuliahMahasiswaId: string
+    Nilai: string
+    Diakui: boolean
+    _count: TranskripNilaiRelationCountAggregateOutputType | null
+    _min: TranskripNilaiRelationMinAggregateOutputType | null
+    _max: TranskripNilaiRelationMaxAggregateOutputType | null
+  }
+
+  type GetTranskripNilaiRelationGroupByPayload<T extends TranskripNilaiRelationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TranskripNilaiRelationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TranskripNilaiRelationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TranskripNilaiRelationGroupByOutputType[P]>
+            : GetScalarType<T[P], TranskripNilaiRelationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TranskripNilaiRelationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TranskripNilaiId?: boolean
+    MataKuliahMahasiswaId?: boolean
+    Nilai?: boolean
+    Diakui?: boolean
+    TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transkripNilaiRelation"]>
+
+  export type TranskripNilaiRelationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TranskripNilaiId?: boolean
+    MataKuliahMahasiswaId?: boolean
+    Nilai?: boolean
+    Diakui?: boolean
+    TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transkripNilaiRelation"]>
+
+  export type TranskripNilaiRelationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    TranskripNilaiId?: boolean
+    MataKuliahMahasiswaId?: boolean
+    Nilai?: boolean
+    Diakui?: boolean
+    TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transkripNilaiRelation"]>
+
+  export type TranskripNilaiRelationSelectScalar = {
+    TranskripNilaiId?: boolean
+    MataKuliahMahasiswaId?: boolean
+    Nilai?: boolean
+    Diakui?: boolean
+  }
+
+  export type TranskripNilaiRelationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"TranskripNilaiId" | "MataKuliahMahasiswaId" | "Nilai" | "Diakui", ExtArgs["result"]["transkripNilaiRelation"]>
+  export type TranskripNilaiRelationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+  }
+  export type TranskripNilaiRelationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+  }
+  export type TranskripNilaiRelationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
+    MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
+  }
+
+  export type $TranskripNilaiRelationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TranskripNilaiRelation"
+    objects: {
+      TranskripNilai: Prisma.$TranskripNilaiPayload<ExtArgs>
+      MataKuliahMahasiswa: Prisma.$MataKuliahMahasiswaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      TranskripNilaiId: string
+      MataKuliahMahasiswaId: string
+      Nilai: string
+      Diakui: boolean
+    }, ExtArgs["result"]["transkripNilaiRelation"]>
+    composites: {}
+  }
+
+  type TranskripNilaiRelationGetPayload<S extends boolean | null | undefined | TranskripNilaiRelationDefaultArgs> = $Result.GetResult<Prisma.$TranskripNilaiRelationPayload, S>
+
+  type TranskripNilaiRelationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TranskripNilaiRelationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TranskripNilaiRelationCountAggregateInputType | true
+    }
+
+  export interface TranskripNilaiRelationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TranskripNilaiRelation'], meta: { name: 'TranskripNilaiRelation' } }
+    /**
+     * Find zero or one TranskripNilaiRelation that matches the filter.
+     * @param {TranskripNilaiRelationFindUniqueArgs} args - Arguments to find a TranskripNilaiRelation
+     * @example
+     * // Get one TranskripNilaiRelation
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TranskripNilaiRelationFindUniqueArgs>(args: SelectSubset<T, TranskripNilaiRelationFindUniqueArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TranskripNilaiRelation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TranskripNilaiRelationFindUniqueOrThrowArgs} args - Arguments to find a TranskripNilaiRelation
+     * @example
+     * // Get one TranskripNilaiRelation
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TranskripNilaiRelationFindUniqueOrThrowArgs>(args: SelectSubset<T, TranskripNilaiRelationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TranskripNilaiRelation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiRelationFindFirstArgs} args - Arguments to find a TranskripNilaiRelation
+     * @example
+     * // Get one TranskripNilaiRelation
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TranskripNilaiRelationFindFirstArgs>(args?: SelectSubset<T, TranskripNilaiRelationFindFirstArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TranskripNilaiRelation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiRelationFindFirstOrThrowArgs} args - Arguments to find a TranskripNilaiRelation
+     * @example
+     * // Get one TranskripNilaiRelation
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TranskripNilaiRelationFindFirstOrThrowArgs>(args?: SelectSubset<T, TranskripNilaiRelationFindFirstOrThrowArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TranskripNilaiRelations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiRelationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TranskripNilaiRelations
+     * const transkripNilaiRelations = await prisma.transkripNilaiRelation.findMany()
+     * 
+     * // Get first 10 TranskripNilaiRelations
+     * const transkripNilaiRelations = await prisma.transkripNilaiRelation.findMany({ take: 10 })
+     * 
+     * // Only select the `TranskripNilaiId`
+     * const transkripNilaiRelationWithTranskripNilaiIdOnly = await prisma.transkripNilaiRelation.findMany({ select: { TranskripNilaiId: true } })
+     * 
+     */
+    findMany<T extends TranskripNilaiRelationFindManyArgs>(args?: SelectSubset<T, TranskripNilaiRelationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TranskripNilaiRelation.
+     * @param {TranskripNilaiRelationCreateArgs} args - Arguments to create a TranskripNilaiRelation.
+     * @example
+     * // Create one TranskripNilaiRelation
+     * const TranskripNilaiRelation = await prisma.transkripNilaiRelation.create({
+     *   data: {
+     *     // ... data to create a TranskripNilaiRelation
+     *   }
+     * })
+     * 
+     */
+    create<T extends TranskripNilaiRelationCreateArgs>(args: SelectSubset<T, TranskripNilaiRelationCreateArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TranskripNilaiRelations.
+     * @param {TranskripNilaiRelationCreateManyArgs} args - Arguments to create many TranskripNilaiRelations.
+     * @example
+     * // Create many TranskripNilaiRelations
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TranskripNilaiRelationCreateManyArgs>(args?: SelectSubset<T, TranskripNilaiRelationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TranskripNilaiRelations and returns the data saved in the database.
+     * @param {TranskripNilaiRelationCreateManyAndReturnArgs} args - Arguments to create many TranskripNilaiRelations.
+     * @example
+     * // Create many TranskripNilaiRelations
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TranskripNilaiRelations and only return the `TranskripNilaiId`
+     * const transkripNilaiRelationWithTranskripNilaiIdOnly = await prisma.transkripNilaiRelation.createManyAndReturn({
+     *   select: { TranskripNilaiId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TranskripNilaiRelationCreateManyAndReturnArgs>(args?: SelectSubset<T, TranskripNilaiRelationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TranskripNilaiRelation.
+     * @param {TranskripNilaiRelationDeleteArgs} args - Arguments to delete one TranskripNilaiRelation.
+     * @example
+     * // Delete one TranskripNilaiRelation
+     * const TranskripNilaiRelation = await prisma.transkripNilaiRelation.delete({
+     *   where: {
+     *     // ... filter to delete one TranskripNilaiRelation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TranskripNilaiRelationDeleteArgs>(args: SelectSubset<T, TranskripNilaiRelationDeleteArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TranskripNilaiRelation.
+     * @param {TranskripNilaiRelationUpdateArgs} args - Arguments to update one TranskripNilaiRelation.
+     * @example
+     * // Update one TranskripNilaiRelation
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TranskripNilaiRelationUpdateArgs>(args: SelectSubset<T, TranskripNilaiRelationUpdateArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TranskripNilaiRelations.
+     * @param {TranskripNilaiRelationDeleteManyArgs} args - Arguments to filter TranskripNilaiRelations to delete.
+     * @example
+     * // Delete a few TranskripNilaiRelations
+     * const { count } = await prisma.transkripNilaiRelation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TranskripNilaiRelationDeleteManyArgs>(args?: SelectSubset<T, TranskripNilaiRelationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TranskripNilaiRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiRelationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TranskripNilaiRelations
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TranskripNilaiRelationUpdateManyArgs>(args: SelectSubset<T, TranskripNilaiRelationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TranskripNilaiRelations and returns the data updated in the database.
+     * @param {TranskripNilaiRelationUpdateManyAndReturnArgs} args - Arguments to update many TranskripNilaiRelations.
+     * @example
+     * // Update many TranskripNilaiRelations
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TranskripNilaiRelations and only return the `TranskripNilaiId`
+     * const transkripNilaiRelationWithTranskripNilaiIdOnly = await prisma.transkripNilaiRelation.updateManyAndReturn({
+     *   select: { TranskripNilaiId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TranskripNilaiRelationUpdateManyAndReturnArgs>(args: SelectSubset<T, TranskripNilaiRelationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TranskripNilaiRelation.
+     * @param {TranskripNilaiRelationUpsertArgs} args - Arguments to update or create a TranskripNilaiRelation.
+     * @example
+     * // Update or create a TranskripNilaiRelation
+     * const transkripNilaiRelation = await prisma.transkripNilaiRelation.upsert({
+     *   create: {
+     *     // ... data to create a TranskripNilaiRelation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TranskripNilaiRelation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TranskripNilaiRelationUpsertArgs>(args: SelectSubset<T, TranskripNilaiRelationUpsertArgs<ExtArgs>>): Prisma__TranskripNilaiRelationClient<$Result.GetResult<Prisma.$TranskripNilaiRelationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TranskripNilaiRelations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiRelationCountArgs} args - Arguments to filter TranskripNilaiRelations to count.
+     * @example
+     * // Count the number of TranskripNilaiRelations
+     * const count = await prisma.transkripNilaiRelation.count({
+     *   where: {
+     *     // ... the filter for the TranskripNilaiRelations we want to count
+     *   }
+     * })
+    **/
+    count<T extends TranskripNilaiRelationCountArgs>(
+      args?: Subset<T, TranskripNilaiRelationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TranskripNilaiRelationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TranskripNilaiRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiRelationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TranskripNilaiRelationAggregateArgs>(args: Subset<T, TranskripNilaiRelationAggregateArgs>): Prisma.PrismaPromise<GetTranskripNilaiRelationAggregateType<T>>
+
+    /**
+     * Group by TranskripNilaiRelation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TranskripNilaiRelationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TranskripNilaiRelationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TranskripNilaiRelationGroupByArgs['orderBy'] }
+        : { orderBy?: TranskripNilaiRelationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TranskripNilaiRelationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTranskripNilaiRelationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TranskripNilaiRelation model
+   */
+  readonly fields: TranskripNilaiRelationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TranskripNilaiRelation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TranskripNilaiRelationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    TranskripNilai<T extends TranskripNilaiDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TranskripNilaiDefaultArgs<ExtArgs>>): Prisma__TranskripNilaiClient<$Result.GetResult<Prisma.$TranskripNilaiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    MataKuliahMahasiswa<T extends MataKuliahMahasiswaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MataKuliahMahasiswaDefaultArgs<ExtArgs>>): Prisma__MataKuliahMahasiswaClient<$Result.GetResult<Prisma.$MataKuliahMahasiswaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TranskripNilaiRelation model
+   */
+  interface TranskripNilaiRelationFieldRefs {
+    readonly TranskripNilaiId: FieldRef<"TranskripNilaiRelation", 'String'>
+    readonly MataKuliahMahasiswaId: FieldRef<"TranskripNilaiRelation", 'String'>
+    readonly Nilai: FieldRef<"TranskripNilaiRelation", 'String'>
+    readonly Diakui: FieldRef<"TranskripNilaiRelation", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TranskripNilaiRelation findUnique
+   */
+  export type TranskripNilaiRelationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilaiRelation to fetch.
+     */
+    where: TranskripNilaiRelationWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilaiRelation findUniqueOrThrow
+   */
+  export type TranskripNilaiRelationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilaiRelation to fetch.
+     */
+    where: TranskripNilaiRelationWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilaiRelation findFirst
+   */
+  export type TranskripNilaiRelationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilaiRelation to fetch.
+     */
+    where?: TranskripNilaiRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilaiRelations to fetch.
+     */
+    orderBy?: TranskripNilaiRelationOrderByWithRelationInput | TranskripNilaiRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TranskripNilaiRelations.
+     */
+    cursor?: TranskripNilaiRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilaiRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilaiRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TranskripNilaiRelations.
+     */
+    distinct?: TranskripNilaiRelationScalarFieldEnum | TranskripNilaiRelationScalarFieldEnum[]
+  }
+
+  /**
+   * TranskripNilaiRelation findFirstOrThrow
+   */
+  export type TranskripNilaiRelationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilaiRelation to fetch.
+     */
+    where?: TranskripNilaiRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilaiRelations to fetch.
+     */
+    orderBy?: TranskripNilaiRelationOrderByWithRelationInput | TranskripNilaiRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TranskripNilaiRelations.
+     */
+    cursor?: TranskripNilaiRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilaiRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilaiRelations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TranskripNilaiRelations.
+     */
+    distinct?: TranskripNilaiRelationScalarFieldEnum | TranskripNilaiRelationScalarFieldEnum[]
+  }
+
+  /**
+   * TranskripNilaiRelation findMany
+   */
+  export type TranskripNilaiRelationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * Filter, which TranskripNilaiRelations to fetch.
+     */
+    where?: TranskripNilaiRelationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TranskripNilaiRelations to fetch.
+     */
+    orderBy?: TranskripNilaiRelationOrderByWithRelationInput | TranskripNilaiRelationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TranskripNilaiRelations.
+     */
+    cursor?: TranskripNilaiRelationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TranskripNilaiRelations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TranskripNilaiRelations.
+     */
+    skip?: number
+    distinct?: TranskripNilaiRelationScalarFieldEnum | TranskripNilaiRelationScalarFieldEnum[]
+  }
+
+  /**
+   * TranskripNilaiRelation create
+   */
+  export type TranskripNilaiRelationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TranskripNilaiRelation.
+     */
+    data: XOR<TranskripNilaiRelationCreateInput, TranskripNilaiRelationUncheckedCreateInput>
+  }
+
+  /**
+   * TranskripNilaiRelation createMany
+   */
+  export type TranskripNilaiRelationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TranskripNilaiRelations.
+     */
+    data: TranskripNilaiRelationCreateManyInput | TranskripNilaiRelationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TranskripNilaiRelation createManyAndReturn
+   */
+  export type TranskripNilaiRelationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * The data used to create many TranskripNilaiRelations.
+     */
+    data: TranskripNilaiRelationCreateManyInput | TranskripNilaiRelationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TranskripNilaiRelation update
+   */
+  export type TranskripNilaiRelationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TranskripNilaiRelation.
+     */
+    data: XOR<TranskripNilaiRelationUpdateInput, TranskripNilaiRelationUncheckedUpdateInput>
+    /**
+     * Choose, which TranskripNilaiRelation to update.
+     */
+    where: TranskripNilaiRelationWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilaiRelation updateMany
+   */
+  export type TranskripNilaiRelationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TranskripNilaiRelations.
+     */
+    data: XOR<TranskripNilaiRelationUpdateManyMutationInput, TranskripNilaiRelationUncheckedUpdateManyInput>
+    /**
+     * Filter which TranskripNilaiRelations to update
+     */
+    where?: TranskripNilaiRelationWhereInput
+    /**
+     * Limit how many TranskripNilaiRelations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TranskripNilaiRelation updateManyAndReturn
+   */
+  export type TranskripNilaiRelationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * The data used to update TranskripNilaiRelations.
+     */
+    data: XOR<TranskripNilaiRelationUpdateManyMutationInput, TranskripNilaiRelationUncheckedUpdateManyInput>
+    /**
+     * Filter which TranskripNilaiRelations to update
+     */
+    where?: TranskripNilaiRelationWhereInput
+    /**
+     * Limit how many TranskripNilaiRelations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TranskripNilaiRelation upsert
+   */
+  export type TranskripNilaiRelationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TranskripNilaiRelation to update in case it exists.
+     */
+    where: TranskripNilaiRelationWhereUniqueInput
+    /**
+     * In case the TranskripNilaiRelation found by the `where` argument doesn't exist, create a new TranskripNilaiRelation with this data.
+     */
+    create: XOR<TranskripNilaiRelationCreateInput, TranskripNilaiRelationUncheckedCreateInput>
+    /**
+     * In case the TranskripNilaiRelation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TranskripNilaiRelationUpdateInput, TranskripNilaiRelationUncheckedUpdateInput>
+  }
+
+  /**
+   * TranskripNilaiRelation delete
+   */
+  export type TranskripNilaiRelationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+    /**
+     * Filter which TranskripNilaiRelation to delete.
+     */
+    where: TranskripNilaiRelationWhereUniqueInput
+  }
+
+  /**
+   * TranskripNilaiRelation deleteMany
+   */
+  export type TranskripNilaiRelationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TranskripNilaiRelations to delete
+     */
+    where?: TranskripNilaiRelationWhereInput
+    /**
+     * Limit how many TranskripNilaiRelations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TranskripNilaiRelation without action
+   */
+  export type TranskripNilaiRelationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TranskripNilaiRelation
+     */
+    select?: TranskripNilaiRelationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TranskripNilaiRelation
+     */
+    omit?: TranskripNilaiRelationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TranskripNilaiRelationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -92748,6 +95249,30 @@ export namespace Prisma {
   };
 
   export type TicketsFileScalarFieldEnum = (typeof TicketsFileScalarFieldEnum)[keyof typeof TicketsFileScalarFieldEnum]
+
+
+  export const TranskripNilaiScalarFieldEnum: {
+    TranskripNilaiId: 'TranskripNilaiId',
+    PendaftaranId: 'PendaftaranId',
+    KodeMataKuliah: 'KodeMataKuliah',
+    NamaMataKuliah: 'NamaMataKuliah',
+    Sks: 'Sks',
+    Nilai: 'Nilai',
+    CreatedAt: 'CreatedAt',
+    UpdatedAt: 'UpdatedAt'
+  };
+
+  export type TranskripNilaiScalarFieldEnum = (typeof TranskripNilaiScalarFieldEnum)[keyof typeof TranskripNilaiScalarFieldEnum]
+
+
+  export const TranskripNilaiRelationScalarFieldEnum: {
+    TranskripNilaiId: 'TranskripNilaiId',
+    MataKuliahMahasiswaId: 'MataKuliahMahasiswaId',
+    Nilai: 'Nilai',
+    Diakui: 'Diakui'
+  };
+
+  export type TranskripNilaiRelationScalarFieldEnum = (typeof TranskripNilaiRelationScalarFieldEnum)[keyof typeof TranskripNilaiRelationScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -95036,6 +97561,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriListRelationFilter
     SanggahanAssesmenMk?: SanggahanAssesmenMkListRelationFilter
     SkorAssesmen?: SkorAssesmenListRelationFilter
+    transkripNilaiRelations?: TranskripNilaiRelationListRelationFilter
   }
 
   export type MataKuliahMahasiswaOrderByWithRelationInput = {
@@ -95052,6 +97578,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriOrderByRelationAggregateInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkOrderByRelationAggregateInput
     SkorAssesmen?: SkorAssesmenOrderByRelationAggregateInput
+    transkripNilaiRelations?: TranskripNilaiRelationOrderByRelationAggregateInput
   }
 
   export type MataKuliahMahasiswaWhereUniqueInput = Prisma.AtLeast<{
@@ -95072,6 +97599,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriListRelationFilter
     SanggahanAssesmenMk?: SanggahanAssesmenMkListRelationFilter
     SkorAssesmen?: SkorAssesmenListRelationFilter
+    transkripNilaiRelations?: TranskripNilaiRelationListRelationFilter
   }, "MataKuliahMahasiswaId" | "PendaftaranId_MataKuliahId">
 
   export type MataKuliahMahasiswaOrderByWithAggregationInput = {
@@ -95461,6 +97989,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenListRelationFilter
     SkRektorMahasiswa?: SkRektorMahasiswaListRelationFilter
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryListRelationFilter
+    transkripNilais?: TranskripNilaiListRelationFilter
   }
 
   export type PendaftaranOrderByWithRelationInput = {
@@ -95493,6 +98022,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenOrderByRelationAggregateInput
     SkRektorMahasiswa?: SkRektorMahasiswaOrderByRelationAggregateInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryOrderByRelationAggregateInput
+    transkripNilais?: TranskripNilaiOrderByRelationAggregateInput
   }
 
   export type PendaftaranWhereUniqueInput = Prisma.AtLeast<{
@@ -95528,6 +98058,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenListRelationFilter
     SkRektorMahasiswa?: SkRektorMahasiswaListRelationFilter
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryListRelationFilter
+    transkripNilais?: TranskripNilaiListRelationFilter
   }, "PendaftaranId">
 
   export type PendaftaranOrderByWithAggregationInput = {
@@ -98008,6 +100539,135 @@ export namespace Prisma {
     UpdatedAt?: DateTimeWithAggregatesFilter<"TicketsFile"> | Date | string
   }
 
+  export type TranskripNilaiWhereInput = {
+    AND?: TranskripNilaiWhereInput | TranskripNilaiWhereInput[]
+    OR?: TranskripNilaiWhereInput[]
+    NOT?: TranskripNilaiWhereInput | TranskripNilaiWhereInput[]
+    TranskripNilaiId?: StringFilter<"TranskripNilai"> | string
+    PendaftaranId?: StringFilter<"TranskripNilai"> | string
+    KodeMataKuliah?: StringFilter<"TranskripNilai"> | string
+    NamaMataKuliah?: StringFilter<"TranskripNilai"> | string
+    Sks?: FloatFilter<"TranskripNilai"> | number
+    Nilai?: StringFilter<"TranskripNilai"> | string
+    CreatedAt?: DateTimeFilter<"TranskripNilai"> | Date | string
+    UpdatedAt?: DateTimeFilter<"TranskripNilai"> | Date | string
+    Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
+    transkripNilaiRelations?: TranskripNilaiRelationListRelationFilter
+  }
+
+  export type TranskripNilaiOrderByWithRelationInput = {
+    TranskripNilaiId?: SortOrder
+    PendaftaranId?: SortOrder
+    KodeMataKuliah?: SortOrder
+    NamaMataKuliah?: SortOrder
+    Sks?: SortOrder
+    Nilai?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+    Pendaftaran?: PendaftaranOrderByWithRelationInput
+    transkripNilaiRelations?: TranskripNilaiRelationOrderByRelationAggregateInput
+  }
+
+  export type TranskripNilaiWhereUniqueInput = Prisma.AtLeast<{
+    TranskripNilaiId?: string
+    AND?: TranskripNilaiWhereInput | TranskripNilaiWhereInput[]
+    OR?: TranskripNilaiWhereInput[]
+    NOT?: TranskripNilaiWhereInput | TranskripNilaiWhereInput[]
+    PendaftaranId?: StringFilter<"TranskripNilai"> | string
+    KodeMataKuliah?: StringFilter<"TranskripNilai"> | string
+    NamaMataKuliah?: StringFilter<"TranskripNilai"> | string
+    Sks?: FloatFilter<"TranskripNilai"> | number
+    Nilai?: StringFilter<"TranskripNilai"> | string
+    CreatedAt?: DateTimeFilter<"TranskripNilai"> | Date | string
+    UpdatedAt?: DateTimeFilter<"TranskripNilai"> | Date | string
+    Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
+    transkripNilaiRelations?: TranskripNilaiRelationListRelationFilter
+  }, "TranskripNilaiId">
+
+  export type TranskripNilaiOrderByWithAggregationInput = {
+    TranskripNilaiId?: SortOrder
+    PendaftaranId?: SortOrder
+    KodeMataKuliah?: SortOrder
+    NamaMataKuliah?: SortOrder
+    Sks?: SortOrder
+    Nilai?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+    _count?: TranskripNilaiCountOrderByAggregateInput
+    _avg?: TranskripNilaiAvgOrderByAggregateInput
+    _max?: TranskripNilaiMaxOrderByAggregateInput
+    _min?: TranskripNilaiMinOrderByAggregateInput
+    _sum?: TranskripNilaiSumOrderByAggregateInput
+  }
+
+  export type TranskripNilaiScalarWhereWithAggregatesInput = {
+    AND?: TranskripNilaiScalarWhereWithAggregatesInput | TranskripNilaiScalarWhereWithAggregatesInput[]
+    OR?: TranskripNilaiScalarWhereWithAggregatesInput[]
+    NOT?: TranskripNilaiScalarWhereWithAggregatesInput | TranskripNilaiScalarWhereWithAggregatesInput[]
+    TranskripNilaiId?: StringWithAggregatesFilter<"TranskripNilai"> | string
+    PendaftaranId?: StringWithAggregatesFilter<"TranskripNilai"> | string
+    KodeMataKuliah?: StringWithAggregatesFilter<"TranskripNilai"> | string
+    NamaMataKuliah?: StringWithAggregatesFilter<"TranskripNilai"> | string
+    Sks?: FloatWithAggregatesFilter<"TranskripNilai"> | number
+    Nilai?: StringWithAggregatesFilter<"TranskripNilai"> | string
+    CreatedAt?: DateTimeWithAggregatesFilter<"TranskripNilai"> | Date | string
+    UpdatedAt?: DateTimeWithAggregatesFilter<"TranskripNilai"> | Date | string
+  }
+
+  export type TranskripNilaiRelationWhereInput = {
+    AND?: TranskripNilaiRelationWhereInput | TranskripNilaiRelationWhereInput[]
+    OR?: TranskripNilaiRelationWhereInput[]
+    NOT?: TranskripNilaiRelationWhereInput | TranskripNilaiRelationWhereInput[]
+    TranskripNilaiId?: StringFilter<"TranskripNilaiRelation"> | string
+    MataKuliahMahasiswaId?: StringFilter<"TranskripNilaiRelation"> | string
+    Nilai?: StringFilter<"TranskripNilaiRelation"> | string
+    Diakui?: BoolFilter<"TranskripNilaiRelation"> | boolean
+    TranskripNilai?: XOR<TranskripNilaiScalarRelationFilter, TranskripNilaiWhereInput>
+    MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
+  }
+
+  export type TranskripNilaiRelationOrderByWithRelationInput = {
+    TranskripNilaiId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
+    Nilai?: SortOrder
+    Diakui?: SortOrder
+    TranskripNilai?: TranskripNilaiOrderByWithRelationInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaOrderByWithRelationInput
+  }
+
+  export type TranskripNilaiRelationWhereUniqueInput = Prisma.AtLeast<{
+    TranskripNilaiId_MataKuliahMahasiswaId?: TranskripNilaiRelationTranskripNilaiIdMataKuliahMahasiswaIdCompoundUniqueInput
+    AND?: TranskripNilaiRelationWhereInput | TranskripNilaiRelationWhereInput[]
+    OR?: TranskripNilaiRelationWhereInput[]
+    NOT?: TranskripNilaiRelationWhereInput | TranskripNilaiRelationWhereInput[]
+    TranskripNilaiId?: StringFilter<"TranskripNilaiRelation"> | string
+    MataKuliahMahasiswaId?: StringFilter<"TranskripNilaiRelation"> | string
+    Nilai?: StringFilter<"TranskripNilaiRelation"> | string
+    Diakui?: BoolFilter<"TranskripNilaiRelation"> | boolean
+    TranskripNilai?: XOR<TranskripNilaiScalarRelationFilter, TranskripNilaiWhereInput>
+    MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
+  }, "TranskripNilaiId_MataKuliahMahasiswaId">
+
+  export type TranskripNilaiRelationOrderByWithAggregationInput = {
+    TranskripNilaiId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
+    Nilai?: SortOrder
+    Diakui?: SortOrder
+    _count?: TranskripNilaiRelationCountOrderByAggregateInput
+    _max?: TranskripNilaiRelationMaxOrderByAggregateInput
+    _min?: TranskripNilaiRelationMinOrderByAggregateInput
+  }
+
+  export type TranskripNilaiRelationScalarWhereWithAggregatesInput = {
+    AND?: TranskripNilaiRelationScalarWhereWithAggregatesInput | TranskripNilaiRelationScalarWhereWithAggregatesInput[]
+    OR?: TranskripNilaiRelationScalarWhereWithAggregatesInput[]
+    NOT?: TranskripNilaiRelationScalarWhereWithAggregatesInput | TranskripNilaiRelationScalarWhereWithAggregatesInput[]
+    TranskripNilaiId?: StringWithAggregatesFilter<"TranskripNilaiRelation"> | string
+    MataKuliahMahasiswaId?: StringWithAggregatesFilter<"TranskripNilaiRelation"> | string
+    Nilai?: StringWithAggregatesFilter<"TranskripNilaiRelation"> | string
+    Diakui?: BoolWithAggregatesFilter<"TranskripNilaiRelation"> | boolean
+  }
+
   export type AlamatCreateInput = {
     AlamatId?: string
     Alamat: string
@@ -100130,6 +102790,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateInput = {
@@ -100144,6 +102805,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUpdateInput = {
@@ -100158,6 +102820,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateInput = {
@@ -100172,6 +102835,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaCreateManyInput = {
@@ -100544,6 +103208,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateInput = {
@@ -100575,6 +103240,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUpdateInput = {
@@ -100606,6 +103272,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateInput = {
@@ -100637,6 +103304,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateManyInput = {
@@ -103262,6 +105930,133 @@ export namespace Prisma {
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TranskripNilaiCreateInput = {
+    TranskripNilaiId?: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+    Pendaftaran: PendaftaranCreateNestedOneWithoutTranskripNilaisInput
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutTranskripNilaiInput
+  }
+
+  export type TranskripNilaiUncheckedCreateInput = {
+    TranskripNilaiId?: string
+    PendaftaranId: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutTranskripNilaiInput
+  }
+
+  export type TranskripNilaiUpdateInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Pendaftaran?: PendaftaranUpdateOneRequiredWithoutTranskripNilaisNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutTranskripNilaiNestedInput
+  }
+
+  export type TranskripNilaiUncheckedUpdateInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutTranskripNilaiNestedInput
+  }
+
+  export type TranskripNilaiCreateManyInput = {
+    TranskripNilaiId?: string
+    PendaftaranId: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+  }
+
+  export type TranskripNilaiUpdateManyMutationInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TranskripNilaiUncheckedUpdateManyInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TranskripNilaiRelationCreateInput = {
+    Nilai: string
+    Diakui?: boolean
+    TranskripNilai: TranskripNilaiCreateNestedOneWithoutTranskripNilaiRelationsInput
+    MataKuliahMahasiswa: MataKuliahMahasiswaCreateNestedOneWithoutTranskripNilaiRelationsInput
+  }
+
+  export type TranskripNilaiRelationUncheckedCreateInput = {
+    TranskripNilaiId: string
+    MataKuliahMahasiswaId: string
+    Nilai: string
+    Diakui?: boolean
+  }
+
+  export type TranskripNilaiRelationUpdateInput = {
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    TranskripNilai?: TranskripNilaiUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type TranskripNilaiRelationCreateManyInput = {
+    TranskripNilaiId: string
+    MataKuliahMahasiswaId: string
+    Nilai: string
+    Diakui?: boolean
+  }
+
+  export type TranskripNilaiRelationUpdateManyMutationInput = {
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateManyInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -104842,11 +107637,21 @@ export namespace Prisma {
     none?: SkorAssesmenWhereInput
   }
 
+  export type TranskripNilaiRelationListRelationFilter = {
+    every?: TranskripNilaiRelationWhereInput
+    some?: TranskripNilaiRelationWhereInput
+    none?: TranskripNilaiRelationWhereInput
+  }
+
   export type SanggahanAssesmenMkOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type SkorAssesmenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TranskripNilaiRelationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -105206,6 +108011,12 @@ export namespace Prisma {
     none?: StatusMahasiswaAssesmentHistoryWhereInput
   }
 
+  export type TranskripNilaiListRelationFilter = {
+    every?: TranskripNilaiWhereInput
+    some?: TranskripNilaiWhereInput
+    none?: TranskripNilaiWhereInput
+  }
+
   export type DaftarUlangOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -105259,6 +108070,10 @@ export namespace Prisma {
   }
 
   export type StatusMahasiswaAssesmentHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TranskripNilaiOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -106795,6 +109610,78 @@ export namespace Prisma {
     UpdatedAt?: SortOrder
   }
 
+  export type TranskripNilaiCountOrderByAggregateInput = {
+    TranskripNilaiId?: SortOrder
+    PendaftaranId?: SortOrder
+    KodeMataKuliah?: SortOrder
+    NamaMataKuliah?: SortOrder
+    Sks?: SortOrder
+    Nilai?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type TranskripNilaiAvgOrderByAggregateInput = {
+    Sks?: SortOrder
+  }
+
+  export type TranskripNilaiMaxOrderByAggregateInput = {
+    TranskripNilaiId?: SortOrder
+    PendaftaranId?: SortOrder
+    KodeMataKuliah?: SortOrder
+    NamaMataKuliah?: SortOrder
+    Sks?: SortOrder
+    Nilai?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type TranskripNilaiMinOrderByAggregateInput = {
+    TranskripNilaiId?: SortOrder
+    PendaftaranId?: SortOrder
+    KodeMataKuliah?: SortOrder
+    NamaMataKuliah?: SortOrder
+    Sks?: SortOrder
+    Nilai?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type TranskripNilaiSumOrderByAggregateInput = {
+    Sks?: SortOrder
+  }
+
+  export type TranskripNilaiScalarRelationFilter = {
+    is?: TranskripNilaiWhereInput
+    isNot?: TranskripNilaiWhereInput
+  }
+
+  export type TranskripNilaiRelationTranskripNilaiIdMataKuliahMahasiswaIdCompoundUniqueInput = {
+    TranskripNilaiId: string
+    MataKuliahMahasiswaId: string
+  }
+
+  export type TranskripNilaiRelationCountOrderByAggregateInput = {
+    TranskripNilaiId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
+    Nilai?: SortOrder
+    Diakui?: SortOrder
+  }
+
+  export type TranskripNilaiRelationMaxOrderByAggregateInput = {
+    TranskripNilaiId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
+    Nilai?: SortOrder
+    Diakui?: SortOrder
+  }
+
+  export type TranskripNilaiRelationMinOrderByAggregateInput = {
+    TranskripNilaiId?: SortOrder
+    MataKuliahMahasiswaId?: SortOrder
+    Nilai?: SortOrder
+    Diakui?: SortOrder
+  }
+
   export type DesaCreateNestedOneWithoutAlamatInput = {
     create?: XOR<DesaCreateWithoutAlamatInput, DesaUncheckedCreateWithoutAlamatInput>
     connectOrCreate?: DesaCreateOrConnectWithoutAlamatInput
@@ -108328,6 +111215,13 @@ export namespace Prisma {
     connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
   }
 
+  export type TranskripNilaiRelationCreateNestedManyWithoutMataKuliahMahasiswaInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput> | TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput[] | TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    createMany?: TranskripNilaiRelationCreateManyMataKuliahMahasiswaInputEnvelope
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+  }
+
   export type EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput = {
     create?: XOR<EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput, EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput> | EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput[] | EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput[]
     connectOrCreate?: EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput | EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput[]
@@ -108347,6 +111241,13 @@ export namespace Prisma {
     connectOrCreate?: SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput | SkorAssesmenCreateOrConnectWithoutMataKuliahMahasiswaInput[]
     createMany?: SkorAssesmenCreateManyMataKuliahMahasiswaInputEnvelope
     connect?: SkorAssesmenWhereUniqueInput | SkorAssesmenWhereUniqueInput[]
+  }
+
+  export type TranskripNilaiRelationUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput> | TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput[] | TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    createMany?: TranskripNilaiRelationCreateManyMataKuliahMahasiswaInputEnvelope
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
   }
 
   export type NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput = {
@@ -108415,6 +111316,20 @@ export namespace Prisma {
     deleteMany?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
   }
 
+  export type TranskripNilaiRelationUpdateManyWithoutMataKuliahMahasiswaNestedInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput> | TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput[] | TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    upsert?: TranskripNilaiRelationUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    createMany?: TranskripNilaiRelationCreateManyMataKuliahMahasiswaInputEnvelope
+    set?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    disconnect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    delete?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    update?: TranskripNilaiRelationUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    updateMany?: TranskripNilaiRelationUpdateManyWithWhereWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationUpdateManyWithWhereWithoutMataKuliahMahasiswaInput[]
+    deleteMany?: TranskripNilaiRelationScalarWhereInput | TranskripNilaiRelationScalarWhereInput[]
+  }
+
   export type EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput = {
     create?: XOR<EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput, EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput> | EvaluasiDiriCreateWithoutMataKuliahMahasiswaInput[] | EvaluasiDiriUncheckedCreateWithoutMataKuliahMahasiswaInput[]
     connectOrCreate?: EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput | EvaluasiDiriCreateOrConnectWithoutMataKuliahMahasiswaInput[]
@@ -108455,6 +111370,20 @@ export namespace Prisma {
     update?: SkorAssesmenUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput | SkorAssesmenUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
     updateMany?: SkorAssesmenUpdateManyWithWhereWithoutMataKuliahMahasiswaInput | SkorAssesmenUpdateManyWithWhereWithoutMataKuliahMahasiswaInput[]
     deleteMany?: SkorAssesmenScalarWhereInput | SkorAssesmenScalarWhereInput[]
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput> | TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput[] | TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput[]
+    upsert?: TranskripNilaiRelationUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    createMany?: TranskripNilaiRelationCreateManyMataKuliahMahasiswaInputEnvelope
+    set?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    disconnect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    delete?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    update?: TranskripNilaiRelationUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput[]
+    updateMany?: TranskripNilaiRelationUpdateManyWithWhereWithoutMataKuliahMahasiswaInput | TranskripNilaiRelationUpdateManyWithWhereWithoutMataKuliahMahasiswaInput[]
+    deleteMany?: TranskripNilaiRelationScalarWhereInput | TranskripNilaiRelationScalarWhereInput[]
   }
 
   export type PermissionCreateNestedOneWithoutUserHasPermissionsInput = {
@@ -108709,6 +111638,13 @@ export namespace Prisma {
     connect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
   }
 
+  export type TranskripNilaiCreateNestedManyWithoutPendaftaranInput = {
+    create?: XOR<TranskripNilaiCreateWithoutPendaftaranInput, TranskripNilaiUncheckedCreateWithoutPendaftaranInput> | TranskripNilaiCreateWithoutPendaftaranInput[] | TranskripNilaiUncheckedCreateWithoutPendaftaranInput[]
+    connectOrCreate?: TranskripNilaiCreateOrConnectWithoutPendaftaranInput | TranskripNilaiCreateOrConnectWithoutPendaftaranInput[]
+    createMany?: TranskripNilaiCreateManyPendaftaranInputEnvelope
+    connect?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+  }
+
   export type AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput = {
     create?: XOR<AssesorMahasiswaCreateWithoutPendaftaranInput, AssesorMahasiswaUncheckedCreateWithoutPendaftaranInput> | AssesorMahasiswaCreateWithoutPendaftaranInput[] | AssesorMahasiswaUncheckedCreateWithoutPendaftaranInput[]
     connectOrCreate?: AssesorMahasiswaCreateOrConnectWithoutPendaftaranInput | AssesorMahasiswaCreateOrConnectWithoutPendaftaranInput[]
@@ -108833,6 +111769,13 @@ export namespace Prisma {
     connectOrCreate?: StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutPendaftaranInput | StatusMahasiswaAssesmentHistoryCreateOrConnectWithoutPendaftaranInput[]
     createMany?: StatusMahasiswaAssesmentHistoryCreateManyPendaftaranInputEnvelope
     connect?: StatusMahasiswaAssesmentHistoryWhereUniqueInput | StatusMahasiswaAssesmentHistoryWhereUniqueInput[]
+  }
+
+  export type TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput = {
+    create?: XOR<TranskripNilaiCreateWithoutPendaftaranInput, TranskripNilaiUncheckedCreateWithoutPendaftaranInput> | TranskripNilaiCreateWithoutPendaftaranInput[] | TranskripNilaiUncheckedCreateWithoutPendaftaranInput[]
+    connectOrCreate?: TranskripNilaiCreateOrConnectWithoutPendaftaranInput | TranskripNilaiCreateOrConnectWithoutPendaftaranInput[]
+    createMany?: TranskripNilaiCreateManyPendaftaranInputEnvelope
+    connect?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
   }
 
   export type EnumSistemKuliahFieldUpdateOperationsInput = {
@@ -109099,6 +112042,20 @@ export namespace Prisma {
     deleteMany?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
   }
 
+  export type TranskripNilaiUpdateManyWithoutPendaftaranNestedInput = {
+    create?: XOR<TranskripNilaiCreateWithoutPendaftaranInput, TranskripNilaiUncheckedCreateWithoutPendaftaranInput> | TranskripNilaiCreateWithoutPendaftaranInput[] | TranskripNilaiUncheckedCreateWithoutPendaftaranInput[]
+    connectOrCreate?: TranskripNilaiCreateOrConnectWithoutPendaftaranInput | TranskripNilaiCreateOrConnectWithoutPendaftaranInput[]
+    upsert?: TranskripNilaiUpsertWithWhereUniqueWithoutPendaftaranInput | TranskripNilaiUpsertWithWhereUniqueWithoutPendaftaranInput[]
+    createMany?: TranskripNilaiCreateManyPendaftaranInputEnvelope
+    set?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    disconnect?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    delete?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    connect?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    update?: TranskripNilaiUpdateWithWhereUniqueWithoutPendaftaranInput | TranskripNilaiUpdateWithWhereUniqueWithoutPendaftaranInput[]
+    updateMany?: TranskripNilaiUpdateManyWithWhereWithoutPendaftaranInput | TranskripNilaiUpdateManyWithWhereWithoutPendaftaranInput[]
+    deleteMany?: TranskripNilaiScalarWhereInput | TranskripNilaiScalarWhereInput[]
+  }
+
   export type AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput = {
     create?: XOR<AssesorMahasiswaCreateWithoutPendaftaranInput, AssesorMahasiswaUncheckedCreateWithoutPendaftaranInput> | AssesorMahasiswaCreateWithoutPendaftaranInput[] | AssesorMahasiswaUncheckedCreateWithoutPendaftaranInput[]
     connectOrCreate?: AssesorMahasiswaCreateOrConnectWithoutPendaftaranInput | AssesorMahasiswaCreateOrConnectWithoutPendaftaranInput[]
@@ -109349,6 +112306,20 @@ export namespace Prisma {
     update?: StatusMahasiswaAssesmentHistoryUpdateWithWhereUniqueWithoutPendaftaranInput | StatusMahasiswaAssesmentHistoryUpdateWithWhereUniqueWithoutPendaftaranInput[]
     updateMany?: StatusMahasiswaAssesmentHistoryUpdateManyWithWhereWithoutPendaftaranInput | StatusMahasiswaAssesmentHistoryUpdateManyWithWhereWithoutPendaftaranInput[]
     deleteMany?: StatusMahasiswaAssesmentHistoryScalarWhereInput | StatusMahasiswaAssesmentHistoryScalarWhereInput[]
+  }
+
+  export type TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput = {
+    create?: XOR<TranskripNilaiCreateWithoutPendaftaranInput, TranskripNilaiUncheckedCreateWithoutPendaftaranInput> | TranskripNilaiCreateWithoutPendaftaranInput[] | TranskripNilaiUncheckedCreateWithoutPendaftaranInput[]
+    connectOrCreate?: TranskripNilaiCreateOrConnectWithoutPendaftaranInput | TranskripNilaiCreateOrConnectWithoutPendaftaranInput[]
+    upsert?: TranskripNilaiUpsertWithWhereUniqueWithoutPendaftaranInput | TranskripNilaiUpsertWithWhereUniqueWithoutPendaftaranInput[]
+    createMany?: TranskripNilaiCreateManyPendaftaranInputEnvelope
+    set?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    disconnect?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    delete?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    connect?: TranskripNilaiWhereUniqueInput | TranskripNilaiWhereUniqueInput[]
+    update?: TranskripNilaiUpdateWithWhereUniqueWithoutPendaftaranInput | TranskripNilaiUpdateWithWhereUniqueWithoutPendaftaranInput[]
+    updateMany?: TranskripNilaiUpdateManyWithWhereWithoutPendaftaranInput | TranskripNilaiUpdateManyWithWhereWithoutPendaftaranInput[]
+    deleteMany?: TranskripNilaiScalarWhereInput | TranskripNilaiScalarWhereInput[]
   }
 
   export type UserHasPermissionsCreateNestedManyWithoutPermissionInput = {
@@ -111533,6 +114504,90 @@ export namespace Prisma {
     update?: XOR<XOR<TicketsUpdateToOneWithWhereWithoutTicketsFilesInput, TicketsUpdateWithoutTicketsFilesInput>, TicketsUncheckedUpdateWithoutTicketsFilesInput>
   }
 
+  export type PendaftaranCreateNestedOneWithoutTranskripNilaisInput = {
+    create?: XOR<PendaftaranCreateWithoutTranskripNilaisInput, PendaftaranUncheckedCreateWithoutTranskripNilaisInput>
+    connectOrCreate?: PendaftaranCreateOrConnectWithoutTranskripNilaisInput
+    connect?: PendaftaranWhereUniqueInput
+  }
+
+  export type TranskripNilaiRelationCreateNestedManyWithoutTranskripNilaiInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput> | TranskripNilaiRelationCreateWithoutTranskripNilaiInput[] | TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput | TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput[]
+    createMany?: TranskripNilaiRelationCreateManyTranskripNilaiInputEnvelope
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+  }
+
+  export type TranskripNilaiRelationUncheckedCreateNestedManyWithoutTranskripNilaiInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput> | TranskripNilaiRelationCreateWithoutTranskripNilaiInput[] | TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput | TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput[]
+    createMany?: TranskripNilaiRelationCreateManyTranskripNilaiInputEnvelope
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+  }
+
+  export type PendaftaranUpdateOneRequiredWithoutTranskripNilaisNestedInput = {
+    create?: XOR<PendaftaranCreateWithoutTranskripNilaisInput, PendaftaranUncheckedCreateWithoutTranskripNilaisInput>
+    connectOrCreate?: PendaftaranCreateOrConnectWithoutTranskripNilaisInput
+    upsert?: PendaftaranUpsertWithoutTranskripNilaisInput
+    connect?: PendaftaranWhereUniqueInput
+    update?: XOR<XOR<PendaftaranUpdateToOneWithWhereWithoutTranskripNilaisInput, PendaftaranUpdateWithoutTranskripNilaisInput>, PendaftaranUncheckedUpdateWithoutTranskripNilaisInput>
+  }
+
+  export type TranskripNilaiRelationUpdateManyWithoutTranskripNilaiNestedInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput> | TranskripNilaiRelationCreateWithoutTranskripNilaiInput[] | TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput | TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput[]
+    upsert?: TranskripNilaiRelationUpsertWithWhereUniqueWithoutTranskripNilaiInput | TranskripNilaiRelationUpsertWithWhereUniqueWithoutTranskripNilaiInput[]
+    createMany?: TranskripNilaiRelationCreateManyTranskripNilaiInputEnvelope
+    set?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    disconnect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    delete?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    update?: TranskripNilaiRelationUpdateWithWhereUniqueWithoutTranskripNilaiInput | TranskripNilaiRelationUpdateWithWhereUniqueWithoutTranskripNilaiInput[]
+    updateMany?: TranskripNilaiRelationUpdateManyWithWhereWithoutTranskripNilaiInput | TranskripNilaiRelationUpdateManyWithWhereWithoutTranskripNilaiInput[]
+    deleteMany?: TranskripNilaiRelationScalarWhereInput | TranskripNilaiRelationScalarWhereInput[]
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateManyWithoutTranskripNilaiNestedInput = {
+    create?: XOR<TranskripNilaiRelationCreateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput> | TranskripNilaiRelationCreateWithoutTranskripNilaiInput[] | TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput[]
+    connectOrCreate?: TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput | TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput[]
+    upsert?: TranskripNilaiRelationUpsertWithWhereUniqueWithoutTranskripNilaiInput | TranskripNilaiRelationUpsertWithWhereUniqueWithoutTranskripNilaiInput[]
+    createMany?: TranskripNilaiRelationCreateManyTranskripNilaiInputEnvelope
+    set?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    disconnect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    delete?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    connect?: TranskripNilaiRelationWhereUniqueInput | TranskripNilaiRelationWhereUniqueInput[]
+    update?: TranskripNilaiRelationUpdateWithWhereUniqueWithoutTranskripNilaiInput | TranskripNilaiRelationUpdateWithWhereUniqueWithoutTranskripNilaiInput[]
+    updateMany?: TranskripNilaiRelationUpdateManyWithWhereWithoutTranskripNilaiInput | TranskripNilaiRelationUpdateManyWithWhereWithoutTranskripNilaiInput[]
+    deleteMany?: TranskripNilaiRelationScalarWhereInput | TranskripNilaiRelationScalarWhereInput[]
+  }
+
+  export type TranskripNilaiCreateNestedOneWithoutTranskripNilaiRelationsInput = {
+    create?: XOR<TranskripNilaiCreateWithoutTranskripNilaiRelationsInput, TranskripNilaiUncheckedCreateWithoutTranskripNilaiRelationsInput>
+    connectOrCreate?: TranskripNilaiCreateOrConnectWithoutTranskripNilaiRelationsInput
+    connect?: TranskripNilaiWhereUniqueInput
+  }
+
+  export type MataKuliahMahasiswaCreateNestedOneWithoutTranskripNilaiRelationsInput = {
+    create?: XOR<MataKuliahMahasiswaCreateWithoutTranskripNilaiRelationsInput, MataKuliahMahasiswaUncheckedCreateWithoutTranskripNilaiRelationsInput>
+    connectOrCreate?: MataKuliahMahasiswaCreateOrConnectWithoutTranskripNilaiRelationsInput
+    connect?: MataKuliahMahasiswaWhereUniqueInput
+  }
+
+  export type TranskripNilaiUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput = {
+    create?: XOR<TranskripNilaiCreateWithoutTranskripNilaiRelationsInput, TranskripNilaiUncheckedCreateWithoutTranskripNilaiRelationsInput>
+    connectOrCreate?: TranskripNilaiCreateOrConnectWithoutTranskripNilaiRelationsInput
+    upsert?: TranskripNilaiUpsertWithoutTranskripNilaiRelationsInput
+    connect?: TranskripNilaiWhereUniqueInput
+    update?: XOR<XOR<TranskripNilaiUpdateToOneWithWhereWithoutTranskripNilaiRelationsInput, TranskripNilaiUpdateWithoutTranskripNilaiRelationsInput>, TranskripNilaiUncheckedUpdateWithoutTranskripNilaiRelationsInput>
+  }
+
+  export type MataKuliahMahasiswaUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput = {
+    create?: XOR<MataKuliahMahasiswaCreateWithoutTranskripNilaiRelationsInput, MataKuliahMahasiswaUncheckedCreateWithoutTranskripNilaiRelationsInput>
+    connectOrCreate?: MataKuliahMahasiswaCreateOrConnectWithoutTranskripNilaiRelationsInput
+    upsert?: MataKuliahMahasiswaUpsertWithoutTranskripNilaiRelationsInput
+    connect?: MataKuliahMahasiswaWhereUniqueInput
+    update?: XOR<XOR<MataKuliahMahasiswaUpdateToOneWithWhereWithoutTranskripNilaiRelationsInput, MataKuliahMahasiswaUpdateWithoutTranskripNilaiRelationsInput>, MataKuliahMahasiswaUncheckedUpdateWithoutTranskripNilaiRelationsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -112959,6 +116014,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutAssesorMahasiswaInput = {
@@ -112989,6 +116045,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutAssesorMahasiswaInput = {
@@ -113088,6 +116145,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutAssesorMahasiswaInput = {
@@ -113118,6 +116176,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type SkRektorAssesorUpsertWithWhereUniqueWithoutAssesorMahasiswaInput = {
@@ -113172,6 +116231,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutBuktiFormInput = {
@@ -113202,6 +116262,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutBuktiFormInput = {
@@ -113309,6 +116370,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutBuktiFormInput = {
@@ -113339,6 +116401,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type JenisDokumenUpsertWithoutBuktiFormInput = {
@@ -113813,6 +116876,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutDaftarUlangInput = {
@@ -113843,6 +116907,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutDaftarUlangInput = {
@@ -113920,6 +116985,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutDaftarUlangInput = {
@@ -113950,6 +117016,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type ProgramStudiUpsertWithoutDaftarUlangInput = {
@@ -114094,6 +117161,7 @@ export namespace Prisma {
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutEvaluasiDiriInput = {
@@ -114107,6 +117175,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutEvaluasiDiriInput = {
@@ -114221,6 +117290,7 @@ export namespace Prisma {
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutEvaluasiDiriInput = {
@@ -114234,6 +117304,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type CapaianPembelajaranUpsertWithoutEvaluasiDiriInput = {
@@ -114543,6 +117614,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutInformasiKependudukanInput = {
@@ -114573,6 +117645,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutInformasiKependudukanInput = {
@@ -114619,6 +117692,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutInformasiKependudukanInput = {
@@ -114649,6 +117723,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateWithoutInstitusiLamaInput = {
@@ -114679,6 +117754,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutInstitusiLamaInput = {
@@ -114709,6 +117785,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutInstitusiLamaInput = {
@@ -114778,6 +117855,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutInstitusiLamaInput = {
@@ -114808,6 +117886,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type AlamatUpsertWithoutInstitusiLamaInput = {
@@ -115162,6 +118241,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMahasiswaInput = {
@@ -115192,6 +118272,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMahasiswaInput = {
@@ -115327,6 +118408,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMahasiswaKonferensiInput = {
@@ -115357,6 +118439,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMahasiswaKonferensiInput = {
@@ -115403,6 +118486,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMahasiswaKonferensiInput = {
@@ -115433,6 +118517,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateWithoutMahasiswaOrganisasiProfesiInput = {
@@ -115463,6 +118548,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMahasiswaOrganisasiProfesiInput = {
@@ -115493,6 +118579,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMahasiswaOrganisasiProfesiInput = {
@@ -115539,6 +118626,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMahasiswaOrganisasiProfesiInput = {
@@ -115569,6 +118657,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateWithoutMahasiswaPelatihanProfessionalInput = {
@@ -115599,6 +118688,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMahasiswaPelatihanProfessionalInput = {
@@ -115629,6 +118719,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMahasiswaPelatihanProfessionalInput = {
@@ -115675,6 +118766,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMahasiswaPelatihanProfessionalInput = {
@@ -115705,6 +118797,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateWithoutMahasiswaPendidikanInput = {
@@ -115735,6 +118828,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMahasiswaPendidikanInput = {
@@ -115765,6 +118859,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMahasiswaPendidikanInput = {
@@ -115811,6 +118906,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMahasiswaPendidikanInput = {
@@ -115841,6 +118937,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateWithoutMahasiswaPiagamInput = {
@@ -115871,6 +118968,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMahasiswaPiagamInput = {
@@ -115901,6 +118999,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMahasiswaPiagamInput = {
@@ -115947,6 +119046,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMahasiswaPiagamInput = {
@@ -115977,6 +119077,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateWithoutMahasiswaRiwayatPekerjaanInput = {
@@ -116007,6 +119108,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMahasiswaRiwayatPekerjaanInput = {
@@ -116037,6 +119139,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMahasiswaRiwayatPekerjaanInput = {
@@ -116083,6 +119186,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMahasiswaRiwayatPekerjaanInput = {
@@ -116113,6 +119217,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type ProgramStudiCreateWithoutMataKuliahInput = {
@@ -116189,6 +119294,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutMataKuliahInput = {
@@ -116202,6 +119308,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutMataKuliahInput = {
@@ -116339,6 +119446,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutMataKuliahMahasiswaInput = {
@@ -116369,6 +119477,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutMataKuliahMahasiswaInput = {
@@ -116507,6 +119616,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput = {
+    Nilai: string
+    Diakui?: boolean
+    TranskripNilai: TranskripNilaiCreateNestedOneWithoutTranskripNilaiRelationsInput
+  }
+
+  export type TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput = {
+    TranskripNilaiId: string
+    Nilai: string
+    Diakui?: boolean
+  }
+
+  export type TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput = {
+    where: TranskripNilaiRelationWhereUniqueInput
+    create: XOR<TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type TranskripNilaiRelationCreateManyMataKuliahMahasiswaInputEnvelope = {
+    data: TranskripNilaiRelationCreateManyMataKuliahMahasiswaInput | TranskripNilaiRelationCreateManyMataKuliahMahasiswaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PendaftaranUpsertWithoutMataKuliahMahasiswaInput = {
     update: XOR<PendaftaranUpdateWithoutMataKuliahMahasiswaInput, PendaftaranUncheckedUpdateWithoutMataKuliahMahasiswaInput>
     create: XOR<PendaftaranCreateWithoutMataKuliahMahasiswaInput, PendaftaranUncheckedCreateWithoutMataKuliahMahasiswaInput>
@@ -116546,6 +119677,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMataKuliahMahasiswaInput = {
@@ -116576,6 +119708,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type MataKuliahUpsertWithoutMataKuliahMahasiswaInput = {
@@ -116693,6 +119826,32 @@ export namespace Prisma {
     CreatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkorAssesmen"> | Date | string | null
     Ai?: BoolFilter<"SkorAssesmen"> | boolean
+  }
+
+  export type TranskripNilaiRelationUpsertWithWhereUniqueWithoutMataKuliahMahasiswaInput = {
+    where: TranskripNilaiRelationWhereUniqueInput
+    update: XOR<TranskripNilaiRelationUpdateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedUpdateWithoutMataKuliahMahasiswaInput>
+    create: XOR<TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedCreateWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type TranskripNilaiRelationUpdateWithWhereUniqueWithoutMataKuliahMahasiswaInput = {
+    where: TranskripNilaiRelationWhereUniqueInput
+    data: XOR<TranskripNilaiRelationUpdateWithoutMataKuliahMahasiswaInput, TranskripNilaiRelationUncheckedUpdateWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type TranskripNilaiRelationUpdateManyWithWhereWithoutMataKuliahMahasiswaInput = {
+    where: TranskripNilaiRelationScalarWhereInput
+    data: XOR<TranskripNilaiRelationUpdateManyMutationInput, TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaInput>
+  }
+
+  export type TranskripNilaiRelationScalarWhereInput = {
+    AND?: TranskripNilaiRelationScalarWhereInput | TranskripNilaiRelationScalarWhereInput[]
+    OR?: TranskripNilaiRelationScalarWhereInput[]
+    NOT?: TranskripNilaiRelationScalarWhereInput | TranskripNilaiRelationScalarWhereInput[]
+    TranskripNilaiId?: StringFilter<"TranskripNilaiRelation"> | string
+    MataKuliahMahasiswaId?: StringFilter<"TranskripNilaiRelation"> | string
+    Nilai?: StringFilter<"TranskripNilaiRelation"> | string
+    Diakui?: BoolFilter<"TranskripNilaiRelation"> | boolean
   }
 
   export type PermissionCreateWithoutUserHasPermissionsInput = {
@@ -117211,6 +120370,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutOrangTuaInput = {
@@ -117241,6 +120401,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutOrangTuaInput = {
@@ -117287,6 +120448,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutOrangTuaInput = {
@@ -117317,6 +120479,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranCreateWithoutPekerjaanMahasiswaInput = {
@@ -117347,6 +120510,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutPekerjaanMahasiswaInput = {
@@ -117377,6 +120541,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutPekerjaanMahasiswaInput = {
@@ -117423,6 +120588,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutPekerjaanMahasiswaInput = {
@@ -117453,6 +120619,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type MahasiswaCreateWithoutPendaftaranInput = {
@@ -117837,6 +121004,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutPendaftaranInput = {
@@ -117850,6 +121018,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutPendaftaranInput = {
@@ -118023,6 +121192,38 @@ export namespace Prisma {
 
   export type StatusMahasiswaAssesmentHistoryCreateManyPendaftaranInputEnvelope = {
     data: StatusMahasiswaAssesmentHistoryCreateManyPendaftaranInput | StatusMahasiswaAssesmentHistoryCreateManyPendaftaranInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TranskripNilaiCreateWithoutPendaftaranInput = {
+    TranskripNilaiId?: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutTranskripNilaiInput
+  }
+
+  export type TranskripNilaiUncheckedCreateWithoutPendaftaranInput = {
+    TranskripNilaiId?: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutTranskripNilaiInput
+  }
+
+  export type TranskripNilaiCreateOrConnectWithoutPendaftaranInput = {
+    where: TranskripNilaiWhereUniqueInput
+    create: XOR<TranskripNilaiCreateWithoutPendaftaranInput, TranskripNilaiUncheckedCreateWithoutPendaftaranInput>
+  }
+
+  export type TranskripNilaiCreateManyPendaftaranInputEnvelope = {
+    data: TranskripNilaiCreateManyPendaftaranInput | TranskripNilaiCreateManyPendaftaranInput[]
     skipDuplicates?: boolean
   }
 
@@ -118530,6 +121731,36 @@ export namespace Prisma {
     Aktif?: BoolFilter<"StatusMahasiswaAssesmentHistory"> | boolean
   }
 
+  export type TranskripNilaiUpsertWithWhereUniqueWithoutPendaftaranInput = {
+    where: TranskripNilaiWhereUniqueInput
+    update: XOR<TranskripNilaiUpdateWithoutPendaftaranInput, TranskripNilaiUncheckedUpdateWithoutPendaftaranInput>
+    create: XOR<TranskripNilaiCreateWithoutPendaftaranInput, TranskripNilaiUncheckedCreateWithoutPendaftaranInput>
+  }
+
+  export type TranskripNilaiUpdateWithWhereUniqueWithoutPendaftaranInput = {
+    where: TranskripNilaiWhereUniqueInput
+    data: XOR<TranskripNilaiUpdateWithoutPendaftaranInput, TranskripNilaiUncheckedUpdateWithoutPendaftaranInput>
+  }
+
+  export type TranskripNilaiUpdateManyWithWhereWithoutPendaftaranInput = {
+    where: TranskripNilaiScalarWhereInput
+    data: XOR<TranskripNilaiUpdateManyMutationInput, TranskripNilaiUncheckedUpdateManyWithoutPendaftaranInput>
+  }
+
+  export type TranskripNilaiScalarWhereInput = {
+    AND?: TranskripNilaiScalarWhereInput | TranskripNilaiScalarWhereInput[]
+    OR?: TranskripNilaiScalarWhereInput[]
+    NOT?: TranskripNilaiScalarWhereInput | TranskripNilaiScalarWhereInput[]
+    TranskripNilaiId?: StringFilter<"TranskripNilai"> | string
+    PendaftaranId?: StringFilter<"TranskripNilai"> | string
+    KodeMataKuliah?: StringFilter<"TranskripNilai"> | string
+    NamaMataKuliah?: StringFilter<"TranskripNilai"> | string
+    Sks?: FloatFilter<"TranskripNilai"> | number
+    Nilai?: StringFilter<"TranskripNilai"> | string
+    CreatedAt?: DateTimeFilter<"TranskripNilai"> | Date | string
+    UpdatedAt?: DateTimeFilter<"TranskripNilai"> | Date | string
+  }
+
   export type UserHasPermissionsCreateWithoutPermissionInput = {
     User: UserCreateNestedOneWithoutUserHasPermissionsInput
   }
@@ -118642,6 +121873,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutPesantrenInput = {
@@ -118672,6 +121904,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutPesantrenInput = {
@@ -118718,6 +121951,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutPesantrenInput = {
@@ -118748,6 +121982,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type UniversityCreateWithoutProgramStudiInput = {
@@ -119400,6 +122635,7 @@ export namespace Prisma {
     Pesantren?: PesantrenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutSanggahanAssesmenInput = {
@@ -119430,6 +122666,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutSanggahanAssesmenInput = {
@@ -119530,6 +122767,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutSanggahanAssesmenInput = {
@@ -119560,6 +122798,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type SanggahanAssesmenMkUpsertWithWhereUniqueWithoutSanggahanAssesmenInput = {
@@ -119643,6 +122882,7 @@ export namespace Prisma {
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutSanggahanAssesmenMkInput = {
@@ -119656,6 +122896,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutSanggahanAssesmenMkInput = {
@@ -119716,6 +122957,7 @@ export namespace Prisma {
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutSanggahanAssesmenMkInput = {
@@ -119729,6 +122971,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type SanggahanAssesmenCreateWithoutSanggahanAssesmenPihakInput = {
@@ -120159,6 +123402,7 @@ export namespace Prisma {
     Pesantren?: PesantrenCreateNestedManyWithoutPendaftaranInput
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutSkRektorMahasiswaInput = {
@@ -120189,6 +123433,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUncheckedCreateNestedManyWithoutPendaftaranInput
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutSkRektorMahasiswaInput = {
@@ -120276,6 +123521,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUpdateManyWithoutPendaftaranNestedInput
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutSkRektorMahasiswaInput = {
@@ -120306,6 +123552,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type MataKuliahMahasiswaCreateWithoutSkorAssesmenInput = {
@@ -120319,6 +123566,7 @@ export namespace Prisma {
     MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
     EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaUncheckedCreateWithoutSkorAssesmenInput = {
@@ -120332,6 +123580,7 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
   }
 
   export type MataKuliahMahasiswaCreateOrConnectWithoutSkorAssesmenInput = {
@@ -120393,6 +123642,7 @@ export namespace Prisma {
     MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutSkorAssesmenInput = {
@@ -120406,6 +123656,7 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type SkorAssesmenAiUpsertWithWhereUniqueWithoutSkorAssesmenInput = {
@@ -120606,6 +123857,7 @@ export namespace Prisma {
     Pesantren?: PesantrenCreateNestedManyWithoutPendaftaranInput
     SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranUncheckedCreateWithoutStatusMahasiswaAssesmentHistoryInput = {
@@ -120636,6 +123888,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUncheckedCreateNestedManyWithoutPendaftaranInput
     SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
+    transkripNilais?: TranskripNilaiUncheckedCreateNestedManyWithoutPendaftaranInput
   }
 
   export type PendaftaranCreateOrConnectWithoutStatusMahasiswaAssesmentHistoryInput = {
@@ -120709,6 +123962,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUpdateManyWithoutPendaftaranNestedInput
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutStatusMahasiswaAssesmentHistoryInput = {
@@ -120739,6 +123993,7 @@ export namespace Prisma {
     Pesantren?: PesantrenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type AsesorCreateWithoutTipeAsesorInput = {
@@ -123641,6 +126896,316 @@ export namespace Prisma {
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PendaftaranCreateWithoutTranskripNilaisInput = {
+    PendaftaranId?: string
+    KodePendaftar: string
+    NoUjian: string
+    Periode: string
+    Gelombang: string
+    SistemKuliah?: $Enums.SistemKuliah
+    JalurPendaftaran: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
+    AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutPendaftaranInput
+    BuktiForm?: BuktiFormCreateNestedManyWithoutPendaftaranInput
+    DaftarUlang?: DaftarUlangCreateNestedManyWithoutPendaftaranInput
+    InformasiKependudukan?: InformasiKependudukanCreateNestedManyWithoutPendaftaranInput
+    InstitusiLama?: InstitusiLamaCreateNestedManyWithoutPendaftaranInput
+    MahasiswaKonferensi?: MahasiswaKonferensiCreateNestedManyWithoutPendaftaranInput
+    MahasiswaOrganisasiProfesi?: MahasiswaOrganisasiProfesiCreateNestedManyWithoutPendaftaranInput
+    MahasiswaPelatihanProfessional?: MahasiswaPelatihanProfessionalCreateNestedManyWithoutPendaftaranInput
+    MahasiswaPendidikan?: MahasiswaPendidikanCreateNestedManyWithoutPendaftaranInput
+    MahasiswaPiagam?: MahasiswaPiagamCreateNestedManyWithoutPendaftaranInput
+    MahasiswaRiwayatPekerjaan?: MahasiswaRiwayatPekerjaanCreateNestedManyWithoutPendaftaranInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaCreateNestedManyWithoutPendaftaranInput
+    OrangTua?: OrangTuaCreateNestedManyWithoutPendaftaranInput
+    PekerjaanMahasiswa?: PekerjaanMahasiswaCreateNestedManyWithoutPendaftaranInput
+    Pesantren?: PesantrenCreateNestedManyWithoutPendaftaranInput
+    SanggahanAssesmen?: SanggahanAssesmenCreateNestedManyWithoutPendaftaranInput
+    SkRektorMahasiswa?: SkRektorMahasiswaCreateNestedManyWithoutPendaftaranInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryCreateNestedManyWithoutPendaftaranInput
+  }
+
+  export type PendaftaranUncheckedCreateWithoutTranskripNilaisInput = {
+    PendaftaranId?: string
+    MahasiswaId: string
+    KodePendaftar: string
+    NoUjian: string
+    Periode: string
+    Gelombang: string
+    SistemKuliah?: $Enums.SistemKuliah
+    JalurPendaftaran: string
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
+    BuktiForm?: BuktiFormUncheckedCreateNestedManyWithoutPendaftaranInput
+    DaftarUlang?: DaftarUlangUncheckedCreateNestedManyWithoutPendaftaranInput
+    InformasiKependudukan?: InformasiKependudukanUncheckedCreateNestedManyWithoutPendaftaranInput
+    InstitusiLama?: InstitusiLamaUncheckedCreateNestedManyWithoutPendaftaranInput
+    MahasiswaKonferensi?: MahasiswaKonferensiUncheckedCreateNestedManyWithoutPendaftaranInput
+    MahasiswaOrganisasiProfesi?: MahasiswaOrganisasiProfesiUncheckedCreateNestedManyWithoutPendaftaranInput
+    MahasiswaPelatihanProfessional?: MahasiswaPelatihanProfessionalUncheckedCreateNestedManyWithoutPendaftaranInput
+    MahasiswaPendidikan?: MahasiswaPendidikanUncheckedCreateNestedManyWithoutPendaftaranInput
+    MahasiswaPiagam?: MahasiswaPiagamUncheckedCreateNestedManyWithoutPendaftaranInput
+    MahasiswaRiwayatPekerjaan?: MahasiswaRiwayatPekerjaanUncheckedCreateNestedManyWithoutPendaftaranInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
+    OrangTua?: OrangTuaUncheckedCreateNestedManyWithoutPendaftaranInput
+    PekerjaanMahasiswa?: PekerjaanMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
+    Pesantren?: PesantrenUncheckedCreateNestedManyWithoutPendaftaranInput
+    SanggahanAssesmen?: SanggahanAssesmenUncheckedCreateNestedManyWithoutPendaftaranInput
+    SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedCreateNestedManyWithoutPendaftaranInput
+  }
+
+  export type PendaftaranCreateOrConnectWithoutTranskripNilaisInput = {
+    where: PendaftaranWhereUniqueInput
+    create: XOR<PendaftaranCreateWithoutTranskripNilaisInput, PendaftaranUncheckedCreateWithoutTranskripNilaisInput>
+  }
+
+  export type TranskripNilaiRelationCreateWithoutTranskripNilaiInput = {
+    Nilai: string
+    Diakui?: boolean
+    MataKuliahMahasiswa: MataKuliahMahasiswaCreateNestedOneWithoutTranskripNilaiRelationsInput
+  }
+
+  export type TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput = {
+    MataKuliahMahasiswaId: string
+    Nilai: string
+    Diakui?: boolean
+  }
+
+  export type TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput = {
+    where: TranskripNilaiRelationWhereUniqueInput
+    create: XOR<TranskripNilaiRelationCreateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput>
+  }
+
+  export type TranskripNilaiRelationCreateManyTranskripNilaiInputEnvelope = {
+    data: TranskripNilaiRelationCreateManyTranskripNilaiInput | TranskripNilaiRelationCreateManyTranskripNilaiInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PendaftaranUpsertWithoutTranskripNilaisInput = {
+    update: XOR<PendaftaranUpdateWithoutTranskripNilaisInput, PendaftaranUncheckedUpdateWithoutTranskripNilaisInput>
+    create: XOR<PendaftaranCreateWithoutTranskripNilaisInput, PendaftaranUncheckedCreateWithoutTranskripNilaisInput>
+    where?: PendaftaranWhereInput
+  }
+
+  export type PendaftaranUpdateToOneWithWhereWithoutTranskripNilaisInput = {
+    where?: PendaftaranWhereInput
+    data: XOR<PendaftaranUpdateWithoutTranskripNilaisInput, PendaftaranUncheckedUpdateWithoutTranskripNilaisInput>
+  }
+
+  export type PendaftaranUpdateWithoutTranskripNilaisInput = {
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    KodePendaftar?: StringFieldUpdateOperationsInput | string
+    NoUjian?: StringFieldUpdateOperationsInput | string
+    Periode?: StringFieldUpdateOperationsInput | string
+    Gelombang?: StringFieldUpdateOperationsInput | string
+    SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
+    JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
+    AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutPendaftaranNestedInput
+    BuktiForm?: BuktiFormUpdateManyWithoutPendaftaranNestedInput
+    DaftarUlang?: DaftarUlangUpdateManyWithoutPendaftaranNestedInput
+    InformasiKependudukan?: InformasiKependudukanUpdateManyWithoutPendaftaranNestedInput
+    InstitusiLama?: InstitusiLamaUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaKonferensi?: MahasiswaKonferensiUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaOrganisasiProfesi?: MahasiswaOrganisasiProfesiUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaPelatihanProfessional?: MahasiswaPelatihanProfessionalUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaPendidikan?: MahasiswaPendidikanUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaPiagam?: MahasiswaPiagamUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaRiwayatPekerjaan?: MahasiswaRiwayatPekerjaanUpdateManyWithoutPendaftaranNestedInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateManyWithoutPendaftaranNestedInput
+    OrangTua?: OrangTuaUpdateManyWithoutPendaftaranNestedInput
+    PekerjaanMahasiswa?: PekerjaanMahasiswaUpdateManyWithoutPendaftaranNestedInput
+    Pesantren?: PesantrenUpdateManyWithoutPendaftaranNestedInput
+    SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
+    SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+  }
+
+  export type PendaftaranUncheckedUpdateWithoutTranskripNilaisInput = {
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    MahasiswaId?: StringFieldUpdateOperationsInput | string
+    KodePendaftar?: StringFieldUpdateOperationsInput | string
+    NoUjian?: StringFieldUpdateOperationsInput | string
+    Periode?: StringFieldUpdateOperationsInput | string
+    Gelombang?: StringFieldUpdateOperationsInput | string
+    SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
+    JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
+    BuktiForm?: BuktiFormUncheckedUpdateManyWithoutPendaftaranNestedInput
+    DaftarUlang?: DaftarUlangUncheckedUpdateManyWithoutPendaftaranNestedInput
+    InformasiKependudukan?: InformasiKependudukanUncheckedUpdateManyWithoutPendaftaranNestedInput
+    InstitusiLama?: InstitusiLamaUncheckedUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaKonferensi?: MahasiswaKonferensiUncheckedUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaOrganisasiProfesi?: MahasiswaOrganisasiProfesiUncheckedUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaPelatihanProfessional?: MahasiswaPelatihanProfessionalUncheckedUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaPendidikan?: MahasiswaPendidikanUncheckedUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaPiagam?: MahasiswaPiagamUncheckedUpdateManyWithoutPendaftaranNestedInput
+    MahasiswaRiwayatPekerjaan?: MahasiswaRiwayatPekerjaanUncheckedUpdateManyWithoutPendaftaranNestedInput
+    MataKuliahMahasiswa?: MataKuliahMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
+    OrangTua?: OrangTuaUncheckedUpdateManyWithoutPendaftaranNestedInput
+    PekerjaanMahasiswa?: PekerjaanMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
+    Pesantren?: PesantrenUncheckedUpdateManyWithoutPendaftaranNestedInput
+    SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
+    SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
+    StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+  }
+
+  export type TranskripNilaiRelationUpsertWithWhereUniqueWithoutTranskripNilaiInput = {
+    where: TranskripNilaiRelationWhereUniqueInput
+    update: XOR<TranskripNilaiRelationUpdateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedUpdateWithoutTranskripNilaiInput>
+    create: XOR<TranskripNilaiRelationCreateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedCreateWithoutTranskripNilaiInput>
+  }
+
+  export type TranskripNilaiRelationUpdateWithWhereUniqueWithoutTranskripNilaiInput = {
+    where: TranskripNilaiRelationWhereUniqueInput
+    data: XOR<TranskripNilaiRelationUpdateWithoutTranskripNilaiInput, TranskripNilaiRelationUncheckedUpdateWithoutTranskripNilaiInput>
+  }
+
+  export type TranskripNilaiRelationUpdateManyWithWhereWithoutTranskripNilaiInput = {
+    where: TranskripNilaiRelationScalarWhereInput
+    data: XOR<TranskripNilaiRelationUpdateManyMutationInput, TranskripNilaiRelationUncheckedUpdateManyWithoutTranskripNilaiInput>
+  }
+
+  export type TranskripNilaiCreateWithoutTranskripNilaiRelationsInput = {
+    TranskripNilaiId?: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+    Pendaftaran: PendaftaranCreateNestedOneWithoutTranskripNilaisInput
+  }
+
+  export type TranskripNilaiUncheckedCreateWithoutTranskripNilaiRelationsInput = {
+    TranskripNilaiId?: string
+    PendaftaranId: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+  }
+
+  export type TranskripNilaiCreateOrConnectWithoutTranskripNilaiRelationsInput = {
+    where: TranskripNilaiWhereUniqueInput
+    create: XOR<TranskripNilaiCreateWithoutTranskripNilaiRelationsInput, TranskripNilaiUncheckedCreateWithoutTranskripNilaiRelationsInput>
+  }
+
+  export type MataKuliahMahasiswaCreateWithoutTranskripNilaiRelationsInput = {
+    MataKuliahMahasiswaId?: string
+    Rpl?: boolean
+    Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    Pendaftaran: PendaftaranCreateNestedOneWithoutMataKuliahMahasiswaInput
+    MataKuliah: MataKuliahCreateNestedOneWithoutMataKuliahMahasiswaInput
+    EvaluasiDiri?: EvaluasiDiriCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenCreateNestedManyWithoutMataKuliahMahasiswaInput
+  }
+
+  export type MataKuliahMahasiswaUncheckedCreateWithoutTranskripNilaiRelationsInput = {
+    MataKuliahMahasiswaId?: string
+    PendaftaranId: string
+    MataKuliahId: string
+    Rpl?: boolean
+    Keterangan?: $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: $Enums.StatusMataKuliahMahasiswa | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    EvaluasiDiri?: EvaluasiDiriUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+    SkorAssesmen?: SkorAssesmenUncheckedCreateNestedManyWithoutMataKuliahMahasiswaInput
+  }
+
+  export type MataKuliahMahasiswaCreateOrConnectWithoutTranskripNilaiRelationsInput = {
+    where: MataKuliahMahasiswaWhereUniqueInput
+    create: XOR<MataKuliahMahasiswaCreateWithoutTranskripNilaiRelationsInput, MataKuliahMahasiswaUncheckedCreateWithoutTranskripNilaiRelationsInput>
+  }
+
+  export type TranskripNilaiUpsertWithoutTranskripNilaiRelationsInput = {
+    update: XOR<TranskripNilaiUpdateWithoutTranskripNilaiRelationsInput, TranskripNilaiUncheckedUpdateWithoutTranskripNilaiRelationsInput>
+    create: XOR<TranskripNilaiCreateWithoutTranskripNilaiRelationsInput, TranskripNilaiUncheckedCreateWithoutTranskripNilaiRelationsInput>
+    where?: TranskripNilaiWhereInput
+  }
+
+  export type TranskripNilaiUpdateToOneWithWhereWithoutTranskripNilaiRelationsInput = {
+    where?: TranskripNilaiWhereInput
+    data: XOR<TranskripNilaiUpdateWithoutTranskripNilaiRelationsInput, TranskripNilaiUncheckedUpdateWithoutTranskripNilaiRelationsInput>
+  }
+
+  export type TranskripNilaiUpdateWithoutTranskripNilaiRelationsInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Pendaftaran?: PendaftaranUpdateOneRequiredWithoutTranskripNilaisNestedInput
+  }
+
+  export type TranskripNilaiUncheckedUpdateWithoutTranskripNilaiRelationsInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MataKuliahMahasiswaUpsertWithoutTranskripNilaiRelationsInput = {
+    update: XOR<MataKuliahMahasiswaUpdateWithoutTranskripNilaiRelationsInput, MataKuliahMahasiswaUncheckedUpdateWithoutTranskripNilaiRelationsInput>
+    create: XOR<MataKuliahMahasiswaCreateWithoutTranskripNilaiRelationsInput, MataKuliahMahasiswaUncheckedCreateWithoutTranskripNilaiRelationsInput>
+    where?: MataKuliahMahasiswaWhereInput
+  }
+
+  export type MataKuliahMahasiswaUpdateToOneWithWhereWithoutTranskripNilaiRelationsInput = {
+    where?: MataKuliahMahasiswaWhereInput
+    data: XOR<MataKuliahMahasiswaUpdateWithoutTranskripNilaiRelationsInput, MataKuliahMahasiswaUncheckedUpdateWithoutTranskripNilaiRelationsInput>
+  }
+
+  export type MataKuliahMahasiswaUpdateWithoutTranskripNilaiRelationsInput = {
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    Rpl?: BoolFieldUpdateOperationsInput | boolean
+    Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Pendaftaran?: PendaftaranUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
+    MataKuliah?: MataKuliahUpdateOneRequiredWithoutMataKuliahMahasiswaNestedInput
+    EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
+  }
+
+  export type MataKuliahMahasiswaUncheckedUpdateWithoutTranskripNilaiRelationsInput = {
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    PendaftaranId?: StringFieldUpdateOperationsInput | string
+    MataKuliahId?: StringFieldUpdateOperationsInput | string
+    Rpl?: BoolFieldUpdateOperationsInput | boolean
+    Keterangan?: NullableEnumKeteranganMataKuliahFieldUpdateOperationsInput | $Enums.KeteranganMataKuliah | null
+    StatusMataKuliahMahasiswa?: NullableEnumStatusMataKuliahMahasiswaFieldUpdateOperationsInput | $Enums.StatusMataKuliahMahasiswa | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+  }
+
   export type InstitusiLamaCreateManyAlamatInput = {
     InstitusiLamaId?: string
     PendaftaranId: string
@@ -124429,6 +127994,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateWithoutMahasiswaInput = {
@@ -124459,6 +128025,7 @@ export namespace Prisma {
     SanggahanAssesmen?: SanggahanAssesmenUncheckedUpdateManyWithoutPendaftaranNestedInput
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
+    transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
   }
 
   export type PendaftaranUncheckedUpdateManyWithoutMahasiswaInput = {
@@ -124536,6 +128103,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutMataKuliahInput = {
@@ -124549,6 +128117,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateManyWithoutMataKuliahInput = {
@@ -124590,6 +128159,12 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Ai: boolean
+  }
+
+  export type TranskripNilaiRelationCreateManyMataKuliahMahasiswaInput = {
+    TranskripNilaiId: string
+    Nilai: string
+    Diakui?: boolean
   }
 
   export type EvaluasiDiriUpdateWithoutMataKuliahMahasiswaInput = {
@@ -124689,6 +128264,24 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Ai?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type TranskripNilaiRelationUpdateWithoutMataKuliahMahasiswaInput = {
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    TranskripNilai?: TranskripNilaiUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateWithoutMataKuliahMahasiswaInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AssesorMahasiswaCreateManyPendaftaranInput = {
@@ -124866,6 +128459,16 @@ export namespace Prisma {
     Tanggal?: Date | string | null
     Keterangan?: string | null
     Aktif: boolean
+  }
+
+  export type TranskripNilaiCreateManyPendaftaranInput = {
+    TranskripNilaiId?: string
+    KodeMataKuliah: string
+    NamaMataKuliah: string
+    Sks: number
+    Nilai: string
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
   }
 
   export type AssesorMahasiswaUpdateWithoutPendaftaranInput = {
@@ -125236,6 +128839,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateWithoutPendaftaranInput = {
@@ -125249,6 +128853,7 @@ export namespace Prisma {
     EvaluasiDiri?: EvaluasiDiriUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SanggahanAssesmenMk?: SanggahanAssesmenMkUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
     SkorAssesmen?: SkorAssesmenUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaNestedInput
   }
 
   export type MataKuliahMahasiswaUncheckedUpdateManyWithoutPendaftaranInput = {
@@ -125413,6 +129018,38 @@ export namespace Prisma {
     Tanggal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Keterangan?: NullableStringFieldUpdateOperationsInput | string | null
     Aktif?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type TranskripNilaiUpdateWithoutPendaftaranInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transkripNilaiRelations?: TranskripNilaiRelationUpdateManyWithoutTranskripNilaiNestedInput
+  }
+
+  export type TranskripNilaiUncheckedUpdateWithoutPendaftaranInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transkripNilaiRelations?: TranskripNilaiRelationUncheckedUpdateManyWithoutTranskripNilaiNestedInput
+  }
+
+  export type TranskripNilaiUncheckedUpdateManyWithoutPendaftaranInput = {
+    TranskripNilaiId?: StringFieldUpdateOperationsInput | string
+    KodeMataKuliah?: StringFieldUpdateOperationsInput | string
+    NamaMataKuliah?: StringFieldUpdateOperationsInput | string
+    Sks?: FloatFieldUpdateOperationsInput | number
+    Nilai?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserHasPermissionsCreateManyPermissionInput = {
@@ -126747,6 +130384,30 @@ export namespace Prisma {
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TranskripNilaiRelationCreateManyTranskripNilaiInput = {
+    MataKuliahMahasiswaId: string
+    Nilai: string
+    Diakui?: boolean
+  }
+
+  export type TranskripNilaiRelationUpdateWithoutTranskripNilaiInput = {
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+    MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateWithoutTranskripNilaiInput = {
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type TranskripNilaiRelationUncheckedUpdateManyWithoutTranskripNilaiInput = {
+    MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
+    Nilai?: StringFieldUpdateOperationsInput | string
+    Diakui?: BoolFieldUpdateOperationsInput | boolean
   }
 
 
