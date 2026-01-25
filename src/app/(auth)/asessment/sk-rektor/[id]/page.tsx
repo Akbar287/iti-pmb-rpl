@@ -97,6 +97,24 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     Rpl: true,
                     Keterangan: true,
                     StatusMataKuliahMahasiswa: true,
+                    transkripNilaiRelations: {
+                        select: {
+                            Diakui: true,
+                            Nilai: true,
+                            TranskripNilai: {
+                                select: {
+                                    TranskripNilaiId: true,
+                                    PendaftaranId: true,
+                                    KodeMataKuliah: true,
+                                    NamaMataKuliah: true,
+                                    Sks: true,
+                                    Nilai: true,
+                                    CreatedAt: true,
+                                    UpdatedAt: true,
+                                }
+                            }
+                        }
+                    },
                     MataKuliah: {
                         select: {
                             MataKuliahId: true,
@@ -200,6 +218,18 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             Rpl: !!mkm.Rpl,
             Keterangan: mkm.Keterangan ?? null,
             StatusMataKuliahMahasiswa: mkm.StatusMataKuliahMahasiswa ?? null,
+            TranskripNilai: {
+                NilaiAsessment: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].Nilai : '',
+                Diakui: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].Diakui : false,
+                TranskripNilaiId: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.TranskripNilaiId : '',
+                PendaftaranId: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.PendaftaranId : '',
+                KodeMataKuliah: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.KodeMataKuliah : '',
+                NamaMataKuliah: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.NamaMataKuliah : '',
+                Sks: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.Sks : 0,
+                Nilai: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.Nilai : '',
+                CreatedAt: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.CreatedAt : new Date(),
+                UpdatedAt: mkm.transkripNilaiRelations.length > 0 ? mkm.transkripNilaiRelations[0].TranskripNilai.UpdatedAt : new Date(),
+            },
             MataKuliah: {
                 MataKuliahId: mkm.MataKuliah.MataKuliahId,
                 Kode: mkm.MataKuliah.Kode,
@@ -221,96 +251,96 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                                 cp.EvaluasiDiri.length === 0
                                     ? ('' as any)
                                     : cp.EvaluasiDiri[0].ProfiensiPengetahuan ??
-                                      ('' as any),
+                                    ('' as any),
                             TanggalPengesahan:
                                 cp.EvaluasiDiri.length === 0
                                     ? null
                                     : cp.EvaluasiDiri[0].TanggalPengesahan
-                                    ? new Date(
-                                          cp.EvaluasiDiri[0].TanggalPengesahan
-                                      )
-                                    : null,
+                                        ? new Date(
+                                            cp.EvaluasiDiri[0].TanggalPengesahan
+                                        )
+                                        : null,
                             CreatedAt:
                                 cp.EvaluasiDiri.length === 0
                                     ? null
                                     : cp.EvaluasiDiri[0].CreatedAt
-                                    ? new Date(cp.EvaluasiDiri[0].CreatedAt)
-                                    : null,
+                                        ? new Date(cp.EvaluasiDiri[0].CreatedAt)
+                                        : null,
                             UpdatedAt:
                                 cp.EvaluasiDiri.length === 0
                                     ? null
                                     : cp.EvaluasiDiri[0].UpdatedAt
-                                    ? new Date(cp.EvaluasiDiri[0].UpdatedAt)
-                                    : null,
+                                        ? new Date(cp.EvaluasiDiri[0].UpdatedAt)
+                                        : null,
                             HasilAsessment: {
                                 HasilAssesmenId:
                                     cp.EvaluasiDiri.length === 0
                                         ? ''
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? ''
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .HasilAssesmenId ?? '',
+                                            .length === 0
+                                            ? ''
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .HasilAssesmenId ?? '',
                                 Valid:
                                     cp.EvaluasiDiri.length === 0
                                         ? false
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? false
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .Valid ?? false,
+                                            .length === 0
+                                            ? false
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .Valid ?? false,
                                 Autentik:
                                     cp.EvaluasiDiri.length === 0
                                         ? false
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? false
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .Autentik ?? false,
+                                            .length === 0
+                                            ? false
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .Autentik ?? false,
                                 Terkini:
                                     cp.EvaluasiDiri.length === 0
                                         ? false
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? false
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .Terkini ?? false,
+                                            .length === 0
+                                            ? false
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .Terkini ?? false,
                                 Memadai:
                                     cp.EvaluasiDiri.length === 0
                                         ? false
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? false
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .Memadai ?? false,
+                                            .length === 0
+                                            ? false
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .Memadai ?? false,
                                 Assesmen:
                                     cp.EvaluasiDiri.length === 0
                                         ? ''
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? ''
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .Assesmen ?? '',
+                                            .length === 0
+                                            ? ''
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .Assesmen ?? '',
                                 Nilai:
                                     cp.EvaluasiDiri.length === 0
                                         ? 0
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? 0
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .Nilai ?? 0,
+                                            .length === 0
+                                            ? 0
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .Nilai ?? 0,
                                 TanggalAssesmen:
                                     cp.EvaluasiDiri.length === 0
                                         ? null
                                         : cp.EvaluasiDiri[0].HasilAssesmen
-                                              .length === 0
-                                        ? null
-                                        : cp.EvaluasiDiri[0].HasilAssesmen[0]
-                                              .TanggalAssesmen
-                                        ? new Date(
-                                              cp.EvaluasiDiri[0].HasilAssesmen[0].TanggalAssesmen
-                                          )
-                                        : null,
+                                            .length === 0
+                                            ? null
+                                            : cp.EvaluasiDiri[0].HasilAssesmen[0]
+                                                .TanggalAssesmen
+                                                ? new Date(
+                                                    cp.EvaluasiDiri[0].HasilAssesmen[0].TanggalAssesmen
+                                                )
+                                                : null,
                             },
                         },
                     })
@@ -358,9 +388,9 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
     }
 
     const res = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
-    const stats : {
+    const stats: {
         StatusMahasiswaAssesmentId: string; NamaStatus: string
-    } = res ? {StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus} : {StatusMahasiswaAssesmentId: '', NamaStatus: ''};
+    } = res ? { StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus } : { StatusMahasiswaAssesmentId: '', NamaStatus: '' };
 
     return (
         <div className="p-6">
