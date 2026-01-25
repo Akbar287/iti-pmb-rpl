@@ -58,7 +58,6 @@ export default function FinalisasiMataKuliah({
             .then(async (res) => {
                 setDataDaftarUlang(res)
                 setLoadingAwal(false)
-                console.log(res)
             })
             .catch((res) => {
                 setLoadingAwal(false)

@@ -62,7 +62,6 @@ const EvaluasiMandiriId = ({
     }[]
     statusPendaftaran: string
 }) => {
-    console.log(statusPendaftaran)
     const DISABLED_STATUSES = [
         'Penunjukan Asesor',
         'Persetujuan Penunjukan Asesor',

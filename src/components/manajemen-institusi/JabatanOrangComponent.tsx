@@ -181,7 +181,7 @@ const JabatanOrangComponent = ({
                 .catch((err) => {
                     toast(
                         'Data Jabatan Institusi Orang gagal diubah. Error: ' +
-                            err
+                        err
                     )
                     setLoading(false)
                 })
@@ -204,7 +204,7 @@ const JabatanOrangComponent = ({
                 .catch((err) => {
                     toast(
                         'Data Jabatan Institusi Orang gagal ditambah. Error: ' +
-                            err
+                        err
                     )
                     setLoading(false)
                 })
@@ -216,7 +216,8 @@ const JabatanOrangComponent = ({
         getInstitusiJabatanOrangPagination(
             paginationState.page,
             paginationState.limit,
-            search
+            search,
+            selectedData.UniversityJabatanId
         )
             .then((res) => {
                 setDataJabatanOrang(res.data)
@@ -235,7 +236,7 @@ const JabatanOrangComponent = ({
             .catch((err) => {
                 setLoading(false)
             })
-    }, [paginationState.page, search, paginationState.limit])
+    }, [paginationState.page, search, paginationState.limit, selectedData.UniversityJabatanId])
 
     const buatData = () => {
         form.reset()
@@ -542,12 +543,12 @@ const JabatanOrangComponent = ({
                                                                 {header.isPlaceholder
                                                                     ? null
                                                                     : flexRender(
-                                                                          header
-                                                                              .column
-                                                                              .columnDef
-                                                                              .header,
-                                                                          header.getContext()
-                                                                      )}
+                                                                        header
+                                                                            .column
+                                                                            .columnDef
+                                                                            .header,
+                                                                        header.getContext()
+                                                                    )}
                                                             </TableHead>
                                                         )
                                                     }
@@ -603,10 +604,10 @@ const JabatanOrangComponent = ({
                                 1}{' '}
                             -{' '}
                             {paginationState.totalElement <
-                            paginationState.page * paginationState.limit
+                                paginationState.page * paginationState.limit
                                 ? paginationState.totalElement
                                 : paginationState.page *
-                                  paginationState.limit}{' '}
+                                paginationState.limit}{' '}
                             dari {paginationState.totalElement} Data.
                         </div>
                         <div className="flex items-center space-x-2 mt-4">
@@ -749,7 +750,7 @@ export function SheetManageData({
                                         <FormField
                                             control={form.control}
                                             name="UniversityJabatanId"
-                                            render={({}) => (
+                                            render={({ }) => (
                                                 <FormItem>
                                                     <FormLabel>
                                                         Nama Institusi
@@ -772,7 +773,7 @@ export function SheetManageData({
                                         <FormField
                                             control={form.control}
                                             name="UniversityJabatanId"
-                                            render={({}) => (
+                                            render={({ }) => (
                                                 <FormItem>
                                                     <FormLabel>
                                                         Nama Jabatan

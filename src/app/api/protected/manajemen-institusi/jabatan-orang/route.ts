@@ -14,6 +14,7 @@ app.get('/', async (c) => {
     const page = Number(c.req.query('page') ?? '1')
     const limit = Number(c.req.query('limit') ?? '10')
     const search = c.req.query('search') ?? ''
+    const UniversityJabatanId = c.req.query('UniversityJabatanId') ?? ''
 
     if (id) {
         const data = await prisma.universityJabatanOrang.findFirst({
@@ -26,10 +27,21 @@ app.get('/', async (c) => {
         }
         return c.json<UniversityJabatanOrang>(data, 200)
     } else if (page && limit) {
-        let where: Prisma.UniversityJabatanOrangWhereInput = search
+        let where: Prisma.UniversityJabatanOrangWhereInput = UniversityJabatanId ? search ? {
+            AND: [
+                {
+                    UniversityJabatanId: UniversityJabatanId
+                },
+                {
+                    OR: [{ Nama: { contains: search, mode: 'insensitive' } }],
+                }
+            ]
+        } : {
+            UniversityJabatanId: UniversityJabatanId
+        } : search
             ? {
-                  OR: [{ Nama: { contains: search, mode: 'insensitive' } }],
-              }
+                OR: [{ Nama: { contains: search, mode: 'insensitive' } }],
+            }
             : {}
 
         const [data, total] = await Promise.all([
@@ -82,7 +94,7 @@ app.post('/', async (c) => {
 
 app.put('/', async (c) => {
     const body: UniversityJabatanOrang = await c.req.json()
-    
+
     const data = await prisma.universityJabatanOrang.update({
         data: {
             Nama: body.Nama,

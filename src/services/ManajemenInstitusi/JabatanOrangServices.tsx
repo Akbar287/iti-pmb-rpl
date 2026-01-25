@@ -6,12 +6,14 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 export async function getInstitusiJabatanOrangPagination(
     page: number,
     limit: number,
-    search: string
+    search: string,
+    UniversityJabatanId: string
 ): Promise<Pagination<UniversityJabatanOrang[]>> {
     const params = new URLSearchParams({
         page: String(page),
         limit: String(limit),
         search,
+        UniversityJabatanId
     })
     const res = await fetch(
         `${BASE_URL}/api/protected/manajemen-institusi/jabatan-orang?${params.toString()}`

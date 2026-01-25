@@ -82,6 +82,15 @@ import {
     SheetHeader,
     SheetTitle,
 } from '../ui/sheet'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '../ui/dialog'
+import { Loader2 } from 'lucide-react'
 import { Separator } from '../ui/separator'
 import { KeteranganMataKuliah, Role } from '@/generated/prisma'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
@@ -90,6 +99,8 @@ import { SkRektorAsessmenSkemaValidasi, SkRektorAsessmenSkemaValidasiTipe } from
 import { zodResolver } from '@hookform/resolvers/zod'
 import { setStatusPersetujuanHasilFinalAsessmen } from '@/services/Status/StatusService'
 import { getFileSkAsessmenBlobByNamafile, setFile } from '@/services/Asessment/SkRektorAsessmenService'
+import { GenerateSkPdf } from '@/services/GeneratePdfService'
+import { isGenerateSk } from '@/config/checkGenerateSkStats'
 
 const HasilAsessmenIdComponent = ({
     dataServer, stats
@@ -105,10 +116,18 @@ const HasilAsessmenIdComponent = ({
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>(stats)
+    const [formGenerate, setFormGenerate] = React.useState<{
+        NomorSk: string
+        JenisSk: string
+    }>({
+        NomorSk: '',
+        JenisSk: '',
+    })
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
     const [loading, setLoading] = React.useState<boolean>(false)
     const [role, setRole] = React.useState<Role | null>(null)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
+    const [openDialogGenerateSk, setOpenDialogGenerateSk] = React.useState<boolean>(false)
     const [paginationState, setPaginationState] = React.useState<{
         page: number
         limit: number
@@ -195,31 +214,17 @@ const HasilAsessmenIdComponent = ({
         setDataPage(
             dataServer.MataKuliahMahasiswa.slice(startIndex2, endIndex2)
         )
-        if (paginationState.page === 1) {
-            setPaginationState({
-                ...paginationState,
-                isFirst: true,
-                hasPrevious: false,
-                hasNext: true,
-                isLast: false,
-            })
-        } else if (paginationState.page === paginationState.totalPage) {
-            setPaginationState({
-                ...paginationState,
-                isLast: true,
-                isFirst: false,
-                hasPrevious: true,
-                hasNext: false,
-            })
-        } else {
-            setPaginationState({
-                ...paginationState,
-                isLast: true,
-                isFirst: true,
-                hasPrevious: true,
-                hasNext: true,
-            })
-        }
+
+        const isFirstPage = paginationState.page === 1
+        const isLastPage = paginationState.page === paginationState.totalPage
+
+        setPaginationState({
+            ...paginationState,
+            isFirst: isFirstPage,
+            isLast: isLastPage,
+            hasPrevious: !isFirstPage,
+            hasNext: !isLastPage && paginationState.totalPage > 1,
+        })
     }, [paginationState.page, paginationState.limit])
 
     const [detailData, setDetailData] = React.useState<{
@@ -427,6 +432,16 @@ const HasilAsessmenIdComponent = ({
         },
     })
 
+    async function generateSk(): Promise<string | null> {
+        try {
+            const previewUrl = await GenerateSkPdf(dataServer.PendaftaranId, formGenerate.NomorSk, formGenerate.JenisSk)
+            return previewUrl
+        } catch (err) {
+            console.error('Error generating SK PDF:', err)
+            toast('Gagal membuat SK PDF. Error: ' + err)
+            return null
+        }
+    }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3">
             {
@@ -836,7 +851,22 @@ const HasilAsessmenIdComponent = ({
                             <CardDescription>
                                 Draft Surat Keputusan Asessmen Mahasiswa
                             </CardDescription>
-                            <CardAction></CardAction>
+                            {
+                                isGenerateSk(stats?.NamaStatus ?? '') ? (
+                                    <CardAction>
+                                        <Button
+                                            type="button"
+                                            size="sm"
+                                            className='bg-primary transition-all duration-100 hover:scale-105 active:scale-95'
+                                            onClick={() => {
+                                                setOpenDialogGenerateSk(true)
+                                            }}
+                                        >
+                                            Generate SK
+                                        </Button>
+                                    </CardAction>
+                                ) : (<></>)
+                            }
                         </CardHeader>
                         <CardContent>
                             <Form {...form}>
@@ -978,11 +1008,152 @@ const HasilAsessmenIdComponent = ({
                 loading={loading}
                 dataDetail={detailData}
             />
+            <DialogGenerateSk
+                openDialog={openDialogGenerateSk}
+                setOpenDialog={setOpenDialogGenerateSk}
+                formGenerate={formGenerate}
+                setFormGenerate={setFormGenerate}
+                generateSk={generateSk}
+            />
         </div>
     )
 }
 
 export default HasilAsessmenIdComponent
+
+export function DialogGenerateSk({
+    openDialog,
+    setOpenDialog,
+    formGenerate,
+    setFormGenerate,
+    generateSk
+}: {
+    openDialog: boolean
+    setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
+    formGenerate: {
+        NomorSk: string
+        JenisSk: string
+    }
+    setFormGenerate: React.Dispatch<React.SetStateAction<{
+        NomorSk: string
+        JenisSk: string
+    }>>
+    generateSk: () => Promise<string | null>
+}) {
+    const [loading, setLoading] = React.useState<boolean>(false)
+    const [pdfUrl, setPdfUrl] = React.useState<string | null>(null)
+
+    const handleSubmit = async () => {
+        if (!formGenerate.NomorSk || !formGenerate.JenisSk) {
+            toast('Nomor SK dan Jenis SK harus diisi')
+            return
+        }
+        setLoading(true)
+        setPdfUrl(null)
+        const url = await generateSk()
+        if (url) {
+            setPdfUrl(url)
+        }
+        setLoading(false)
+    }
+
+    const handleClose = () => {
+        setOpenDialog(false)
+        setPdfUrl(null)
+        setFormGenerate({ NomorSk: '', JenisSk: '' })
+    }
+
+    return (
+        <Dialog open={openDialog} onOpenChange={(open) => {
+            if (!open) handleClose()
+            else setOpenDialog(open)
+        }}>
+            <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                    <DialogTitle>Generate SK</DialogTitle>
+                    <DialogDescription>
+                        Formulir untuk generate SK. Isi data kemudian klik Generate.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label htmlFor="nomorSk" className="text-sm font-medium leading-none">
+                                Nomor SK
+                            </label>
+                            <Input
+                                id="nomorSk"
+                                placeholder="Masukkan Nomor SK"
+                                value={formGenerate.NomorSk}
+                                onChange={(e) => setFormGenerate(prev => ({ ...prev, NomorSk: e.target.value }))}
+                                disabled={loading}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label htmlFor="jenisSk" className="text-sm font-medium leading-none">
+                                Jenis SK
+                            </label>
+                            <Select
+                                value={formGenerate.JenisSk}
+                                onValueChange={(value) => setFormGenerate(prev => ({ ...prev, JenisSk: value }))}
+                                disabled={loading}
+                            >
+                                <SelectTrigger id="jenisSk">
+                                    <SelectValue placeholder="Pilih Jenis SK" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectGroup>
+                                        <SelectLabel>Jenis SK</SelectLabel>
+                                        <SelectItem value="TRANSFER KREDIT">TRANSFER SKS</SelectItem>
+                                        <SelectItem value="PEROLEHAN KREDIT">PEROLEHAN SKS</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                    {pdfUrl && (
+                        <div className="mt-4">
+                            <label className="text-sm font-medium leading-none mb-2 block">
+                                Hasil Generate SK
+                            </label>
+                            <iframe
+                                src={pdfUrl}
+                                title="PDF Preview"
+                                width="100%"
+                                height="400px"
+                                className="border rounded"
+                            />
+                        </div>
+                    )}
+                </div>
+                <DialogFooter>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleClose}
+                        disabled={loading}
+                    >
+                        Tutup
+                    </Button>
+                    <Button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Loading...
+                            </>
+                        ) : (
+                            'Generate SK'
+                        )}
+                    </Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+}
 
 export function SheetManageData({
     openDialog,
