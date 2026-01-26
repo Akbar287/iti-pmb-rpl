@@ -87904,7 +87904,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar: Bytes | null
     Populer: boolean
     Waktu: Date
     _count: SettingBeritaCountAggregateOutputType | null
@@ -88002,7 +88002,7 @@ export namespace Prisma {
       SettingMainPageId: string
       Title: string
       Deskripsi: string
-      Gambar: Prisma.Bytes
+      Gambar: Prisma.Bytes | null
       Populer: boolean
       Waktu: Date
     }, ExtArgs["result"]["settingBerita"]>
@@ -100274,7 +100274,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFilter<"SettingBerita"> | string
     Title?: StringFilter<"SettingBerita"> | string
     Deskripsi?: StringFilter<"SettingBerita"> | string
-    Gambar?: BytesFilter<"SettingBerita"> | Bytes
+    Gambar?: BytesNullableFilter<"SettingBerita"> | Bytes | null
     Populer?: BoolFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
@@ -100287,7 +100287,7 @@ export namespace Prisma {
     SettingMainPageId?: SortOrder
     Title?: SortOrder
     Deskripsi?: SortOrder
-    Gambar?: SortOrder
+    Gambar?: SortOrderInput | SortOrder
     Populer?: SortOrder
     Waktu?: SortOrder
     SettingMainPage?: SettingMainPageOrderByWithRelationInput
@@ -100303,7 +100303,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFilter<"SettingBerita"> | string
     Title?: StringFilter<"SettingBerita"> | string
     Deskripsi?: StringFilter<"SettingBerita"> | string
-    Gambar?: BytesFilter<"SettingBerita"> | Bytes
+    Gambar?: BytesNullableFilter<"SettingBerita"> | Bytes | null
     Populer?: BoolFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
     SettingMainPage?: XOR<SettingMainPageScalarRelationFilter, SettingMainPageWhereInput>
@@ -100316,7 +100316,7 @@ export namespace Prisma {
     SettingMainPageId?: SortOrder
     Title?: SortOrder
     Deskripsi?: SortOrder
-    Gambar?: SortOrder
+    Gambar?: SortOrderInput | SortOrder
     Populer?: SortOrder
     Waktu?: SortOrder
     _count?: SettingBeritaCountOrderByAggregateInput
@@ -100333,7 +100333,7 @@ export namespace Prisma {
     SettingMainPageId?: StringWithAggregatesFilter<"SettingBerita"> | string
     Title?: StringWithAggregatesFilter<"SettingBerita"> | string
     Deskripsi?: StringWithAggregatesFilter<"SettingBerita"> | string
-    Gambar?: BytesWithAggregatesFilter<"SettingBerita"> | Bytes
+    Gambar?: BytesNullableWithAggregatesFilter<"SettingBerita"> | Bytes | null
     Populer?: BoolWithAggregatesFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeWithAggregatesFilter<"SettingBerita"> | Date | string
   }
@@ -105649,7 +105649,7 @@ export namespace Prisma {
     SettingBeritaId?: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
     SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingBeritaInput
@@ -105662,7 +105662,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
   }
@@ -105671,7 +105671,7 @@ export namespace Prisma {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
     SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput
@@ -105684,7 +105684,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -105695,7 +105695,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
   }
@@ -105704,7 +105704,7 @@ export namespace Prisma {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -105715,7 +105715,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -125276,7 +125276,7 @@ export namespace Prisma {
     SettingBeritaId?: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
     SettingMainPage: SettingMainPageCreateNestedOneWithoutSettingBeritaInput
@@ -125287,7 +125287,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
   }
@@ -125327,7 +125327,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFilter<"SettingBerita"> | string
     Title?: StringFilter<"SettingBerita"> | string
     Deskripsi?: StringFilter<"SettingBerita"> | string
-    Gambar?: BytesFilter<"SettingBerita"> | Bytes
+    Gambar?: BytesNullableFilter<"SettingBerita"> | Bytes | null
     Populer?: BoolFilter<"SettingBerita"> | boolean
     Waktu?: DateTimeFilter<"SettingBerita"> | Date | string
   }
@@ -125497,7 +125497,7 @@ export namespace Prisma {
     SettingBeritaId?: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
     KategoriBerita: KategoriBeritaCreateNestedOneWithoutSettingBeritaInput
@@ -125508,7 +125508,7 @@ export namespace Prisma {
     KategoriBeritaId: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
   }
@@ -130119,7 +130119,7 @@ export namespace Prisma {
     SettingMainPageId: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
   }
@@ -130128,7 +130128,7 @@ export namespace Prisma {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
     SettingMainPage?: SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput
@@ -130139,7 +130139,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -130149,7 +130149,7 @@ export namespace Prisma {
     SettingMainPageId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -130198,7 +130198,7 @@ export namespace Prisma {
     KategoriBeritaId: string
     Title: string
     Deskripsi: string
-    Gambar: Bytes
+    Gambar?: Bytes | null
     Populer?: boolean
     Waktu: Date | string
   }
@@ -130324,7 +130324,7 @@ export namespace Prisma {
     SettingBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
     KategoriBerita?: KategoriBeritaUpdateOneRequiredWithoutSettingBeritaNestedInput
@@ -130335,7 +130335,7 @@ export namespace Prisma {
     KategoriBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -130345,7 +130345,7 @@ export namespace Prisma {
     KategoriBeritaId?: StringFieldUpdateOperationsInput | string
     Title?: StringFieldUpdateOperationsInput | string
     Deskripsi?: StringFieldUpdateOperationsInput | string
-    Gambar?: BytesFieldUpdateOperationsInput | Bytes
+    Gambar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
     Populer?: BoolFieldUpdateOperationsInput | boolean
     Waktu?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -1094,7 +1094,7 @@ model SettingBerita {
   SettingMainPageId String   @map("setting_main_page_id")
   Title             String   @map("title")
   Deskripsi         String   @map("deskripsi")
-  Gambar            Bytes    @map("gambar")
+  Gambar            Bytes?   @map("gambar")
   Populer           Boolean  @default(false) @map("populer")
   Waktu             DateTime @map("waktu")
 

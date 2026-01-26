@@ -24,6 +24,7 @@ import {
 const Navbar = () => {
     const router = useRouter()
     const { setTheme, theme } = useTheme()
+    const [mounted, setMounted] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
     const [showSearch, setShowSearch] = useState(false)
     const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -34,6 +35,11 @@ const Navbar = () => {
     )
     const searchInputRef = useRef<HTMLInputElement>(null)
     const [animateMenu, setAnimateMenu] = useState(false)
+
+    // Fix hydration error for theme
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -384,9 +390,8 @@ const Navbar = () => {
                                     className="p-1"
                                 >
                                     <ChevronRight
-                                        className={`h-4 w-4 transition-transform ${
-                                            isOpen ? 'rotate-90' : ''
-                                        }`}
+                                        className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-90' : ''
+                                            }`}
                                     />
                                 </Button>
                             </CollapsibleTrigger>
@@ -456,11 +461,10 @@ const Navbar = () => {
         <>
             {/* Fixed Navigation Bar */}
             <nav
-                className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-                    isScrolled
-                        ? 'bg-gray-50/95 dark:bg-gray-800 shadow-md py-2'
-                        : 'bg-gray-700/30 py-4'
-                }`}
+                className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled
+                    ? 'bg-gray-50/95 dark:bg-gray-800 shadow-md py-2'
+                    : 'bg-gray-700/30 py-4'
+                    }`}
             >
                 <div className="container mx-auto px-4">
                     <div className="flex items-center justify-between">
@@ -478,11 +482,10 @@ const Navbar = () => {
                                 className="mr-2"
                             />
                             <span
-                                className={`font-sans font-bold text-2xl ${
-                                    isScrolled
-                                        ? 'text-primary'
-                                        : 'text-gray-100'
-                                }`}
+                                className={`font-sans font-bold text-2xl ${isScrolled
+                                    ? 'text-primary'
+                                    : 'text-gray-100'
+                                    }`}
                             >
                                 <span className="block md:hidden">ITI</span>
                                 <span className="hidden md:block">
@@ -527,7 +530,7 @@ const Navbar = () => {
                                     setTheme(theme == 'dark' ? 'light' : 'dark')
                                 }
                             >
-                                {theme == 'dark' ? <MoonIcon /> : <SunIcon />}
+                                {mounted ? (theme === 'dark' ? <MoonIcon /> : <SunIcon />) : <SunIcon />}
                             </Button>
                         </div>
 
@@ -585,7 +588,7 @@ const Navbar = () => {
                                     setTheme(theme == 'dark' ? 'light' : 'dark')
                                 }
                             >
-                                {theme == 'dark' ? <MoonIcon /> : <SunIcon />}
+                                {mounted ? (theme === 'dark' ? <MoonIcon /> : <SunIcon />) : <SunIcon />}
                             </Button>
                         </div>
                     </div>
@@ -593,11 +596,10 @@ const Navbar = () => {
                     {showSearch && (
                         <div className="absolute left-0 right-0 mt-2 px-4 transition-all duration-300 ease-in-out animate-in fade-in">
                             <div
-                                className={`bg-white shadow-lg rounded-md p-4 transform transition-all duration-300 ${
-                                    showSearch
-                                        ? 'translate-y-0 opacity-100'
-                                        : '-translate-y-4 opacity-0'
-                                }`}
+                                className={`bg-white shadow-lg rounded-md p-4 transform transition-all duration-300 ${showSearch
+                                    ? 'translate-y-0 opacity-100'
+                                    : '-translate-y-4 opacity-0'
+                                    }`}
                             >
                                 <form className="flex items-center">
                                     <Input
@@ -630,9 +632,8 @@ const Navbar = () => {
 
             {menuOpen && (
                 <div
-                    className={`fixed inset-0 z-60 h-screen w-screen flex flex-col ${
-                        animateMenu ? 'opacity-100' : 'opacity-0'
-                    } transition-opacity duration-500`}
+                    className={`fixed inset-0 z-60 h-screen w-screen flex flex-col ${animateMenu ? 'opacity-100' : 'opacity-0'
+                        } transition-opacity duration-500`}
                 >
                     <div
                         className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out"
@@ -652,11 +653,10 @@ const Navbar = () => {
                     <div className="container mx-auto px-4 py-24 relative z-10 flex flex-1 overflow-hidden">
                         <div className="grid grid-cols-12 gap-6 h-full">
                             <div
-                                className={`col-span-2 border-r border-white/20 pr-6 ${
-                                    animateMenu
-                                        ? 'translate-x-0 opacity-100'
-                                        : '-translate-x-10 opacity-0'
-                                } transition-all duration-500 delay-100 transform`}
+                                className={`col-span-2 border-r border-white/20 pr-6 ${animateMenu
+                                    ? 'translate-x-0 opacity-100'
+                                    : '-translate-x-10 opacity-0'
+                                    } transition-all duration-500 delay-100 transform`}
                             >
                                 <h3 className="text-3xl  font-bold mb-10 text-white animate-in fade-in duration-300 delay-200">
                                     Menu
@@ -666,9 +666,8 @@ const Navbar = () => {
                                         <li
                                             key={index}
                                             style={{
-                                                animationDelay: `${
-                                                    150 + index * 50
-                                                }ms`,
+                                                animationDelay: `${150 + index * 50
+                                                    }ms`,
                                             }}
                                             className="animate-in fade-in slide-in-from-left duration-300"
                                         >
@@ -703,11 +702,10 @@ const Navbar = () => {
                             </div>
 
                             <div
-                                className={`col-span-2 border-r border-white/20 pr-6 ${
-                                    animateMenu
-                                        ? 'translate-x-0 opacity-100'
-                                        : '-translate-x-10 opacity-0'
-                                } transition-all duration-500 delay-200 transform`}
+                                className={`col-span-2 border-r border-white/20 pr-6 ${animateMenu
+                                    ? 'translate-x-0 opacity-100'
+                                    : '-translate-x-10 opacity-0'
+                                    } transition-all duration-500 delay-200 transform`}
                             >
                                 {activeMenu && (
                                     <>
@@ -730,10 +728,9 @@ const Navbar = () => {
                                                         <li
                                                             key={index}
                                                             style={{
-                                                                animationDelay: `${
-                                                                    200 +
+                                                                animationDelay: `${200 +
                                                                     index * 50
-                                                                }ms`,
+                                                                    }ms`,
                                                             }}
                                                             className="animate-in fade-in slide-in-from-left duration-300"
                                                         >
@@ -775,11 +772,10 @@ const Navbar = () => {
 
                             {/* Third column: Child menu */}
                             <div
-                                className={`col-span-8 ${
-                                    animateMenu
-                                        ? 'translate-x-0 opacity-100'
-                                        : 'translate-x-10 opacity-0'
-                                } transition-all duration-500 delay-300 transform`}
+                                className={`col-span-8 ${animateMenu
+                                    ? 'translate-x-0 opacity-100'
+                                    : 'translate-x-10 opacity-0'
+                                    } transition-all duration-500 delay-300 transform`}
                             >
                                 <div className="grid grid-cols-12 gap-6 h-full">
                                     {/* Child menu items */}
@@ -821,11 +817,10 @@ const Navbar = () => {
                                                                 <li
                                                                     key={index}
                                                                     style={{
-                                                                        animationDelay: `${
-                                                                            250 +
+                                                                        animationDelay: `${250 +
                                                                             index *
-                                                                                50
-                                                                        }ms`,
+                                                                            50
+                                                                            }ms`,
                                                                     }}
                                                                     className="animate-in fade-in slide-in-from-left duration-300"
                                                                 >

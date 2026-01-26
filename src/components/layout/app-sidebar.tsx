@@ -105,8 +105,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     const logout = () => {
         localStorage.removeItem('pmb.iti.role')
-        signOut()
         toast('Sedang Mengeluarkan Anda')
+        signOut({ callbackUrl: '/' })
     }
 
     return (

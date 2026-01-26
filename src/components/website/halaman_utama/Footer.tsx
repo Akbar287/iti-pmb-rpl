@@ -237,13 +237,13 @@ const Footer = () => {
             rights reserved.
           </div>
           <div className="flex space-x-6">
-            <a href="#" className="hover:text-primary transition-colors">
+            <a href="/kebijakan-privasi" className="hover:text-primary transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
+            <a href="/syarat-ketentuan" className="hover:text-primary transition-colors">
               Terms of Use
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
+            <a href="/cookie-policy" className="hover:text-primary transition-colors">
               Cookie Policy
             </a>
           </div>
