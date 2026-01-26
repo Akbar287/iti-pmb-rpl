@@ -25,8 +25,18 @@ import {
     ChevronLeft,
     ChevronRight,
     InfoIcon,
+    Loader2,
     MoreHorizontal,
+    FileText,
 } from 'lucide-react'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '../ui/dialog'
 import { Input } from '../ui/input'
 import {
     Select,
@@ -53,6 +63,7 @@ import { ResponseSanggahanMhsPaginationType } from '@/types/SanggahanTypes'
 import { getSanggahanAsessmentToMahasiswa } from '@/services/Asessment/SanggahanService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { setStatusHasilFinalAsessmen } from '@/services/Status/StatusService'
+import { GenerateRekapitulasiPdf } from '@/services/GeneratePdfService'
 
 const SanggahanComponent = () => {
     const router = useRouter()
@@ -90,43 +101,32 @@ const SanggahanComponent = () => {
     })
     const [search, setSearch] = React.useState<string>('')
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [openDialogGeneratePdf, setOpenDialogGeneratePdf] = React.useState<boolean>(false)
+    const [pdfPreviewUrl, setPdfPreviewUrl] = React.useState<string | null>(null)
+    const [loadingPdf, setLoadingPdf] = React.useState<boolean>(false)
 
     const startAsessment = (PendaftaranId: string) => {
         router.push('/asessment/sanggahan-mahasiswa/' + PendaftaranId)
     }
 
-    const continueSanggahan = (dt: ResponseSanggahanMhsPaginationType) => {
-        Swal.fire({
-            title: 'Lanjutkan ke Proses Sanggahan ?',
-            text:
-                'Lanjutkan  ' +
-                dt.KodePendaftar +
-                ' ke Proses Hasil Final. Aksi ini tidak dapat di undo',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#f45f24',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Lanjutkan!',
-            cancelButtonText: 'Batalkan',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                setStatusHasilFinalAsessmen(dt.PendaftaranId).then(() => {
-                    setDataMahasiswa(
-                        dataMahasiswa.filter(
-                            (x) => x.PendaftaranId !== dt.PendaftaranId
-                        )
-                    )
-                    Swal.fire({
-                        title: 'Berhasil!',
-                        text:
-                            'Asessmen ' +
-                            dt.KodePendaftar +
-                            ' dilanjutkan ke Proses Hasil Final Asessmen.',
-                        icon: 'success',
-                    })
-                })
-            }
-        })
+    const generateRekapitulasiPdfWindow = async (PendaftaranId: string) => {
+        setLoadingPdf(true)
+        setOpenDialogGeneratePdf(true)
+        setPdfPreviewUrl(null)
+        await GenerateRekapitulasiPdf(PendaftaranId)
+            .then((res) => {
+                setPdfPreviewUrl(res)
+                setLoadingPdf(false)
+            })
+            .catch((err) => {
+                toast.error('Gagal Generate Rekapitulasi Pdf')
+                setLoadingPdf(false)
+            })
+    }
+
+    const handleCloseDialogPdf = () => {
+        setOpenDialogGeneratePdf(false)
+        setPdfPreviewUrl(null)
     }
 
     function getAllData(role: {
@@ -249,15 +249,20 @@ const SanggahanComponent = () => {
                             >
                                 Copy Pendaftaran Mahasiswa ID
                             </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                onClick={() => generateRekapitulasiPdfWindow(row.original.PendaftaranId)}
+                            >
+                                Preview Generate Rekapitulasi PDF
+                            </DropdownMenuItem>
                             {role?.Name === 'Mahasiswa' || (role?.Name === 'Asesor' && row.original.SanggahanAssesmenId !== '') ? (
                                 <React.Fragment>
-                                    <DropdownMenuSeparator />
                                     <DropdownMenuItem
                                         onClick={() =>
                                             startAsessment(jd.PendaftaranId)
                                         }
                                     >
-                                        {role?.Name === 'Asesor' ? "Menindaklanjuti Sanggahan" :"Lihat Nilai Asessmen"}
+                                        {role?.Name === 'Asesor' ? "Menindaklanjuti Sanggahan" : "Lihat Nilai Asessmen"}
                                     </DropdownMenuItem>
                                 </React.Fragment>
                             ) : <></>}
@@ -467,6 +472,70 @@ const SanggahanComponent = () => {
                     </Button>
                 </div>
             </div>
+            {/* Dialog Preview PDF */}
+            <Dialog open={openDialogGeneratePdf} onOpenChange={(open) => {
+                if (!open) handleCloseDialogPdf()
+                else setOpenDialogGeneratePdf(open)
+            }}>
+                <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <FileText className="h-5 w-5" />
+                            Preview Rekapitulasi PDF
+                        </DialogTitle>
+                        <DialogDescription>
+                            Preview dokumen rekapitulasi hasil penilaian RPL perolehan kredit
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4">
+                        {loadingPdf ? (
+                            <div className="flex flex-col items-center justify-center h-[400px] gap-4">
+                                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                                <p className="text-sm text-muted-foreground">Generating PDF...</p>
+                            </div>
+                        ) : pdfPreviewUrl ? (
+                            <div>
+                                <iframe
+                                    src={pdfPreviewUrl}
+                                    title="PDF Preview"
+                                    width="100%"
+                                    height="500px"
+                                    className="border rounded"
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center h-[400px] gap-4">
+                                <FileText className="h-16 w-16 text-muted-foreground/50" />
+                                <p className="text-sm text-muted-foreground">Tidak ada PDF untuk ditampilkan</p>
+                            </div>
+                        )}
+                    </div>
+                    <DialogFooter>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={handleCloseDialogPdf}
+                        >
+                            Tutup
+                        </Button>
+                        {pdfPreviewUrl && (
+                            <Button
+                                type="button"
+                                onClick={() => {
+                                    if (pdfPreviewUrl) {
+                                        const link = document.createElement('a')
+                                        link.href = pdfPreviewUrl
+                                        link.download = 'rekapitulasi-penilaian-rpl.pdf'
+                                        link.click()
+                                    }
+                                }}
+                            >
+                                Download PDF
+                            </Button>
+                        )}
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }

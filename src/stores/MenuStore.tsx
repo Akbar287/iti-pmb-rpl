@@ -180,7 +180,7 @@ const menu: MenuStoreProps[] = [
         items: [
             {
                 namaRole: ['Wakil Rektor'],
-                title: 'Persetujuan 2 Asesor',
+                title: 'Persetujuan Asesor',
                 url: '/approval/asesor',
             },
             {
