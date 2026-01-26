@@ -606,7 +606,7 @@ const Navbar = () => {
                                         ref={searchInputRef}
                                         type="search"
                                         placeholder="Cari Kampus ITI..."
-                                        className="flex-grow border-0 focus-visible:ring-0 focus-visible:ring-offset-0 animate-in fade-in duration-300"
+                                        className="grow border-0 focus-visible:ring-0 focus-visible:ring-offset-0 animate-in fade-in duration-300"
                                     />
                                     <Button
                                         type="submit"

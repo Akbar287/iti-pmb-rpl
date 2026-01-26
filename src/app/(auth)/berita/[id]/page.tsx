@@ -163,7 +163,7 @@ export default function BeritaDetailPage({ params }: { params: Promise<{ id: str
 
             {/* Hero Image */}
             <div className="relative overflow-hidden rounded-3xl mb-8 shadow-2xl group">
-                <div className="aspect-[21/9] w-full">
+                <div className="aspect-21/9 w-full">
                     <img
                         src={getImageUrl()}
                         alt={berita.Title}

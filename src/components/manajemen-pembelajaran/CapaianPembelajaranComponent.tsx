@@ -62,7 +62,7 @@ import { toast } from 'sonner'
 import Swal from 'sweetalert2'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CapaianPembelajaran, MataKuliah } from '@/generated/prisma'
+import { CapaianPembelajaran } from '@/generated/prisma'
 import {
     Form,
     FormControl,
@@ -246,7 +246,7 @@ const CapaianPembelajaranComponent = ({
                 .catch((err) => {
                     toast(
                         'Data Capaian Pembelajaran gagal ditambah. Error: ' +
-                            err
+                        err
                     )
                     setLoading(false)
                 })
@@ -419,9 +419,9 @@ const CapaianPembelajaranComponent = ({
             <Card className="bg-gray-50 shadow-md dark:bg-gray-800">
                 <CardHeader>
                     <CardTitle>
-                        <h1 className="text-2xl">Mata Kuliah</h1>
+                        <h1 className="text-2xl">Capaian Pembelajaran</h1>
                     </CardTitle>
-                    <CardDescription>Catat Mata Kuliah Anda</CardDescription>
+                    <CardDescription>Catat Capaian Pembelajaran di Mata Kuliah</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -684,12 +684,12 @@ const CapaianPembelajaranComponent = ({
                                                                 {header.isPlaceholder
                                                                     ? null
                                                                     : flexRender(
-                                                                          header
-                                                                              .column
-                                                                              .columnDef
-                                                                              .header,
-                                                                          header.getContext()
-                                                                      )}
+                                                                        header
+                                                                            .column
+                                                                            .columnDef
+                                                                            .header,
+                                                                        header.getContext()
+                                                                    )}
                                                             </TableHead>
                                                         )
                                                     }
@@ -745,10 +745,10 @@ const CapaianPembelajaranComponent = ({
                                 1}{' '}
                             -{' '}
                             {paginationState.totalElement <
-                            paginationState.page * paginationState.limit
+                                paginationState.page * paginationState.limit
                                 ? paginationState.totalElement
                                 : paginationState.page *
-                                  paginationState.limit}{' '}
+                                paginationState.limit}{' '}
                             dari {paginationState.totalElement} Data.
                         </div>
                         <div className="flex items-center space-x-2 mt-4">
@@ -1010,7 +1010,7 @@ export function SheetManageData({
                                                                 ) =>
                                                                     field.onChange(
                                                                         val ===
-                                                                            'true'
+                                                                        'true'
                                                                     )
                                                                 }
                                                             >

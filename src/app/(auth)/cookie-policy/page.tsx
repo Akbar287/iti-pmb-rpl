@@ -317,14 +317,14 @@ export default function CookiePolicyPage() {
         <div className="w-full max-w-4xl mx-auto px-4 py-8">
             {/* Hero Section with Animation */}
             <div className="relative mt-12 mb-8 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-yellow-400/20 blur-3xl animate-pulse" />
-                <Card className="relative bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-amber-900/30 dark:via-orange-900/30 dark:to-yellow-900/30 border-amber-200/50 dark:border-amber-700/50 shadow-2xl">
+                <div className="absolute inset-0 bg-linear-to-r from-amber-400/20 via-orange-400/20 to-yellow-400/20 blur-3xl animate-pulse" />
+                <Card className="relative bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-amber-900/30 dark:via-orange-900/30 dark:to-yellow-900/30 border-amber-200/50 dark:border-amber-700/50 shadow-2xl">
                     <CardHeader className="text-center pb-2">
-                        <div className="mx-auto w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg transform hover:scale-110 transition-all duration-300 hover:rotate-6">
+                        <div className="mx-auto w-20 h-20 bg-linear-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mb-4 shadow-lg transform hover:scale-110 transition-all duration-300 hover:rotate-6">
                             <Cookie className="h-10 w-10 text-white animate-bounce" />
                         </div>
                         <CardTitle>
-                            <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-500 bg-clip-text text-transparent animate-gradient">
+                            <h1 className="text-4xl font-bold bg-linear-to-r from-amber-600 via-orange-500 to-yellow-500 bg-clip-text text-transparent animate-gradient">
                                 Kebijakan Cookie
                             </h1>
                         </CardTitle>
@@ -332,7 +332,7 @@ export default function CookiePolicyPage() {
                             Sistem Informasi RPL Terpadu - Institut Teknologi Indonesia
                         </CardDescription>
                         <div className="flex justify-center gap-2 mt-4">
-                            <Badge variant="outline" className="bg-gradient-to-r from-amber-100 to-orange-100 dark:from-amber-800 dark:to-orange-800 border-amber-300 dark:border-amber-600">
+                            <Badge variant="outline" className="bg-linear-to-r from-amber-100 to-orange-100 dark:from-amber-800 dark:to-orange-800 border-amber-300 dark:border-amber-600">
                                 <Sparkles className="h-3 w-3 mr-1" />
                                 Terakhir diperbarui: Januari 2026
                             </Badge>
@@ -342,10 +342,10 @@ export default function CookiePolicyPage() {
             </div>
 
             {/* Introduction Card */}
-            <Card className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800 transform hover:scale-[1.02] transition-all duration-300">
+            <Card className="mb-8 bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800 transform hover:scale-[1.02] transition-all duration-300">
                 <CardContent className="pt-6">
                     <div className="flex items-start gap-4">
-                        <div className="p-3 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl shadow-lg">
+                        <div className="p-3 bg-linear-to-br from-blue-400 to-indigo-500 rounded-xl shadow-lg">
                             <Info className="h-6 w-6 text-white" />
                         </div>
                         <div>
@@ -364,13 +364,13 @@ export default function CookiePolicyPage() {
 
             {/* Cookie Preferences Panel */}
             <Card className="mb-8 overflow-hidden">
-                <div className="bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 p-1">
+                <div className="bg-linear-to-r from-violet-500 via-purple-500 to-fuchsia-500 p-1">
                     <CardHeader className="bg-white dark:bg-gray-900 rounded-t-lg">
                         <CardTitle className="flex items-center gap-3">
-                            <div className="p-2 bg-gradient-to-br from-violet-400 to-purple-500 rounded-lg">
+                            <div className="p-2 bg-linear-to-br from-violet-400 to-purple-500 rounded-lg">
                                 <Settings className="h-5 w-5 text-white animate-spin-slow" />
                             </div>
-                            <span className="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
+                            <span className="bg-linear-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
                                 Preferensi Cookie Anda
                             </span>
                             {hasChanges && (
@@ -393,7 +393,7 @@ export default function CookiePolicyPage() {
                                 >
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <div className={`p-2 rounded-lg bg-gradient-to-br ${cookie.color} shadow-md`}>
+                                            <div className={`p-2 rounded-lg bg-linear-to-br ${cookie.color} shadow-md`}>
                                                 <div className="text-white">
                                                     {cookie.icon}
                                                 </div>
@@ -416,7 +416,7 @@ export default function CookiePolicyPage() {
                                             checked={cookiePreferences[cookie.id as keyof typeof cookiePreferences]}
                                             onCheckedChange={() => handleToggle(cookie.id)}
                                             disabled={cookie.required}
-                                            className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-emerald-400 data-[state=checked]:to-green-500"
+                                            className="data-[state=checked]:bg-linear-to-r data-[state=checked]:from-emerald-400 data-[state=checked]:to-green-500"
                                         />
                                     </div>
                                 </div>
@@ -427,7 +427,7 @@ export default function CookiePolicyPage() {
                         <div className="flex flex-wrap gap-3 mt-6 justify-center">
                             <Button
                                 onClick={acceptAll}
-                                className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white shadow-lg transform hover:scale-105 transition-all duration-300"
+                                className="bg-linear-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white shadow-lg transform hover:scale-105 transition-all duration-300"
                             >
                                 <CheckCircle2 className="h-4 w-4 mr-2" />
                                 Terima Semua
@@ -442,7 +442,7 @@ export default function CookiePolicyPage() {
                             <Button
                                 onClick={savePreferences}
                                 variant="secondary"
-                                className={`bg-gradient-to-r from-violet-100 to-purple-100 dark:from-violet-900 dark:to-purple-900 hover:from-violet-200 hover:to-purple-200 transform hover:scale-105 transition-all duration-300 ${hasChanges ? 'ring-2 ring-amber-500 ring-offset-2' : ''}`}
+                                className={`bg-linear-to-r from-violet-100 to-purple-100 dark:from-violet-900 dark:to-purple-900 hover:from-violet-200 hover:to-purple-200 transform hover:scale-105 transition-all duration-300 ${hasChanges ? 'ring-2 ring-amber-500 ring-offset-2' : ''}`}
                             >
                                 <Save className="h-4 w-4 mr-2" />
                                 Simpan Preferensi
@@ -453,10 +453,10 @@ export default function CookiePolicyPage() {
             </Card>
 
             {/* Cookie Types Detail */}
-            <Card className="mb-8 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl border-0">
+            <Card className="mb-8 bg-linear-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl border-0">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                        <div className="p-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg">
+                        <div className="p-2 bg-linear-to-br from-amber-400 to-orange-500 rounded-lg">
                             <Cookie className="h-5 w-5 text-white" />
                         </div>
                         <span>Detail Jenis Cookie</span>
@@ -475,7 +475,7 @@ export default function CookiePolicyPage() {
                             >
                                 <AccordionTrigger className="hover:no-underline py-4">
                                     <div className="flex items-center gap-3">
-                                        <span className={`flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br ${cookie.color} text-white text-sm font-semibold shadow-md`}>
+                                        <span className={`flex items-center justify-center w-8 h-8 rounded-full bg-linear-to-br ${cookie.color} text-white text-sm font-semibold shadow-md`}>
                                             {index + 1}
                                         </span>
                                         <div className={`p-1.5 rounded-lg ${cookie.iconBg}`}>
@@ -508,10 +508,10 @@ export default function CookiePolicyPage() {
             </Card>
 
             {/* Information Sections */}
-            <Card className="mb-8 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl border-0">
+            <Card className="mb-8 bg-linear-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl border-0">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-3">
-                        <div className="p-2 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-lg">
+                        <div className="p-2 bg-linear-to-br from-cyan-400 to-blue-500 rounded-lg">
                             <Info className="h-5 w-5 text-white" />
                         </div>
                         <span>Informasi Tambahan</span>
@@ -527,7 +527,7 @@ export default function CookiePolicyPage() {
                             >
                                 <AccordionTrigger className="hover:no-underline py-4">
                                     <div className="flex items-center gap-3">
-                                        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 text-white text-sm font-semibold shadow-md">
+                                        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-linear-to-br from-cyan-400 to-blue-500 text-white text-sm font-semibold shadow-md">
                                             {index + 1}
                                         </span>
                                         {info.icon}
@@ -573,7 +573,7 @@ export default function CookiePolicyPage() {
 
             {/* Contact Section */}
             <div className="relative overflow-hidden rounded-2xl mb-8">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-purple-500/10 to-pink-500/10 animate-gradient" />
+                <div className="absolute inset-0 bg-linear-to-r from-primary/10 via-purple-500/10 to-pink-500/10 animate-gradient" />
                 <Card className="relative bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-primary/20">
                     <CardContent className="p-6">
                         <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
@@ -585,13 +585,13 @@ export default function CookiePolicyPage() {
                             silakan hubungi kami:
                         </p>
                         <div className="flex flex-wrap gap-4 text-sm">
-                            <div className="flex items-center gap-2 bg-gradient-to-r from-primary/10 to-purple-500/10 px-4 py-2 rounded-full">
+                            <div className="flex items-center gap-2 bg-linear-to-r from-primary/10 to-purple-500/10 px-4 py-2 rounded-full">
                                 <span className="text-muted-foreground">Email:</span>
                                 <a href="mailto:pdsi@iti.ac.id" className="text-primary hover:underline font-medium">
                                     pdsi@iti.ac.id
                                 </a>
                             </div>
-                            <div className="flex items-center gap-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 px-4 py-2 rounded-full">
+                            <div className="flex items-center gap-2 bg-linear-to-r from-purple-500/10 to-pink-500/10 px-4 py-2 rounded-full">
                                 <span className="text-muted-foreground">Telepon:</span>
                                 <span className="font-medium">(+62) 81360090013</span>
                             </div>
