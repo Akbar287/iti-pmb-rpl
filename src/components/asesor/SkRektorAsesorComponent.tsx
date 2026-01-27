@@ -44,7 +44,6 @@ import {
     TableRow,
 } from '../ui/table'
 import {
-    deleteSkRektorAsesor,
     getFileBlobByNamafile,
     getSkRektorAsesorPagination,
     getSkRektorAsesorPaginationAsesorRole,
@@ -183,7 +182,7 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                 setPreviewPdf(res)
                 setOpenDialog(true)
             })
-            .catch((err) => {})
+            .catch((err) => { })
     }
     const columns: ColumnDef<ResponseSkRektorAsesor>[] = [
         {
@@ -336,10 +335,10 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                                                 {header.isPlaceholder
                                                     ? null
                                                     : flexRender(
-                                                          header.column
-                                                              .columnDef.header,
-                                                          header.getContext()
-                                                      )}
+                                                        header.column
+                                                            .columnDef.header,
+                                                        header.getContext()
+                                                    )}
                                             </TableHead>
                                         )
                                     })}
@@ -387,7 +386,7 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                         1}{' '}
                     -{' '}
                     {paginationState.totalElement <
-                    paginationState.page * paginationState.limit
+                        paginationState.page * paginationState.limit
                         ? paginationState.totalElement
                         : paginationState.page * paginationState.limit}{' '}
                     dari {paginationState.totalElement} Data.

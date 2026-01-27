@@ -27,19 +27,19 @@ export async function setPersetujuanAsesor(
     catatan: string
 ): Promise<{
     status: string, message: string; data: any[]
-}> { 
+}> {
     const res = await fetch(
         `${BASE_URL}/api/protected/approval/asesor`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                pendaftaranId: PendaftaranId,
-                approval: approval,
-                catatan: catatan,
-            }),
-        }
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            pendaftaranId: PendaftaranId,
+            approval: approval,
+            catatan: catatan,
+        }),
+    }
     )
     if (!res.ok) throw new Error('Failed to fetch asesor mahasiswa')
     return res.json()

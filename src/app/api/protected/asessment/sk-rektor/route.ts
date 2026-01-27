@@ -906,7 +906,7 @@ app.get('/', async (c) => {
 
             if (!pendaftaran) c.json(null)
 
-            const cookieHeader = cookies().toString();
+            const cookieHeader = (await cookies()).toString();
 
             const target = pendaftaran?.Mahasiswa.User.NomorWa ?? "";
             if (!target) return;

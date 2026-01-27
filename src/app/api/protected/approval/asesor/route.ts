@@ -233,65 +233,65 @@ app.post('/', async (c) => {
 
     }
 
-    const TipeSkRektor = await prisma.tipeSkRektor.findFirst({
-        where: {
-            Nama: 'Asesor'
-        }, select: { TipeSkRektorId: true }
-    })
-    if (!TipeSkRektor) {
-        return c.json(
-            { status: "error", message: "Tipe SK Rektor 'Asesor' tidak ditemukan", data: [] },
-            { status: 400 }
-        );
-    }
+    // const TipeSkRektor = await prisma.tipeSkRektor.findFirst({
+    //     where: {
+    //         Nama: 'Asesor'
+    //     }, select: { TipeSkRektorId: true }
+    // })
+    // if (!TipeSkRektor) {
+    //     return c.json(
+    //         { status: "error", message: "Tipe SK Rektor 'Asesor' tidak ditemukan", data: [] },
+    //         { status: 400 }
+    //     );
+    // }
 
-    if (!asesorMahasiswa || asesorMahasiswa.AssesorMahasiswa.length === 0) {
-        return c.json(
-            { status: "error", message: "Asesor Mahasiswa belum ada relasi", data: [] },
-            { status: 400 }
-        );
-    }
+    // if (!asesorMahasiswa || asesorMahasiswa.AssesorMahasiswa.length === 0) {
+    //     return c.json(
+    //         { status: "error", message: "Asesor Mahasiswa belum ada relasi", data: [] },
+    //         { status: 400 }
+    //     );
+    // }
 
-    const skIds = asesorMahasiswa.AssesorMahasiswa.flatMap((am) =>
-        am.SkRektorAssesor.map((sra) => sra.SkRektor.SkRektorId)
-    );
+    // const skIds = asesorMahasiswa.AssesorMahasiswa.flatMap((am) =>
+    //     am.SkRektorAssesor.map((sra) => sra.SkRektor.SkRektorId)
+    // );
 
-    const uniqueSkIds = [...new Set(skIds)];
+    // const uniqueSkIds = [...new Set(skIds)];
 
-    const baseSkData = {
-        TipeSkRektorId: TipeSkRektor.TipeSkRektorId,
-        NamaSk: "",
-        TahunSk: 2020,
-        NomorSk: "",
-        NamaFile: "",
-        NamaDokumen: "",
-        FileData: Buffer.alloc(0),
-        Catatan: body.catatan,
-        UpdatedAt: new Date(),
-    } as const;
+    // const baseSkData = {
+    //     TipeSkRektorId: TipeSkRektor.TipeSkRektorId,
+    //     NamaSk: "",
+    //     TahunSk: 2020,
+    //     NomorSk: "",
+    //     NamaFile: "",
+    //     NamaDokumen: "",
+    //     FileData: Buffer.alloc(0),
+    //     Catatan: body.catatan,
+    //     UpdatedAt: new Date(),
+    // } as const;
 
-    await prisma.$transaction(async (tx) => {
-        if (uniqueSkIds.length === 0) {
-            const sk = await tx.skRektor.create({
-                data: {
-                    ...baseSkData,
-                    CreatedAt: new Date(),
-                },
-            });
+    // await prisma.$transaction(async (tx) => {
+    //     if (uniqueSkIds.length === 0) {
+    //         const sk = await tx.skRektor.create({
+    //             data: {
+    //                 ...baseSkData,
+    //                 CreatedAt: new Date(),
+    //             },
+    //         });
 
-            const relasi = asesorMahasiswa.AssesorMahasiswa.map((am) => ({
-                AssesorMahasiswaId: am.AssesorMahasiswaId,
-                SkRektorId: sk.SkRektorId,
-            }));
+    //         const relasi = asesorMahasiswa.AssesorMahasiswa.map((am) => ({
+    //             AssesorMahasiswaId: am.AssesorMahasiswaId,
+    //             SkRektorId: sk.SkRektorId,
+    //         }));
 
-            await tx.skRektorAssesor.createMany({ data: relasi });
-        } else {
-            await tx.skRektor.update({
-                where: { SkRektorId: uniqueSkIds[0] },
-                data: baseSkData,
-            });
-        }
-    });
+    //         await tx.skRektorAssesor.createMany({ data: relasi });
+    //     } else {
+    //         await tx.skRektor.update({
+    //             where: { SkRektorId: uniqueSkIds[0] },
+    //             data: baseSkData,
+    //         });
+    //     }
+    // });
 
     return c.json({
         status: 'success',

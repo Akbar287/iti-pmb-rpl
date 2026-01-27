@@ -270,9 +270,9 @@ const UploadDokumen = ({
                 </Alert>
                 <div>
                     {selectableMahasiswa &&
-                    jenisDokumen.length > 0 &&
-                    !loading &&
-                    ['Pengisian Data Diri', 'Sanggahan'].includes(statusMhs) ? (
+                        jenisDokumen.length > 0 &&
+                        !loading &&
+                        ['Pengisian Data Diri', 'Sanggahan'].includes(statusMhs) ? (
                         <Button
                             className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
                             type="button"
@@ -329,18 +329,18 @@ const UploadDokumen = ({
                                                 'Pengisian Data Diri',
                                                 'Sanggahan',
                                             ].includes(statusMhs) && (
-                                                <Button
-                                                    className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
-                                                    variant={'destructive'}
-                                                    type="button"
-                                                    onClick={() =>
-                                                        hapusData(row)
-                                                    }
-                                                >
-                                                    <Trash2 />
-                                                    Hapus
-                                                </Button>
-                                            )}
+                                                    <Button
+                                                        className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer "
+                                                        variant={'destructive'}
+                                                        type="button"
+                                                        onClick={() =>
+                                                            hapusData(row)
+                                                        }
+                                                    >
+                                                        <Trash2 />
+                                                        Hapus
+                                                    </Button>
+                                                )}
                                         </TableCell>
                                     </TableRow>
                                 ))
@@ -462,6 +462,15 @@ function DialogUploadDokumen({
                                 <AlertDescription>
                                     Gabungkan beberapa file sejenis ke dalam
                                     satu PDF, lalu pilih jenis dokumennya
+                                </AlertDescription>
+                            </Alert>
+                            <Alert className="w-full mt-3" variant={'destructive'}>
+                                <AlertCircle className="h-4 w-4" />
+                                <AlertTitle>
+                                    Jangan Tutup Jendela ini.
+                                </AlertTitle>
+                                <AlertDescription>
+                                    Validasi dokumen memakan waktu 1-2 menit tergantung koneksi internet dan jumlah halaman.
                                 </AlertDescription>
                             </Alert>
                             {errorMessage && (
