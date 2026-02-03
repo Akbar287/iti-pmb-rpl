@@ -8,7 +8,7 @@ import {
     StatusPerkawinan,
 } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import {
     CalonMahasiswaRplPage,
     CalonMahasiswaRplRequestResponseDTO,
@@ -873,7 +873,7 @@ app.post('/', async (c) => {
         const body: SevimaImportCaseType[] = await c.req.json()
 
         const results = await Promise.all(
-            body.map(u => createMahasiswaUser(u, {username: 'name'}))
+            body.map(u => createMahasiswaUser(u, { username: 'name' }))
         )
 
         const filtered = results.filter(r => r !== null)
@@ -1199,7 +1199,7 @@ export const POST = handle(app)
 export const PUT = handle(app)
 export const DELETE = handle(app)
 
-async function createMahasiswaUser(body: SevimaImportCaseType, options?: {username: string}) {
+async function createMahasiswaUser(body: SevimaImportCaseType, options?: { username: string }) {
     const provinsi = body.alamat.ProvinsiId
     const kabupaten = body.alamat.KabupatenId
     const kecamatan = body.alamat.KecamatanId

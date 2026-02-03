@@ -35,7 +35,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { setStatusAsessmenOlehAsesor } from '@/services/Status/StatusService'
 
 const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
-    status: { NamaStatus: string; Urutan: number; Aktif: boolean}[]
+    status: { NamaStatus: string; Urutan: number; Aktif: boolean }[]
     dataServer: {
         PendaftaranId: string;
         NamaProgramStudi: string;
@@ -56,7 +56,7 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
     const form = useForm<SkRektorSkemaValidasiTipe>({
         resolver: zodResolver(SkRektorSkemaValidasi),
         defaultValues: {
-            data: new File([], ''),
+            data: undefined,
             NamaSk: dataServer.NamaSk,
             TahunSk: dataServer.TahunSk,
             NomorSk: dataServer.NomorSk,
@@ -67,28 +67,30 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
     const onSubmit = async (data: SkRektorSkemaValidasiTipe) => {
         setLoading(true)
 
-        await setSkRektorAsesor(
-            data.data,
-            data.NamaSk,
-            data.TahunSk,
-            data.NomorSk,
-            dataServer?.PendaftaranId ?? ''
-        )
-            .then(async (res) => {
-                toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                let r = status.find(x => x.NamaStatus == 'Penerbitan SK Penugasan Asesor')
-                if(r) {
-                    if(r.Aktif) {
-                        console.log('Hai')
-                        await setStatusAsessmenOlehAsesor(dataServer?.PendaftaranId ?? '')
+        if (data.data) {
+            await setSkRektorAsesor(
+                data.data,
+                data.NamaSk,
+                data.TahunSk,
+                data.NomorSk,
+                dataServer?.PendaftaranId ?? ''
+            )
+                .then(async (res) => {
+                    toast('Data SK Asesor Mahasiswa berhasil disimpan')
+                    let r = status.find(x => x.NamaStatus == 'Penerbitan SK Penugasan Asesor')
+                    if (r) {
+                        if (r.Aktif) {
+                            console.log('Hai')
+                            await setStatusAsessmenOlehAsesor(dataServer?.PendaftaranId ?? '')
+                        }
                     }
-                }
-            })
-            .catch((err) => {
-                toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
-            }).finally(() => {
-                setLoading(false)
-            })
+                })
+                .catch((err) => {
+                    toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
+                }).finally(() => {
+                    setLoading(false)
+                })
+        }
     }
 
     React.useEffect(() => {

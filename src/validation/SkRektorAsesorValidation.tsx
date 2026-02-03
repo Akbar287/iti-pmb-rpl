@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024 
+const MAX_FILE_SIZE = 10 * 1024 * 1024
 const ACCEPTED_FILE_TYPES = [
     'application/pdf',
     'application/msword',
@@ -18,7 +18,7 @@ export const SkRektorSkemaValidasi = z.object({
         .refine(
             (file) => ACCEPTED_FILE_TYPES.includes(file.type),
             'Format file tidak valid. Hanya .pdf, .jpg, atau .png yang diterima.'
-        ),
+        ).optional(),
 
     NamaSk: z
         .string({

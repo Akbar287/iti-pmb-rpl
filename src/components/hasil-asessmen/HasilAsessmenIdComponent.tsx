@@ -151,7 +151,7 @@ const HasilAsessmenIdComponent = ({
     const form = useForm<SkRektorAsessmenSkemaValidasiTipe>({
         resolver: zodResolver(SkRektorAsessmenSkemaValidasi),
         defaultValues: {
-            data: new File([], ''),
+            data: undefined,
             NamaSk: '',
             TahunSk: '',
             NomorSk: '',
@@ -160,27 +160,29 @@ const HasilAsessmenIdComponent = ({
 
     const onSubmit = async (data: SkRektorAsessmenSkemaValidasiTipe) => {
         setLoading(true)
-        await setFile(
-            data.data,
-            dataServer.PendaftaranId,
-            data.NamaSk,
-            data.TahunSk,
-            data.NomorSk
-        )
-            .then((res) => {
-                setStatusPersetujuanHasilFinalAsessmen(dataServer.PendaftaranId).then(
-                    (res) => {
-                        toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                        setStatusServer({ StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40k', NamaStatus: 'Persetujuan Hasil Final' })
-                        setLoading(false)
-                    }
-                )
-                setLoading(false)
-            })
-            .catch((err) => {
-                toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
-                setLoading(false)
-            })
+        if (data.data) {
+            await setFile(
+                data.data,
+                dataServer.PendaftaranId,
+                data.NamaSk,
+                data.TahunSk,
+                data.NomorSk
+            )
+                .then((res) => {
+                    setStatusPersetujuanHasilFinalAsessmen(dataServer.PendaftaranId).then(
+                        (res) => {
+                            toast('Data SK Asesor Mahasiswa berhasil disimpan')
+                            setStatusServer({ StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40k', NamaStatus: 'Persetujuan Hasil Final' })
+                            setLoading(false)
+                        }
+                    )
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
+                    setLoading(false)
+                })
+        }
     }
 
     React.useEffect(() => {

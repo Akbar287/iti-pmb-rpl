@@ -3,8 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   devIndicators: false,
+  output: 'standalone',
   images: {
-    domains: ['localhost', 'https://pmb-rpl.vercel.app/'],
+    domains: ['localhost', 'simrpl.iti.ac.id', 'pmb-rpl.vercel.app'],
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {

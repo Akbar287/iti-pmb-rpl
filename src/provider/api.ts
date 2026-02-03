@@ -1,6 +1,6 @@
 import { AuthOptions, getServerSession } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import Bycript from 'bcrypt'
+import Bycript from 'bcryptjs'
 import { Session } from 'next-auth'
 import { JWT } from "next-auth/jwt"
 import { prisma } from '@/lib/prisma'
@@ -101,7 +101,7 @@ const authOptions: AuthOptions = {
         maxAge: 30 * 24 * 60 * 60,
     },
     callbacks: {
-        async jwt({ token, user }:{ token: any; user?: any; }) {
+        async jwt({ token, user }: { token: any; user?: any; }) {
             if (user) {
                 token.id = user.id
                 token.username = user.username

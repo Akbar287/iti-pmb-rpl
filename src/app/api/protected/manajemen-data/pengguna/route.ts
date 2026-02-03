@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { Prisma } from '@/generated/prisma'
 import { UserResponseByIdType, UserResponsesType } from '@/types/ManajemenUser'
 import { UserTable } from '@/types/types'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { UserCreateFormValidation } from '@/validation/ProfilValidation'
 
 const app = new Hono().basePath('/api/protected/manajemen-data/pengguna')
@@ -99,59 +99,59 @@ app.get('/', async (c) => {
             d === null
                 ? null
                 : {
-                      UserId: d.UserId,
-                      Username:
-                          d.Userlogin?.find(
-                              (c) => c.Credential === 'credential'
-                          )?.Username ?? '',
-                      Nama: d.Nama ?? '',
-                      Email: d.Email ?? '',
-                      EmailVerifiedAt: d.EmailVerifiedAt ?? null,
-                      TempatLahir: d.TempatLahir ?? null,
-                      TanggalLahir: d.TanggalLahir ?? null,
-                      JenisKelamin: d.JenisKelamin ?? '',
-                      PendidikanTerakhir: d.PendidikanTerakhir ?? '',
-                      Avatar: process.env.NEXT_PUBLIC_API_BASE_URL + '/api/protected/avatar?userId=' + d.UserId,
-                      Agama: d.Agama ?? '',
-                      Telepon: d.Telepon ?? '',
-                      NomorWa: d.NomorWa ?? '',
-                      NomorHp: d.NomorHp ?? '',
-                      Alamat: d.Alamat
-                          ? {
-                                AlamatId: d.Alamat.AlamatId,
-                                Alamat: d.Alamat.Alamat,
-                                KodePos: d.Alamat.KodePos ?? '',
-                                DesaId: d.Alamat.Desa?.DesaId ?? '',
-                                NamaDesa: d.Alamat.Desa?.Nama ?? '',
-                                KecamatanId:
-                                    d.Alamat.Desa?.Kecamatan?.KecamatanId ?? '',
-                                NamaKecamatan:
-                                    d.Alamat.Desa?.Kecamatan?.Nama ?? '',
-                                KabupatenId:
-                                    d.Alamat.Desa?.Kecamatan?.Kabupaten
-                                        ?.KabupatenId ?? '',
-                                NamaKabupaten:
-                                    d.Alamat.Desa?.Kecamatan?.Kabupaten?.Nama ??
-                                    '',
-                                ProvinsiId:
-                                    d.Alamat.Desa?.Kecamatan?.Kabupaten
-                                        ?.Provinsi?.ProvinsiId ?? '',
-                                NamaProvinsi:
-                                    d.Alamat.Desa?.Kecamatan?.Kabupaten
-                                        ?.Provinsi?.Nama ?? '',
-                                CountryId:
-                                    d.Alamat.Desa?.Kecamatan?.Kabupaten
-                                        ?.Provinsi?.Country?.CountryId ?? '',
-                                NamaCountry:
-                                    d.Alamat.Desa?.Kecamatan?.Kabupaten
-                                        ?.Provinsi?.Country?.Nama ?? '',
-                            }
-                          : null,
-                      Role: d.UserHasRoles?.map((r) => ({
-                          RoleId: r.Role?.RoleId ?? '',
-                          NamaRole: r.Role?.Name ?? '',
-                      })),
-                  }
+                    UserId: d.UserId,
+                    Username:
+                        d.Userlogin?.find(
+                            (c) => c.Credential === 'credential'
+                        )?.Username ?? '',
+                    Nama: d.Nama ?? '',
+                    Email: d.Email ?? '',
+                    EmailVerifiedAt: d.EmailVerifiedAt ?? null,
+                    TempatLahir: d.TempatLahir ?? null,
+                    TanggalLahir: d.TanggalLahir ?? null,
+                    JenisKelamin: d.JenisKelamin ?? '',
+                    PendidikanTerakhir: d.PendidikanTerakhir ?? '',
+                    Avatar: process.env.NEXT_PUBLIC_API_BASE_URL + '/api/protected/avatar?userId=' + d.UserId,
+                    Agama: d.Agama ?? '',
+                    Telepon: d.Telepon ?? '',
+                    NomorWa: d.NomorWa ?? '',
+                    NomorHp: d.NomorHp ?? '',
+                    Alamat: d.Alamat
+                        ? {
+                            AlamatId: d.Alamat.AlamatId,
+                            Alamat: d.Alamat.Alamat,
+                            KodePos: d.Alamat.KodePos ?? '',
+                            DesaId: d.Alamat.Desa?.DesaId ?? '',
+                            NamaDesa: d.Alamat.Desa?.Nama ?? '',
+                            KecamatanId:
+                                d.Alamat.Desa?.Kecamatan?.KecamatanId ?? '',
+                            NamaKecamatan:
+                                d.Alamat.Desa?.Kecamatan?.Nama ?? '',
+                            KabupatenId:
+                                d.Alamat.Desa?.Kecamatan?.Kabupaten
+                                    ?.KabupatenId ?? '',
+                            NamaKabupaten:
+                                d.Alamat.Desa?.Kecamatan?.Kabupaten?.Nama ??
+                                '',
+                            ProvinsiId:
+                                d.Alamat.Desa?.Kecamatan?.Kabupaten
+                                    ?.Provinsi?.ProvinsiId ?? '',
+                            NamaProvinsi:
+                                d.Alamat.Desa?.Kecamatan?.Kabupaten
+                                    ?.Provinsi?.Nama ?? '',
+                            CountryId:
+                                d.Alamat.Desa?.Kecamatan?.Kabupaten
+                                    ?.Provinsi?.Country?.CountryId ?? '',
+                            NamaCountry:
+                                d.Alamat.Desa?.Kecamatan?.Kabupaten
+                                    ?.Provinsi?.Country?.Nama ?? '',
+                        }
+                        : null,
+                    Role: d.UserHasRoles?.map((r) => ({
+                        RoleId: r.Role?.RoleId ?? '',
+                        NamaRole: r.Role?.Name ?? '',
+                    })),
+                }
 
         return c.json(
             res ? res : { status: 'error', message: 'no query id', data: [] },
@@ -160,11 +160,11 @@ app.get('/', async (c) => {
     } else {
         const where: Prisma.UserWhereInput = search
             ? {
-                  OR: [
-                      { Nama: { contains: search, mode: 'insensitive' } },
-                      { Email: { contains: search, mode: 'insensitive' } },
-                  ],
-              }
+                OR: [
+                    { Nama: { contains: search, mode: 'insensitive' } },
+                    { Email: { contains: search, mode: 'insensitive' } },
+                ],
+            }
             : {}
 
         const [data, total] = await Promise.all([
@@ -216,9 +216,9 @@ app.get('/', async (c) => {
                 (d?.UserHasRoles ?? []).length === 0
                     ? []
                     : (d?.UserHasRoles ?? []).map((r) => ({
-                          RoleId: r.Role.Name ?? '',
-                          NamaRole: r.Role.Name ?? '',
-                      })),
+                        RoleId: r.Role.Name ?? '',
+                        NamaRole: r.Role.Name ?? '',
+                    })),
         }))
 
         return c.json<{
@@ -277,7 +277,7 @@ app.post('/', async (c) => {
                                         Provinsi: {
                                             select: {
                                                 ProvinsiId: true,
-                                                Nama: true, 
+                                                Nama: true,
                                                 Country: {
                                                     select: {
                                                         CountryId: true,
@@ -343,31 +343,31 @@ app.post('/', async (c) => {
             NomorHp: user.NomorHp ?? '',
             Alamat: alamat.Alamat
                 ? {
-                      AlamatId: alamat.AlamatId,
-                      Alamat: alamat.Alamat,
-                      KodePos: alamat.KodePos ?? '',
-                      DesaId: alamat.Desa?.DesaId ?? '',
-                      NamaDesa: alamat.Desa?.Nama ?? '',
-                      KecamatanId: alamat.Desa?.Kecamatan?.KecamatanId ?? '',
-                      NamaKecamatan: alamat.Desa?.Kecamatan?.Nama ?? '',
-                      KabupatenId:
-                          alamat.Desa?.Kecamatan?.Kabupaten?.KabupatenId ??
-                          '',
-                      NamaKabupaten:
-                          alamat.Desa?.Kecamatan?.Kabupaten?.Nama ?? '',
-                      ProvinsiId:
-                          alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi
-                              ?.ProvinsiId ?? '',
-                      NamaProvinsi:
-                          alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Nama ??
-                          '',
-                      CountryId:
-                          alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
-                              ?.CountryId ?? '',
-                      NamaCountry:
-                          alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
-                              ?.Nama ?? '',
-                  }
+                    AlamatId: alamat.AlamatId,
+                    Alamat: alamat.Alamat,
+                    KodePos: alamat.KodePos ?? '',
+                    DesaId: alamat.Desa?.DesaId ?? '',
+                    NamaDesa: alamat.Desa?.Nama ?? '',
+                    KecamatanId: alamat.Desa?.Kecamatan?.KecamatanId ?? '',
+                    NamaKecamatan: alamat.Desa?.Kecamatan?.Nama ?? '',
+                    KabupatenId:
+                        alamat.Desa?.Kecamatan?.Kabupaten?.KabupatenId ??
+                        '',
+                    NamaKabupaten:
+                        alamat.Desa?.Kecamatan?.Kabupaten?.Nama ?? '',
+                    ProvinsiId:
+                        alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi
+                            ?.ProvinsiId ?? '',
+                    NamaProvinsi:
+                        alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Nama ??
+                        '',
+                    CountryId:
+                        alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
+                            ?.CountryId ?? '',
+                    NamaCountry:
+                        alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
+                            ?.Nama ?? '',
+                }
                 : null,
             Role: []
         }
@@ -515,18 +515,18 @@ app.put('/', async (c) => {
                 },
                 select: {
                     UserId: true,
-                    Nama:true,
-                    Email:true,
-                    TempatLahir:true,
-                    TanggalLahir:true,
+                    Nama: true,
+                    Email: true,
+                    TempatLahir: true,
+                    TanggalLahir: true,
                     EmailVerifiedAt: true,
-                    JenisKelamin:true,
-                    PendidikanTerakhir:true,
-                    Avatar:true,
-                    Agama:true,
-                    Telepon:true,
-                    NomorWa:true,
-                    NomorHp:true,
+                    JenisKelamin: true,
+                    PendidikanTerakhir: true,
+                    Avatar: true,
+                    Agama: true,
+                    Telepon: true,
+                    NomorWa: true,
+                    NomorHp: true,
                     UserHasRoles: {
                         select: {
                             Role: {
@@ -579,7 +579,7 @@ app.put('/', async (c) => {
                                             Provinsi: {
                                                 select: {
                                                     ProvinsiId: true,
-                                                    Nama: true, 
+                                                    Nama: true,
                                                     Country: {
                                                         select: {
                                                             CountryId: true,
@@ -614,31 +614,31 @@ app.put('/', async (c) => {
                 NomorHp: user.NomorHp ?? '',
                 Alamat: alamat.Alamat
                     ? {
-                          AlamatId: alamat.AlamatId,
-                          Alamat: alamat.Alamat,
-                          KodePos: alamat.KodePos ?? '',
-                          DesaId: alamat.Desa?.DesaId ?? '',
-                          NamaDesa: alamat.Desa?.Nama ?? '',
-                          KecamatanId: alamat.Desa?.Kecamatan?.KecamatanId ?? '',
-                          NamaKecamatan: alamat.Desa?.Kecamatan?.Nama ?? '',
-                          KabupatenId:
-                              alamat.Desa?.Kecamatan?.Kabupaten?.KabupatenId ??
-                              '',
-                          NamaKabupaten:
-                              alamat.Desa?.Kecamatan?.Kabupaten?.Nama ?? '',
-                          ProvinsiId:
-                              alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi
-                                  ?.ProvinsiId ?? '',
-                          NamaProvinsi:
-                              alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Nama ??
-                              '',
-                          CountryId:
-                              alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
-                                  ?.CountryId ?? '',
-                          NamaCountry:
-                              alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
-                                  ?.Nama ?? '',
-                      }
+                        AlamatId: alamat.AlamatId,
+                        Alamat: alamat.Alamat,
+                        KodePos: alamat.KodePos ?? '',
+                        DesaId: alamat.Desa?.DesaId ?? '',
+                        NamaDesa: alamat.Desa?.Nama ?? '',
+                        KecamatanId: alamat.Desa?.Kecamatan?.KecamatanId ?? '',
+                        NamaKecamatan: alamat.Desa?.Kecamatan?.Nama ?? '',
+                        KabupatenId:
+                            alamat.Desa?.Kecamatan?.Kabupaten?.KabupatenId ??
+                            '',
+                        NamaKabupaten:
+                            alamat.Desa?.Kecamatan?.Kabupaten?.Nama ?? '',
+                        ProvinsiId:
+                            alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi
+                                ?.ProvinsiId ?? '',
+                        NamaProvinsi:
+                            alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Nama ??
+                            '',
+                        CountryId:
+                            alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
+                                ?.CountryId ?? '',
+                        NamaCountry:
+                            alamat.Desa?.Kecamatan?.Kabupaten?.Provinsi?.Country
+                                ?.Nama ?? '',
+                    }
                     : null,
                 Role: user.UserHasRoles.map(r => ({
                     RoleId: r.Role.RoleId,
@@ -648,7 +648,7 @@ app.put('/', async (c) => {
             return c.json(res, 200)
         }
         return c.json({
-            status: 'error', 
+            status: 'error',
             message: 'no valid input',
             data: []
         }, 400)

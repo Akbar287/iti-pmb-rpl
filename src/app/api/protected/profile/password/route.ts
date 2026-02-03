@@ -2,12 +2,12 @@ import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { getSession } from '@/provider/api'
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { prisma } from '@/lib/prisma'
 
 const app = new Hono().basePath('/api/protected/profile/password')
 
-app.use('*', withApiAuth); 
+app.use('*', withApiAuth);
 
 app.put('/', async (c) => {
     const session = await getSession();
@@ -55,7 +55,7 @@ app.put('/', async (c) => {
             message: "Password Lama Salah"
         });
     }
-    
+
 
 })
 

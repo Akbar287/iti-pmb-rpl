@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import crypto from 'crypto'
@@ -22,7 +22,7 @@ app.get('/', async (c) => {
                         ProgramStudi: {
                             select: {
                                 ProgramStudiId: true,
-                                UniversityId: true, 
+                                UniversityId: true,
                                 Nama: true
                             }
                         }
@@ -90,35 +90,33 @@ app.get('/', async (c) => {
                         NomorHp: true,
                         Alamat: {
                             select: {
-                                        AlamatId: true,
-                                        Alamat: true,
-                                        KodePos: true,
-                                        Desa: {
+                                AlamatId: true,
+                                Alamat: true,
+                                KodePos: true,
+                                Desa: {
+                                    select: {
+                                        DesaId: true,
+                                        Nama: true,
+                                        Kecamatan: {
                                             select: {
-                                                DesaId: true,
+                                                KecamatanId: true,
                                                 Nama: true,
-                                                Kecamatan: {
+                                                Kabupaten: {
                                                     select: {
-                                                        KecamatanId: true,
+                                                        KabupatenId:
+                                                            true,
                                                         Nama: true,
-                                                        Kabupaten: {
+                                                        Provinsi: {
                                                             select: {
-                                                                KabupatenId:
+                                                                ProvinsiId:
                                                                     true,
                                                                 Nama: true,
-                                                                Provinsi: {
+                                                                Country:
+                                                                {
                                                                     select: {
-                                                                        ProvinsiId:
+                                                                        CountryId:
                                                                             true,
                                                                         Nama: true,
-                                                                        Country:
-                                                                            {
-                                                                                select: {
-                                                                                    CountryId:
-                                                                                        true,
-                                                                                    Nama: true,
-                                                                                },
-                                                                            },
                                                                     },
                                                                 },
                                                             },
@@ -128,6 +126,8 @@ app.get('/', async (c) => {
                                             },
                                         },
                                     },
+                                },
+                            },
                         }
                     }
                 }
@@ -151,7 +151,7 @@ app.get('/', async (c) => {
                 KodePos: data?.User.Alamat.KodePos ?? '',
                 DesaId: data?.User.Alamat.Desa.DesaId ?? '',
                 NamaDesa: data?.User.Alamat.Desa.Nama ?? '',
-                KecamatanId: data?.User.Alamat.Desa.Kecamatan.KecamatanId ??'',
+                KecamatanId: data?.User.Alamat.Desa.Kecamatan.KecamatanId ?? '',
                 NamaKecamatan: data?.User.Alamat.Desa.Kecamatan.Nama ?? '',
                 KabupatenId: data?.User.Alamat.Desa.Kecamatan.Kabupaten.KabupatenId ?? '',
                 NamaKabupaten: data?.User.Alamat.Desa.Kecamatan.Kabupaten.Nama ?? '',
@@ -211,34 +211,34 @@ app.get('/', async (c) => {
     } else if (page && limit) {
         let where: Prisma.AsesorWhereInput = search
             ? {
-                  OR: [
-                      {
-                          TipeAsesor: {
-                              Nama: {
-                                  contains: search,
-                                  mode: 'insensitive',
-                              },
-                          },
-                      },
-                      {
-                          User: {
-                              is: {
-                                  OR: [
-                                      {
-                                          Nama: {
-                                              contains: search,
-                                              mode: 'insensitive',
-                                          },
-                                      },
-                                      {
-                                          PendidikanTerakhir: { equals: search as Jenjang },
-                                      },
-                                  ],
-                              },
-                          },
-                      },
-                  ],
-              }
+                OR: [
+                    {
+                        TipeAsesor: {
+                            Nama: {
+                                contains: search,
+                                mode: 'insensitive',
+                            },
+                        },
+                    },
+                    {
+                        User: {
+                            is: {
+                                OR: [
+                                    {
+                                        Nama: {
+                                            contains: search,
+                                            mode: 'insensitive',
+                                        },
+                                    },
+                                    {
+                                        PendidikanTerakhir: { equals: search as Jenjang },
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            }
             : {}
 
         const [data, total] = await Promise.all([
@@ -246,12 +246,12 @@ app.get('/', async (c) => {
                 where,
                 skip: (page - 1) * limit,
                 take: limit,
-                orderBy: { User: {Nama: 'asc'} },
+                orderBy: { User: { Nama: 'asc' } },
                 select: {
                     AsesorId: true,
-                    TipeAsesor: {select: {Nama: true}},
+                    TipeAsesor: { select: { Nama: true } },
                     AsesorProgramStudi: {
-                        select: {ProgramStudi: {select: {Nama: true}}}
+                        select: { ProgramStudi: { select: { Nama: true } } }
                     },
                     User: {
                         select: {
@@ -397,7 +397,7 @@ app.post('/', async (c) => {
             })
         }
 
-        const tipeAsesor = await prisma.tipeAsesor.findFirst({select: {TipeAsesorId: true, Nama: true}, where: {TipeAsesorId: body.TipeAsesor.TipeAsesorId}})
+        const tipeAsesor = await prisma.tipeAsesor.findFirst({ select: { TipeAsesorId: true, Nama: true }, where: { TipeAsesorId: body.TipeAsesor.TipeAsesorId } })
         if (!tipeAsesor) {
             throw new Error('TipeAsesor not found')
         }
@@ -511,142 +511,148 @@ app.put('/', async (c) => {
         },
     })
 
-        const asesor = await prisma.asesor.update({
-            data: {
-                TipeAsesorId: body.TipeAsesor.TipeAsesorId,
-                UserId: user.UserId
-            },
-            where: {
-                AsesorId: body.AsesorId,
-            },
-        })
+    const asesor = await prisma.asesor.update({
+        data: {
+            TipeAsesorId: body.TipeAsesor.TipeAsesorId,
+            UserId: user.UserId
+        },
+        where: {
+            AsesorId: body.AsesorId,
+        },
+    })
 
-        await prisma.asesorProgramStudi.deleteMany({
-            where: {
-                AsesorId : asesor.AsesorId
-            }
-        })
+    await prisma.asesorProgramStudi.deleteMany({
+        where: {
+            AsesorId: asesor.AsesorId
+        }
+    })
 
-        const temp = body.ProgramStudi.map(prodi => ({
-            AsesorId: asesor.AsesorId,
-            ProgramStudiId: prodi.ProgramStudiId
-        }))
+    const temp = body.ProgramStudi.map(prodi => ({
+        AsesorId: asesor.AsesorId,
+        ProgramStudiId: prodi.ProgramStudiId
+    }))
 
-        await prisma.asesorProgramStudi.createMany({
-            data: temp,
-            skipDuplicates: true
-        })
+    await prisma.asesorProgramStudi.createMany({
+        data: temp,
+        skipDuplicates: true
+    })
 
-        if(body.AsesorAkademik) {
-            if(body.AsesorAkademik.AsesorAkademikId !== '') {
-                await prisma.asesorAkademik.update({
-                    data: {
-                        Pangkat: body.AsesorAkademik.Pangkat,
-                        JabatanFungsionalAkademik: body.AsesorAkademik.JabatanFungsionalAkademik,
-                        NipNidn: body.AsesorAkademik.NipNidn,
-                        NamaPerguruanTinggi: body.AsesorAkademik.NamaPerguruanTinggi,
-                        AlamatPerguruanTinggi: body.AsesorAkademik.AlamatPerguruanTinggi,
-                        PendidikanTerakhirBidangKeilmuan: body.AsesorAkademik.AlamatPerguruanTinggi,
-                        UpdatedAt: new Date()
-                    }, 
-                    where: {
-                        AsesorAkademikId: body.AsesorAkademik.AsesorAkademikId
-                    }
-                })
-            } else if (body.AsesorAkademik.NamaPerguruanTinggi !== '' && body.AsesorAkademik.AsesorAkademikId === '') {
-                let temp = await prisma.asesorPraktisi.findFirst({select: {AsesorPraktisiId: true}, where: {AsesorId: asesor.AsesorId}})
-                if(temp) {
-                    await prisma.asesorPraktisi.delete({
-                        where: {
-                            AsesorPraktisiId: temp.AsesorPraktisiId
-                        }})
+    if (body.AsesorAkademik) {
+        if (body.AsesorAkademik.AsesorAkademikId !== '') {
+            await prisma.asesorAkademik.update({
+                data: {
+                    Pangkat: body.AsesorAkademik.Pangkat,
+                    JabatanFungsionalAkademik: body.AsesorAkademik.JabatanFungsionalAkademik,
+                    NipNidn: body.AsesorAkademik.NipNidn,
+                    NamaPerguruanTinggi: body.AsesorAkademik.NamaPerguruanTinggi,
+                    AlamatPerguruanTinggi: body.AsesorAkademik.AlamatPerguruanTinggi,
+                    PendidikanTerakhirBidangKeilmuan: body.AsesorAkademik.AlamatPerguruanTinggi,
+                    UpdatedAt: new Date()
+                },
+                where: {
+                    AsesorAkademikId: body.AsesorAkademik.AsesorAkademikId
                 }
-
-                await prisma.asesorAkademik.create({
-                    data: {
-                        AsesorId: asesor.AsesorId,
-                        Pangkat: body.AsesorAkademik.Pangkat,
-                        JabatanFungsionalAkademik: body.AsesorAkademik.JabatanFungsionalAkademik,
-                        NipNidn: body.AsesorAkademik.NipNidn,
-                        NamaPerguruanTinggi: body.AsesorAkademik.NamaPerguruanTinggi,
-                        AlamatPerguruanTinggi: body.AsesorAkademik.AlamatPerguruanTinggi,
-                        PendidikanTerakhirBidangKeilmuan: body.AsesorAkademik.AlamatPerguruanTinggi,
-                        CreatedAt: new Date(),
-                        UpdatedAt: new Date()
-                    }
-                })
-            }
-        }
-
-        if(body.AsesorPraktisi) {
-            if(body.AsesorPraktisi.AsesorPraktisiId !== '') {
-                await prisma.asesorPraktisi.update({
-                    data: {
-                        NamaAsosiasi: body.AsesorPraktisi.NamaAsosiasi,
-                        NomorKeanggotaan: body.AsesorPraktisi.NomorKeanggotaan,
-                        Jabatan: body.AsesorPraktisi.Jabatan,
-                        AlamatKantor: body.AsesorPraktisi.AlamatKantor,
-                        NamaInstansi: body.AsesorPraktisi.NamaInstansi,
-                        JabatanInstansi: body.AsesorPraktisi.JabatanInstansi,
-                        BidangKeahlian: body.AsesorPraktisi.BidangKeahlian,
-                        UpdatedAt: new Date()
-                    }, 
+            })
+        } else if (body.AsesorAkademik.NamaPerguruanTinggi !== '' && body.AsesorAkademik.AsesorAkademikId === '') {
+            let temp = await prisma.asesorPraktisi.findFirst({ select: { AsesorPraktisiId: true }, where: { AsesorId: asesor.AsesorId } })
+            if (temp) {
+                await prisma.asesorPraktisi.delete({
                     where: {
-                        AsesorPraktisiId: body.AsesorPraktisi.AsesorPraktisiId
-                    }
-                })
-            } else if (body.AsesorPraktisi.NamaAsosiasi !== '' && body.AsesorPraktisi.AsesorPraktisiId === '') {
-                let temp = await prisma.asesorAkademik.findFirst({select: {AsesorAkademikId: true}, where: {AsesorId: asesor.AsesorId}})
-                if(temp) {
-                    await prisma.asesorAkademik.delete({
-                        where: {
-                            AsesorAkademikId: temp.AsesorAkademikId
-                        }})
-                }
-
-                await prisma.asesorPraktisi.create({
-                    data: {
-                        AsesorId: asesor.AsesorId,
-                        NamaAsosiasi: body.AsesorPraktisi.NamaAsosiasi,
-                        NomorKeanggotaan: body.AsesorPraktisi.NomorKeanggotaan,
-                        Jabatan: body.AsesorPraktisi.Jabatan,
-                        AlamatKantor: body.AsesorPraktisi.AlamatKantor,
-                        NamaInstansi: body.AsesorPraktisi.NamaInstansi,
-                        JabatanInstansi: body.AsesorPraktisi.JabatanInstansi,
-                        BidangKeahlian: body.AsesorPraktisi.BidangKeahlian,
-                        CreatedAt: new Date(),
-                        UpdatedAt: new Date()
+                        AsesorPraktisiId: temp.AsesorPraktisiId
                     }
                 })
             }
-        }
 
-        const response: AsesorPage = {
-            UserId: user.UserId,
-            AsesorId: asesor.AsesorId,
-            Nama: user.Nama,
-            TipeAsesor: body.TipeAsesor.Nama,
-            Prodi: body.ProgramStudi.map(prodi => (prodi.Nama)).join(', '),
-            PendidikanTerakhir: user.PendidikanTerakhir,
+            await prisma.asesorAkademik.create({
+                data: {
+                    AsesorId: asesor.AsesorId,
+                    Pangkat: body.AsesorAkademik.Pangkat,
+                    JabatanFungsionalAkademik: body.AsesorAkademik.JabatanFungsionalAkademik,
+                    NipNidn: body.AsesorAkademik.NipNidn,
+                    NamaPerguruanTinggi: body.AsesorAkademik.NamaPerguruanTinggi,
+                    AlamatPerguruanTinggi: body.AsesorAkademik.AlamatPerguruanTinggi,
+                    PendidikanTerakhirBidangKeilmuan: body.AsesorAkademik.AlamatPerguruanTinggi,
+                    CreatedAt: new Date(),
+                    UpdatedAt: new Date()
+                }
+            })
         }
+    }
+
+    if (body.AsesorPraktisi) {
+        if (body.AsesorPraktisi.AsesorPraktisiId !== '') {
+            await prisma.asesorPraktisi.update({
+                data: {
+                    NamaAsosiasi: body.AsesorPraktisi.NamaAsosiasi,
+                    NomorKeanggotaan: body.AsesorPraktisi.NomorKeanggotaan,
+                    Jabatan: body.AsesorPraktisi.Jabatan,
+                    AlamatKantor: body.AsesorPraktisi.AlamatKantor,
+                    NamaInstansi: body.AsesorPraktisi.NamaInstansi,
+                    JabatanInstansi: body.AsesorPraktisi.JabatanInstansi,
+                    BidangKeahlian: body.AsesorPraktisi.BidangKeahlian,
+                    UpdatedAt: new Date()
+                },
+                where: {
+                    AsesorPraktisiId: body.AsesorPraktisi.AsesorPraktisiId
+                }
+            })
+        } else if (body.AsesorPraktisi.NamaAsosiasi !== '' && body.AsesorPraktisi.AsesorPraktisiId === '') {
+            let temp = await prisma.asesorAkademik.findFirst({ select: { AsesorAkademikId: true }, where: { AsesorId: asesor.AsesorId } })
+            if (temp) {
+                await prisma.asesorAkademik.delete({
+                    where: {
+                        AsesorAkademikId: temp.AsesorAkademikId
+                    }
+                })
+            }
+
+            await prisma.asesorPraktisi.create({
+                data: {
+                    AsesorId: asesor.AsesorId,
+                    NamaAsosiasi: body.AsesorPraktisi.NamaAsosiasi,
+                    NomorKeanggotaan: body.AsesorPraktisi.NomorKeanggotaan,
+                    Jabatan: body.AsesorPraktisi.Jabatan,
+                    AlamatKantor: body.AsesorPraktisi.AlamatKantor,
+                    NamaInstansi: body.AsesorPraktisi.NamaInstansi,
+                    JabatanInstansi: body.AsesorPraktisi.JabatanInstansi,
+                    BidangKeahlian: body.AsesorPraktisi.BidangKeahlian,
+                    CreatedAt: new Date(),
+                    UpdatedAt: new Date()
+                }
+            })
+        }
+    }
+
+    const response: AsesorPage = {
+        UserId: user.UserId,
+        AsesorId: asesor.AsesorId,
+        Nama: user.Nama,
+        TipeAsesor: body.TipeAsesor.Nama,
+        Prodi: body.ProgramStudi.map(prodi => (prodi.Nama)).join(', '),
+        PendidikanTerakhir: user.PendidikanTerakhir,
+    }
 
     return c.json(response, 200)
 })
 
 app.delete('/', async (c) => {
     const AsesorId = c.req.query('id')
-    const idForAll = await prisma.asesor.findFirst({select: {
-        AsesorId: true,
-        User: {select: {UserId: true, UserHasRoles: {select: {RoleId: true}}, Userlogin: {select: {UserloginId: true}}, Alamat: {select: {AlamatId: true}}}},
-        AsesorAkademik: {select: {AsesorAkademikId: true, AsesorAkademikKeanggotaanAsosiasi: {select: {AsesorAkademikKeanggotaanAsosiasiId: true}}}},
-        AsesorPraktisi: {select: {AsesorPraktisiId: true}},
-    }, where: {AsesorId: AsesorId}})
+    const idForAll = await prisma.asesor.findFirst({
+        select: {
+            AsesorId: true,
+            User: { select: { UserId: true, UserHasRoles: { select: { RoleId: true } }, Userlogin: { select: { UserloginId: true } }, Alamat: { select: { AlamatId: true } } } },
+            AsesorAkademik: { select: { AsesorAkademikId: true, AsesorAkademikKeanggotaanAsosiasi: { select: { AsesorAkademikKeanggotaanAsosiasiId: true } } } },
+            AsesorPraktisi: { select: { AsesorPraktisiId: true } },
+        }, where: { AsesorId: AsesorId }
+    })
 
-    const asesorRole = await prisma.role.findFirst({where: {
-        Name: {
-            equals: 'Asesor', mode: 'insensitive'
+    const asesorRole = await prisma.role.findFirst({
+        where: {
+            Name: {
+                equals: 'Asesor', mode: 'insensitive'
+            }
         }
-    }})
+    })
 
     if (asesorRole && idForAll) {
         await prisma.asesorAkademikKeanggotaanAsosiasi.deleteMany({
@@ -688,13 +694,13 @@ app.delete('/', async (c) => {
             },
         })
 
-        if(idForAll.User.UserHasRoles.length === 1) {
-            await prisma.user.delete({ 
+        if (idForAll.User.UserHasRoles.length === 1) {
+            await prisma.user.delete({
                 where: {
                     UserId: idForAll.User.UserId
                 }
             })
-        } 
+        }
     }
 
     return c.json([])

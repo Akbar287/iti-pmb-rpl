@@ -1,7 +1,6 @@
 import TambahSkRektorAsesorComponent from '@/components/asesor/TambahSkRektorAsesorComponent'
 import React from 'react'
 import { prisma } from '@/lib/prisma'
-import { string } from 'zod'
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params

@@ -18,7 +18,7 @@ export const SkRektorAsessmenSkemaValidasi = z.object({
         .refine(
             (file) => ACCEPTED_FILE_TYPES.includes(file.type),
             'Format file tidak valid. Hanya .pdf, .jpg, atau .png yang diterima.'
-        ),
+        ).optional(),
 
     NamaSk: z
         .string({

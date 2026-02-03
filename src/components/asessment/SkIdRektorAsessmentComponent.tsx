@@ -80,7 +80,7 @@ const SkIdRektorAsessmentComponent = ({
     const form = useForm<SkRektorAsessmenSkemaValidasiTipe>({
         resolver: zodResolver(SkRektorAsessmenSkemaValidasi),
         defaultValues: {
-            data: new File([], ''),
+            data: undefined,
             NamaSk: '',
             TahunSk: '',
             NomorSk: '',
@@ -112,6 +112,11 @@ const SkIdRektorAsessmentComponent = ({
     const onSubmit = async (data: SkRektorAsessmenSkemaValidasiTipe) => {
         setLoading(true)
 
+        if (!data.data) {
+            toast('Data SK Asesor Mahasiswa tidak boleh kosong')
+            setLoading(false)
+            return
+        }
         await setFile(
             data.data,
             dataServer.PendaftaranId,
@@ -469,7 +474,7 @@ const SkIdRektorAsessmentComponent = ({
                                                         loading ? <>
                                                             <TimerIcon /> Loading
                                                         </> : <>
-                                                        <PenIcon /> Simpan
+                                                            <PenIcon /> Simpan
                                                         </>
                                                     }
                                                 </Button>
@@ -487,7 +492,7 @@ const SkIdRektorAsessmentComponent = ({
                                                         loading ? <>
                                                             <TimerIcon /> Loading
                                                         </> : <>
-                                                        <CloudUploadIcon /> Publikasikan
+                                                            <CloudUploadIcon /> Publikasikan
                                                         </>
                                                     }
                                                 </Button>
