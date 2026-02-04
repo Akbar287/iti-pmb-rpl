@@ -1,4 +1,4 @@
-Sistem Informasi Penerimaan Mahasiswa Baru
+Sistem Informasi Penerimaan Mahasiswa Baru RPL
 
 ## Menjalankan Aplikasi
 
