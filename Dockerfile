@@ -18,9 +18,6 @@ RUN npm config set registry https://registry.npmjs.org/ \
 # Copy seluruh source code
 COPY . .
 
-# Generate Prisma Client
-RUN npx prisma generate
-
 # Build Next.js (dijalankan di GitHub Actions, BUKAN di server)
 RUN npm run build
 
@@ -28,4 +25,5 @@ RUN npm run build
 EXPOSE 3000
 
 # Jalankan aplikasi
-CMD ["npm", "run", "start"]
+CMD ["sh", "-c", "npx prisma generate && npm run start"]
+
