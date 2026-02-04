@@ -1,4 +1,4 @@
-Sistem Informasi Penerimaan Mahasiswa Baru RPL
+Sistem Informasi Penerimaan Mahasiswa Baru Type RPL
 
 ## Menjalankan Aplikasi
 
