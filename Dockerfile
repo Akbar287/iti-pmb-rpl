@@ -13,7 +13,7 @@ COPY package*.json ./
 
 # Install dependency
 RUN npm config set registry https://registry.npmjs.org/ \
-    && npm install --no-audit --no-fund
+    && npm install --no-audit --no-fund --ignore-scripts
 
 # Copy seluruh source code
 COPY . .
