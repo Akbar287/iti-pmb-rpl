@@ -67,17 +67,17 @@
     "tailwind-merge": "^3.2.0",
     "tw-animate-css": "^1.2.5",
     "zod": "^4.1.13",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "tailwindcss": "^4",
+    "@tailwindcss/postcss": "^4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^5.0.2",
     "@types/node": "^20.17.30",
     "@types/pg": "^8.15.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "prisma": "^7.0.1",
-    "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.3",
     "typescript": "^5"
