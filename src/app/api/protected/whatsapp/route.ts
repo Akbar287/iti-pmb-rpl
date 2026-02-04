@@ -2,7 +2,7 @@ import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { FonnteResponse, MessageOptions } from 'fonnte-wa'
-import { fonnteClient } from '@/config/fonnet'
+import { getFonnteClient } from '@/config/fonnet'
 
 const app = new Hono().basePath('/api/protected/whatsapp')
 
@@ -30,7 +30,7 @@ app.post('/', async (c) => {
     }
 
     const options: MessageOptions = { target, message }
-    const res = await fonnteClient.sendMessage(options)
+    const res = await getFonnteClient().sendMessage(options)
 
     if (!res.status) {
       console.error('Fonnte sendWaText gagal:', res.message)
@@ -53,7 +53,7 @@ app.post('/', async (c) => {
     const results: FonnteResponse[] = []
 
     for (const target of targets) {
-      const res = await fonnteClient.sendMessage({ target, message })
+      const res = await getFonnteClient().sendMessage({ target, message })
       results.push(res)
     }
 
@@ -75,7 +75,7 @@ app.post('/', async (c) => {
       )
     }
 
-    const res = await fonnteClient.sendButtons({
+    const res = await getFonnteClient().sendButtons({
       target,
       message,
       buttonTemplate: {
@@ -103,7 +103,7 @@ app.post('/', async (c) => {
       )
     }
 
-    const res = await fonnteClient.sendList({
+    const res = await getFonnteClient().sendList({
       target,
       message,
       listTemplate: {
