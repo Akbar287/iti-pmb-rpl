@@ -97,10 +97,10 @@ export function LoginForm({
                                         />
                                     </div>
                                 </div>
-                                <span className="sr-only">PMB ITI</span>
+                                <span className="sr-only">RPL ITI</span>
                             </Link>
                             <h1 className="text-xl font-bold">
-                                Selamat Datang di Sistem PMB ITI
+                                Selamat Datang di Sistem RPL ITI
                             </h1>
                         </div>
                         {errorMessage && (
