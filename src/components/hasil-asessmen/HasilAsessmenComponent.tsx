@@ -11,6 +11,7 @@ import {
     VisibilityState,
 } from '@tanstack/react-table'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import { toast } from 'sonner'
 import {
     Dialog,
@@ -216,7 +217,7 @@ const HasilAsessmenComponent = () => {
 
     React.useEffect(() => {
         if (!role) {
-            const rolelogin = localStorage.getItem('pmb.iti.role')
+            const rolelogin = safeStorage.getItem('pmb.iti.role')
             if (rolelogin) {
                 let temp = JSON.parse(rolelogin)
                 setRole(temp)

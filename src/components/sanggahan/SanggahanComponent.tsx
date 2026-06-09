@@ -11,6 +11,7 @@ import {
     VisibilityState,
 } from '@tanstack/react-table'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import { toast } from 'sonner'
 import {
     DropdownMenu,
@@ -58,7 +59,7 @@ import {
 } from '../ui/table'
 import { Badge } from '../ui/badge'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { ResponseSanggahanMhsPaginationType } from '@/types/SanggahanTypes'
 import { getSanggahanAsessmentToMahasiswa } from '@/services/Asessment/SanggahanService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
@@ -162,7 +163,7 @@ const SanggahanComponent = () => {
     }
     React.useEffect(() => {
         if (!role) {
-            const rolelogin = localStorage.getItem('pmb.iti.role')
+            const rolelogin = safeStorage.getItem('pmb.iti.role')
             if (rolelogin) {
                 let temp = JSON.parse(rolelogin)
                 setRole(temp)

@@ -59,7 +59,7 @@ import {
     SheetTitle,
 } from '@/components/ui/sheet'
 import { toast } from 'sonner'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Jenjang, ProgramStudi } from '@/generated/prisma'
@@ -377,7 +377,7 @@ const ProgramStudiComponent = ({
 
     return (
         <div className="w-full">
-            <Card className="bg-gray-50 shadow-md dark:bg-gray-800">
+            <Card className="shadow-md">
                 <CardHeader>
                     <CardTitle>
                         <h1 className="text-2xl">Program Studi</h1>

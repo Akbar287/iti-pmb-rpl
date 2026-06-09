@@ -37,7 +37,7 @@ import {
     Timer,
     X,
 } from 'lucide-react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { Input } from '../../ui/input'
 import {
     Select,
@@ -1278,6 +1278,13 @@ export function SheetManageData({
                     onEscapeKeyDown={(event) => event.preventDefault()}
                     onPointerDownOutside={(event) => event.preventDefault()}
                 >
+                    <SheetHeader>
+                        <SheetTitle>{titleDialog}</SheetTitle>
+                        <SheetDescription>
+                            Manage Data untuk{' '}
+                            {form.getValues('user.Nama')}
+                        </SheetDescription>
+                    </SheetHeader>
                     {loading ? (
                         <div className="flex justify-center mt-3 flex-col">
                             <Skeleton className="w-full my-2 h-20" />
@@ -1293,13 +1300,6 @@ export function SheetManageData({
                                     console.dir(err)
                                 })}
                             >
-                                <SheetHeader>
-                                    <SheetTitle>{titleDialog}</SheetTitle>
-                                    <SheetDescription>
-                                        Manage Data untuk{' '}
-                                        {form.getValues('user.Nama')}
-                                    </SheetDescription>
-                                </SheetHeader>
                                 <div className="w-full grid grid-cols-1 gap-3 px-4">
                                     <div className="container mx-auto">
                                         <div className="grid grid-cols-1 gap-3">

@@ -33,7 +33,7 @@ import {
     PenIcon,
     Timer,
 } from 'lucide-react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { Input } from '../ui/input'
 import {
     Select,
@@ -370,7 +370,7 @@ const KegiatanComponent = ({
 
     return (
         <div className="w-full">
-            <Card className="shadow-md bg-gray-50 dark:bg-gray-800">
+            <Card className="shadow-md">
                 <CardHeader>
                     <CardTitle>
                         <h1 className="text-2xl">Kegiatan</h1>

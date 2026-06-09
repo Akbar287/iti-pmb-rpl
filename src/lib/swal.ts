@@ -6,9 +6,8 @@ import Swal from 'sweetalert2'
 const swal = Swal.mixin({
     customClass: {
         popup: 'swal-glass',
-        backdrop: 'swal-glass-backdrop',
     },
-    backdrop: 'rgba(0,0,0,0.3)',
+    backdrop: `rgba(0,0,0,0.3)`,
 })
 
 export default swal

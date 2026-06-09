@@ -7,7 +7,7 @@ import { DaftarUlangProdiType } from '@/types/DaftarUlangProdi'
 import { ArrowRightIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import {
     Card,
     CardContent,

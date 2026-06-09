@@ -42,7 +42,7 @@ import {
     PenIcon,
     Timer,
 } from 'lucide-react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { Input } from '../ui/input'
 import {
     Select,

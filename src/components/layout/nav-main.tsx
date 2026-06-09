@@ -43,10 +43,11 @@ export function NavMain({
                         return (
                             <SidebarMenuItem key={item.title}>
                                 <SidebarMenuButton
+                                    asChild
                                     tooltip={item.title}
                                     isActive={isMenuActive}
                                 >
-                                    <Link className="flex" href={item.url}>
+                                    <Link href={item.url}>
                                         {item.icon && (
                                             <item.icon className="w-4 h-4 mr-1" />
                                         )}

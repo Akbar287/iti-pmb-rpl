@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -94,7 +95,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import Link from 'next/link'
 import { getRolesPagination } from '@/services/RoleServices'
 import { TicketFile } from '@/types/TicketsTypes'
@@ -343,7 +344,7 @@ export default function TicketUserComponent() {
         setSubmitting(true)
 
         try {
-            const selectedRole = JSON.parse(localStorage.getItem('pmb.iti.role') || '{}')
+            const selectedRole = JSON.parse(safeStorage.getItem('pmb.iti.role') || '{}')
             let ticketId = data.TicketsId
 
             if (dialogTitle === 'Edit Tiket') {
@@ -482,7 +483,7 @@ export default function TicketUserComponent() {
 
     return (
         <div className="w-full">
-            <Card className="bg-gray-50 shadow-md dark:bg-gray-800">
+            <Card className="shadow-md">
                 <CardHeader>
                     <CardTitle>
                         <h1 className="text-2xl">Tiket Bantuan Saya</h1>

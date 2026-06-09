@@ -13,6 +13,7 @@ import {
     VisibilityState,
 } from '@tanstack/react-table'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import { toast } from 'sonner'
 import {
@@ -31,7 +32,7 @@ import {
     PenIcon,
     Timer,
 } from 'lucide-react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { Input } from '../ui/input'
 import {
     Select,
@@ -214,7 +215,7 @@ const PenunjukanAsesorComponent = ({
     React.useEffect(() => {
         let roleName = role !== null ? role.Name : null
         if (!role) {
-            const rolelogin = localStorage.getItem('pmb.iti.role')
+            const rolelogin = safeStorage.getItem('pmb.iti.role')
             if (rolelogin) {
                 let temp = JSON.parse(rolelogin)
                 setRole(temp)

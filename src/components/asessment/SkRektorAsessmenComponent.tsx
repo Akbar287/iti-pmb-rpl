@@ -11,6 +11,7 @@ import {
     VisibilityState,
 } from '@tanstack/react-table'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -99,7 +100,7 @@ const SkRektorAsessmenComponent = () => {
     React.useEffect(() => {
         let roleName = role ? role.Name : null
         if (!role) {
-            const rolelogin = localStorage.getItem('pmb.iti.role')
+            const rolelogin = safeStorage.getItem('pmb.iti.role')
             if (rolelogin) {
                 let temp = JSON.parse(rolelogin)
                 setRole(temp)

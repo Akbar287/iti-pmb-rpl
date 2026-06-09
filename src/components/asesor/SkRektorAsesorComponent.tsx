@@ -12,6 +12,7 @@ import {
     VisibilityState,
 } from '@tanstack/react-table'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 
 import {
     DropdownMenu,
@@ -23,7 +24,7 @@ import {
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
 import { ChevronLeft, ChevronRight, MoreHorizontal, X } from 'lucide-react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { Input } from '../ui/input'
 import {
     Select,
@@ -103,7 +104,7 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
     React.useEffect(() => {
         let roleName = role !== null ? role.Name : null
         if (!role) {
-            const rolelogin = localStorage.getItem('pmb.iti.role')
+            const rolelogin = safeStorage.getItem('pmb.iti.role')
             if (rolelogin) {
                 let temp = JSON.parse(rolelogin)
                 setRole(temp)

@@ -11,6 +11,7 @@ import {
     VisibilityState,
 } from '@tanstack/react-table'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import { toast } from 'sonner'
 import {
     DropdownMenu,
@@ -45,7 +46,7 @@ import { getMahasiswaFromAsesorRekapitulasi } from '@/services/Asessment/Asessme
 import { Badge } from '../ui/badge'
 import { ResponseMhsFromAsesorSession } from '@/types/PenunjukanAsesor'
 import { useRouter } from 'next/navigation'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { setStatusSanggahan } from '@/services/Status/StatusService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 
@@ -127,7 +128,7 @@ const RekapitulasiComponent = () => {
     React.useEffect(() => {
         let currentRole = role
         if (!currentRole) {
-            const rolelogin = localStorage.getItem('pmb.iti.role')
+            const rolelogin = safeStorage.getItem('pmb.iti.role')
             if (rolelogin) {
                 currentRole = JSON.parse(rolelogin)
                 setRole(currentRole)

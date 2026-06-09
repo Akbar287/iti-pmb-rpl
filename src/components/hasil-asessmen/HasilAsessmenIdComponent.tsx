@@ -4,6 +4,7 @@ import {
     ResponseFinalAsessmenAsesorDetailType,
 } from '@/types/FinalAsessmen'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -188,7 +189,7 @@ const HasilAsessmenIdComponent = ({
     React.useEffect(() => {
         if (role === null) {
             setLoading(true)
-            const r = localStorage.getItem('pmb.iti.role')
+            const r = safeStorage.getItem('pmb.iti.role')
             if (r) {
                 setRole(JSON.parse(r))
                 setLoading(false)

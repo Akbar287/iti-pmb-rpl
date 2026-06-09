@@ -2,6 +2,7 @@
 
 import { SanggahanAsessmenTypes } from '@/types/AsessmentTypes'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import {
     Card,
     CardContent,
@@ -36,7 +37,7 @@ import { Input } from '../ui/input'
 import { convertScoreToGrade, replaceItemAtIndex } from '@/lib/utils'
 import { Badge } from '../ui/badge'
 import { Checkbox } from '../ui/checkbox'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { setSanggahanFromMahasiswa } from '@/services/Asessment/SanggahanService'
 import { setStatusHasilFinalAsessmen } from '@/services/Status/StatusService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
@@ -89,7 +90,7 @@ const SanggahanIdComponent = ({
     React.useEffect(() => {
         if (role === null) {
             setLoading(true)
-            const r = localStorage.getItem('pmb.iti.role')
+            const r = safeStorage.getItem('pmb.iti.role')
             if (r) {
                 setRole(JSON.parse(r))
                 setLoading(false)

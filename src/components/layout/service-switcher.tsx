@@ -68,7 +68,10 @@ export function TeamSwitcher({
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg border-white/80
+                        bg-white/40 backdrop-blur-3xl
+                        shadow-sm shadow-black/5
+                        dark:border-white/10 dark:bg-slate-950/40"
                         align="start"
                         side={isMobile ? 'bottom' : 'right'}
                         sideOffset={4}

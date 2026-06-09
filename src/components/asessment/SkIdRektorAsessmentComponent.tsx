@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 import {
     Card,
     CardAction,
@@ -89,7 +90,7 @@ const SkIdRektorAsessmentComponent = ({
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
     React.useEffect(() => {
         if (!role) {
-            const rolelogin = localStorage.getItem('pmb.iti.role')
+            const rolelogin = safeStorage.getItem('pmb.iti.role')
             if (rolelogin) {
                 let temp = JSON.parse(rolelogin)
                 setRole(temp)

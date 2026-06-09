@@ -21,6 +21,7 @@ import { MenuProps } from '@/types/types'
 import useCountStore from '@/stores/MenuStore'
 import { usePathname, useRouter } from 'next/navigation'
 import { startTransition } from 'react'
+import { safeStorage } from '@/lib/safe-storage'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const router = useRouter()
@@ -33,7 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     )
     const changeRole = async (role: Role) => {
         toast(`Beralih ke role ${role.Name}`)
-        localStorage.setItem('pmb.iti.role', JSON.stringify(role))
+        safeStorage.setItem('pmb.iti.role', JSON.stringify(role))
         setSelectedRole(role)
         setSelectedMenu(getMenuByRole(role))
         if (pathname !== '/') {
@@ -45,16 +46,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     React.useEffect(() => {
         if (selectedRole) {
-            if (!localStorage.getItem('pmb.iti.role')) {
-                localStorage.setItem(
+            if (!safeStorage.getItem('pmb.iti.role')) {
+                safeStorage.setItem(
                     'pmb.iti.role',
                     JSON.stringify(selectedRole)
                 )
                 setSelectedMenu(getMenuByRole(selectedRole))
             }
         } else {
-            if (localStorage.getItem('pmb.iti.role')) {
-                const storedRole = localStorage.getItem('pmb.iti.role')
+            if (safeStorage.getItem('pmb.iti.role')) {
+                const storedRole = safeStorage.getItem('pmb.iti.role')
                 if (storedRole) {
                     setSelectedRole(JSON.parse(storedRole))
                     setSelectedMenu(getMenuByRole(JSON.parse(storedRole)))
@@ -68,7 +69,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 session?.user.roles &&
                     setSelectedMenu(getMenuByRole(session?.user.roles[0]))
                 session?.user.roles &&
-                    localStorage.setItem(
+                    safeStorage.setItem(
                         'pmb.iti.role',
                         JSON.stringify(session?.user.roles[0])
                     )
@@ -104,14 +105,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     }
 
     const logout = () => {
-        localStorage.removeItem('pmb.iti.role')
+        safeStorage.removeItem('pmb.iti.role')
         toast('Sedang Mengeluarkan Anda')
         signOut({ callbackUrl: '/' })
     }
 
     return (
         <Sidebar variant="inset" {...props}>
-            <SidebarHeader>
+            <SidebarHeader className="border-white/50
+                        bg-white/20 backdrop-blur-xl
+                        shadow-sm shadow-black/5
+                        dark:border-white/10 dark:bg-slate-950/40">
                 {session?.user.roles && (
                     <TeamSwitcher
                         teams={session?.user.roles}
@@ -121,12 +125,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     />
                 )}
             </SidebarHeader>
-            <SidebarContent>
+            <SidebarContent className="border-white/50
+                        bg-white/20 backdrop-blur-xl
+                        shadow-sm shadow-black/5
+                        dark:border-white/10 dark:bg-slate-950/40">
                 <NavMain selectedMenu={selectedMenu} />
                 <NavProjects projects={data.projects} />
                 <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
-            <SidebarFooter>
+            <SidebarFooter className="border-white/50
+                        bg-white/20 backdrop-blur-xl
+                        shadow-sm shadow-black/5
+                        dark:border-white/10 dark:bg-slate-950/40">
                 <NavUser
                     user={{
                         nama: session?.user.nama,

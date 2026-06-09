@@ -10,7 +10,7 @@ import {
 } from '@/generated/prisma'
 import { InstitusiLamaType, InstitusiLamaValue } from '@/types/InstitusiLama'
 import React from 'react'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import {
     Card,
     CardContent,

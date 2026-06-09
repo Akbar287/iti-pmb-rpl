@@ -126,7 +126,7 @@ export default function TicketUserDetailComponent({ ticketId }: { ticketId: stri
             </div>
 
             {/* Ticket Info */}
-            <Card className="bg-gray-50 dark:bg-gray-800">
+            <Card>
                 <CardHeader>
                     <div className="flex items-start justify-between">
                         <div>
@@ -184,7 +184,7 @@ export default function TicketUserDetailComponent({ ticketId }: { ticketId: stri
             </Card>
 
             {/* Attachments */}
-            <Card className="bg-gray-50 dark:bg-gray-800">
+            <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Paperclip className="h-5 w-5" />

@@ -72,7 +72,7 @@ import {
 import { toast } from 'sonner'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { UserTable } from '@/types/types'
-import Swal from 'sweetalert2'
+import Swal from '@/lib/swal'
 import { useForm, UseFormReturn } from 'react-hook-form'
 import {
     UserCreateFormValidation,

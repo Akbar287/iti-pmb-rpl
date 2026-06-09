@@ -282,7 +282,7 @@ export default function TicketsComponent() {
 
     return (
         <div className="w-full">
-            <Card className="bg-gray-50 shadow-md dark:bg-gray-800">
+            <Card className="shadow-md">
                 <CardHeader>
                     <CardTitle>
                         <h1 className="text-2xl">Manajemen Tiket Bantuan</h1>
@@ -519,19 +519,21 @@ export default function TicketsComponent() {
                     <DialogHeader>
                         <DialogTitle>Update Status Tiket</DialogTitle>
                         <DialogDescription>
-                            {selectedTicket && (
-                                <div className="mt-2 space-y-2">
-                                    <p><strong>Subject:</strong> {selectedTicket.Subject}</p>
-                                    <p><strong>Pengaju:</strong> {selectedTicket.NamaPengaju}</p>
-                                    <p><strong>Status Saat Ini:</strong>{' '}
-                                        <Badge variant={getStatusBadgeVariant(selectedTicket.Status)}>
-                                            {selectedTicket.Status.replace('_', ' ')}
-                                        </Badge>
-                                    </p>
-                                </div>
-                            )}
+                            Pilih status baru untuk tiket ini.
                         </DialogDescription>
                     </DialogHeader>
+                    {selectedTicket && (
+                        <div className="space-y-1 text-sm">
+                            <div><strong>Subject:</strong> {selectedTicket.Subject}</div>
+                            <div><strong>Pengaju:</strong> {selectedTicket.NamaPengaju}</div>
+                            <div className="flex items-center gap-2">
+                                <strong>Status Saat Ini:</strong>
+                                <Badge variant={getStatusBadgeVariant(selectedTicket.Status)}>
+                                    {selectedTicket.Status.replace('_', ' ')}
+                                </Badge>
+                            </div>
+                        </div>
+                    )}
                     <div className="py-4">
                         <label className="text-sm font-medium mb-2 block">
                             Pilih Status Baru
