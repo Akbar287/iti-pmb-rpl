@@ -147,12 +147,12 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                         Assesmen: ed.HasilAssesmen[0].Assesmen ?? '',
                         Nilai: ed.HasilAssesmen[0].Nilai ?? 0,
                         Justifikasi: {
-                            Valid: ed.HasilAssesmen[0].HasilAssesmenAi[0].Valid ?? '',
-                            Autentik: ed.HasilAssesmen[0].HasilAssesmenAi[0].Autentik ?? '',
-                            Terkini: ed.HasilAssesmen[0].HasilAssesmenAi[0].Terkini ?? '',
-                            Memadai: ed.HasilAssesmen[0].HasilAssesmenAi[0].Memadai ?? '',
-                            Assesmen: ed.HasilAssesmen[0].HasilAssesmenAi[0].Assesmen ?? '',
-                            Nilai: ed.HasilAssesmen[0].HasilAssesmenAi[0].Nilai ?? '',
+                            Valid: ed.HasilAssesmen[0].HasilAssesmenAi.length === 0 ? '' : ed.HasilAssesmen[0].HasilAssesmenAi[0].Valid ?? '',
+                            Autentik: ed.HasilAssesmen[0].HasilAssesmenAi.length === 0 ? '' : ed.HasilAssesmen[0].HasilAssesmenAi[0].Autentik ?? '',
+                            Terkini: ed.HasilAssesmen[0].HasilAssesmenAi.length === 0 ? '' : ed.HasilAssesmen[0].HasilAssesmenAi[0].Terkini ?? '',
+                            Memadai: ed.HasilAssesmen[0].HasilAssesmenAi.length === 0 ? '' : ed.HasilAssesmen[0].HasilAssesmenAi[0].Memadai ?? '',
+                            Assesmen: ed.HasilAssesmen[0].HasilAssesmenAi.length === 0 ? '' : ed.HasilAssesmen[0].HasilAssesmenAi[0].Assesmen ?? '',
+                            Nilai: ed.HasilAssesmen[0].HasilAssesmenAi.length === 0 ? '' : ed.HasilAssesmen[0].HasilAssesmenAi[0].Nilai ?? '',
                         },
                         BuktiForm: ed.BuktiFormEvaluasiDiri.map(x => ({
                             NamaDokumen: x.BuktiForm.NamaDokumen,

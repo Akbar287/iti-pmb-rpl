@@ -119,10 +119,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <Sidebar variant="inset" {...props}>
-            <SidebarHeader className="border-white/50
-                        bg-white/20 backdrop-blur-xl
-                        shadow-sm shadow-black/5
-                        dark:border-white/10 dark:bg-slate-950/40">
+            <SidebarHeader className="bg-transparent border-b border-white/30 dark:border-white/10">
                 {session?.user.roles && (
                     <TeamSwitcher
                         teams={teams.length > 0 ? teams : session.user.roles}
@@ -132,18 +129,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     />
                 )}
             </SidebarHeader>
-            <SidebarContent className="border-white/50
-                        bg-white/20 backdrop-blur-xl
-                        shadow-sm shadow-black/5
-                        dark:border-white/10 dark:bg-slate-950/40">
+            <SidebarContent className="bg-transparent">
                 <NavMain selectedMenu={selectedMenu} />
                 <NavProjects projects={data.projects} />
                 <NavSecondary items={data.navSecondary} className="mt-auto" />
             </SidebarContent>
-            <SidebarFooter className="border-white/50
-                        bg-white/20 backdrop-blur-xl
-                        shadow-sm shadow-black/5
-                        dark:border-white/10 dark:bg-slate-950/40">
+            <SidebarFooter className="bg-transparent border-t border-white/30 dark:border-white/10">
                 <NavUser
                     user={{
                         nama: session?.user.nama,

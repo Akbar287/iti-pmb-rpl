@@ -49,24 +49,56 @@ export async function getFileByPendaftaranId(PendaftaranId: string): Promise<{
     return res.json()
 }
 
+export type UploadProgress =
+    | { stage: 'pdf'; percent: number }
+    | { stage: 'upload'; percent: number }
+
 export async function setFile(
     data: File,
     JenisDokumenId: string,
-    PendaftaranId: string
+    PendaftaranId: string,
+    onProgress?: (info: UploadProgress) => void
 ): Promise<Response> {
     const formData = new FormData()
     formData.append('files', data)
     formData.append('JenisDokumenId', JenisDokumenId)
     formData.append('PendaftaranId', PendaftaranId)
 
-    let pagesBase64: string[] = [];
-    if (data.type === "application/pdf") {
-        pagesBase64 = await pdfFileToBase64Images(data, { maxPages: 5 });
+    if (data.type === 'application/pdf') {
+        await pdfFileToBase64Images(data, {
+            maxPages: 5,
+            onPage: (current, total) =>
+                onProgress?.({ stage: 'pdf', percent: (current / total) * 100 }),
+        })
     }
 
-    return await fetch(`${BASE_URL}/api/protected/upload-dokumen`, {
-        method: 'POST',
-        body: formData,
+    // Gunakan XMLHttpRequest agar progress unggahan byte bisa dipantau
+    // (Fetch API tidak menyediakan event progress untuk upload).
+    return await new Promise<Response>((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+        xhr.open('POST', `${BASE_URL}/api/protected/upload-dokumen`)
+
+        xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+                onProgress?.({
+                    stage: 'upload',
+                    percent: (e.loaded / e.total) * 100,
+                })
+            }
+        }
+
+        xhr.onload = () => {
+            resolve(
+                new Response(xhr.responseText, {
+                    status: xhr.status,
+                    statusText: xhr.statusText,
+                })
+            )
+        }
+        xhr.onerror = () => reject(new Error('Failed to upload dokumen'))
+        xhr.ontimeout = () => reject(new Error('Upload dokumen timeout'))
+
+        xhr.send(formData)
     })
 }
 

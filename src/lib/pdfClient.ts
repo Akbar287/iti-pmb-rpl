@@ -3,7 +3,11 @@
 
 export async function pdfFileToBase64Images(
   file: File,
-  options?: { maxPages?: number; scale?: number }
+  options?: {
+    maxPages?: number;
+    scale?: number;
+    onPage?: (current: number, total: number) => void;
+  }
 ): Promise<string[]> {
   if (typeof window === "undefined") {
     throw new Error("pdfFileToBase64Images hanya boleh dipanggil di browser");
@@ -43,6 +47,8 @@ export async function pdfFileToBase64Images(
       const dataUrl = canvas.toDataURL("image/png");
       const base64 = dataUrl.replace(/^data:image\/png;base64,/, "");
       images.push(base64);
+
+      options?.onPage?.(pageNum, maxPages);
     }
 
     return images;

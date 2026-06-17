@@ -5,7 +5,7 @@ import { MataKuliahMahasiswaCapaianPembelajaranTypes } from '@/types/DaftarUlang
 
 export default async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
-    const data = await prisma.pendaftaran.findFirst({
+    const dataPromise = prisma.pendaftaran.findFirst({
         where: {
             PendaftaranId: id,
         },
@@ -89,6 +89,34 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         },
     })
 
+    const buktiFormPromise = prisma.buktiForm.findMany({
+        where: {
+            PendaftaranId: id,
+        },
+        orderBy: {
+            JenisDokumen: {
+                NomorDokumen: 'asc',
+            },
+        },
+        select: {
+            BuktiFormId: true,
+            NamaDokumen: true,
+            NamaFile: true,
+            JenisDokumen: {
+                select: {
+                    Jenis: true,
+                    JenisDokumenId: true,
+                    NomorDokumen: true,
+                },
+            },
+        },
+    })
+
+    const [data, buktiFormServer] = await Promise.all([
+        dataPromise,
+        buktiFormPromise,
+    ])
+
     const dataServer: MataKuliahMahasiswaCapaianPembelajaranTypes = (
         data?.MataKuliahMahasiswa ?? []
     )
@@ -169,29 +197,6 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                                 },
                     })),
         }))
-
-    const buktiFormServer = await prisma.buktiForm.findMany({
-        where: {
-            PendaftaranId: id,
-        },
-        orderBy: {
-            JenisDokumen: {
-                NomorDokumen: 'asc',
-            },
-        },
-        select: {
-            BuktiFormId: true,
-            NamaDokumen: true,
-            NamaFile: true,
-            JenisDokumen: {
-                select: {
-                    Jenis: true,
-                    JenisDokumenId: true,
-                    NomorDokumen: true,
-                },
-            },
-        },
-    })
 
     const statusPendaftaran = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? ''
 

@@ -205,7 +205,7 @@ const HasilAsessmenComponent = () => {
                 setLoadingPdf(false)
             })
             .catch((err) => {
-                toast.error('Gagal Generate Rekapitulasi Pdf')
+                toast.error(`Gagal Generate Rekapitulasi Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
                 setLoadingPdf(false)
             })
     }

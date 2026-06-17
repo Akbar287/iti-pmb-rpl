@@ -45,6 +45,22 @@ const getSocialColor = (name: string): string => {
 // Logo path
 const logoPath = path.join(process.cwd(), 'public', 'images', 'logo.png');
 
+const safeText = (value: unknown, fallback = ''): string => {
+    if (value === null || value === undefined) return fallback;
+    const text = String(value).trim();
+    return text || fallback;
+};
+
+const safeNumber = (value: unknown): number | null => {
+    if (typeof value !== 'number' || !Number.isFinite(value)) return null;
+    return value;
+};
+
+const formatScore = (value: number | null): string => {
+    if (value === null) return '-';
+    return Number.isInteger(value) ? String(value) : value.toFixed(2);
+};
+
 // Styles
 const styles = StyleSheet.create({
     page: {
@@ -341,34 +357,37 @@ interface TableRowData {
 // Component
 export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiType }) => {
     // Sort social media
-    const sortedSocialMedia = data.Universitas.UniversitySocialMedia
-        .filter(sm => socialMediaOrder.includes(sm.Nama))
-        .sort((a, b) => socialMediaOrder.indexOf(a.Nama) - socialMediaOrder.indexOf(b.Nama));
+    const sortedSocialMedia = (data.Universitas?.UniversitySocialMedia ?? [])
+        .filter(sm => socialMediaOrder.includes(safeText(sm.Nama)))
+        .sort((a, b) => socialMediaOrder.indexOf(safeText(a.Nama)) - socialMediaOrder.indexOf(safeText(b.Nama)));
+
+    const mataKuliah = data.MataKuliah ?? [];
+    const mataKuliahMahasiswa = data.MataKuliahMahasiswa ?? [];
 
     // Process table data - Using MataKuliah as the base reference
-    const tableRows: TableRowData[] = data.MataKuliah.map((mk, index) => {
+    const tableRows: TableRowData[] = mataKuliah.map((mk, index) => {
         // Find matching MataKuliahMahasiswa
-        const matchingMkm = data.MataKuliahMahasiswa.find(
-            mkm => mkm.MataKuliah.Kode === mk.Kode || mkm.MataKuliah.Nama === mk.Nama
+        const matchingMkm = mataKuliahMahasiswa.find(
+            mkm => safeText(mkm.MataKuliah?.Kode) === safeText(mk.Kode) || safeText(mkm.MataKuliah?.Nama) === safeText(mk.Nama)
         );
 
         if (matchingMkm) {
             const isRpl = matchingMkm.Rpl || false;
-            const hasAsessmen = matchingMkm.SkorAsessmen.SkorAssesmenId !== '';
-            const isFromTranskrip = matchingMkm.TranskripNilai.TranskripNilaiId !== '';
+            const hasAsessmen = safeText(matchingMkm.SkorAsessmen?.SkorAssesmenId) !== '';
+            const isFromTranskrip = safeText(matchingMkm.TranskripNilai?.TranskripNilaiId) !== '';
 
             return {
                 no: index + 1,
-                kode: mk.Kode,
-                nama: mk.Nama,
-                portofolio: hasAsessmen && isRpl ? matchingMkm.SkorAsessmen.Portofolio : null,
-                tulis: hasAsessmen && isRpl ? matchingMkm.SkorAsessmen.Tulis : null,
-                wawancara: hasAsessmen && isRpl ? matchingMkm.SkorAsessmen.Wawancara : null,
-                demo: hasAsessmen && isRpl ? matchingMkm.SkorAsessmen.Demo : null,
-                transkrip: isFromTranskrip ? matchingMkm.TranskripNilai.Nilai : '',
-                skorRataRata: hasAsessmen ? matchingMkm.SkorAsessmen.SkorRataRata : null,
-                nilaiHuruf: hasAsessmen ? matchingMkm.SkorAsessmen.NilaiHuruf : (isFromTranskrip ? matchingMkm.TranskripNilai.NilaiAsessmen : ''),
-                status: matchingMkm.SkorAsessmen.Diakui || matchingMkm.TranskripNilai.Diakui ? 'Diakui' : 'Tidak Diakui',
+                kode: safeText(mk.Kode),
+                nama: safeText(mk.Nama),
+                portofolio: hasAsessmen && isRpl ? safeNumber(matchingMkm.SkorAsessmen?.Portofolio) : null,
+                tulis: hasAsessmen && isRpl ? safeNumber(matchingMkm.SkorAsessmen?.Tulis) : null,
+                wawancara: hasAsessmen && isRpl ? safeNumber(matchingMkm.SkorAsessmen?.Wawancara) : null,
+                demo: hasAsessmen && isRpl ? safeNumber(matchingMkm.SkorAsessmen?.Demo) : null,
+                transkrip: isFromTranskrip ? safeText(matchingMkm.TranskripNilai?.Nilai) : '',
+                skorRataRata: hasAsessmen ? safeNumber(matchingMkm.SkorAsessmen?.SkorRataRata) : null,
+                nilaiHuruf: hasAsessmen ? safeText(matchingMkm.SkorAsessmen?.NilaiHuruf) : (isFromTranskrip ? safeText(matchingMkm.TranskripNilai?.NilaiAsessmen) : ''),
+                status: matchingMkm.SkorAsessmen?.Diakui || matchingMkm.TranskripNilai?.Diakui ? 'Diakui' : 'Tidak Diakui',
                 isRpl,
             };
         }
@@ -376,8 +395,8 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
         // Not in MataKuliahMahasiswa
         return {
             no: index + 1,
-            kode: mk.Kode,
-            nama: mk.Nama,
+            kode: safeText(mk.Kode),
+            nama: safeText(mk.Nama),
             portofolio: null,
             tulis: null,
             wawancara: null,
@@ -394,7 +413,7 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
     const totalSksDialui = tableRows
         .filter(row => row.status === 'Diakui')
         .reduce((acc, row) => {
-            const mk = data.MataKuliah.find(m => m.Kode === row.kode);
+            const mk = mataKuliah.find(m => safeText(m.Kode) === row.kode);
             return acc + (mk?.Sks || 0);
         }, 0);
 
@@ -485,19 +504,19 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                         <Image src={logoPath} style={styles.logoImage} />
                     </View>
                     <View style={styles.headerTextContainer}>
-                        <Text style={styles.institutionName}>{data.Universitas.Nama || 'INSTITUT TEKNOLOGI INDONESIA'}</Text>
+                        <Text style={styles.institutionName}>{safeText(data.Universitas?.Nama, 'INSTITUT TEKNOLOGI INDONESIA')}</Text>
                         <Text style={styles.addressText}>
-                            {data.Universitas.Alamat || 'Jl. Raya Puspiptek'}, Tangerang Selatan - {data.Universitas.KodePos || '15314'}
+                            {safeText(data.Universitas?.Alamat, 'Jl. Raya Puspiptek')}, Tangerang Selatan - {safeText(data.Universitas?.KodePos, '15314')}
                         </Text>
                         <Text style={styles.phoneText}>(021) 7562757</Text>
                         <View style={styles.socialRow}>
                             {sortedSocialMedia.map((sm, index) => (
                                 <View key={sm.UniversitySocialMediaId || index} style={styles.socialItem}>
-                                    <Text style={{ ...styles.socialIcon, color: getSocialColor(sm.Nama) }}>
-                                        {getSocialIcon(sm.Nama)}
+                                    <Text style={{ ...styles.socialIcon, color: getSocialColor(safeText(sm.Nama)) }}>
+                                        {getSocialIcon(safeText(sm.Nama))}
                                     </Text>
                                     <Text style={styles.socialText}>
-                                        {sm.Nama === 'X' ? `@${sm.Username.replace('@', '')}` : sm.Username}
+                                        {safeText(sm.Nama) === 'X' ? `@${safeText(sm.Username).replace('@', '')}` : safeText(sm.Username)}
                                     </Text>
                                 </View>
                             ))}
@@ -521,22 +540,22 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Nama Pemohon RPL</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{data.Nama}</Text>
+                            <Text style={styles.infoValue}>{safeText(data.Nama, '-')}</Text>
                         </View>
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Alamat</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{data.Alamat}</Text>
+                            <Text style={styles.infoValue}>{safeText(data.Alamat, '-')}</Text>
                         </View>
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>No. Hp</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{data.NomorHp}</Text>
+                            <Text style={styles.infoValue}>{safeText(data.NomorHp, '-')}</Text>
                         </View>
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Email</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={{ ...styles.infoValue, color: '#0066cc', textDecoration: 'underline' }}>{data.Email}</Text>
+                            <Text style={{ ...styles.infoValue, color: '#0066cc', textDecoration: 'underline' }}>{safeText(data.Email, '-')}</Text>
                         </View>
                     </View>
                     {/* Right Column */}
@@ -544,22 +563,22 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Jenjang Pendidikan Sebelumnya</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{data.InstitusiLama.Jenjang}</Text>
+                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.Jenjang, '-')}</Text>
                         </View>
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Program Studi Sebelummnya</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{data.InstitusiLama.Jurusan}</Text>
+                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.Jurusan, '-')}</Text>
                         </View>
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Jenjang KKNI yang dituju</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{data.InstitusiLama.JenjangKKNIDituju}</Text>
+                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.JenjangKKNIDituju, '-')}</Text>
                         </View>
                         <View style={styles.infoRow}>
                             <Text style={styles.infoLabel}>Nama Perguruan Tinggi Asal</Text>
                             <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{data.InstitusiLama.NamaInstitusi}</Text>
+                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.NamaInstitusi, '-')}</Text>
                         </View>
                     </View>
                 </View>
@@ -568,7 +587,7 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                 <View style={styles.programStudiRow}>
                     <Text style={styles.programStudiLabel}>Program Studi Tujuan</Text>
                     <Text style={styles.programStudiSeparator}>:</Text>
-                    <Text style={styles.programStudiValue}>{data.ProgramStudi.Nama}</Text>
+                    <Text style={styles.programStudiValue}>{safeText(data.ProgramStudi?.Nama, '-')}</Text>
                 </View>
 
                 {/* Table */}
@@ -590,22 +609,22 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                                     <Text style={styles.cellText}>{row.nama}</Text>
                                 </View>
                                 <View style={[styles.cell, styles.colPortofolio]}>
-                                    <Text style={styles.cellTextCenter}>{row.portofolio !== null ? row.portofolio : '-'}</Text>
+                                    <Text style={styles.cellTextCenter}>{formatScore(row.portofolio)}</Text>
                                 </View>
                                 <View style={[styles.cell, styles.colTulis]}>
-                                    <Text style={styles.cellTextCenter}>{row.tulis !== null ? row.tulis : '-'}</Text>
+                                    <Text style={styles.cellTextCenter}>{formatScore(row.tulis)}</Text>
                                 </View>
                                 <View style={[styles.cell, styles.colWawancara]}>
-                                    <Text style={styles.cellTextCenter}>{row.wawancara !== null ? row.wawancara : '-'}</Text>
+                                    <Text style={styles.cellTextCenter}>{formatScore(row.wawancara)}</Text>
                                 </View>
                                 <View style={[styles.cell, styles.colDemo]}>
-                                    <Text style={styles.cellTextCenter}>{row.demo !== null ? row.demo : '-'}</Text>
+                                    <Text style={styles.cellTextCenter}>{formatScore(row.demo)}</Text>
                                 </View>
                                 <View style={[styles.cell, styles.colTranskrip]}>
                                     <Text style={styles.cellTextCenter}>{row.transkrip || '-'}</Text>
                                 </View>
                                 <View style={[styles.cell, styles.colSkor]}>
-                                    <Text style={styles.cellTextCenter}>{row.skorRataRata !== null ? row.skorRataRata : '-'}</Text>
+                                    <Text style={styles.cellTextCenter}>{formatScore(row.skorRataRata)}</Text>
                                 </View>
                                 <View style={[styles.cell, styles.colNilai]}>
                                     <Text style={styles.cellTextCenter}>{row.nilaiHuruf || '-'}</Text>
@@ -646,7 +665,7 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                         <View style={styles.signatureBlock}>
                             <Text style={styles.signatureTitle}>Penilai I</Text>
                             <Text style={styles.signatureName}>
-                                ({data.Asesor.find(x => x.Urutan == 1)?.Nama || '.................................'})
+                                ({safeText((data.Asesor ?? []).find(x => x.Urutan == 1)?.Nama, '.................................')})
                             </Text>
                         </View>
 
@@ -654,14 +673,14 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                         <View style={styles.signatureBlock}>
                             <Text style={styles.signatureTitle}>Penilai II</Text>
                             <Text style={styles.signatureName}>
-                                ({data.Asesor.find(x => x.Urutan == 2)?.Nama || '.................................'})
+                                ({safeText((data.Asesor ?? []).find(x => x.Urutan == 2)?.Nama, '.................................')})
                             </Text>
                         </View>
 
                         {/* Pemohon */}
                         <View style={styles.signatureBlock}>
                             <Text style={styles.signatureTitle}>Pemohon</Text>
-                            <Text style={styles.signatureName}>({data.Nama})</Text>
+                            <Text style={styles.signatureName}>({safeText(data.Nama, '.................................')})</Text>
                         </View>
                     </View>
                 </View>

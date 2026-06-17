@@ -1,13 +1,16 @@
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
-import { renderToStream } from '@react-pdf/renderer'
 import { GenerateSkPdf } from '@/components/generate-pdf/GenerateSkPdf'
 import { prisma } from '@/lib/prisma'
 import { GenerateRekapitulasiType, GenerateSkType } from '@/types/GeneratePdfTypes'
 import { Jenjang } from '@/generated/prisma'
 import { isGenerateRekapitulasi, isGenerateSk } from '@/config/checkGenerateSkStats'
 import { GenerateRekapitulasiPdf } from '@/components/generate-pdf/GenerateRekapitulasiPdf'
+import { renderPdfToStream } from '@/lib/pdf-renderer'
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 const app = new Hono().basePath('/api/protected/generate-pdf')
 
@@ -233,7 +236,7 @@ app.get('/', async (c) => {
                 })) : []
             }
 
-            const stream = await renderToStream(GenerateSkPdf({ data, NomorSk, JenisSk }));
+            const stream = await renderPdfToStream(GenerateSkPdf({ data, NomorSk, JenisSk }));
 
             return c.body(stream as unknown as ReadableStream, 200, {
                 'Content-Type': 'application/pdf',
@@ -411,58 +414,65 @@ app.get('/', async (c) => {
         }
 
         let check = response.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
+        const currentStatus = check?.StatusMahasiswaAssesment.NamaStatus ?? ''
 
-        if (isGenerateRekapitulasi(check?.StatusMahasiswaAssesment.NamaStatus ?? '')) {
+        if (isGenerateRekapitulasi(currentStatus)) {
+            const daftarUlang = response.DaftarUlang[0]
+            const programStudi = daftarUlang?.ProgramStudi
+            const universitas = programStudi?.University
+            const institusiLama = response.InstitusiLama[0]
+            const user = response.Mahasiswa.User
+
             const data: GenerateRekapitulasiType = {
-                PendaftaranId: response ? response.PendaftaranId : '',
-                Nama: response ? response.Mahasiswa.User.Nama : '',
-                Alamat: response ? response.Mahasiswa.User.Alamat.Alamat : '',
-                KodePos: response ? response.Mahasiswa.User.Alamat.KodePos : '',
-                NomorHp: response ? response.Mahasiswa.User.NomorHp ?? '-' : '',
-                Email: response ? response.Mahasiswa.User.Email : '',
-                Asesor: response ? response.AssesorMahasiswa.map(a => ({
+                PendaftaranId: response.PendaftaranId,
+                Nama: user.Nama || '',
+                Alamat: user.Alamat?.Alamat || '',
+                KodePos: user.Alamat?.KodePos || '',
+                NomorHp: user.NomorHp || '-',
+                Email: user.Email || '',
+                Asesor: response.AssesorMahasiswa.map(a => ({
                     AsesorId: a.Asesor.AsesorId,
-                    Nama: a.Asesor.User.Nama,
+                    Nama: a.Asesor.User.Nama || '',
                     Urutan: a.Urutan,
-                })) : [],
+                })),
                 ProgramStudi: {
-                    ProgramStudiId: response ? response.DaftarUlang.length > 0 ? response.DaftarUlang[0].ProgramStudi.ProgramStudiId : '' : '',
-                    Nama: response ? response.DaftarUlang.length > 0 ? response.DaftarUlang[0].ProgramStudi.Nama : '' : '',
+                    ProgramStudiId: programStudi?.ProgramStudiId || '',
+                    Nama: programStudi?.Nama || '',
                 },
                 Universitas: {
-                    UniversityId: response ? response.DaftarUlang.length > 0 ? response?.DaftarUlang[0].ProgramStudi.University.UniversityId : '' : '',
+                    UniversityId: universitas?.UniversityId || '',
                     Logo: '',
-                    Alamat: response ? response.DaftarUlang.length > 0 ? response?.DaftarUlang[0].ProgramStudi.University.Alamat.Alamat : '' : '',
-                    KodePos: response ? response.DaftarUlang.length > 0 ? response?.DaftarUlang[0].ProgramStudi.University.Alamat.KodePos : '' : '',
-                    Nama: response ? response.DaftarUlang.length > 0 ? response?.DaftarUlang[0].ProgramStudi.University.Nama : '' : '',
-                    UniversitySocialMedia: response ? response.DaftarUlang.length > 0 ? response?.DaftarUlang[0].ProgramStudi.University.UniversitySosialMedia.map(sm => ({
+                    Alamat: universitas?.Alamat?.Alamat || '',
+                    KodePos: universitas?.Alamat?.KodePos || '',
+                    Nama: universitas?.Nama || '',
+                    UniversitySocialMedia: universitas?.UniversitySosialMedia.map(sm => ({
                         UniversitySocialMediaId: sm.UniversitySosialMediaId || '',
                         Nama: sm.Nama || '',
                         Username: sm.Username || '',
                         Icon: sm.Icon || ''
-                    })) : [] : [],
-                    UniversityJabatan: response ? response.DaftarUlang.length > 0 ? response?.DaftarUlang[0].ProgramStudi.University.UniversityJabatan.map(item => ({
+                    })) || [],
+                    UniversityJabatan: universitas?.UniversityJabatan.map(item => ({
                         UniversityJabatanId: item.UniversityJabatanId || '',
                         NamaJabatan: item.Nama || '',
                         Nama: item.UniversityJabatanOrang.length > 0 ? item.UniversityJabatanOrang[0].Nama : ''
-                    })) : [] : []
+                    })) || []
                 },
                 InstitusiLama: {
-                    InstitusiLamaId: response ? response.InstitusiLama.length > 0 ? response?.InstitusiLama[0].InstitusiLamaId : '' : '',
-                    Jenjang: response ? response.InstitusiLama.length > 0 ? response?.InstitusiLama[0].Jenjang : Jenjang.S1 : Jenjang.S1,
-                    NamaInstitusi: response ? response.InstitusiLama.length > 0 ? response?.InstitusiLama[0].NamaInstitusi : '' : '',
-                    Jurusan: response ? response.InstitusiLama.length > 0 ? response?.InstitusiLama[0].Jurusan : '' : '',
-                    Nisn: response ? response.InstitusiLama.length > 0 ? response?.InstitusiLama[0].Nisn : '' : '',
-                    JenjangKKNIDituju: response ? response.DaftarUlang.length > 0 ? response?.DaftarUlang[0].JenjangKkniDituju ?? '' : '' : ''
+                    InstitusiLamaId: institusiLama?.InstitusiLamaId || '',
+                    Jenjang: institusiLama?.Jenjang || Jenjang.S1,
+                    NamaInstitusi: institusiLama?.NamaInstitusi || '',
+                    Jurusan: institusiLama?.Jurusan || '',
+                    Nisn: institusiLama?.Nisn || '',
+                    JenjangKKNIDituju: daftarUlang?.JenjangKkniDituju || ''
                 },
-                MataKuliah: response ? response.DaftarUlang.length > 0 ? response.DaftarUlang[0].ProgramStudi.MataKuliah.map(mk => ({
+                MataKuliah: programStudi?.MataKuliah.map(mk => ({
                     MataKuliahId: mk.MataKuliahId || '',
                     Kode: mk.Kode || '',
                     Nama: mk.Nama || '',
                     Sks: mk.Sks || 0,
                     Semester: mk.Semester || '',
-                })) : [] : [],
-                MataKuliahMahasiswa: response ? response.MataKuliahMahasiswa.map(mkm => ({
+                })) || [],
+                MataKuliahMahasiswa: response.MataKuliahMahasiswa.map(mkm => ({
                     MataKuliahMahasiswaId: mkm.MataKuliahMahasiswaId,
                     Rpl: mkm.Rpl || false,
                     Keterangan: mkm.Keterangan || '',
@@ -491,17 +501,29 @@ app.get('/', async (c) => {
                         Diakui: mkm.SkorAssesmen.length > 0 ? mkm.SkorAssesmen[0].Diakui : false,
                         NilaiHuruf: mkm.SkorAssesmen.length > 0 ? mkm.SkorAssesmen[0].NilaiHuruf ?? '' : '',
                     }
-                })) : [],
+                })),
             }
 
-            const stream = await renderToStream(GenerateRekapitulasiPdf({ data }));
+            try {
+                const stream = await renderPdfToStream(GenerateRekapitulasiPdf({ data }));
 
-            return c.body(stream as unknown as ReadableStream, 200, {
-                'Content-Type': 'application/pdf',
-                'Content-Disposition': `attachment; filename="form-05-${data.Nama}.pdf"`,
-            });
+                return c.body(stream as unknown as ReadableStream, 200, {
+                    'Content-Type': 'application/pdf',
+                    'Content-Disposition': `attachment; filename="form-05-${data.Nama}.pdf"`,
+                });
+            } catch (error) {
+                console.error('[generate-pdf][rekapitulasi]', error)
+                return c.json({
+                    error: 'Failed to generate rekapitulasi PDF',
+                    message: error instanceof Error ? error.message : 'Unknown render error'
+                }, 500)
+            }
         } else {
-            return c.json({ error: 'Invalid status' }, 400)
+            return c.json({
+                error: 'Invalid status',
+                message: 'Status pendaftaran belum dapat generate rekapitulasi PDF',
+                currentStatus: currentStatus || '-'
+            }, 400)
         }
     } else {
         return c.json({ error: 'Invalid type' }, 400)

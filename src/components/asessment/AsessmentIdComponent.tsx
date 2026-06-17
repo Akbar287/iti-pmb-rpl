@@ -78,7 +78,7 @@ const AsessmentIdComponent = ({
     const [openDialogPdfPreview, setOpenDialogPdfPreview] =
         React.useState<boolean>(false)
 
-    
+
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
     const [index, setIndex] = React.useState<number>(0)
     const [activeCapaian, setActiveCapaian] = React.useState<string | null>(
@@ -492,7 +492,7 @@ const AsessmentIdComponent = ({
 
     return (
         <React.Fragment>
-            <SidebarInset className="mr-[300px]">
+            <SidebarInset className="mr-[300px] bg-transparent">
                 <div className="w-full">
                     <Card>
                         <CardHeader>
@@ -899,7 +899,7 @@ const AsessmentIdComponent = ({
                 side="right"
                 variant="inset"
                 collapsible="none"
-                className="fixed right-0 top-0  h-screen w-[300px] bg-background border-l overflow-y-auto"
+                className="fixed right-0 top-16 z-10 h-[calc(100vh-4rem)] w-[300px] bg-white/40 backdrop-blur-2xl border-l border-white/50 shadow-sm shadow-black/5 dark:bg-slate-950/40 dark:border-white/10 overflow-y-auto"
             >
                 <SidebarHeader className="gap-3.5 border-b p-4">
                     <div className="flex w-full items-center justify-between">

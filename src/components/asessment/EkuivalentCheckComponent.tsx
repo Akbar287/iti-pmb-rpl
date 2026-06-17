@@ -277,7 +277,7 @@ export default function EkuivalentCheckComponent({
 
     return (
         <React.Fragment>
-            <SidebarInset className="mr-[350px]">
+            <SidebarInset className="mr-[350px] bg-transparent">
                 <div className="w-full space-y-4">
                     {/* Info Asesor */}
                     <Alert>
@@ -541,7 +541,7 @@ export default function EkuivalentCheckComponent({
                 side="right"
                 variant="inset"
                 collapsible="none"
-                className="fixed right-0 top-0 h-screen w-[350px] bg-background border-l overflow-y-auto"
+                className="fixed right-0 top-16 z-10 h-[calc(100vh-4rem)] w-[350px] bg-white/40 backdrop-blur-2xl border-l border-white/50 shadow-sm shadow-black/5 dark:bg-slate-950/40 dark:border-white/10 overflow-y-auto"
             >
                 <SidebarHeader className="gap-3.5 border-b p-4">
                     <div className="flex w-full items-center justify-between">

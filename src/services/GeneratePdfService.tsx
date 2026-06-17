@@ -1,4 +1,15 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+
+async function getPdfErrorMessage(res: Response, fallback: string): Promise<string> {
+    try {
+        const body = await res.json()
+        const message = body?.message || body?.error || fallback
+        const currentStatus = body?.currentStatus ? ` Status saat ini: ${body.currentStatus}.` : ''
+        return `${message}${currentStatus}`
+    } catch {
+        return fallback
+    }
+}
 
 export async function GenerateSkPdf(PendaftaranId: string, NomorSK: string, JenisSK: string): Promise<string> {
     const params = new URLSearchParams({
@@ -11,7 +22,7 @@ export async function GenerateSkPdf(PendaftaranId: string, NomorSK: string, Jeni
         `${BASE_URL}/api/protected/generate-pdf?${params.toString()}`
     )
     if (!res.ok) {
-        throw new Error('Failed to get dokumen bukti form')
+        throw new Error(await getPdfErrorMessage(res, 'Failed to get dokumen bukti form'))
     }
 
     const blob = await res.blob()
@@ -28,7 +39,7 @@ export async function GenerateRekapitulasiPdf(PendaftaranId: string): Promise<st
         `${BASE_URL}/api/protected/generate-pdf?${params.toString()}`
     )
     if (!res.ok) {
-        throw new Error('Failed to get dokumen bukti form')
+        throw new Error(await getPdfErrorMessage(res, 'Failed to get dokumen bukti form'))
     }
 
     const blob = await res.blob()

@@ -50,11 +50,11 @@ const LayoutAuth = ({ children }: { children: React.ReactNode }) => {
                         bg-white/40 backdrop-blur-2xl
                         shadow-sm shadow-black/5
                         dark:border-white/10 dark:bg-slate-950/40">
-                    <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-2
-                        border-b border-white/50
-                        bg-white/40 backdrop-blur-2xl
-                        shadow-sm shadow-black/5
-                        dark:border-white/10 dark:bg-slate-950/40">
+                    <header className="sticky top-2 z-20 mx-2 mt-2 flex h-14 shrink-0 items-center gap-2
+                        rounded-2xl border border-white/40
+                        bg-white/20 backdrop-blur-2xl
+                        shadow-lg shadow-black/5
+                        dark:border-white/10 dark:bg-slate-950/30">
                         <div className="flex items-center gap-2 px-4">
                             <SidebarTrigger className="-ml-1" />
                             <Separator

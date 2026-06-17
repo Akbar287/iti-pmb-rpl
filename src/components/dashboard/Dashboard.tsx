@@ -26,6 +26,7 @@ import {
     BarChart,
     CartesianGrid,
     Cell,
+    Label,
     LabelList,
     Pie,
     PieChart,
@@ -115,6 +116,141 @@ const PIE_COLORS = [
     'var(--chart-4)',
     'var(--chart-5)',
 ]
+
+// Gabungkan dua array yang dikunci field yang sama (mis. programStudi) menjadi
+// satu baris per kunci, supaya bisa ditampilkan sebagai grouped bar chart.
+function mergeByKey(
+    a: any[],
+    aValueKey: string,
+    aLabel: string,
+    b: any[],
+    bValueKey: string,
+    bLabel: string,
+    keyField = 'programStudi'
+): Record<string, any>[] {
+    const map = new Map<string, any>()
+    a.forEach((x) => {
+        map.set(x[keyField], {
+            [keyField]: x[keyField],
+            [aLabel]: x[aValueKey] ?? 0,
+            [bLabel]: 0,
+        })
+    })
+    b.forEach((x) => {
+        const cur =
+            map.get(x[keyField]) ??
+            { [keyField]: x[keyField], [aLabel]: 0, [bLabel]: 0 }
+        cur[bLabel] = x[bValueKey] ?? 0
+        map.set(x[keyField], cur)
+    })
+    return Array.from(map.values())
+}
+
+// Donut chart ringkas dengan total di tengah — dipakai berulang di banyak role.
+function DonutCard({
+    title,
+    description,
+    data,
+    config,
+    dataKey,
+    nameKey,
+    centerLabel,
+}: {
+    title: string
+    description: string
+    data: any[]
+    config: ChartConfig
+    dataKey: string
+    nameKey: string
+    centerLabel?: string
+}) {
+    const total = data.reduce((s, x) => s + (x[dataKey] ?? 0), 0)
+    return (
+        <Card className={`${G} flex flex-col`}>
+            <CardHeader className="items-center">
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+            </CardHeader>
+            <CardContent className="flex-1">
+                {data.length > 0 && total > 0 ? (
+                    <ChartContainer config={config} className="mx-auto aspect-square max-h-[220px]">
+                        <PieChart>
+                            <ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
+                            <Pie data={data} dataKey={dataKey} nameKey={nameKey} innerRadius={55} outerRadius={85} strokeWidth={4}>
+                                {data.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                                <Label
+                                    content={({ viewBox }) => {
+                                        if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                                            return (
+                                                <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                                                    <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-2xl font-bold">{total}</tspan>
+                                                    <tspan x={viewBox.cx} y={(viewBox.cy ?? 0) + 18} className="fill-muted-foreground text-xs">{centerLabel ?? 'Total'}</tspan>
+                                                </text>
+                                            )
+                                        }
+                                    }}
+                                />
+                            </Pie>
+                            <ChartLegend content={<ChartLegendContent nameKey={nameKey} />} />
+                        </PieChart>
+                    </ChartContainer>
+                ) : <EmptyChart />}
+            </CardContent>
+        </Card>
+    )
+}
+
+// Horizontal bar chart — enak untuk ranking/peringkat per kategori.
+function HBarCard({
+    title,
+    description,
+    data,
+    config,
+    dataKey,
+    categoryKey,
+    color,
+    formatTick = true,
+}: {
+    title: string
+    description: string
+    data: any[]
+    config: ChartConfig
+    dataKey: string
+    categoryKey: string
+    color: string
+    formatTick?: boolean
+}) {
+    return (
+        <Card className={G}>
+            <CardHeader>
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+            </CardHeader>
+            <CardContent>
+                {data.length > 0 ? (
+                    <ChartContainer config={config}>
+                        <BarChart data={data} layout="vertical" margin={{ left: 8, right: 24 }}>
+                            <CartesianGrid horizontal={false} />
+                            <XAxis type="number" tickLine={false} axisLine={false} />
+                            <YAxis
+                                type="category"
+                                dataKey={categoryKey}
+                                tickLine={false}
+                                axisLine={false}
+                                width={70}
+                                tickFormatter={(v) => (formatTick ? getInitials(String(v)) : String(v))}
+                            />
+                            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={false} />} />
+                            <Bar dataKey={dataKey} fill={color} radius={5}>
+                                <LabelList dataKey={dataKey} position="right" offset={8} className="fill-foreground" fontSize={11} />
+                            </Bar>
+                        </BarChart>
+                    </ChartContainer>
+                ) : <EmptyChart />}
+            </CardContent>
+        </Card>
+    )
+}
 
 const G = [
     'bg-white/30 backdrop-blur-2xl',
@@ -225,6 +361,25 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
         const totalMK = mkList.reduce((s: number, x: any) => s + (x.jumlahMataKuliah ?? 0), 0)
         const totalUser = userList.reduce((s: number, x: any) => s + (x.jumlahPengguna ?? 0), 0)
         const asesorSK = asesorPie.find((x) => x.name === 'Asesor Sudah SK')?.total ?? 0
+        const asesorBelum = asesorPie.find((x) => x.name === 'Asesor Belum SK')?.total ?? 0
+        const mhsSK = mhsPie.find((x) => x.name === 'Mahasiswa Sudah SK')?.total ?? 0
+        const mhsBelum = mhsPie.find((x) => x.name === 'Mahasiswa Belum SK')?.total ?? 0
+
+        // Aggregasi turunan
+        const mhsVsMk = mergeByKey(prodi, 'jumlahMahasiswa', 'Mahasiswa', mkList, 'jumlahMataKuliah', 'Mata Kuliah')
+        const skSummary = [
+            { status: 'Sudah SK', Asesor: asesorSK, Mahasiswa: mhsSK },
+            { status: 'Belum SK', Asesor: asesorBelum, Mahasiswa: mhsBelum },
+        ]
+        const cfgMhsVsMk: ChartConfig = {
+            Mahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' },
+            'Mata Kuliah': { label: 'Mata Kuliah', color: 'var(--chart-3)' },
+        }
+        const cfgUserDonut: ChartConfig = { jumlahPengguna: { label: 'Pengguna' } }
+        const cfgSkSummary: ChartConfig = {
+            Asesor: { label: 'Asesor', color: 'var(--chart-1)' },
+            Mahasiswa: { label: 'Mahasiswa', color: 'var(--chart-4)' },
+        }
 
         const cfgProdi: ChartConfig = { jumlahMahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' } }
         const cfgStatus: ChartConfig = { jumlah: { label: 'Jumlah', color: 'var(--chart-2)' } }
@@ -383,6 +538,72 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Row 4 — Komparasi & komposisi */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Mahasiswa vs Mata Kuliah per Prodi</CardTitle>
+                            <CardDescription>Perbandingan beban mahasiswa dan ketersediaan mata kuliah di tiap prodi</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {mhsVsMk.length > 0 ? (
+                                <ChartContainer config={cfgMhsVsMk}>
+                                    <BarChart data={mhsVsMk} margin={{ top: 16 }}>
+                                        <CartesianGrid vertical={false} />
+                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
+                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                        <ChartLegend content={<ChartLegendContent />} />
+                                        <Bar dataKey="Mahasiswa" fill="var(--chart-1)" radius={4} />
+                                        <Bar dataKey="Mata Kuliah" fill="var(--chart-3)" radius={4} />
+                                    </BarChart>
+                                </ChartContainer>
+                            ) : <EmptyChart />}
+                        </CardContent>
+                    </Card>
+
+                    <DonutCard
+                        title="Komposisi Pengguna per Role"
+                        description="Proporsi akun aktif berdasarkan peran dalam sistem"
+                        data={userList}
+                        config={cfgUserDonut}
+                        dataKey="jumlahPengguna"
+                        nameKey="role"
+                        centerLabel="Pengguna"
+                    />
+                </div>
+
+                {/* Row 5 — Ringkasan SK & funnel status */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Ringkasan Status SK</CardTitle>
+                            <CardDescription>Perbandingan capaian SK antara asesor dan mahasiswa</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <ChartContainer config={cfgSkSummary}>
+                                <BarChart data={skSummary} margin={{ top: 16 }}>
+                                    <CartesianGrid vertical={false} />
+                                    <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={8} />
+                                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                    <ChartLegend content={<ChartLegendContent />} />
+                                    <Bar dataKey="Asesor" fill="var(--chart-1)" radius={4} />
+                                    <Bar dataKey="Mahasiswa" fill="var(--chart-4)" radius={4} />
+                                </BarChart>
+                            </ChartContainer>
+                        </CardContent>
+                    </Card>
+
+                    <HBarCard
+                        title="Funnel Status Asesmen"
+                        description="Jumlah mahasiswa di setiap tahapan proses asesmen"
+                        data={statusList}
+                        config={{ jumlah: { label: 'Jumlah', color: 'var(--chart-2)' } }}
+                        dataKey="jumlah"
+                        categoryKey="status"
+                        color="var(--chart-2)"
+                    />
+                </div>
             </div>
         )
     }
@@ -408,6 +629,17 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
             'Asesor Praktisi': { label: 'Asesor Praktisi', color: 'var(--chart-2)' },
         }
         const cfgCount: ChartConfig = { count: { label: 'Jumlah', color: 'var(--chart-1)' } }
+
+        // Aggregasi turunan
+        const intakeVsMk = mergeByKey(chart3, 'count', 'Mahasiswa', chart4, 'count', 'Mata Kuliah', 'program_studi')
+        const totalAsesorPerProdi = chart1.map((x: any) => ({
+            program_studi: x.date,
+            total: (x['Asesor Akademik'] ?? 0) + (x['Asesor Praktisi'] ?? 0),
+        }))
+        const cfgIntakeVsMk: ChartConfig = {
+            Mahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' },
+            'Mata Kuliah': { label: 'Mata Kuliah', color: 'var(--chart-3)' },
+        }
 
         return (
             <div className="w-full space-y-4">
@@ -503,6 +735,40 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Row 3 — Komparasi & ranking */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Mahasiswa vs Mata Kuliah per Prodi</CardTitle>
+                            <CardDescription>Perbandingan jumlah mahasiswa intake dan mata kuliah RPL di tiap prodi</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {intakeVsMk.length > 0 ? (
+                                <ChartContainer config={cfgIntakeVsMk}>
+                                    <BarChart data={intakeVsMk} margin={{ top: 16 }}>
+                                        <CartesianGrid vertical={false} />
+                                        <XAxis dataKey="program_studi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
+                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                        <ChartLegend content={<ChartLegendContent />} />
+                                        <Bar dataKey="Mahasiswa" fill="var(--chart-1)" radius={4} />
+                                        <Bar dataKey="Mata Kuliah" fill="var(--chart-3)" radius={4} />
+                                    </BarChart>
+                                </ChartContainer>
+                            ) : <EmptyChart />}
+                        </CardContent>
+                    </Card>
+
+                    <HBarCard
+                        title="Total Asesor per Prodi"
+                        description="Peringkat program studi berdasarkan jumlah seluruh asesor"
+                        data={totalAsesorPerProdi}
+                        config={{ total: { label: 'Asesor', color: 'var(--chart-2)' } }}
+                        dataKey="total"
+                        categoryKey="program_studi"
+                        color="var(--chart-2)"
+                    />
+                </div>
             </div>
         )
     }
@@ -522,6 +788,24 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
         }
         const cfgStatus: ChartConfig = {
             Jumlah: { label: 'Jumlah', color: 'var(--chart-1)' },
+        }
+
+        // Aggregasi turunan
+        const assesDonut = [
+            { name: 'Sudah Asesmen', total: sudah },
+            { name: 'Belum Asesmen', total: belum },
+        ]
+        const progressPerProdi = chart1.map((x: any) => {
+            const t = (x.sudahAsses ?? 0) + (x.belumAsses ?? 0)
+            return {
+                programStudi: x.programStudi,
+                persen: t > 0 ? Math.round(((x.sudahAsses ?? 0) / t) * 100) : 0,
+            }
+        })
+        const cfgAssesDonut: ChartConfig = {
+            total: { label: 'Jumlah' },
+            'Sudah Asesmen': { label: 'Sudah Asesmen', color: 'var(--chart-1)' },
+            'Belum Asesmen': { label: 'Belum Asesmen', color: 'var(--chart-2)' },
         }
 
         return (
@@ -575,6 +859,29 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
                             ) : <EmptyChart />}
                         </CardContent>
                     </Card>
+                </div>
+
+                {/* Row 2 — Komposisi & progres */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <DonutCard
+                        title="Komposisi Asesmen"
+                        description="Proporsi mahasiswa yang sudah dan belum diasesmen"
+                        data={assesDonut}
+                        config={cfgAssesDonut}
+                        dataKey="total"
+                        nameKey="name"
+                        centerLabel="Mahasiswa"
+                    />
+
+                    <HBarCard
+                        title="Persentase Penyelesaian per Prodi"
+                        description="Capaian asesmen (%) di setiap program studi"
+                        data={progressPerProdi}
+                        config={{ persen: { label: 'Selesai (%)', color: 'var(--chart-1)' } }}
+                        dataKey="persen"
+                        categoryKey="programStudi"
+                        color="var(--chart-1)"
+                    />
                 </div>
             </div>
         )
@@ -779,6 +1086,29 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Row 2 — Komposisi */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <DonutCard
+                        title="Distribusi Mahasiswa per Prodi"
+                        description="Proporsi mahasiswa RPL di setiap program studi"
+                        data={prodi}
+                        config={{ jumlahMahasiswa: { label: 'Mahasiswa' } }}
+                        dataKey="jumlahMahasiswa"
+                        nameKey="programStudi"
+                        centerLabel="Mahasiswa"
+                    />
+
+                    <DonutCard
+                        title="Komposisi Pengguna per Role"
+                        description="Proporsi akun terdaftar berdasarkan peran sistem"
+                        data={userList}
+                        config={{ jumlahPengguna: { label: 'Pengguna' } }}
+                        dataKey="jumlahPengguna"
+                        nameKey="role"
+                        centerLabel="Pengguna"
+                    />
+                </div>
             </div>
         )
     }
@@ -798,6 +1128,13 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
         const cfgStatus: ChartConfig = { jumlah: { label: 'Jumlah', color: 'var(--chart-2)' } }
         const cfgMK: ChartConfig = { jumlahMataKuliah: { label: 'Mata Kuliah', color: 'var(--chart-3)' } }
         const cfgCP: ChartConfig = { jumlahCapaianPembelajaran: { label: 'Capaian Pembelajaran', color: 'var(--chart-4)' } }
+
+        // Aggregasi turunan
+        const mkVsCp = mergeByKey(mkList, 'jumlahMataKuliah', 'Mata Kuliah', cpList, 'jumlahCapaianPembelajaran', 'Capaian Pembelajaran')
+        const cfgMkVsCp: ChartConfig = {
+            'Mata Kuliah': { label: 'Mata Kuliah', color: 'var(--chart-3)' },
+            'Capaian Pembelajaran': { label: 'Capaian Pembelajaran', color: 'var(--chart-4)' },
+        }
 
         return (
             <div className="w-full space-y-4">
@@ -894,6 +1231,40 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Row 3 — Komparasi & komposisi */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Mata Kuliah vs Capaian Pembelajaran</CardTitle>
+                            <CardDescription>Perbandingan jumlah mata kuliah dan capaian pembelajaran per prodi</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {mkVsCp.length > 0 ? (
+                                <ChartContainer config={cfgMkVsCp}>
+                                    <BarChart data={mkVsCp} margin={{ top: 16 }}>
+                                        <CartesianGrid vertical={false} />
+                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
+                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                        <ChartLegend content={<ChartLegendContent />} />
+                                        <Bar dataKey="Mata Kuliah" fill="var(--chart-3)" radius={4} />
+                                        <Bar dataKey="Capaian Pembelajaran" fill="var(--chart-4)" radius={4} />
+                                    </BarChart>
+                                </ChartContainer>
+                            ) : <EmptyChart />}
+                        </CardContent>
+                    </Card>
+
+                    <DonutCard
+                        title="Distribusi Mahasiswa per Prodi"
+                        description="Proporsi mahasiswa RPL di setiap program studi"
+                        data={prodi}
+                        config={{ jumlahMahasiswa: { label: 'Mahasiswa' } }}
+                        dataKey="jumlahMahasiswa"
+                        nameKey="programStudi"
+                        centerLabel="Mahasiswa"
+                    />
+                </div>
             </div>
         )
     }
@@ -917,6 +1288,25 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
             total: { label: 'Jumlah' },
             'Mahasiswa Sudah SK': { label: 'Sudah SK', color: 'var(--chart-1)' },
             'Mahasiswa Belum SK': { label: 'Belum SK', color: 'var(--chart-2)' },
+        }
+
+        // Aggregasi turunan
+        const skSummary = [
+            { status: 'Sudah SK', Asesor: asesorSK, Mahasiswa: mhsSK },
+            { status: 'Belum SK', Asesor: asesorBelum, Mahasiswa: mhsBelum },
+        ]
+        const skTotalDonut = [
+            { name: 'Total Sudah SK', total: asesorSK + mhsSK },
+            { name: 'Total Belum SK', total: asesorBelum + mhsBelum },
+        ]
+        const cfgSkSummary: ChartConfig = {
+            Asesor: { label: 'Asesor', color: 'var(--chart-1)' },
+            Mahasiswa: { label: 'Mahasiswa', color: 'var(--chart-4)' },
+        }
+        const cfgSkTotalDonut: ChartConfig = {
+            total: { label: 'Jumlah' },
+            'Total Sudah SK': { label: 'Sudah SK', color: 'var(--chart-1)' },
+            'Total Belum SK': { label: 'Belum SK', color: 'var(--chart-2)' },
         }
 
         return (
@@ -968,6 +1358,38 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
                             ) : <EmptyChart />}
                         </CardContent>
                     </Card>
+                </div>
+
+                {/* Row 2 — Ringkasan agregat */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Ringkasan Status SK</CardTitle>
+                            <CardDescription>Perbandingan capaian SK antara asesor dan mahasiswa</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <ChartContainer config={cfgSkSummary}>
+                                <BarChart data={skSummary} margin={{ top: 16 }}>
+                                    <CartesianGrid vertical={false} />
+                                    <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={8} />
+                                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                    <ChartLegend content={<ChartLegendContent />} />
+                                    <Bar dataKey="Asesor" fill="var(--chart-1)" radius={4} />
+                                    <Bar dataKey="Mahasiswa" fill="var(--chart-4)" radius={4} />
+                                </BarChart>
+                            </ChartContainer>
+                        </CardContent>
+                    </Card>
+
+                    <DonutCard
+                        title="Total Capaian SK"
+                        description="Gabungan asesor dan mahasiswa berdasarkan status SK"
+                        data={skTotalDonut}
+                        config={cfgSkTotalDonut}
+                        dataKey="total"
+                        nameKey="name"
+                        centerLabel="Total"
+                    />
                 </div>
             </div>
         )

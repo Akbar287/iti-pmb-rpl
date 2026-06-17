@@ -72,7 +72,9 @@ import {
     setFile,
 } from '@/services/UploadDokumenService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
-import { truncateText } from '@/lib/utils'
+import { Progress } from '../ui/progress'
+import { cn, truncateText } from '@/lib/utils'
+import { kataMotivasiNungguLoadUploadFiles } from '@/config/constraint'
 
 const UploadDokumen = ({
     dataMahasiswa,
@@ -100,6 +102,8 @@ const UploadDokumen = ({
         React.useState<JenisDokumen[]>(jenisDokumenServer)
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null)
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [progress, setProgress] = React.useState<number>(0)
+    const [progressLabel, setProgressLabel] = React.useState<string>('')
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [openDialogDownload, setOpenDialogDownload] =
@@ -182,36 +186,79 @@ const UploadDokumen = ({
     }
 
     const onSubmit = async (dataSubmit: BuktiFormFormValidation) => {
-        if (dataSubmit.NamaFile !== undefined) {
-            setLoading(true)
-            setFile(
+        if (dataSubmit.NamaFile === undefined) return
+
+        setLoading(true)
+        setProgress(0)
+        setProgressLabel('Mempersiapkan...')
+
+        // Validasi dokumen di server memakan waktu 1-2 menit dan tidak bisa
+        // diukur persentasenya. Untuk meyakinkan user bahwa proses masih
+        // berjalan (tidak stuck), bar dijalankan dengan crawl yang melambat
+        // mendekati 95% selama menunggu respons server.
+        let validationTimer: ReturnType<typeof setInterval> | null = null
+        const startValidationCrawl = () => {
+            setProgressLabel('Memvalidasi dokumen (1-2 menit)...')
+            if (validationTimer) return
+            validationTimer = setInterval(() => {
+                setProgress((p) => (p < 95 ? p + (95 - p) * 0.04 : p))
+            }, 500)
+        }
+        const stopValidationCrawl = () => {
+            if (validationTimer) {
+                clearInterval(validationTimer)
+                validationTimer = null
+            }
+        }
+
+        try {
+            const res = await setFile(
                 dataSubmit.NamaFile,
                 dataSubmit.JenisDokumenId,
-                selectableMahasiswa
-            )
-                .then(async (res) => {
-                    const temp: {
-                        status: string
-                        message: string
-                        data: string | BuktiFormTypes
-                    } = await res.json()
-
-                    if (temp.status === 'error') {
-                        setErrorMessage(temp.message)
-                        toast('Error: ' + temp.message)
+                selectableMahasiswa,
+                ({ stage, percent }) => {
+                    if (stage === 'pdf') {
+                        setProgressLabel('Memproses PDF...')
+                        // tahap PDF: 0% - 25%
+                        setProgress(Math.round(percent * 0.25))
                     } else {
-                        if (typeof temp.data !== 'string') {
-                            setData([...data, temp.data])
-                        }
-                        toast('Data Form Disimpan')
-                        setOpenDialog(false)
-                        form.reset()
+                        setProgressLabel('Mengunggah dokumen...')
+                        // tahap unggah: 25% - 45%
+                        setProgress(25 + Math.round(percent * 0.2))
+                        if (percent >= 100) startValidationCrawl()
                     }
-                    setLoading(false)
-                })
-                .catch((err) => {
-                    setLoading(false)
-                })
+                }
+            )
+
+            stopValidationCrawl()
+
+            const temp: {
+                status: string
+                message: string
+                data: string | BuktiFormTypes
+            } = await res.json()
+
+            setProgress(100)
+
+            if (temp.status === 'error') {
+                setProgressLabel('Gagal')
+                setErrorMessage(temp.message)
+                toast('Error: ' + temp.message)
+            } else {
+                setProgressLabel('Selesai')
+                if (typeof temp.data !== 'string') {
+                    setData([...data, temp.data])
+                }
+                toast('Data Form Disimpan')
+                setOpenDialog(false)
+                form.reset()
+            }
+        } catch (err) {
+            setProgressLabel('Gagal')
+            toast('Gagal mengunggah dokumen, silakan coba lagi.')
+        } finally {
+            stopValidationCrawl()
+            setLoading(false)
         }
     }
 
@@ -354,6 +401,8 @@ const UploadDokumen = ({
                     setOpenDialog={setOpenDialog}
                     form={form}
                     loading={loading}
+                    progress={progress}
+                    progressLabel={progressLabel}
                     pdfPreviewUrl={pdfPreviewUrl}
                     setPdfPreviewUrl={setPdfPreviewUrl}
                     jenisDokumen={jenisDokumen}
@@ -427,6 +476,8 @@ function DialogUploadDokumen({
     setOpenDialog,
     form,
     loading,
+    progress,
+    progressLabel,
     pdfPreviewUrl,
     setPdfPreviewUrl,
     jenisDokumen,
@@ -436,15 +487,45 @@ function DialogUploadDokumen({
     openDialog: boolean
     setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
     loading: boolean
+    progress: number
+    progressLabel: string
     form: UseFormReturn<BuktiFormFormValidation>
     pdfPreviewUrl: string | null
     setPdfPreviewUrl: React.Dispatch<React.SetStateAction<string | null>>
     jenisDokumen: JenisDokumen[]
     errorMessage: string | null
 }) {
+    const [motivasiIndex, setMotivasiIndex] = React.useState<number>(0)
+    const [motivasiVisible, setMotivasiVisible] = React.useState<boolean>(true)
+
+    React.useEffect(() => {
+        if (!loading) {
+            setMotivasiIndex(0)
+            setMotivasiVisible(true)
+            return
+        }
+
+        const interval = setInterval(() => {
+            // slide down (menghilang) lalu ganti teks & slide up (muncul)
+            setMotivasiVisible(false)
+            setTimeout(() => {
+                setMotivasiIndex(
+                    (i) => (i + 1) % kataMotivasiNungguLoadUploadFiles.length
+                )
+                setMotivasiVisible(true)
+            }, 500)
+        }, 5000)
+
+        return () => clearInterval(interval)
+    }, [loading])
+
     return (
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogContent className="w-full max-h-[80vh]  overflow-y-scroll">
+            <DialogContent
+                className="w-full max-h-[80vh]  overflow-y-scroll"
+                onInteractOutside={(e) => e.preventDefault()}
+                onEscapeKeyDown={(e) => e.preventDefault()}
+            >
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <DialogHeader>
@@ -467,7 +548,7 @@ function DialogUploadDokumen({
                             <Alert className="w-full mt-3" variant={'destructive'}>
                                 <AlertCircle className="h-4 w-4" />
                                 <AlertTitle>
-                                    Jangan Tutup Jendela ini.
+                                    Jangan Tutup Jendela ini ketika sedang proses Submit Form.
                                 </AlertTitle>
                                 <AlertDescription>
                                     Validasi dokumen memakan waktu 1-2 menit tergantung koneksi internet dan jumlah halaman.
@@ -585,6 +666,31 @@ function DialogUploadDokumen({
                                 )}
                             </div>
                         </div>
+                        {loading && (
+                            <div className="w-full mt-3 space-y-2">
+                                <div className="flex justify-between text-sm text-muted-foreground">
+                                    <span>{progressLabel}</span>
+                                    <span>{Math.round(progress)}%</span>
+                                </div>
+                                <Progress value={progress} />
+                                <div className="overflow-hidden pt-1">
+                                    <p
+                                        className={cn(
+                                            'text-black dark:text-white text-sm text-center transition-all duration-500 ease-out',
+                                            motivasiVisible
+                                                ? 'translate-y-0 opacity-100'
+                                                : 'translate-y-4 opacity-0'
+                                        )}
+                                    >
+                                        {
+                                            kataMotivasiNungguLoadUploadFiles[
+                                                motivasiIndex
+                                            ]
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        )}
                         <DialogFooter className="mt-3">
                             <Button
                                 className="mx-2  hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer"
