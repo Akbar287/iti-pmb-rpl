@@ -25,4 +25,6 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            NEXT_PUBLIC_API_BASE_URL=${{ env.NEXT_PUBLIC_API_BASE_URL }}
           tags: interpidsquid/iti-pmb-rpl:latest
