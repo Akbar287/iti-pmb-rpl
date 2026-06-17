@@ -81,9 +81,14 @@ const authOptions: AuthOptions = {
                         nama: userLogin.User.Nama,
                         avatar: process.env.NEXT_PUBLIC_API_BASE_URL + '/api/protected/avatar?userId=' + userLogin.User.UserId,
                         email: userLogin.User.Email,
-                        roles: userLogin.User.UserHasRoles.flatMap(
-                            (f) => f.Role
-                        ),
+                        // Hanya simpan field ringan di JWT. Icon (data-URI SVG)
+                        // sengaja TIDAK disertakan agar cookie sesi tidak membengkak
+                        // dan ditolak reverse proxy (502). Icon di-fetch di sidebar.
+                        roles: userLogin.User.UserHasRoles.map((f) => ({
+                            RoleId: f.Role.RoleId,
+                            Name: f.Role.Name,
+                            GuardName: f.Role.GuardName,
+                        })),
                     }
 
                     return user

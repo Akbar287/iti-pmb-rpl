@@ -29,6 +29,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { data: session } = useSession()
     const getMenuByRole = useCountStore((state) => state.getMenuByRole)
     const [selectedRole, setSelectedRole] = React.useState<Role | null>(null)
+    const [teams, setTeams] = React.useState<Role[]>([])
     const [selectedMenu, setSelectedMenu] = React.useState<MenuProps[] | null>(
         null
     )
@@ -44,38 +45,44 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         }
     }
 
+    // JWT hanya membawa role ringan (tanpa Icon) agar cookie sesi tidak
+    // membengkak dan ditolak proxy (502). Icon lengkap di-fetch di sini.
     React.useEffect(() => {
-        if (selectedRole) {
-            if (!safeStorage.getItem('pmb.iti.role')) {
-                safeStorage.setItem(
-                    'pmb.iti.role',
-                    JSON.stringify(selectedRole)
-                )
-                setSelectedMenu(getMenuByRole(selectedRole))
-            }
-        } else {
-            if (safeStorage.getItem('pmb.iti.role')) {
-                const storedRole = safeStorage.getItem('pmb.iti.role')
-                if (storedRole) {
-                    setSelectedRole(JSON.parse(storedRole))
-                    setSelectedMenu(getMenuByRole(JSON.parse(storedRole)))
-                }
-            } else {
-                setSelectedRole(
-                    session?.user.roles !== undefined
-                        ? session?.user.roles[0]
-                        : null
-                )
-                session?.user.roles &&
-                    setSelectedMenu(getMenuByRole(session?.user.roles[0]))
-                session?.user.roles &&
-                    safeStorage.setItem(
-                        'pmb.iti.role',
-                        JSON.stringify(session?.user.roles[0])
-                    )
-            }
+        const sessionRoles = session?.user.roles
+        if (!sessionRoles || sessionRoles.length === 0) return
+
+        let active = true
+        fetch(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/protected/role`,
+            { credentials: 'include' }
+        )
+            .then((r) => (r.ok ? r.json() : []))
+            .then((all: Role[]) => {
+                if (!active) return
+                const byId = new Map(all.map((r) => [r.RoleId, r]))
+                setTeams(sessionRoles.map((r) => byId.get(r.RoleId) ?? r))
+            })
+            .catch(() => {
+                if (active) setTeams(sessionRoles)
+            })
+        return () => {
+            active = false
         }
-    }, [selectedRole])
+    }, [session?.user.roles])
+
+    // Tentukan role aktif dari localStorage (dicocokkan ke teams ber-Icon),
+    // jatuh ke role pertama bila belum ada.
+    React.useEffect(() => {
+        if (teams.length === 0) return
+
+        const stored = safeStorage.getItem('pmb.iti.role')
+        const storedId = stored ? (JSON.parse(stored) as Role).RoleId : null
+        const resolved = teams.find((t) => t.RoleId === storedId) ?? teams[0]
+
+        setSelectedRole(resolved)
+        setSelectedMenu(getMenuByRole(resolved))
+        safeStorage.setItem('pmb.iti.role', JSON.stringify(resolved))
+    }, [teams])
 
     const data = {
         navSecondary: [
@@ -118,7 +125,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         dark:border-white/10 dark:bg-slate-950/40">
                 {session?.user.roles && (
                     <TeamSwitcher
-                        teams={session?.user.roles}
+                        teams={teams.length > 0 ? teams : session.user.roles}
                         selectedRole={selectedRole}
                         changeRole={changeRole}
                         logout={logout}

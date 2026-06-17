@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   output: 'standalone',
   images: {
-    domains: ['localhost', 'simrpl.iti.ac.id', 'pmb-rpl.vercel.app'],
+    domains: ['localhost', 'simrpl.iti.ac.id', 'pmb-rpl.vercel.app', 'rpl.seni.asia'],
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
