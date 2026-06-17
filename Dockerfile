@@ -8,10 +8,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 
-# URL publik aplikasi. Variabel NEXT_PUBLIC_* di-inline ke client bundle saat
-# `next build`, jadi WAJIB tersedia saat build di dalam container — kalau tidak,
-# client bundle berisi "undefined" (mis. /undefined/api/protected/chart).
-# ENV ini juga persist ke runtime, dipakai route server (avatar, dll).
 ARG NEXT_PUBLIC_API_BASE_URL
 ARG BACKEND_API_BASE_URL
 
