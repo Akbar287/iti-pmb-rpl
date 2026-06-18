@@ -959,8 +959,67 @@ model User {
   Userlogin          Userlogin[]
   Asesor             Asesor[]
   tickets            Tickets[]
+  AiTokenUsage       AiTokenUsage[]
 
   @@map("user")
+}
+
+model AiTokenUsage {
+  AiTokenUsageId         String    @id @default(uuid()) @map("ai_token_usage_id")
+  UserId                 String?   @map("user_id")
+  Feature                String    @map("feature")
+  FeatureGroup           String?   @map("feature_group")
+  Page                   String?   @map("page")
+  Route                  String?   @map("route")
+  Method                 String?   @map("method")
+  RequestId              String?   @map("request_id")
+  SessionId              String?   @map("session_id")
+  ReferenceType          String?   @map("reference_type")
+  ReferenceId            String?   @map("reference_id")
+  SdkProvider            String?   @map("sdk_provider")
+  LlmProvider            String?   @map("llm_provider")
+  LlmModel               String    @map("llm_model")
+  LlmModelVersion        String?   @map("llm_model_version")
+  LlmModelSlug           String    @map("llm_model_slug")
+  Temperature            Float?    @map("temperature")
+  TopP                   Float?    @map("top_p")
+  MaxOutputTokens        Int?      @map("max_output_tokens")
+  InputTokens            Int       @default(0) @map("input_tokens")
+  OutputTokens           Int       @default(0) @map("output_tokens")
+  TotalTokens            Int       @default(0) @map("total_tokens")
+  ReasoningTokens        Int?      @map("reasoning_tokens")
+  CachedInputTokens      Int?      @map("cached_input_tokens")
+  PromptCharCount        Int?      @map("prompt_char_count")
+  CompletionCharCount    Int?      @map("completion_char_count")
+  PromptMessageCount     Int?      @map("prompt_message_count")
+  CompletionMessageCount Int?      @map("completion_message_count")
+  DurationMs             Int?      @map("duration_ms")
+  FirstTokenMs           Int?      @map("first_token_ms")
+  Streaming              Boolean   @default(false) @map("streaming")
+  Status                 String    @default("SUCCESS") @map("status")
+  ErrorCode              String?   @map("error_code")
+  ErrorMessage           String?   @map("error_message")
+  InputCostUsd           Decimal?  @map("input_cost_usd") @db.Decimal(18, 10)
+  OutputCostUsd          Decimal?  @map("output_cost_usd") @db.Decimal(18, 10)
+  TotalCostUsd           Decimal?  @map("total_cost_usd") @db.Decimal(18, 10)
+  Currency               String?   @default("USD") @map("currency")
+  PriceSource            String?   @map("price_source")
+  UsageRaw               Json?     @map("usage_raw")
+  ProviderMetadata       Json?     @map("provider_metadata")
+  Metadata               Json?     @map("metadata")
+  CreatedAt              DateTime  @default(now()) @map("created_at")
+  UpdatedAt              DateTime? @updatedAt @map("updated_at")
+  User                   User?     @relation(fields: [UserId], references: [UserId], onDelete: SetNull)
+
+  @@index([Feature, CreatedAt])
+  @@index([FeatureGroup, CreatedAt])
+  @@index([UserId, CreatedAt])
+  @@index([LlmProvider, LlmModel, CreatedAt])
+  @@index([LlmModelSlug, CreatedAt])
+  @@index([Status, CreatedAt])
+  @@index([ReferenceType, ReferenceId])
+  @@index([RequestId])
+  @@map("ai_token_usage")
 }
 
 model Userlogin {

@@ -11,6 +11,113 @@ app.use('*', withApiAuth)
 
 app.get('/', async (c) => {
     const _r = c.req.query('_r')
+    // Filter periode (mis. "2025/2026 Genap"). Kosong / "ALL" = semua periode.
+    const _p = c.req.query('_p') || ''
+    const periode = _p && _p !== 'ALL' ? _p : null
+
+    // Daftar periode untuk dropdown filter dashboard.
+    if (c.req.query('_list') === 'periode') {
+        const rows = await prisma.pendaftaran.findMany({
+            distinct: ['Periode'],
+            select: { Periode: true },
+            orderBy: { Periode: 'desc' },
+        })
+        return c.json(
+            {
+                data: rows.map((r) => r.Periode).filter(Boolean),
+                status: 'success',
+                message: 'Periode list retrieved successfully',
+            },
+            { status: 200 }
+        )
+    }
+
+    // Agregasi lintas periode (maks 8 periode terbaru). Tidak terpengaruh
+    // filter periode — dipakai untuk chart perbandingan antar periode.
+    if (c.req.query('_agg') === 'periode') {
+        const periodRows = await prisma.pendaftaran.findMany({
+            distinct: ['Periode'],
+            select: { Periode: true },
+            orderBy: { Periode: 'desc' },
+        })
+        const periods = periodRows
+            .map((r) => r.Periode)
+            .filter(Boolean)
+            .slice(0, 8)
+            .reverse() // tampil kronologis (lama -> baru)
+
+        const statuses = await prisma.statusMahasiswaAssesment.findMany({
+            select: { NamaStatus: true, Urutan: true },
+            orderBy: { Urutan: 'asc' },
+        })
+
+        const histories = periods.length
+            ? await prisma.statusMahasiswaAssesmentHistory.findMany({
+                where: { Aktif: true, Pendaftaran: { Periode: { in: periods } } },
+                select: {
+                    StatusMahasiswaAssesment: { select: { NamaStatus: true } },
+                    Pendaftaran: { select: { Periode: true } },
+                },
+            })
+            : []
+
+        const rows = statuses.map((s) => {
+            const obj: Record<string, string | number> = { category: s.NamaStatus }
+            for (const p of periods) {
+                obj[p] = histories.filter(
+                    (h) =>
+                        h.StatusMahasiswaAssesment.NamaStatus === s.NamaStatus &&
+                        h.Pendaftaran.Periode === p
+                ).length
+            }
+            return obj
+        })
+
+        // Tren total pendaftar per periode.
+        const trend = await Promise.all(
+            periods.map(async (p) => ({
+                periode: p,
+                total: await prisma.pendaftaran.count({ where: { Periode: p } }),
+            }))
+        )
+
+        // Jumlah mahasiswa (daftar ulang) per program studi per periode.
+        const duRows = periods.length
+            ? await prisma.daftarUlang.findMany({
+                where: { Pendaftaran: { Periode: { in: periods } } },
+                select: {
+                    ProgramStudi: { select: { Nama: true } },
+                    Pendaftaran: { select: { Periode: true } },
+                },
+            })
+            : []
+        const prodiNames = [...new Set(duRows.map((d) => d.ProgramStudi.Nama))]
+        const prodiRows = prodiNames.map((nama) => {
+            const obj: Record<string, string | number> = { category: nama }
+            for (const p of periods) {
+                obj[p] = duRows.filter(
+                    (d) => d.ProgramStudi.Nama === nama && d.Pendaftaran.Periode === p
+                ).length
+            }
+            return obj
+        })
+
+        return c.json(
+            {
+                data: {
+                    periods,
+                    categories: statuses.map((s) => s.NamaStatus),
+                    rows,
+                    trend,
+                    prodiRows,
+                },
+                status: 'success',
+                message: 'Aggregated periode chart retrieved successfully',
+            },
+            { status: 200 }
+        )
+    }
+
     if (!_r) {
         return c.json(
             { data: [], status: 'error', message: 'role id is required' },
@@ -39,7 +146,7 @@ app.get('/', async (c) => {
             select: {
                 ProgramStudiId: true,
                 Nama: true,
-                _count: { select: { DaftarUlang: true }},
+                _count: { select: { DaftarUlang: periode ? { where: { Pendaftaran: { Periode: periode } } } : true } },
             },
         });
 
@@ -54,7 +161,7 @@ app.get('/', async (c) => {
         // Chart 2 - Jumlah Mahasiswa per status
         const byStatus = await prisma.statusMahasiswaAssesmentHistory.groupBy({
             by: ['StatusMahasiswaAssesmentId'],
-            where: { Aktif: true },
+            where: { Aktif: true, ...(periode ? { Pendaftaran: { Periode: periode } } : {}) },
             _count: { _all: true },
         });
 
@@ -123,14 +230,18 @@ app.get('/', async (c) => {
         // Chart 5 - Jumlah Asesor Belum dan Sudah di SK
         const [withRelationAsesor, withoutRelationAsesor] = await Promise.all([
             prisma.assesorMahasiswa.count({
-                where: { 
+                where: {
                     Confirmation: true,
-                    SkRektorAssesor: { some: {} } },
+                    SkRektorAssesor: { some: {} },
+                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                },
             }),
             prisma.assesorMahasiswa.count({
-                where: { 
+                where: {
                     Confirmation: true,
-                    SkRektorAssesor: { none: {} } },
+                    SkRektorAssesor: { none: {} },
+                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                },
             }),
         ]);
 
@@ -149,10 +260,10 @@ app.get('/', async (c) => {
         // Chart 6 - Jumlah Mahasiswa Belum dan Sudah di SK
         const [withRelationMhs, withoutRelationMhs] = await Promise.all([
             prisma.pendaftaran.count({
-                where: { SkRektorMahasiswa: { some: {} } },
+                where: { SkRektorMahasiswa: { some: {} }, ...(periode ? { Periode: periode } : {}) },
             }),
             prisma.pendaftaran.count({
-                where: { SkRektorMahasiswa: { none: {} } },
+                where: { SkRektorMahasiswa: { none: {} }, ...(periode ? { Periode: periode } : {}) },
             }),
         ]);
 
@@ -238,7 +349,7 @@ app.get('/', async (c) => {
                 Nama: true,
                 _count: {
                     select: {
-                        DaftarUlang: true,
+                        DaftarUlang: periode ? { where: { Pendaftaran: { Periode: periode } } } : true,
                         MataKuliah: true,
                     },
                 },
@@ -302,6 +413,7 @@ app.get('/', async (c) => {
 
             const mahasiswaList = await prisma.pendaftaran.findMany({
                 where: {
+                    ...(periode ? { Periode: periode } : {}),
                     DaftarUlang: {
                         some: {
                             ProgramStudiId: programStudiId,
@@ -357,6 +469,7 @@ app.get('/', async (c) => {
                 where: {
                     Aktif: true,
                     Pendaftaran: {
+                    ...(periode ? { Periode: periode } : {}),
                     AssesorMahasiswa: {
                         some: {
                         Asesor: {
@@ -654,7 +767,7 @@ app.get('/', async (c) => {
             select: {
                 ProgramStudiId: true,
                 Nama: true,
-                _count: { select: { DaftarUlang: true }},
+                _count: { select: { DaftarUlang: periode ? { where: { Pendaftaran: { Periode: periode } } } : true } },
             },
         });
 
@@ -704,7 +817,7 @@ app.get('/', async (c) => {
             select: {
                 ProgramStudiId: true,
                 Nama: true,
-                _count: { select: { DaftarUlang: true }},
+                _count: { select: { DaftarUlang: periode ? { where: { Pendaftaran: { Periode: periode } } } : true } },
             },
         });
 
@@ -720,7 +833,7 @@ app.get('/', async (c) => {
         // Chart 2 - Jumlah Mahasiswa per status
         const byStatus = await prisma.statusMahasiswaAssesmentHistory.groupBy({
             by: ['StatusMahasiswaAssesmentId'],
-            where: { Aktif: true },
+            where: { Aktif: true, ...(periode ? { Pendaftaran: { Periode: periode } } : {}) },
             _count: { _all: true },
         });
 
@@ -800,14 +913,18 @@ app.get('/', async (c) => {
         // Chart 1
         const [withRelationAsesor, withoutRelationAsesor] = await Promise.all([
             prisma.assesorMahasiswa.count({
-                where: { 
+                where: {
                     Confirmation: true,
-                    SkRektorAssesor: { some: {} } },
+                    SkRektorAssesor: { some: {} },
+                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                },
             }),
             prisma.assesorMahasiswa.count({
-                where: { 
+                where: {
                     Confirmation: true,
-                    SkRektorAssesor: { none: {} } },
+                    SkRektorAssesor: { none: {} },
+                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                },
             }),
         ]);
 
@@ -825,10 +942,10 @@ app.get('/', async (c) => {
 
         const [withRelationMhs, withoutRelationMhs] = await Promise.all([
             prisma.pendaftaran.count({
-                where: { SkRektorMahasiswa: { some: {} } },
+                where: { SkRektorMahasiswa: { some: {} }, ...(periode ? { Periode: periode } : {}) },
             }),
             prisma.pendaftaran.count({
-                where: { SkRektorMahasiswa: { none: {} } },
+                where: { SkRektorMahasiswa: { none: {} }, ...(periode ? { Periode: periode } : {}) },
             }),
         ]);
 

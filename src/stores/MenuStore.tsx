@@ -357,6 +357,11 @@ const menu: MenuStoreProps[] = [
                 title: 'Tickets',
                 url: '/manajemen-sistem/tickets',
             },
+            {
+                namaRole: ['Admin'],
+                title: 'Token Usage',
+                url: '/manajemen-sistem/token-usage',
+            },
         ],
     },
     {

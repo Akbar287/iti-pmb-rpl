@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.0.1
- * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 Prisma.prismaVersion = {
-  client: "7.0.1",
-  engine: "f09f2815f091dbba658cdcd2264306d88bb5bda6"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -707,6 +707,53 @@ exports.Prisma.UserScalarFieldEnum = {
   DeletedAt: 'DeletedAt'
 };
 
+exports.Prisma.AiTokenUsageScalarFieldEnum = {
+  AiTokenUsageId: 'AiTokenUsageId',
+  UserId: 'UserId',
+  Feature: 'Feature',
+  FeatureGroup: 'FeatureGroup',
+  Page: 'Page',
+  Route: 'Route',
+  Method: 'Method',
+  RequestId: 'RequestId',
+  SessionId: 'SessionId',
+  ReferenceType: 'ReferenceType',
+  ReferenceId: 'ReferenceId',
+  SdkProvider: 'SdkProvider',
+  LlmProvider: 'LlmProvider',
+  LlmModel: 'LlmModel',
+  LlmModelVersion: 'LlmModelVersion',
+  LlmModelSlug: 'LlmModelSlug',
+  Temperature: 'Temperature',
+  TopP: 'TopP',
+  MaxOutputTokens: 'MaxOutputTokens',
+  InputTokens: 'InputTokens',
+  OutputTokens: 'OutputTokens',
+  TotalTokens: 'TotalTokens',
+  ReasoningTokens: 'ReasoningTokens',
+  CachedInputTokens: 'CachedInputTokens',
+  PromptCharCount: 'PromptCharCount',
+  CompletionCharCount: 'CompletionCharCount',
+  PromptMessageCount: 'PromptMessageCount',
+  CompletionMessageCount: 'CompletionMessageCount',
+  DurationMs: 'DurationMs',
+  FirstTokenMs: 'FirstTokenMs',
+  Streaming: 'Streaming',
+  Status: 'Status',
+  ErrorCode: 'ErrorCode',
+  ErrorMessage: 'ErrorMessage',
+  InputCostUsd: 'InputCostUsd',
+  OutputCostUsd: 'OutputCostUsd',
+  TotalCostUsd: 'TotalCostUsd',
+  Currency: 'Currency',
+  PriceSource: 'PriceSource',
+  UsageRaw: 'UsageRaw',
+  ProviderMetadata: 'ProviderMetadata',
+  Metadata: 'Metadata',
+  CreatedAt: 'CreatedAt',
+  UpdatedAt: 'UpdatedAt'
+};
+
 exports.Prisma.UserloginScalarFieldEnum = {
   UserloginId: 'UserloginId',
   UserId: 'UserId',
@@ -857,6 +904,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -865,6 +917,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.ProfiensiPengetahuan = exports.$Enums.ProfiensiPengetahuan = {
   SANGAT_BAIK: 'SANGAT_BAIK',
@@ -1006,6 +1064,7 @@ exports.Prisma.ModelName = {
   UniversityJabatan: 'UniversityJabatan',
   UniversityJabatanOrang: 'UniversityJabatanOrang',
   User: 'User',
+  AiTokenUsage: 'AiTokenUsage',
   Userlogin: 'Userlogin',
   JenisKegiatan: 'JenisKegiatan',
   KategoriBerita: 'KategoriBerita',

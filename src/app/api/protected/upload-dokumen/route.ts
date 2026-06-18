@@ -7,8 +7,10 @@ import { prisma } from '@/lib/prisma'
 import { BuktiFormTypes } from '@/types/BuktiFormUploadDokumenTypes'
 import { streamText, gateway } from 'ai'
 import { AiOcr, maksimalPagesAiOcr } from '@/config/ai'
+import { randomUUID } from 'crypto'
+import { createAiTokenUsage } from '@/lib/ai-token-usage'
 
-const app = new Hono().basePath('/api/protected/upload-dokumen')
+const app = new Hono<{ Variables: { token: { id?: string } } }>().basePath('/api/protected/upload-dokumen')
 
 app.use('*', withApiAuth)
 
@@ -157,6 +159,9 @@ app.get('/', async (c) => {
 })
 app.post('/', async (c) => {
     const body = await c.req.parseBody()
+    const token = c.get('token') as { id?: string } | undefined
+    const userId = token?.id ?? null
+    const requestId = c.req.header('x-request-id') ?? randomUUID()
 
     const file = body.files
     const JenisDokumenId = body.JenisDokumenId
@@ -389,9 +394,11 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
         : basePrompt + jsonStructure;
 
     const pdfBs64 = Buffer.from(buffer).toString('base64');
+    const modelSlug = AiOcr ? AiOcr : "alibaba/qwen3-vl-instruct"
+    const startedAt = Date.now()
 
     const result = await streamText({
-        model: gateway(AiOcr ? AiOcr : "alibaba/qwen3-vl-instruct"),
+        model: gateway(modelSlug),
         topP: 0.9,
         temperature: 0,
         messages: [
@@ -414,9 +421,79 @@ Jawab HANYA dengan JSON valid tanpa penjelasan tambahan di luar JSON.
 
 
     let fullText = ""
-    for await (const chunk of result.textStream) {
-        fullText += chunk;
+    try {
+        for await (const chunk of result.textStream) {
+            fullText += chunk;
+        }
+    } catch (err) {
+        await createAiTokenUsage({
+            userId,
+            feature: 'AI_OCR',
+            featureGroup: 'OCR',
+            page: '/upload-dokumen',
+            route: '/api/protected/upload-dokumen',
+            method: 'POST',
+            requestId,
+            referenceType: 'BuktiForm',
+            referenceId: data.BuktiFormId,
+            modelSlug,
+            temperature: 0,
+            topP: 0.9,
+            promptCharCount: prompt.length,
+            completionCharCount: fullText.length,
+            promptMessageCount: 1,
+            completionMessageCount: fullText ? 1 : 0,
+            durationMs: Date.now() - startedAt,
+            status: 'ERROR',
+            errorMessage: err instanceof Error ? err.message : String(err),
+            metadata: {
+                pendaftaranId: PendaftaranId,
+                jenisDokumen: jenisDokumen.Jenis,
+                isTranskripNilai,
+                originalFileName,
+                fileExt,
+                fileSize: file.size,
+            },
+        })
+        throw err
     }
+
+    let usage = null
+    try {
+        usage = await result.totalUsage
+    } catch (usageError) {
+        console.error('AI usage read error', usageError)
+    }
+
+    await createAiTokenUsage({
+        userId,
+        feature: 'AI_OCR',
+        featureGroup: 'OCR',
+        page: '/upload-dokumen',
+        route: '/api/protected/upload-dokumen',
+        method: 'POST',
+        requestId,
+        referenceType: 'BuktiForm',
+        referenceId: data.BuktiFormId,
+        modelSlug,
+        temperature: 0,
+        topP: 0.9,
+        usage,
+        promptCharCount: prompt.length,
+        completionCharCount: fullText.length,
+        promptMessageCount: 1,
+        completionMessageCount: fullText ? 1 : 0,
+        durationMs: Date.now() - startedAt,
+        metadata: {
+            pendaftaranId: PendaftaranId,
+            jenisDokumen: jenisDokumen.Jenis,
+            isTranskripNilai,
+            originalFileName,
+            fileExt,
+            fileSize: file.size,
+        },
+    })
+
     await prisma.buktiFormPages.create({
         data: {
             BuktiFormId: data.BuktiFormId,
@@ -546,5 +623,3 @@ app.delete('/', async (c) => {
 export const GET = handle(app)
 export const POST = handle(app)
 export const DELETE = handle(app)
-
-

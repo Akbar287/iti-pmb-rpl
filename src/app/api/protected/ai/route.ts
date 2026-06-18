@@ -5,8 +5,14 @@ import { handle } from 'hono/vercel'
 import { prisma } from "@/lib/prisma"
 import { ProfiensiPengetahuan } from '@/generated/prisma';
 import { AiAsessmenCp, AiAsessmenRekapitulasi } from '@/config/ai';
+import { randomUUID } from 'crypto';
+import {
+    countAiMessageCharacters,
+    countAiMessages,
+    createAiTokenUsage,
+} from '@/lib/ai-token-usage';
 
-const app = new Hono().basePath('/api/protected/ai')
+const app = new Hono<{ Variables: { token: { id?: string } } }>().basePath('/api/protected/ai')
 
 // Asessmen Rekapitulasi
 export type JustifikasiMataKuliahType = {
@@ -109,6 +115,10 @@ app.use('*', withApiAuth)
 app.post('/', async (c) => {
     const HasilAsessmentId = c.req.query('_h')
     const SkorAsessmentId = c.req.query('_s')
+    const token = c.get('token') as { id?: string } | undefined
+    const userId = token?.id ?? null
+    const requestId = c.req.header('x-request-id') ?? randomUUID()
+
     if (HasilAsessmentId) {
         const body = await c.req.json()
         const messages = (body.messages ?? []) as { role: string; content: string }[]
@@ -197,8 +207,10 @@ app.post('/', async (c) => {
             })),
         ]
 
+        const modelSlug = AiAsessmenCp ? AiAsessmenCp : 'groq/gpt-oss-20b'
+        const startedAt = Date.now()
         const result = await streamText({
-            model: gateway(AiAsessmenCp ? AiAsessmenCp :'groq/gpt-oss-20b'),
+            model: gateway(modelSlug),
             temperature: 0,
             topP: 0.9,
             messages: aiMessages,
@@ -208,13 +220,71 @@ app.post('/', async (c) => {
 
         const stream = new ReadableStream({
             async start(controller) {
+                let completionText = ''
+                let firstTokenMs: number | null = null
                 try {
                     for await (const chunk of result.textStream) {
+                        if (firstTokenMs === null) firstTokenMs = Date.now() - startedAt
+                        completionText += chunk
                         controller.enqueue(encoder.encode(chunk))
                     }
+
+                    let usage = null
+                    try {
+                        usage = await result.totalUsage
+                    } catch (usageError) {
+                        console.error('AI usage read error', usageError)
+                    }
+
+                    await createAiTokenUsage({
+                        userId,
+                        feature: 'AI_ASESSMEN_CP',
+                        featureGroup: 'AI_ASESSMEN',
+                        page: '/asessment/asessmen-mahasiswa',
+                        route: '/api/protected/ai',
+                        method: 'POST',
+                        requestId,
+                        referenceType: 'HasilAssesmen',
+                        referenceId: HasilAsessmentId,
+                        modelSlug,
+                        temperature: 0,
+                        topP: 0.9,
+                        usage,
+                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        completionCharCount: completionText.length,
+                        promptMessageCount: countAiMessages(aiMessages),
+                        completionMessageCount: completionText ? 1 : 0,
+                        durationMs: Date.now() - startedAt,
+                        firstTokenMs,
+                        streaming: true,
+                    })
+
                     controller.close()
                 } catch (err) {
                     console.error('stream error', err)
+                    await createAiTokenUsage({
+                        userId,
+                        feature: 'AI_ASESSMEN_CP',
+                        featureGroup: 'AI_ASESSMEN',
+                        page: '/asessment/asessmen-mahasiswa',
+                        route: '/api/protected/ai',
+                        method: 'POST',
+                        requestId,
+                        referenceType: 'HasilAssesmen',
+                        referenceId: HasilAsessmentId,
+                        modelSlug,
+                        temperature: 0,
+                        topP: 0.9,
+                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        completionCharCount: completionText.length,
+                        promptMessageCount: countAiMessages(aiMessages),
+                        completionMessageCount: completionText ? 1 : 0,
+                        durationMs: Date.now() - startedAt,
+                        firstTokenMs,
+                        streaming: true,
+                        status: 'ERROR',
+                        errorMessage: err instanceof Error ? err.message : String(err),
+                    })
                     controller.error(err)
                 }
             },
@@ -324,8 +394,10 @@ ${contextText}
             })),
         ]
 
+        const modelSlug = AiAsessmenRekapitulasi ? AiAsessmenRekapitulasi : 'groq/gpt-oss-20b'
+        const startedAt = Date.now()
         const result = await streamText({
-            model: gateway(AiAsessmenRekapitulasi ? AiAsessmenRekapitulasi : 'groq/gpt-oss-20b'),
+            model: gateway(modelSlug),
             temperature: 0,
             topP: 0.9,
             messages: aiMessages,
@@ -335,13 +407,71 @@ ${contextText}
 
         const stream = new ReadableStream({
             async start(controller) {
+                let completionText = ''
+                let firstTokenMs: number | null = null
                 try {
                     for await (const chunk of result.textStream) {
+                        if (firstTokenMs === null) firstTokenMs = Date.now() - startedAt
+                        completionText += chunk
                         controller.enqueue(encoder.encode(chunk))
                     }
+
+                    let usage = null
+                    try {
+                        usage = await result.totalUsage
+                    } catch (usageError) {
+                        console.error('AI usage read error', usageError)
+                    }
+
+                    await createAiTokenUsage({
+                        userId,
+                        feature: 'AI_ASESSMEN_REKAPITULASI',
+                        featureGroup: 'AI_ASESSMEN',
+                        page: '/asessment/rekapitulasi',
+                        route: '/api/protected/ai',
+                        method: 'POST',
+                        requestId,
+                        referenceType: 'SkorAssesmen',
+                        referenceId: SkorAsessmentId,
+                        modelSlug,
+                        temperature: 0,
+                        topP: 0.9,
+                        usage,
+                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        completionCharCount: completionText.length,
+                        promptMessageCount: countAiMessages(aiMessages),
+                        completionMessageCount: completionText ? 1 : 0,
+                        durationMs: Date.now() - startedAt,
+                        firstTokenMs,
+                        streaming: true,
+                    })
+
                     controller.close()
                 } catch (err) {
                     console.error('stream error', err)
+                    await createAiTokenUsage({
+                        userId,
+                        feature: 'AI_ASESSMEN_REKAPITULASI',
+                        featureGroup: 'AI_ASESSMEN',
+                        page: '/asessment/rekapitulasi',
+                        route: '/api/protected/ai',
+                        method: 'POST',
+                        requestId,
+                        referenceType: 'SkorAssesmen',
+                        referenceId: SkorAsessmentId,
+                        modelSlug,
+                        temperature: 0,
+                        topP: 0.9,
+                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        completionCharCount: completionText.length,
+                        promptMessageCount: countAiMessages(aiMessages),
+                        completionMessageCount: completionText ? 1 : 0,
+                        durationMs: Date.now() - startedAt,
+                        firstTokenMs,
+                        streaming: true,
+                        status: 'ERROR',
+                        errorMessage: err instanceof Error ? err.message : String(err),
+                    })
                     controller.error(err)
                 }
             },
@@ -362,8 +492,10 @@ ${contextText}
             })),
         ]
 
+        const modelSlug = 'groq/gpt-oss-20b'
+        const startedAt = Date.now()
         const result = await streamText({
-            model: gateway('groq/gpt-oss-20b'),
+            model: gateway(modelSlug),
             temperature: 0,
             topP: 0.9,
             messages: aiMessages,
@@ -373,13 +505,65 @@ ${contextText}
 
         const stream = new ReadableStream({
             async start(controller) {
+                let completionText = ''
+                let firstTokenMs: number | null = null
                 try {
                     for await (const chunk of result.textStream) {
+                        if (firstTokenMs === null) firstTokenMs = Date.now() - startedAt
+                        completionText += chunk
                         controller.enqueue(encoder.encode(chunk))
                     }
+
+                    let usage = null
+                    try {
+                        usage = await result.totalUsage
+                    } catch (usageError) {
+                        console.error('AI usage read error', usageError)
+                    }
+
+                    await createAiTokenUsage({
+                        userId,
+                        feature: 'AI_CHAT_AUTH',
+                        featureGroup: 'CHATBOT',
+                        route: '/api/protected/ai',
+                        method: 'POST',
+                        requestId,
+                        modelSlug,
+                        temperature: 0,
+                        topP: 0.9,
+                        usage,
+                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        completionCharCount: completionText.length,
+                        promptMessageCount: countAiMessages(aiMessages),
+                        completionMessageCount: completionText ? 1 : 0,
+                        durationMs: Date.now() - startedAt,
+                        firstTokenMs,
+                        streaming: true,
+                    })
+
                     controller.close()
                 } catch (err) {
                     console.error('stream error', err)
+                    await createAiTokenUsage({
+                        userId,
+                        feature: 'AI_CHAT_AUTH',
+                        featureGroup: 'CHATBOT',
+                        route: '/api/protected/ai',
+                        method: 'POST',
+                        requestId,
+                        modelSlug,
+                        temperature: 0,
+                        topP: 0.9,
+                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        completionCharCount: completionText.length,
+                        promptMessageCount: countAiMessages(aiMessages),
+                        completionMessageCount: completionText ? 1 : 0,
+                        durationMs: Date.now() - startedAt,
+                        firstTokenMs,
+                        streaming: true,
+                        status: 'ERROR',
+                        errorMessage: err instanceof Error ? err.message : String(err),
+                    })
                     controller.error(err)
                 }
             },

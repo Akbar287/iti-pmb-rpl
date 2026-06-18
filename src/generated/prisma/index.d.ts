@@ -319,6 +319,11 @@ export type UniversityJabatanOrang = $Result.DefaultSelection<Prisma.$University
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model AiTokenUsage
+ * 
+ */
+export type AiTokenUsage = $Result.DefaultSelection<Prisma.$AiTokenUsagePayload>
+/**
  * Model Userlogin
  * 
  */
@@ -560,13 +565,15 @@ export const SistemKuliah: typeof $Enums.SistemKuliah
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Alamats
  * const alamats = await prisma.alamat.findMany()
  * ```
  *
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
@@ -581,13 +588,15 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Alamats
    * const alamats = await prisma.alamat.findMany()
    * ```
    *
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
 
   constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
@@ -610,7 +619,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -622,7 +631,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -633,7 +642,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -645,7 +654,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -661,9 +670,9 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
@@ -1282,6 +1291,16 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.aiTokenUsage`: Exposes CRUD operations for the **AiTokenUsage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AiTokenUsages
+    * const aiTokenUsages = await prisma.aiTokenUsage.findMany()
+    * ```
+    */
+  get aiTokenUsage(): Prisma.AiTokenUsageDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.userlogin`: Exposes CRUD operations for the **Userlogin** model.
     * Example usage:
     * ```ts
@@ -1480,8 +1499,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.0.1
-   * Query Engine version: f09f2815f091dbba658cdcd2264306d88bb5bda6
+   * Prisma Client JS version: 7.8.0
+   * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
    */
   export type PrismaVersion = {
     client: string
@@ -1925,6 +1944,7 @@ export namespace Prisma {
     UniversityJabatan: 'UniversityJabatan',
     UniversityJabatanOrang: 'UniversityJabatanOrang',
     User: 'User',
+    AiTokenUsage: 'AiTokenUsage',
     Userlogin: 'Userlogin',
     JenisKegiatan: 'JenisKegiatan',
     KategoriBerita: 'KategoriBerita',
@@ -1955,7 +1975,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormPages" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "hasilAssesmenAi" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "skorAssesmenAi" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita" | "questionAndAsk" | "tickets" | "ticketsFile" | "transkripNilai" | "transkripNilaiRelation"
+      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormPages" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "hasilAssesmenAi" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "skorAssesmenAi" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "aiTokenUsage" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita" | "questionAndAsk" | "tickets" | "ticketsFile" | "transkripNilai" | "transkripNilaiRelation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6473,6 +6493,80 @@ export namespace Prisma {
           }
         }
       }
+      AiTokenUsage: {
+        payload: Prisma.$AiTokenUsagePayload<ExtArgs>
+        fields: Prisma.AiTokenUsageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AiTokenUsageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AiTokenUsageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>
+          }
+          findFirst: {
+            args: Prisma.AiTokenUsageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AiTokenUsageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>
+          }
+          findMany: {
+            args: Prisma.AiTokenUsageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>[]
+          }
+          create: {
+            args: Prisma.AiTokenUsageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>
+          }
+          createMany: {
+            args: Prisma.AiTokenUsageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AiTokenUsageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>[]
+          }
+          delete: {
+            args: Prisma.AiTokenUsageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>
+          }
+          update: {
+            args: Prisma.AiTokenUsageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>
+          }
+          deleteMany: {
+            args: Prisma.AiTokenUsageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AiTokenUsageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AiTokenUsageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>[]
+          }
+          upsert: {
+            args: Prisma.AiTokenUsageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AiTokenUsagePayload>
+          }
+          aggregate: {
+            args: Prisma.AiTokenUsageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAiTokenUsage>
+          }
+          groupBy: {
+            args: Prisma.AiTokenUsageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AiTokenUsageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AiTokenUsageCountArgs<ExtArgs>
+            result: $Utils.Optional<AiTokenUsageCountAggregateOutputType> | number
+          }
+        }
+      }
       Userlogin: {
         payload: Prisma.$UserloginPayload<ExtArgs>
         fields: Prisma.UserloginFieldRefs
@@ -7637,7 +7731,7 @@ export namespace Prisma {
      *  { emit: 'stdout', level: 'error' }
      * 
      * ```
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     * Read more in our [docs](https://pris.ly/d/logging).
      */
     log?: (LogLevel | LogDefinition)[]
     /**
@@ -7673,6 +7767,22 @@ export namespace Prisma {
      * ```
      */
     omit?: Prisma.GlobalOmitConfig
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   adapter,
+     *   comments: [
+     *     traceContext(),
+     *     queryInsights(),
+     *   ],
+     * })
+     * ```
+     */
+    comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
     alamat?: AlamatOmit
@@ -7736,6 +7846,7 @@ export namespace Prisma {
     universityJabatan?: UniversityJabatanOmit
     universityJabatanOrang?: UniversityJabatanOrangOmit
     user?: UserOmit
+    aiTokenUsage?: AiTokenUsageOmit
     userlogin?: UserloginOmit
     jenisKegiatan?: JenisKegiatanOmit
     kategoriBerita?: KategoriBeritaOmit
@@ -9105,6 +9216,7 @@ export namespace Prisma {
     Userlogin: number
     Asesor: number
     tickets: number
+    AiTokenUsage: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9114,6 +9226,7 @@ export namespace Prisma {
     Userlogin?: boolean | UserCountOutputTypeCountUserloginArgs
     Asesor?: boolean | UserCountOutputTypeCountAsesorArgs
     tickets?: boolean | UserCountOutputTypeCountTicketsArgs
+    AiTokenUsage?: boolean | UserCountOutputTypeCountAiTokenUsageArgs
   }
 
   // Custom InputTypes
@@ -9167,6 +9280,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TicketsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAiTokenUsageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiTokenUsageWhereInput
   }
 
 
@@ -10215,6 +10335,11 @@ export namespace Prisma {
      * Skip the first `n` Alamats.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Alamats.
+     */
     distinct?: AlamatScalarFieldEnum | AlamatScalarFieldEnum[]
   }
 
@@ -11384,6 +11509,11 @@ export namespace Prisma {
      * Skip the first `n` Asesors.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Asesors.
+     */
     distinct?: AsesorScalarFieldEnum | AsesorScalarFieldEnum[]
   }
 
@@ -12622,6 +12752,11 @@ export namespace Prisma {
      * Skip the first `n` AsesorAkademiks.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsesorAkademiks.
+     */
     distinct?: AsesorAkademikScalarFieldEnum | AsesorAkademikScalarFieldEnum[]
   }
 
@@ -13717,6 +13852,11 @@ export namespace Prisma {
      * Skip the first `n` AsesorAkademikKeanggotaanAsosiasis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsesorAkademikKeanggotaanAsosiasis.
+     */
     distinct?: AsesorAkademikKeanggotaanAsosiasiScalarFieldEnum | AsesorAkademikKeanggotaanAsosiasiScalarFieldEnum[]
   }
 
@@ -14866,6 +15006,11 @@ export namespace Prisma {
      * Skip the first `n` AsesorPraktisis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsesorPraktisis.
+     */
     distinct?: AsesorPraktisiScalarFieldEnum | AsesorPraktisiScalarFieldEnum[]
   }
 
@@ -15998,6 +16143,11 @@ export namespace Prisma {
      * Skip the first `n` AssesorMahasiswas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AssesorMahasiswas.
+     */
     distinct?: AssesorMahasiswaScalarFieldEnum | AssesorMahasiswaScalarFieldEnum[]
   }
 
@@ -17137,6 +17287,11 @@ export namespace Prisma {
      * Skip the first `n` BuktiForms.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuktiForms.
+     */
     distinct?: BuktiFormScalarFieldEnum | BuktiFormScalarFieldEnum[]
   }
 
@@ -18243,6 +18398,11 @@ export namespace Prisma {
      * Skip the first `n` BuktiFormPages.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuktiFormPages.
+     */
     distinct?: BuktiFormPagesScalarFieldEnum | BuktiFormPagesScalarFieldEnum[]
   }
 
@@ -19270,6 +19430,11 @@ export namespace Prisma {
      * Skip the first `n` BuktiFormEvaluasiDiris.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuktiFormEvaluasiDiris.
+     */
     distinct?: BuktiFormEvaluasiDiriScalarFieldEnum | BuktiFormEvaluasiDiriScalarFieldEnum[]
   }
 
@@ -20407,6 +20572,11 @@ export namespace Prisma {
      * Skip the first `n` CapaianPembelajarans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CapaianPembelajarans.
+     */
     distinct?: CapaianPembelajaranScalarFieldEnum | CapaianPembelajaranScalarFieldEnum[]
   }
 
@@ -21446,6 +21616,11 @@ export namespace Prisma {
      * Skip the first `n` Countries.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Countries.
+     */
     distinct?: CountryScalarFieldEnum | CountryScalarFieldEnum[]
   }
 
@@ -22632,6 +22807,11 @@ export namespace Prisma {
      * Skip the first `n` DaftarUlangs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DaftarUlangs.
+     */
     distinct?: DaftarUlangScalarFieldEnum | DaftarUlangScalarFieldEnum[]
   }
 
@@ -23670,6 +23850,11 @@ export namespace Prisma {
      * Skip the first `n` Desas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Desas.
+     */
     distinct?: DesaScalarFieldEnum | DesaScalarFieldEnum[]
   }
 
@@ -24796,6 +24981,11 @@ export namespace Prisma {
      * Skip the first `n` EvaluasiDiris.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EvaluasiDiris.
+     */
     distinct?: EvaluasiDiriScalarFieldEnum | EvaluasiDiriScalarFieldEnum[]
   }
 
@@ -26033,6 +26223,11 @@ export namespace Prisma {
      * Skip the first `n` HasilAssesmen.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HasilAssesmen.
+     */
     distinct?: HasilAssesmenScalarFieldEnum | HasilAssesmenScalarFieldEnum[]
   }
 
@@ -27154,6 +27349,11 @@ export namespace Prisma {
      * Skip the first `n` HasilAssesmenAis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HasilAssesmenAis.
+     */
     distinct?: HasilAssesmenAiScalarFieldEnum | HasilAssesmenAiScalarFieldEnum[]
   }
 
@@ -28238,6 +28438,11 @@ export namespace Prisma {
      * Skip the first `n` InformasiKependudukans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InformasiKependudukans.
+     */
     distinct?: InformasiKependudukanScalarFieldEnum | InformasiKependudukanScalarFieldEnum[]
   }
 
@@ -29446,6 +29651,11 @@ export namespace Prisma {
      * Skip the first `n` InstitusiLamas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InstitusiLamas.
+     */
     distinct?: InstitusiLamaScalarFieldEnum | InstitusiLamaScalarFieldEnum[]
   }
 
@@ -30540,6 +30750,11 @@ export namespace Prisma {
      * Skip the first `n` JenisDokumen.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JenisDokumen.
+     */
     distinct?: JenisDokumenScalarFieldEnum | JenisDokumenScalarFieldEnum[]
   }
 
@@ -31594,6 +31809,11 @@ export namespace Prisma {
      * Skip the first `n` Kabupatens.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Kabupatens.
+     */
     distinct?: KabupatenScalarFieldEnum | KabupatenScalarFieldEnum[]
   }
 
@@ -32656,6 +32876,11 @@ export namespace Prisma {
      * Skip the first `n` Kecamatans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Kecamatans.
+     */
     distinct?: KecamatanScalarFieldEnum | KecamatanScalarFieldEnum[]
   }
 
@@ -33744,6 +33969,11 @@ export namespace Prisma {
      * Skip the first `n` Mahasiswas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Mahasiswas.
+     */
     distinct?: MahasiswaScalarFieldEnum | MahasiswaScalarFieldEnum[]
   }
 
@@ -34899,6 +35129,11 @@ export namespace Prisma {
      * Skip the first `n` MahasiswaKonferensis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MahasiswaKonferensis.
+     */
     distinct?: MahasiswaKonferensiScalarFieldEnum | MahasiswaKonferensiScalarFieldEnum[]
   }
 
@@ -36017,6 +36252,11 @@ export namespace Prisma {
      * Skip the first `n` MahasiswaOrganisasiProfesis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MahasiswaOrganisasiProfesis.
+     */
     distinct?: MahasiswaOrganisasiProfesiScalarFieldEnum | MahasiswaOrganisasiProfesiScalarFieldEnum[]
   }
 
@@ -37114,6 +37354,11 @@ export namespace Prisma {
      * Skip the first `n` MahasiswaPelatihanProfessionals.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MahasiswaPelatihanProfessionals.
+     */
     distinct?: MahasiswaPelatihanProfessionalScalarFieldEnum | MahasiswaPelatihanProfessionalScalarFieldEnum[]
   }
 
@@ -38232,6 +38477,11 @@ export namespace Prisma {
      * Skip the first `n` MahasiswaPendidikans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MahasiswaPendidikans.
+     */
     distinct?: MahasiswaPendidikanScalarFieldEnum | MahasiswaPendidikanScalarFieldEnum[]
   }
 
@@ -39350,6 +39600,11 @@ export namespace Prisma {
      * Skip the first `n` MahasiswaPiagams.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MahasiswaPiagams.
+     */
     distinct?: MahasiswaPiagamScalarFieldEnum | MahasiswaPiagamScalarFieldEnum[]
   }
 
@@ -40473,6 +40728,11 @@ export namespace Prisma {
      * Skip the first `n` MahasiswaRiwayatPekerjaans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MahasiswaRiwayatPekerjaans.
+     */
     distinct?: MahasiswaRiwayatPekerjaanScalarFieldEnum | MahasiswaRiwayatPekerjaanScalarFieldEnum[]
   }
 
@@ -41640,6 +41900,11 @@ export namespace Prisma {
      * Skip the first `n` MataKuliahs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MataKuliahs.
+     */
     distinct?: MataKuliahScalarFieldEnum | MataKuliahScalarFieldEnum[]
   }
 
@@ -42811,6 +43076,11 @@ export namespace Prisma {
      * Skip the first `n` MataKuliahMahasiswas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MataKuliahMahasiswas.
+     */
     distinct?: MataKuliahMahasiswaScalarFieldEnum | MataKuliahMahasiswaScalarFieldEnum[]
   }
 
@@ -43934,6 +44204,11 @@ export namespace Prisma {
      * Skip the first `n` UserHasPermissions.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserHasPermissions.
+     */
     distinct?: UserHasPermissionsScalarFieldEnum | UserHasPermissionsScalarFieldEnum[]
   }
 
@@ -44961,6 +45236,11 @@ export namespace Prisma {
      * Skip the first `n` UserHasRoles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserHasRoles.
+     */
     distinct?: UserHasRolesScalarFieldEnum | UserHasRolesScalarFieldEnum[]
   }
 
@@ -45988,6 +46268,11 @@ export namespace Prisma {
      * Skip the first `n` AsesorProgramStudis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AsesorProgramStudis.
+     */
     distinct?: AsesorProgramStudiScalarFieldEnum | AsesorProgramStudiScalarFieldEnum[]
   }
 
@@ -47145,6 +47430,11 @@ export namespace Prisma {
      * Skip the first `n` OrangTuas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OrangTuas.
+     */
     distinct?: OrangTuaScalarFieldEnum | OrangTuaScalarFieldEnum[]
   }
 
@@ -48142,6 +48432,11 @@ export namespace Prisma {
      * Skip the first `n` PasswordResetTokens.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PasswordResetTokens.
+     */
     distinct?: PasswordResetTokensScalarFieldEnum | PasswordResetTokensScalarFieldEnum[]
   }
 
@@ -49211,6 +49506,11 @@ export namespace Prisma {
      * Skip the first `n` PekerjaanMahasiswas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PekerjaanMahasiswas.
+     */
     distinct?: PekerjaanMahasiswaScalarFieldEnum | PekerjaanMahasiswaScalarFieldEnum[]
   }
 
@@ -50412,6 +50712,11 @@ export namespace Prisma {
      * Skip the first `n` Pendaftarans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pendaftarans.
+     */
     distinct?: PendaftaranScalarFieldEnum | PendaftaranScalarFieldEnum[]
   }
 
@@ -51926,6 +52231,11 @@ export namespace Prisma {
      * Skip the first `n` Permissions.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Permissions.
+     */
     distinct?: PermissionScalarFieldEnum | PermissionScalarFieldEnum[]
   }
 
@@ -53037,6 +53347,11 @@ export namespace Prisma {
      * Skip the first `n` Pesantrens.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pesantrens.
+     */
     distinct?: PesantrenScalarFieldEnum | PesantrenScalarFieldEnum[]
   }
 
@@ -54148,6 +54463,11 @@ export namespace Prisma {
      * Skip the first `n` ProgramStudis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProgramStudis.
+     */
     distinct?: ProgramStudiScalarFieldEnum | ProgramStudiScalarFieldEnum[]
   }
 
@@ -55258,6 +55578,11 @@ export namespace Prisma {
      * Skip the first `n` Provinsis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Provinsis.
+     */
     distinct?: ProvinsiScalarFieldEnum | ProvinsiScalarFieldEnum[]
   }
 
@@ -56309,6 +56634,11 @@ export namespace Prisma {
      * Skip the first `n` RoleHasPermissions.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RoleHasPermissions.
+     */
     distinct?: RoleHasPermissionsScalarFieldEnum | RoleHasPermissionsScalarFieldEnum[]
   }
 
@@ -57388,6 +57718,11 @@ export namespace Prisma {
      * Skip the first `n` Roles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Roles.
+     */
     distinct?: RoleScalarFieldEnum | RoleScalarFieldEnum[]
   }
 
@@ -58557,6 +58892,11 @@ export namespace Prisma {
      * Skip the first `n` SanggahanAssesmen.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SanggahanAssesmen.
+     */
     distinct?: SanggahanAssesmenScalarFieldEnum | SanggahanAssesmenScalarFieldEnum[]
   }
 
@@ -59684,6 +60024,11 @@ export namespace Prisma {
      * Skip the first `n` SanggahanAssesmenMks.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SanggahanAssesmenMks.
+     */
     distinct?: SanggahanAssesmenMkScalarFieldEnum | SanggahanAssesmenMkScalarFieldEnum[]
   }
 
@@ -60768,6 +61113,11 @@ export namespace Prisma {
      * Skip the first `n` SanggahanAssesmenPihaks.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SanggahanAssesmenPihaks.
+     */
     distinct?: SanggahanAssesmenPihakScalarFieldEnum | SanggahanAssesmenPihakScalarFieldEnum[]
   }
 
@@ -61783,6 +62133,11 @@ export namespace Prisma {
      * Skip the first `n` TipeSkRektors.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipeSkRektors.
+     */
     distinct?: TipeSkRektorScalarFieldEnum | TipeSkRektorScalarFieldEnum[]
   }
 
@@ -62979,6 +63334,11 @@ export namespace Prisma {
      * Skip the first `n` SkRektors.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkRektors.
+     */
     distinct?: SkRektorScalarFieldEnum | SkRektorScalarFieldEnum[]
   }
 
@@ -64054,6 +64414,11 @@ export namespace Prisma {
      * Skip the first `n` SkRektorAssesors.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkRektorAssesors.
+     */
     distinct?: SkRektorAssesorScalarFieldEnum | SkRektorAssesorScalarFieldEnum[]
   }
 
@@ -65081,6 +65446,11 @@ export namespace Prisma {
      * Skip the first `n` SkRektorMahasiswas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkRektorMahasiswas.
+     */
     distinct?: SkRektorMahasiswaScalarFieldEnum | SkRektorMahasiswaScalarFieldEnum[]
   }
 
@@ -66286,6 +66656,11 @@ export namespace Prisma {
      * Skip the first `n` SkorAssesmen.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkorAssesmen.
+     */
     distinct?: SkorAssesmenScalarFieldEnum | SkorAssesmenScalarFieldEnum[]
   }
 
@@ -67420,6 +67795,11 @@ export namespace Prisma {
      * Skip the first `n` SkorAssesmenAis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkorAssesmenAis.
+     */
     distinct?: SkorAssesmenAiScalarFieldEnum | SkorAssesmenAiScalarFieldEnum[]
   }
 
@@ -68508,6 +68888,11 @@ export namespace Prisma {
      * Skip the first `n` StatusMahasiswaAssesments.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StatusMahasiswaAssesments.
+     */
     distinct?: StatusMahasiswaAssesmentScalarFieldEnum | StatusMahasiswaAssesmentScalarFieldEnum[]
   }
 
@@ -69603,6 +69988,11 @@ export namespace Prisma {
      * Skip the first `n` StatusMahasiswaAssesmentHistories.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StatusMahasiswaAssesmentHistories.
+     */
     distinct?: StatusMahasiswaAssesmentHistoryScalarFieldEnum | StatusMahasiswaAssesmentHistoryScalarFieldEnum[]
   }
 
@@ -70683,6 +71073,11 @@ export namespace Prisma {
      * Skip the first `n` TipeAsesors.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TipeAsesors.
+     */
     distinct?: TipeAsesorScalarFieldEnum | TipeAsesorScalarFieldEnum[]
   }
 
@@ -71805,6 +72200,11 @@ export namespace Prisma {
      * Skip the first `n` Universities.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Universities.
+     */
     distinct?: UniversityScalarFieldEnum | UniversityScalarFieldEnum[]
   }
 
@@ -72983,6 +73383,11 @@ export namespace Prisma {
      * Skip the first `n` UniversitySosialMedias.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UniversitySosialMedias.
+     */
     distinct?: UniversitySosialMediaScalarFieldEnum | UniversitySosialMediaScalarFieldEnum[]
   }
 
@@ -74028,6 +74433,11 @@ export namespace Prisma {
      * Skip the first `n` UniversityInformasis.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UniversityInformasis.
+     */
     distinct?: UniversityInformasiScalarFieldEnum | UniversityInformasiScalarFieldEnum[]
   }
 
@@ -75118,6 +75528,11 @@ export namespace Prisma {
      * Skip the first `n` UniversityJabatans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UniversityJabatans.
+     */
     distinct?: UniversityJabatanScalarFieldEnum | UniversityJabatanScalarFieldEnum[]
   }
 
@@ -76226,6 +76641,11 @@ export namespace Prisma {
      * Skip the first `n` UniversityJabatanOrangs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UniversityJabatanOrangs.
+     */
     distinct?: UniversityJabatanOrangScalarFieldEnum | UniversityJabatanOrangScalarFieldEnum[]
   }
 
@@ -76719,6 +77139,7 @@ export namespace Prisma {
     Userlogin?: boolean | User$UserloginArgs<ExtArgs>
     Asesor?: boolean | User$AsesorArgs<ExtArgs>
     tickets?: boolean | User$ticketsArgs<ExtArgs>
+    AiTokenUsage?: boolean | User$AiTokenUsageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -76796,6 +77217,7 @@ export namespace Prisma {
     Userlogin?: boolean | User$UserloginArgs<ExtArgs>
     Asesor?: boolean | User$AsesorArgs<ExtArgs>
     tickets?: boolean | User$ticketsArgs<ExtArgs>
+    AiTokenUsage?: boolean | User$AiTokenUsageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -76815,6 +77237,7 @@ export namespace Prisma {
       Userlogin: Prisma.$UserloginPayload<ExtArgs>[]
       Asesor: Prisma.$AsesorPayload<ExtArgs>[]
       tickets: Prisma.$TicketsPayload<ExtArgs>[]
+      AiTokenUsage: Prisma.$AiTokenUsagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       UserId: string
@@ -77236,6 +77659,7 @@ export namespace Prisma {
     Userlogin<T extends User$UserloginArgs<ExtArgs> = {}>(args?: Subset<T, User$UserloginArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserloginPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Asesor<T extends User$AsesorArgs<ExtArgs> = {}>(args?: Subset<T, User$AsesorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tickets<T extends User$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, User$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    AiTokenUsage<T extends User$AiTokenUsageArgs<ExtArgs> = {}>(args?: Subset<T, User$AiTokenUsageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -77479,6 +77903,11 @@ export namespace Prisma {
      * Skip the first `n` Users.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
@@ -77823,6 +78252,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.AiTokenUsage
+   */
+  export type User$AiTokenUsageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    where?: AiTokenUsageWhereInput
+    orderBy?: AiTokenUsageOrderByWithRelationInput | AiTokenUsageOrderByWithRelationInput[]
+    cursor?: AiTokenUsageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AiTokenUsageScalarFieldEnum | AiTokenUsageScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -77838,6 +78291,1681 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AiTokenUsage
+   */
+
+  export type AggregateAiTokenUsage = {
+    _count: AiTokenUsageCountAggregateOutputType | null
+    _avg: AiTokenUsageAvgAggregateOutputType | null
+    _sum: AiTokenUsageSumAggregateOutputType | null
+    _min: AiTokenUsageMinAggregateOutputType | null
+    _max: AiTokenUsageMaxAggregateOutputType | null
+  }
+
+  export type AiTokenUsageAvgAggregateOutputType = {
+    Temperature: number | null
+    TopP: number | null
+    MaxOutputTokens: number | null
+    InputTokens: number | null
+    OutputTokens: number | null
+    TotalTokens: number | null
+    ReasoningTokens: number | null
+    CachedInputTokens: number | null
+    PromptCharCount: number | null
+    CompletionCharCount: number | null
+    PromptMessageCount: number | null
+    CompletionMessageCount: number | null
+    DurationMs: number | null
+    FirstTokenMs: number | null
+    InputCostUsd: Decimal | null
+    OutputCostUsd: Decimal | null
+    TotalCostUsd: Decimal | null
+  }
+
+  export type AiTokenUsageSumAggregateOutputType = {
+    Temperature: number | null
+    TopP: number | null
+    MaxOutputTokens: number | null
+    InputTokens: number | null
+    OutputTokens: number | null
+    TotalTokens: number | null
+    ReasoningTokens: number | null
+    CachedInputTokens: number | null
+    PromptCharCount: number | null
+    CompletionCharCount: number | null
+    PromptMessageCount: number | null
+    CompletionMessageCount: number | null
+    DurationMs: number | null
+    FirstTokenMs: number | null
+    InputCostUsd: Decimal | null
+    OutputCostUsd: Decimal | null
+    TotalCostUsd: Decimal | null
+  }
+
+  export type AiTokenUsageMinAggregateOutputType = {
+    AiTokenUsageId: string | null
+    UserId: string | null
+    Feature: string | null
+    FeatureGroup: string | null
+    Page: string | null
+    Route: string | null
+    Method: string | null
+    RequestId: string | null
+    SessionId: string | null
+    ReferenceType: string | null
+    ReferenceId: string | null
+    SdkProvider: string | null
+    LlmProvider: string | null
+    LlmModel: string | null
+    LlmModelVersion: string | null
+    LlmModelSlug: string | null
+    Temperature: number | null
+    TopP: number | null
+    MaxOutputTokens: number | null
+    InputTokens: number | null
+    OutputTokens: number | null
+    TotalTokens: number | null
+    ReasoningTokens: number | null
+    CachedInputTokens: number | null
+    PromptCharCount: number | null
+    CompletionCharCount: number | null
+    PromptMessageCount: number | null
+    CompletionMessageCount: number | null
+    DurationMs: number | null
+    FirstTokenMs: number | null
+    Streaming: boolean | null
+    Status: string | null
+    ErrorCode: string | null
+    ErrorMessage: string | null
+    InputCostUsd: Decimal | null
+    OutputCostUsd: Decimal | null
+    TotalCostUsd: Decimal | null
+    Currency: string | null
+    PriceSource: string | null
+    CreatedAt: Date | null
+    UpdatedAt: Date | null
+  }
+
+  export type AiTokenUsageMaxAggregateOutputType = {
+    AiTokenUsageId: string | null
+    UserId: string | null
+    Feature: string | null
+    FeatureGroup: string | null
+    Page: string | null
+    Route: string | null
+    Method: string | null
+    RequestId: string | null
+    SessionId: string | null
+    ReferenceType: string | null
+    ReferenceId: string | null
+    SdkProvider: string | null
+    LlmProvider: string | null
+    LlmModel: string | null
+    LlmModelVersion: string | null
+    LlmModelSlug: string | null
+    Temperature: number | null
+    TopP: number | null
+    MaxOutputTokens: number | null
+    InputTokens: number | null
+    OutputTokens: number | null
+    TotalTokens: number | null
+    ReasoningTokens: number | null
+    CachedInputTokens: number | null
+    PromptCharCount: number | null
+    CompletionCharCount: number | null
+    PromptMessageCount: number | null
+    CompletionMessageCount: number | null
+    DurationMs: number | null
+    FirstTokenMs: number | null
+    Streaming: boolean | null
+    Status: string | null
+    ErrorCode: string | null
+    ErrorMessage: string | null
+    InputCostUsd: Decimal | null
+    OutputCostUsd: Decimal | null
+    TotalCostUsd: Decimal | null
+    Currency: string | null
+    PriceSource: string | null
+    CreatedAt: Date | null
+    UpdatedAt: Date | null
+  }
+
+  export type AiTokenUsageCountAggregateOutputType = {
+    AiTokenUsageId: number
+    UserId: number
+    Feature: number
+    FeatureGroup: number
+    Page: number
+    Route: number
+    Method: number
+    RequestId: number
+    SessionId: number
+    ReferenceType: number
+    ReferenceId: number
+    SdkProvider: number
+    LlmProvider: number
+    LlmModel: number
+    LlmModelVersion: number
+    LlmModelSlug: number
+    Temperature: number
+    TopP: number
+    MaxOutputTokens: number
+    InputTokens: number
+    OutputTokens: number
+    TotalTokens: number
+    ReasoningTokens: number
+    CachedInputTokens: number
+    PromptCharCount: number
+    CompletionCharCount: number
+    PromptMessageCount: number
+    CompletionMessageCount: number
+    DurationMs: number
+    FirstTokenMs: number
+    Streaming: number
+    Status: number
+    ErrorCode: number
+    ErrorMessage: number
+    InputCostUsd: number
+    OutputCostUsd: number
+    TotalCostUsd: number
+    Currency: number
+    PriceSource: number
+    UsageRaw: number
+    ProviderMetadata: number
+    Metadata: number
+    CreatedAt: number
+    UpdatedAt: number
+    _all: number
+  }
+
+
+  export type AiTokenUsageAvgAggregateInputType = {
+    Temperature?: true
+    TopP?: true
+    MaxOutputTokens?: true
+    InputTokens?: true
+    OutputTokens?: true
+    TotalTokens?: true
+    ReasoningTokens?: true
+    CachedInputTokens?: true
+    PromptCharCount?: true
+    CompletionCharCount?: true
+    PromptMessageCount?: true
+    CompletionMessageCount?: true
+    DurationMs?: true
+    FirstTokenMs?: true
+    InputCostUsd?: true
+    OutputCostUsd?: true
+    TotalCostUsd?: true
+  }
+
+  export type AiTokenUsageSumAggregateInputType = {
+    Temperature?: true
+    TopP?: true
+    MaxOutputTokens?: true
+    InputTokens?: true
+    OutputTokens?: true
+    TotalTokens?: true
+    ReasoningTokens?: true
+    CachedInputTokens?: true
+    PromptCharCount?: true
+    CompletionCharCount?: true
+    PromptMessageCount?: true
+    CompletionMessageCount?: true
+    DurationMs?: true
+    FirstTokenMs?: true
+    InputCostUsd?: true
+    OutputCostUsd?: true
+    TotalCostUsd?: true
+  }
+
+  export type AiTokenUsageMinAggregateInputType = {
+    AiTokenUsageId?: true
+    UserId?: true
+    Feature?: true
+    FeatureGroup?: true
+    Page?: true
+    Route?: true
+    Method?: true
+    RequestId?: true
+    SessionId?: true
+    ReferenceType?: true
+    ReferenceId?: true
+    SdkProvider?: true
+    LlmProvider?: true
+    LlmModel?: true
+    LlmModelVersion?: true
+    LlmModelSlug?: true
+    Temperature?: true
+    TopP?: true
+    MaxOutputTokens?: true
+    InputTokens?: true
+    OutputTokens?: true
+    TotalTokens?: true
+    ReasoningTokens?: true
+    CachedInputTokens?: true
+    PromptCharCount?: true
+    CompletionCharCount?: true
+    PromptMessageCount?: true
+    CompletionMessageCount?: true
+    DurationMs?: true
+    FirstTokenMs?: true
+    Streaming?: true
+    Status?: true
+    ErrorCode?: true
+    ErrorMessage?: true
+    InputCostUsd?: true
+    OutputCostUsd?: true
+    TotalCostUsd?: true
+    Currency?: true
+    PriceSource?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+  }
+
+  export type AiTokenUsageMaxAggregateInputType = {
+    AiTokenUsageId?: true
+    UserId?: true
+    Feature?: true
+    FeatureGroup?: true
+    Page?: true
+    Route?: true
+    Method?: true
+    RequestId?: true
+    SessionId?: true
+    ReferenceType?: true
+    ReferenceId?: true
+    SdkProvider?: true
+    LlmProvider?: true
+    LlmModel?: true
+    LlmModelVersion?: true
+    LlmModelSlug?: true
+    Temperature?: true
+    TopP?: true
+    MaxOutputTokens?: true
+    InputTokens?: true
+    OutputTokens?: true
+    TotalTokens?: true
+    ReasoningTokens?: true
+    CachedInputTokens?: true
+    PromptCharCount?: true
+    CompletionCharCount?: true
+    PromptMessageCount?: true
+    CompletionMessageCount?: true
+    DurationMs?: true
+    FirstTokenMs?: true
+    Streaming?: true
+    Status?: true
+    ErrorCode?: true
+    ErrorMessage?: true
+    InputCostUsd?: true
+    OutputCostUsd?: true
+    TotalCostUsd?: true
+    Currency?: true
+    PriceSource?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+  }
+
+  export type AiTokenUsageCountAggregateInputType = {
+    AiTokenUsageId?: true
+    UserId?: true
+    Feature?: true
+    FeatureGroup?: true
+    Page?: true
+    Route?: true
+    Method?: true
+    RequestId?: true
+    SessionId?: true
+    ReferenceType?: true
+    ReferenceId?: true
+    SdkProvider?: true
+    LlmProvider?: true
+    LlmModel?: true
+    LlmModelVersion?: true
+    LlmModelSlug?: true
+    Temperature?: true
+    TopP?: true
+    MaxOutputTokens?: true
+    InputTokens?: true
+    OutputTokens?: true
+    TotalTokens?: true
+    ReasoningTokens?: true
+    CachedInputTokens?: true
+    PromptCharCount?: true
+    CompletionCharCount?: true
+    PromptMessageCount?: true
+    CompletionMessageCount?: true
+    DurationMs?: true
+    FirstTokenMs?: true
+    Streaming?: true
+    Status?: true
+    ErrorCode?: true
+    ErrorMessage?: true
+    InputCostUsd?: true
+    OutputCostUsd?: true
+    TotalCostUsd?: true
+    Currency?: true
+    PriceSource?: true
+    UsageRaw?: true
+    ProviderMetadata?: true
+    Metadata?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+    _all?: true
+  }
+
+  export type AiTokenUsageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiTokenUsage to aggregate.
+     */
+    where?: AiTokenUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTokenUsages to fetch.
+     */
+    orderBy?: AiTokenUsageOrderByWithRelationInput | AiTokenUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AiTokenUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTokenUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTokenUsages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AiTokenUsages
+    **/
+    _count?: true | AiTokenUsageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AiTokenUsageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AiTokenUsageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AiTokenUsageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AiTokenUsageMaxAggregateInputType
+  }
+
+  export type GetAiTokenUsageAggregateType<T extends AiTokenUsageAggregateArgs> = {
+        [P in keyof T & keyof AggregateAiTokenUsage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAiTokenUsage[P]>
+      : GetScalarType<T[P], AggregateAiTokenUsage[P]>
+  }
+
+
+
+
+  export type AiTokenUsageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AiTokenUsageWhereInput
+    orderBy?: AiTokenUsageOrderByWithAggregationInput | AiTokenUsageOrderByWithAggregationInput[]
+    by: AiTokenUsageScalarFieldEnum[] | AiTokenUsageScalarFieldEnum
+    having?: AiTokenUsageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AiTokenUsageCountAggregateInputType | true
+    _avg?: AiTokenUsageAvgAggregateInputType
+    _sum?: AiTokenUsageSumAggregateInputType
+    _min?: AiTokenUsageMinAggregateInputType
+    _max?: AiTokenUsageMaxAggregateInputType
+  }
+
+  export type AiTokenUsageGroupByOutputType = {
+    AiTokenUsageId: string
+    UserId: string | null
+    Feature: string
+    FeatureGroup: string | null
+    Page: string | null
+    Route: string | null
+    Method: string | null
+    RequestId: string | null
+    SessionId: string | null
+    ReferenceType: string | null
+    ReferenceId: string | null
+    SdkProvider: string | null
+    LlmProvider: string | null
+    LlmModel: string
+    LlmModelVersion: string | null
+    LlmModelSlug: string
+    Temperature: number | null
+    TopP: number | null
+    MaxOutputTokens: number | null
+    InputTokens: number
+    OutputTokens: number
+    TotalTokens: number
+    ReasoningTokens: number | null
+    CachedInputTokens: number | null
+    PromptCharCount: number | null
+    CompletionCharCount: number | null
+    PromptMessageCount: number | null
+    CompletionMessageCount: number | null
+    DurationMs: number | null
+    FirstTokenMs: number | null
+    Streaming: boolean
+    Status: string
+    ErrorCode: string | null
+    ErrorMessage: string | null
+    InputCostUsd: Decimal | null
+    OutputCostUsd: Decimal | null
+    TotalCostUsd: Decimal | null
+    Currency: string | null
+    PriceSource: string | null
+    UsageRaw: JsonValue | null
+    ProviderMetadata: JsonValue | null
+    Metadata: JsonValue | null
+    CreatedAt: Date
+    UpdatedAt: Date | null
+    _count: AiTokenUsageCountAggregateOutputType | null
+    _avg: AiTokenUsageAvgAggregateOutputType | null
+    _sum: AiTokenUsageSumAggregateOutputType | null
+    _min: AiTokenUsageMinAggregateOutputType | null
+    _max: AiTokenUsageMaxAggregateOutputType | null
+  }
+
+  type GetAiTokenUsageGroupByPayload<T extends AiTokenUsageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AiTokenUsageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AiTokenUsageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AiTokenUsageGroupByOutputType[P]>
+            : GetScalarType<T[P], AiTokenUsageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AiTokenUsageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    AiTokenUsageId?: boolean
+    UserId?: boolean
+    Feature?: boolean
+    FeatureGroup?: boolean
+    Page?: boolean
+    Route?: boolean
+    Method?: boolean
+    RequestId?: boolean
+    SessionId?: boolean
+    ReferenceType?: boolean
+    ReferenceId?: boolean
+    SdkProvider?: boolean
+    LlmProvider?: boolean
+    LlmModel?: boolean
+    LlmModelVersion?: boolean
+    LlmModelSlug?: boolean
+    Temperature?: boolean
+    TopP?: boolean
+    MaxOutputTokens?: boolean
+    InputTokens?: boolean
+    OutputTokens?: boolean
+    TotalTokens?: boolean
+    ReasoningTokens?: boolean
+    CachedInputTokens?: boolean
+    PromptCharCount?: boolean
+    CompletionCharCount?: boolean
+    PromptMessageCount?: boolean
+    CompletionMessageCount?: boolean
+    DurationMs?: boolean
+    FirstTokenMs?: boolean
+    Streaming?: boolean
+    Status?: boolean
+    ErrorCode?: boolean
+    ErrorMessage?: boolean
+    InputCostUsd?: boolean
+    OutputCostUsd?: boolean
+    TotalCostUsd?: boolean
+    Currency?: boolean
+    PriceSource?: boolean
+    UsageRaw?: boolean
+    ProviderMetadata?: boolean
+    Metadata?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+    User?: boolean | AiTokenUsage$UserArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTokenUsage"]>
+
+  export type AiTokenUsageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    AiTokenUsageId?: boolean
+    UserId?: boolean
+    Feature?: boolean
+    FeatureGroup?: boolean
+    Page?: boolean
+    Route?: boolean
+    Method?: boolean
+    RequestId?: boolean
+    SessionId?: boolean
+    ReferenceType?: boolean
+    ReferenceId?: boolean
+    SdkProvider?: boolean
+    LlmProvider?: boolean
+    LlmModel?: boolean
+    LlmModelVersion?: boolean
+    LlmModelSlug?: boolean
+    Temperature?: boolean
+    TopP?: boolean
+    MaxOutputTokens?: boolean
+    InputTokens?: boolean
+    OutputTokens?: boolean
+    TotalTokens?: boolean
+    ReasoningTokens?: boolean
+    CachedInputTokens?: boolean
+    PromptCharCount?: boolean
+    CompletionCharCount?: boolean
+    PromptMessageCount?: boolean
+    CompletionMessageCount?: boolean
+    DurationMs?: boolean
+    FirstTokenMs?: boolean
+    Streaming?: boolean
+    Status?: boolean
+    ErrorCode?: boolean
+    ErrorMessage?: boolean
+    InputCostUsd?: boolean
+    OutputCostUsd?: boolean
+    TotalCostUsd?: boolean
+    Currency?: boolean
+    PriceSource?: boolean
+    UsageRaw?: boolean
+    ProviderMetadata?: boolean
+    Metadata?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+    User?: boolean | AiTokenUsage$UserArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTokenUsage"]>
+
+  export type AiTokenUsageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    AiTokenUsageId?: boolean
+    UserId?: boolean
+    Feature?: boolean
+    FeatureGroup?: boolean
+    Page?: boolean
+    Route?: boolean
+    Method?: boolean
+    RequestId?: boolean
+    SessionId?: boolean
+    ReferenceType?: boolean
+    ReferenceId?: boolean
+    SdkProvider?: boolean
+    LlmProvider?: boolean
+    LlmModel?: boolean
+    LlmModelVersion?: boolean
+    LlmModelSlug?: boolean
+    Temperature?: boolean
+    TopP?: boolean
+    MaxOutputTokens?: boolean
+    InputTokens?: boolean
+    OutputTokens?: boolean
+    TotalTokens?: boolean
+    ReasoningTokens?: boolean
+    CachedInputTokens?: boolean
+    PromptCharCount?: boolean
+    CompletionCharCount?: boolean
+    PromptMessageCount?: boolean
+    CompletionMessageCount?: boolean
+    DurationMs?: boolean
+    FirstTokenMs?: boolean
+    Streaming?: boolean
+    Status?: boolean
+    ErrorCode?: boolean
+    ErrorMessage?: boolean
+    InputCostUsd?: boolean
+    OutputCostUsd?: boolean
+    TotalCostUsd?: boolean
+    Currency?: boolean
+    PriceSource?: boolean
+    UsageRaw?: boolean
+    ProviderMetadata?: boolean
+    Metadata?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+    User?: boolean | AiTokenUsage$UserArgs<ExtArgs>
+  }, ExtArgs["result"]["aiTokenUsage"]>
+
+  export type AiTokenUsageSelectScalar = {
+    AiTokenUsageId?: boolean
+    UserId?: boolean
+    Feature?: boolean
+    FeatureGroup?: boolean
+    Page?: boolean
+    Route?: boolean
+    Method?: boolean
+    RequestId?: boolean
+    SessionId?: boolean
+    ReferenceType?: boolean
+    ReferenceId?: boolean
+    SdkProvider?: boolean
+    LlmProvider?: boolean
+    LlmModel?: boolean
+    LlmModelVersion?: boolean
+    LlmModelSlug?: boolean
+    Temperature?: boolean
+    TopP?: boolean
+    MaxOutputTokens?: boolean
+    InputTokens?: boolean
+    OutputTokens?: boolean
+    TotalTokens?: boolean
+    ReasoningTokens?: boolean
+    CachedInputTokens?: boolean
+    PromptCharCount?: boolean
+    CompletionCharCount?: boolean
+    PromptMessageCount?: boolean
+    CompletionMessageCount?: boolean
+    DurationMs?: boolean
+    FirstTokenMs?: boolean
+    Streaming?: boolean
+    Status?: boolean
+    ErrorCode?: boolean
+    ErrorMessage?: boolean
+    InputCostUsd?: boolean
+    OutputCostUsd?: boolean
+    TotalCostUsd?: boolean
+    Currency?: boolean
+    PriceSource?: boolean
+    UsageRaw?: boolean
+    ProviderMetadata?: boolean
+    Metadata?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+  }
+
+  export type AiTokenUsageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"AiTokenUsageId" | "UserId" | "Feature" | "FeatureGroup" | "Page" | "Route" | "Method" | "RequestId" | "SessionId" | "ReferenceType" | "ReferenceId" | "SdkProvider" | "LlmProvider" | "LlmModel" | "LlmModelVersion" | "LlmModelSlug" | "Temperature" | "TopP" | "MaxOutputTokens" | "InputTokens" | "OutputTokens" | "TotalTokens" | "ReasoningTokens" | "CachedInputTokens" | "PromptCharCount" | "CompletionCharCount" | "PromptMessageCount" | "CompletionMessageCount" | "DurationMs" | "FirstTokenMs" | "Streaming" | "Status" | "ErrorCode" | "ErrorMessage" | "InputCostUsd" | "OutputCostUsd" | "TotalCostUsd" | "Currency" | "PriceSource" | "UsageRaw" | "ProviderMetadata" | "Metadata" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["aiTokenUsage"]>
+  export type AiTokenUsageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | AiTokenUsage$UserArgs<ExtArgs>
+  }
+  export type AiTokenUsageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | AiTokenUsage$UserArgs<ExtArgs>
+  }
+  export type AiTokenUsageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | AiTokenUsage$UserArgs<ExtArgs>
+  }
+
+  export type $AiTokenUsagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AiTokenUsage"
+    objects: {
+      User: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      AiTokenUsageId: string
+      UserId: string | null
+      Feature: string
+      FeatureGroup: string | null
+      Page: string | null
+      Route: string | null
+      Method: string | null
+      RequestId: string | null
+      SessionId: string | null
+      ReferenceType: string | null
+      ReferenceId: string | null
+      SdkProvider: string | null
+      LlmProvider: string | null
+      LlmModel: string
+      LlmModelVersion: string | null
+      LlmModelSlug: string
+      Temperature: number | null
+      TopP: number | null
+      MaxOutputTokens: number | null
+      InputTokens: number
+      OutputTokens: number
+      TotalTokens: number
+      ReasoningTokens: number | null
+      CachedInputTokens: number | null
+      PromptCharCount: number | null
+      CompletionCharCount: number | null
+      PromptMessageCount: number | null
+      CompletionMessageCount: number | null
+      DurationMs: number | null
+      FirstTokenMs: number | null
+      Streaming: boolean
+      Status: string
+      ErrorCode: string | null
+      ErrorMessage: string | null
+      InputCostUsd: Prisma.Decimal | null
+      OutputCostUsd: Prisma.Decimal | null
+      TotalCostUsd: Prisma.Decimal | null
+      Currency: string | null
+      PriceSource: string | null
+      UsageRaw: Prisma.JsonValue | null
+      ProviderMetadata: Prisma.JsonValue | null
+      Metadata: Prisma.JsonValue | null
+      CreatedAt: Date
+      UpdatedAt: Date | null
+    }, ExtArgs["result"]["aiTokenUsage"]>
+    composites: {}
+  }
+
+  type AiTokenUsageGetPayload<S extends boolean | null | undefined | AiTokenUsageDefaultArgs> = $Result.GetResult<Prisma.$AiTokenUsagePayload, S>
+
+  type AiTokenUsageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AiTokenUsageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AiTokenUsageCountAggregateInputType | true
+    }
+
+  export interface AiTokenUsageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AiTokenUsage'], meta: { name: 'AiTokenUsage' } }
+    /**
+     * Find zero or one AiTokenUsage that matches the filter.
+     * @param {AiTokenUsageFindUniqueArgs} args - Arguments to find a AiTokenUsage
+     * @example
+     * // Get one AiTokenUsage
+     * const aiTokenUsage = await prisma.aiTokenUsage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AiTokenUsageFindUniqueArgs>(args: SelectSubset<T, AiTokenUsageFindUniqueArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AiTokenUsage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AiTokenUsageFindUniqueOrThrowArgs} args - Arguments to find a AiTokenUsage
+     * @example
+     * // Get one AiTokenUsage
+     * const aiTokenUsage = await prisma.aiTokenUsage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AiTokenUsageFindUniqueOrThrowArgs>(args: SelectSubset<T, AiTokenUsageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiTokenUsage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTokenUsageFindFirstArgs} args - Arguments to find a AiTokenUsage
+     * @example
+     * // Get one AiTokenUsage
+     * const aiTokenUsage = await prisma.aiTokenUsage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AiTokenUsageFindFirstArgs>(args?: SelectSubset<T, AiTokenUsageFindFirstArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AiTokenUsage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTokenUsageFindFirstOrThrowArgs} args - Arguments to find a AiTokenUsage
+     * @example
+     * // Get one AiTokenUsage
+     * const aiTokenUsage = await prisma.aiTokenUsage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AiTokenUsageFindFirstOrThrowArgs>(args?: SelectSubset<T, AiTokenUsageFindFirstOrThrowArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AiTokenUsages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTokenUsageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AiTokenUsages
+     * const aiTokenUsages = await prisma.aiTokenUsage.findMany()
+     * 
+     * // Get first 10 AiTokenUsages
+     * const aiTokenUsages = await prisma.aiTokenUsage.findMany({ take: 10 })
+     * 
+     * // Only select the `AiTokenUsageId`
+     * const aiTokenUsageWithAiTokenUsageIdOnly = await prisma.aiTokenUsage.findMany({ select: { AiTokenUsageId: true } })
+     * 
+     */
+    findMany<T extends AiTokenUsageFindManyArgs>(args?: SelectSubset<T, AiTokenUsageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AiTokenUsage.
+     * @param {AiTokenUsageCreateArgs} args - Arguments to create a AiTokenUsage.
+     * @example
+     * // Create one AiTokenUsage
+     * const AiTokenUsage = await prisma.aiTokenUsage.create({
+     *   data: {
+     *     // ... data to create a AiTokenUsage
+     *   }
+     * })
+     * 
+     */
+    create<T extends AiTokenUsageCreateArgs>(args: SelectSubset<T, AiTokenUsageCreateArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AiTokenUsages.
+     * @param {AiTokenUsageCreateManyArgs} args - Arguments to create many AiTokenUsages.
+     * @example
+     * // Create many AiTokenUsages
+     * const aiTokenUsage = await prisma.aiTokenUsage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AiTokenUsageCreateManyArgs>(args?: SelectSubset<T, AiTokenUsageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AiTokenUsages and returns the data saved in the database.
+     * @param {AiTokenUsageCreateManyAndReturnArgs} args - Arguments to create many AiTokenUsages.
+     * @example
+     * // Create many AiTokenUsages
+     * const aiTokenUsage = await prisma.aiTokenUsage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AiTokenUsages and only return the `AiTokenUsageId`
+     * const aiTokenUsageWithAiTokenUsageIdOnly = await prisma.aiTokenUsage.createManyAndReturn({
+     *   select: { AiTokenUsageId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AiTokenUsageCreateManyAndReturnArgs>(args?: SelectSubset<T, AiTokenUsageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AiTokenUsage.
+     * @param {AiTokenUsageDeleteArgs} args - Arguments to delete one AiTokenUsage.
+     * @example
+     * // Delete one AiTokenUsage
+     * const AiTokenUsage = await prisma.aiTokenUsage.delete({
+     *   where: {
+     *     // ... filter to delete one AiTokenUsage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AiTokenUsageDeleteArgs>(args: SelectSubset<T, AiTokenUsageDeleteArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AiTokenUsage.
+     * @param {AiTokenUsageUpdateArgs} args - Arguments to update one AiTokenUsage.
+     * @example
+     * // Update one AiTokenUsage
+     * const aiTokenUsage = await prisma.aiTokenUsage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AiTokenUsageUpdateArgs>(args: SelectSubset<T, AiTokenUsageUpdateArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AiTokenUsages.
+     * @param {AiTokenUsageDeleteManyArgs} args - Arguments to filter AiTokenUsages to delete.
+     * @example
+     * // Delete a few AiTokenUsages
+     * const { count } = await prisma.aiTokenUsage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AiTokenUsageDeleteManyArgs>(args?: SelectSubset<T, AiTokenUsageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiTokenUsages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTokenUsageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AiTokenUsages
+     * const aiTokenUsage = await prisma.aiTokenUsage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AiTokenUsageUpdateManyArgs>(args: SelectSubset<T, AiTokenUsageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AiTokenUsages and returns the data updated in the database.
+     * @param {AiTokenUsageUpdateManyAndReturnArgs} args - Arguments to update many AiTokenUsages.
+     * @example
+     * // Update many AiTokenUsages
+     * const aiTokenUsage = await prisma.aiTokenUsage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AiTokenUsages and only return the `AiTokenUsageId`
+     * const aiTokenUsageWithAiTokenUsageIdOnly = await prisma.aiTokenUsage.updateManyAndReturn({
+     *   select: { AiTokenUsageId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AiTokenUsageUpdateManyAndReturnArgs>(args: SelectSubset<T, AiTokenUsageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AiTokenUsage.
+     * @param {AiTokenUsageUpsertArgs} args - Arguments to update or create a AiTokenUsage.
+     * @example
+     * // Update or create a AiTokenUsage
+     * const aiTokenUsage = await prisma.aiTokenUsage.upsert({
+     *   create: {
+     *     // ... data to create a AiTokenUsage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AiTokenUsage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AiTokenUsageUpsertArgs>(args: SelectSubset<T, AiTokenUsageUpsertArgs<ExtArgs>>): Prisma__AiTokenUsageClient<$Result.GetResult<Prisma.$AiTokenUsagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AiTokenUsages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTokenUsageCountArgs} args - Arguments to filter AiTokenUsages to count.
+     * @example
+     * // Count the number of AiTokenUsages
+     * const count = await prisma.aiTokenUsage.count({
+     *   where: {
+     *     // ... the filter for the AiTokenUsages we want to count
+     *   }
+     * })
+    **/
+    count<T extends AiTokenUsageCountArgs>(
+      args?: Subset<T, AiTokenUsageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AiTokenUsageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AiTokenUsage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTokenUsageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AiTokenUsageAggregateArgs>(args: Subset<T, AiTokenUsageAggregateArgs>): Prisma.PrismaPromise<GetAiTokenUsageAggregateType<T>>
+
+    /**
+     * Group by AiTokenUsage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AiTokenUsageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AiTokenUsageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AiTokenUsageGroupByArgs['orderBy'] }
+        : { orderBy?: AiTokenUsageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AiTokenUsageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAiTokenUsageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AiTokenUsage model
+   */
+  readonly fields: AiTokenUsageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AiTokenUsage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AiTokenUsageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    User<T extends AiTokenUsage$UserArgs<ExtArgs> = {}>(args?: Subset<T, AiTokenUsage$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AiTokenUsage model
+   */
+  interface AiTokenUsageFieldRefs {
+    readonly AiTokenUsageId: FieldRef<"AiTokenUsage", 'String'>
+    readonly UserId: FieldRef<"AiTokenUsage", 'String'>
+    readonly Feature: FieldRef<"AiTokenUsage", 'String'>
+    readonly FeatureGroup: FieldRef<"AiTokenUsage", 'String'>
+    readonly Page: FieldRef<"AiTokenUsage", 'String'>
+    readonly Route: FieldRef<"AiTokenUsage", 'String'>
+    readonly Method: FieldRef<"AiTokenUsage", 'String'>
+    readonly RequestId: FieldRef<"AiTokenUsage", 'String'>
+    readonly SessionId: FieldRef<"AiTokenUsage", 'String'>
+    readonly ReferenceType: FieldRef<"AiTokenUsage", 'String'>
+    readonly ReferenceId: FieldRef<"AiTokenUsage", 'String'>
+    readonly SdkProvider: FieldRef<"AiTokenUsage", 'String'>
+    readonly LlmProvider: FieldRef<"AiTokenUsage", 'String'>
+    readonly LlmModel: FieldRef<"AiTokenUsage", 'String'>
+    readonly LlmModelVersion: FieldRef<"AiTokenUsage", 'String'>
+    readonly LlmModelSlug: FieldRef<"AiTokenUsage", 'String'>
+    readonly Temperature: FieldRef<"AiTokenUsage", 'Float'>
+    readonly TopP: FieldRef<"AiTokenUsage", 'Float'>
+    readonly MaxOutputTokens: FieldRef<"AiTokenUsage", 'Int'>
+    readonly InputTokens: FieldRef<"AiTokenUsage", 'Int'>
+    readonly OutputTokens: FieldRef<"AiTokenUsage", 'Int'>
+    readonly TotalTokens: FieldRef<"AiTokenUsage", 'Int'>
+    readonly ReasoningTokens: FieldRef<"AiTokenUsage", 'Int'>
+    readonly CachedInputTokens: FieldRef<"AiTokenUsage", 'Int'>
+    readonly PromptCharCount: FieldRef<"AiTokenUsage", 'Int'>
+    readonly CompletionCharCount: FieldRef<"AiTokenUsage", 'Int'>
+    readonly PromptMessageCount: FieldRef<"AiTokenUsage", 'Int'>
+    readonly CompletionMessageCount: FieldRef<"AiTokenUsage", 'Int'>
+    readonly DurationMs: FieldRef<"AiTokenUsage", 'Int'>
+    readonly FirstTokenMs: FieldRef<"AiTokenUsage", 'Int'>
+    readonly Streaming: FieldRef<"AiTokenUsage", 'Boolean'>
+    readonly Status: FieldRef<"AiTokenUsage", 'String'>
+    readonly ErrorCode: FieldRef<"AiTokenUsage", 'String'>
+    readonly ErrorMessage: FieldRef<"AiTokenUsage", 'String'>
+    readonly InputCostUsd: FieldRef<"AiTokenUsage", 'Decimal'>
+    readonly OutputCostUsd: FieldRef<"AiTokenUsage", 'Decimal'>
+    readonly TotalCostUsd: FieldRef<"AiTokenUsage", 'Decimal'>
+    readonly Currency: FieldRef<"AiTokenUsage", 'String'>
+    readonly PriceSource: FieldRef<"AiTokenUsage", 'String'>
+    readonly UsageRaw: FieldRef<"AiTokenUsage", 'Json'>
+    readonly ProviderMetadata: FieldRef<"AiTokenUsage", 'Json'>
+    readonly Metadata: FieldRef<"AiTokenUsage", 'Json'>
+    readonly CreatedAt: FieldRef<"AiTokenUsage", 'DateTime'>
+    readonly UpdatedAt: FieldRef<"AiTokenUsage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AiTokenUsage findUnique
+   */
+  export type AiTokenUsageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTokenUsage to fetch.
+     */
+    where: AiTokenUsageWhereUniqueInput
+  }
+
+  /**
+   * AiTokenUsage findUniqueOrThrow
+   */
+  export type AiTokenUsageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTokenUsage to fetch.
+     */
+    where: AiTokenUsageWhereUniqueInput
+  }
+
+  /**
+   * AiTokenUsage findFirst
+   */
+  export type AiTokenUsageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTokenUsage to fetch.
+     */
+    where?: AiTokenUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTokenUsages to fetch.
+     */
+    orderBy?: AiTokenUsageOrderByWithRelationInput | AiTokenUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiTokenUsages.
+     */
+    cursor?: AiTokenUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTokenUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTokenUsages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiTokenUsages.
+     */
+    distinct?: AiTokenUsageScalarFieldEnum | AiTokenUsageScalarFieldEnum[]
+  }
+
+  /**
+   * AiTokenUsage findFirstOrThrow
+   */
+  export type AiTokenUsageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTokenUsage to fetch.
+     */
+    where?: AiTokenUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTokenUsages to fetch.
+     */
+    orderBy?: AiTokenUsageOrderByWithRelationInput | AiTokenUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AiTokenUsages.
+     */
+    cursor?: AiTokenUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTokenUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTokenUsages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiTokenUsages.
+     */
+    distinct?: AiTokenUsageScalarFieldEnum | AiTokenUsageScalarFieldEnum[]
+  }
+
+  /**
+   * AiTokenUsage findMany
+   */
+  export type AiTokenUsageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * Filter, which AiTokenUsages to fetch.
+     */
+    where?: AiTokenUsageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AiTokenUsages to fetch.
+     */
+    orderBy?: AiTokenUsageOrderByWithRelationInput | AiTokenUsageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AiTokenUsages.
+     */
+    cursor?: AiTokenUsageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AiTokenUsages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AiTokenUsages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AiTokenUsages.
+     */
+    distinct?: AiTokenUsageScalarFieldEnum | AiTokenUsageScalarFieldEnum[]
+  }
+
+  /**
+   * AiTokenUsage create
+   */
+  export type AiTokenUsageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AiTokenUsage.
+     */
+    data: XOR<AiTokenUsageCreateInput, AiTokenUsageUncheckedCreateInput>
+  }
+
+  /**
+   * AiTokenUsage createMany
+   */
+  export type AiTokenUsageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AiTokenUsages.
+     */
+    data: AiTokenUsageCreateManyInput | AiTokenUsageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AiTokenUsage createManyAndReturn
+   */
+  export type AiTokenUsageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * The data used to create many AiTokenUsages.
+     */
+    data: AiTokenUsageCreateManyInput | AiTokenUsageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiTokenUsage update
+   */
+  export type AiTokenUsageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AiTokenUsage.
+     */
+    data: XOR<AiTokenUsageUpdateInput, AiTokenUsageUncheckedUpdateInput>
+    /**
+     * Choose, which AiTokenUsage to update.
+     */
+    where: AiTokenUsageWhereUniqueInput
+  }
+
+  /**
+   * AiTokenUsage updateMany
+   */
+  export type AiTokenUsageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AiTokenUsages.
+     */
+    data: XOR<AiTokenUsageUpdateManyMutationInput, AiTokenUsageUncheckedUpdateManyInput>
+    /**
+     * Filter which AiTokenUsages to update
+     */
+    where?: AiTokenUsageWhereInput
+    /**
+     * Limit how many AiTokenUsages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiTokenUsage updateManyAndReturn
+   */
+  export type AiTokenUsageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * The data used to update AiTokenUsages.
+     */
+    data: XOR<AiTokenUsageUpdateManyMutationInput, AiTokenUsageUncheckedUpdateManyInput>
+    /**
+     * Filter which AiTokenUsages to update
+     */
+    where?: AiTokenUsageWhereInput
+    /**
+     * Limit how many AiTokenUsages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AiTokenUsage upsert
+   */
+  export type AiTokenUsageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AiTokenUsage to update in case it exists.
+     */
+    where: AiTokenUsageWhereUniqueInput
+    /**
+     * In case the AiTokenUsage found by the `where` argument doesn't exist, create a new AiTokenUsage with this data.
+     */
+    create: XOR<AiTokenUsageCreateInput, AiTokenUsageUncheckedCreateInput>
+    /**
+     * In case the AiTokenUsage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AiTokenUsageUpdateInput, AiTokenUsageUncheckedUpdateInput>
+  }
+
+  /**
+   * AiTokenUsage delete
+   */
+  export type AiTokenUsageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
+    /**
+     * Filter which AiTokenUsage to delete.
+     */
+    where: AiTokenUsageWhereUniqueInput
+  }
+
+  /**
+   * AiTokenUsage deleteMany
+   */
+  export type AiTokenUsageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AiTokenUsages to delete
+     */
+    where?: AiTokenUsageWhereInput
+    /**
+     * Limit how many AiTokenUsages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AiTokenUsage.User
+   */
+  export type AiTokenUsage$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * AiTokenUsage without action
+   */
+  export type AiTokenUsageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AiTokenUsage
+     */
+    select?: AiTokenUsageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AiTokenUsage
+     */
+    omit?: AiTokenUsageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AiTokenUsageInclude<ExtArgs> | null
   }
 
 
@@ -78681,6 +80809,11 @@ export namespace Prisma {
      * Skip the first `n` Userlogins.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Userlogins.
+     */
     distinct?: UserloginScalarFieldEnum | UserloginScalarFieldEnum[]
   }
 
@@ -79709,6 +81842,11 @@ export namespace Prisma {
      * Skip the first `n` JenisKegiatans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JenisKegiatans.
+     */
     distinct?: JenisKegiatanScalarFieldEnum | JenisKegiatanScalarFieldEnum[]
   }
 
@@ -80753,6 +82891,11 @@ export namespace Prisma {
      * Skip the first `n` KategoriBeritas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KategoriBeritas.
+     */
     distinct?: KategoriBeritaScalarFieldEnum | KategoriBeritaScalarFieldEnum[]
   }
 
@@ -82035,6 +84178,11 @@ export namespace Prisma {
      * Skip the first `n` SettingMainPages.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingMainPages.
+     */
     distinct?: SettingMainPageScalarFieldEnum | SettingMainPageScalarFieldEnum[]
   }
 
@@ -83284,6 +85432,11 @@ export namespace Prisma {
      * Skip the first `n` SettingKegiatans.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingKegiatans.
+     */
     distinct?: SettingKegiatanScalarFieldEnum | SettingKegiatanScalarFieldEnum[]
   }
 
@@ -84329,6 +86482,11 @@ export namespace Prisma {
      * Skip the first `n` SettingCommunities.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingCommunities.
+     */
     distinct?: SettingCommunityScalarFieldEnum | SettingCommunityScalarFieldEnum[]
   }
 
@@ -85387,6 +87545,11 @@ export namespace Prisma {
      * Skip the first `n` SettingWhies.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingWhies.
+     */
     distinct?: SettingWhyScalarFieldEnum | SettingWhyScalarFieldEnum[]
   }
 
@@ -86445,6 +88608,11 @@ export namespace Prisma {
      * Skip the first `n` SettingNumbers.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingNumbers.
+     */
     distinct?: SettingNumberScalarFieldEnum | SettingNumberScalarFieldEnum[]
   }
 
@@ -87529,6 +89697,11 @@ export namespace Prisma {
      * Skip the first `n` SettingTestimonies.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingTestimonies.
+     */
     distinct?: SettingTestimonyScalarFieldEnum | SettingTestimonyScalarFieldEnum[]
   }
 
@@ -88634,6 +90807,11 @@ export namespace Prisma {
      * Skip the first `n` SettingBeritas.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SettingBeritas.
+     */
     distinct?: SettingBeritaScalarFieldEnum | SettingBeritaScalarFieldEnum[]
   }
 
@@ -89657,6 +91835,11 @@ export namespace Prisma {
      * Skip the first `n` QuestionAndAsks.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuestionAndAsks.
+     */
     distinct?: QuestionAndAskScalarFieldEnum | QuestionAndAskScalarFieldEnum[]
   }
 
@@ -90761,6 +92944,11 @@ export namespace Prisma {
      * Skip the first `n` Tickets.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tickets.
+     */
     distinct?: TicketsScalarFieldEnum | TicketsScalarFieldEnum[]
   }
 
@@ -91869,6 +94057,11 @@ export namespace Prisma {
      * Skip the first `n` TicketsFiles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TicketsFiles.
+     */
     distinct?: TicketsFileScalarFieldEnum | TicketsFileScalarFieldEnum[]
   }
 
@@ -93006,6 +95199,11 @@ export namespace Prisma {
      * Skip the first `n` TranskripNilais.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TranskripNilais.
+     */
     distinct?: TranskripNilaiScalarFieldEnum | TranskripNilaiScalarFieldEnum[]
   }
 
@@ -94083,6 +96281,11 @@ export namespace Prisma {
      * Skip the first `n` TranskripNilaiRelations.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TranskripNilaiRelations.
+     */
     distinct?: TranskripNilaiRelationScalarFieldEnum | TranskripNilaiRelationScalarFieldEnum[]
   }
 
@@ -95085,6 +97288,56 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const AiTokenUsageScalarFieldEnum: {
+    AiTokenUsageId: 'AiTokenUsageId',
+    UserId: 'UserId',
+    Feature: 'Feature',
+    FeatureGroup: 'FeatureGroup',
+    Page: 'Page',
+    Route: 'Route',
+    Method: 'Method',
+    RequestId: 'RequestId',
+    SessionId: 'SessionId',
+    ReferenceType: 'ReferenceType',
+    ReferenceId: 'ReferenceId',
+    SdkProvider: 'SdkProvider',
+    LlmProvider: 'LlmProvider',
+    LlmModel: 'LlmModel',
+    LlmModelVersion: 'LlmModelVersion',
+    LlmModelSlug: 'LlmModelSlug',
+    Temperature: 'Temperature',
+    TopP: 'TopP',
+    MaxOutputTokens: 'MaxOutputTokens',
+    InputTokens: 'InputTokens',
+    OutputTokens: 'OutputTokens',
+    TotalTokens: 'TotalTokens',
+    ReasoningTokens: 'ReasoningTokens',
+    CachedInputTokens: 'CachedInputTokens',
+    PromptCharCount: 'PromptCharCount',
+    CompletionCharCount: 'CompletionCharCount',
+    PromptMessageCount: 'PromptMessageCount',
+    CompletionMessageCount: 'CompletionMessageCount',
+    DurationMs: 'DurationMs',
+    FirstTokenMs: 'FirstTokenMs',
+    Streaming: 'Streaming',
+    Status: 'Status',
+    ErrorCode: 'ErrorCode',
+    ErrorMessage: 'ErrorMessage',
+    InputCostUsd: 'InputCostUsd',
+    OutputCostUsd: 'OutputCostUsd',
+    TotalCostUsd: 'TotalCostUsd',
+    Currency: 'Currency',
+    PriceSource: 'PriceSource',
+    UsageRaw: 'UsageRaw',
+    ProviderMetadata: 'ProviderMetadata',
+    Metadata: 'Metadata',
+    CreatedAt: 'CreatedAt',
+    UpdatedAt: 'UpdatedAt'
+  };
+
+  export type AiTokenUsageScalarFieldEnum = (typeof AiTokenUsageScalarFieldEnum)[keyof typeof AiTokenUsageScalarFieldEnum]
+
+
   export const UserloginScalarFieldEnum: {
     UserloginId: 'UserloginId',
     UserId: 'UserId',
@@ -95283,6 +97536,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -95297,6 +97558,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -95518,6 +97788,34 @@ export namespace Prisma {
    * Reference to a field of type 'JenisKelamin[]'
    */
   export type ListEnumJenisKelaminFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JenisKelamin[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
+   * Reference to a field of type 'Decimal[]'
+   */
+  export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -99570,6 +101868,7 @@ export namespace Prisma {
     Userlogin?: UserloginListRelationFilter
     Asesor?: AsesorListRelationFilter
     tickets?: TicketsListRelationFilter
+    AiTokenUsage?: AiTokenUsageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -99598,6 +101897,7 @@ export namespace Prisma {
     Userlogin?: UserloginOrderByRelationAggregateInput
     Asesor?: AsesorOrderByRelationAggregateInput
     tickets?: TicketsOrderByRelationAggregateInput
+    AiTokenUsage?: AiTokenUsageOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -99629,6 +101929,7 @@ export namespace Prisma {
     Userlogin?: UserloginListRelationFilter
     Asesor?: AsesorListRelationFilter
     tickets?: TicketsListRelationFilter
+    AiTokenUsage?: AiTokenUsageListRelationFilter
   }, "UserId" | "Email">
 
   export type UserOrderByWithAggregationInput = {
@@ -99677,6 +101978,258 @@ export namespace Prisma {
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     DeletedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  }
+
+  export type AiTokenUsageWhereInput = {
+    AND?: AiTokenUsageWhereInput | AiTokenUsageWhereInput[]
+    OR?: AiTokenUsageWhereInput[]
+    NOT?: AiTokenUsageWhereInput | AiTokenUsageWhereInput[]
+    AiTokenUsageId?: StringFilter<"AiTokenUsage"> | string
+    UserId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Feature?: StringFilter<"AiTokenUsage"> | string
+    FeatureGroup?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Page?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Route?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Method?: StringNullableFilter<"AiTokenUsage"> | string | null
+    RequestId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    SessionId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ReferenceType?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ReferenceId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    SdkProvider?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmProvider?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmModel?: StringFilter<"AiTokenUsage"> | string
+    LlmModelVersion?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmModelSlug?: StringFilter<"AiTokenUsage"> | string
+    Temperature?: FloatNullableFilter<"AiTokenUsage"> | number | null
+    TopP?: FloatNullableFilter<"AiTokenUsage"> | number | null
+    MaxOutputTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    InputTokens?: IntFilter<"AiTokenUsage"> | number
+    OutputTokens?: IntFilter<"AiTokenUsage"> | number
+    TotalTokens?: IntFilter<"AiTokenUsage"> | number
+    ReasoningTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CachedInputTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    PromptCharCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CompletionCharCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    PromptMessageCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CompletionMessageCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    DurationMs?: IntNullableFilter<"AiTokenUsage"> | number | null
+    FirstTokenMs?: IntNullableFilter<"AiTokenUsage"> | number | null
+    Streaming?: BoolFilter<"AiTokenUsage"> | boolean
+    Status?: StringFilter<"AiTokenUsage"> | string
+    ErrorCode?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ErrorMessage?: StringNullableFilter<"AiTokenUsage"> | string | null
+    InputCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    Currency?: StringNullableFilter<"AiTokenUsage"> | string | null
+    PriceSource?: StringNullableFilter<"AiTokenUsage"> | string | null
+    UsageRaw?: JsonNullableFilter<"AiTokenUsage">
+    ProviderMetadata?: JsonNullableFilter<"AiTokenUsage">
+    Metadata?: JsonNullableFilter<"AiTokenUsage">
+    CreatedAt?: DateTimeFilter<"AiTokenUsage"> | Date | string
+    UpdatedAt?: DateTimeNullableFilter<"AiTokenUsage"> | Date | string | null
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type AiTokenUsageOrderByWithRelationInput = {
+    AiTokenUsageId?: SortOrder
+    UserId?: SortOrderInput | SortOrder
+    Feature?: SortOrder
+    FeatureGroup?: SortOrderInput | SortOrder
+    Page?: SortOrderInput | SortOrder
+    Route?: SortOrderInput | SortOrder
+    Method?: SortOrderInput | SortOrder
+    RequestId?: SortOrderInput | SortOrder
+    SessionId?: SortOrderInput | SortOrder
+    ReferenceType?: SortOrderInput | SortOrder
+    ReferenceId?: SortOrderInput | SortOrder
+    SdkProvider?: SortOrderInput | SortOrder
+    LlmProvider?: SortOrderInput | SortOrder
+    LlmModel?: SortOrder
+    LlmModelVersion?: SortOrderInput | SortOrder
+    LlmModelSlug?: SortOrder
+    Temperature?: SortOrderInput | SortOrder
+    TopP?: SortOrderInput | SortOrder
+    MaxOutputTokens?: SortOrderInput | SortOrder
+    InputTokens?: SortOrder
+    OutputTokens?: SortOrder
+    TotalTokens?: SortOrder
+    ReasoningTokens?: SortOrderInput | SortOrder
+    CachedInputTokens?: SortOrderInput | SortOrder
+    PromptCharCount?: SortOrderInput | SortOrder
+    CompletionCharCount?: SortOrderInput | SortOrder
+    PromptMessageCount?: SortOrderInput | SortOrder
+    CompletionMessageCount?: SortOrderInput | SortOrder
+    DurationMs?: SortOrderInput | SortOrder
+    FirstTokenMs?: SortOrderInput | SortOrder
+    Streaming?: SortOrder
+    Status?: SortOrder
+    ErrorCode?: SortOrderInput | SortOrder
+    ErrorMessage?: SortOrderInput | SortOrder
+    InputCostUsd?: SortOrderInput | SortOrder
+    OutputCostUsd?: SortOrderInput | SortOrder
+    TotalCostUsd?: SortOrderInput | SortOrder
+    Currency?: SortOrderInput | SortOrder
+    PriceSource?: SortOrderInput | SortOrder
+    UsageRaw?: SortOrderInput | SortOrder
+    ProviderMetadata?: SortOrderInput | SortOrder
+    Metadata?: SortOrderInput | SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrderInput | SortOrder
+    User?: UserOrderByWithRelationInput
+  }
+
+  export type AiTokenUsageWhereUniqueInput = Prisma.AtLeast<{
+    AiTokenUsageId?: string
+    AND?: AiTokenUsageWhereInput | AiTokenUsageWhereInput[]
+    OR?: AiTokenUsageWhereInput[]
+    NOT?: AiTokenUsageWhereInput | AiTokenUsageWhereInput[]
+    UserId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Feature?: StringFilter<"AiTokenUsage"> | string
+    FeatureGroup?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Page?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Route?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Method?: StringNullableFilter<"AiTokenUsage"> | string | null
+    RequestId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    SessionId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ReferenceType?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ReferenceId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    SdkProvider?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmProvider?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmModel?: StringFilter<"AiTokenUsage"> | string
+    LlmModelVersion?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmModelSlug?: StringFilter<"AiTokenUsage"> | string
+    Temperature?: FloatNullableFilter<"AiTokenUsage"> | number | null
+    TopP?: FloatNullableFilter<"AiTokenUsage"> | number | null
+    MaxOutputTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    InputTokens?: IntFilter<"AiTokenUsage"> | number
+    OutputTokens?: IntFilter<"AiTokenUsage"> | number
+    TotalTokens?: IntFilter<"AiTokenUsage"> | number
+    ReasoningTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CachedInputTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    PromptCharCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CompletionCharCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    PromptMessageCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CompletionMessageCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    DurationMs?: IntNullableFilter<"AiTokenUsage"> | number | null
+    FirstTokenMs?: IntNullableFilter<"AiTokenUsage"> | number | null
+    Streaming?: BoolFilter<"AiTokenUsage"> | boolean
+    Status?: StringFilter<"AiTokenUsage"> | string
+    ErrorCode?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ErrorMessage?: StringNullableFilter<"AiTokenUsage"> | string | null
+    InputCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    Currency?: StringNullableFilter<"AiTokenUsage"> | string | null
+    PriceSource?: StringNullableFilter<"AiTokenUsage"> | string | null
+    UsageRaw?: JsonNullableFilter<"AiTokenUsage">
+    ProviderMetadata?: JsonNullableFilter<"AiTokenUsage">
+    Metadata?: JsonNullableFilter<"AiTokenUsage">
+    CreatedAt?: DateTimeFilter<"AiTokenUsage"> | Date | string
+    UpdatedAt?: DateTimeNullableFilter<"AiTokenUsage"> | Date | string | null
+    User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "AiTokenUsageId">
+
+  export type AiTokenUsageOrderByWithAggregationInput = {
+    AiTokenUsageId?: SortOrder
+    UserId?: SortOrderInput | SortOrder
+    Feature?: SortOrder
+    FeatureGroup?: SortOrderInput | SortOrder
+    Page?: SortOrderInput | SortOrder
+    Route?: SortOrderInput | SortOrder
+    Method?: SortOrderInput | SortOrder
+    RequestId?: SortOrderInput | SortOrder
+    SessionId?: SortOrderInput | SortOrder
+    ReferenceType?: SortOrderInput | SortOrder
+    ReferenceId?: SortOrderInput | SortOrder
+    SdkProvider?: SortOrderInput | SortOrder
+    LlmProvider?: SortOrderInput | SortOrder
+    LlmModel?: SortOrder
+    LlmModelVersion?: SortOrderInput | SortOrder
+    LlmModelSlug?: SortOrder
+    Temperature?: SortOrderInput | SortOrder
+    TopP?: SortOrderInput | SortOrder
+    MaxOutputTokens?: SortOrderInput | SortOrder
+    InputTokens?: SortOrder
+    OutputTokens?: SortOrder
+    TotalTokens?: SortOrder
+    ReasoningTokens?: SortOrderInput | SortOrder
+    CachedInputTokens?: SortOrderInput | SortOrder
+    PromptCharCount?: SortOrderInput | SortOrder
+    CompletionCharCount?: SortOrderInput | SortOrder
+    PromptMessageCount?: SortOrderInput | SortOrder
+    CompletionMessageCount?: SortOrderInput | SortOrder
+    DurationMs?: SortOrderInput | SortOrder
+    FirstTokenMs?: SortOrderInput | SortOrder
+    Streaming?: SortOrder
+    Status?: SortOrder
+    ErrorCode?: SortOrderInput | SortOrder
+    ErrorMessage?: SortOrderInput | SortOrder
+    InputCostUsd?: SortOrderInput | SortOrder
+    OutputCostUsd?: SortOrderInput | SortOrder
+    TotalCostUsd?: SortOrderInput | SortOrder
+    Currency?: SortOrderInput | SortOrder
+    PriceSource?: SortOrderInput | SortOrder
+    UsageRaw?: SortOrderInput | SortOrder
+    ProviderMetadata?: SortOrderInput | SortOrder
+    Metadata?: SortOrderInput | SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrderInput | SortOrder
+    _count?: AiTokenUsageCountOrderByAggregateInput
+    _avg?: AiTokenUsageAvgOrderByAggregateInput
+    _max?: AiTokenUsageMaxOrderByAggregateInput
+    _min?: AiTokenUsageMinOrderByAggregateInput
+    _sum?: AiTokenUsageSumOrderByAggregateInput
+  }
+
+  export type AiTokenUsageScalarWhereWithAggregatesInput = {
+    AND?: AiTokenUsageScalarWhereWithAggregatesInput | AiTokenUsageScalarWhereWithAggregatesInput[]
+    OR?: AiTokenUsageScalarWhereWithAggregatesInput[]
+    NOT?: AiTokenUsageScalarWhereWithAggregatesInput | AiTokenUsageScalarWhereWithAggregatesInput[]
+    AiTokenUsageId?: StringWithAggregatesFilter<"AiTokenUsage"> | string
+    UserId?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    Feature?: StringWithAggregatesFilter<"AiTokenUsage"> | string
+    FeatureGroup?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    Page?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    Route?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    Method?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    RequestId?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    SessionId?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    ReferenceType?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    ReferenceId?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    SdkProvider?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    LlmProvider?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    LlmModel?: StringWithAggregatesFilter<"AiTokenUsage"> | string
+    LlmModelVersion?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    LlmModelSlug?: StringWithAggregatesFilter<"AiTokenUsage"> | string
+    Temperature?: FloatNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    TopP?: FloatNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    MaxOutputTokens?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    InputTokens?: IntWithAggregatesFilter<"AiTokenUsage"> | number
+    OutputTokens?: IntWithAggregatesFilter<"AiTokenUsage"> | number
+    TotalTokens?: IntWithAggregatesFilter<"AiTokenUsage"> | number
+    ReasoningTokens?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    CachedInputTokens?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    PromptCharCount?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    CompletionCharCount?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    PromptMessageCount?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    CompletionMessageCount?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    DurationMs?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    FirstTokenMs?: IntNullableWithAggregatesFilter<"AiTokenUsage"> | number | null
+    Streaming?: BoolWithAggregatesFilter<"AiTokenUsage"> | boolean
+    Status?: StringWithAggregatesFilter<"AiTokenUsage"> | string
+    ErrorCode?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    ErrorMessage?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    InputCostUsd?: DecimalNullableWithAggregatesFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: DecimalNullableWithAggregatesFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: DecimalNullableWithAggregatesFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    Currency?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    PriceSource?: StringNullableWithAggregatesFilter<"AiTokenUsage"> | string | null
+    UsageRaw?: JsonNullableWithAggregatesFilter<"AiTokenUsage">
+    ProviderMetadata?: JsonNullableWithAggregatesFilter<"AiTokenUsage">
+    Metadata?: JsonNullableWithAggregatesFilter<"AiTokenUsage">
+    CreatedAt?: DateTimeWithAggregatesFilter<"AiTokenUsage"> | Date | string
+    UpdatedAt?: DateTimeNullableWithAggregatesFilter<"AiTokenUsage"> | Date | string | null
   }
 
   export type UserloginWhereInput = {
@@ -104874,6 +107427,7 @@ export namespace Prisma {
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
     Asesor?: AsesorCreateNestedManyWithoutUserInput
     tickets?: TicketsCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -104901,6 +107455,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
     Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
     tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -104928,6 +107483,7 @@ export namespace Prisma {
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUpdateManyWithoutUserNestedInput
     tickets?: TicketsUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -104955,6 +107511,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
     tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -105017,6 +107574,334 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AiTokenUsageCreateInput = {
+    AiTokenUsageId?: string
+    Feature: string
+    FeatureGroup?: string | null
+    Page?: string | null
+    Route?: string | null
+    Method?: string | null
+    RequestId?: string | null
+    SessionId?: string | null
+    ReferenceType?: string | null
+    ReferenceId?: string | null
+    SdkProvider?: string | null
+    LlmProvider?: string | null
+    LlmModel: string
+    LlmModelVersion?: string | null
+    LlmModelSlug: string
+    Temperature?: number | null
+    TopP?: number | null
+    MaxOutputTokens?: number | null
+    InputTokens?: number
+    OutputTokens?: number
+    TotalTokens?: number
+    ReasoningTokens?: number | null
+    CachedInputTokens?: number | null
+    PromptCharCount?: number | null
+    CompletionCharCount?: number | null
+    PromptMessageCount?: number | null
+    CompletionMessageCount?: number | null
+    DurationMs?: number | null
+    FirstTokenMs?: number | null
+    Streaming?: boolean
+    Status?: string
+    ErrorCode?: string | null
+    ErrorMessage?: string | null
+    InputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: Decimal | DecimalJsLike | number | string | null
+    Currency?: string | null
+    PriceSource?: string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string | null
+    User?: UserCreateNestedOneWithoutAiTokenUsageInput
+  }
+
+  export type AiTokenUsageUncheckedCreateInput = {
+    AiTokenUsageId?: string
+    UserId?: string | null
+    Feature: string
+    FeatureGroup?: string | null
+    Page?: string | null
+    Route?: string | null
+    Method?: string | null
+    RequestId?: string | null
+    SessionId?: string | null
+    ReferenceType?: string | null
+    ReferenceId?: string | null
+    SdkProvider?: string | null
+    LlmProvider?: string | null
+    LlmModel: string
+    LlmModelVersion?: string | null
+    LlmModelSlug: string
+    Temperature?: number | null
+    TopP?: number | null
+    MaxOutputTokens?: number | null
+    InputTokens?: number
+    OutputTokens?: number
+    TotalTokens?: number
+    ReasoningTokens?: number | null
+    CachedInputTokens?: number | null
+    PromptCharCount?: number | null
+    CompletionCharCount?: number | null
+    PromptMessageCount?: number | null
+    CompletionMessageCount?: number | null
+    DurationMs?: number | null
+    FirstTokenMs?: number | null
+    Streaming?: boolean
+    Status?: string
+    ErrorCode?: string | null
+    ErrorMessage?: string | null
+    InputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: Decimal | DecimalJsLike | number | string | null
+    Currency?: string | null
+    PriceSource?: string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string | null
+  }
+
+  export type AiTokenUsageUpdateInput = {
+    AiTokenUsageId?: StringFieldUpdateOperationsInput | string
+    Feature?: StringFieldUpdateOperationsInput | string
+    FeatureGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Page?: NullableStringFieldUpdateOperationsInput | string | null
+    Route?: NullableStringFieldUpdateOperationsInput | string | null
+    Method?: NullableStringFieldUpdateOperationsInput | string | null
+    RequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    SessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceType?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    SdkProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModel?: StringFieldUpdateOperationsInput | string
+    LlmModelVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModelSlug?: StringFieldUpdateOperationsInput | string
+    Temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    TopP?: NullableFloatFieldUpdateOperationsInput | number | null
+    MaxOutputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    InputTokens?: IntFieldUpdateOperationsInput | number
+    OutputTokens?: IntFieldUpdateOperationsInput | number
+    TotalTokens?: IntFieldUpdateOperationsInput | number
+    ReasoningTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    CachedInputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    DurationMs?: NullableIntFieldUpdateOperationsInput | number | null
+    FirstTokenMs?: NullableIntFieldUpdateOperationsInput | number | null
+    Streaming?: BoolFieldUpdateOperationsInput | boolean
+    Status?: StringFieldUpdateOperationsInput | string
+    ErrorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    ErrorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    InputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Currency?: NullableStringFieldUpdateOperationsInput | string | null
+    PriceSource?: NullableStringFieldUpdateOperationsInput | string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    User?: UserUpdateOneWithoutAiTokenUsageNestedInput
+  }
+
+  export type AiTokenUsageUncheckedUpdateInput = {
+    AiTokenUsageId?: StringFieldUpdateOperationsInput | string
+    UserId?: NullableStringFieldUpdateOperationsInput | string | null
+    Feature?: StringFieldUpdateOperationsInput | string
+    FeatureGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Page?: NullableStringFieldUpdateOperationsInput | string | null
+    Route?: NullableStringFieldUpdateOperationsInput | string | null
+    Method?: NullableStringFieldUpdateOperationsInput | string | null
+    RequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    SessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceType?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    SdkProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModel?: StringFieldUpdateOperationsInput | string
+    LlmModelVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModelSlug?: StringFieldUpdateOperationsInput | string
+    Temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    TopP?: NullableFloatFieldUpdateOperationsInput | number | null
+    MaxOutputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    InputTokens?: IntFieldUpdateOperationsInput | number
+    OutputTokens?: IntFieldUpdateOperationsInput | number
+    TotalTokens?: IntFieldUpdateOperationsInput | number
+    ReasoningTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    CachedInputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    DurationMs?: NullableIntFieldUpdateOperationsInput | number | null
+    FirstTokenMs?: NullableIntFieldUpdateOperationsInput | number | null
+    Streaming?: BoolFieldUpdateOperationsInput | boolean
+    Status?: StringFieldUpdateOperationsInput | string
+    ErrorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    ErrorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    InputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Currency?: NullableStringFieldUpdateOperationsInput | string | null
+    PriceSource?: NullableStringFieldUpdateOperationsInput | string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AiTokenUsageCreateManyInput = {
+    AiTokenUsageId?: string
+    UserId?: string | null
+    Feature: string
+    FeatureGroup?: string | null
+    Page?: string | null
+    Route?: string | null
+    Method?: string | null
+    RequestId?: string | null
+    SessionId?: string | null
+    ReferenceType?: string | null
+    ReferenceId?: string | null
+    SdkProvider?: string | null
+    LlmProvider?: string | null
+    LlmModel: string
+    LlmModelVersion?: string | null
+    LlmModelSlug: string
+    Temperature?: number | null
+    TopP?: number | null
+    MaxOutputTokens?: number | null
+    InputTokens?: number
+    OutputTokens?: number
+    TotalTokens?: number
+    ReasoningTokens?: number | null
+    CachedInputTokens?: number | null
+    PromptCharCount?: number | null
+    CompletionCharCount?: number | null
+    PromptMessageCount?: number | null
+    CompletionMessageCount?: number | null
+    DurationMs?: number | null
+    FirstTokenMs?: number | null
+    Streaming?: boolean
+    Status?: string
+    ErrorCode?: string | null
+    ErrorMessage?: string | null
+    InputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: Decimal | DecimalJsLike | number | string | null
+    Currency?: string | null
+    PriceSource?: string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string | null
+  }
+
+  export type AiTokenUsageUpdateManyMutationInput = {
+    AiTokenUsageId?: StringFieldUpdateOperationsInput | string
+    Feature?: StringFieldUpdateOperationsInput | string
+    FeatureGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Page?: NullableStringFieldUpdateOperationsInput | string | null
+    Route?: NullableStringFieldUpdateOperationsInput | string | null
+    Method?: NullableStringFieldUpdateOperationsInput | string | null
+    RequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    SessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceType?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    SdkProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModel?: StringFieldUpdateOperationsInput | string
+    LlmModelVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModelSlug?: StringFieldUpdateOperationsInput | string
+    Temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    TopP?: NullableFloatFieldUpdateOperationsInput | number | null
+    MaxOutputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    InputTokens?: IntFieldUpdateOperationsInput | number
+    OutputTokens?: IntFieldUpdateOperationsInput | number
+    TotalTokens?: IntFieldUpdateOperationsInput | number
+    ReasoningTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    CachedInputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    DurationMs?: NullableIntFieldUpdateOperationsInput | number | null
+    FirstTokenMs?: NullableIntFieldUpdateOperationsInput | number | null
+    Streaming?: BoolFieldUpdateOperationsInput | boolean
+    Status?: StringFieldUpdateOperationsInput | string
+    ErrorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    ErrorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    InputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Currency?: NullableStringFieldUpdateOperationsInput | string | null
+    PriceSource?: NullableStringFieldUpdateOperationsInput | string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AiTokenUsageUncheckedUpdateManyInput = {
+    AiTokenUsageId?: StringFieldUpdateOperationsInput | string
+    UserId?: NullableStringFieldUpdateOperationsInput | string | null
+    Feature?: StringFieldUpdateOperationsInput | string
+    FeatureGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Page?: NullableStringFieldUpdateOperationsInput | string | null
+    Route?: NullableStringFieldUpdateOperationsInput | string | null
+    Method?: NullableStringFieldUpdateOperationsInput | string | null
+    RequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    SessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceType?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    SdkProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModel?: StringFieldUpdateOperationsInput | string
+    LlmModelVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModelSlug?: StringFieldUpdateOperationsInput | string
+    Temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    TopP?: NullableFloatFieldUpdateOperationsInput | number | null
+    MaxOutputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    InputTokens?: IntFieldUpdateOperationsInput | number
+    OutputTokens?: IntFieldUpdateOperationsInput | number
+    TotalTokens?: IntFieldUpdateOperationsInput | number
+    ReasoningTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    CachedInputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    DurationMs?: NullableIntFieldUpdateOperationsInput | number | null
+    FirstTokenMs?: NullableIntFieldUpdateOperationsInput | number | null
+    Streaming?: BoolFieldUpdateOperationsInput | boolean
+    Status?: StringFieldUpdateOperationsInput | string
+    ErrorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    ErrorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    InputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Currency?: NullableStringFieldUpdateOperationsInput | string | null
+    PriceSource?: NullableStringFieldUpdateOperationsInput | string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserloginCreateInput = {
@@ -109031,11 +111916,21 @@ export namespace Prisma {
     none?: UserloginWhereInput
   }
 
+  export type AiTokenUsageListRelationFilter = {
+    every?: AiTokenUsageWhereInput
+    some?: AiTokenUsageWhereInput
+    none?: AiTokenUsageWhereInput
+  }
+
   export type MahasiswaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type UserloginOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AiTokenUsageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -109120,6 +112015,316 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type AiTokenUsageCountOrderByAggregateInput = {
+    AiTokenUsageId?: SortOrder
+    UserId?: SortOrder
+    Feature?: SortOrder
+    FeatureGroup?: SortOrder
+    Page?: SortOrder
+    Route?: SortOrder
+    Method?: SortOrder
+    RequestId?: SortOrder
+    SessionId?: SortOrder
+    ReferenceType?: SortOrder
+    ReferenceId?: SortOrder
+    SdkProvider?: SortOrder
+    LlmProvider?: SortOrder
+    LlmModel?: SortOrder
+    LlmModelVersion?: SortOrder
+    LlmModelSlug?: SortOrder
+    Temperature?: SortOrder
+    TopP?: SortOrder
+    MaxOutputTokens?: SortOrder
+    InputTokens?: SortOrder
+    OutputTokens?: SortOrder
+    TotalTokens?: SortOrder
+    ReasoningTokens?: SortOrder
+    CachedInputTokens?: SortOrder
+    PromptCharCount?: SortOrder
+    CompletionCharCount?: SortOrder
+    PromptMessageCount?: SortOrder
+    CompletionMessageCount?: SortOrder
+    DurationMs?: SortOrder
+    FirstTokenMs?: SortOrder
+    Streaming?: SortOrder
+    Status?: SortOrder
+    ErrorCode?: SortOrder
+    ErrorMessage?: SortOrder
+    InputCostUsd?: SortOrder
+    OutputCostUsd?: SortOrder
+    TotalCostUsd?: SortOrder
+    Currency?: SortOrder
+    PriceSource?: SortOrder
+    UsageRaw?: SortOrder
+    ProviderMetadata?: SortOrder
+    Metadata?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type AiTokenUsageAvgOrderByAggregateInput = {
+    Temperature?: SortOrder
+    TopP?: SortOrder
+    MaxOutputTokens?: SortOrder
+    InputTokens?: SortOrder
+    OutputTokens?: SortOrder
+    TotalTokens?: SortOrder
+    ReasoningTokens?: SortOrder
+    CachedInputTokens?: SortOrder
+    PromptCharCount?: SortOrder
+    CompletionCharCount?: SortOrder
+    PromptMessageCount?: SortOrder
+    CompletionMessageCount?: SortOrder
+    DurationMs?: SortOrder
+    FirstTokenMs?: SortOrder
+    InputCostUsd?: SortOrder
+    OutputCostUsd?: SortOrder
+    TotalCostUsd?: SortOrder
+  }
+
+  export type AiTokenUsageMaxOrderByAggregateInput = {
+    AiTokenUsageId?: SortOrder
+    UserId?: SortOrder
+    Feature?: SortOrder
+    FeatureGroup?: SortOrder
+    Page?: SortOrder
+    Route?: SortOrder
+    Method?: SortOrder
+    RequestId?: SortOrder
+    SessionId?: SortOrder
+    ReferenceType?: SortOrder
+    ReferenceId?: SortOrder
+    SdkProvider?: SortOrder
+    LlmProvider?: SortOrder
+    LlmModel?: SortOrder
+    LlmModelVersion?: SortOrder
+    LlmModelSlug?: SortOrder
+    Temperature?: SortOrder
+    TopP?: SortOrder
+    MaxOutputTokens?: SortOrder
+    InputTokens?: SortOrder
+    OutputTokens?: SortOrder
+    TotalTokens?: SortOrder
+    ReasoningTokens?: SortOrder
+    CachedInputTokens?: SortOrder
+    PromptCharCount?: SortOrder
+    CompletionCharCount?: SortOrder
+    PromptMessageCount?: SortOrder
+    CompletionMessageCount?: SortOrder
+    DurationMs?: SortOrder
+    FirstTokenMs?: SortOrder
+    Streaming?: SortOrder
+    Status?: SortOrder
+    ErrorCode?: SortOrder
+    ErrorMessage?: SortOrder
+    InputCostUsd?: SortOrder
+    OutputCostUsd?: SortOrder
+    TotalCostUsd?: SortOrder
+    Currency?: SortOrder
+    PriceSource?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type AiTokenUsageMinOrderByAggregateInput = {
+    AiTokenUsageId?: SortOrder
+    UserId?: SortOrder
+    Feature?: SortOrder
+    FeatureGroup?: SortOrder
+    Page?: SortOrder
+    Route?: SortOrder
+    Method?: SortOrder
+    RequestId?: SortOrder
+    SessionId?: SortOrder
+    ReferenceType?: SortOrder
+    ReferenceId?: SortOrder
+    SdkProvider?: SortOrder
+    LlmProvider?: SortOrder
+    LlmModel?: SortOrder
+    LlmModelVersion?: SortOrder
+    LlmModelSlug?: SortOrder
+    Temperature?: SortOrder
+    TopP?: SortOrder
+    MaxOutputTokens?: SortOrder
+    InputTokens?: SortOrder
+    OutputTokens?: SortOrder
+    TotalTokens?: SortOrder
+    ReasoningTokens?: SortOrder
+    CachedInputTokens?: SortOrder
+    PromptCharCount?: SortOrder
+    CompletionCharCount?: SortOrder
+    PromptMessageCount?: SortOrder
+    CompletionMessageCount?: SortOrder
+    DurationMs?: SortOrder
+    FirstTokenMs?: SortOrder
+    Streaming?: SortOrder
+    Status?: SortOrder
+    ErrorCode?: SortOrder
+    ErrorMessage?: SortOrder
+    InputCostUsd?: SortOrder
+    OutputCostUsd?: SortOrder
+    TotalCostUsd?: SortOrder
+    Currency?: SortOrder
+    PriceSource?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type AiTokenUsageSumOrderByAggregateInput = {
+    Temperature?: SortOrder
+    TopP?: SortOrder
+    MaxOutputTokens?: SortOrder
+    InputTokens?: SortOrder
+    OutputTokens?: SortOrder
+    TotalTokens?: SortOrder
+    ReasoningTokens?: SortOrder
+    CachedInputTokens?: SortOrder
+    PromptCharCount?: SortOrder
+    CompletionCharCount?: SortOrder
+    PromptMessageCount?: SortOrder
+    CompletionMessageCount?: SortOrder
+    DurationMs?: SortOrder
+    FirstTokenMs?: SortOrder
+    InputCostUsd?: SortOrder
+    OutputCostUsd?: SortOrder
+    TotalCostUsd?: SortOrder
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type UserloginCountOrderByAggregateInput = {
@@ -113700,6 +116905,13 @@ export namespace Prisma {
     connect?: TicketsWhereUniqueInput | TicketsWhereUniqueInput[]
   }
 
+  export type AiTokenUsageCreateNestedManyWithoutUserInput = {
+    create?: XOR<AiTokenUsageCreateWithoutUserInput, AiTokenUsageUncheckedCreateWithoutUserInput> | AiTokenUsageCreateWithoutUserInput[] | AiTokenUsageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AiTokenUsageCreateOrConnectWithoutUserInput | AiTokenUsageCreateOrConnectWithoutUserInput[]
+    createMany?: AiTokenUsageCreateManyUserInputEnvelope
+    connect?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+  }
+
   export type MahasiswaUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<MahasiswaCreateWithoutUserInput, MahasiswaUncheckedCreateWithoutUserInput> | MahasiswaCreateWithoutUserInput[] | MahasiswaUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MahasiswaCreateOrConnectWithoutUserInput | MahasiswaCreateOrConnectWithoutUserInput[]
@@ -113740,6 +116952,13 @@ export namespace Prisma {
     connectOrCreate?: TicketsCreateOrConnectWithoutUserInput | TicketsCreateOrConnectWithoutUserInput[]
     createMany?: TicketsCreateManyUserInputEnvelope
     connect?: TicketsWhereUniqueInput | TicketsWhereUniqueInput[]
+  }
+
+  export type AiTokenUsageUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AiTokenUsageCreateWithoutUserInput, AiTokenUsageUncheckedCreateWithoutUserInput> | AiTokenUsageCreateWithoutUserInput[] | AiTokenUsageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AiTokenUsageCreateOrConnectWithoutUserInput | AiTokenUsageCreateOrConnectWithoutUserInput[]
+    createMany?: AiTokenUsageCreateManyUserInputEnvelope
+    connect?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
   }
 
   export type EnumJenisKelaminFieldUpdateOperationsInput = {
@@ -113842,6 +117061,20 @@ export namespace Prisma {
     deleteMany?: TicketsScalarWhereInput | TicketsScalarWhereInput[]
   }
 
+  export type AiTokenUsageUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AiTokenUsageCreateWithoutUserInput, AiTokenUsageUncheckedCreateWithoutUserInput> | AiTokenUsageCreateWithoutUserInput[] | AiTokenUsageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AiTokenUsageCreateOrConnectWithoutUserInput | AiTokenUsageCreateOrConnectWithoutUserInput[]
+    upsert?: AiTokenUsageUpsertWithWhereUniqueWithoutUserInput | AiTokenUsageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AiTokenUsageCreateManyUserInputEnvelope
+    set?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    disconnect?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    delete?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    connect?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    update?: AiTokenUsageUpdateWithWhereUniqueWithoutUserInput | AiTokenUsageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AiTokenUsageUpdateManyWithWhereWithoutUserInput | AiTokenUsageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AiTokenUsageScalarWhereInput | AiTokenUsageScalarWhereInput[]
+  }
+
   export type MahasiswaUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<MahasiswaCreateWithoutUserInput, MahasiswaUncheckedCreateWithoutUserInput> | MahasiswaCreateWithoutUserInput[] | MahasiswaUncheckedCreateWithoutUserInput[]
     connectOrCreate?: MahasiswaCreateOrConnectWithoutUserInput | MahasiswaCreateOrConnectWithoutUserInput[]
@@ -113924,6 +117157,60 @@ export namespace Prisma {
     update?: TicketsUpdateWithWhereUniqueWithoutUserInput | TicketsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TicketsUpdateManyWithWhereWithoutUserInput | TicketsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TicketsScalarWhereInput | TicketsScalarWhereInput[]
+  }
+
+  export type AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<AiTokenUsageCreateWithoutUserInput, AiTokenUsageUncheckedCreateWithoutUserInput> | AiTokenUsageCreateWithoutUserInput[] | AiTokenUsageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AiTokenUsageCreateOrConnectWithoutUserInput | AiTokenUsageCreateOrConnectWithoutUserInput[]
+    upsert?: AiTokenUsageUpsertWithWhereUniqueWithoutUserInput | AiTokenUsageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: AiTokenUsageCreateManyUserInputEnvelope
+    set?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    disconnect?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    delete?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    connect?: AiTokenUsageWhereUniqueInput | AiTokenUsageWhereUniqueInput[]
+    update?: AiTokenUsageUpdateWithWhereUniqueWithoutUserInput | AiTokenUsageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: AiTokenUsageUpdateManyWithWhereWithoutUserInput | AiTokenUsageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: AiTokenUsageScalarWhereInput | AiTokenUsageScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutAiTokenUsageInput = {
+    create?: XOR<UserCreateWithoutAiTokenUsageInput, UserUncheckedCreateWithoutAiTokenUsageInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAiTokenUsageInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type UserUpdateOneWithoutAiTokenUsageNestedInput = {
+    create?: XOR<UserCreateWithoutAiTokenUsageInput, UserUncheckedCreateWithoutAiTokenUsageInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAiTokenUsageInput
+    upsert?: UserUpsertWithoutAiTokenUsageInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAiTokenUsageInput, UserUpdateWithoutAiTokenUsageInput>, UserUncheckedUpdateWithoutAiTokenUsageInput>
   }
 
   export type UserCreateNestedOneWithoutUserloginInput = {
@@ -114982,6 +118269,99 @@ export namespace Prisma {
     _max?: NestedBytesNullableFilter<$PrismaModel>
   }
 
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type NestedEnumStatusTiketBantuanFilter<$PrismaModel = never> = {
     equals?: $Enums.StatusTiketBantuan | EnumStatusTiketBantuanFieldRefInput<$PrismaModel>
     in?: $Enums.StatusTiketBantuan[] | ListEnumStatusTiketBantuanFieldRefInput<$PrismaModel>
@@ -115118,6 +118498,7 @@ export namespace Prisma {
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
     Asesor?: AsesorCreateNestedManyWithoutUserInput
     tickets?: TicketsCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAlamatInput = {
@@ -115144,6 +118525,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
     Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
     tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAlamatInput = {
@@ -115332,6 +118714,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
     tickets?: TicketsCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAsesorInput = {
@@ -115358,6 +118741,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
     tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAsesorInput = {
@@ -115555,6 +118939,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
     tickets?: TicketsUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAsesorInput = {
@@ -115581,6 +118966,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
     tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AsesorAkademikUpsertWithWhereUniqueWithoutAsesorInput = {
@@ -118180,6 +121566,7 @@ export namespace Prisma {
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
     Asesor?: AsesorCreateNestedManyWithoutUserInput
     tickets?: TicketsCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMahasiswaInput = {
@@ -118206,6 +121593,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
     Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
     tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMahasiswaInput = {
@@ -118320,6 +121708,7 @@ export namespace Prisma {
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUpdateManyWithoutUserNestedInput
     tickets?: TicketsUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMahasiswaInput = {
@@ -118346,6 +121735,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
     tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PendaftaranUpsertWithWhereUniqueWithoutMahasiswaInput = {
@@ -119901,6 +123291,7 @@ export namespace Prisma {
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
     Asesor?: AsesorCreateNestedManyWithoutUserInput
     tickets?: TicketsCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserHasPermissionsInput = {
@@ -119927,6 +123318,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
     Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
     tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserHasPermissionsInput = {
@@ -119998,6 +123390,7 @@ export namespace Prisma {
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUpdateManyWithoutUserNestedInput
     tickets?: TicketsUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserHasPermissionsInput = {
@@ -120024,6 +123417,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
     tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RoleCreateWithoutUserHasRolesInput = {
@@ -120079,6 +123473,7 @@ export namespace Prisma {
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
     Asesor?: AsesorCreateNestedManyWithoutUserInput
     tickets?: TicketsCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserHasRolesInput = {
@@ -120105,6 +123500,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
     Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
     tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserHasRolesInput = {
@@ -120182,6 +123578,7 @@ export namespace Prisma {
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUpdateManyWithoutUserNestedInput
     tickets?: TicketsUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserHasRolesInput = {
@@ -120208,6 +123605,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
     tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AsesorCreateWithoutAsesorProgramStudiInput = {
@@ -124945,6 +128343,108 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AiTokenUsageCreateWithoutUserInput = {
+    AiTokenUsageId?: string
+    Feature: string
+    FeatureGroup?: string | null
+    Page?: string | null
+    Route?: string | null
+    Method?: string | null
+    RequestId?: string | null
+    SessionId?: string | null
+    ReferenceType?: string | null
+    ReferenceId?: string | null
+    SdkProvider?: string | null
+    LlmProvider?: string | null
+    LlmModel: string
+    LlmModelVersion?: string | null
+    LlmModelSlug: string
+    Temperature?: number | null
+    TopP?: number | null
+    MaxOutputTokens?: number | null
+    InputTokens?: number
+    OutputTokens?: number
+    TotalTokens?: number
+    ReasoningTokens?: number | null
+    CachedInputTokens?: number | null
+    PromptCharCount?: number | null
+    CompletionCharCount?: number | null
+    PromptMessageCount?: number | null
+    CompletionMessageCount?: number | null
+    DurationMs?: number | null
+    FirstTokenMs?: number | null
+    Streaming?: boolean
+    Status?: string
+    ErrorCode?: string | null
+    ErrorMessage?: string | null
+    InputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: Decimal | DecimalJsLike | number | string | null
+    Currency?: string | null
+    PriceSource?: string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string | null
+  }
+
+  export type AiTokenUsageUncheckedCreateWithoutUserInput = {
+    AiTokenUsageId?: string
+    Feature: string
+    FeatureGroup?: string | null
+    Page?: string | null
+    Route?: string | null
+    Method?: string | null
+    RequestId?: string | null
+    SessionId?: string | null
+    ReferenceType?: string | null
+    ReferenceId?: string | null
+    SdkProvider?: string | null
+    LlmProvider?: string | null
+    LlmModel: string
+    LlmModelVersion?: string | null
+    LlmModelSlug: string
+    Temperature?: number | null
+    TopP?: number | null
+    MaxOutputTokens?: number | null
+    InputTokens?: number
+    OutputTokens?: number
+    TotalTokens?: number
+    ReasoningTokens?: number | null
+    CachedInputTokens?: number | null
+    PromptCharCount?: number | null
+    CompletionCharCount?: number | null
+    PromptMessageCount?: number | null
+    CompletionMessageCount?: number | null
+    DurationMs?: number | null
+    FirstTokenMs?: number | null
+    Streaming?: boolean
+    Status?: string
+    ErrorCode?: string | null
+    ErrorMessage?: string | null
+    InputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: Decimal | DecimalJsLike | number | string | null
+    Currency?: string | null
+    PriceSource?: string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string | null
+  }
+
+  export type AiTokenUsageCreateOrConnectWithoutUserInput = {
+    where: AiTokenUsageWhereUniqueInput
+    create: XOR<AiTokenUsageCreateWithoutUserInput, AiTokenUsageUncheckedCreateWithoutUserInput>
+  }
+
+  export type AiTokenUsageCreateManyUserInputEnvelope = {
+    data: AiTokenUsageCreateManyUserInput | AiTokenUsageCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AlamatUpsertWithoutUserInput = {
     update: XOR<AlamatUpdateWithoutUserInput, AlamatUncheckedUpdateWithoutUserInput>
     create: XOR<AlamatCreateWithoutUserInput, AlamatUncheckedCreateWithoutUserInput>
@@ -125092,6 +128592,196 @@ export namespace Prisma {
     data: XOR<TicketsUpdateManyMutationInput, TicketsUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type AiTokenUsageUpsertWithWhereUniqueWithoutUserInput = {
+    where: AiTokenUsageWhereUniqueInput
+    update: XOR<AiTokenUsageUpdateWithoutUserInput, AiTokenUsageUncheckedUpdateWithoutUserInput>
+    create: XOR<AiTokenUsageCreateWithoutUserInput, AiTokenUsageUncheckedCreateWithoutUserInput>
+  }
+
+  export type AiTokenUsageUpdateWithWhereUniqueWithoutUserInput = {
+    where: AiTokenUsageWhereUniqueInput
+    data: XOR<AiTokenUsageUpdateWithoutUserInput, AiTokenUsageUncheckedUpdateWithoutUserInput>
+  }
+
+  export type AiTokenUsageUpdateManyWithWhereWithoutUserInput = {
+    where: AiTokenUsageScalarWhereInput
+    data: XOR<AiTokenUsageUpdateManyMutationInput, AiTokenUsageUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type AiTokenUsageScalarWhereInput = {
+    AND?: AiTokenUsageScalarWhereInput | AiTokenUsageScalarWhereInput[]
+    OR?: AiTokenUsageScalarWhereInput[]
+    NOT?: AiTokenUsageScalarWhereInput | AiTokenUsageScalarWhereInput[]
+    AiTokenUsageId?: StringFilter<"AiTokenUsage"> | string
+    UserId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Feature?: StringFilter<"AiTokenUsage"> | string
+    FeatureGroup?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Page?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Route?: StringNullableFilter<"AiTokenUsage"> | string | null
+    Method?: StringNullableFilter<"AiTokenUsage"> | string | null
+    RequestId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    SessionId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ReferenceType?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ReferenceId?: StringNullableFilter<"AiTokenUsage"> | string | null
+    SdkProvider?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmProvider?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmModel?: StringFilter<"AiTokenUsage"> | string
+    LlmModelVersion?: StringNullableFilter<"AiTokenUsage"> | string | null
+    LlmModelSlug?: StringFilter<"AiTokenUsage"> | string
+    Temperature?: FloatNullableFilter<"AiTokenUsage"> | number | null
+    TopP?: FloatNullableFilter<"AiTokenUsage"> | number | null
+    MaxOutputTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    InputTokens?: IntFilter<"AiTokenUsage"> | number
+    OutputTokens?: IntFilter<"AiTokenUsage"> | number
+    TotalTokens?: IntFilter<"AiTokenUsage"> | number
+    ReasoningTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CachedInputTokens?: IntNullableFilter<"AiTokenUsage"> | number | null
+    PromptCharCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CompletionCharCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    PromptMessageCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    CompletionMessageCount?: IntNullableFilter<"AiTokenUsage"> | number | null
+    DurationMs?: IntNullableFilter<"AiTokenUsage"> | number | null
+    FirstTokenMs?: IntNullableFilter<"AiTokenUsage"> | number | null
+    Streaming?: BoolFilter<"AiTokenUsage"> | boolean
+    Status?: StringFilter<"AiTokenUsage"> | string
+    ErrorCode?: StringNullableFilter<"AiTokenUsage"> | string | null
+    ErrorMessage?: StringNullableFilter<"AiTokenUsage"> | string | null
+    InputCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: DecimalNullableFilter<"AiTokenUsage"> | Decimal | DecimalJsLike | number | string | null
+    Currency?: StringNullableFilter<"AiTokenUsage"> | string | null
+    PriceSource?: StringNullableFilter<"AiTokenUsage"> | string | null
+    UsageRaw?: JsonNullableFilter<"AiTokenUsage">
+    ProviderMetadata?: JsonNullableFilter<"AiTokenUsage">
+    Metadata?: JsonNullableFilter<"AiTokenUsage">
+    CreatedAt?: DateTimeFilter<"AiTokenUsage"> | Date | string
+    UpdatedAt?: DateTimeNullableFilter<"AiTokenUsage"> | Date | string | null
+  }
+
+  export type UserCreateWithoutAiTokenUsageInput = {
+    UserId?: string
+    Nama: string
+    Email: string
+    EmailVerifiedAt?: Date | string | null
+    TempatLahir?: string | null
+    TanggalLahir?: Date | string | null
+    JenisKelamin?: $Enums.JenisKelamin
+    PendidikanTerakhir?: $Enums.Jenjang
+    Avatar?: Bytes | null
+    Agama?: string | null
+    Telepon?: string | null
+    NomorWa?: string | null
+    NomorHp?: string | null
+    RememberToken?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    Alamat: AlamatCreateNestedOneWithoutUserInput
+    Mahasiswa?: MahasiswaCreateNestedManyWithoutUserInput
+    UserHasPermissions?: UserHasPermissionsCreateNestedManyWithoutUserInput
+    UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
+    Userlogin?: UserloginCreateNestedManyWithoutUserInput
+    Asesor?: AsesorCreateNestedManyWithoutUserInput
+    tickets?: TicketsCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAiTokenUsageInput = {
+    UserId?: string
+    AlamatId: string
+    Nama: string
+    Email: string
+    EmailVerifiedAt?: Date | string | null
+    TempatLahir?: string | null
+    TanggalLahir?: Date | string | null
+    JenisKelamin?: $Enums.JenisKelamin
+    PendidikanTerakhir?: $Enums.Jenjang
+    Avatar?: Bytes | null
+    Agama?: string | null
+    Telepon?: string | null
+    NomorWa?: string | null
+    NomorHp?: string | null
+    RememberToken?: string | null
+    CreatedAt?: Date | string | null
+    UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    Mahasiswa?: MahasiswaUncheckedCreateNestedManyWithoutUserInput
+    UserHasPermissions?: UserHasPermissionsUncheckedCreateNestedManyWithoutUserInput
+    UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
+    Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
+    Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
+    tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAiTokenUsageInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAiTokenUsageInput, UserUncheckedCreateWithoutAiTokenUsageInput>
+  }
+
+  export type UserUpsertWithoutAiTokenUsageInput = {
+    update: XOR<UserUpdateWithoutAiTokenUsageInput, UserUncheckedUpdateWithoutAiTokenUsageInput>
+    create: XOR<UserCreateWithoutAiTokenUsageInput, UserUncheckedCreateWithoutAiTokenUsageInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAiTokenUsageInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAiTokenUsageInput, UserUncheckedUpdateWithoutAiTokenUsageInput>
+  }
+
+  export type UserUpdateWithoutAiTokenUsageInput = {
+    UserId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Email?: StringFieldUpdateOperationsInput | string
+    EmailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TempatLahir?: NullableStringFieldUpdateOperationsInput | string | null
+    TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
+    PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Agama?: NullableStringFieldUpdateOperationsInput | string | null
+    Telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    RememberToken?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Alamat?: AlamatUpdateOneRequiredWithoutUserNestedInput
+    Mahasiswa?: MahasiswaUpdateManyWithoutUserNestedInput
+    UserHasPermissions?: UserHasPermissionsUpdateManyWithoutUserNestedInput
+    UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
+    Userlogin?: UserloginUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUpdateManyWithoutUserNestedInput
+    tickets?: TicketsUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAiTokenUsageInput = {
+    UserId?: StringFieldUpdateOperationsInput | string
+    AlamatId?: StringFieldUpdateOperationsInput | string
+    Nama?: StringFieldUpdateOperationsInput | string
+    Email?: StringFieldUpdateOperationsInput | string
+    EmailVerifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TempatLahir?: NullableStringFieldUpdateOperationsInput | string | null
+    TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
+    PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
+    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Agama?: NullableStringFieldUpdateOperationsInput | string | null
+    Telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorHp?: NullableStringFieldUpdateOperationsInput | string | null
+    RememberToken?: NullableStringFieldUpdateOperationsInput | string | null
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Mahasiswa?: MahasiswaUncheckedUpdateManyWithoutUserNestedInput
+    UserHasPermissions?: UserHasPermissionsUncheckedUpdateManyWithoutUserNestedInput
+    UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
+    Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
+    Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
+    tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutUserloginInput = {
     UserId?: string
     Nama: string
@@ -125116,6 +128806,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
     Asesor?: AsesorCreateNestedManyWithoutUserInput
     tickets?: TicketsCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserloginInput = {
@@ -125142,6 +128833,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
     Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
     tickets?: TicketsUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserloginInput = {
@@ -125184,6 +128876,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUpdateManyWithoutUserNestedInput
     tickets?: TicketsUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserloginInput = {
@@ -125210,6 +128903,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
     tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SettingKegiatanCreateWithoutJenisKegiatanInput = {
@@ -126551,6 +130245,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesCreateNestedManyWithoutUserInput
     Userlogin?: UserloginCreateNestedManyWithoutUserInput
     Asesor?: AsesorCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTicketsInput = {
@@ -126577,6 +130272,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUncheckedCreateNestedManyWithoutUserInput
     Userlogin?: UserloginUncheckedCreateNestedManyWithoutUserInput
     Asesor?: AsesorUncheckedCreateNestedManyWithoutUserInput
+    AiTokenUsage?: AiTokenUsageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTicketsInput = {
@@ -126705,6 +130401,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTicketsInput = {
@@ -126731,6 +130428,7 @@ export namespace Prisma {
     UserHasRoles?: UserHasRolesUncheckedUpdateManyWithoutUserNestedInput
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RoleUpsertWithoutTicketsInput = {
@@ -127356,6 +131054,7 @@ export namespace Prisma {
     Userlogin?: UserloginUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUpdateManyWithoutUserNestedInput
     tickets?: TicketsUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlamatInput = {
@@ -127382,6 +131081,7 @@ export namespace Prisma {
     Userlogin?: UserloginUncheckedUpdateManyWithoutUserNestedInput
     Asesor?: AsesorUncheckedUpdateManyWithoutUserNestedInput
     tickets?: TicketsUncheckedUpdateManyWithoutUserNestedInput
+    AiTokenUsage?: AiTokenUsageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutAlamatInput = {
@@ -129939,6 +133639,52 @@ export namespace Prisma {
     UpdatedAt?: Date | string
   }
 
+  export type AiTokenUsageCreateManyUserInput = {
+    AiTokenUsageId?: string
+    Feature: string
+    FeatureGroup?: string | null
+    Page?: string | null
+    Route?: string | null
+    Method?: string | null
+    RequestId?: string | null
+    SessionId?: string | null
+    ReferenceType?: string | null
+    ReferenceId?: string | null
+    SdkProvider?: string | null
+    LlmProvider?: string | null
+    LlmModel: string
+    LlmModelVersion?: string | null
+    LlmModelSlug: string
+    Temperature?: number | null
+    TopP?: number | null
+    MaxOutputTokens?: number | null
+    InputTokens?: number
+    OutputTokens?: number
+    TotalTokens?: number
+    ReasoningTokens?: number | null
+    CachedInputTokens?: number | null
+    PromptCharCount?: number | null
+    CompletionCharCount?: number | null
+    PromptMessageCount?: number | null
+    CompletionMessageCount?: number | null
+    DurationMs?: number | null
+    FirstTokenMs?: number | null
+    Streaming?: boolean
+    Status?: string
+    ErrorCode?: string | null
+    ErrorMessage?: string | null
+    InputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: Decimal | DecimalJsLike | number | string | null
+    Currency?: string | null
+    PriceSource?: string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string | null
+  }
+
   export type MahasiswaUpdateWithoutUserInput = {
     MahasiswaId?: StringFieldUpdateOperationsInput | string
     StatusPerkawinan?: EnumStatusPerkawinanFieldUpdateOperationsInput | $Enums.StatusPerkawinan
@@ -130072,6 +133818,144 @@ export namespace Prisma {
     Status?: EnumStatusTiketBantuanFieldUpdateOperationsInput | $Enums.StatusTiketBantuan
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AiTokenUsageUpdateWithoutUserInput = {
+    AiTokenUsageId?: StringFieldUpdateOperationsInput | string
+    Feature?: StringFieldUpdateOperationsInput | string
+    FeatureGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Page?: NullableStringFieldUpdateOperationsInput | string | null
+    Route?: NullableStringFieldUpdateOperationsInput | string | null
+    Method?: NullableStringFieldUpdateOperationsInput | string | null
+    RequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    SessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceType?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    SdkProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModel?: StringFieldUpdateOperationsInput | string
+    LlmModelVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModelSlug?: StringFieldUpdateOperationsInput | string
+    Temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    TopP?: NullableFloatFieldUpdateOperationsInput | number | null
+    MaxOutputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    InputTokens?: IntFieldUpdateOperationsInput | number
+    OutputTokens?: IntFieldUpdateOperationsInput | number
+    TotalTokens?: IntFieldUpdateOperationsInput | number
+    ReasoningTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    CachedInputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    DurationMs?: NullableIntFieldUpdateOperationsInput | number | null
+    FirstTokenMs?: NullableIntFieldUpdateOperationsInput | number | null
+    Streaming?: BoolFieldUpdateOperationsInput | boolean
+    Status?: StringFieldUpdateOperationsInput | string
+    ErrorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    ErrorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    InputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Currency?: NullableStringFieldUpdateOperationsInput | string | null
+    PriceSource?: NullableStringFieldUpdateOperationsInput | string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AiTokenUsageUncheckedUpdateWithoutUserInput = {
+    AiTokenUsageId?: StringFieldUpdateOperationsInput | string
+    Feature?: StringFieldUpdateOperationsInput | string
+    FeatureGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Page?: NullableStringFieldUpdateOperationsInput | string | null
+    Route?: NullableStringFieldUpdateOperationsInput | string | null
+    Method?: NullableStringFieldUpdateOperationsInput | string | null
+    RequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    SessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceType?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    SdkProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModel?: StringFieldUpdateOperationsInput | string
+    LlmModelVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModelSlug?: StringFieldUpdateOperationsInput | string
+    Temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    TopP?: NullableFloatFieldUpdateOperationsInput | number | null
+    MaxOutputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    InputTokens?: IntFieldUpdateOperationsInput | number
+    OutputTokens?: IntFieldUpdateOperationsInput | number
+    TotalTokens?: IntFieldUpdateOperationsInput | number
+    ReasoningTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    CachedInputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    DurationMs?: NullableIntFieldUpdateOperationsInput | number | null
+    FirstTokenMs?: NullableIntFieldUpdateOperationsInput | number | null
+    Streaming?: BoolFieldUpdateOperationsInput | boolean
+    Status?: StringFieldUpdateOperationsInput | string
+    ErrorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    ErrorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    InputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Currency?: NullableStringFieldUpdateOperationsInput | string | null
+    PriceSource?: NullableStringFieldUpdateOperationsInput | string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AiTokenUsageUncheckedUpdateManyWithoutUserInput = {
+    AiTokenUsageId?: StringFieldUpdateOperationsInput | string
+    Feature?: StringFieldUpdateOperationsInput | string
+    FeatureGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    Page?: NullableStringFieldUpdateOperationsInput | string | null
+    Route?: NullableStringFieldUpdateOperationsInput | string | null
+    Method?: NullableStringFieldUpdateOperationsInput | string | null
+    RequestId?: NullableStringFieldUpdateOperationsInput | string | null
+    SessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceType?: NullableStringFieldUpdateOperationsInput | string | null
+    ReferenceId?: NullableStringFieldUpdateOperationsInput | string | null
+    SdkProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmProvider?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModel?: StringFieldUpdateOperationsInput | string
+    LlmModelVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    LlmModelSlug?: StringFieldUpdateOperationsInput | string
+    Temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    TopP?: NullableFloatFieldUpdateOperationsInput | number | null
+    MaxOutputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    InputTokens?: IntFieldUpdateOperationsInput | number
+    OutputTokens?: IntFieldUpdateOperationsInput | number
+    TotalTokens?: IntFieldUpdateOperationsInput | number
+    ReasoningTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    CachedInputTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionCharCount?: NullableIntFieldUpdateOperationsInput | number | null
+    PromptMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    CompletionMessageCount?: NullableIntFieldUpdateOperationsInput | number | null
+    DurationMs?: NullableIntFieldUpdateOperationsInput | number | null
+    FirstTokenMs?: NullableIntFieldUpdateOperationsInput | number | null
+    Streaming?: BoolFieldUpdateOperationsInput | boolean
+    Status?: StringFieldUpdateOperationsInput | string
+    ErrorCode?: NullableStringFieldUpdateOperationsInput | string | null
+    ErrorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    InputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    OutputCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    TotalCostUsd?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    Currency?: NullableStringFieldUpdateOperationsInput | string | null
+    PriceSource?: NullableStringFieldUpdateOperationsInput | string | null
+    UsageRaw?: NullableJsonNullValueInput | InputJsonValue
+    ProviderMetadata?: NullableJsonNullValueInput | InputJsonValue
+    Metadata?: NullableJsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SettingKegiatanCreateManyJenisKegiatanInput = {

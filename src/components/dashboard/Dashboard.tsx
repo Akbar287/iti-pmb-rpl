@@ -7,7 +7,19 @@ import {
     getChartMahasiswaRole,
     getChartPmbRole,
     getChartRektorRole,
+    getMultiPeriodeChart,
+    getPeriodeList,
+    MultiPeriodeChart,
 } from '@/services/ChartServices'
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
 import {
     ChartAkademikData,
     ChartDataItemAdmin,
@@ -22,6 +34,8 @@ import React from 'react'
 import { safeStorage } from '@/lib/safe-storage'
 import { Skeleton } from '../ui/skeleton'
 import {
+    Area,
+    AreaChart,
     Bar,
     BarChart,
     CartesianGrid,
@@ -30,6 +44,10 @@ import {
     LabelList,
     Pie,
     PieChart,
+    PolarAngleAxis,
+    PolarGrid,
+    Radar,
+    RadarChart,
     XAxis,
     YAxis,
 } from 'recharts'
@@ -115,6 +133,18 @@ const PIE_COLORS = [
     'var(--chart-3)',
     'var(--chart-4)',
     'var(--chart-5)',
+]
+
+// Palet hingga 8 periode untuk chart perbandingan antar periode.
+const MULTI_COLORS = [
+    'var(--chart-1)',
+    'var(--chart-2)',
+    'var(--chart-3)',
+    'var(--chart-4)',
+    'var(--chart-5)',
+    '#6366f1',
+    '#ec4899',
+    '#14b8a6',
 ]
 
 // Gabungkan dua array yang dikunci field yang sama (mis. programStudi) menjadi
@@ -278,82 +308,240 @@ const Dashboard = ({ session }: { session: Session | null }) => {
     const [dataAsesor, setDataAsesor] = React.useState<ChartResponseAsesor | null>(null)
     const [dataPmb, setDataPmb] = React.useState<ChartDataItemPmb | null>(null)
     const [dataAdmin, setDataAdmin] = React.useState<ChartDataItemAdmin | null>(null)
+    // Filter periode (kosong = semua periode). Tidak berlaku untuk Mahasiswa.
+    const [periode, setPeriode] = React.useState<string>('')
+    const [periodeList, setPeriodeList] = React.useState<string[]>([])
+    // Data agregasi lintas periode (independen dari filter periode).
+    const [dataMultiPeriode, setDataMultiPeriode] = React.useState<MultiPeriodeChart | null>(null)
 
+    // ── Resolusi role + daftar periode (sekali, saat sesi tersedia) ──────────
     React.useEffect(() => {
-        // Tentukan role aktif: utamakan pilihan yang tersimpan di localStorage,
-        // namun saat pertama kali login storage belum sempat diisi oleh sidebar,
-        // jadi jatuh ke role pertama dari sesi agar dashboard tidak macet skeleton.
-        let roleState: { GuardName: string; Icon: string; Name: string; RoleId: string } | null = role ?? null
-        if (!roleState) {
-            const stored = safeStorage.getItem('pmb.iti.role')
-            if (stored) {
-                try {
-                    roleState = JSON.parse(stored)
-                } catch {
-                    roleState = null
-                }
+        if (role) return
+        let roleState: { GuardName: string; Icon: string; Name: string; RoleId: string } | null = null
+        const stored = safeStorage.getItem('pmb.iti.role')
+        if (stored) {
+            try {
+                roleState = JSON.parse(stored)
+            } catch {
+                roleState = null
             }
-            if (!roleState && session?.user.roles && session.user.roles.length > 0) {
-                const r = session.user.roles[0] as { RoleId: string; Name: string; GuardName?: string }
-                roleState = {
-                    RoleId: r.RoleId,
-                    Name: r.Name,
-                    GuardName: r.GuardName ?? '',
-                    Icon: '',
-                }
-            }
-            if (roleState) setRole(roleState)
         }
+        if (!roleState && session?.user.roles && session.user.roles.length > 0) {
+            const r = session.user.roles[0] as { RoleId: string; Name: string; GuardName?: string }
+            roleState = {
+                RoleId: r.RoleId,
+                Name: r.Name,
+                GuardName: r.GuardName ?? '',
+                Icon: '',
+            }
+        }
+        if (roleState) {
+            setRole(roleState)
+            // Mahasiswa tidak memakai filter periode maupun chart antar periode.
+            if (!roleState.Name.match('Mahasiswa')) {
+                getPeriodeList()
+                    .then((list) => setPeriodeList(list))
+                    .catch(() => { })
+                getMultiPeriodeChart()
+                    .then((res) => setDataMultiPeriode(res))
+                    .catch(() => { })
+            }
+        }
+    }, [session, role])
 
-        // Sesi belum tersedia dan storage kosong — tunggu render berikutnya.
-        if (!roleState) return
+    // ── Muat data chart sesuai role + periode terpilih ───────────────────────
+    React.useEffect(() => {
+        if (!role) return
 
         setLoading(true)
 
-        if (roleState?.Name.match('Rektor')) {
-            getChartRektorRole(roleState.RoleId)
+        if (role.Name.match('Rektor')) {
+            getChartRektorRole(role.RoleId, periode)
                 .then((res) => setDataRektor(res))
                 .catch(() => { })
                 .finally(() => setLoading(false))
-        } else if (roleState?.Name.match('Kaprodi')) {
-            getChartKaprodiRole(roleState.RoleId)
+        } else if (role.Name.match('Kaprodi')) {
+            getChartKaprodiRole(role.RoleId, periode)
                 .then((res) => setDataKaprodi(res))
                 .catch(() => { })
                 .finally(() => setLoading(false))
-        } else if (roleState?.Name.match('Asesor')) {
-            getChartAsesorRole(roleState.RoleId)
+        } else if (role.Name.match('Asesor')) {
+            getChartAsesorRole(role.RoleId, periode)
                 .then((res) => setDataAsesor(res))
                 .catch(() => { })
                 .finally(() => setLoading(false))
-        } else if (roleState?.Name.match('Mahasiswa')) {
-            getChartMahasiswaRole(roleState.RoleId)
+        } else if (role.Name.match('Mahasiswa')) {
+            getChartMahasiswaRole(role.RoleId)
                 .then((res) => setDataMhs(res))
                 .catch(() => { })
                 .finally(() => setLoading(false))
-        } else if (roleState?.Name.match('Admin')) {
-            getChartAdminRole(roleState.RoleId)
+        } else if (role.Name.match('Admin')) {
+            getChartAdminRole(role.RoleId, periode)
                 .then((res) => setDataAdmin(res))
                 .catch(() => { })
                 .finally(() => setLoading(false))
-        } else if (roleState?.Name.match('PMB')) {
-            getChartPmbRole(roleState.RoleId)
+        } else if (role.Name.match('PMB')) {
+            getChartPmbRole(role.RoleId, periode)
                 .then((res) => setDataPmb(res))
                 .catch(() => { })
                 .finally(() => setLoading(false))
-        } else if (roleState?.Name.match('Akademik')) {
-            getChartAkademikRole(roleState.RoleId)
+        } else if (role.Name.match('Akademik')) {
+            getChartAkademikRole(role.RoleId, periode)
                 .then((res) => setDataAkademik(res))
                 .catch(() => { })
                 .finally(() => setLoading(false))
         } else {
             setLoading(false)
         }
-    }, [session])
+    }, [role, periode])
+
+    // Filter periode (dirender di atas konten setiap role kecuali Mahasiswa).
+    const periodeFilterNode = (
+        <div className={`flex items-center justify-end gap-3 ${G} rounded-lg px-4 py-3`}>
+            <span className="text-sm font-medium text-muted-foreground">Periode</span>
+            <Select
+                value={periode || 'ALL'}
+                onValueChange={(v) => setPeriode(v === 'ALL' ? '' : v)}
+            >
+                <SelectTrigger className="w-[220px]">
+                    <SelectValue placeholder="Semua Periode" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectGroup>
+                        <SelectLabel>Periode</SelectLabel>
+                        <SelectItem value="ALL">Semua Periode</SelectItem>
+                        {periodeList.map((p) => (
+                            <SelectItem key={p} value={p}>{p}</SelectItem>
+                        ))}
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+        </div>
+    )
+
+    // Konfigurasi warna per periode untuk chart perbandingan antar periode.
+    const cfgMulti: ChartConfig = Object.fromEntries(
+        (dataMultiPeriode?.periods ?? []).map((p, i) => [
+            p,
+            { label: p, color: MULTI_COLORS[i % MULTI_COLORS.length] },
+        ])
+    )
+
+    // Section perbandingan antar periode (radar + bar), dirender di bawah konten
+    // setiap role kecuali Mahasiswa. Independen dari filter periode.
+    const multiPeriodeNode =
+        dataMultiPeriode && dataMultiPeriode.periods.length > 0 ? (
+            <div className="space-y-4">
+                <div className="flex items-center gap-3 pt-2">
+                    <div className="h-px flex-1 bg-border" />
+                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        Perbandingan Antar Periode (maks 8 terbaru)
+                    </span>
+                    <div className="h-px flex-1 bg-border" />
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <Card className={`${G} flex flex-col`}>
+                        <CardHeader className="items-center">
+                            <CardTitle>Radar Distribusi Status</CardTitle>
+                            <CardDescription>Sebaran mahasiswa per status di tiap periode</CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex-1">
+                            <ChartContainer config={cfgMulti} className="mx-auto aspect-square max-h-[320px]">
+                                <RadarChart data={dataMultiPeriode.rows}>
+                                    <ChartTooltip content={<ChartTooltipContent />} />
+                                    <PolarGrid />
+                                    <PolarAngleAxis dataKey="category" tickFormatter={(v) => getInitials(String(v))} />
+                                    {dataMultiPeriode.periods.map((p, i) => (
+                                        <Radar
+                                            key={p}
+                                            dataKey={p}
+                                            stroke={MULTI_COLORS[i % MULTI_COLORS.length]}
+                                            fill={MULTI_COLORS[i % MULTI_COLORS.length]}
+                                            fillOpacity={0.05}
+                                        />
+                                    ))}
+                                    <ChartLegend content={<ChartLegendContent />} />
+                                </RadarChart>
+                            </ChartContainer>
+                        </CardContent>
+                    </Card>
+
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Bar History</CardTitle>
+                            <CardDescription>Perbandingan jumlah mahasiswa per status antar periode</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <ChartContainer config={cfgMulti}>
+                                <BarChart data={dataMultiPeriode.rows} margin={{ top: 16 }}>
+                                    <CartesianGrid vertical={false} />
+                                    <XAxis dataKey="category" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(String(v))} />
+                                    <YAxis tickLine={false} axisLine={false} />
+                                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                    <ChartLegend content={<ChartLegendContent />} />
+                                    {dataMultiPeriode.periods.map((p, i) => (
+                                        <Bar key={p} dataKey={p} fill={MULTI_COLORS[i % MULTI_COLORS.length]} radius={2} />
+                                    ))}
+                                </BarChart>
+                            </ChartContainer>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Tren Pendaftar per Periode</CardTitle>
+                            <CardDescription>Total calon mahasiswa RPL yang mendaftar di tiap periode</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {dataMultiPeriode.trend.length > 0 ? (
+                                <ChartContainer config={{ total: { label: 'Pendaftar', color: 'var(--chart-1)' } }}>
+                                    <AreaChart data={dataMultiPeriode.trend} margin={{ top: 16, left: 8, right: 8 }}>
+                                        <CartesianGrid vertical={false} />
+                                        <XAxis dataKey="periode" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(String(v))} />
+                                        <YAxis tickLine={false} axisLine={false} />
+                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                        <Area dataKey="total" type="monotone" stroke="var(--chart-1)" fill="var(--chart-1)" fillOpacity={0.15}>
+                                            <LabelList dataKey="total" position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        </Area>
+                                    </AreaChart>
+                                </ChartContainer>
+                            ) : <EmptyChart />}
+                        </CardContent>
+                    </Card>
+
+                    <Card className={G}>
+                        <CardHeader>
+                            <CardTitle>Mahasiswa per Prodi Antar Periode</CardTitle>
+                            <CardDescription>Perbandingan intake program studi di tiap periode</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            {dataMultiPeriode.prodiRows.length > 0 ? (
+                                <ChartContainer config={cfgMulti}>
+                                    <BarChart data={dataMultiPeriode.prodiRows} margin={{ top: 16 }}>
+                                        <CartesianGrid vertical={false} />
+                                        <XAxis dataKey="category" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(String(v))} />
+                                        <YAxis tickLine={false} axisLine={false} />
+                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                                        <ChartLegend content={<ChartLegendContent />} />
+                                        {dataMultiPeriode.periods.map((p, i) => (
+                                            <Bar key={p} dataKey={p} fill={MULTI_COLORS[i % MULTI_COLORS.length]} radius={2} />
+                                        ))}
+                                    </BarChart>
+                                </ChartContainer>
+                            ) : <EmptyChart />}
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        ) : null
 
     // ── Loading ──────────────────────────────────────────────────────────────
     if (loading || role === null) {
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {Array.from({ length: 4 }).map((_, i) => (
                         <Skeleton key={i} className="h-24 w-full rounded-lg" />
@@ -417,6 +605,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 {/* Stat cards */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
@@ -623,6 +812,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         color="var(--chart-2)"
                     />
                 </div>
+                {multiPeriodeNode}
             </div>
         )
     }
@@ -662,6 +852,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <StatCard label="Total Asesor" value={totalAsesor} icon={UserCheck} color="blue" />
                     <StatCard label="Mahasiswa Intake" value={totalIntake} icon={Users} color="green" />
@@ -788,6 +979,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         color="var(--chart-2)"
                     />
                 </div>
+                {multiPeriodeNode}
             </div>
         )
     }
@@ -829,6 +1021,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 <div className="grid grid-cols-3 gap-4">
                     <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
                     <StatCard label="Sudah Asesmen" value={sudah} icon={CheckCircle2} color="green" />
@@ -902,6 +1095,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         color="var(--chart-1)"
                     />
                 </div>
+                {multiPeriodeNode}
             </div>
         )
     }
@@ -928,6 +1122,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 {/* Timeline */}
                 {chart4.length > 0 && (
                     <div className="space-y-3">
@@ -1056,6 +1251,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 <div className="grid grid-cols-3 gap-4">
                     <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
                     <StatCard label="Total Pengguna" value={totalUser} icon={UserCheck} color="green" />
@@ -1128,6 +1324,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         centerLabel="Pengguna"
                     />
                 </div>
+                {multiPeriodeNode}
             </div>
         )
     }
@@ -1157,6 +1354,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 <div className="grid grid-cols-3 gap-4">
                     <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
                     <StatCard label="Total Mata Kuliah" value={totalMK} icon={BookOpen} color="green" />
@@ -1284,6 +1482,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         centerLabel="Mahasiswa"
                     />
                 </div>
+                {multiPeriodeNode}
             </div>
         )
     }
@@ -1330,6 +1529,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
+                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <StatCard label="Asesor Sudah SK" value={asesorSK} icon={CheckCircle2} color="green" />
                     <StatCard label="Asesor Belum SK" value={asesorBelum} icon={ClipboardList} color="rose" />
@@ -1410,6 +1610,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         centerLabel="Total"
                     />
                 </div>
+                {multiPeriodeNode}
             </div>
         )
     }

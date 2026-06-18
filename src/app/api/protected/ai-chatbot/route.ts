@@ -2,6 +2,12 @@ import { Hono } from 'hono'
 import { streamText, CoreMessage, gateway } from "ai";
 import { handle } from 'hono/vercel'
 import { AiChatNoAuth } from "@/config/ai"
+import { randomUUID } from 'crypto'
+import {
+    countAiMessageCharacters,
+    countAiMessages,
+    createAiTokenUsage,
+} from '@/lib/ai-token-usage'
 
 const app = new Hono().basePath('/api/protected/ai-chatbot')
 
@@ -12,13 +18,18 @@ type ClientMessage = { role: string; content: string }
 type ChatRequestBody = {
     messages?: ClientMessage[]
     context?: string
+    sessionId?: string
 }
 
 
 app.post('/', async (c) => {
-    const body = await c.req.json()
+    const body = await c.req.json() as ChatRequestBody
     const messages = (body.messages ?? []) as { role: string; content: string }[]
     const systemPrompt = buildRplRagSystemPrompt(body.context)
+    const modelSlug = AiChatNoAuth ? AiChatNoAuth : 'groq/gpt-oss-20b'
+    const requestId = c.req.header('x-request-id') ?? randomUUID()
+    const sessionId = body.sessionId ?? c.req.header('x-ai-session-id') ?? null
+    const startedAt = Date.now()
     const aiMessages: CoreMessage[] = [
         {
             role: 'system',
@@ -31,7 +42,7 @@ app.post('/', async (c) => {
     ]
 
     const result = await streamText({
-        model: gateway(AiChatNoAuth ? AiChatNoAuth : 'groq/gpt-oss-20b'),
+        model: gateway(modelSlug),
         temperature: 0,
         topP: 0.9,
         messages: aiMessages,
@@ -41,13 +52,73 @@ app.post('/', async (c) => {
 
     const stream = new ReadableStream({
         async start(controller) {
+            let completionText = ''
+            let firstTokenMs: number | null = null
             try {
                 for await (const chunk of result.textStream) {
+                    if (firstTokenMs === null) firstTokenMs = Date.now() - startedAt
+                    completionText += chunk
                     controller.enqueue(encoder.encode(chunk))
                 }
+
+                let usage = null
+                try {
+                    usage = await result.totalUsage
+                } catch (usageError) {
+                    console.error('AI usage read error', usageError)
+                }
+
+                await createAiTokenUsage({
+                    feature: 'AI_CHATBOT',
+                    featureGroup: 'CHATBOT',
+                    page: '/ai-chat',
+                    route: '/api/protected/ai-chatbot',
+                    method: 'POST',
+                    requestId,
+                    sessionId,
+                    modelSlug,
+                    temperature: 0,
+                    topP: 0.9,
+                    usage,
+                    promptCharCount: countAiMessageCharacters(aiMessages),
+                    completionCharCount: completionText.length,
+                    promptMessageCount: countAiMessages(aiMessages),
+                    completionMessageCount: completionText ? 1 : 0,
+                    durationMs: Date.now() - startedAt,
+                    firstTokenMs,
+                    streaming: true,
+                    metadata: {
+                        hasRagContext: Boolean(body.context?.trim()),
+                    },
+                })
+
                 controller.close()
             } catch (err) {
                 console.error('stream error', err)
+                await createAiTokenUsage({
+                    feature: 'AI_CHATBOT',
+                    featureGroup: 'CHATBOT',
+                    page: '/ai-chat',
+                    route: '/api/protected/ai-chatbot',
+                    method: 'POST',
+                    requestId,
+                    sessionId,
+                    modelSlug,
+                    temperature: 0,
+                    topP: 0.9,
+                    promptCharCount: countAiMessageCharacters(aiMessages),
+                    completionCharCount: completionText.length,
+                    promptMessageCount: countAiMessages(aiMessages),
+                    completionMessageCount: completionText ? 1 : 0,
+                    durationMs: Date.now() - startedAt,
+                    firstTokenMs,
+                    streaming: true,
+                    status: 'ERROR',
+                    errorMessage: err instanceof Error ? err.message : String(err),
+                    metadata: {
+                        hasRagContext: Boolean(body.context?.trim()),
+                    },
+                })
                 controller.error(err)
             }
         },

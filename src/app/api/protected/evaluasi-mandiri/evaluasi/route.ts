@@ -13,8 +13,12 @@ import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { normalizeJson } from "@/lib/NormalizedAiResult"
 import { AiJustifikasiOcr } from '@/config/ai'
+import { randomUUID } from 'crypto'
+import {
+    createAiTokenUsage,
+} from '@/lib/ai-token-usage'
 
-const app = new Hono().basePath('/api/protected/evaluasi-mandiri/evaluasi')
+const app = new Hono<{ Variables: { token: { id?: string } } }>().basePath('/api/protected/evaluasi-mandiri/evaluasi')
 
 app.use('*', withApiAuth)
 
@@ -199,6 +203,9 @@ app.get('/', async (c) => {
 
 app.post('/', async (c) => {
     const body: RequestSetEvaluasiDiri = await c.req.json()
+    const token = c.get('token') as { id?: string } | undefined
+    const userId = token?.id ?? null
+    const requestId = c.req.header('x-request-id') ?? randomUUID()
 
     const all = await prisma.capaianPembelajaran.findFirst({
         where: { CapaianPembelajaranId: body.CapaianPembelajaranId },
@@ -362,8 +369,18 @@ app.post('/', async (c) => {
         }
     }))
 
+    const prompt = buildAssessmentPrompt({
+        nama: nama.Mahasiswa.User.Nama,
+        mata_kuliah: all.MataKuliah.Nama,
+        cpl: all.Nama,
+        profisiensi: body.ProfiensiPengetahuan,
+        dokumen: temp,
+    })
+    const modelSlug = AiJustifikasiOcr ? AiJustifikasiOcr : "gpt-oss:20b"
+    const startedAt = Date.now()
+
     const result = await streamText({
-        model: gateway(AiJustifikasiOcr ? AiJustifikasiOcr : "gpt-oss:20b"),
+        model: gateway(modelSlug),
         temperature: 0,
         topP: 0.9,
         messages: [
@@ -372,13 +389,7 @@ app.post('/', async (c) => {
                 content: [
                     {
                         type: "text",
-                        text: buildAssessmentPrompt({
-                            nama: nama.Mahasiswa.User.Nama,
-                            mata_kuliah: all.MataKuliah.Nama,
-                            cpl: all.Nama,
-                            profisiensi: body.ProfiensiPengetahuan,
-                            dokumen: temp,
-                        }),
+                        text: prompt,
                     },
                 ],
             },
@@ -386,9 +397,74 @@ app.post('/', async (c) => {
     });
 
     let fullText = ""
-    for await (const chunk of result.textStream) {
-        fullText += chunk;
+    try {
+        for await (const chunk of result.textStream) {
+            fullText += chunk;
+        }
+    } catch (err) {
+        await createAiTokenUsage({
+            userId,
+            feature: 'AI_JUSTIFIKASI_OCR',
+            featureGroup: 'AI_ASESSMEN',
+            page: '/evaluasi-mandiri/evaluasi',
+            route: '/api/protected/evaluasi-mandiri/evaluasi',
+            method: 'POST',
+            requestId,
+            referenceType: 'EvaluasiDiri',
+            referenceId: data.EvaluasiDiriId,
+            modelSlug,
+            temperature: 0,
+            topP: 0.9,
+            promptCharCount: prompt.length,
+            completionCharCount: fullText.length,
+            promptMessageCount: 1,
+            completionMessageCount: fullText ? 1 : 0,
+            durationMs: Date.now() - startedAt,
+            status: 'ERROR',
+            errorMessage: err instanceof Error ? err.message : String(err),
+            metadata: {
+                pendaftaranId: body.PendaftaranId,
+                mataKuliahMahasiswaId: body.MataKuliahMahasiswaId,
+                capaianPembelajaranId: body.CapaianPembelajaranId,
+                jumlahDokumen: temp.length,
+            },
+        })
+        throw err
     }
+
+    let usage = null
+    try {
+        usage = await result.totalUsage
+    } catch (usageError) {
+        console.error('AI usage read error', usageError)
+    }
+
+    await createAiTokenUsage({
+        userId,
+        feature: 'AI_JUSTIFIKASI_OCR',
+        featureGroup: 'AI_ASESSMEN',
+        page: '/evaluasi-mandiri/evaluasi',
+        route: '/api/protected/evaluasi-mandiri/evaluasi',
+        method: 'POST',
+        requestId,
+        referenceType: 'EvaluasiDiri',
+        referenceId: data.EvaluasiDiriId,
+        modelSlug,
+        temperature: 0,
+        topP: 0.9,
+        usage,
+        promptCharCount: prompt.length,
+        completionCharCount: fullText.length,
+        promptMessageCount: 1,
+        completionMessageCount: fullText ? 1 : 0,
+        durationMs: Date.now() - startedAt,
+        metadata: {
+            pendaftaranId: body.PendaftaranId,
+            mataKuliahMahasiswaId: body.MataKuliahMahasiswaId,
+            capaianPembelajaranId: body.CapaianPembelajaranId,
+            jumlahDokumen: temp.length,
+        },
+    })
 
     const saveAsessmen: AssessmentResult = normalizeJson<AssessmentResult>(fullText);
 
