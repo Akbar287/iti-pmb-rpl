@@ -435,7 +435,7 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                 <div className="flex items-center gap-3 pt-2">
                     <div className="h-px flex-1 bg-border" />
                     <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        Perbandingan Antar Periode (maks 8 terbaru)
+                        Perbandingan Antar Periode
                     </span>
                     <div className="h-px flex-1 bg-border" />
                 </div>

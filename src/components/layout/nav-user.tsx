@@ -107,9 +107,9 @@ export function NavUser({
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
-                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg border-white/80
-                        bg-white/40 backdrop-blur-3xl
-                        shadow-sm shadow-black/5
+                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg border border-white/40
+                        bg-white/20 backdrop-blur-2xl
+                        shadow-lg shadow-black/10
                         dark:border-white/10 dark:bg-slate-950/40"
                         side={isMobile ? 'bottom' : 'right'}
                         align="end"

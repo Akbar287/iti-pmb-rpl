@@ -1,11 +1,8 @@
 import React from 'react'
+import NotifikasiComponent from '@/components/notifikasi/NotifikasiComponent'
 
 const Page = () => {
-    return (
-        <div>
-            <h1>Notifikasi</h1>
-        </div>
-    )
+    return <NotifikasiComponent />
 }
 
 export default Page

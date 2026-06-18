@@ -155,7 +155,8 @@ const menu: MenuStoreProps[] = [
         ],
     },
     {
-        namaRole: ['Kaprodi', 'Asesor', 'Akademik', 'Wakil Rektor'],
+        namaRole: ['Kaprodi'],
+        // namaRole: ['Kaprodi', 'Asesor', 'Akademik', 'Wakil Rektor'],
         title: 'Asesor',
         url: '/asesor',
         icon: BookTextIcon,

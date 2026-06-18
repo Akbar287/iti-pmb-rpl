@@ -58,7 +58,8 @@ export function NavMain({
                                     <SidebarMenuSub>
                                         {item.items.map((item) => {
                                             const isSubActive =
-                                                pathname.startsWith(item.url)
+                                                pathname === item.url ||
+                                                pathname.startsWith(item.url + '/')
 
                                             return (
                                                 <SidebarMenuSubItem

@@ -1,7 +1,8 @@
 import React from 'react'
+import SubMenuLanding from '@/components/layout/SubMenuLanding'
 
 const Page = () => {
-    return <div>Kelengkapan Informasi</div>
+    return <SubMenuLanding />
 }
 
 export default Page
