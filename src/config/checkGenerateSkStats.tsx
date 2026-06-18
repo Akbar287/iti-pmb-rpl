@@ -30,6 +30,8 @@ export function isGenerateRekapitulasi(namaStatus: string) {
 // Form 03
 export function isGenerateEvaluasiMandiri(namaStatus: string) {
     return [
+        'Asessmen Mandiri',
+        'Penunjukan Asesor',
         'Asessmen Oleh Asesor',
         'Rekapitulasi Hasil',
         'Rekapitulasi Asessmen',

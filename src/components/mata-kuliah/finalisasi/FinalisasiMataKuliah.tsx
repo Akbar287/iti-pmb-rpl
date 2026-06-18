@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button'
 import { StatusPerkawinan } from '@/generated/prisma'
 import { getEvaluasiMandiri } from '@/services/EvaluasiMandiri/EvaluasiMandiriService'
 import { setStatusPenunjukanAsesor } from '@/services/Status/StatusService'
+import { GenerateFormAsessmen } from '@/services/GeneratePdfService'
 import { DaftarUlangProdiType } from '@/types/DaftarUlangProdi'
-import { ArrowRightIcon } from 'lucide-react'
+import { ArrowRightIcon, FileEditIcon, FileTextIcon, TimerIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import Swal from '@/lib/swal'
+import { toast } from 'sonner'
 import {
     Card,
     CardContent,
@@ -49,6 +51,22 @@ export default function FinalisasiMataKuliah({
         React.useState<DaftarUlangProdiType | null>(null)
     const [loading, setLoading] = React.useState<boolean>(false)
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
+    const [loadingPdf, setLoadingPdf] = React.useState<boolean>(false)
+
+    const lihatFormAsessmen = async () => {
+        if (!dataDaftarUlang) return
+        setLoadingPdf(true)
+        try {
+            const previewUrl = await GenerateFormAsessmen(dataDaftarUlang.PendaftaranId)
+            window.open(previewUrl, '_blank')
+        } catch (err) {
+            toast.error(
+                `Gagal Generate Form Asessmen${err instanceof Error ? `: ${err.message}` : ''}`
+            )
+        } finally {
+            setLoadingPdf(false)
+        }
+    }
 
     React.useEffect(() => {
         if (!selectableMahasiswa) return
@@ -213,6 +231,32 @@ export default function FinalisasiMataKuliah({
 
                             {canProceed ? (
                                 <>
+                                    <Alert className="border-green-500 bg-green-50 dark:bg-green-950">
+                                        <FileEditIcon className="h-4 w-4 text-green-600" />
+                                        <AlertTitle className="text-green-700 dark:text-green-400">Form Asessmen!</AlertTitle>
+                                        <AlertDescription className="text-green-600 dark:text-green-300">
+                                            <span>Lihat Form Evaluasi Diri (Form 03) Anda.</span>
+                                            <Button
+                                                className="mt-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer"
+                                                type="button"
+                                                variant="outline"
+                                                disabled={loadingPdf}
+                                                onClick={() => lihatFormAsessmen()}
+                                            >
+                                                {loadingPdf ? (
+                                                    <>
+                                                        <TimerIcon className="mr-2 h-4 w-4" />
+                                                        Memproses...
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <FileTextIcon className="mr-2 h-4 w-4" />
+                                                        Lihat Form Asessmen
+                                                    </>
+                                                )}
+                                            </Button>
+                                        </AlertDescription>
+                                    </Alert>
                                     <Alert className="border-green-500 bg-green-50 dark:bg-green-950">
                                         <CheckCircle2Icon className="h-4 w-4 text-green-600" />
                                         <AlertTitle className="text-green-700 dark:text-green-400">Evaluasi Mandiri Selesai!</AlertTitle>

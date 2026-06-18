@@ -1,4 +1,66 @@
-import { Jenjang } from "@/generated/prisma"
+import { Jenjang, ProfiensiPengetahuan } from "@/generated/prisma"
+
+export interface GenerateFormAsessmenType {
+    PendaftaranId: string
+    KodePendaftar: string
+    Periode: string
+    Nama: string
+    TempatLahir: string
+    TanggalLahir: Date | null
+    Alamat: string
+    NomorHp: string
+    Email: string
+    ProgramStudi: {
+        ProgramStudiId: string
+        Nama: string
+    }
+    Universitas: {
+        UniversityId: string
+        Logo: string
+        Alamat: string
+        KodePos: string
+        Nama: string
+        UniversitySocialMedia: {
+            UniversitySocialMediaId: string
+            Nama: string
+            Username: string
+            Icon: string
+        }[]
+    }
+    Asesor: {
+        AsesorId: string
+        Nama: string
+        Urutan: number
+    }[]
+    MataKuliah: {
+        MataKuliahMahasiswaId: string
+        Kode: string
+        Nama: string
+        Deskripsi: string
+        Diakui: boolean
+        NilaiHuruf: string
+        SumberPengakuan: string
+        TanggalPengesahan: Date | null
+        CapaianPembelajaran: {
+            CapaianPembelajaranId: string
+            Nama: string
+            Urutan: number
+            Profiensi: ProfiensiPengetahuan | null
+            Dinilai: boolean
+            Valid: boolean
+            Autentik: boolean
+            Terkini: boolean
+            Memadai: boolean
+            Nilai: number | null
+            AsesmenLanjut: string
+            Bukti: {
+                NomorDokumen: number
+                Jenis: string
+                NamaDokumen: string
+            }[]
+        }[]
+    }[]
+}
 
 export interface GenerateSkType {
     PendaftaranId: string

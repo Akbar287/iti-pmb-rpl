@@ -247,7 +247,16 @@ const UploadDokumen = ({
             } else {
                 setProgressLabel('Selesai')
                 if (typeof temp.data !== 'string') {
-                    setData([...data, temp.data])
+                    const row = temp.data
+                    // Backend memakai pola upsert (1 dokumen : 1 buktiForm), jadi
+                    // ganti baris bila jenis dokumennya sudah ada, kalau belum tambahkan.
+                    setData((prev) =>
+                        prev.some((d) => d.JenisDokumenId === row.JenisDokumenId)
+                            ? prev.map((d) =>
+                                  d.JenisDokumenId === row.JenisDokumenId ? row : d
+                              )
+                            : [...prev, row]
+                    )
                 }
                 toast('Data Form Disimpan')
                 setOpenDialog(false)
@@ -684,7 +693,7 @@ function DialogUploadDokumen({
                                     >
                                         {
                                             kataMotivasiNungguLoadUploadFiles[
-                                                motivasiIndex
+                                            motivasiIndex
                                             ]
                                         }
                                     </p>

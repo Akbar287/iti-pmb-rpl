@@ -231,33 +231,65 @@ app.post('/', async (c) => {
     const originalFileName = file.name
     const filename = `${uuidv4()}.${fileExt}`
 
-    const data = await prisma.buktiForm.create({
-        data: {
-            JenisDokumenId: JenisDokumenId as string,
-            PendaftaranId: PendaftaranId as string,
-            NamaFile: filename,
-            FileData: buffer,
-            NamaDokumen: originalFileName,
-            CreatedAt: new Date(),
-            UpdatedAt: new Date(),
-        },
-        select: {
-            JenisDokumenId: true,
-            BuktiFormId: true,
-            PendaftaranId: true,
-            NamaFile: true,
-            NamaDokumen: true,
-            CreatedAt: true,
-            UpdatedAt: true,
-            JenisDokumen: {
-                select: {
-                    Jenis: true,
-                    NomorDokumen: true,
-                    Keterangan: true,
-                }
+    const buktiFormSelect = {
+        JenisDokumenId: true,
+        BuktiFormId: true,
+        PendaftaranId: true,
+        NamaFile: true,
+        NamaDokumen: true,
+        CreatedAt: true,
+        UpdatedAt: true,
+        JenisDokumen: {
+            select: {
+                Jenis: true,
+                NomorDokumen: true,
+                Keterangan: true,
             }
         }
-    });
+    } as const
+
+    // Satu pendaftar hanya boleh memiliki 1 BuktiForm per JenisDokumen.
+    // Bila sudah ada, unggahan berikutnya MENIMPA (update) baris yang sama —
+    // bukan membuat baris baru — sehingga relasi tetap 1 dokumen : 1 buktiForm.
+    const existing = await prisma.buktiForm.findFirst({
+        where: {
+            PendaftaranId: PendaftaranId as string,
+            JenisDokumenId: JenisDokumenId as string,
+        },
+        select: { BuktiFormId: true },
+    })
+
+    let data
+    if (existing) {
+        // Buang hasil OCR halaman lama agar tidak menumpuk dari unggahan sebelumnya.
+        await prisma.buktiFormPages.deleteMany({
+            where: { BuktiFormId: existing.BuktiFormId },
+        })
+
+        data = await prisma.buktiForm.update({
+            where: { BuktiFormId: existing.BuktiFormId },
+            data: {
+                NamaFile: filename,
+                FileData: buffer,
+                NamaDokumen: originalFileName,
+                UpdatedAt: new Date(),
+            },
+            select: buktiFormSelect,
+        })
+    } else {
+        data = await prisma.buktiForm.create({
+            data: {
+                JenisDokumenId: JenisDokumenId as string,
+                PendaftaranId: PendaftaranId as string,
+                NamaFile: filename,
+                FileData: buffer,
+                NamaDokumen: originalFileName,
+                CreatedAt: new Date(),
+                UpdatedAt: new Date(),
+            },
+            select: buktiFormSelect,
+        })
+    }
 
 
     const isTranskripNilai = jenisDokumen.Jenis.trim().toLowerCase().includes('transkrip');

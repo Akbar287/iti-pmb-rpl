@@ -2,10 +2,11 @@ import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { GenerateSkPdf } from '@/components/generate-pdf/GenerateSkPdf'
+import { GenerateFormAsessmen } from '@/components/generate-pdf/GenerateFormAsessmen'
 import { prisma } from '@/lib/prisma'
-import { GenerateRekapitulasiType, GenerateSkType } from '@/types/GeneratePdfTypes'
+import { GenerateFormAsessmenType, GenerateRekapitulasiType, GenerateSkType } from '@/types/GeneratePdfTypes'
 import { Jenjang } from '@/generated/prisma'
-import { isGenerateRekapitulasi, isGenerateSk } from '@/config/checkGenerateSkStats'
+import { isGenerateEvaluasiMandiri, isGenerateRekapitulasi, isGenerateSk } from '@/config/checkGenerateSkStats'
 import { GenerateRekapitulasiPdf } from '@/components/generate-pdf/GenerateRekapitulasiPdf'
 import { renderPdfToStream } from '@/lib/pdf-renderer'
 
@@ -244,6 +245,278 @@ app.get('/', async (c) => {
             });
         } else {
             return c.json({ error: 'Invalid status' }, 400)
+        }
+    } else if (type === 'form_asessmen') {
+        const response = await prisma.pendaftaran.findFirst({
+            where: {
+                PendaftaranId
+            },
+            select: {
+                PendaftaranId: true,
+                KodePendaftar: true,
+                Periode: true,
+                StatusMahasiswaAssesmentHistory: {
+                    select: {
+                        Aktif: true,
+                        StatusMahasiswaAssesment: {
+                            select: {
+                                StatusMahasiswaAssesmentId: true,
+                                NamaStatus: true
+                            }
+                        }
+                    }
+                },
+                AssesorMahasiswa: {
+                    select: {
+                        Urutan: true,
+                        Asesor: {
+                            select: {
+                                AsesorId: true,
+                                User: { select: { Nama: true } }
+                            }
+                        }
+                    }
+                },
+                Mahasiswa: {
+                    select: {
+                        User: {
+                            select: {
+                                Nama: true,
+                                TempatLahir: true,
+                                TanggalLahir: true,
+                                NomorHp: true,
+                                Email: true,
+                                Alamat: {
+                                    select: { Alamat: true, KodePos: true }
+                                }
+                            }
+                        }
+                    }
+                },
+                DaftarUlang: {
+                    select: {
+                        ProgramStudi: {
+                            select: {
+                                ProgramStudiId: true,
+                                Nama: true,
+                                University: {
+                                    select: {
+                                        UniversityId: true,
+                                        Nama: true,
+                                        Alamat: { select: { Alamat: true, KodePos: true } },
+                                        UniversitySosialMedia: {
+                                            select: {
+                                                UniversitySosialMediaId: true,
+                                                Nama: true,
+                                                Username: true,
+                                                Icon: true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                MataKuliahMahasiswa: {
+                    where: { Rpl: true },
+                    select: {
+                        MataKuliahMahasiswaId: true,
+                        Keterangan: true,
+                        MataKuliah: {
+                            select: {
+                                Kode: true,
+                                Nama: true,
+                                Silabus: true,
+                                CapaianPembelajaran: {
+                                    where: { Active: true, DeletedAt: null },
+                                    orderBy: { Urutan: 'asc' },
+                                    select: {
+                                        CapaianPembelajaranId: true,
+                                        Nama: true,
+                                        Urutan: true
+                                    }
+                                }
+                            }
+                        },
+                        SkorAssesmen: {
+                            select: { Diakui: true, NilaiHuruf: true }
+                        },
+                        transkripNilaiRelations: {
+                            select: {
+                                Nilai: true,
+                                Diakui: true
+                            }
+                        },
+                        EvaluasiDiri: {
+                            select: {
+                                CapaianPembelajaranId: true,
+                                ProfiensiPengetahuan: true,
+                                TanggalPengesahan: true,
+                                HasilAssesmen: {
+                                    select: {
+                                        Valid: true,
+                                        Autentik: true,
+                                        Terkini: true,
+                                        Memadai: true,
+                                        Nilai: true,
+                                        Assesmen: true
+                                    }
+                                },
+                                BuktiFormEvaluasiDiri: {
+                                    select: {
+                                        BuktiForm: {
+                                            select: {
+                                                NamaDokumen: true,
+                                                JenisDokumen: {
+                                                    select: { NomorDokumen: true, Jenis: true }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        const transkripNilaiBukti = await prisma.jenisDokumen.findFirst({
+            where: { Jenis: 'Ijazah dan Transkrip Nilai' }, select: {
+                NomorDokumen: true,
+                Jenis: true,
+                BuktiForm: {
+                    where: {
+                        PendaftaranId: PendaftaranId
+                    },
+                    select: {
+                        BuktiFormId: true,
+                        NamaDokumen: true,
+                    }
+                }
+            }
+        })
+
+        if (!response || !transkripNilaiBukti) {
+            return c.json({ error: 'Data not found' }, 404)
+        }
+
+        const check = response.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
+        const currentStatus = check?.StatusMahasiswaAssesment.NamaStatus ?? ''
+
+        if (!isGenerateEvaluasiMandiri(currentStatus)) {
+            return c.json({
+                error: 'Invalid status',
+                message: 'Status pendaftaran belum dapat generate formulir evaluasi diri',
+                currentStatus: currentStatus || '-'
+            }, 400)
+        }
+
+        const programStudi = response.DaftarUlang[0]?.ProgramStudi
+        const universitas = programStudi?.University
+        const user = response.Mahasiswa.User
+
+        const data: GenerateFormAsessmenType = {
+            PendaftaranId: response.PendaftaranId,
+            KodePendaftar: response.KodePendaftar || '',
+            Periode: response.Periode || '',
+            Nama: user.Nama || '',
+            TempatLahir: user.TempatLahir || '',
+            TanggalLahir: user.TanggalLahir ?? null,
+            Alamat: user.Alamat?.Alamat || '',
+            NomorHp: user.NomorHp || '-',
+            Email: user.Email || '',
+            ProgramStudi: {
+                ProgramStudiId: programStudi?.ProgramStudiId || '',
+                Nama: programStudi?.Nama || '',
+            },
+            Universitas: {
+                UniversityId: universitas?.UniversityId || '',
+                Logo: '',
+                Alamat: universitas?.Alamat?.Alamat || '',
+                KodePos: universitas?.Alamat?.KodePos || '',
+                Nama: universitas?.Nama || '',
+                UniversitySocialMedia: universitas?.UniversitySosialMedia.map(sm => ({
+                    UniversitySocialMediaId: sm.UniversitySosialMediaId || '',
+                    Nama: sm.Nama || '',
+                    Username: sm.Username || '',
+                    Icon: sm.Icon || ''
+                })) || [],
+            },
+            Asesor: response.AssesorMahasiswa.map(a => ({
+                AsesorId: a.Asesor.AsesorId,
+                Nama: a.Asesor.User.Nama || '',
+                Urutan: a.Urutan,
+            })),
+            MataKuliah: response.MataKuliahMahasiswa.map(mkm => {
+                const skor = mkm.SkorAssesmen[0]
+                const diakui = mkm.Keterangan === 'Transfer_SKS' ? mkm.transkripNilaiRelations.length == 0 ? false : mkm.transkripNilaiRelations[0].Diakui : skor?.Diakui ?? false
+                const nilaiHuruf = mkm.Keterangan === 'Transfer_SKS' ? mkm.transkripNilaiRelations.length == 0 ? '' : mkm.transkripNilaiRelations[0].Nilai : skor?.NilaiHuruf ?? ''
+                // Index evaluasi diri per capaian untuk join cepat.
+                const evaluasiByCapaian = new Map(
+                    mkm.EvaluasiDiri.map(ed => [ed.CapaianPembelajaranId, ed])
+                )
+                const tanggalPengesahan = mkm.EvaluasiDiri
+                    .map(ed => ed.TanggalPengesahan)
+                    .filter((t): t is Date => !!t)
+                    .sort((a, b) => b.getTime() - a.getTime())[0] ?? null
+
+                return {
+                    MataKuliahMahasiswaId: mkm.MataKuliahMahasiswaId,
+                    Kode: mkm.MataKuliah.Kode || '',
+                    Nama: mkm.MataKuliah.Nama || '',
+                    Deskripsi: mkm.MataKuliah.Silabus || '',
+                    Diakui: diakui,
+                    NilaiHuruf: nilaiHuruf,
+                    SumberPengakuan: mkm.Keterangan === 'Transfer_SKS' ? 'transkrip' : 'porto',
+                    TanggalPengesahan: tanggalPengesahan,
+                    CapaianPembelajaran: mkm.MataKuliah.CapaianPembelajaran.map(cp => {
+                        const ed = evaluasiByCapaian.get(cp.CapaianPembelajaranId)
+                        const hasil = ed?.HasilAssesmen[0]
+                        const bukti = (ed?.BuktiFormEvaluasiDiri ?? []).map(b => ({
+                            NomorDokumen: b.BuktiForm.JenisDokumen.NomorDokumen ?? 0,
+                            Jenis: b.BuktiForm.JenisDokumen.Jenis || '',
+                            NamaDokumen: b.BuktiForm.NamaDokumen || '',
+                        }))
+                        return {
+                            CapaianPembelajaranId: cp.CapaianPembelajaranId,
+                            Nama: cp.Nama || '',
+                            Urutan: cp.Urutan,
+                            Profiensi: ed?.ProfiensiPengetahuan ?? null,
+                            Dinilai: !!hasil,
+                            Valid: hasil?.Valid ?? false,
+                            Autentik: hasil?.Autentik ?? false,
+                            Terkini: hasil?.Terkini ?? false,
+                            Memadai: hasil?.Memadai ?? false,
+                            Nilai: hasil ? hasil.Nilai : null,
+                            AsesmenLanjut: hasil?.Assesmen ?? '',
+                            Bukti: mkm.Keterangan === 'Transfer_SKS' ? [
+                                {
+                                    NomorDokumen: transkripNilaiBukti.NomorDokumen,
+                                    Jenis: transkripNilaiBukti.Jenis ?? '',
+                                    NamaDokumen: transkripNilaiBukti?.BuktiForm[0].NamaDokumen ?? '',
+                                }
+                            ] : bukti,
+                        }
+                    })
+                }
+            })
+        }
+
+        try {
+            const stream = await renderPdfToStream(GenerateFormAsessmen({ data }));
+
+            return c.body(stream as unknown as ReadableStream, 200, {
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': `attachment; filename="form-03-${data.Nama}.pdf"`,
+            });
+        } catch (error) {
+            console.error('[generate-pdf][form_asessmen]', error)
+            return c.json({
+                error: 'Failed to generate formulir evaluasi diri PDF',
+                message: error instanceof Error ? error.message : 'Unknown render error'
+            }, 500)
         }
     } else if (type === 'rekapitulasi') {
         const response = await prisma.pendaftaran.findFirst({

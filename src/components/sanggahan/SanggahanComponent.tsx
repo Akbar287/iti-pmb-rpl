@@ -64,7 +64,7 @@ import { ResponseSanggahanMhsPaginationType } from '@/types/SanggahanTypes'
 import { getSanggahanAsessmentToMahasiswa } from '@/services/Asessment/SanggahanService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { setStatusHasilFinalAsessmen } from '@/services/Status/StatusService'
-import { GenerateRekapitulasiPdf } from '@/services/GeneratePdfService'
+import { GenerateRekapitulasiPdf, GenerateFormAsessmen } from '@/services/GeneratePdfService'
 
 const SanggahanComponent = () => {
     const router = useRouter()
@@ -105,6 +105,11 @@ const SanggahanComponent = () => {
     const [openDialogGeneratePdf, setOpenDialogGeneratePdf] = React.useState<boolean>(false)
     const [pdfPreviewUrl, setPdfPreviewUrl] = React.useState<string | null>(null)
     const [loadingPdf, setLoadingPdf] = React.useState<boolean>(false)
+    const [pdfDialogMeta, setPdfDialogMeta] = React.useState({
+        title: 'Preview Rekapitulasi PDF',
+        description: 'Preview dokumen rekapitulasi hasil penilaian RPL perolehan kredit',
+        downloadFileName: 'rekapitulasi-penilaian-rpl.pdf',
+    })
 
     const startAsessment = (PendaftaranId: string) => {
         router.push('/asessment/sanggahan-mahasiswa/' + PendaftaranId)
@@ -114,6 +119,11 @@ const SanggahanComponent = () => {
         setLoadingPdf(true)
         setOpenDialogGeneratePdf(true)
         setPdfPreviewUrl(null)
+        setPdfDialogMeta({
+            title: 'Preview Rekapitulasi PDF',
+            description: 'Preview dokumen rekapitulasi hasil penilaian RPL perolehan kredit',
+            downloadFileName: 'rekapitulasi-penilaian-rpl.pdf',
+        })
         await GenerateRekapitulasiPdf(PendaftaranId)
             .then((res) => {
                 setPdfPreviewUrl(res)
@@ -121,6 +131,26 @@ const SanggahanComponent = () => {
             })
             .catch((err) => {
                 toast.error(`Gagal Generate Rekapitulasi Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
+                setLoadingPdf(false)
+            })
+    }
+
+    const generateFormAsessmenPdfWindow = async (PendaftaranId: string) => {
+        setLoadingPdf(true)
+        setOpenDialogGeneratePdf(true)
+        setPdfPreviewUrl(null)
+        setPdfDialogMeta({
+            title: 'Preview Form Asessmen PDF',
+            description: 'Preview dokumen formulir evaluasi diri calon mahasiswa RPL',
+            downloadFileName: 'form-asessmen-rpl.pdf',
+        })
+        await GenerateFormAsessmen(PendaftaranId)
+            .then((res) => {
+                setPdfPreviewUrl(res)
+                setLoadingPdf(false)
+            })
+            .catch((err) => {
+                toast.error(`Gagal Generate Form Asessmen Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
                 setLoadingPdf(false)
             })
     }
@@ -255,6 +285,11 @@ const SanggahanComponent = () => {
                                 onClick={() => generateRekapitulasiPdfWindow(row.original.PendaftaranId)}
                             >
                                 Preview Generate Rekapitulasi PDF
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => generateFormAsessmenPdfWindow(row.original.PendaftaranId)}
+                            >
+                                Preview Generate Form Asessmen
                             </DropdownMenuItem>
                             {role?.Name === 'Mahasiswa' || (role?.Name === 'Asesor' && row.original.SanggahanAssesmenId !== '') ? (
                                 <React.Fragment>
@@ -482,10 +517,10 @@ const SanggahanComponent = () => {
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
                             <FileText className="h-5 w-5" />
-                            Preview Rekapitulasi PDF
+                            {pdfDialogMeta.title}
                         </DialogTitle>
                         <DialogDescription>
-                            Preview dokumen rekapitulasi hasil penilaian RPL perolehan kredit
+                            {pdfDialogMeta.description}
                         </DialogDescription>
                     </DialogHeader>
                     <div className="py-4">
@@ -526,7 +561,7 @@ const SanggahanComponent = () => {
                                     if (pdfPreviewUrl) {
                                         const link = document.createElement('a')
                                         link.href = pdfPreviewUrl
-                                        link.download = 'rekapitulasi-penilaian-rpl.pdf'
+                                        link.download = pdfDialogMeta.downloadFileName
                                         link.click()
                                     }
                                 }}

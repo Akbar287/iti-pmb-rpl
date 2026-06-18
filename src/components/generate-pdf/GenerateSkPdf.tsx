@@ -13,6 +13,12 @@ const formatDate = (date: Date): string => {
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 };
 
+const safeText = (value: unknown, fallback = ''): string => {
+    if (value === null || value === undefined) return fallback;
+    const text = String(value).trim();
+    return text || fallback;
+};
+
 // Helper function to format periode (e.g., '2024/2025 Genap' -> 'Genap 2024/2025')
 const formatPeriode = (periode: string): string => {
     const parts = periode.trim().split(' ');
@@ -505,6 +511,31 @@ export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType
             {/* Page 1 - Keputusan Rektor (Portrait) */}
             <Page size="A4" orientation="portrait" style={portraitStyles.page}>
                 {/* Header */}
+                {/* Header */}
+                <View style={styles.headerContainer} fixed>
+                    <View style={styles.logoContainer}>
+                        <Image src={logoPath} style={styles.logoImage} />
+                    </View>
+                    <View style={styles.headerTextContainer}>
+                        <Text style={styles.institutionName}>{safeText(data.Universitas?.Nama, 'INSTITUT TEKNOLOGI INDONESIA')}</Text>
+                        <Text style={styles.addressText}>
+                            {safeText(data.Universitas?.Alamat, 'Jl. Raya Puspiptek')}, Tangerang Selatan - {safeText(data.Universitas?.KodePos, '15314')}
+                        </Text>
+                        <Text style={styles.phoneText}>(021) 7562757</Text>
+                        <View style={styles.socialRow}>
+                            {sortedSocialMedia.map((sm, index) => (
+                                <View key={sm.UniversitySocialMediaId || index} style={styles.socialItem}>
+                                    <Text style={{ ...styles.socialIcon, color: getSocialColor(safeText(sm.Nama)) }}>
+                                        {getSocialIcon(safeText(sm.Nama))}
+                                    </Text>
+                                    <Text style={styles.socialText}>
+                                        {safeText(sm.Nama) === 'X' ? `@${safeText(sm.Username).replace('@', '')}` : safeText(sm.Username)}
+                                    </Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+                </View>
                 <View style={portraitStyles.header}>
                     <Text style={portraitStyles.headerBold}>KEPUTUSAN REKTOR</Text>
                     <Text style={portraitStyles.headerBold}>INSTITUT TEKNOLOGI INDONESIA</Text>

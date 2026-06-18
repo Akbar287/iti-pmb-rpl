@@ -263,7 +263,7 @@ const G = [
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
-const Dashboard = ({ session: _ }: { session: Session | null }) => {
+const Dashboard = ({ session }: { session: Session | null }) => {
     const [role, setRole] = React.useState<{
         GuardName: string
         Icon: string
@@ -280,16 +280,35 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
     const [dataAdmin, setDataAdmin] = React.useState<ChartDataItemAdmin | null>(null)
 
     React.useEffect(() => {
-        setLoading(true)
+        // Tentukan role aktif: utamakan pilihan yang tersimpan di localStorage,
+        // namun saat pertama kali login storage belum sempat diisi oleh sidebar,
+        // jadi jatuh ke role pertama dari sesi agar dashboard tidak macet skeleton.
         let roleState: { GuardName: string; Icon: string; Name: string; RoleId: string } | null = role ?? null
-        if (!role) {
+        if (!roleState) {
             const stored = safeStorage.getItem('pmb.iti.role')
             if (stored) {
-                const temp = JSON.parse(stored)
-                setRole(temp)
-                roleState = temp
+                try {
+                    roleState = JSON.parse(stored)
+                } catch {
+                    roleState = null
+                }
             }
+            if (!roleState && session?.user.roles && session.user.roles.length > 0) {
+                const r = session.user.roles[0] as { RoleId: string; Name: string; GuardName?: string }
+                roleState = {
+                    RoleId: r.RoleId,
+                    Name: r.Name,
+                    GuardName: r.GuardName ?? '',
+                    Icon: '',
+                }
+            }
+            if (roleState) setRole(roleState)
         }
+
+        // Sesi belum tersedia dan storage kosong — tunggu render berikutnya.
+        if (!roleState) return
+
+        setLoading(true)
 
         if (roleState?.Name.match('Rektor')) {
             getChartRektorRole(roleState.RoleId)
@@ -329,7 +348,7 @@ const Dashboard = ({ session: _ }: { session: Session | null }) => {
         } else {
             setLoading(false)
         }
-    }, [])
+    }, [session])
 
     // ── Loading ──────────────────────────────────────────────────────────────
     if (loading || role === null) {
