@@ -382,7 +382,7 @@ const SkRektorAsessmenComponent = () => {
                                     )
                                 }
                             >
-                                Copy Pendaftaran ID
+                                Salin Pendaftaran ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => detailData(jd)}>
