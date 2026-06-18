@@ -211,3 +211,29 @@ export interface GenerateRekapitulasiType {
         }
     }[]
 }
+
+export interface GenerateBeritaAcaraType {
+    PendaftaranId: string
+    Nama: string
+    TanggalRapat: Date
+    TahunAkademik: string
+    Semester: string
+    ProgramStudi: {
+        ProgramStudiId: string
+        Nama: string
+    }
+    Universitas: {
+        UniversityId: string
+        Nama: string
+        Alamat: string
+        KodePos: string
+    }
+    SksDiakui: number
+    SksHarusDiambil: number
+    Penilai: {
+        Nama: string
+        Urutan: number
+    }[]
+    Kaprodi: string
+    KetuaKomite: string
+}

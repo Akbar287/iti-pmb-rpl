@@ -3,10 +3,11 @@ import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { GenerateSkPdf } from '@/components/generate-pdf/GenerateSkPdf'
 import { GenerateFormAsessmen } from '@/components/generate-pdf/GenerateFormAsessmen'
+import { GenerateBeritaAcara } from '@/components/generate-pdf/GenerateBeritaAcara'
 import { prisma } from '@/lib/prisma'
-import { GenerateFormAsessmenType, GenerateRekapitulasiType, GenerateSkType } from '@/types/GeneratePdfTypes'
+import { GenerateBeritaAcaraType, GenerateFormAsessmenType, GenerateRekapitulasiType, GenerateSkType } from '@/types/GeneratePdfTypes'
 import { Jenjang } from '@/generated/prisma'
-import { isGenerateEvaluasiMandiri, isGenerateRekapitulasi, isGenerateSk } from '@/config/checkGenerateSkStats'
+import { isGenerateBeritaAcara, isGenerateEvaluasiMandiri, isGenerateRekapitulasi, isGenerateSk } from '@/config/checkGenerateSkStats'
 import { GenerateRekapitulasiPdf } from '@/components/generate-pdf/GenerateRekapitulasiPdf'
 import { renderPdfToStream } from '@/lib/pdf-renderer'
 
@@ -515,6 +516,140 @@ app.get('/', async (c) => {
             console.error('[generate-pdf][form_asessmen]', error)
             return c.json({
                 error: 'Failed to generate formulir evaluasi diri PDF',
+                message: error instanceof Error ? error.message : 'Unknown render error'
+            }, 500)
+        }
+    } else if (type === 'berita_acara') {
+        const response = await prisma.pendaftaran.findFirst({
+            where: { PendaftaranId },
+            select: {
+                PendaftaranId: true,
+                StatusMahasiswaAssesmentHistory: {
+                    select: {
+                        Aktif: true,
+                        StatusMahasiswaAssesment: { select: { NamaStatus: true } }
+                    }
+                },
+                AssesorMahasiswa: {
+                    select: {
+                        Urutan: true,
+                        Asesor: { select: { User: { select: { Nama: true } } } }
+                    }
+                },
+                Mahasiswa: { select: { User: { select: { Nama: true } } } },
+                DaftarUlang: {
+                    select: {
+                        ProgramStudi: {
+                            select: {
+                                ProgramStudiId: true,
+                                Nama: true,
+                                MataKuliah: { select: { Sks: true } },
+                                University: {
+                                    select: {
+                                        UniversityId: true,
+                                        Nama: true,
+                                        Alamat: { select: { Alamat: true, KodePos: true } },
+                                        UniversityJabatan: {
+                                            select: {
+                                                Nama: true,
+                                                UniversityJabatanOrang: { select: { Nama: true } }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                MataKuliahMahasiswa: {
+                    where: { Rpl: true },
+                    select: {
+                        Keterangan: true,
+                        MataKuliah: { select: { Sks: true } },
+                        SkorAssesmen: { select: { Diakui: true } },
+                        transkripNilaiRelations: { select: { Diakui: true } }
+                    }
+                }
+            }
+        })
+
+        if (!response) {
+            return c.json({ error: 'Pendaftaran not found' }, 404)
+        }
+
+        const check = response.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)
+        const currentStatus = check?.StatusMahasiswaAssesment.NamaStatus ?? ''
+
+        if (!isGenerateBeritaAcara(currentStatus)) {
+            return c.json({
+                error: 'Invalid status',
+                message: 'Status pendaftaran belum dapat generate berita acara',
+                currentStatus: currentStatus || '-'
+            }, 400)
+        }
+
+        const programStudi = response.DaftarUlang[0]?.ProgramStudi
+        const universitas = programStudi?.University
+
+        // Total SKS prodi & SKS yang diakui (transfer → transkrip, porto → skor)
+        const totalSksProdi = (programStudi?.MataKuliah ?? []).reduce((acc, mk) => acc + (mk.Sks ?? 0), 0)
+        const sksDiakui = response.MataKuliahMahasiswa.reduce((acc, mkm) => {
+            const diakui = mkm.Keterangan === 'Transfer_SKS'
+                ? (mkm.transkripNilaiRelations[0]?.Diakui ?? false)
+                : (mkm.SkorAssesmen[0]?.Diakui ?? false)
+            return diakui ? acc + (mkm.MataKuliah.Sks ?? 0) : acc
+        }, 0)
+        const sksHarusDiambil = Math.max(totalSksProdi - sksDiakui, 0)
+
+        // Cari pejabat berdasarkan kata kunci nama jabatan.
+        const jabatan = universitas?.UniversityJabatan ?? []
+        const findJabatan = (keywords: string[]) => {
+            const found = jabatan.find(j =>
+                keywords.some(k => (j.Nama ?? '').toLowerCase().includes(k))
+            )
+            return found?.UniversityJabatanOrang[0]?.Nama ?? ''
+        }
+
+        const now = new Date()
+        const tahun = now.getFullYear()
+
+        const data: GenerateBeritaAcaraType = {
+            PendaftaranId: response.PendaftaranId,
+            Nama: response.Mahasiswa.User.Nama || '',
+            TanggalRapat: now,
+            TahunAkademik: `${tahun}/${tahun + 1}`,
+            Semester: 'Ganjil',
+            ProgramStudi: {
+                ProgramStudiId: programStudi?.ProgramStudiId || '',
+                Nama: programStudi?.Nama || '',
+            },
+            Universitas: {
+                UniversityId: universitas?.UniversityId || '',
+                Nama: universitas?.Nama || '',
+                Alamat: universitas?.Alamat?.Alamat || '',
+                KodePos: universitas?.Alamat?.KodePos || '',
+            },
+            SksDiakui: sksDiakui,
+            SksHarusDiambil: sksHarusDiambil,
+            Penilai: response.AssesorMahasiswa.map(a => ({
+                Nama: a.Asesor.User.Nama || '',
+                Urutan: a.Urutan,
+            })),
+            Kaprodi: findJabatan(['program studi', 'kaprodi', 'ketua program']),
+            KetuaKomite: findJabatan(['komite']),
+        }
+
+        try {
+            const stream = await renderPdfToStream(GenerateBeritaAcara({ data }));
+
+            return c.body(stream as unknown as ReadableStream, 200, {
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': `attachment; filename="berita-acara-${data.Nama}.pdf"`,
+            });
+        } catch (error) {
+            console.error('[generate-pdf][berita_acara]', error)
+            return c.json({
+                error: 'Failed to generate berita acara PDF',
                 message: error instanceof Error ? error.message : 'Unknown render error'
             }, 500)
         }

@@ -11,6 +11,23 @@ async function getPdfErrorMessage(res: Response, fallback: string): Promise<stri
     }
 }
 
+export async function GenerateBeritaAcara(PendaftaranId: string): Promise<string> {
+    const params = new URLSearchParams({
+        _id: String(PendaftaranId),
+        _t: String("berita_acara")
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/generate-pdf?${params.toString()}`
+    )
+    if (!res.ok) {
+        throw new Error(await getPdfErrorMessage(res, 'Failed to get dokumen bukti form'))
+    }
+
+    const blob = await res.blob()
+    const previewUrl = URL.createObjectURL(blob)
+    return previewUrl
+}
+
 export async function GenerateFormAsessmen(PendaftaranId: string): Promise<string> {
     const params = new URLSearchParams({
         _id: String(PendaftaranId),

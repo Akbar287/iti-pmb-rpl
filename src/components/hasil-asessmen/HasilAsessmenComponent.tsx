@@ -68,7 +68,7 @@ import {
 } from '@/services/Asessment/HasilAsessmentService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { useRouter } from 'next/navigation'
-import { GenerateRekapitulasiPdf } from '@/services/GeneratePdfService'
+import { GenerateRekapitulasiPdf, GenerateFormAsessmen, GenerateBeritaAcara } from '@/services/GeneratePdfService'
 
 const HasilAsessmenComponent = () => {
     const router = useRouter()
@@ -210,6 +210,36 @@ const HasilAsessmenComponent = () => {
             })
     }
 
+    const generateBeritaAcaraWindow = async (PendaftaranId: string) => {
+        setLoadingPdf(true)
+        setOpenDialogGeneratePdf(true)
+        setPdfPreviewUrl(null)
+        await GenerateBeritaAcara(PendaftaranId)
+            .then((res) => {
+                setPdfPreviewUrl(res)
+                setLoadingPdf(false)
+            })
+            .catch((err) => {
+                toast.error(`Gagal Generate Berita Acara Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
+                setLoadingPdf(false)
+            })
+    }
+
+    const generateFormAsessmenWindow = async (PendaftaranId: string) => {
+        setLoadingPdf(true)
+        setOpenDialogGeneratePdf(true)
+        setPdfPreviewUrl(null)
+        await GenerateFormAsessmen(PendaftaranId)
+            .then((res) => {
+                setPdfPreviewUrl(res)
+                setLoadingPdf(false)
+            })
+            .catch((err) => {
+                toast.error(`Gagal Generate Form Asessmen Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
+                setLoadingPdf(false)
+            })
+    }
+
     const handleCloseDialogPdf = () => {
         setOpenDialogGeneratePdf(false)
         setPdfPreviewUrl(null)
@@ -317,6 +347,16 @@ const HasilAsessmenComponent = () => {
                                     onClick={() => generateRekapitulasiPdfWindow(row.original.PendaftaranId)}
                                 >
                                     Preview Generate Rekapitulasi PDF
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => generateBeritaAcaraWindow(row.original.PendaftaranId)}
+                                >
+                                    Preview Generate Berita Acara PDF
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() => generateFormAsessmenWindow(row.original.PendaftaranId)}
+                                >
+                                    Preview Generate Form Asessmen PDF
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={() => gotoDetail(jd.PendaftaranId)}

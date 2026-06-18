@@ -20,7 +20,8 @@ import {
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { ChevronLeft, ChevronRight, MoreHorizontal, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, FileText, Loader2, MoreHorizontal, X } from 'lucide-react'
+import { toast } from 'sonner'
 import { Input } from '../ui/input'
 import {
     Select,
@@ -59,6 +60,11 @@ import {
     DialogHeader,
     DialogTitle,
 } from '../ui/dialog'
+import {
+    GenerateRekapitulasiPdf,
+    GenerateBeritaAcara,
+    GenerateFormAsessmen,
+} from '@/services/GeneratePdfService'
 
 export default function SelesaiComponent() {
     const [data, setData] = React.useState<ResponseSkRektorAsessmenType[]>([])
@@ -89,6 +95,18 @@ export default function SelesaiComponent() {
     const [previewPdf, setPreviewPdf] = React.useState<string>('')
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [openDialogGeneratePdf, setOpenDialogGeneratePdf] = React.useState<boolean>(false)
+    const [pdfPreviewUrl, setPdfPreviewUrl] = React.useState<string | null>(null)
+    const [loadingPdf, setLoadingPdf] = React.useState<boolean>(false)
+    const [pdfDialogMeta, setPdfDialogMeta] = React.useState<{
+        title: string
+        description: string
+        downloadFileName: string
+    }>({
+        title: 'Preview PDF',
+        description: 'Preview dokumen PDF',
+        downloadFileName: 'dokumen.pdf',
+    })
 
 
     React.useEffect(() => {
@@ -127,6 +145,71 @@ export default function SelesaiComponent() {
                 setOpenDialog(true)
             })
             .catch((err) => { })
+    }
+
+    const generateRekapitulasiPdfWindow = async (PendaftaranId: string) => {
+        setLoadingPdf(true)
+        setOpenDialogGeneratePdf(true)
+        setPdfPreviewUrl(null)
+        setPdfDialogMeta({
+            title: 'Preview Rekapitulasi PDF',
+            description: 'Preview dokumen rekapitulasi hasil penilaian RPL perolehan kredit',
+            downloadFileName: 'rekapitulasi-penilaian-rpl.pdf',
+        })
+        await GenerateRekapitulasiPdf(PendaftaranId)
+            .then((res) => {
+                setPdfPreviewUrl(res)
+                setLoadingPdf(false)
+            })
+            .catch((err) => {
+                toast.error(`Gagal Generate Rekapitulasi Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
+                setLoadingPdf(false)
+            })
+    }
+
+    const generateBeritaAcaraWindow = async (PendaftaranId: string) => {
+        setLoadingPdf(true)
+        setOpenDialogGeneratePdf(true)
+        setPdfPreviewUrl(null)
+        setPdfDialogMeta({
+            title: 'Preview Berita Acara PDF',
+            description: 'Preview berita acara rapat pleno pengesahan penilaian RPL',
+            downloadFileName: 'berita-acara-rpl.pdf',
+        })
+        await GenerateBeritaAcara(PendaftaranId)
+            .then((res) => {
+                setPdfPreviewUrl(res)
+                setLoadingPdf(false)
+            })
+            .catch((err) => {
+                toast.error(`Gagal Generate Berita Acara Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
+                setLoadingPdf(false)
+            })
+    }
+
+    const generateFormAsessmenWindow = async (PendaftaranId: string) => {
+        setLoadingPdf(true)
+        setOpenDialogGeneratePdf(true)
+        setPdfPreviewUrl(null)
+        setPdfDialogMeta({
+            title: 'Preview Form Asessmen PDF',
+            description: 'Preview formulir evaluasi diri calon mahasiswa RPL',
+            downloadFileName: 'form-asessmen-rpl.pdf',
+        })
+        await GenerateFormAsessmen(PendaftaranId)
+            .then((res) => {
+                setPdfPreviewUrl(res)
+                setLoadingPdf(false)
+            })
+            .catch((err) => {
+                toast.error(`Gagal Generate Form Asessmen Pdf${err instanceof Error ? `: ${err.message}` : ''}`)
+                setLoadingPdf(false)
+            })
+    }
+
+    const handleCloseDialogPdf = () => {
+        setOpenDialogGeneratePdf(false)
+        setPdfPreviewUrl(null)
     }
 
     const columns: ColumnDef<ResponseSkRektorAsessmenType>[] = [
@@ -209,6 +292,21 @@ export default function SelesaiComponent() {
                                 Copy Pendaftaran ID
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
+                            <DropdownMenuItem
+                                onClick={() => generateRekapitulasiPdfWindow(row.original.PendaftaranId)}
+                            >
+                                Preview Generate Rekapitulasi PDF
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => generateBeritaAcaraWindow(row.original.PendaftaranId)}
+                            >
+                                Preview Generate Berita Acara PDF
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => generateFormAsessmenWindow(row.original.PendaftaranId)}
+                            >
+                                Preview Generate Form Asessmen PDF
+                            </DropdownMenuItem>
                             {jd.NamaFile !== '' ? (
                                 <DropdownMenuItem onClick={() => unduhSk(jd)}>
                                     Unduh SK
@@ -465,6 +563,69 @@ export default function SelesaiComponent() {
                     </Button>
                 </div>
             </div>
+            <Dialog open={openDialogGeneratePdf} onOpenChange={(open) => {
+                if (!open) handleCloseDialogPdf()
+                else setOpenDialogGeneratePdf(open)
+            }}>
+                <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <FileText className="h-5 w-5" />
+                            {pdfDialogMeta.title}
+                        </DialogTitle>
+                        <DialogDescription>
+                            {pdfDialogMeta.description}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="py-4">
+                        {loadingPdf ? (
+                            <div className="flex flex-col items-center justify-center h-[400px] gap-4">
+                                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                                <p className="text-sm text-muted-foreground">Generating PDF...</p>
+                            </div>
+                        ) : pdfPreviewUrl ? (
+                            <div>
+                                <iframe
+                                    src={pdfPreviewUrl}
+                                    title="PDF Preview"
+                                    width="100%"
+                                    height="500px"
+                                    className="border rounded"
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center h-[400px] gap-4">
+                                <FileText className="h-16 w-16 text-muted-foreground/50" />
+                                <p className="text-sm text-muted-foreground">Tidak ada PDF untuk ditampilkan</p>
+                            </div>
+                        )}
+                    </div>
+                    <DialogFooter>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={handleCloseDialogPdf}
+                        >
+                            Tutup
+                        </Button>
+                        {pdfPreviewUrl && (
+                            <Button
+                                type="button"
+                                onClick={() => {
+                                    if (pdfPreviewUrl) {
+                                        const link = document.createElement('a')
+                                        link.href = pdfPreviewUrl
+                                        link.download = pdfDialogMeta.downloadFileName
+                                        link.click()
+                                    }
+                                }}
+                            >
+                                Download PDF
+                            </Button>
+                        )}
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
             <DialogPreviewDokumen
                 openDialog={openDialog}
                 setOpenDialog={setOpenDialog}

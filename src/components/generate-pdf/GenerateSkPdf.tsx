@@ -400,7 +400,9 @@ export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType
             if (matchingMkm.Keterangan === 'Transfer_SKS') {
                 col2Data = {
                     nama: matchingMkm.MataKuliah.Nama,
-                    sks: matchingMkm.TranskripNilai.Sks,
+                    // SKS mengacu ke kolom (03) / master mata kuliah, bukan SKS
+                    // hasil transkrip yang bisa kosong atau salah.
+                    sks: mk.Sks,
                     nilai: matchingMkm.TranskripNilai.NilaiAsessmen,
                 };
             } else if (matchingMkm.Keterangan === 'Perolehan_SKS') {
