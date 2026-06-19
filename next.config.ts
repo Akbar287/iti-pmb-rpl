@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  assetPrefix: "/static",
   experimental: {
     workerThreads: false,
   },
