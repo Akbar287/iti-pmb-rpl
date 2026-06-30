@@ -346,17 +346,17 @@ const HasilAsessmenComponent = () => {
                                 <DropdownMenuItem
                                     onClick={() => generateRekapitulasiPdfWindow(row.original.PendaftaranId)}
                                 >
-                                    Preview Generate Rekapitulasi PDF
+                                    Preview Rekapitulasi PDF
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={() => generateBeritaAcaraWindow(row.original.PendaftaranId)}
                                 >
-                                    Preview Generate Berita Acara PDF
+                                    Preview Berita Acara PDF
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={() => generateFormAsessmenWindow(row.original.PendaftaranId)}
                                 >
-                                    Preview Generate Form Asessmen PDF
+                                    Preview Form Asessmen PDF
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={() => gotoDetail(jd.PendaftaranId)}
