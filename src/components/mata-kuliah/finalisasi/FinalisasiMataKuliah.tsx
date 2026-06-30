@@ -5,7 +5,7 @@ import { getEvaluasiMandiri } from '@/services/EvaluasiMandiri/EvaluasiMandiriSe
 import { setStatusPenunjukanAsesor } from '@/services/Status/StatusService'
 import { GenerateFormAsessmen } from '@/services/GeneratePdfService'
 import { DaftarUlangProdiType } from '@/types/DaftarUlangProdi'
-import { ArrowRightIcon, FileEditIcon, FileTextIcon, TimerIcon } from 'lucide-react'
+import { ArrowRightIcon, FileEditIcon, FileTextIcon, Loader2, TimerIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import Swal from '@/lib/swal'
@@ -30,6 +30,14 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { CheckCircle2Icon, InfoIcon } from 'lucide-react'
 import Link from 'next/link'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog'
 
 export default function FinalisasiMataKuliah({
     dataMahasiswa
@@ -52,13 +60,19 @@ export default function FinalisasiMataKuliah({
     const [loading, setLoading] = React.useState<boolean>(false)
     const [loadingAwal, setLoadingAwal] = React.useState<boolean>(false)
     const [loadingPdf, setLoadingPdf] = React.useState<boolean>(false)
+    const [openDialogPdf, setOpenDialogPdf] = React.useState<boolean>(false)
+    const [pdfPreviewUrl, setPdfPreviewUrl] = React.useState<string | null>(null)
 
     const lihatFormAsessmen = async () => {
         if (!dataDaftarUlang) return
+
         setLoadingPdf(true)
+        setOpenDialogPdf(true)
+        setPdfPreviewUrl(null)
+
         try {
             const previewUrl = await GenerateFormAsessmen(dataDaftarUlang.PendaftaranId)
-            window.open(previewUrl, '_blank')
+            setPdfPreviewUrl(previewUrl)
         } catch (err) {
             toast.error(
                 `Gagal Generate Form Asessmen${err instanceof Error ? `: ${err.message}` : ''}`
@@ -67,6 +81,19 @@ export default function FinalisasiMataKuliah({
             setLoadingPdf(false)
         }
     }
+
+    const handleCloseDialogPdf = () => {
+        setOpenDialogPdf(false)
+        setPdfPreviewUrl(null)
+    }
+
+    React.useEffect(() => {
+        return () => {
+            if (pdfPreviewUrl) {
+                URL.revokeObjectURL(pdfPreviewUrl)
+            }
+        }
+    }, [pdfPreviewUrl])
 
     React.useEffect(() => {
         if (!selectableMahasiswa) return
@@ -292,6 +319,77 @@ export default function FinalisasiMataKuliah({
                     )}
                 </div>
             </CardContent>
+            <Dialog
+                open={openDialogPdf}
+                onOpenChange={(open) => {
+                    if (open) {
+                        setOpenDialogPdf(true)
+                    } else {
+                        handleCloseDialogPdf()
+                    }
+                }}
+            >
+                <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <FileTextIcon className="h-5 w-5" />
+                            Preview Form Asessmen PDF
+                        </DialogTitle>
+                        <DialogDescription>
+                            Preview dokumen Form Evaluasi Diri (Form 03) Anda.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="py-4">
+                        {loadingPdf ? (
+                            <div className="flex h-[400px] flex-col items-center justify-center gap-4">
+                                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                                <p className="text-sm text-muted-foreground">
+                                    Generating PDF...
+                                </p>
+                            </div>
+                        ) : pdfPreviewUrl ? (
+                            <iframe
+                                src={pdfPreviewUrl}
+                                title="Preview Form Asessmen PDF"
+                                width="100%"
+                                height="500px"
+                                className="rounded border"
+                            />
+                        ) : (
+                            <div className="flex h-[400px] flex-col items-center justify-center gap-4">
+                                <FileTextIcon className="h-16 w-16 text-muted-foreground/50" />
+                                <p className="text-sm text-muted-foreground">
+                                    Tidak ada PDF untuk ditampilkan
+                                </p>
+                            </div>
+                        )}
+                    </div>
+
+                    <DialogFooter>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={handleCloseDialogPdf}
+                        >
+                            Tutup
+                        </Button>
+                        {pdfPreviewUrl && (
+                            <Button
+                                type="button"
+                                onClick={() => {
+                                    const link = document.createElement('a')
+                                    link.href = pdfPreviewUrl
+                                    link.download = 'form-asessmen-rpl.pdf'
+                                    link.click()
+                                }}
+                            >
+                                Download PDF
+                            </Button>
+                        )}
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </Card>
     )
 }

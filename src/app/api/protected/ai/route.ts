@@ -182,9 +182,7 @@ app.post('/', async (c) => {
 
         const contextText = buildAssessmentContext(justifikasi)
 
-        const systemMessage: CoreMessage = {
-            role: 'system',
-            content: `
+        const systemPrompt = `
     Kamu adalah AI asisten asesmen RPL di Sistem Informasi RPL Terpadu ITI.
     
     Tugasmu:
@@ -196,15 +194,17 @@ app.post('/', async (c) => {
     Berikut data asesmen dan bukti dukung:
     
     ${contextText}
-    `.trim(),
-        }
+    `.trim()
 
-        const aiMessages: CoreMessage[] = [
-            systemMessage,
-            ...messages.map((m) => ({
-                role: m.role as 'user' | 'assistant' | 'system',
-                content: m.content,
-            })),
+        const aiMessages: CoreMessage[] = messages
+            .filter((message) => message.role === 'user' || message.role === 'assistant')
+            .map((message) => ({
+                role: message.role as 'user' | 'assistant',
+                content: message.content,
+            }))
+        const messagesForUsage: CoreMessage[] = [
+            { role: 'system', content: systemPrompt },
+            ...aiMessages,
         ]
 
         const modelSlug = AiAsessmenCp ? AiAsessmenCp : 'groq/gpt-oss-20b'
@@ -213,7 +213,9 @@ app.post('/', async (c) => {
             model: gateway(modelSlug),
             temperature: 0,
             topP: 0.9,
+            system: systemPrompt,
             messages: aiMessages,
+            allowSystemInMessages: false,
         })
 
         const encoder = new TextEncoder()
@@ -250,9 +252,9 @@ app.post('/', async (c) => {
                         temperature: 0,
                         topP: 0.9,
                         usage,
-                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        promptCharCount: countAiMessageCharacters(messagesForUsage),
                         completionCharCount: completionText.length,
-                        promptMessageCount: countAiMessages(aiMessages),
+                        promptMessageCount: countAiMessages(messagesForUsage),
                         completionMessageCount: completionText ? 1 : 0,
                         durationMs: Date.now() - startedAt,
                         firstTokenMs,
@@ -275,9 +277,9 @@ app.post('/', async (c) => {
                         modelSlug,
                         temperature: 0,
                         topP: 0.9,
-                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        promptCharCount: countAiMessageCharacters(messagesForUsage),
                         completionCharCount: completionText.length,
-                        promptMessageCount: countAiMessages(aiMessages),
+                        promptMessageCount: countAiMessages(messagesForUsage),
                         completionMessageCount: completionText ? 1 : 0,
                         durationMs: Date.now() - startedAt,
                         firstTokenMs,
@@ -370,9 +372,7 @@ app.post('/', async (c) => {
 
         const contextText = buildMataKuliahSkorContext(justifikasi)
 
-        const systemMessage: CoreMessage = {
-            role: 'system',
-            content: `
+        const systemPrompt = `
 Kamu adalah AI asisten asesmen RPL untuk penilaian per mata kuliah.
 
 Tugasmu:
@@ -383,15 +383,17 @@ Tugasmu:
 Berikut data yang harus kamu gunakan:
 
 ${contextText}
-`.trim(),
-        }
+`.trim()
 
-        const aiMessages: CoreMessage[] = [
-            systemMessage,
-            ...messages.map((m) => ({
-                role: m.role as 'user' | 'assistant' | 'system',
-                content: m.content,
-            })),
+        const aiMessages: CoreMessage[] = messages
+            .filter((message) => message.role === 'user' || message.role === 'assistant')
+            .map((message) => ({
+                role: message.role as 'user' | 'assistant',
+                content: message.content,
+            }))
+        const messagesForUsage: CoreMessage[] = [
+            { role: 'system', content: systemPrompt },
+            ...aiMessages,
         ]
 
         const modelSlug = AiAsessmenRekapitulasi ? AiAsessmenRekapitulasi : 'groq/gpt-oss-20b'
@@ -400,7 +402,9 @@ ${contextText}
             model: gateway(modelSlug),
             temperature: 0,
             topP: 0.9,
+            system: systemPrompt,
             messages: aiMessages,
+            allowSystemInMessages: false,
         })
 
         const encoder = new TextEncoder()
@@ -437,9 +441,9 @@ ${contextText}
                         temperature: 0,
                         topP: 0.9,
                         usage,
-                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        promptCharCount: countAiMessageCharacters(messagesForUsage),
                         completionCharCount: completionText.length,
-                        promptMessageCount: countAiMessages(aiMessages),
+                        promptMessageCount: countAiMessages(messagesForUsage),
                         completionMessageCount: completionText ? 1 : 0,
                         durationMs: Date.now() - startedAt,
                         firstTokenMs,
@@ -462,9 +466,9 @@ ${contextText}
                         modelSlug,
                         temperature: 0,
                         topP: 0.9,
-                        promptCharCount: countAiMessageCharacters(aiMessages),
+                        promptCharCount: countAiMessageCharacters(messagesForUsage),
                         completionCharCount: completionText.length,
-                        promptMessageCount: countAiMessages(aiMessages),
+                        promptMessageCount: countAiMessages(messagesForUsage),
                         completionMessageCount: completionText ? 1 : 0,
                         durationMs: Date.now() - startedAt,
                         firstTokenMs,
@@ -485,12 +489,12 @@ ${contextText}
     } else {
         const body = await c.req.json()
         const messages = (body.messages ?? []) as { role: string; content: string }[]
-        const aiMessages: CoreMessage[] = [
-            ...messages.map((m) => ({
-                role: m.role as 'user' | 'assistant' | 'system',
-                content: m.content,
-            })),
-        ]
+        const aiMessages: CoreMessage[] = messages
+            .filter((message) => message.role === 'user' || message.role === 'assistant')
+            .map((message) => ({
+                role: message.role as 'user' | 'assistant',
+                content: message.content,
+            }))
 
         const modelSlug = 'groq/gpt-oss-20b'
         const startedAt = Date.now()
@@ -499,6 +503,7 @@ ${contextText}
             temperature: 0,
             topP: 0.9,
             messages: aiMessages,
+            allowSystemInMessages: false,
         })
 
         const encoder = new TextEncoder()

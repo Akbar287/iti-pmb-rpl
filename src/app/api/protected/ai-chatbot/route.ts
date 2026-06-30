@@ -30,22 +30,27 @@ app.post('/', async (c) => {
     const requestId = c.req.header('x-request-id') ?? randomUUID()
     const sessionId = body.sessionId ?? c.req.header('x-ai-session-id') ?? null
     const startedAt = Date.now()
-    const aiMessages: CoreMessage[] = [
+    const aiMessages: CoreMessage[] = messages
+        .filter((message) => message.role === 'user' || message.role === 'assistant')
+        .map((message) => ({
+            role: message.role as 'user' | 'assistant',
+            content: message.content,
+        }))
+    const messagesForUsage: CoreMessage[] = [
         {
             role: 'system',
             content: systemPrompt,
         },
-        ...messages.map((m) => ({
-            role: m.role as 'user' | 'assistant' | 'system',
-            content: m.content,
-        })),
+        ...aiMessages,
     ]
 
     const result = await streamText({
         model: gateway(modelSlug),
         temperature: 0,
         topP: 0.9,
+        system: systemPrompt,
         messages: aiMessages,
+        allowSystemInMessages: false,
     })
 
     const encoder = new TextEncoder()
@@ -80,9 +85,9 @@ app.post('/', async (c) => {
                     temperature: 0,
                     topP: 0.9,
                     usage,
-                    promptCharCount: countAiMessageCharacters(aiMessages),
+                    promptCharCount: countAiMessageCharacters(messagesForUsage),
                     completionCharCount: completionText.length,
-                    promptMessageCount: countAiMessages(aiMessages),
+                    promptMessageCount: countAiMessages(messagesForUsage),
                     completionMessageCount: completionText ? 1 : 0,
                     durationMs: Date.now() - startedAt,
                     firstTokenMs,
@@ -106,9 +111,9 @@ app.post('/', async (c) => {
                     modelSlug,
                     temperature: 0,
                     topP: 0.9,
-                    promptCharCount: countAiMessageCharacters(aiMessages),
+                    promptCharCount: countAiMessageCharacters(messagesForUsage),
                     completionCharCount: completionText.length,
-                    promptMessageCount: countAiMessages(aiMessages),
+                    promptMessageCount: countAiMessages(messagesForUsage),
                     completionMessageCount: completionText ? 1 : 0,
                     durationMs: Date.now() - startedAt,
                     firstTokenMs,
