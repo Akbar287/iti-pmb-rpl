@@ -3,6 +3,14 @@ import { Pagination } from '@/types/Pagination'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
+export interface MataKuliahImportItem {
+    Kode: string
+    Nama: string
+    Sks: number
+    Semester: string
+    Silabus: string
+}
+
 export async function getMataKuliahPagination(
     page: number,
     limit: number,
@@ -65,6 +73,31 @@ export async function setMataKuliah(data: MataKuliah): Promise<MataKuliah> {
     )
     if (!res.ok) {
         throw new Error('Failed to create mata kuliah')
+    }
+    return res.json()
+}
+
+export async function importMataKuliah(
+    ProgramStudiId: string,
+    Items: MataKuliahImportItem[]
+): Promise<{ data: MataKuliah[]; count: number }> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/manajemen-pembelajaran/mata-kuliah`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ProgramStudiId, Items }),
+        }
+    )
+    if (!res.ok) {
+        let message = 'Gagal mengimpor mata kuliah.'
+        try {
+            const body = await res.json()
+            message = body?.message || message
+        } catch {
+            // Gunakan pesan fallback bila response bukan JSON.
+        }
+        throw new Error(message)
     }
     return res.json()
 }

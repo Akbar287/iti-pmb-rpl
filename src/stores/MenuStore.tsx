@@ -8,6 +8,7 @@ import {
     Home,
     SquareTerminal,
     University,
+    WholeWordIcon,
 } from 'lucide-react'
 import { create } from 'zustand'
 
@@ -155,7 +156,7 @@ const menu: MenuStoreProps[] = [
         ],
     },
     {
-        namaRole: ['Kaprodi'],
+        namaRole: ['Kaprodi', 'Wakil Rektor'],
         // namaRole: ['Kaprodi', 'Asesor', 'Akademik', 'Wakil Rektor'],
         title: 'Asesor',
         url: '/asesor',
@@ -363,6 +364,34 @@ const menu: MenuStoreProps[] = [
                 title: 'Token Usage',
                 url: '/manajemen-sistem/token-usage',
             },
+        ],
+    },
+    {
+        namaRole: ['Admin'],
+        title: 'Template Builder',
+        url: '/template-builder',
+        icon: WholeWordIcon,
+        items: [
+            {
+                namaRole: ['Admin'],
+                title: 'Form Asessmen',
+                url: '/template-builder/form-asessmen',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Form Rekapitulasi',
+                url: '/template-builder/form-rekapitulasi',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'Form Berita Acara',
+                url: '/template-builder/form-berita-acara',
+            },
+            {
+                namaRole: ['Admin'],
+                title: 'SK Hasil',
+                url: '/template-builder/sk-hasil',
+            }
         ],
     },
     {

@@ -1,7 +1,13 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { GenerateRekapitulasiType } from '@/types/GeneratePdfTypes';
 import path from 'path';
+import { FormAssessmentPortraitTemplate } from '@/types/FormAssessmentTemplate';
+import { getRekapitulasiPlaceholderValues } from '@/lib/rekapitulasi-template';
+import {
+    RekapitulasiAfterTablePages,
+    RekapitulasiTemplateBlocks,
+} from './RekapitulasiTemplateContent';
 
 // Helper function to format date
 const formatDate = (date: Date): string => {
@@ -355,14 +361,19 @@ interface TableRowData {
 }
 
 // Component
-export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiType }) => {
-    // Sort social media
-    const sortedSocialMedia = (data.Universitas?.UniversitySocialMedia ?? [])
-        .filter(sm => socialMediaOrder.includes(safeText(sm.Nama)))
-        .sort((a, b) => socialMediaOrder.indexOf(safeText(a.Nama)) - socialMediaOrder.indexOf(safeText(b.Nama)));
-
+export const GenerateRekapitulasiPdf = ({
+    data,
+    template,
+}: {
+    data: GenerateRekapitulasiType
+    template: FormAssessmentPortraitTemplate
+}) => {
     const mataKuliah = data.MataKuliah ?? [];
     const mataKuliahMahasiswa = data.MataKuliahMahasiswa ?? [];
+    const placeholders = getRekapitulasiPlaceholderValues(data);
+    const beforeTableBlocks = template.pages
+        .filter(page => page.placement === 'before_table')
+        .flatMap(page => page.blocks);
 
     // Process table data - Using MataKuliah as the base reference
     const tableRows: TableRowData[] = mataKuliah.map((mk, index) => {
@@ -498,97 +509,11 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
     return (
         <Document>
             <Page size="A4" orientation="landscape" style={styles.page}>
-                {/* Header */}
-                <View style={styles.headerContainer} fixed>
-                    <View style={styles.logoContainer}>
-                        <Image src={logoPath} style={styles.logoImage} />
-                    </View>
-                    <View style={styles.headerTextContainer}>
-                        <Text style={styles.institutionName}>{safeText(data.Universitas?.Nama, 'INSTITUT TEKNOLOGI INDONESIA')}</Text>
-                        <Text style={styles.addressText}>
-                            {safeText(data.Universitas?.Alamat, 'Jl. Raya Puspiptek')}, Tangerang Selatan - {safeText(data.Universitas?.KodePos, '15314')}
-                        </Text>
-                        <Text style={styles.phoneText}>(021) 7562757</Text>
-                        <View style={styles.socialRow}>
-                            {sortedSocialMedia.map((sm, index) => (
-                                <View key={sm.UniversitySocialMediaId || index} style={styles.socialItem}>
-                                    <Text style={{ ...styles.socialIcon, color: getSocialColor(safeText(sm.Nama)) }}>
-                                        {getSocialIcon(safeText(sm.Nama))}
-                                    </Text>
-                                    <Text style={styles.socialText}>
-                                        {safeText(sm.Nama) === 'X' ? `@${safeText(sm.Username).replace('@', '')}` : safeText(sm.Username)}
-                                    </Text>
-                                </View>
-                            ))}
-                        </View>
-                    </View>
-                </View>
-
-                {/* Form Number */}
-                <Text style={styles.formNumber}>Form (05)</Text>
-
-                {/* Title */}
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>REKAPITULASI HASIL PENILAIAN RPL PEROLEHAN KREDIT</Text>
-                    <Text style={styles.subtitle}>INSTITUT TEKNOLOGI INDONESIA</Text>
-                </View>
-
-                {/* Info Section */}
-                <View style={styles.infoContainer}>
-                    {/* Left Column */}
-                    <View style={styles.infoColumn}>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>Nama Pemohon RPL</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{safeText(data.Nama, '-')}</Text>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>Alamat</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{safeText(data.Alamat, '-')}</Text>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>No. Hp</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{safeText(data.NomorHp, '-')}</Text>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>Email</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={{ ...styles.infoValue, color: '#0066cc', textDecoration: 'underline' }}>{safeText(data.Email, '-')}</Text>
-                        </View>
-                    </View>
-                    {/* Right Column */}
-                    <View style={styles.infoColumn}>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>Jenjang Pendidikan Sebelumnya</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.Jenjang, '-')}</Text>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>Program Studi Sebelummnya</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.Jurusan, '-')}</Text>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>Jenjang KKNI yang dituju</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.JenjangKKNIDituju, '-')}</Text>
-                        </View>
-                        <View style={styles.infoRow}>
-                            <Text style={styles.infoLabel}>Nama Perguruan Tinggi Asal</Text>
-                            <Text style={styles.infoSeparator}>:</Text>
-                            <Text style={styles.infoValue}>{safeText(data.InstitusiLama?.NamaInstitusi, '-')}</Text>
-                        </View>
-                    </View>
-                </View>
-
-                {/* Program Studi Tujuan */}
-                <View style={styles.programStudiRow}>
-                    <Text style={styles.programStudiLabel}>Program Studi Tujuan</Text>
-                    <Text style={styles.programStudiSeparator}>:</Text>
-                    <Text style={styles.programStudiValue}>{safeText(data.ProgramStudi?.Nama, '-')}</Text>
-                </View>
+                <RekapitulasiTemplateBlocks
+                    blocks={beforeTableBlocks}
+                    placeholders={placeholders}
+                    logoPath={logoPath}
+                />
 
                 {/* Table */}
                 <View style={styles.tableContainer}>
@@ -650,41 +575,12 @@ export const GenerateRekapitulasiPdf = ({ data }: { data: GenerateRekapitulasiTy
                 </View>
             </Page>
 
-            {/* Page 2 - Signature Section */}
-            <Page size="A4" orientation="landscape" style={styles.page}>
-                {/* Signature Section */}
-                <View style={styles.signatureContainer}>
-                    {/* Date */}
-                    <View style={styles.signatureDateContainer}>
-                        <Text style={styles.signatureDate}>Tangerang Selatan, {formatDate(new Date())}</Text>
-                    </View>
-
-                    {/* Signatures */}
-                    <View style={styles.signatureRow}>
-                        {/* Penilai I */}
-                        <View style={styles.signatureBlock}>
-                            <Text style={styles.signatureTitle}>Penilai I</Text>
-                            <Text style={styles.signatureName}>
-                                ({safeText((data.Asesor ?? []).find(x => x.Urutan == 1)?.Nama, '.................................')})
-                            </Text>
-                        </View>
-
-                        {/* Penilai II */}
-                        <View style={styles.signatureBlock}>
-                            <Text style={styles.signatureTitle}>Penilai II</Text>
-                            <Text style={styles.signatureName}>
-                                ({safeText((data.Asesor ?? []).find(x => x.Urutan == 2)?.Nama, '.................................')})
-                            </Text>
-                        </View>
-
-                        {/* Pemohon */}
-                        <View style={styles.signatureBlock}>
-                            <Text style={styles.signatureTitle}>Pemohon</Text>
-                            <Text style={styles.signatureName}>({safeText(data.Nama, '.................................')})</Text>
-                        </View>
-                    </View>
-                </View>
-            </Page>
+            <RekapitulasiAfterTablePages
+                template={template}
+                placeholders={placeholders}
+                logoPath={logoPath}
+                pageStyle={styles.page}
+            />
         </Document>
     );
 };

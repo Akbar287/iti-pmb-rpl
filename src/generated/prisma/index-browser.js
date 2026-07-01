@@ -651,6 +651,15 @@ exports.Prisma.UniversityScalarFieldEnum = {
   DeletedAt: 'DeletedAt'
 };
 
+exports.Prisma.DocumentTemplateScalarFieldEnum = {
+  DocumentTemplateId: 'DocumentTemplateId',
+  Type: 'Type',
+  Name: 'Name',
+  Content: 'Content',
+  CreatedAt: 'CreatedAt',
+  UpdatedAt: 'UpdatedAt'
+};
+
 exports.Prisma.UniversitySosialMediaScalarFieldEnum = {
   UniversitySosialMediaId: 'UniversitySosialMediaId',
   UniversityId: 'UniversityId',
@@ -904,6 +913,10 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
@@ -1059,6 +1072,7 @@ exports.Prisma.ModelName = {
   StatusMahasiswaAssesmentHistory: 'StatusMahasiswaAssesmentHistory',
   TipeAsesor: 'TipeAsesor',
   University: 'University',
+  DocumentTemplate: 'DocumentTemplate',
   UniversitySosialMedia: 'UniversitySosialMedia',
   UniversityInformasi: 'UniversityInformasi',
   UniversityJabatan: 'UniversityJabatan',

@@ -484,7 +484,7 @@ const RekapitulasiIdComponent = ({
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel>
-                                                            Portofolio
+                                                            Nilai Portofolio
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
@@ -513,7 +513,7 @@ const RekapitulasiIdComponent = ({
                                                             />
                                                         </FormControl>
                                                         <FormDescription>
-                                                            Portofolio
+                                                            Silakan masukan nilai Portofolio
                                                         </FormDescription>
                                                         <FormMessage />
                                                     </FormItem>
@@ -526,7 +526,7 @@ const RekapitulasiIdComponent = ({
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel>
-                                                            Tulis
+                                                            Nilai Tulis
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
@@ -548,7 +548,7 @@ const RekapitulasiIdComponent = ({
                                                             />
                                                         </FormControl>
                                                         <FormDescription>
-                                                            Tulis
+                                                            Silakan masukan nilai Tulis
                                                         </FormDescription>
                                                         <FormMessage />
                                                     </FormItem>
@@ -561,7 +561,7 @@ const RekapitulasiIdComponent = ({
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel>
-                                                            Wawancara
+                                                            Nilai Wawancara
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
@@ -583,7 +583,7 @@ const RekapitulasiIdComponent = ({
                                                             />
                                                         </FormControl>
                                                         <FormDescription>
-                                                            Wawancara
+                                                            Silakan masukan nilai Wawancara
                                                         </FormDescription>
                                                         <FormMessage />
                                                     </FormItem>
@@ -596,7 +596,7 @@ const RekapitulasiIdComponent = ({
                                                 render={({ field }) => (
                                                     <FormItem>
                                                         <FormLabel>
-                                                            Demo
+                                                            Nilai Demo
                                                         </FormLabel>
                                                         <FormControl>
                                                             <Input
@@ -618,7 +618,7 @@ const RekapitulasiIdComponent = ({
                                                             />
                                                         </FormControl>
                                                         <FormDescription>
-                                                            Demo
+                                                            Silakan masukan nilai Demo
                                                         </FormDescription>
                                                         <FormMessage />
                                                     </FormItem>

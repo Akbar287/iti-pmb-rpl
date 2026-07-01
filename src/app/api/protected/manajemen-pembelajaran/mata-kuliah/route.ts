@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
+import { z } from 'zod'
 
 const app = new Hono().basePath(
     '/api/protected/manajemen-pembelajaran/mata-kuliah'
@@ -109,16 +110,115 @@ app.get('/', async (c) => {
 })
 
 app.post('/', async (c) => {
-    const body: MataKuliah = await c.req.json()
+    const body: unknown = await c.req.json()
+
+    if (
+        body &&
+        typeof body === 'object' &&
+        'Items' in body &&
+        'ProgramStudiId' in body
+    ) {
+        const bulkSchema = z.object({
+            ProgramStudiId: z.string().min(1),
+            Items: z
+                .array(
+                    z.object({
+                        Kode: z.string().trim().min(1).max(100),
+                        Nama: z.string().trim().min(1).max(500),
+                        Sks: z.number().int().min(1).max(30),
+                        Semester: z.string().trim().max(100).optional(),
+                        Silabus: z.string().trim().max(10000).optional(),
+                    })
+                )
+                .min(1)
+                .max(1000),
+        })
+        const parsed = bulkSchema.safeParse(body)
+        if (!parsed.success) {
+            return c.json(
+                {
+                    message: 'Data impor mata kuliah tidak valid.',
+                    issues: parsed.error.issues,
+                },
+                400
+            )
+        }
+
+        const programStudi = await prisma.programStudi.findUnique({
+            where: { ProgramStudiId: parsed.data.ProgramStudiId },
+            select: { ProgramStudiId: true },
+        })
+        if (!programStudi) {
+            return c.json({ message: 'Program studi tidak ditemukan.' }, 404)
+        }
+
+        const normalizedCodes = parsed.data.Items.map((item) =>
+            item.Kode.toLocaleLowerCase('id-ID')
+        )
+        const duplicateInFile = normalizedCodes.filter(
+            (code, index) => normalizedCodes.indexOf(code) !== index
+        )
+        if (duplicateInFile.length > 0) {
+            return c.json(
+                {
+                    message: `Kode mata kuliah duplikat di file: ${[
+                        ...new Set(duplicateInFile),
+                    ].join(', ')}`,
+                },
+                409
+            )
+        }
+
+        const existing = await prisma.mataKuliah.findMany({
+            where: { ProgramStudiId: parsed.data.ProgramStudiId },
+            select: { Kode: true },
+        })
+        const existingCodes = new Set(
+            existing.map((item) => item.Kode.toLocaleLowerCase('id-ID'))
+        )
+        const duplicateInDatabase = parsed.data.Items.filter((item) =>
+            existingCodes.has(item.Kode.toLocaleLowerCase('id-ID'))
+        ).map((item) => item.Kode)
+        if (duplicateInDatabase.length > 0) {
+            return c.json(
+                {
+                    message: `Kode sudah terdaftar di program studi ini: ${duplicateInDatabase.join(', ')}`,
+                },
+                409
+            )
+        }
+
+        const now = new Date()
+        const data = await prisma.$transaction(
+            parsed.data.Items.map((item) =>
+                prisma.mataKuliah.create({
+                    data: {
+                        ProgramStudiId: parsed.data.ProgramStudiId,
+                        Kode: item.Kode.trim(),
+                        Nama: item.Nama.trim(),
+                        Sks: item.Sks,
+                        Semester: item.Semester?.trim() || null,
+                        Silabus: item.Silabus?.trim() || null,
+                        CreatedAt: now,
+                        UpdatedAt: now,
+                    },
+                })
+            )
+        )
+
+        return c.json({ data, count: data.length }, 201)
+    }
+
+    const singleBody = body as MataKuliah
 
     const data = await prisma.mataKuliah.create({
         data: {
-            ProgramStudiId: body.ProgramStudiId,
-            Kode: body.Kode,
-            Nama: body.Nama,
-            Sks: body.Sks,
-            Semester: body.Semester,
-            Silabus: body.Silabus,
+            ProgramStudiId: singleBody.ProgramStudiId,
+            Kode: singleBody.Kode,
+            Nama: singleBody.Nama,
+            Sks: singleBody.Sks,
+            Semester: singleBody.Semester,
+            Silabus: singleBody.Silabus,
             CreatedAt: new Date(),
             UpdatedAt: new Date(),
         },

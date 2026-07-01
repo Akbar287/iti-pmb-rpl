@@ -294,6 +294,11 @@ export type TipeAsesor = $Result.DefaultSelection<Prisma.$TipeAsesorPayload>
  */
 export type University = $Result.DefaultSelection<Prisma.$UniversityPayload>
 /**
+ * Model DocumentTemplate
+ * 
+ */
+export type DocumentTemplate = $Result.DefaultSelection<Prisma.$DocumentTemplatePayload>
+/**
  * Model UniversitySosialMedia
  * 
  */
@@ -1241,6 +1246,16 @@ export class PrismaClient<
   get university(): Prisma.UniversityDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.documentTemplate`: Exposes CRUD operations for the **DocumentTemplate** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DocumentTemplates
+    * const documentTemplates = await prisma.documentTemplate.findMany()
+    * ```
+    */
+  get documentTemplate(): Prisma.DocumentTemplateDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.universitySosialMedia`: Exposes CRUD operations for the **UniversitySosialMedia** model.
     * Example usage:
     * ```ts
@@ -1939,6 +1954,7 @@ export namespace Prisma {
     StatusMahasiswaAssesmentHistory: 'StatusMahasiswaAssesmentHistory',
     TipeAsesor: 'TipeAsesor',
     University: 'University',
+    DocumentTemplate: 'DocumentTemplate',
     UniversitySosialMedia: 'UniversitySosialMedia',
     UniversityInformasi: 'UniversityInformasi',
     UniversityJabatan: 'UniversityJabatan',
@@ -1975,7 +1991,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormPages" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "hasilAssesmenAi" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "skorAssesmenAi" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "aiTokenUsage" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita" | "questionAndAsk" | "tickets" | "ticketsFile" | "transkripNilai" | "transkripNilaiRelation"
+      modelProps: "alamat" | "asesor" | "asesorAkademik" | "asesorAkademikKeanggotaanAsosiasi" | "asesorPraktisi" | "assesorMahasiswa" | "buktiForm" | "buktiFormPages" | "buktiFormEvaluasiDiri" | "capaianPembelajaran" | "country" | "daftarUlang" | "desa" | "evaluasiDiri" | "hasilAssesmen" | "hasilAssesmenAi" | "informasiKependudukan" | "institusiLama" | "jenisDokumen" | "kabupaten" | "kecamatan" | "mahasiswa" | "mahasiswaKonferensi" | "mahasiswaOrganisasiProfesi" | "mahasiswaPelatihanProfessional" | "mahasiswaPendidikan" | "mahasiswaPiagam" | "mahasiswaRiwayatPekerjaan" | "mataKuliah" | "mataKuliahMahasiswa" | "userHasPermissions" | "userHasRoles" | "asesorProgramStudi" | "orangTua" | "passwordResetTokens" | "pekerjaanMahasiswa" | "pendaftaran" | "permission" | "pesantren" | "programStudi" | "provinsi" | "roleHasPermissions" | "role" | "sanggahanAssesmen" | "sanggahanAssesmenMk" | "sanggahanAssesmenPihak" | "tipeSkRektor" | "skRektor" | "skRektorAssesor" | "skRektorMahasiswa" | "skorAssesmen" | "skorAssesmenAi" | "statusMahasiswaAssesment" | "statusMahasiswaAssesmentHistory" | "tipeAsesor" | "university" | "documentTemplate" | "universitySosialMedia" | "universityInformasi" | "universityJabatan" | "universityJabatanOrang" | "user" | "aiTokenUsage" | "userlogin" | "jenisKegiatan" | "kategoriBerita" | "settingMainPage" | "settingKegiatan" | "settingCommunity" | "settingWhy" | "settingNumber" | "settingTestimony" | "settingBerita" | "questionAndAsk" | "tickets" | "ticketsFile" | "transkripNilai" | "transkripNilaiRelation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6123,6 +6139,80 @@ export namespace Prisma {
           }
         }
       }
+      DocumentTemplate: {
+        payload: Prisma.$DocumentTemplatePayload<ExtArgs>
+        fields: Prisma.DocumentTemplateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DocumentTemplateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DocumentTemplateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
+          }
+          findFirst: {
+            args: Prisma.DocumentTemplateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DocumentTemplateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
+          }
+          findMany: {
+            args: Prisma.DocumentTemplateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>[]
+          }
+          create: {
+            args: Prisma.DocumentTemplateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
+          }
+          createMany: {
+            args: Prisma.DocumentTemplateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DocumentTemplateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>[]
+          }
+          delete: {
+            args: Prisma.DocumentTemplateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
+          }
+          update: {
+            args: Prisma.DocumentTemplateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
+          }
+          deleteMany: {
+            args: Prisma.DocumentTemplateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DocumentTemplateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DocumentTemplateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>[]
+          }
+          upsert: {
+            args: Prisma.DocumentTemplateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentTemplatePayload>
+          }
+          aggregate: {
+            args: Prisma.DocumentTemplateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDocumentTemplate>
+          }
+          groupBy: {
+            args: Prisma.DocumentTemplateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DocumentTemplateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DocumentTemplateCountArgs<ExtArgs>
+            result: $Utils.Optional<DocumentTemplateCountAggregateOutputType> | number
+          }
+        }
+      }
       UniversitySosialMedia: {
         payload: Prisma.$UniversitySosialMediaPayload<ExtArgs>
         fields: Prisma.UniversitySosialMediaFieldRefs
@@ -7841,6 +7931,7 @@ export namespace Prisma {
     statusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryOmit
     tipeAsesor?: TipeAsesorOmit
     university?: UniversityOmit
+    documentTemplate?: DocumentTemplateOmit
     universitySosialMedia?: UniversitySosialMediaOmit
     universityInformasi?: UniversityInformasiOmit
     universityJabatan?: UniversityJabatanOmit
@@ -72544,6 +72635,1015 @@ export namespace Prisma {
 
 
   /**
+   * Model DocumentTemplate
+   */
+
+  export type AggregateDocumentTemplate = {
+    _count: DocumentTemplateCountAggregateOutputType | null
+    _min: DocumentTemplateMinAggregateOutputType | null
+    _max: DocumentTemplateMaxAggregateOutputType | null
+  }
+
+  export type DocumentTemplateMinAggregateOutputType = {
+    DocumentTemplateId: string | null
+    Type: string | null
+    Name: string | null
+    CreatedAt: Date | null
+    UpdatedAt: Date | null
+  }
+
+  export type DocumentTemplateMaxAggregateOutputType = {
+    DocumentTemplateId: string | null
+    Type: string | null
+    Name: string | null
+    CreatedAt: Date | null
+    UpdatedAt: Date | null
+  }
+
+  export type DocumentTemplateCountAggregateOutputType = {
+    DocumentTemplateId: number
+    Type: number
+    Name: number
+    Content: number
+    CreatedAt: number
+    UpdatedAt: number
+    _all: number
+  }
+
+
+  export type DocumentTemplateMinAggregateInputType = {
+    DocumentTemplateId?: true
+    Type?: true
+    Name?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+  }
+
+  export type DocumentTemplateMaxAggregateInputType = {
+    DocumentTemplateId?: true
+    Type?: true
+    Name?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+  }
+
+  export type DocumentTemplateCountAggregateInputType = {
+    DocumentTemplateId?: true
+    Type?: true
+    Name?: true
+    Content?: true
+    CreatedAt?: true
+    UpdatedAt?: true
+    _all?: true
+  }
+
+  export type DocumentTemplateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DocumentTemplate to aggregate.
+     */
+    where?: DocumentTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentTemplates to fetch.
+     */
+    orderBy?: DocumentTemplateOrderByWithRelationInput | DocumentTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DocumentTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DocumentTemplates
+    **/
+    _count?: true | DocumentTemplateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DocumentTemplateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DocumentTemplateMaxAggregateInputType
+  }
+
+  export type GetDocumentTemplateAggregateType<T extends DocumentTemplateAggregateArgs> = {
+        [P in keyof T & keyof AggregateDocumentTemplate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDocumentTemplate[P]>
+      : GetScalarType<T[P], AggregateDocumentTemplate[P]>
+  }
+
+
+
+
+  export type DocumentTemplateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DocumentTemplateWhereInput
+    orderBy?: DocumentTemplateOrderByWithAggregationInput | DocumentTemplateOrderByWithAggregationInput[]
+    by: DocumentTemplateScalarFieldEnum[] | DocumentTemplateScalarFieldEnum
+    having?: DocumentTemplateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DocumentTemplateCountAggregateInputType | true
+    _min?: DocumentTemplateMinAggregateInputType
+    _max?: DocumentTemplateMaxAggregateInputType
+  }
+
+  export type DocumentTemplateGroupByOutputType = {
+    DocumentTemplateId: string
+    Type: string
+    Name: string
+    Content: JsonValue
+    CreatedAt: Date
+    UpdatedAt: Date
+    _count: DocumentTemplateCountAggregateOutputType | null
+    _min: DocumentTemplateMinAggregateOutputType | null
+    _max: DocumentTemplateMaxAggregateOutputType | null
+  }
+
+  type GetDocumentTemplateGroupByPayload<T extends DocumentTemplateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DocumentTemplateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DocumentTemplateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DocumentTemplateGroupByOutputType[P]>
+            : GetScalarType<T[P], DocumentTemplateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DocumentTemplateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    DocumentTemplateId?: boolean
+    Type?: boolean
+    Name?: boolean
+    Content?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+  }, ExtArgs["result"]["documentTemplate"]>
+
+  export type DocumentTemplateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    DocumentTemplateId?: boolean
+    Type?: boolean
+    Name?: boolean
+    Content?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+  }, ExtArgs["result"]["documentTemplate"]>
+
+  export type DocumentTemplateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    DocumentTemplateId?: boolean
+    Type?: boolean
+    Name?: boolean
+    Content?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+  }, ExtArgs["result"]["documentTemplate"]>
+
+  export type DocumentTemplateSelectScalar = {
+    DocumentTemplateId?: boolean
+    Type?: boolean
+    Name?: boolean
+    Content?: boolean
+    CreatedAt?: boolean
+    UpdatedAt?: boolean
+  }
+
+  export type DocumentTemplateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"DocumentTemplateId" | "Type" | "Name" | "Content" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["documentTemplate"]>
+
+  export type $DocumentTemplatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DocumentTemplate"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      DocumentTemplateId: string
+      Type: string
+      Name: string
+      Content: Prisma.JsonValue
+      CreatedAt: Date
+      UpdatedAt: Date
+    }, ExtArgs["result"]["documentTemplate"]>
+    composites: {}
+  }
+
+  type DocumentTemplateGetPayload<S extends boolean | null | undefined | DocumentTemplateDefaultArgs> = $Result.GetResult<Prisma.$DocumentTemplatePayload, S>
+
+  type DocumentTemplateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DocumentTemplateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DocumentTemplateCountAggregateInputType | true
+    }
+
+  export interface DocumentTemplateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DocumentTemplate'], meta: { name: 'DocumentTemplate' } }
+    /**
+     * Find zero or one DocumentTemplate that matches the filter.
+     * @param {DocumentTemplateFindUniqueArgs} args - Arguments to find a DocumentTemplate
+     * @example
+     * // Get one DocumentTemplate
+     * const documentTemplate = await prisma.documentTemplate.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DocumentTemplateFindUniqueArgs>(args: SelectSubset<T, DocumentTemplateFindUniqueArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DocumentTemplate that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DocumentTemplateFindUniqueOrThrowArgs} args - Arguments to find a DocumentTemplate
+     * @example
+     * // Get one DocumentTemplate
+     * const documentTemplate = await prisma.documentTemplate.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DocumentTemplateFindUniqueOrThrowArgs>(args: SelectSubset<T, DocumentTemplateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DocumentTemplate that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentTemplateFindFirstArgs} args - Arguments to find a DocumentTemplate
+     * @example
+     * // Get one DocumentTemplate
+     * const documentTemplate = await prisma.documentTemplate.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DocumentTemplateFindFirstArgs>(args?: SelectSubset<T, DocumentTemplateFindFirstArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DocumentTemplate that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentTemplateFindFirstOrThrowArgs} args - Arguments to find a DocumentTemplate
+     * @example
+     * // Get one DocumentTemplate
+     * const documentTemplate = await prisma.documentTemplate.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DocumentTemplateFindFirstOrThrowArgs>(args?: SelectSubset<T, DocumentTemplateFindFirstOrThrowArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DocumentTemplates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentTemplateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DocumentTemplates
+     * const documentTemplates = await prisma.documentTemplate.findMany()
+     * 
+     * // Get first 10 DocumentTemplates
+     * const documentTemplates = await prisma.documentTemplate.findMany({ take: 10 })
+     * 
+     * // Only select the `DocumentTemplateId`
+     * const documentTemplateWithDocumentTemplateIdOnly = await prisma.documentTemplate.findMany({ select: { DocumentTemplateId: true } })
+     * 
+     */
+    findMany<T extends DocumentTemplateFindManyArgs>(args?: SelectSubset<T, DocumentTemplateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DocumentTemplate.
+     * @param {DocumentTemplateCreateArgs} args - Arguments to create a DocumentTemplate.
+     * @example
+     * // Create one DocumentTemplate
+     * const DocumentTemplate = await prisma.documentTemplate.create({
+     *   data: {
+     *     // ... data to create a DocumentTemplate
+     *   }
+     * })
+     * 
+     */
+    create<T extends DocumentTemplateCreateArgs>(args: SelectSubset<T, DocumentTemplateCreateArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DocumentTemplates.
+     * @param {DocumentTemplateCreateManyArgs} args - Arguments to create many DocumentTemplates.
+     * @example
+     * // Create many DocumentTemplates
+     * const documentTemplate = await prisma.documentTemplate.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DocumentTemplateCreateManyArgs>(args?: SelectSubset<T, DocumentTemplateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DocumentTemplates and returns the data saved in the database.
+     * @param {DocumentTemplateCreateManyAndReturnArgs} args - Arguments to create many DocumentTemplates.
+     * @example
+     * // Create many DocumentTemplates
+     * const documentTemplate = await prisma.documentTemplate.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DocumentTemplates and only return the `DocumentTemplateId`
+     * const documentTemplateWithDocumentTemplateIdOnly = await prisma.documentTemplate.createManyAndReturn({
+     *   select: { DocumentTemplateId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DocumentTemplateCreateManyAndReturnArgs>(args?: SelectSubset<T, DocumentTemplateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DocumentTemplate.
+     * @param {DocumentTemplateDeleteArgs} args - Arguments to delete one DocumentTemplate.
+     * @example
+     * // Delete one DocumentTemplate
+     * const DocumentTemplate = await prisma.documentTemplate.delete({
+     *   where: {
+     *     // ... filter to delete one DocumentTemplate
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DocumentTemplateDeleteArgs>(args: SelectSubset<T, DocumentTemplateDeleteArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DocumentTemplate.
+     * @param {DocumentTemplateUpdateArgs} args - Arguments to update one DocumentTemplate.
+     * @example
+     * // Update one DocumentTemplate
+     * const documentTemplate = await prisma.documentTemplate.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DocumentTemplateUpdateArgs>(args: SelectSubset<T, DocumentTemplateUpdateArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DocumentTemplates.
+     * @param {DocumentTemplateDeleteManyArgs} args - Arguments to filter DocumentTemplates to delete.
+     * @example
+     * // Delete a few DocumentTemplates
+     * const { count } = await prisma.documentTemplate.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DocumentTemplateDeleteManyArgs>(args?: SelectSubset<T, DocumentTemplateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DocumentTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentTemplateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DocumentTemplates
+     * const documentTemplate = await prisma.documentTemplate.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DocumentTemplateUpdateManyArgs>(args: SelectSubset<T, DocumentTemplateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DocumentTemplates and returns the data updated in the database.
+     * @param {DocumentTemplateUpdateManyAndReturnArgs} args - Arguments to update many DocumentTemplates.
+     * @example
+     * // Update many DocumentTemplates
+     * const documentTemplate = await prisma.documentTemplate.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DocumentTemplates and only return the `DocumentTemplateId`
+     * const documentTemplateWithDocumentTemplateIdOnly = await prisma.documentTemplate.updateManyAndReturn({
+     *   select: { DocumentTemplateId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DocumentTemplateUpdateManyAndReturnArgs>(args: SelectSubset<T, DocumentTemplateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DocumentTemplate.
+     * @param {DocumentTemplateUpsertArgs} args - Arguments to update or create a DocumentTemplate.
+     * @example
+     * // Update or create a DocumentTemplate
+     * const documentTemplate = await prisma.documentTemplate.upsert({
+     *   create: {
+     *     // ... data to create a DocumentTemplate
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DocumentTemplate we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DocumentTemplateUpsertArgs>(args: SelectSubset<T, DocumentTemplateUpsertArgs<ExtArgs>>): Prisma__DocumentTemplateClient<$Result.GetResult<Prisma.$DocumentTemplatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DocumentTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentTemplateCountArgs} args - Arguments to filter DocumentTemplates to count.
+     * @example
+     * // Count the number of DocumentTemplates
+     * const count = await prisma.documentTemplate.count({
+     *   where: {
+     *     // ... the filter for the DocumentTemplates we want to count
+     *   }
+     * })
+    **/
+    count<T extends DocumentTemplateCountArgs>(
+      args?: Subset<T, DocumentTemplateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DocumentTemplateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DocumentTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentTemplateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DocumentTemplateAggregateArgs>(args: Subset<T, DocumentTemplateAggregateArgs>): Prisma.PrismaPromise<GetDocumentTemplateAggregateType<T>>
+
+    /**
+     * Group by DocumentTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentTemplateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DocumentTemplateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DocumentTemplateGroupByArgs['orderBy'] }
+        : { orderBy?: DocumentTemplateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DocumentTemplateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDocumentTemplateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DocumentTemplate model
+   */
+  readonly fields: DocumentTemplateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DocumentTemplate.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DocumentTemplateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DocumentTemplate model
+   */
+  interface DocumentTemplateFieldRefs {
+    readonly DocumentTemplateId: FieldRef<"DocumentTemplate", 'String'>
+    readonly Type: FieldRef<"DocumentTemplate", 'String'>
+    readonly Name: FieldRef<"DocumentTemplate", 'String'>
+    readonly Content: FieldRef<"DocumentTemplate", 'Json'>
+    readonly CreatedAt: FieldRef<"DocumentTemplate", 'DateTime'>
+    readonly UpdatedAt: FieldRef<"DocumentTemplate", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DocumentTemplate findUnique
+   */
+  export type DocumentTemplateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which DocumentTemplate to fetch.
+     */
+    where: DocumentTemplateWhereUniqueInput
+  }
+
+  /**
+   * DocumentTemplate findUniqueOrThrow
+   */
+  export type DocumentTemplateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which DocumentTemplate to fetch.
+     */
+    where: DocumentTemplateWhereUniqueInput
+  }
+
+  /**
+   * DocumentTemplate findFirst
+   */
+  export type DocumentTemplateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which DocumentTemplate to fetch.
+     */
+    where?: DocumentTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentTemplates to fetch.
+     */
+    orderBy?: DocumentTemplateOrderByWithRelationInput | DocumentTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DocumentTemplates.
+     */
+    cursor?: DocumentTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DocumentTemplates.
+     */
+    distinct?: DocumentTemplateScalarFieldEnum | DocumentTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * DocumentTemplate findFirstOrThrow
+   */
+  export type DocumentTemplateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which DocumentTemplate to fetch.
+     */
+    where?: DocumentTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentTemplates to fetch.
+     */
+    orderBy?: DocumentTemplateOrderByWithRelationInput | DocumentTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DocumentTemplates.
+     */
+    cursor?: DocumentTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DocumentTemplates.
+     */
+    distinct?: DocumentTemplateScalarFieldEnum | DocumentTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * DocumentTemplate findMany
+   */
+  export type DocumentTemplateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which DocumentTemplates to fetch.
+     */
+    where?: DocumentTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DocumentTemplates to fetch.
+     */
+    orderBy?: DocumentTemplateOrderByWithRelationInput | DocumentTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DocumentTemplates.
+     */
+    cursor?: DocumentTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DocumentTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DocumentTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DocumentTemplates.
+     */
+    distinct?: DocumentTemplateScalarFieldEnum | DocumentTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * DocumentTemplate create
+   */
+  export type DocumentTemplateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * The data needed to create a DocumentTemplate.
+     */
+    data: XOR<DocumentTemplateCreateInput, DocumentTemplateUncheckedCreateInput>
+  }
+
+  /**
+   * DocumentTemplate createMany
+   */
+  export type DocumentTemplateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DocumentTemplates.
+     */
+    data: DocumentTemplateCreateManyInput | DocumentTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DocumentTemplate createManyAndReturn
+   */
+  export type DocumentTemplateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to create many DocumentTemplates.
+     */
+    data: DocumentTemplateCreateManyInput | DocumentTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DocumentTemplate update
+   */
+  export type DocumentTemplateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * The data needed to update a DocumentTemplate.
+     */
+    data: XOR<DocumentTemplateUpdateInput, DocumentTemplateUncheckedUpdateInput>
+    /**
+     * Choose, which DocumentTemplate to update.
+     */
+    where: DocumentTemplateWhereUniqueInput
+  }
+
+  /**
+   * DocumentTemplate updateMany
+   */
+  export type DocumentTemplateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DocumentTemplates.
+     */
+    data: XOR<DocumentTemplateUpdateManyMutationInput, DocumentTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which DocumentTemplates to update
+     */
+    where?: DocumentTemplateWhereInput
+    /**
+     * Limit how many DocumentTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DocumentTemplate updateManyAndReturn
+   */
+  export type DocumentTemplateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to update DocumentTemplates.
+     */
+    data: XOR<DocumentTemplateUpdateManyMutationInput, DocumentTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which DocumentTemplates to update
+     */
+    where?: DocumentTemplateWhereInput
+    /**
+     * Limit how many DocumentTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DocumentTemplate upsert
+   */
+  export type DocumentTemplateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * The filter to search for the DocumentTemplate to update in case it exists.
+     */
+    where: DocumentTemplateWhereUniqueInput
+    /**
+     * In case the DocumentTemplate found by the `where` argument doesn't exist, create a new DocumentTemplate with this data.
+     */
+    create: XOR<DocumentTemplateCreateInput, DocumentTemplateUncheckedCreateInput>
+    /**
+     * In case the DocumentTemplate was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DocumentTemplateUpdateInput, DocumentTemplateUncheckedUpdateInput>
+  }
+
+  /**
+   * DocumentTemplate delete
+   */
+  export type DocumentTemplateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+    /**
+     * Filter which DocumentTemplate to delete.
+     */
+    where: DocumentTemplateWhereUniqueInput
+  }
+
+  /**
+   * DocumentTemplate deleteMany
+   */
+  export type DocumentTemplateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DocumentTemplates to delete
+     */
+    where?: DocumentTemplateWhereInput
+    /**
+     * Limit how many DocumentTemplates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DocumentTemplate without action
+   */
+  export type DocumentTemplateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DocumentTemplate
+     */
+    select?: DocumentTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DocumentTemplate
+     */
+    omit?: DocumentTemplateOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model UniversitySosialMedia
    */
 
@@ -97217,6 +98317,18 @@ export namespace Prisma {
   export type UniversityScalarFieldEnum = (typeof UniversityScalarFieldEnum)[keyof typeof UniversityScalarFieldEnum]
 
 
+  export const DocumentTemplateScalarFieldEnum: {
+    DocumentTemplateId: 'DocumentTemplateId',
+    Type: 'Type',
+    Name: 'Name',
+    Content: 'Content',
+    CreatedAt: 'CreatedAt',
+    UpdatedAt: 'UpdatedAt'
+  };
+
+  export type DocumentTemplateScalarFieldEnum = (typeof DocumentTemplateScalarFieldEnum)[keyof typeof DocumentTemplateScalarFieldEnum]
+
+
   export const UniversitySosialMediaScalarFieldEnum: {
     UniversitySosialMediaId: 'UniversitySosialMediaId',
     UniversityId: 'UniversityId',
@@ -97536,6 +98648,13 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
   export const NullableJsonNullValueInput: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull
@@ -97778,6 +98897,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'JenisKelamin'
    */
   export type EnumJenisKelaminFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JenisKelamin'>
@@ -97802,20 +98935,6 @@ export namespace Prisma {
    * Reference to a field of type 'Decimal[]'
    */
   export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -101599,6 +102718,63 @@ export namespace Prisma {
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"University"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"University"> | Date | string | null
     DeletedAt?: DateTimeNullableWithAggregatesFilter<"University"> | Date | string | null
+  }
+
+  export type DocumentTemplateWhereInput = {
+    AND?: DocumentTemplateWhereInput | DocumentTemplateWhereInput[]
+    OR?: DocumentTemplateWhereInput[]
+    NOT?: DocumentTemplateWhereInput | DocumentTemplateWhereInput[]
+    DocumentTemplateId?: StringFilter<"DocumentTemplate"> | string
+    Type?: StringFilter<"DocumentTemplate"> | string
+    Name?: StringFilter<"DocumentTemplate"> | string
+    Content?: JsonFilter<"DocumentTemplate">
+    CreatedAt?: DateTimeFilter<"DocumentTemplate"> | Date | string
+    UpdatedAt?: DateTimeFilter<"DocumentTemplate"> | Date | string
+  }
+
+  export type DocumentTemplateOrderByWithRelationInput = {
+    DocumentTemplateId?: SortOrder
+    Type?: SortOrder
+    Name?: SortOrder
+    Content?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type DocumentTemplateWhereUniqueInput = Prisma.AtLeast<{
+    DocumentTemplateId?: string
+    Type?: string
+    AND?: DocumentTemplateWhereInput | DocumentTemplateWhereInput[]
+    OR?: DocumentTemplateWhereInput[]
+    NOT?: DocumentTemplateWhereInput | DocumentTemplateWhereInput[]
+    Name?: StringFilter<"DocumentTemplate"> | string
+    Content?: JsonFilter<"DocumentTemplate">
+    CreatedAt?: DateTimeFilter<"DocumentTemplate"> | Date | string
+    UpdatedAt?: DateTimeFilter<"DocumentTemplate"> | Date | string
+  }, "DocumentTemplateId" | "Type">
+
+  export type DocumentTemplateOrderByWithAggregationInput = {
+    DocumentTemplateId?: SortOrder
+    Type?: SortOrder
+    Name?: SortOrder
+    Content?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+    _count?: DocumentTemplateCountOrderByAggregateInput
+    _max?: DocumentTemplateMaxOrderByAggregateInput
+    _min?: DocumentTemplateMinOrderByAggregateInput
+  }
+
+  export type DocumentTemplateScalarWhereWithAggregatesInput = {
+    AND?: DocumentTemplateScalarWhereWithAggregatesInput | DocumentTemplateScalarWhereWithAggregatesInput[]
+    OR?: DocumentTemplateScalarWhereWithAggregatesInput[]
+    NOT?: DocumentTemplateScalarWhereWithAggregatesInput | DocumentTemplateScalarWhereWithAggregatesInput[]
+    DocumentTemplateId?: StringWithAggregatesFilter<"DocumentTemplate"> | string
+    Type?: StringWithAggregatesFilter<"DocumentTemplate"> | string
+    Name?: StringWithAggregatesFilter<"DocumentTemplate"> | string
+    Content?: JsonWithAggregatesFilter<"DocumentTemplate">
+    CreatedAt?: DateTimeWithAggregatesFilter<"DocumentTemplate"> | Date | string
+    UpdatedAt?: DateTimeWithAggregatesFilter<"DocumentTemplate"> | Date | string
   }
 
   export type UniversitySosialMediaWhereInput = {
@@ -107157,6 +108333,69 @@ export namespace Prisma {
     DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type DocumentTemplateCreateInput = {
+    DocumentTemplateId?: string
+    Type: string
+    Name: string
+    Content: JsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+  }
+
+  export type DocumentTemplateUncheckedCreateInput = {
+    DocumentTemplateId?: string
+    Type: string
+    Name: string
+    Content: JsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+  }
+
+  export type DocumentTemplateUpdateInput = {
+    DocumentTemplateId?: StringFieldUpdateOperationsInput | string
+    Type?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Content?: JsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentTemplateUncheckedUpdateInput = {
+    DocumentTemplateId?: StringFieldUpdateOperationsInput | string
+    Type?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Content?: JsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentTemplateCreateManyInput = {
+    DocumentTemplateId?: string
+    Type: string
+    Name: string
+    Content: JsonNullValueInput | InputJsonValue
+    CreatedAt?: Date | string
+    UpdatedAt?: Date | string
+  }
+
+  export type DocumentTemplateUpdateManyMutationInput = {
+    DocumentTemplateId?: StringFieldUpdateOperationsInput | string
+    Type?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Content?: JsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentTemplateUncheckedUpdateManyInput = {
+    DocumentTemplateId?: StringFieldUpdateOperationsInput | string
+    Type?: StringFieldUpdateOperationsInput | string
+    Name?: StringFieldUpdateOperationsInput | string
+    Content?: JsonNullValueInput | InputJsonValue
+    CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UniversitySosialMediaCreateInput = {
     UniversitySosialMediaId?: string
     Nama: string
@@ -111768,6 +113007,80 @@ export namespace Prisma {
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
     DeletedAt?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type DocumentTemplateCountOrderByAggregateInput = {
+    DocumentTemplateId?: SortOrder
+    Type?: SortOrder
+    Name?: SortOrder
+    Content?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type DocumentTemplateMaxOrderByAggregateInput = {
+    DocumentTemplateId?: SortOrder
+    Type?: SortOrder
+    Name?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+
+  export type DocumentTemplateMinOrderByAggregateInput = {
+    DocumentTemplateId?: SortOrder
+    Type?: SortOrder
+    Name?: SortOrder
+    CreatedAt?: SortOrder
+    UpdatedAt?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type UniversitySosialMediaCountOrderByAggregateInput = {
@@ -118233,6 +119546,29 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSistemKuliahFilter<$PrismaModel>
     _max?: NestedEnumSistemKuliahFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedEnumJenisKelaminFilter<$PrismaModel = never> = {

@@ -2,6 +2,9 @@ import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { GenerateSkType } from '@/types/GeneratePdfTypes';
 import path from 'path';
+import { FormAssessmentPortraitTemplate } from '@/types/FormAssessmentTemplate';
+import { getSkHasilPlaceholderValues } from '@/lib/sk-hasil-template';
+import { RekapitulasiTemplateBlocks } from './RekapitulasiTemplateContent';
 
 // Helper function to format date
 const formatDate = (date: Date): string => {
@@ -378,11 +381,26 @@ interface TableRowData {
 }
 
 // Komponen Document
-export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType, NomorSk: string, JenisSk: string }) => {
+export const GenerateSkPdf = ({
+    data,
+    NomorSk,
+    JenisSk,
+    portraitTemplate,
+}: {
+    data: GenerateSkType
+    NomorSk: string
+    JenisSk: string
+    portraitTemplate: FormAssessmentPortraitTemplate
+}) => {
     // Sort social media
     const sortedSocialMedia = data.Universitas.UniversitySocialMedia
         .filter(sm => socialMediaOrder.includes(sm.Nama))
         .sort((a, b) => socialMediaOrder.indexOf(a.Nama) - socialMediaOrder.indexOf(b.Nama));
+    const templatePlaceholders = getSkHasilPlaceholderValues(
+        data,
+        NomorSk,
+        JenisSk
+    );
 
     // Process table data - Column 1 as reference
     const tableRows: TableRowData[] = data.MataKuliah.map(mk => {
@@ -510,7 +528,25 @@ export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType
 
     return (
         <Document>
+            {portraitTemplate.pages
+                .filter((page) => page.placement === 'before_landscape')
+                .map((page) => (
+                    <Page
+                        key={page.id}
+                        size="A4"
+                        orientation="portrait"
+                        style={portraitStyles.page}
+                    >
+                        <RekapitulasiTemplateBlocks
+                            blocks={page.blocks}
+                            placeholders={templatePlaceholders}
+                            logoPath={logoPath}
+                        />
+                    </Page>
+                ))}
+
             {/* Page 1 - Keputusan Rektor (Portrait) */}
+            {false && (
             <Page size="A4" orientation="portrait" style={portraitStyles.page}>
                 {/* Header */}
                 {/* Header */}
@@ -612,8 +648,10 @@ export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType
                     <Text style={portraitStyles.listContent}>Keputusan Rektor No. 665/Kept-ITI/XII/2025 tentang Penetapan Penilai Pengakuan Mata Kuliah Pendidikan Akademik Jalur Rekognisi Pembelajaran Lampau (RPL) Institut Teknologi Indonesia</Text>
                 </View>
             </Page>
+            )}
 
             {/* Page 2 - Keputusan Rektor Continued (Portrait) */}
+            {false && (
             <Page size="A4" orientation="portrait" style={portraitStyles.page}>
                 <View style={portraitStyles.listItem}>
                     <Text style={portraitStyles.listNumber}>9.</Text>
@@ -688,6 +726,7 @@ export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType
                     <Text style={portraitStyles.tembusanItem}>Ka. Prodi {data.ProgramStudi.Nama}</Text>
                 </View>
             </Page>
+            )}
 
             {/* Page 3+ - Landscape Table (existing content) */}
             <Page size="A4" orientation="landscape" style={styles.page}>
@@ -723,7 +762,12 @@ export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType
 
                 {/* Title */}
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>DAFTAR NILAI PENILAIAN RPL  PEROLEHAN KREDIT</Text>
+                    <Text style={styles.title}>
+                        DAFTAR NILAI PENILAIAN RPL{' '}
+                        {JenisSk.toUpperCase().includes('TRANSFER')
+                            ? 'TRANSFER KREDIT'
+                            : 'PEROLEHAN KREDIT'}
+                    </Text>
                 </View>
 
                 {/* Info Section */}
@@ -940,6 +984,22 @@ export const GenerateSkPdf = ({ data, NomorSk, JenisSk }: { data: GenerateSkType
                 </View>
 
             </Page>
+            {portraitTemplate.pages
+                .filter((page) => page.placement === 'after_landscape')
+                .map((page) => (
+                    <Page
+                        key={page.id}
+                        size="A4"
+                        orientation="portrait"
+                        style={portraitStyles.page}
+                    >
+                        <RekapitulasiTemplateBlocks
+                            blocks={page.blocks}
+                            placeholders={templatePlaceholders}
+                            logoPath={logoPath}
+                        />
+                    </Page>
+                ))}
         </Document>
     );
 };

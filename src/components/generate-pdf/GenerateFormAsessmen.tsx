@@ -1,9 +1,10 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { GenerateFormAsessmenType } from '@/types/GeneratePdfTypes';
 import { ProfiensiPengetahuan } from '@/generated/prisma';
 import path from 'path';
-import { Check } from 'lucide-react';
+import { FormAssessmentPortraitTemplate } from '@/types/FormAssessmentTemplate';
+import { FormAssessmentPortrait } from './FormAssessmentPortrait';
 
 const months = [
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
@@ -14,10 +15,6 @@ const formatDate = (date: Date | null): string => {
     if (!date) return '..............';
     const d = new Date(date);
     return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-};
-
-const formatMonthYear = (date: Date): string => {
-    return `${months[date.getMonth()]} ${date.getFullYear()}`;
 };
 
 const logoPath = path.join(process.cwd(), 'public', 'images', 'logo.png');
@@ -341,66 +338,6 @@ const styles = StyleSheet.create({
     },
 });
 
-// Daftar bukti yang dapat digunakan (1-15) dan prinsip verifikasi (VATM).
-const BUKTI_REF: string[] = [
-    'Ijazah dan/atau Transkrip Nilai dari Mata Kuliah yang pernah ditempuh di jenjang Pendidikan Tinggi sebelumnya (khusus untuk transfer sks);',
-    'Daftar Riwayat pekerjaan dengan rincian tugas yang dilakukan;',
-    'Sertifikat Kompetensi;',
-    'sertifikat pengoperasian/lisensi yang sesuai dengan jabatan kerja dimiliki;',
-    'Foto pekerjaan yang pernah dilakukan dan deskripsi pekerjaan;',
-    'Buku harian;',
-    'Lembar tugas/lembar kerja ketika bekerja di perusahaan;',
-    'Dokumen analisis/perancangan (parsial atau lengkap) ketika bekerja di perusahaan;',
-    'Logbook;',
-    'Catatan pelatihan di lokasi tempat kerja;',
-    'Keanggotaan asosiasi profesi yang relevan;',
-    'Referensi / surat keterangan/ laporan verifikasi pihak ketiga dari pemberi kerja / supervisor;',
-    'Penghargaan dari industri; dan',
-    'Penilaian kinerja dari perusahaan',
-    'Dokumen lain yang relevan',
-];
-
-const PRINSIP_BUKTI_REF: string[] = [
-    'Valid/Sahih: ada hubungan yang jelas antara persyaratan bukti dari unit kompetensi/mata kuliah yang akan dinilai dengan bukti yang menjadi dasar penilaian;',
-    'Autentik/Asli: dapat dibuktikan bahwa buktinya adalah karya calon sendiri.',
-    'Terkini: bukti menunjukkan pengetahuan dan keterampilan kandidat saat ini;',
-    'Memadai/Cukup: kriteria mengacu kepada kriteria unjuk kerja dan panduan bukti: mendemonstrasikan kompetensi selama periode waktu tertentu; mengacu kepada semua dimensi kompetensi; dan mendemonstrasikan kompetensi dalam konteks yang berbeda;',
-];
-
-const term: string[] = [
-    'Semua informasi yang saya tuliskan adalah sepenuhnya benar dan saya bertanggung-jawab atas seluruh data dalam formulir ini dan apabila dikemudian hari ternyata informasi yang saya sampaikan tersebut adalah tidak benar, maka saya bersedia menerima sangsi sesuai dengan ketentuan yang berlaku;',
-    'Saya memberikan ijin kepada pihak pengelola program RPL, untuk melakukan pemeriksaan kebenaran informasi yang saya berikan dalam formulir evaluasi diri ini kepada seluruh pihak yang terkait dengan data akademik sebelumnya dan kepada perusahaan tempat saya bekerja sebelumnya dan atau saat ini saya bekerja;',
-    'Saya bersedia untuk mengikuti asesmen lanjutan untuk membuktikan kompetensi saya, sesuai waktu dan tempat/platform daring yang ditentukan oleh unit RPL.'
-]
-
-// Daftar uraian profisiensi sesuai pedoman Form 03.
-const PROFISIENSI_REF: { label: string; uraian: string[] }[] = [
-    {
-        label: 'Sangat baik',
-        uraian: [
-            'Saya melakukan tugas ini dengan sangat baik, atau',
-            'Saya menguasai bahan kajian ini dengan sangat baik, atau',
-            'Saya memiliki keterampilan ini, selalu digunakan dalam pekerjaan dengan tepat tanpa ada kesalahan',
-        ],
-    },
-    {
-        label: 'Baik',
-        uraian: [
-            'Saya melakukan tugas ini dengan baik, atau',
-            'Saya menguasai bahan kajian ini dengan baik, atau',
-            'Saya memiliki keterampilan ini, dan kadang-kadang digunakan dalam pekerjaan',
-        ],
-    },
-    {
-        label: 'Tidak pernah',
-        uraian: [
-            'Saya tidak pernah melakukan tugas ini, atau',
-            'Saya tidak menguasai bahan kajian ini, atau',
-            'Saya tidak memiliki keterampilan ini',
-        ],
-    },
-];
-
 // Tanda centang pada kolom profisiensi yang dipilih calon.
 const profCheck = (current: ProfiensiPengetahuan | null, target: ProfiensiPengetahuan): string =>
     current === target ? '√ v' : '';
@@ -408,139 +345,25 @@ const profCheck = (current: ProfiensiPengetahuan | null, target: ProfiensiPenget
 // Hasil evaluasi asesor: v jika terpenuhi, x jika tidak / belum dinilai.
 const vatm = (dinilai: boolean, flag: boolean): string => (dinilai ? (flag ? 'v' : 'x') : 'x');
 
-export const GenerateFormAsessmen = ({ data }: { data: GenerateFormAsessmenType }) => {
+export const GenerateFormAsessmen = ({
+    data,
+    portraitTemplate,
+}: {
+    data: GenerateFormAsessmenType
+    portraitTemplate: FormAssessmentPortraitTemplate
+}) => {
     const now = new Date();
     const mataKuliahList = data.MataKuliah ?? [];
 
     return (
         <Document>
-            {/* ── Halaman Sampul ── */}
-            <Page size="A4" style={styles.page} orientation='portrait'>
-                <Text style={styles.coverFormNumber}>Form (03)</Text>
-                <Text style={styles.coverInstitution}>
-                    {safeText(data.Universitas?.Nama, 'INSTITUT TEKNOLOGI INDONESIA')}
-                </Text>
-                <Text style={styles.coverProdi}>Program Studi {safeText(data.ProgramStudi?.Nama, '-')}</Text>
-                <View style={styles.coverLogoWrap}>
-                    <Image src={logoPath} style={styles.coverLogo} />
-                </View>
-                <Text style={styles.coverTitle}>
-                    FORMULIR EVALUASI DIRI CALON MAHASISWA{'\n'}REKOGNISI PEMBELAJARAN LAMPAU (RPL)
-                </Text>
-                <Text style={styles.coverPlace}>
-                    Tangerang Selatan{'\n'}{formatMonthYear(now)}
-                </Text>
-            </Page>
-
-            {/* ── Halaman Identitas ── */}
-            <Page size="A4" style={styles.page}>
-                <Text style={styles.paragraph}>Formulir Evaluasi Diri (Form 03)</Text>
-                <Text style={styles.identityTitle}>FORMULIR EVALUASI DIRI</Text>
-
-                <View style={styles.identityRow}>
-                    <Text style={styles.identityLabel}>NAMA PERGURUAN TINGGI</Text>
-                    <Text style={styles.identitySep}>:</Text>
-                    <Text style={styles.identityValue}>{safeText(data.Universitas?.Nama, '-')}</Text>
-                </View>
-                <View style={styles.identityRow}>
-                    <Text style={styles.identityLabel}>PROGRAM STUDI</Text>
-                    <Text style={styles.identitySep}>:</Text>
-                    <Text style={styles.identityValue}>{safeText(data.ProgramStudi?.Nama, '-')}</Text>
-                </View>
-                <View style={styles.identityRow}>
-                    <Text style={styles.identityLabel}>Nama Calon</Text>
-                    <Text style={styles.identitySep}>:</Text>
-                    <Text style={styles.identityValue}>{safeText(data.Nama, '-')}</Text>
-                </View>
-                <View style={styles.identityRow}>
-                    <Text style={styles.identityLabel}>Tempat/Tgl lahir</Text>
-                    <Text style={styles.identitySep}>:</Text>
-                    <Text style={styles.identityValue}>
-                        {safeText(data.TempatLahir, '-')}, {formatDate(data.TanggalLahir)}
-                    </Text>
-                </View>
-                <View style={styles.identityRow}>
-                    <Text style={styles.identityLabel}>Alamat</Text>
-                    <Text style={styles.identitySep}>:</Text>
-                    <Text style={styles.identityValue}>{safeText(data.Alamat, '-')}</Text>
-                </View>
-                <View style={styles.identityRow}>
-                    <Text style={styles.identityLabel}>Nomor Telpon/HP</Text>
-                    <Text style={styles.identitySep}>:</Text>
-                    <Text style={styles.identityValue}>{safeText(data.NomorHp, '-')}</Text>
-                </View>
-                <View style={styles.identityRow}>
-                    <Text style={styles.identityLabel}>Alamat E Mail</Text>
-                    <Text style={styles.identitySep}>:</Text>
-                    <Text style={styles.identityValue}>{safeText(data.Email, '-')}</Text>
-                </View>
-
-                <Text style={styles.paragraph}>
-                    Isilah setiap kriteria unjuk kerja atau capaian pembelajaran pada halaman-halaman
-                    berikut sesuai dengan tingkat profesiansi yang saudara miliki. Saudara harus jujur
-                    dalam melakukan penilaian ini.
-                </Text>
-
-                <Text style={styles.paragraph}>
-                    <Text style={{ fontWeight: 'bold' }}>Catatan:</Text> Jika saudara merasa yakin dengan kemampuan yang saudara miliki atas pencapaian profesiensi setiap kriteria unjuk kerja atau capaian pembelajaran yang dideskripsikan pada halaman berikut, dimohon saudara dapat melampirkan bukti yang valid, autentik, terkini, dan memadai untuk mendukung klaim saudara atas pencapaian profesiensi yang baik, dan/atau sangat baik tersebut.
-                </Text>
-
-                <Text style={styles.paragraph}>
-                    Identifikasi tingkat profesiensi pencapaian saudara dalam kriteria unjuk kerja atau capaian pembelajaran dengan menggunakan jawaban berikut ini:
-                </Text>
-
-                <View style={styles.profRefTable}>
-                    {/* Header */}
-                    <View style={styles.profRefRow} wrap={false}>
-                        <View style={styles.profRefColLabel}>
-                            <Text style={styles.profRefHeaderText}>Profisiensi/kemampuan</Text>
-                        </View>
-                        <View style={styles.profRefColUraian}>
-                            <Text style={styles.profRefHeaderText}>Uraian</Text>
-                        </View>
-                    </View>
-                    {/* Baris */}
-                    {PROFISIENSI_REF.map((item) => (
-                        <View key={item.label} style={styles.profRefRow} wrap={false}>
-                            <View style={styles.profRefColLabel}>
-                                <Text style={styles.profRefLabelText}>{item.label}</Text>
-                            </View>
-                            <View style={styles.profRefColUraian}>
-                                {item.uraian.map((u, i) => (
-                                    <View key={i} style={styles.profRefBulletRow}>
-                                        <Text style={styles.profRefBullet}>•</Text>
-                                        <Text style={styles.profRefUraianText}>{u}</Text>
-                                    </View>
-                                ))}
-                            </View>
-                        </View>
-                    ))}
-                </View>
-
-                <Text style={styles.paragraph}>
-                    Bukti yang dapat digunakan untuk mendukung klaim saudara atas pencapaian
-                    profesiensi yang baik dan atau sangat baik tersebut antara lain:
-                </Text>
-                {BUKTI_REF.map((b, i) => (
-                    <View key={i} style={styles.listRow}>
-                        <Text style={styles.listMarker}>{i + 1}.</Text>
-                        <Text style={styles.listText}>{b}</Text>
-                    </View>
-                ))}
-
-                <Text style={styles.paragraph}>
-                    Bukti (portofolio) untuk mendukung klaim calon atas pernyataan kriteria capaian
-                    pembelajaran mata kuliah atau modul pembelajaran yang dilampirkan calon pada saat
-                    mengajukan lamaran akan diverifikasi dan divalidasi oleh Asesor sesuai prinsip
-                    bukti, yaitu, sahih/valid (V), autentik (A), terkini (T) dan cukup/memadai (M), yaitu:
-                </Text>
-                {PRINSIP_BUKTI_REF.map((p, i) => (
-                    <View key={i} style={styles.listRow}>
-                        <Text style={styles.listMarker}>•</Text>
-                        <Text style={styles.listText}>{p}</Text>
-                    </View>
-                ))}
-            </Page>
+            <FormAssessmentPortrait
+                data={data}
+                template={portraitTemplate}
+                logoPath={logoPath}
+                pageStyle={styles.page}
+                placement="before_landscape"
+            />
 
             {/* ── Per Mata Kuliah ── */}
             {mataKuliahList.length === 0 ? (
@@ -766,47 +589,13 @@ export const GenerateFormAsessmen = ({ data }: { data: GenerateFormAsessmenType 
                     );
                 })
             )}
-            <Page size="A4" style={styles.page} orientation='portrait'>
-                <View style={styles.closingNoteBlock}>
-                    <Text style={styles.closingNoteText}>Keterangan:</Text>
-                    <Text style={styles.closingNoteText}>
-                        Kolom 1: Diisi oleh Program Studi, berupa Pernyataan Kemampuan Akhir
-                        yang Diharapkan/Capaian Pembelajaran Mata Kuliah.
-                    </Text>
-                    <Text style={styles.closingNoteText}>
-                        Kolom 2: Diisi oleh Calon mahasiswa/pelamar RPL sesuai dengan tingkat profesiensi yang
-                        dikuasainya atas pernyataan yang diuraikan di kolom 1.
-                    </Text>
-                    <Text style={styles.closingNoteText}>
-                        Kolom 3: Diisi oleh Asesor setelah calon mengisi kolom 2 dan melampirkan BUKTI
-                        (Portofolio) yang disebutkan pada kolom 5 dan disusun nomor urutnya sesuai yang
-                        dinyatakan pada kolom 4.
-                    </Text>
-                    <Text style={styles.closingNoteText}>
-                        Kolom 4: Nomor urut BUKTI Portofolio sebagaimana jenis BUKTI yang diuraikan pada
-                        kolom 4.
-                    </Text>
-                    <Text style={styles.closingNoteText}>
-                        Kolom 5: Jenis BUKTI portofolio. Bukti ini dapat digunakan secara berulang untuk
-                        mendukung klaim beberapa pernyataan yang diuraikan pada kolom 1.
-                    </Text>
-                    <Text style={[styles.closingNoteText, { marginTop: 30 }]}>
-                        Saya telah membaca dan mengisi Formulir Evaluasi Diri ini untuk mengikuti asesmen
-                        RPL dan dengan ini saya menyatakan:
-                    </Text>
-                    {term.map((item, index) => (
-                        <Text key={index} style={styles.closingNoteText}>
-                            {index + 1}. {item}
-                        </Text>
-                    ))}
-                </View>
-                {/* Tanda tangan calon */}
-                <View style={styles.signRight}>
-                    <Text style={styles.signText}>Tangerang Selatan, {formatDate(now)}</Text>
-                    <Text style={styles.signText}>Tanda Tangan Calon Mahasiswa</Text>
-                    <Text style={styles.signName}>({safeText(data.Nama, '.................................')})</Text>
-                </View>
-            </Page>
+            <FormAssessmentPortrait
+                data={data}
+                template={portraitTemplate}
+                logoPath={logoPath}
+                pageStyle={styles.page}
+                placement="after_landscape"
+            />
         </Document >
     );
 };

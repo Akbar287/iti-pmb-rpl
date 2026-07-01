@@ -10,6 +10,28 @@ import { Jenjang } from '@/generated/prisma'
 import { isGenerateBeritaAcara, isGenerateEvaluasiMandiri, isGenerateRekapitulasi, isGenerateSk } from '@/config/checkGenerateSkStats'
 import { GenerateRekapitulasiPdf } from '@/components/generate-pdf/GenerateRekapitulasiPdf'
 import { renderPdfToStream } from '@/lib/pdf-renderer'
+import {
+    cloneDefaultFormAssessmentTemplate,
+    FORM_ASSESSMENT_TEMPLATE_TYPE,
+    normalizeFormAssessmentTemplate,
+} from '@/lib/form-assessment-template'
+import {
+    cloneDefaultRekapitulasiTemplate,
+    normalizeRekapitulasiTemplate,
+    REKAPITULASI_TEMPLATE_TYPE,
+} from '@/lib/rekapitulasi-template'
+import {
+    BERITA_ACARA_TEMPLATE_TYPE,
+    cloneDefaultBeritaAcaraTemplate,
+    normalizeBeritaAcaraTemplate,
+} from '@/lib/berita-acara-template'
+import {
+    cloneDefaultSkHasilTemplate,
+    LEGACY_SK_HASIL_TEMPLATE_TYPE,
+    normalizeSkHasilTemplate,
+    resolveSkHasilTemplateVariant,
+    SK_HASIL_TEMPLATE_TYPES,
+} from '@/lib/sk-hasil-template'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -238,7 +260,30 @@ app.get('/', async (c) => {
                 })) : []
             }
 
-            const stream = await renderPdfToStream(GenerateSkPdf({ data, NomorSk, JenisSk }));
+            const templateVariant = resolveSkHasilTemplateVariant(JenisSk)
+            const savedTemplate = await prisma.documentTemplate.findUnique({
+                where: { Type: SK_HASIL_TEMPLATE_TYPES[templateVariant] },
+                select: { Content: true },
+            })
+            const legacyTemplate =
+                !savedTemplate && templateVariant === 'perolehan'
+                    ? await prisma.documentTemplate.findUnique({
+                          where: { Type: LEGACY_SK_HASIL_TEMPLATE_TYPE },
+                          select: { Content: true },
+                      })
+                    : null
+            const portraitTemplate =
+                normalizeSkHasilTemplate(
+                    (savedTemplate ?? legacyTemplate)?.Content
+                ) ?? cloneDefaultSkHasilTemplate(templateVariant)
+            const stream = await renderPdfToStream(
+                GenerateSkPdf({
+                    data,
+                    NomorSk,
+                    JenisSk,
+                    portraitTemplate,
+                })
+            );
 
             return c.body(stream as unknown as ReadableStream, 200, {
                 'Content-Type': 'application/pdf',
@@ -506,7 +551,16 @@ app.get('/', async (c) => {
         }
 
         try {
-            const stream = await renderPdfToStream(GenerateFormAsessmen({ data }));
+            const savedTemplate = await prisma.documentTemplate.findUnique({
+                where: { Type: FORM_ASSESSMENT_TEMPLATE_TYPE },
+                select: { Content: true },
+            })
+            const portraitTemplate =
+                normalizeFormAssessmentTemplate(savedTemplate?.Content) ??
+                cloneDefaultFormAssessmentTemplate()
+            const stream = await renderPdfToStream(
+                GenerateFormAsessmen({ data, portraitTemplate })
+            );
 
             return c.body(stream as unknown as ReadableStream, 200, {
                 'Content-Type': 'application/pdf',
@@ -640,7 +694,16 @@ app.get('/', async (c) => {
         }
 
         try {
-            const stream = await renderPdfToStream(GenerateBeritaAcara({ data }));
+            const savedTemplate = await prisma.documentTemplate.findUnique({
+                where: { Type: BERITA_ACARA_TEMPLATE_TYPE },
+                select: { Content: true },
+            })
+            const template =
+                normalizeBeritaAcaraTemplate(savedTemplate?.Content) ??
+                cloneDefaultBeritaAcaraTemplate()
+            const stream = await renderPdfToStream(
+                GenerateBeritaAcara({ data, template })
+            );
 
             return c.body(stream as unknown as ReadableStream, 200, {
                 'Content-Type': 'application/pdf',
@@ -913,7 +976,16 @@ app.get('/', async (c) => {
             }
 
             try {
-                const stream = await renderPdfToStream(GenerateRekapitulasiPdf({ data }));
+                const savedTemplate = await prisma.documentTemplate.findUnique({
+                    where: { Type: REKAPITULASI_TEMPLATE_TYPE },
+                    select: { Content: true },
+                })
+                const template =
+                    normalizeRekapitulasiTemplate(savedTemplate?.Content) ??
+                    cloneDefaultRekapitulasiTemplate()
+                const stream = await renderPdfToStream(
+                    GenerateRekapitulasiPdf({ data, template })
+                );
 
                 return c.body(stream as unknown as ReadableStream, 200, {
                     'Content-Type': 'application/pdf',

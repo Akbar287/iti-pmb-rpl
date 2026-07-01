@@ -885,6 +885,17 @@ model University {
   @@map("university")
 }
 
+model DocumentTemplate {
+  DocumentTemplateId String   @id @default(uuid()) @map("document_template_id")
+  Type               String   @unique @map("type")
+  Name               String   @map("name")
+  Content            Json     @map("content")
+  CreatedAt          DateTime @default(now()) @map("created_at")
+  UpdatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("document_template")
+}
+
 model UniversitySosialMedia {
   UniversitySosialMediaId String     @id @default(uuid()) @map("university_sosial_media_id")
   UniversityId            String     @map("university_id")
