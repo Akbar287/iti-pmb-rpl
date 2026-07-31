@@ -9,7 +9,16 @@ import Image from 'next/image'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
-import { CalendarIcon, Lock, SaveAll, Timer, User2 } from 'lucide-react'
+import {
+    CalendarIcon,
+    IdCard,
+    Lock,
+    MapPin,
+    Phone,
+    SaveAll,
+    Timer,
+    User2,
+} from 'lucide-react'
 import { format } from 'date-fns'
 import {
     Form,
@@ -72,6 +81,37 @@ import {
     DialogTitle,
 } from '../ui/dialog'
 import { Skeleton } from '../ui/skeleton'
+import { Separator } from '../ui/separator'
+
+const FormSection = ({
+    icon: Icon,
+    title,
+    description,
+    children,
+}: {
+    icon: React.ElementType
+    title: string
+    description: string
+    children: React.ReactNode
+}) => (
+    <section className="space-y-4">
+        <div className="flex items-start gap-3">
+            <span className="flex items-center justify-center w-8 h-8 rounded-lg shrink-0 bg-primary/10 text-primary">
+                <Icon className="w-4 h-4" />
+            </span>
+            <div>
+                <h3 className="font-semibold leading-none">{title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                    {description}
+                </p>
+            </div>
+        </div>
+        <Separator />
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {children}
+        </div>
+    </section>
+)
 
 interface IProfil {
     data: ProfilInterface | null
@@ -313,8 +353,12 @@ const Profil = ({
                                             </AlertDescription>
                                         </Alert>
                                     )}
-                                    <div className="container mx-auto">
-                                        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                                    <div className="container mx-auto space-y-8">
+                                        <FormSection
+                                            icon={User2}
+                                            title="Informasi Akun"
+                                            description="Identitas dan kredensial masuk anda."
+                                        >
                                             <FormField
                                                 control={form.control}
                                                 name="Nama"
@@ -396,6 +440,13 @@ const Profil = ({
                                                 )}
                                             />
 
+                                        </FormSection>
+
+                                        <FormSection
+                                            icon={IdCard}
+                                            title="Data Pribadi"
+                                            description="Data kelahiran, jenis kelamin, agama, dan pendidikan terakhir."
+                                        >
                                             <FormField
                                                 control={form.control}
                                                 name="TempatLahir"
@@ -679,6 +730,13 @@ const Profil = ({
                                                 )}
                                             />
 
+                                        </FormSection>
+
+                                        <FormSection
+                                            icon={Phone}
+                                            title="Kontak"
+                                            description="Nomor yang dapat dihubungi terkait proses RPL."
+                                        >
                                             <FormField
                                                 control={form.control}
                                                 name="Telepon"
@@ -760,6 +818,13 @@ const Profil = ({
                                                 )}
                                             />
 
+                                        </FormSection>
+
+                                        <FormSection
+                                            icon={MapPin}
+                                            title="Alamat Domisili"
+                                            description="Pilih wilayah secara berurutan dari negara hingga desa."
+                                        >
                                             <FormField
                                                 control={form.control}
                                                 name="CountryId"
@@ -1138,7 +1203,7 @@ const Profil = ({
                                                 control={form.control}
                                                 name="Alamat"
                                                 render={({ field }) => (
-                                                    <FormItem>
+                                                    <FormItem className="md:col-span-2 xl:col-span-3">
                                                         <FormLabel>
                                                             Alamat
                                                         </FormLabel>
@@ -1187,7 +1252,7 @@ const Profil = ({
                                                     </FormItem>
                                                 )}
                                             />
-                                        </div>
+                                        </FormSection>
                                     </div>
                                 </div>
                             </CardContent>

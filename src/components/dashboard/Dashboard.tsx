@@ -109,7 +109,9 @@ function StatCard({
                         <p className="text-sm text-muted-foreground">{label}</p>
                         <p className="text-3xl font-bold mt-1">{value}</p>
                     </div>
-                    <div className={`h-12 w-12 rounded-full flex items-center justify-center shrink-0 backdrop-blur-sm ${bg}`}>
+                    <div
+                        className={`h-12 w-12 rounded-full flex items-center justify-center shrink-0 backdrop-blur-sm ${bg}`}
+                    >
                         <Icon className="h-6 w-6" />
                     </div>
                 </div>
@@ -167,9 +169,11 @@ function mergeByKey(
         })
     })
     b.forEach((x) => {
-        const cur =
-            map.get(x[keyField]) ??
-            { [keyField]: x[keyField], [aLabel]: 0, [bLabel]: 0 }
+        const cur = map.get(x[keyField]) ?? {
+            [keyField]: x[keyField],
+            [aLabel]: 0,
+            [bLabel]: 0,
+        }
         cur[bLabel] = x[bValueKey] ?? 0
         map.set(x[keyField], cur)
     })
@@ -203,28 +207,77 @@ function DonutCard({
             </CardHeader>
             <CardContent className="flex-1">
                 {data.length > 0 && total > 0 ? (
-                    <ChartContainer config={config} className="mx-auto aspect-square max-h-[220px]">
+                    <ChartContainer
+                        config={config}
+                        className="mx-auto aspect-square max-h-[220px]"
+                    >
                         <PieChart>
-                            <ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
-                            <Pie data={data} dataKey={dataKey} nameKey={nameKey} innerRadius={55} outerRadius={85} strokeWidth={4}>
-                                {data.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                            <ChartTooltip
+                                content={
+                                    <ChartTooltipContent hideLabel={false} />
+                                }
+                            />
+                            <Pie
+                                data={data}
+                                dataKey={dataKey}
+                                nameKey={nameKey}
+                                innerRadius={55}
+                                outerRadius={85}
+                                strokeWidth={4}
+                            >
+                                {data.map((_, i) => (
+                                    <Cell
+                                        key={i}
+                                        fill={PIE_COLORS[i % PIE_COLORS.length]}
+                                    />
+                                ))}
                                 <Label
                                     content={({ viewBox }) => {
-                                        if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                                        if (
+                                            viewBox &&
+                                            'cx' in viewBox &&
+                                            'cy' in viewBox
+                                        ) {
                                             return (
-                                                <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                                                    <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-2xl font-bold">{total}</tspan>
-                                                    <tspan x={viewBox.cx} y={(viewBox.cy ?? 0) + 18} className="fill-muted-foreground text-xs">{centerLabel ?? 'Total'}</tspan>
+                                                <text
+                                                    x={viewBox.cx}
+                                                    y={viewBox.cy}
+                                                    textAnchor="middle"
+                                                    dominantBaseline="middle"
+                                                >
+                                                    <tspan
+                                                        x={viewBox.cx}
+                                                        y={viewBox.cy}
+                                                        className="fill-foreground text-2xl font-bold"
+                                                    >
+                                                        {total}
+                                                    </tspan>
+                                                    <tspan
+                                                        x={viewBox.cx}
+                                                        y={
+                                                            (viewBox.cy ?? 0) +
+                                                            18
+                                                        }
+                                                        className="fill-muted-foreground text-xs"
+                                                    >
+                                                        {centerLabel ?? 'Total'}
+                                                    </tspan>
                                                 </text>
                                             )
                                         }
                                     }}
                                 />
                             </Pie>
-                            <ChartLegend content={<ChartLegendContent nameKey={nameKey} />} />
+                            <ChartLegend
+                                content={
+                                    <ChartLegendContent nameKey={nameKey} />
+                                }
+                            />
                         </PieChart>
                     </ChartContainer>
-                ) : <EmptyChart />}
+                ) : (
+                    <EmptyChart />
+                )}
             </CardContent>
         </Card>
     )
@@ -259,24 +312,49 @@ function HBarCard({
             <CardContent>
                 {data.length > 0 ? (
                     <ChartContainer config={config}>
-                        <BarChart data={data} layout="vertical" margin={{ left: 8, right: 24 }}>
+                        <BarChart
+                            data={data}
+                            layout="vertical"
+                            margin={{ left: 8, right: 24 }}
+                        >
                             <CartesianGrid horizontal={false} />
-                            <XAxis type="number" tickLine={false} axisLine={false} />
+                            <XAxis
+                                type="number"
+                                tickLine={false}
+                                axisLine={false}
+                            />
                             <YAxis
                                 type="category"
                                 dataKey={categoryKey}
                                 tickLine={false}
                                 axisLine={false}
                                 width={70}
-                                tickFormatter={(v) => (formatTick ? getInitials(String(v)) : String(v))}
+                                tickFormatter={(v) =>
+                                    formatTick
+                                        ? getInitials(String(v))
+                                        : String(v)
+                                }
                             />
-                            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={false} />} />
+                            <ChartTooltip
+                                cursor={false}
+                                content={
+                                    <ChartTooltipContent hideLabel={false} />
+                                }
+                            />
                             <Bar dataKey={dataKey} fill={color} radius={5}>
-                                <LabelList dataKey={dataKey} position="right" offset={8} className="fill-foreground" fontSize={11} />
+                                <LabelList
+                                    dataKey={dataKey}
+                                    position="right"
+                                    offset={8}
+                                    className="fill-foreground"
+                                    fontSize={11}
+                                />
                             </Bar>
                         </BarChart>
                     </ChartContainer>
-                ) : <EmptyChart />}
+                ) : (
+                    <EmptyChart />
+                )}
             </CardContent>
         </Card>
     )
@@ -301,23 +379,37 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         RoleId: string
     } | null>(null)
     const [loading, setLoading] = React.useState(false)
-    const [dataMhs, setDataMhs] = React.useState<ChartMahasiswaData | null>(null)
-    const [dataKaprodi, setDataKaprodi] = React.useState<ChartKaprodiData | null>(null)
-    const [dataRektor, setDataRektor] = React.useState<ChartDataItemRektor | null>(null)
-    const [dataAkademik, setDataAkademik] = React.useState<ChartAkademikData | null>(null)
-    const [dataAsesor, setDataAsesor] = React.useState<ChartResponseAsesor | null>(null)
+    const [dataMhs, setDataMhs] = React.useState<ChartMahasiswaData | null>(
+        null
+    )
+    const [dataKaprodi, setDataKaprodi] =
+        React.useState<ChartKaprodiData | null>(null)
+    const [dataRektor, setDataRektor] =
+        React.useState<ChartDataItemRektor | null>(null)
+    const [dataAkademik, setDataAkademik] =
+        React.useState<ChartAkademikData | null>(null)
+    const [dataAsesor, setDataAsesor] =
+        React.useState<ChartResponseAsesor | null>(null)
     const [dataPmb, setDataPmb] = React.useState<ChartDataItemPmb | null>(null)
-    const [dataAdmin, setDataAdmin] = React.useState<ChartDataItemAdmin | null>(null)
+    const [dataAdmin, setDataAdmin] = React.useState<ChartDataItemAdmin | null>(
+        null
+    )
     // Filter periode (kosong = semua periode). Tidak berlaku untuk Mahasiswa.
     const [periode, setPeriode] = React.useState<string>('')
     const [periodeList, setPeriodeList] = React.useState<string[]>([])
     // Data agregasi lintas periode (independen dari filter periode).
-    const [dataMultiPeriode, setDataMultiPeriode] = React.useState<MultiPeriodeChart | null>(null)
+    const [dataMultiPeriode, setDataMultiPeriode] =
+        React.useState<MultiPeriodeChart | null>(null)
 
     // ── Resolusi role + daftar periode (sekali, saat sesi tersedia) ──────────
     React.useEffect(() => {
         if (role) return
-        let roleState: { GuardName: string; Icon: string; Name: string; RoleId: string } | null = null
+        let roleState: {
+            GuardName: string
+            Icon: string
+            Name: string
+            RoleId: string
+        } | null = null
         const stored = safeStorage.getItem('pmb.iti.role')
         if (stored) {
             try {
@@ -326,8 +418,16 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                 roleState = null
             }
         }
-        if (!roleState && session?.user.roles && session.user.roles.length > 0) {
-            const r = session.user.roles[0] as { RoleId: string; Name: string; GuardName?: string }
+        if (
+            !roleState &&
+            session?.user.roles &&
+            session.user.roles.length > 0
+        ) {
+            const r = session.user.roles[0] as {
+                RoleId: string
+                Name: string
+                GuardName?: string
+            }
             roleState = {
                 RoleId: r.RoleId,
                 Name: r.Name,
@@ -341,10 +441,10 @@ const Dashboard = ({ session }: { session: Session | null }) => {
             if (!roleState.Name.match('Mahasiswa')) {
                 getPeriodeList()
                     .then((list) => setPeriodeList(list))
-                    .catch(() => { })
+                    .catch(() => {})
                 getMultiPeriodeChart()
                     .then((res) => setDataMultiPeriode(res))
-                    .catch(() => { })
+                    .catch(() => {})
             }
         }
     }, [session, role])
@@ -358,37 +458,37 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         if (role.Name.match('Rektor')) {
             getChartRektorRole(role.RoleId, periode)
                 .then((res) => setDataRektor(res))
-                .catch(() => { })
+                .catch(() => {})
                 .finally(() => setLoading(false))
         } else if (role.Name.match('Kaprodi')) {
             getChartKaprodiRole(role.RoleId, periode)
                 .then((res) => setDataKaprodi(res))
-                .catch(() => { })
+                .catch(() => {})
                 .finally(() => setLoading(false))
         } else if (role.Name.match('Asesor')) {
             getChartAsesorRole(role.RoleId, periode)
                 .then((res) => setDataAsesor(res))
-                .catch(() => { })
+                .catch(() => {})
                 .finally(() => setLoading(false))
         } else if (role.Name.match('Mahasiswa')) {
             getChartMahasiswaRole(role.RoleId)
                 .then((res) => setDataMhs(res))
-                .catch(() => { })
+                .catch(() => {})
                 .finally(() => setLoading(false))
         } else if (role.Name.match('Admin')) {
             getChartAdminRole(role.RoleId, periode)
                 .then((res) => setDataAdmin(res))
-                .catch(() => { })
+                .catch(() => {})
                 .finally(() => setLoading(false))
         } else if (role.Name.match('PMB')) {
             getChartPmbRole(role.RoleId, periode)
                 .then((res) => setDataPmb(res))
-                .catch(() => { })
+                .catch(() => {})
                 .finally(() => setLoading(false))
         } else if (role.Name.match('Akademik')) {
             getChartAkademikRole(role.RoleId, periode)
                 .then((res) => setDataAkademik(res))
-                .catch(() => { })
+                .catch(() => {})
                 .finally(() => setLoading(false))
         } else {
             setLoading(false)
@@ -397,8 +497,12 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
     // Filter periode (dirender di atas konten setiap role kecuali Mahasiswa).
     const periodeFilterNode = (
-        <div className={`flex items-center justify-end gap-3 ${G} rounded-lg px-4 py-3`}>
-            <span className="text-sm font-medium text-muted-foreground">Periode</span>
+        <div
+            className={`flex items-center justify-end gap-3 ${G} rounded-lg px-4 py-3`}
+        >
+            <span className="text-sm font-medium text-muted-foreground">
+                Periode
+            </span>
             <Select
                 value={periode || 'ALL'}
                 onValueChange={(v) => setPeriode(v === 'ALL' ? '' : v)}
@@ -411,7 +515,9 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         <SelectLabel>Periode</SelectLabel>
                         <SelectItem value="ALL">Semua Periode</SelectItem>
                         {periodeList.map((p) => (
-                            <SelectItem key={p} value={p}>{p}</SelectItem>
+                            <SelectItem key={p} value={p}>
+                                {p}
+                            </SelectItem>
                         ))}
                     </SelectGroup>
                 </SelectContent>
@@ -443,24 +549,46 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={`${G} flex flex-col`}>
                         <CardHeader className="items-center">
                             <CardTitle>Radar Distribusi Status</CardTitle>
-                            <CardDescription>Sebaran mahasiswa per status di tiap periode</CardDescription>
+                            <CardDescription>
+                                Sebaran mahasiswa per status di tiap periode
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">
-                            <ChartContainer config={cfgMulti} className="mx-auto aspect-square max-h-[320px]">
+                            <ChartContainer
+                                config={cfgMulti}
+                                className="mx-auto aspect-square max-h-[320px]"
+                            >
                                 <RadarChart data={dataMultiPeriode.rows}>
-                                    <ChartTooltip content={<ChartTooltipContent />} />
+                                    <ChartTooltip
+                                        content={<ChartTooltipContent />}
+                                    />
                                     <PolarGrid />
-                                    <PolarAngleAxis dataKey="category" tickFormatter={(v) => getInitials(String(v))} />
+                                    <PolarAngleAxis
+                                        dataKey="category"
+                                        tickFormatter={(v) =>
+                                            getInitials(String(v))
+                                        }
+                                    />
                                     {dataMultiPeriode.periods.map((p, i) => (
                                         <Radar
                                             key={p}
                                             dataKey={p}
-                                            stroke={MULTI_COLORS[i % MULTI_COLORS.length]}
-                                            fill={MULTI_COLORS[i % MULTI_COLORS.length]}
+                                            stroke={
+                                                MULTI_COLORS[
+                                                    i % MULTI_COLORS.length
+                                                ]
+                                            }
+                                            fill={
+                                                MULTI_COLORS[
+                                                    i % MULTI_COLORS.length
+                                                ]
+                                            }
                                             fillOpacity={0.05}
                                         />
                                     ))}
-                                    <ChartLegend content={<ChartLegendContent />} />
+                                    <ChartLegend
+                                        content={<ChartLegendContent />}
+                                    />
                                 </RadarChart>
                             </ChartContainer>
                         </CardContent>
@@ -469,18 +597,46 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Bar History</CardTitle>
-                            <CardDescription>Perbandingan jumlah mahasiswa per status antar periode</CardDescription>
+                            <CardDescription>
+                                Perbandingan jumlah mahasiswa per status antar
+                                periode
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <ChartContainer config={cfgMulti}>
-                                <BarChart data={dataMultiPeriode.rows} margin={{ top: 16 }}>
+                                <BarChart
+                                    data={dataMultiPeriode.rows}
+                                    margin={{ top: 16 }}
+                                >
                                     <CartesianGrid vertical={false} />
-                                    <XAxis dataKey="category" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(String(v))} />
+                                    <XAxis
+                                        dataKey="category"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        tickFormatter={(v) =>
+                                            getInitials(String(v))
+                                        }
+                                    />
                                     <YAxis tickLine={false} axisLine={false} />
-                                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                    <ChartLegend content={<ChartLegendContent />} />
+                                    <ChartTooltip
+                                        cursor={false}
+                                        content={<ChartTooltipContent />}
+                                    />
+                                    <ChartLegend
+                                        content={<ChartLegendContent />}
+                                    />
                                     {dataMultiPeriode.periods.map((p, i) => (
-                                        <Bar key={p} dataKey={p} fill={MULTI_COLORS[i % MULTI_COLORS.length]} radius={2} />
+                                        <Bar
+                                            key={p}
+                                            dataKey={p}
+                                            fill={
+                                                MULTI_COLORS[
+                                                    i % MULTI_COLORS.length
+                                                ]
+                                            }
+                                            radius={2}
+                                        />
                                     ))}
                                 </BarChart>
                             </ChartContainer>
@@ -492,45 +648,124 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Tren Pendaftar per Periode</CardTitle>
-                            <CardDescription>Total calon mahasiswa RPL yang mendaftar di tiap periode</CardDescription>
+                            <CardDescription>
+                                Total calon mahasiswa RPL yang mendaftar di tiap
+                                periode
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {dataMultiPeriode.trend.length > 0 ? (
-                                <ChartContainer config={{ total: { label: 'Pendaftar', color: 'var(--chart-1)' } }}>
-                                    <AreaChart data={dataMultiPeriode.trend} margin={{ top: 16, left: 8, right: 8 }}>
+                                <ChartContainer
+                                    config={{
+                                        total: {
+                                            label: 'Pendaftar',
+                                            color: 'var(--chart-1)',
+                                        },
+                                    }}
+                                >
+                                    <AreaChart
+                                        data={dataMultiPeriode.trend}
+                                        margin={{ top: 16, left: 8, right: 8 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="periode" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(String(v))} />
-                                        <YAxis tickLine={false} axisLine={false} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Area dataKey="total" type="monotone" stroke="var(--chart-1)" fill="var(--chart-1)" fillOpacity={0.15}>
-                                            <LabelList dataKey="total" position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="periode"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(String(v))
+                                            }
+                                        />
+                                        <YAxis
+                                            tickLine={false}
+                                            axisLine={false}
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Area
+                                            dataKey="total"
+                                            type="monotone"
+                                            stroke="var(--chart-1)"
+                                            fill="var(--chart-1)"
+                                            fillOpacity={0.15}
+                                        >
+                                            <LabelList
+                                                dataKey="total"
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Area>
                                     </AreaChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
-                            <CardTitle>Mahasiswa per Prodi Antar Periode</CardTitle>
-                            <CardDescription>Perbandingan intake program studi di tiap periode</CardDescription>
+                            <CardTitle>
+                                Mahasiswa per Prodi Antar Periode
+                            </CardTitle>
+                            <CardDescription>
+                                Perbandingan intake program studi di tiap
+                                periode
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {dataMultiPeriode.prodiRows.length > 0 ? (
                                 <ChartContainer config={cfgMulti}>
-                                    <BarChart data={dataMultiPeriode.prodiRows} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={dataMultiPeriode.prodiRows}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="category" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(String(v))} />
-                                        <YAxis tickLine={false} axisLine={false} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <ChartLegend content={<ChartLegendContent />} />
-                                        {dataMultiPeriode.periods.map((p, i) => (
-                                            <Bar key={p} dataKey={p} fill={MULTI_COLORS[i % MULTI_COLORS.length]} radius={2} />
-                                        ))}
+                                        <XAxis
+                                            dataKey="category"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(String(v))
+                                            }
+                                        />
+                                        <YAxis
+                                            tickLine={false}
+                                            axisLine={false}
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <ChartLegend
+                                            content={<ChartLegendContent />}
+                                        />
+                                        {dataMultiPeriode.periods.map(
+                                            (p, i) => (
+                                                <Bar
+                                                    key={p}
+                                                    dataKey={p}
+                                                    fill={
+                                                        MULTI_COLORS[
+                                                            i %
+                                                                MULTI_COLORS.length
+                                                        ]
+                                                    }
+                                                    radius={2}
+                                                />
+                                            )
+                                        )}
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -541,7 +776,9 @@ const Dashboard = ({ session }: { session: Session | null }) => {
     if (loading || role === null) {
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {Array.from({ length: 4 }).map((_, i) => (
                         <Skeleton key={i} className="h-24 w-full rounded-lg" />
@@ -561,19 +798,45 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         const statusList = dataRektor?.data[1]?.countPerStatusLengkap ?? []
         const mkList = dataRektor?.data[2]?.hasilMK ?? []
         const userList = dataRektor?.data[3]?.totalUserPerRole ?? []
-        const asesorPie = (dataRektor?.data[4] ?? []) as { name: string; total: number }[]
-        const mhsPie = (dataRektor?.data[5] ?? []) as { name: string; total: number }[]
+        const asesorPie = (dataRektor?.data[4] ?? []) as {
+            name: string
+            total: number
+        }[]
+        const mhsPie = (dataRektor?.data[5] ?? []) as {
+            name: string
+            total: number
+        }[]
 
-        const totalMhs = prodi.reduce((s: number, x: any) => s + (x.jumlahMahasiswa ?? 0), 0)
-        const totalMK = mkList.reduce((s: number, x: any) => s + (x.jumlahMataKuliah ?? 0), 0)
-        const totalUser = userList.reduce((s: number, x: any) => s + (x.jumlahPengguna ?? 0), 0)
-        const asesorSK = asesorPie.find((x) => x.name === 'Asesor Sudah SK')?.total ?? 0
-        const asesorBelum = asesorPie.find((x) => x.name === 'Asesor Belum SK')?.total ?? 0
-        const mhsSK = mhsPie.find((x) => x.name === 'Mahasiswa Sudah SK')?.total ?? 0
-        const mhsBelum = mhsPie.find((x) => x.name === 'Mahasiswa Belum SK')?.total ?? 0
+        const totalMhs = prodi.reduce(
+            (s: number, x: any) => s + (x.jumlahMahasiswa ?? 0),
+            0
+        )
+        const totalMK = mkList.reduce(
+            (s: number, x: any) => s + (x.jumlahMataKuliah ?? 0),
+            0
+        )
+        const totalUser = userList.reduce(
+            (s: number, x: any) => s + (x.jumlahPengguna ?? 0),
+            0
+        )
+        const asesorSK =
+            asesorPie.find((x) => x.name === 'Asesor Sudah SK')?.total ?? 0
+        const asesorBelum =
+            asesorPie.find((x) => x.name === 'Asesor Belum SK')?.total ?? 0
+        const mhsSK =
+            mhsPie.find((x) => x.name === 'Mahasiswa Sudah SK')?.total ?? 0
+        const mhsBelum =
+            mhsPie.find((x) => x.name === 'Mahasiswa Belum SK')?.total ?? 0
 
         // Aggregasi turunan
-        const mhsVsMk = mergeByKey(prodi, 'jumlahMahasiswa', 'Mahasiswa', mkList, 'jumlahMataKuliah', 'Mata Kuliah')
+        const mhsVsMk = mergeByKey(
+            prodi,
+            'jumlahMahasiswa',
+            'Mahasiswa',
+            mkList,
+            'jumlahMataKuliah',
+            'Mata Kuliah'
+        )
         const skSummary = [
             { status: 'Sudah SK', Asesor: asesorSK, Mahasiswa: mhsSK },
             { status: 'Belum SK', Asesor: asesorBelum, Mahasiswa: mhsBelum },
@@ -582,16 +845,26 @@ const Dashboard = ({ session }: { session: Session | null }) => {
             Mahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' },
             'Mata Kuliah': { label: 'Mata Kuliah', color: 'var(--chart-3)' },
         }
-        const cfgUserDonut: ChartConfig = { jumlahPengguna: { label: 'Pengguna' } }
+        const cfgUserDonut: ChartConfig = {
+            jumlahPengguna: { label: 'Pengguna' },
+        }
         const cfgSkSummary: ChartConfig = {
             Asesor: { label: 'Asesor', color: 'var(--chart-1)' },
             Mahasiswa: { label: 'Mahasiswa', color: 'var(--chart-4)' },
         }
 
-        const cfgProdi: ChartConfig = { jumlahMahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' } }
-        const cfgStatus: ChartConfig = { jumlah: { label: 'Jumlah', color: 'var(--chart-2)' } }
-        const cfgMK: ChartConfig = { jumlahMataKuliah: { label: 'Mata Kuliah', color: 'var(--chart-3)' } }
-        const cfgUser: ChartConfig = { jumlahPengguna: { label: 'Pengguna', color: 'var(--chart-4)' } }
+        const cfgProdi: ChartConfig = {
+            jumlahMahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' },
+        }
+        const cfgStatus: ChartConfig = {
+            jumlah: { label: 'Jumlah', color: 'var(--chart-2)' },
+        }
+        const cfgMK: ChartConfig = {
+            jumlahMataKuliah: { label: 'Mata Kuliah', color: 'var(--chart-3)' },
+        }
+        const cfgUser: ChartConfig = {
+            jumlahPengguna: { label: 'Pengguna', color: 'var(--chart-4)' },
+        }
         const cfgAsesorPie: ChartConfig = {
             total: { label: 'Jumlah' },
             'Asesor Sudah SK': { label: 'Sudah SK', color: 'var(--chart-1)' },
@@ -599,19 +872,47 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         }
         const cfgMhsPie: ChartConfig = {
             total: { label: 'Jumlah' },
-            'Mahasiswa Sudah SK': { label: 'Sudah SK', color: 'var(--chart-1)' },
-            'Mahasiswa Belum SK': { label: 'Belum SK', color: 'var(--chart-2)' },
+            'Mahasiswa Sudah SK': {
+                label: 'Sudah SK',
+                color: 'var(--chart-1)',
+            },
+            'Mahasiswa Belum SK': {
+                label: 'Belum SK',
+                color: 'var(--chart-2)',
+            },
         }
 
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 {/* Stat cards */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
-                    <StatCard label="Total Mata Kuliah" value={totalMK} icon={BookOpen} color="green" />
-                    <StatCard label="Total Pengguna" value={totalUser} icon={UserCheck} color="violet" />
-                    <StatCard label="Asesor Sudah SK" value={asesorSK} icon={ClipboardList} color="orange" />
+                    <StatCard
+                        label="Total Mahasiswa"
+                        value={totalMhs}
+                        icon={Users}
+                        color="blue"
+                    />
+                    <StatCard
+                        label="Total Mata Kuliah"
+                        value={totalMK}
+                        icon={BookOpen}
+                        color="green"
+                    />
+                    <StatCard
+                        label="Total Pengguna"
+                        value={totalUser}
+                        icon={UserCheck}
+                        color="violet"
+                    />
+                    <StatCard
+                        label="Asesor Sudah SK"
+                        value={asesorSK}
+                        icon={ClipboardList}
+                        color="orange"
+                    />
                 </div>
 
                 {/* Row 1 */}
@@ -619,42 +920,96 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Mahasiswa per Program Studi</CardTitle>
-                            <CardDescription>Distribusi jumlah mahasiswa RPL di setiap prodi</CardDescription>
+                            <CardDescription>
+                                Distribusi jumlah mahasiswa RPL di setiap prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {prodi.length > 0 ? (
                                 <ChartContainer config={cfgProdi}>
                                     <BarChart data={prodi} margin={{ top: 16 }}>
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahMahasiswa" fill="var(--chart-1)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahMahasiswa"
+                                            fill="var(--chart-1)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
-                            <CardTitle>Mahasiswa per Status Kelengkapan</CardTitle>
-                            <CardDescription>Jumlah mahasiswa berdasarkan status pengisian berkas</CardDescription>
+                            <CardTitle>
+                                Mahasiswa per Status Kelengkapan
+                            </CardTitle>
+                            <CardDescription>
+                                Jumlah mahasiswa berdasarkan status pengisian
+                                berkas
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {statusList.length > 0 ? (
                                 <ChartContainer config={cfgStatus}>
-                                    <BarChart data={statusList} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={statusList}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlah" fill="var(--chart-2)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="status"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlah"
+                                            fill="var(--chart-2)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -664,42 +1019,93 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Mata Kuliah per Program Studi</CardTitle>
-                            <CardDescription>Total mata kuliah yang tersedia di setiap prodi</CardDescription>
+                            <CardDescription>
+                                Total mata kuliah yang tersedia di setiap prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {mkList.length > 0 ? (
                                 <ChartContainer config={cfgMK}>
-                                    <BarChart data={mkList} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={mkList}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahMataKuliah" fill="var(--chart-3)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahMataKuliah"
+                                            fill="var(--chart-3)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Pengguna per Role</CardTitle>
-                            <CardDescription>Jumlah akun aktif berdasarkan peran dalam sistem</CardDescription>
+                            <CardDescription>
+                                Jumlah akun aktif berdasarkan peran dalam sistem
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {userList.length > 0 ? (
                                 <ChartContainer config={cfgUser}>
-                                    <BarChart data={userList} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={userList}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="role" tickLine={false} axisLine={false} tickMargin={8} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahPengguna" fill="var(--chart-4)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="role"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahPengguna"
+                                            fill="var(--chart-4)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -709,40 +1115,111 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={`${G} flex flex-col`}>
                         <CardHeader className="items-center">
                             <CardTitle>Status SK Asesor</CardTitle>
-                            <CardDescription>Perbandingan asesor sudah dan belum menerima SK</CardDescription>
+                            <CardDescription>
+                                Perbandingan asesor sudah dan belum menerima SK
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">
                             {asesorPie.length > 0 ? (
-                                <ChartContainer config={cfgAsesorPie} className="mx-auto aspect-square max-h-[220px]">
+                                <ChartContainer
+                                    config={cfgAsesorPie}
+                                    className="mx-auto aspect-square max-h-[220px]"
+                                >
                                     <PieChart>
-                                        <ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
-                                        <Pie data={asesorPie} dataKey="total" nameKey="name" label={({ name, percent }) => `${getInitials(name)} ${(percent * 100).toFixed(0)}%`} outerRadius={80}>
-                                            {asesorPie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                                        <ChartTooltip
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <Pie
+                                            data={asesorPie}
+                                            dataKey="total"
+                                            nameKey="name"
+                                            label={({ name, percent }) =>
+                                                `${getInitials(name)} ${(percent * 100).toFixed(0)}%`
+                                            }
+                                            outerRadius={80}
+                                        >
+                                            {asesorPie.map((_, i) => (
+                                                <Cell
+                                                    key={i}
+                                                    fill={
+                                                        PIE_COLORS[
+                                                            i %
+                                                                PIE_COLORS.length
+                                                        ]
+                                                    }
+                                                />
+                                            ))}
                                         </Pie>
-                                        <ChartLegend content={<ChartLegendContent nameKey="name" />} />
+                                        <ChartLegend
+                                            content={
+                                                <ChartLegendContent nameKey="name" />
+                                            }
+                                        />
                                     </PieChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={`${G} flex flex-col`}>
                         <CardHeader className="items-center">
                             <CardTitle>Status SK Mahasiswa</CardTitle>
-                            <CardDescription>Perbandingan mahasiswa sudah dan belum menerima SK hasil asesmen</CardDescription>
+                            <CardDescription>
+                                Perbandingan mahasiswa sudah dan belum menerima
+                                SK hasil asesmen
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">
                             {mhsPie.length > 0 ? (
-                                <ChartContainer config={cfgMhsPie} className="mx-auto aspect-square max-h-[220px]">
+                                <ChartContainer
+                                    config={cfgMhsPie}
+                                    className="mx-auto aspect-square max-h-[220px]"
+                                >
                                     <PieChart>
-                                        <ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
-                                        <Pie data={mhsPie} dataKey="total" nameKey="name" label={({ name, percent }) => `${getInitials(name)} ${(percent * 100).toFixed(0)}%`} outerRadius={80}>
-                                            {mhsPie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                                        <ChartTooltip
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <Pie
+                                            data={mhsPie}
+                                            dataKey="total"
+                                            nameKey="name"
+                                            label={({ name, percent }) =>
+                                                `${getInitials(name)} ${(percent * 100).toFixed(0)}%`
+                                            }
+                                            outerRadius={80}
+                                        >
+                                            {mhsPie.map((_, i) => (
+                                                <Cell
+                                                    key={i}
+                                                    fill={
+                                                        PIE_COLORS[
+                                                            i %
+                                                                PIE_COLORS.length
+                                                        ]
+                                                    }
+                                                />
+                                            ))}
                                         </Pie>
-                                        <ChartLegend content={<ChartLegendContent nameKey="name" />} />
+                                        <ChartLegend
+                                            content={
+                                                <ChartLegendContent nameKey="name" />
+                                            }
+                                        />
                                     </PieChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -751,22 +1228,53 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={G}>
                         <CardHeader>
-                            <CardTitle>Mahasiswa vs Mata Kuliah per Prodi</CardTitle>
-                            <CardDescription>Perbandingan beban mahasiswa dan ketersediaan mata kuliah di tiap prodi</CardDescription>
+                            <CardTitle>
+                                Mahasiswa vs Mata Kuliah per Prodi
+                            </CardTitle>
+                            <CardDescription>
+                                Perbandingan beban mahasiswa dan ketersediaan
+                                mata kuliah di tiap prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {mhsVsMk.length > 0 ? (
                                 <ChartContainer config={cfgMhsVsMk}>
-                                    <BarChart data={mhsVsMk} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={mhsVsMk}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <ChartLegend content={<ChartLegendContent />} />
-                                        <Bar dataKey="Mahasiswa" fill="var(--chart-1)" radius={4} />
-                                        <Bar dataKey="Mata Kuliah" fill="var(--chart-3)" radius={4} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <ChartLegend
+                                            content={<ChartLegendContent />}
+                                        />
+                                        <Bar
+                                            dataKey="Mahasiswa"
+                                            fill="var(--chart-1)"
+                                            radius={4}
+                                        />
+                                        <Bar
+                                            dataKey="Mata Kuliah"
+                                            fill="var(--chart-3)"
+                                            radius={4}
+                                        />
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
@@ -786,17 +1294,38 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Ringkasan Status SK</CardTitle>
-                            <CardDescription>Perbandingan capaian SK antara asesor dan mahasiswa</CardDescription>
+                            <CardDescription>
+                                Perbandingan capaian SK antara asesor dan
+                                mahasiswa
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <ChartContainer config={cfgSkSummary}>
                                 <BarChart data={skSummary} margin={{ top: 16 }}>
                                     <CartesianGrid vertical={false} />
-                                    <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={8} />
-                                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                    <ChartLegend content={<ChartLegendContent />} />
-                                    <Bar dataKey="Asesor" fill="var(--chart-1)" radius={4} />
-                                    <Bar dataKey="Mahasiswa" fill="var(--chart-4)" radius={4} />
+                                    <XAxis
+                                        dataKey="status"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                    />
+                                    <ChartTooltip
+                                        cursor={false}
+                                        content={<ChartTooltipContent />}
+                                    />
+                                    <ChartLegend
+                                        content={<ChartLegendContent />}
+                                    />
+                                    <Bar
+                                        dataKey="Asesor"
+                                        fill="var(--chart-1)"
+                                        radius={4}
+                                    />
+                                    <Bar
+                                        dataKey="Mahasiswa"
+                                        fill="var(--chart-4)"
+                                        radius={4}
+                                    />
                                 </BarChart>
                             </ChartContainer>
                         </CardContent>
@@ -806,7 +1335,12 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         title="Funnel Status Asesmen"
                         description="Jumlah mahasiswa di setiap tahapan proses asesmen"
                         data={statusList}
-                        config={{ jumlah: { label: 'Jumlah', color: 'var(--chart-2)' } }}
+                        config={{
+                            jumlah: {
+                                label: 'Jumlah',
+                                color: 'var(--chart-2)',
+                            },
+                        }}
                         dataKey="jumlah"
                         categoryKey="status"
                         color="var(--chart-2)"
@@ -824,23 +1358,54 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         const chart3 = dataKaprodi?.data[2]?.chart_3 ?? []
         const chart4 = dataKaprodi?.data[3]?.chart_4 ?? []
 
-        const totalAsesor = chart2.reduce((s: number, x: any) => s + (x.count ?? 0), 0)
-        const totalIntake = chart3.reduce((s: number, x: any) => s + (x.count ?? 0), 0)
-        const totalMK = chart4.reduce((s: number, x: any) => s + (x.count ?? 0), 0)
+        const totalAsesor = chart2.reduce(
+            (s: number, x: any) => s + (x.count ?? 0),
+            0
+        )
+        const totalIntake = chart3.reduce(
+            (s: number, x: any) => s + (x.count ?? 0),
+            0
+        )
+        const totalMK = chart4.reduce(
+            (s: number, x: any) => s + (x.count ?? 0),
+            0
+        )
 
         const cfgAsesorBar: ChartConfig = {
-            'Asesor Akademik': { label: 'Asesor Akademik', color: 'var(--chart-1)' },
-            'Asesor Praktisi': { label: 'Asesor Praktisi', color: 'var(--chart-2)' },
+            'Asesor Akademik': {
+                label: 'Asesor Akademik',
+                color: 'var(--chart-1)',
+            },
+            'Asesor Praktisi': {
+                label: 'Asesor Praktisi',
+                color: 'var(--chart-2)',
+            },
         }
         const cfgAsesorPie: ChartConfig = {
             count: { label: 'Jumlah' },
-            'Asesor Akademik': { label: 'Asesor Akademik', color: 'var(--chart-1)' },
-            'Asesor Praktisi': { label: 'Asesor Praktisi', color: 'var(--chart-2)' },
+            'Asesor Akademik': {
+                label: 'Asesor Akademik',
+                color: 'var(--chart-1)',
+            },
+            'Asesor Praktisi': {
+                label: 'Asesor Praktisi',
+                color: 'var(--chart-2)',
+            },
         }
-        const cfgCount: ChartConfig = { count: { label: 'Jumlah', color: 'var(--chart-1)' } }
+        const cfgCount: ChartConfig = {
+            count: { label: 'Jumlah', color: 'var(--chart-1)' },
+        }
 
         // Aggregasi turunan
-        const intakeVsMk = mergeByKey(chart3, 'count', 'Mahasiswa', chart4, 'count', 'Mata Kuliah', 'program_studi')
+        const intakeVsMk = mergeByKey(
+            chart3,
+            'count',
+            'Mahasiswa',
+            chart4,
+            'count',
+            'Mata Kuliah',
+            'program_studi'
+        )
         const totalAsesorPerProdi = chart1.map((x: any) => ({
             program_studi: x.date,
             total: (x['Asesor Akademik'] ?? 0) + (x['Asesor Praktisi'] ?? 0),
@@ -852,52 +1417,137 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <StatCard label="Total Asesor" value={totalAsesor} icon={UserCheck} color="blue" />
-                    <StatCard label="Mahasiswa Intake" value={totalIntake} icon={Users} color="green" />
-                    <StatCard label="Total Mata Kuliah" value={totalMK} icon={BookOpen} color="violet" />
+                    <StatCard
+                        label="Total Asesor"
+                        value={totalAsesor}
+                        icon={UserCheck}
+                        color="blue"
+                    />
+                    <StatCard
+                        label="Mahasiswa Intake"
+                        value={totalIntake}
+                        icon={Users}
+                        color="green"
+                    />
+                    <StatCard
+                        label="Total Mata Kuliah"
+                        value={totalMK}
+                        icon={BookOpen}
+                        color="violet"
+                    />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Asesor per Program Studi</CardTitle>
-                            <CardDescription>Jumlah asesor akademik dan praktisi di setiap prodi</CardDescription>
+                            <CardDescription>
+                                Jumlah asesor akademik dan praktisi di setiap
+                                prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {chart1.length > 0 ? (
                                 <ChartContainer config={cfgAsesorBar}>
-                                    <BarChart data={chart1} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={chart1}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="date" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={false} />} />
-                                        <ChartLegend content={<ChartLegendContent />} />
-                                        <Bar dataKey="Asesor Akademik" fill="var(--chart-1)" radius={4} />
-                                        <Bar dataKey="Asesor Praktisi" fill="var(--chart-2)" radius={4} />
+                                        <XAxis
+                                            dataKey="date"
+                                            tickLine={false}
+                                            tickMargin={10}
+                                            axisLine={false}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <ChartLegend
+                                            content={<ChartLegendContent />}
+                                        />
+                                        <Bar
+                                            dataKey="Asesor Akademik"
+                                            fill="var(--chart-1)"
+                                            radius={4}
+                                        />
+                                        <Bar
+                                            dataKey="Asesor Praktisi"
+                                            fill="var(--chart-2)"
+                                            radius={4}
+                                        />
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={`${G} flex flex-col`}>
                         <CardHeader className="items-center">
                             <CardTitle>Komposisi Tipe Asesor</CardTitle>
-                            <CardDescription>Proporsi asesor akademik vs asesor praktisi</CardDescription>
+                            <CardDescription>
+                                Proporsi asesor akademik vs asesor praktisi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">
                             {chart2.length > 0 ? (
-                                <ChartContainer config={cfgAsesorPie} className="mx-auto aspect-square max-h-[220px]">
+                                <ChartContainer
+                                    config={cfgAsesorPie}
+                                    className="mx-auto aspect-square max-h-[220px]"
+                                >
                                     <PieChart>
-                                        <ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
-                                        <Pie data={chart2} dataKey="count" nameKey="tipe" label={({ tipe, percent }) => `${getInitials(tipe)} ${(percent * 100).toFixed(0)}%`} outerRadius={80}>
-                                            {chart2.map((_: any, i: number) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                                        <ChartTooltip
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <Pie
+                                            data={chart2}
+                                            dataKey="count"
+                                            nameKey="tipe"
+                                            label={({ tipe, percent }) =>
+                                                `${getInitials(tipe)} ${(percent * 100).toFixed(0)}%`
+                                            }
+                                            outerRadius={80}
+                                        >
+                                            {chart2.map((_: any, i: number) => (
+                                                <Cell
+                                                    key={i}
+                                                    fill={
+                                                        PIE_COLORS[
+                                                            i %
+                                                                PIE_COLORS.length
+                                                        ]
+                                                    }
+                                                />
+                                            ))}
                                         </Pie>
-                                        <ChartLegend content={<ChartLegendContent nameKey="tipe" />} />
+                                        <ChartLegend
+                                            content={
+                                                <ChartLegendContent nameKey="tipe" />
+                                            }
+                                        />
                                     </PieChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -906,42 +1556,105 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Mahasiswa Intake per Prodi</CardTitle>
-                            <CardDescription>Total mahasiswa yang mendaftar RPL per program studi</CardDescription>
+                            <CardDescription>
+                                Total mahasiswa yang mendaftar RPL per program
+                                studi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {chart3.length > 0 ? (
                                 <ChartContainer config={cfgCount}>
-                                    <BarChart data={chart3} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={chart3}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="program_studi" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={false} />} />
-                                        <Bar dataKey="count" fill="var(--chart-1)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="program_studi"
+                                            tickLine={false}
+                                            tickMargin={10}
+                                            axisLine={false}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <Bar
+                                            dataKey="count"
+                                            fill="var(--chart-1)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Mata Kuliah per Prodi</CardTitle>
-                            <CardDescription>Total mata kuliah yang dapat diakui melalui RPL</CardDescription>
+                            <CardDescription>
+                                Total mata kuliah yang dapat diakui melalui RPL
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {chart4.length > 0 ? (
                                 <ChartContainer config={cfgCount}>
-                                    <BarChart data={chart4} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={chart4}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="program_studi" tickLine={false} tickMargin={10} axisLine={false} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel={false} />} />
-                                        <Bar dataKey="count" fill="var(--chart-3)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="program_studi"
+                                            tickLine={false}
+                                            tickMargin={10}
+                                            axisLine={false}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <Bar
+                                            dataKey="count"
+                                            fill="var(--chart-3)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -950,22 +1663,53 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={G}>
                         <CardHeader>
-                            <CardTitle>Mahasiswa vs Mata Kuliah per Prodi</CardTitle>
-                            <CardDescription>Perbandingan jumlah mahasiswa intake dan mata kuliah RPL di tiap prodi</CardDescription>
+                            <CardTitle>
+                                Mahasiswa vs Mata Kuliah per Prodi
+                            </CardTitle>
+                            <CardDescription>
+                                Perbandingan jumlah mahasiswa intake dan mata
+                                kuliah RPL di tiap prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {intakeVsMk.length > 0 ? (
                                 <ChartContainer config={cfgIntakeVsMk}>
-                                    <BarChart data={intakeVsMk} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={intakeVsMk}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="program_studi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <ChartLegend content={<ChartLegendContent />} />
-                                        <Bar dataKey="Mahasiswa" fill="var(--chart-1)" radius={4} />
-                                        <Bar dataKey="Mata Kuliah" fill="var(--chart-3)" radius={4} />
+                                        <XAxis
+                                            dataKey="program_studi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <ChartLegend
+                                            content={<ChartLegendContent />}
+                                        />
+                                        <Bar
+                                            dataKey="Mahasiswa"
+                                            fill="var(--chart-1)"
+                                            radius={4}
+                                        />
+                                        <Bar
+                                            dataKey="Mata Kuliah"
+                                            fill="var(--chart-3)"
+                                            radius={4}
+                                        />
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
@@ -973,7 +1717,9 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         title="Total Asesor per Prodi"
                         description="Peringkat program studi berdasarkan jumlah seluruh asesor"
                         data={totalAsesorPerProdi}
-                        config={{ total: { label: 'Asesor', color: 'var(--chart-2)' } }}
+                        config={{
+                            total: { label: 'Asesor', color: 'var(--chart-2)' },
+                        }}
                         dataKey="total"
                         categoryKey="program_studi"
                         color="var(--chart-2)"
@@ -989,9 +1735,19 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         const chart1 = dataAsesor?.data?.chart1 ?? []
         const chart2 = dataAsesor?.data?.chart2 ?? []
 
-        const totalMhs = chart1.reduce((s: number, x: any) => s + (x.sudahAsses ?? 0) + (x.belumAsses ?? 0), 0)
-        const sudah = chart1.reduce((s: number, x: any) => s + (x.sudahAsses ?? 0), 0)
-        const belum = chart1.reduce((s: number, x: any) => s + (x.belumAsses ?? 0), 0)
+        const totalMhs = chart1.reduce(
+            (s: number, x: any) =>
+                s + (x.sudahAsses ?? 0) + (x.belumAsses ?? 0),
+            0
+        )
+        const sudah = chart1.reduce(
+            (s: number, x: any) => s + (x.sudahAsses ?? 0),
+            0
+        )
+        const belum = chart1.reduce(
+            (s: number, x: any) => s + (x.belumAsses ?? 0),
+            0
+        )
 
         const cfgAsses: ChartConfig = {
             belumAsses: { label: 'Belum Asesmen', color: 'var(--chart-2)' },
@@ -1015,60 +1771,143 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         })
         const cfgAssesDonut: ChartConfig = {
             total: { label: 'Jumlah' },
-            'Sudah Asesmen': { label: 'Sudah Asesmen', color: 'var(--chart-1)' },
-            'Belum Asesmen': { label: 'Belum Asesmen', color: 'var(--chart-2)' },
+            'Sudah Asesmen': {
+                label: 'Sudah Asesmen',
+                color: 'var(--chart-1)',
+            },
+            'Belum Asesmen': {
+                label: 'Belum Asesmen',
+                color: 'var(--chart-2)',
+            },
         }
 
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 <div className="grid grid-cols-3 gap-4">
-                    <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
-                    <StatCard label="Sudah Asesmen" value={sudah} icon={CheckCircle2} color="green" />
-                    <StatCard label="Belum Asesmen" value={belum} icon={ClipboardList} color="rose" />
+                    <StatCard
+                        label="Total Mahasiswa"
+                        value={totalMhs}
+                        icon={Users}
+                        color="blue"
+                    />
+                    <StatCard
+                        label="Sudah Asesmen"
+                        value={sudah}
+                        icon={CheckCircle2}
+                        color="green"
+                    />
+                    <StatCard
+                        label="Belum Asesmen"
+                        value={belum}
+                        icon={ClipboardList}
+                        color="rose"
+                    />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Asesmen per Program Studi</CardTitle>
-                            <CardDescription>Perbandingan mahasiswa sudah dan belum diasesmen di tiap prodi</CardDescription>
+                            <CardDescription>
+                                Perbandingan mahasiswa sudah dan belum diasesmen
+                                di tiap prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {chart1.length > 0 ? (
                                 <ChartContainer config={cfgAsses}>
-                                    <BarChart data={chart1} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={chart1}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <ChartLegend content={<ChartLegendContent />} />
-                                        <Bar dataKey="sudahAsses" fill="var(--chart-1)" radius={4} />
-                                        <Bar dataKey="belumAsses" fill="var(--chart-2)" radius={4} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <ChartLegend
+                                            content={<ChartLegendContent />}
+                                        />
+                                        <Bar
+                                            dataKey="sudahAsses"
+                                            fill="var(--chart-1)"
+                                            radius={4}
+                                        />
+                                        <Bar
+                                            dataKey="belumAsses"
+                                            fill="var(--chart-2)"
+                                            radius={4}
+                                        />
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Status Asesmen Mahasiswa</CardTitle>
-                            <CardDescription>Distribusi mahasiswa berdasarkan status proses asesmen</CardDescription>
+                            <CardDescription>
+                                Distribusi mahasiswa berdasarkan status proses
+                                asesmen
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {chart2.length > 0 ? (
                                 <ChartContainer config={cfgStatus}>
-                                    <BarChart data={chart2} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={chart2}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="Status" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <YAxis tickLine={false} axisLine={false} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="Jumlah" fill="var(--chart-1)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="Status"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <YAxis
+                                            tickLine={false}
+                                            axisLine={false}
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="Jumlah"
+                                            fill="var(--chart-1)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -1089,7 +1928,12 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                         title="Persentase Penyelesaian per Prodi"
                         description="Capaian asesmen (%) di setiap program studi"
                         data={progressPerProdi}
-                        config={{ persen: { label: 'Selesai (%)', color: 'var(--chart-1)' } }}
+                        config={{
+                            persen: {
+                                label: 'Selesai (%)',
+                                color: 'var(--chart-1)',
+                            },
+                        }}
                         dataKey="persen"
                         categoryKey="programStudi"
                         color="var(--chart-1)"
@@ -1117,12 +1961,17 @@ const Dashboard = ({ session }: { session: Session | null }) => {
             { label: 'Organisasi Profesi', key: 'MahasiswaOrganisasiProfesi' },
             { label: 'Piagam', key: 'MahasiswaPiagam' },
             { label: 'Konferensi', key: 'MahasiswaKonferensi' },
-            { label: 'Pelatihan Profesional', key: 'MahasiswaPelatihanProfessional' },
+            {
+                label: 'Pelatihan Profesional',
+                key: 'MahasiswaPelatihanProfessional',
+            },
         ]
 
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 {/* Timeline */}
                 {chart4.length > 0 && (
                     <div className="space-y-3">
@@ -1139,97 +1988,174 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Kelengkapan Data Diri */}
                     <div className="space-y-3">
-                        {chart1.length > 0 ? chart1.map((item: any, idx: number) => {
-                            const done = checkFields.filter((f) => (item[f.key] ?? 0) > 0).length
-                            const pct = Math.round((done / checkFields.length) * 100)
-                            return (
-                                <Card key={idx} className={G}>
-                                    <CardHeader className="pb-2">
-                                        <div className="flex items-start justify-between">
-                                            <div>
-                                                <CardTitle className="text-base">Kelengkapan Data Diri</CardTitle>
-                                                <CardDescription>{item.KodePendaftar} · {item.ProgramStudi}</CardDescription>
+                        {chart1.length > 0 ? (
+                            chart1.map((item: any, idx: number) => {
+                                const done = checkFields.filter(
+                                    (f) => (item[f.key] ?? 0) > 0
+                                ).length
+                                const pct = Math.round(
+                                    (done / checkFields.length) * 100
+                                )
+                                return (
+                                    <Card key={idx} className={G}>
+                                        <CardHeader className="pb-2">
+                                            <div className="flex items-start justify-between">
+                                                <div>
+                                                    <CardTitle className="text-base">
+                                                        Kelengkapan Data Diri
+                                                    </CardTitle>
+                                                    <CardDescription>
+                                                        {item.KodePendaftar} ·{' '}
+                                                        {item.ProgramStudi}
+                                                    </CardDescription>
+                                                </div>
+                                                <Badge
+                                                    variant={
+                                                        pct === 100
+                                                            ? 'default'
+                                                            : pct >= 50
+                                                              ? 'secondary'
+                                                              : 'destructive'
+                                                    }
+                                                >
+                                                    {pct}% lengkap
+                                                </Badge>
                                             </div>
-                                            <Badge variant={pct === 100 ? 'default' : pct >= 50 ? 'secondary' : 'destructive'}>
-                                                {pct}% lengkap
-                                            </Badge>
-                                        </div>
-                                        {/* Progress bar */}
-                                        <div className="mt-2 h-2 w-full bg-muted rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full rounded-full bg-primary transition-all"
-                                                style={{ width: `${pct}%` }}
-                                            />
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="grid grid-cols-2 gap-1.5">
-                                            {checkFields.map((f) => {
-                                                const filled = (item[f.key] ?? 0) > 0
-                                                return (
-                                                    <div key={f.key} className="flex items-center gap-2 text-sm">
-                                                        {filled
-                                                            ? <CheckCircle2 className="h-4 w-4 shrink-0 text-green-500" />
-                                                            : <XCircle className="h-4 w-4 shrink-0 text-red-400" />
-                                                        }
-                                                        <span className={filled ? '' : 'text-muted-foreground'}>{f.label}</span>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            )
-                        }) : (
-                            <Card className={G}><CardContent className="pt-6"><EmptyChart /></CardContent></Card>
+                                            {/* Progress bar */}
+                                            <div className="mt-2 h-2 w-full bg-muted rounded-full overflow-hidden">
+                                                <div
+                                                    className="h-full rounded-full bg-primary transition-all"
+                                                    style={{ width: `${pct}%` }}
+                                                />
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="grid grid-cols-2 gap-1.5">
+                                                {checkFields.map((f) => {
+                                                    const filled =
+                                                        (item[f.key] ?? 0) > 0
+                                                    return (
+                                                        <div
+                                                            key={f.key}
+                                                            className="flex items-center gap-2 text-sm"
+                                                        >
+                                                            {filled ? (
+                                                                <CheckCircle2 className="h-4 w-4 shrink-0 text-green-500" />
+                                                            ) : (
+                                                                <XCircle className="h-4 w-4 shrink-0 text-red-400" />
+                                                            )}
+                                                            <span
+                                                                className={
+                                                                    filled
+                                                                        ? ''
+                                                                        : 'text-muted-foreground'
+                                                                }
+                                                            >
+                                                                {f.label}
+                                                            </span>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                )
+                            })
+                        ) : (
+                            <Card className={G}>
+                                <CardContent className="pt-6">
+                                    <EmptyChart />
+                                </CardContent>
+                            </Card>
                         )}
                     </div>
 
                     {/* Upload Dokumen */}
                     <div className="space-y-3">
-                        {chart2.length > 0 ? chart2.map((item: any, idx: number) => {
-                            const docs: any[] = item.BuktiForm ?? []
-                            const done = docs.filter((d) => (d.Upload ?? 0) > 0).length
-                            const pct = docs.length > 0 ? Math.round((done / docs.length) * 100) : 0
-                            return (
-                                <Card key={idx} className={G}>
-                                    <CardHeader className="pb-2">
-                                        <div className="flex items-start justify-between">
-                                            <div>
-                                                <CardTitle className="text-base">Upload Dokumen</CardTitle>
-                                                <CardDescription>{item.KodePendaftar}</CardDescription>
+                        {chart2.length > 0 ? (
+                            chart2.map((item: any, idx: number) => {
+                                const docs: any[] = item.BuktiForm ?? []
+                                const done = docs.filter(
+                                    (d) => (d.Upload ?? 0) > 0
+                                ).length
+                                const pct =
+                                    docs.length > 0
+                                        ? Math.round((done / docs.length) * 100)
+                                        : 0
+                                return (
+                                    <Card key={idx} className={G}>
+                                        <CardHeader className="pb-2">
+                                            <div className="flex items-start justify-between">
+                                                <div>
+                                                    <CardTitle className="text-base">
+                                                        Upload Dokumen
+                                                    </CardTitle>
+                                                    <CardDescription>
+                                                        {item.KodePendaftar}
+                                                    </CardDescription>
+                                                </div>
+                                                <Badge
+                                                    variant={
+                                                        pct === 100
+                                                            ? 'default'
+                                                            : pct >= 50
+                                                              ? 'secondary'
+                                                              : 'destructive'
+                                                    }
+                                                >
+                                                    {pct}% terupload
+                                                </Badge>
                                             </div>
-                                            <Badge variant={pct === 100 ? 'default' : pct >= 50 ? 'secondary' : 'destructive'}>
-                                                {pct}% terupload
-                                            </Badge>
-                                        </div>
-                                        <div className="mt-2 h-2 w-full bg-muted rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full rounded-full bg-primary transition-all"
-                                                style={{ width: `${pct}%` }}
-                                            />
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="grid grid-cols-1 gap-1.5">
-                                            {docs.map((doc: any, di: number) => {
-                                                const uploaded = (doc.Upload ?? 0) > 0
-                                                return (
-                                                    <div key={di} className="flex items-center gap-2 text-sm">
-                                                        {uploaded
-                                                            ? <CheckCircle2 className="h-4 w-4 shrink-0 text-green-500" />
-                                                            : <XCircle className="h-4 w-4 shrink-0 text-red-400" />
-                                                        }
-                                                        <span className={uploaded ? '' : 'text-muted-foreground'}>{doc.JenisDokumen}</span>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            )
-                        }) : (
-                            <Card className={G}><CardContent className="pt-6"><EmptyChart /></CardContent></Card>
+                                            <div className="mt-2 h-2 w-full bg-muted rounded-full overflow-hidden">
+                                                <div
+                                                    className="h-full rounded-full bg-primary transition-all"
+                                                    style={{ width: `${pct}%` }}
+                                                />
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="grid grid-cols-1 gap-1.5">
+                                                {docs.map(
+                                                    (doc: any, di: number) => {
+                                                        const uploaded =
+                                                            (doc.Upload ?? 0) >
+                                                            0
+                                                        return (
+                                                            <div
+                                                                key={di}
+                                                                className="flex items-center gap-2 text-sm"
+                                                            >
+                                                                {uploaded ? (
+                                                                    <CheckCircle2 className="h-4 w-4 shrink-0 text-green-500" />
+                                                                ) : (
+                                                                    <XCircle className="h-4 w-4 shrink-0 text-red-400" />
+                                                                )}
+                                                                <span
+                                                                    className={
+                                                                        uploaded
+                                                                            ? ''
+                                                                            : 'text-muted-foreground'
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        doc.JenisDokumen
+                                                                    }
+                                                                </span>
+                                                            </div>
+                                                        )
+                                                    }
+                                                )}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                )
+                            })
+                        ) : (
+                            <Card className={G}>
+                                <CardContent className="pt-6">
+                                    <EmptyChart />
+                                </CardContent>
+                            </Card>
                         )}
                     </div>
                 </div>
@@ -1242,62 +2168,138 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         const prodi = dataAdmin?.data[0]?.hasilPerProdi ?? []
         const userList = dataAdmin?.data[1]?.totalUserPerRole ?? []
 
-        const totalMhs = prodi.reduce((s: number, x: any) => s + (x.jumlahMahasiswa ?? 0), 0)
-        const totalUser = userList.reduce((s: number, x: any) => s + (x.jumlahPengguna ?? 0), 0)
+        const totalMhs = prodi.reduce(
+            (s: number, x: any) => s + (x.jumlahMahasiswa ?? 0),
+            0
+        )
+        const totalUser = userList.reduce(
+            (s: number, x: any) => s + (x.jumlahPengguna ?? 0),
+            0
+        )
         const totalProdi = prodi.length
 
-        const cfgProdi: ChartConfig = { jumlahMahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' } }
-        const cfgUser: ChartConfig = { jumlahPengguna: { label: 'Pengguna', color: 'var(--chart-2)' } }
+        const cfgProdi: ChartConfig = {
+            jumlahMahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' },
+        }
+        const cfgUser: ChartConfig = {
+            jumlahPengguna: { label: 'Pengguna', color: 'var(--chart-2)' },
+        }
 
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 <div className="grid grid-cols-3 gap-4">
-                    <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
-                    <StatCard label="Total Pengguna" value={totalUser} icon={UserCheck} color="green" />
-                    <StatCard label="Total Prodi" value={totalProdi} icon={GraduationCap} color="violet" />
+                    <StatCard
+                        label="Total Mahasiswa"
+                        value={totalMhs}
+                        icon={Users}
+                        color="blue"
+                    />
+                    <StatCard
+                        label="Total Pengguna"
+                        value={totalUser}
+                        icon={UserCheck}
+                        color="green"
+                    />
+                    <StatCard
+                        label="Total Prodi"
+                        value={totalProdi}
+                        icon={GraduationCap}
+                        color="violet"
+                    />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Mahasiswa per Program Studi</CardTitle>
-                            <CardDescription>Distribusi mahasiswa RPL di setiap program studi</CardDescription>
+                            <CardDescription>
+                                Distribusi mahasiswa RPL di setiap program studi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {prodi.length > 0 ? (
                                 <ChartContainer config={cfgProdi}>
                                     <BarChart data={prodi} margin={{ top: 16 }}>
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahMahasiswa" fill="var(--chart-1)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahMahasiswa"
+                                            fill="var(--chart-1)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Pengguna per Role</CardTitle>
-                            <CardDescription>Jumlah akun yang terdaftar di setiap peran sistem</CardDescription>
+                            <CardDescription>
+                                Jumlah akun yang terdaftar di setiap peran
+                                sistem
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {userList.length > 0 ? (
                                 <ChartContainer config={cfgUser}>
-                                    <BarChart data={userList} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={userList}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="role" tickLine={false} axisLine={false} tickMargin={8} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahPengguna" fill="var(--chart-2)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="role"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahPengguna"
+                                            fill="var(--chart-2)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -1336,71 +2338,172 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         const mkList = dataPmb?.data[2]?.hasilMK ?? []
         const cpList = dataPmb?.data[3]?.hasilCP ?? []
 
-        const totalMhs = prodi.reduce((s: number, x: any) => s + (x.jumlahMahasiswa ?? 0), 0)
-        const totalMK = mkList.reduce((s: number, x: any) => s + (x.jumlahMataKuliah ?? 0), 0)
-        const totalCP = cpList.reduce((s: number, x: any) => s + (x.jumlahCapaianPembelajaran ?? 0), 0)
+        const totalMhs = prodi.reduce(
+            (s: number, x: any) => s + (x.jumlahMahasiswa ?? 0),
+            0
+        )
+        const totalMK = mkList.reduce(
+            (s: number, x: any) => s + (x.jumlahMataKuliah ?? 0),
+            0
+        )
+        const totalCP = cpList.reduce(
+            (s: number, x: any) => s + (x.jumlahCapaianPembelajaran ?? 0),
+            0
+        )
 
-        const cfgProdi: ChartConfig = { jumlahMahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' } }
-        const cfgStatus: ChartConfig = { jumlah: { label: 'Jumlah', color: 'var(--chart-2)' } }
-        const cfgMK: ChartConfig = { jumlahMataKuliah: { label: 'Mata Kuliah', color: 'var(--chart-3)' } }
-        const cfgCP: ChartConfig = { jumlahCapaianPembelajaran: { label: 'Capaian Pembelajaran', color: 'var(--chart-4)' } }
+        const cfgProdi: ChartConfig = {
+            jumlahMahasiswa: { label: 'Mahasiswa', color: 'var(--chart-1)' },
+        }
+        const cfgStatus: ChartConfig = {
+            jumlah: { label: 'Jumlah', color: 'var(--chart-2)' },
+        }
+        const cfgMK: ChartConfig = {
+            jumlahMataKuliah: { label: 'Mata Kuliah', color: 'var(--chart-3)' },
+        }
+        const cfgCP: ChartConfig = {
+            jumlahCapaianPembelajaran: {
+                label: 'Capaian Pembelajaran',
+                color: 'var(--chart-4)',
+            },
+        }
 
         // Aggregasi turunan
-        const mkVsCp = mergeByKey(mkList, 'jumlahMataKuliah', 'Mata Kuliah', cpList, 'jumlahCapaianPembelajaran', 'Capaian Pembelajaran')
+        const mkVsCp = mergeByKey(
+            mkList,
+            'jumlahMataKuliah',
+            'Mata Kuliah',
+            cpList,
+            'jumlahCapaianPembelajaran',
+            'Capaian Pembelajaran'
+        )
         const cfgMkVsCp: ChartConfig = {
             'Mata Kuliah': { label: 'Mata Kuliah', color: 'var(--chart-3)' },
-            'Capaian Pembelajaran': { label: 'Capaian Pembelajaran', color: 'var(--chart-4)' },
+            'Capaian Pembelajaran': {
+                label: 'Capaian Pembelajaran',
+                color: 'var(--chart-4)',
+            },
         }
 
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 <div className="grid grid-cols-3 gap-4">
-                    <StatCard label="Total Mahasiswa" value={totalMhs} icon={Users} color="blue" />
-                    <StatCard label="Total Mata Kuliah" value={totalMK} icon={BookOpen} color="green" />
-                    <StatCard label="Total Capaian Pembelajaran" value={totalCP} icon={GraduationCap} color="violet" />
+                    <StatCard
+                        label="Total Mahasiswa"
+                        value={totalMhs}
+                        icon={Users}
+                        color="blue"
+                    />
+                    <StatCard
+                        label="Total Mata Kuliah"
+                        value={totalMK}
+                        icon={BookOpen}
+                        color="green"
+                    />
+                    <StatCard
+                        label="Total Capaian Pembelajaran"
+                        value={totalCP}
+                        icon={GraduationCap}
+                        color="violet"
+                    />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Mahasiswa per Program Studi</CardTitle>
-                            <CardDescription>Distribusi mahasiswa RPL di setiap program studi</CardDescription>
+                            <CardDescription>
+                                Distribusi mahasiswa RPL di setiap program studi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {prodi.length > 0 ? (
                                 <ChartContainer config={cfgProdi}>
                                     <BarChart data={prodi} margin={{ top: 16 }}>
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahMahasiswa" fill="var(--chart-1)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahMahasiswa"
+                                            fill="var(--chart-1)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
-                            <CardTitle>Mahasiswa per Status Kelengkapan</CardTitle>
-                            <CardDescription>Distribusi berdasarkan kelengkapan pengisian berkas</CardDescription>
+                            <CardTitle>
+                                Mahasiswa per Status Kelengkapan
+                            </CardTitle>
+                            <CardDescription>
+                                Distribusi berdasarkan kelengkapan pengisian
+                                berkas
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {statusList.length > 0 ? (
                                 <ChartContainer config={cfgStatus}>
-                                    <BarChart data={statusList} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={statusList}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlah" fill="var(--chart-2)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="status"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlah"
+                                            fill="var(--chart-2)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -1409,42 +2512,100 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Mata Kuliah per Program Studi</CardTitle>
-                            <CardDescription>Jumlah mata kuliah RPL yang tersedia di setiap prodi</CardDescription>
+                            <CardDescription>
+                                Jumlah mata kuliah RPL yang tersedia di setiap
+                                prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {mkList.length > 0 ? (
                                 <ChartContainer config={cfgMK}>
-                                    <BarChart data={mkList} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={mkList}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahMataKuliah" fill="var(--chart-3)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahMataKuliah"
+                                            fill="var(--chart-3)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={G}>
                         <CardHeader>
-                            <CardTitle>Capaian Pembelajaran per Prodi</CardTitle>
-                            <CardDescription>Jumlah capaian pembelajaran yang ditetapkan per program studi</CardDescription>
+                            <CardTitle>
+                                Capaian Pembelajaran per Prodi
+                            </CardTitle>
+                            <CardDescription>
+                                Jumlah capaian pembelajaran yang ditetapkan per
+                                program studi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {cpList.length > 0 ? (
                                 <ChartContainer config={cfgCP}>
-                                    <BarChart data={cpList} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={cpList}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <Bar dataKey="jumlahCapaianPembelajaran" fill="var(--chart-4)" radius={6}>
-                                            <LabelList position="top" offset={8} className="fill-foreground" fontSize={11} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <Bar
+                                            dataKey="jumlahCapaianPembelajaran"
+                                            fill="var(--chart-4)"
+                                            radius={6}
+                                        >
+                                            <LabelList
+                                                position="top"
+                                                offset={8}
+                                                className="fill-foreground"
+                                                fontSize={11}
+                                            />
                                         </Bar>
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -1453,22 +2614,53 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={G}>
                         <CardHeader>
-                            <CardTitle>Mata Kuliah vs Capaian Pembelajaran</CardTitle>
-                            <CardDescription>Perbandingan jumlah mata kuliah dan capaian pembelajaran per prodi</CardDescription>
+                            <CardTitle>
+                                Mata Kuliah vs Capaian Pembelajaran
+                            </CardTitle>
+                            <CardDescription>
+                                Perbandingan jumlah mata kuliah dan capaian
+                                pembelajaran per prodi
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             {mkVsCp.length > 0 ? (
                                 <ChartContainer config={cfgMkVsCp}>
-                                    <BarChart data={mkVsCp} margin={{ top: 16 }}>
+                                    <BarChart
+                                        data={mkVsCp}
+                                        margin={{ top: 16 }}
+                                    >
                                         <CartesianGrid vertical={false} />
-                                        <XAxis dataKey="programStudi" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(v) => getInitials(v)} />
-                                        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                        <ChartLegend content={<ChartLegendContent />} />
-                                        <Bar dataKey="Mata Kuliah" fill="var(--chart-3)" radius={4} />
-                                        <Bar dataKey="Capaian Pembelajaran" fill="var(--chart-4)" radius={4} />
+                                        <XAxis
+                                            dataKey="programStudi"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            tickFormatter={(v) =>
+                                                getInitials(v)
+                                            }
+                                        />
+                                        <ChartTooltip
+                                            cursor={false}
+                                            content={<ChartTooltipContent />}
+                                        />
+                                        <ChartLegend
+                                            content={<ChartLegendContent />}
+                                        />
+                                        <Bar
+                                            dataKey="Mata Kuliah"
+                                            fill="var(--chart-3)"
+                                            radius={4}
+                                        />
+                                        <Bar
+                                            dataKey="Capaian Pembelajaran"
+                                            fill="var(--chart-4)"
+                                            radius={4}
+                                        />
                                     </BarChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
@@ -1489,13 +2681,23 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
     // ── AKADEMIK ─────────────────────────────────────────────────────────────
     if (role.Name.match('Akademik')) {
-        const asesorPie = (dataAkademik?.data[0] ?? []) as { name: string; total: number }[]
-        const mhsPie = (dataAkademik?.data[1] ?? []) as { name: string; total: number }[]
+        const asesorPie = (dataAkademik?.data[0] ?? []) as {
+            name: string
+            total: number
+        }[]
+        const mhsPie = (dataAkademik?.data[1] ?? []) as {
+            name: string
+            total: number
+        }[]
 
-        const asesorSK = asesorPie.find((x) => x.name === 'Asesor Sudah SK')?.total ?? 0
-        const asesorBelum = asesorPie.find((x) => x.name === 'Asesor Belum SK')?.total ?? 0
-        const mhsSK = mhsPie.find((x) => x.name === 'Mahasiswa Sudah SK')?.total ?? 0
-        const mhsBelum = mhsPie.find((x) => x.name === 'Mahasiswa Belum SK')?.total ?? 0
+        const asesorSK =
+            asesorPie.find((x) => x.name === 'Asesor Sudah SK')?.total ?? 0
+        const asesorBelum =
+            asesorPie.find((x) => x.name === 'Asesor Belum SK')?.total ?? 0
+        const mhsSK =
+            mhsPie.find((x) => x.name === 'Mahasiswa Sudah SK')?.total ?? 0
+        const mhsBelum =
+            mhsPie.find((x) => x.name === 'Mahasiswa Belum SK')?.total ?? 0
 
         const cfgAsesorPie: ChartConfig = {
             total: { label: 'Jumlah' },
@@ -1504,8 +2706,14 @@ const Dashboard = ({ session }: { session: Session | null }) => {
         }
         const cfgMhsPie: ChartConfig = {
             total: { label: 'Jumlah' },
-            'Mahasiswa Sudah SK': { label: 'Sudah SK', color: 'var(--chart-1)' },
-            'Mahasiswa Belum SK': { label: 'Belum SK', color: 'var(--chart-2)' },
+            'Mahasiswa Sudah SK': {
+                label: 'Sudah SK',
+                color: 'var(--chart-1)',
+            },
+            'Mahasiswa Belum SK': {
+                label: 'Belum SK',
+                color: 'var(--chart-2)',
+            },
         }
 
         // Aggregasi turunan
@@ -1529,52 +2737,146 @@ const Dashboard = ({ session }: { session: Session | null }) => {
 
         return (
             <div className="w-full space-y-4">
-                {role && !role.Name.match('Mahasiswa') ? periodeFilterNode : null}
+                {role && !role.Name.match('Mahasiswa')
+                    ? periodeFilterNode
+                    : null}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <StatCard label="Asesor Sudah SK" value={asesorSK} icon={CheckCircle2} color="green" />
-                    <StatCard label="Asesor Belum SK" value={asesorBelum} icon={ClipboardList} color="rose" />
-                    <StatCard label="Mahasiswa Sudah SK" value={mhsSK} icon={GraduationCap} color="blue" />
-                    <StatCard label="Mahasiswa Belum SK" value={mhsBelum} icon={Users} color="orange" />
+                    <StatCard
+                        label="Asesor Sudah SK"
+                        value={asesorSK}
+                        icon={CheckCircle2}
+                        color="green"
+                    />
+                    <StatCard
+                        label="Asesor Belum SK"
+                        value={asesorBelum}
+                        icon={ClipboardList}
+                        color="rose"
+                    />
+                    <StatCard
+                        label="Mahasiswa Sudah SK"
+                        value={mhsSK}
+                        icon={GraduationCap}
+                        color="blue"
+                    />
+                    <StatCard
+                        label="Mahasiswa Belum SK"
+                        value={mhsBelum}
+                        icon={Users}
+                        color="orange"
+                    />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Card className={`${G} flex flex-col`}>
                         <CardHeader className="items-center">
                             <CardTitle>Status SK Asesor</CardTitle>
-                            <CardDescription>Proporsi asesor yang sudah dan belum menerima SK penugasan</CardDescription>
+                            <CardDescription>
+                                Proporsi asesor yang sudah dan belum menerima SK
+                                penugasan
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">
                             {asesorPie.length > 0 ? (
-                                <ChartContainer config={cfgAsesorPie} className="mx-auto aspect-square max-h-[240px]">
+                                <ChartContainer
+                                    config={cfgAsesorPie}
+                                    className="mx-auto aspect-square max-h-[240px]"
+                                >
                                     <PieChart>
-                                        <ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
-                                        <Pie data={asesorPie} dataKey="total" nameKey="name" outerRadius={90} label={({ name, percent }) => `${getInitials(name)} ${(percent * 100).toFixed(0)}%`}>
-                                            {asesorPie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                                        <ChartTooltip
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <Pie
+                                            data={asesorPie}
+                                            dataKey="total"
+                                            nameKey="name"
+                                            outerRadius={90}
+                                            label={({ name, percent }) =>
+                                                `${getInitials(name)} ${(percent * 100).toFixed(0)}%`
+                                            }
+                                        >
+                                            {asesorPie.map((_, i) => (
+                                                <Cell
+                                                    key={i}
+                                                    fill={
+                                                        PIE_COLORS[
+                                                            i %
+                                                                PIE_COLORS.length
+                                                        ]
+                                                    }
+                                                />
+                                            ))}
                                         </Pie>
-                                        <ChartLegend content={<ChartLegendContent nameKey="name" />} />
+                                        <ChartLegend
+                                            content={
+                                                <ChartLegendContent nameKey="name" />
+                                            }
+                                        />
                                     </PieChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
 
                     <Card className={`${G} flex flex-col`}>
                         <CardHeader className="items-center">
                             <CardTitle>Status SK Mahasiswa</CardTitle>
-                            <CardDescription>Proporsi mahasiswa yang sudah dan belum menerima SK hasil asesmen</CardDescription>
+                            <CardDescription>
+                                Proporsi mahasiswa yang sudah dan belum menerima
+                                SK hasil asesmen
+                            </CardDescription>
                         </CardHeader>
                         <CardContent className="flex-1">
                             {mhsPie.length > 0 ? (
-                                <ChartContainer config={cfgMhsPie} className="mx-auto aspect-square max-h-[240px]">
+                                <ChartContainer
+                                    config={cfgMhsPie}
+                                    className="mx-auto aspect-square max-h-[240px]"
+                                >
                                     <PieChart>
-                                        <ChartTooltip content={<ChartTooltipContent hideLabel={false} />} />
-                                        <Pie data={mhsPie} dataKey="total" nameKey="name" outerRadius={90} label={({ name, percent }) => `${getInitials(name)} ${(percent * 100).toFixed(0)}%`}>
-                                            {mhsPie.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+                                        <ChartTooltip
+                                            content={
+                                                <ChartTooltipContent
+                                                    hideLabel={false}
+                                                />
+                                            }
+                                        />
+                                        <Pie
+                                            data={mhsPie}
+                                            dataKey="total"
+                                            nameKey="name"
+                                            outerRadius={90}
+                                            label={({ name, percent }) =>
+                                                `${getInitials(name)} ${(percent * 100).toFixed(0)}%`
+                                            }
+                                        >
+                                            {mhsPie.map((_, i) => (
+                                                <Cell
+                                                    key={i}
+                                                    fill={
+                                                        PIE_COLORS[
+                                                            i %
+                                                                PIE_COLORS.length
+                                                        ]
+                                                    }
+                                                />
+                                            ))}
                                         </Pie>
-                                        <ChartLegend content={<ChartLegendContent nameKey="name" />} />
+                                        <ChartLegend
+                                            content={
+                                                <ChartLegendContent nameKey="name" />
+                                            }
+                                        />
                                     </PieChart>
                                 </ChartContainer>
-                            ) : <EmptyChart />}
+                            ) : (
+                                <EmptyChart />
+                            )}
                         </CardContent>
                     </Card>
                 </div>
@@ -1584,17 +2886,38 @@ const Dashboard = ({ session }: { session: Session | null }) => {
                     <Card className={G}>
                         <CardHeader>
                             <CardTitle>Ringkasan Status SK</CardTitle>
-                            <CardDescription>Perbandingan capaian SK antara asesor dan mahasiswa</CardDescription>
+                            <CardDescription>
+                                Perbandingan capaian SK antara asesor dan
+                                mahasiswa
+                            </CardDescription>
                         </CardHeader>
                         <CardContent>
                             <ChartContainer config={cfgSkSummary}>
                                 <BarChart data={skSummary} margin={{ top: 16 }}>
                                     <CartesianGrid vertical={false} />
-                                    <XAxis dataKey="status" tickLine={false} axisLine={false} tickMargin={8} />
-                                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                                    <ChartLegend content={<ChartLegendContent />} />
-                                    <Bar dataKey="Asesor" fill="var(--chart-1)" radius={4} />
-                                    <Bar dataKey="Mahasiswa" fill="var(--chart-4)" radius={4} />
+                                    <XAxis
+                                        dataKey="status"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                    />
+                                    <ChartTooltip
+                                        cursor={false}
+                                        content={<ChartTooltipContent />}
+                                    />
+                                    <ChartLegend
+                                        content={<ChartLegendContent />}
+                                    />
+                                    <Bar
+                                        dataKey="Asesor"
+                                        fill="var(--chart-1)"
+                                        radius={4}
+                                    />
+                                    <Bar
+                                        dataKey="Mahasiswa"
+                                        fill="var(--chart-4)"
+                                        radius={4}
+                                    />
                                 </BarChart>
                             </ChartContainer>
                         </CardContent>
