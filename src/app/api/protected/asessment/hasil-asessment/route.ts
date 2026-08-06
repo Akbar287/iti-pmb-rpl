@@ -10,6 +10,25 @@ const app = new Hono().basePath('/api/protected/asessment/hasil-asessment')
 
 app.use('*', withApiAuth)
 
+// Tahap-tahap saat berkas hasil asesmen masih relevan bagi Akademik:
+// sedang disiapkan, sedang diajukan, atau dikembalikan untuk direvisi.
+// Tahap yang masih ditampilkan pada menu Hasil Asessmen selama SK belum
+// dipublikasikan Akademik.
+const STATUS_HASIL_BELUM_TERBIT = [
+    'Hasil Final Asessmen',
+    'Penerbitan SK Asessmen',
+    'Persetujuan SK Asessmen',
+    'Penandatanganan SK',
+    'Sinkronisasi Hasil Asessmen',
+    'Selesai',
+]
+
+const STATUS_AKADEMIK = [
+    'Hasil Final Asessmen',
+    'Penerbitan SK Asessmen',
+    'Persetujuan SK Asessmen',
+]
+
 app.get('/', async (c) => {
     const session = await getSession()
     const jenis = c.req.query('jenis')
@@ -37,38 +56,21 @@ app.get('/', async (c) => {
                             },
                             {
                                 Pendaftaran: {
-                                    OR: [
-                                        {
-                                            StatusMahasiswaAssesmentHistory: {
-                                                some: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Hasil Final Asessmen",
-                                                    },
+                                    StatusMahasiswaAssesmentHistory: {
+                                        some: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
+                                                NamaStatus: {
+                                                    in: STATUS_HASIL_BELUM_TERBIT,
                                                 },
                                             },
                                         },
-                                        {
-                                            StatusMahasiswaAssesmentHistory: {
-                                                some: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Persetujuan Hasil Final",
-                                                    },
-                                                },
-                                            },
-                                        },
-                                        {
-                                            StatusMahasiswaAssesmentHistory: {
-                                                some: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Penerbitan SK Asessmen",
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    ]
+                                    },
+                                    // Begitu SK dipublikasikan Akademik, berkas
+                                    // berpindah ke menu Sk. Rektor.
+                                    SkRektorMahasiswa: {
+                                        none: { SkRektor: { Dipublikasikan: true } },
+                                    },
                                 },
                             },
                             {
@@ -110,38 +112,21 @@ app.get('/', async (c) => {
                             },
                             {
                                 Pendaftaran: {
-                                    OR: [
-                                        {
-                                            StatusMahasiswaAssesmentHistory: {
-                                                some: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Hasil Final Asessmen",
-                                                    },
+                                    StatusMahasiswaAssesmentHistory: {
+                                        some: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
+                                                NamaStatus: {
+                                                    in: STATUS_HASIL_BELUM_TERBIT,
                                                 },
                                             },
                                         },
-                                        {
-                                            StatusMahasiswaAssesmentHistory: {
-                                                some: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Persetujuan Hasil Final",
-                                                    },
-                                                },
-                                            },
-                                        },
-                                        {
-                                            StatusMahasiswaAssesmentHistory: {
-                                                some: {
-                                                    Aktif: true,
-                                                    StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Penerbitan SK Asessmen",
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    ]
+                                    },
+                                    // Begitu SK dipublikasikan Akademik, berkas
+                                    // berpindah ke menu Sk. Rektor.
+                                    SkRektorMahasiswa: {
+                                        none: { SkRektor: { Dipublikasikan: true } },
+                                    },
                                 },
                             },
                         ]
@@ -286,7 +271,7 @@ app.get('/', async (c) => {
                                                 some: {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Persetujuan Hasil Final",
+                                                        NamaStatus: "Persetujuan SK Asessmen",
                                                     },
                                                 },
                                             },
@@ -368,7 +353,7 @@ app.get('/', async (c) => {
                                                 some: {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Persetujuan Hasil Final",
+                                                        NamaStatus: "Persetujuan SK Asessmen",
                                                     },
                                                 },
                                             },
@@ -499,7 +484,11 @@ app.get('/', async (c) => {
                                         some: {
                                             Aktif: true,
                                             StatusMahasiswaAssesment: {
-                                                NamaStatus: "Hasil Final Asessmen",
+                                                // Berkas tetap tampil bagi Akademik selama
+                                                // masih disiapkan maupun sedang diajukan.
+                                                NamaStatus: {
+                                                    in: STATUS_AKADEMIK,
+                                                },
                                             },
                                         },
                                     },
@@ -545,7 +534,9 @@ app.get('/', async (c) => {
                                 some: {
                                     Aktif: true,
                                     StatusMahasiswaAssesment: {
-                                        NamaStatus: "Hasil Final Asessmen",
+                                        NamaStatus: {
+                                            in: STATUS_AKADEMIK,
+                                        },
                                     },
                                 },
                             }

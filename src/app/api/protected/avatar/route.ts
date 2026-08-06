@@ -3,6 +3,7 @@ import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import { getSession } from '@/provider/api'
 import { prisma } from '@/lib/prisma'
+import { bacaBerkas, berkasAda, simpanBerkas } from '@/lib/storage'
 
 const app = new Hono().basePath('/api/protected/avatar')
 
@@ -22,7 +23,7 @@ app.get('/', async (c) => {
         select: { Avatar: true }
     })
 
-    if( !avatar || !avatar.Avatar) {
+    if (!avatar?.Avatar || !(await berkasAda(avatar.Avatar))) {
         return c.json(
             { data: [], status: 'error', message: 'Avatar not found' },
             { status: 404 }
@@ -30,7 +31,7 @@ app.get('/', async (c) => {
     }
 
     try {
-            return c.body(avatar.Avatar, 200, {
+            return c.body(await bacaBerkas(avatar.Avatar), 200, {
                 'Content-Type': 'image/png',
                 'Content-Disposition': `inline; filename="${'avatar.png'}"`,
             })
@@ -54,19 +55,34 @@ app.post('/', async (c) => {
         )
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer())
+    if (!session?.user.id) {
+        return c.json(
+            { status: 'error', message: 'Unauthorized', data: [] },
+            { status: 401 }
+        )
+    }
 
+    const buffer = Buffer.from(new Uint8Array(await file.arrayBuffer()))
+
+    // Avatar disimpan di <storage>/<userId>/avatar/avatar.png; basis data hanya
+    // memegang path-nya.
+    const pathFile = await simpanBerkas(
+        session.user.id,
+        'avatar',
+        'avatar.png',
+        buffer
+    )
 
     await prisma.user.update({
         data: {
-            Avatar: buffer,
+            Avatar: pathFile,
         },
         where: {
-            UserId: session?.user.id,
+            UserId: session.user.id,
         },
     })
 
-    return c.body(buffer, 200, {
+    return c.body(new Uint8Array(buffer), 200, {
                 'Content-Type': 'image/png',
                 'Content-Disposition': `inline; filename="${'avatar.png'}"`,
             })

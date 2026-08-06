@@ -4,6 +4,7 @@ import { handle } from 'hono/vercel'
 import mime from 'mime'
 import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
+import { bacaBerkas, berkasAda, simpanBerkas } from '@/lib/storage'
 import { TicketFile } from '@/types/TicketsTypes'
 
 const app = new Hono().basePath('/api/protected/tickets/file')
@@ -41,7 +42,11 @@ app.get('/', async (c) => {
                 mime.getType(data.NamaDokumen || data.NamaFile) ||
                 'application/octet-stream'
 
-            return c.body(data.FileData, 200, {
+            if (!(await berkasAda(data.PathFile))) {
+                return c.json({ error: 'File not found in storage' }, 404)
+            }
+
+            return c.body(await bacaBerkas(data.PathFile), 200, {
                 'Content-Type': contentType,
                 'Content-Disposition': `inline; filename="${data.NamaDokumen}"`,
             })
@@ -145,16 +150,33 @@ app.post('/', async (c) => {
     }
 
     // Process file
-    const buffer = Buffer.from(await file.arrayBuffer())
+    const buffer = Buffer.from(new Uint8Array(await file.arrayBuffer()))
     const originalFileName = file.name
     const filename = `${uuidv4()}.${fileExt}`
+
+    // Lampiran disimpan di folder pembuat tiket, basis data memegang path-nya.
+    const tiket = await prisma.tickets.findFirst({
+        where: { TicketsId: ticketsId },
+        select: { UserId: true },
+    })
+
+    if (!tiket) {
+        return c.json({ error: 'Tiket tidak ditemukan' }, 400)
+    }
+
+    const pathFile = await simpanBerkas(
+        tiket.UserId,
+        'tiket',
+        filename,
+        buffer
+    )
 
     // Save to database
     const data = await prisma.ticketsFile.create({
         data: {
             TicketsId: ticketsId,
             NamaFile: filename,
-            FileData: buffer,
+            PathFile: pathFile,
             NamaDokumen: originalFileName,
             CreatedAt: new Date(),
             UpdatedAt: new Date(),

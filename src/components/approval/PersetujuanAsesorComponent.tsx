@@ -15,7 +15,7 @@ import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetT
 import { Label } from '../ui/label'
 import { Textarea } from '../ui/textarea'
 import { toast } from 'sonner'
-import { setStatusAsessmenOlehAsesor, setStatusPenerbitanSkPenunjukanAsesor, setStatusPenunjukanAsesor, setStatusPersetujuanPenunjukanAsesor } from '@/services/Status/StatusService'
+import { setStatusAsessmenOlehAsesor, setStatusPenunjukanAsesor, setStatusPersetujuanPenunjukanAsesor } from '@/services/Status/StatusService'
 import { Separator } from '../ui/separator'
 
 const PersetujuanAsesorComponent = () => {

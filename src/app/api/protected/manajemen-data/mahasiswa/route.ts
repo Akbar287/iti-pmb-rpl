@@ -1437,7 +1437,7 @@ async function createMahasiswaUser(body: SevimaImportCaseType, options?: { usern
                     "Proses pertama, anda perlu mengisi kelengkapan informasi dan dokumen bukti dukung."),
                 jenis: String('sendWaText'),
             })
-            const cookieHeader = cookies().toString()
+            const cookieHeader = (await cookies()).toString()
             await fetch(
                 `${BASE_URL}/api/protected/whatsapp?${params.toString()}`, {
                 method: 'POST',

@@ -2,6 +2,12 @@ import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import mime from 'mime'
+import {
+    bacaBerkas,
+    berkasAda,
+    hapusBerkas,
+    simpanBerkas,
+} from '@/lib/storage'
 import { v4 as uuidv4 } from 'uuid'
 import { prisma } from '@/lib/prisma'
 import { BuktiFormTypes } from '@/types/BuktiFormUploadDokumenTypes'
@@ -120,7 +126,7 @@ app.get('/', async (c) => {
                 NamaFile: filename,
             },
             select: {
-                FileData: true,
+                PathFile: true,
                 NamaFile: true,
                 NamaDokumen: true,
             }
@@ -133,18 +139,20 @@ app.get('/', async (c) => {
             )
         }
         try {
-            if (!fileRecord || !fileRecord.FileData) {
+            if (!(await berkasAda(fileRecord.PathFile))) {
                 return c.json(
-                    { data: [], status: 'error', message: 'file not found in DB' },
+                    { data: [], status: 'error', message: 'file not found in storage' },
                     { status: 404 }
                 )
             }
+
+            const isiBerkas = await bacaBerkas(fileRecord.PathFile)
 
             const contentType =
                 mime.getType(fileRecord.NamaDokumen || filename) ||
                 'application/octet-stream'
 
-            return c.body(fileRecord.FileData, 200, {
+            return c.body(isiBerkas, 200, {
                 'Content-Type': contentType,
                 'Content-Disposition': `inline; filename="${filename}"`,
             })
@@ -236,6 +244,27 @@ app.post('/', async (c) => {
     const originalFileName = file.name
     const filename = `${uuidv4()}.${fileExt}`
 
+    // Berkas mahasiswa disimpan di <storage>/<userId>/dokumen/, basis data
+    // hanya memegang path-nya.
+    const pemilik = await prisma.pendaftaran.findFirst({
+        where: { PendaftaranId: PendaftaranId as string },
+        select: { Mahasiswa: { select: { UserId: true } } },
+    })
+
+    if (!pemilik) {
+        return c.json(
+            { status: 'error', message: 'Pendaftaran tidak ditemukan', data: [] },
+            { status: 400 }
+        )
+    }
+
+    const pathFile = await simpanBerkas(
+        pemilik.Mahasiswa.UserId,
+        'dokumen',
+        filename,
+        buffer
+    )
+
     const buktiFormSelect = {
         JenisDokumenId: true,
         BuktiFormId: true,
@@ -275,7 +304,7 @@ app.post('/', async (c) => {
             where: { BuktiFormId: existing.BuktiFormId },
             data: {
                 NamaFile: filename,
-                FileData: buffer,
+                PathFile: pathFile,
                 NamaDokumen: originalFileName,
                 UpdatedAt: new Date(),
             },
@@ -287,7 +316,7 @@ app.post('/', async (c) => {
                 JenisDokumenId: JenisDokumenId as string,
                 PendaftaranId: PendaftaranId as string,
                 NamaFile: filename,
-                FileData: buffer,
+                PathFile: pathFile,
                 NamaDokumen: originalFileName,
                 CreatedAt: new Date(),
                 UpdatedAt: new Date(),
@@ -596,6 +625,11 @@ app.delete('/', async (c) => {
             BuktiFormId: id,
         },
     })
+
+    // Berkas fisik ikut dibuang agar tidak menumpuk di penyimpanan.
+    if (data?.PathFile) {
+        await hapusBerkas(data.PathFile)
+    }
 
     if (data) {
         const jenisDokumen = await prisma.jenisDokumen.findFirst({

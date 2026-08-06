@@ -92,6 +92,13 @@ enum SistemKuliah {
   REGULER
 }
 
+/// Jenis SK hasil asesmen RPL. Diterbitkan mengikuti jenis mata kuliah yang
+/// diajukan mahasiswa (KeteranganMataKuliah), bisa salah satu atau keduanya.
+enum JenisSkAsessmen {
+  PEROLEHAN_SKS
+  TRANSFER_SKS
+}
+
 model Alamat {
   AlamatId      String          @id @default(uuid()) @map("alamat_id")
   DesaId        String          @map("desa_id")
@@ -118,6 +125,7 @@ model Asesor {
   AsesorPraktisi     AsesorPraktisi[]
   AssesorMahasiswa   AssesorMahasiswa[]
   AsesorProgramStudi AsesorProgramStudi[]
+  SkRektorAssesor    SkRektorAssesor[]
 
   @@map("asesor")
 }
@@ -180,7 +188,6 @@ model AssesorMahasiswa {
   UpdatedAt          DateTime?         @map("updated_at")
   Asesor             Asesor            @relation(fields: [AsesorId], references: [AsesorId], onDelete: Cascade)
   Pendaftaran        Pendaftaran       @relation(fields: [PendaftaranId], references: [PendaftaranId], onDelete: Cascade)
-  SkRektorAssesor    SkRektorAssesor[]
 
   @@map("assesor_mahasiswa")
 }
@@ -190,7 +197,7 @@ model BuktiForm {
   PendaftaranId         String                  @map("pendaftaran_id")
   JenisDokumenId        String                  @map("jenis_dokumen_id")
   NamaFile              String                  @map("nama_file")
-  FileData              Bytes                   @map("file_data")
+  PathFile              String                  @map("path_file")
   NamaDokumen           String                  @map("nama_dokumen")
   CreatedAt             DateTime?               @map("created_at")
   UpdatedAt             DateTime?               @map("updated_at")
@@ -762,9 +769,26 @@ model SkRektor {
   TahunSk           Int                 @default(2025) @map("tahun_sk")
   NomorSk           String              @map("nomor_sk")
   NamaFile          String              @map("nama_file")
-  FileData          Bytes               @map("file_data")
+  PathFile          String              @map("path_file")
   NamaDokumen       String              @map("nama_dokumen")
   Catatan           String?             @map("catatan")
+  JenisSkAsessmen   JenisSkAsessmen?    @map("jenis_sk_asessmen")
+  Dipublikasikan    Boolean             @default(false) @map("dipublikasikan")
+  DipublikasikanPada DateTime?          @map("dipublikasikan_pada")
+  NomorSuratSisurat String?             @map("nomor_surat_sisurat")
+  NomorSuratPada    DateTime?           @map("nomor_surat_pada")
+  Disetujui         Boolean             @default(false) @map("disetujui")
+  DisetujuiPada     DateTime?           @map("disetujui_pada")
+  DisetujuiOleh     String?             @map("disetujui_oleh")
+  Ditandatangani    Boolean             @default(false) @map("ditandatangani")
+  TandaTanganPada   DateTime?           @map("tanda_tangan_pada")
+  TandaTanganOleh   String?             @map("tanda_tangan_oleh")
+  QrToken           String?             @map("qr_token")
+  QrVerifyUrl       String?             @map("qr_verify_url")
+  QrDocumentId      Int?                @map("qr_document_id")
+  QrOfficialId      Int?                @map("qr_official_id")
+  QrOfficialNama    String?             @map("qr_official_nama")
+  QrOfficialJabatan String?             @map("qr_official_jabatan")
   CreatedAt         DateTime?           @map("created_at")
   UpdatedAt         DateTime?           @map("updated_at")
   TipeSkRektor      TipeSkRektor        @relation(fields: [TipeSkRektorId], references: [TipeSkRektorId], onDelete: Cascade)
@@ -775,13 +799,13 @@ model SkRektor {
 }
 
 model SkRektorAssesor {
-  SkRektorId         String @map("sk_rektor_id")
-  AssesorMahasiswaId String @map("assesor_mahasiswa_id")
+  SkRektorId String @map("sk_rektor_id")
+  AsesorId   String @map("asesor_id")
 
-  SkRektor         SkRektor         @relation(fields: [SkRektorId], references: [SkRektorId], onDelete: Cascade)
-  AssesorMahasiswa AssesorMahasiswa @relation(fields: [AssesorMahasiswaId], references: [AssesorMahasiswaId], onDelete: Cascade)
+  SkRektor SkRektor @relation(fields: [SkRektorId], references: [SkRektorId], onDelete: Cascade)
+  Asesor   Asesor   @relation(fields: [AsesorId], references: [AsesorId], onDelete: Cascade)
 
-  @@id([SkRektorId, AssesorMahasiswaId])
+  @@id([SkRektorId, AsesorId])
   @@map("sk_rektor_assesor")
 }
 
@@ -954,7 +978,7 @@ model User {
   TanggalLahir       DateTime?            @map("tanggal_lahir")
   JenisKelamin       JenisKelamin         @default(PRIA) @map("jenis_kelamin")
   PendidikanTerakhir Jenjang              @default(TIDAK_TAMAT_SD) @map("pendidikan_terakhir")
-  Avatar             Bytes?               @map("avatar")
+  Avatar             String?              @map("avatar")
   Agama              String?              @map("agama")
   Telepon            String?              @map("telepon")
   NomorWa            String?              @map("nomor_wa")
@@ -1207,7 +1231,7 @@ model TicketsFile {
   TicketsFileId String   @id @default(uuid()) @map("tickets_file_id")
   TicketsId     String   @map("tickets_id")
   NamaFile      String   @map("nama_file")
-  FileData      Bytes    @map("file_data")
+  PathFile      String   @map("path_file")
   NamaDokumen   String   @map("nama_dokumen")
   CreatedAt     DateTime @default(now()) @map("created_at")
   UpdatedAt     DateTime @default(now()) @map("updated_at")

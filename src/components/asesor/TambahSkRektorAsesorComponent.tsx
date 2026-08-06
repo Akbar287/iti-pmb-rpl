@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,6 +19,7 @@ import {
     TableBody,
     TableCell,
     TableHead,
+    TableHeader,
     TableRow,
 } from '../ui/table'
 import {
@@ -25,34 +27,59 @@ import {
     SkRektorSkemaValidasiTipe,
 } from '@/validation/SkRektorAsesorValidation'
 import {
+    getAsesorTanpaSk,
     getFileBlobByNamafile,
     setSkRektorAsesor,
 } from '@/services/Asesor/SkRektor'
+import { ResponseAsesorTanpaSk } from '@/types/PenunjukanAsesor'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { PenIcon } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card'
-import { setStatusAsessmenOlehAsesor } from '@/services/Status/StatusService'
+import { Badge } from '../ui/badge'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
+import { MultiSelect } from '../ui/multi-select'
+import { LockIcon, PenIcon, TimerIcon } from 'lucide-react'
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '../ui/card'
 
-const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
-    status: { NamaStatus: string; Urutan: number; Aktif: boolean }[]
+type AsesorTerpilih = {
+    AsesorId: string
+    NamaAsesor: string
+    NamaTipeAsesor: string
+    Email: string
+}
+
+const TambahSkRektorAsesorComponent = ({
+    dataServer,
+}: {
     dataServer: {
-        PendaftaranId: string;
-        NamaProgramStudi: string;
-        NamaMahasiswa: string
-        NamaAsesorPertama: string;
-        NamaAsesorKedua: string;
-        NamaFile: string;
-        NamaDokumen: string;
-        SkRektorId: string;
-        NamaSk: string;
-        TahunSk: string;
-        NomorSk: string;
+        SkRektorId: string
+        NamaSk: string
+        TahunSk: string
+        NomorSk: string
+        NamaFile: string
+        NamaDokumen: string
+        Disetujui: boolean
         Catatan: string
+        Asesor: AsesorTerpilih[]
     }
 }) => {
-
+    const router = useRouter()
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
+    const [asesorTersedia, setAsesorTersedia] = React.useState<
+        ResponseAsesorTanpaSk[]
+    >([])
+    const [asesorTerpilih, setAsesorTerpilih] = React.useState<string[]>(
+        dataServer.Asesor.map((x) => x.AsesorId)
+    )
+
+    const terkunci = dataServer.Disetujui
+
     const form = useForm<SkRektorSkemaValidasiTipe>({
         resolver: zodResolver(SkRektorSkemaValidasi),
         defaultValues: {
@@ -62,49 +89,93 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
             NomorSk: dataServer.NomorSk,
         },
     })
-    const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
+
+    React.useEffect(() => {
+        if (dataServer.NamaFile) {
+            getFileBlobByNamafile(dataServer.NamaFile)
+                .then((res) => setPdfPreview(res))
+                .catch(() => undefined)
+        }
+        getAsesorTanpaSk()
+            .then((res) => setAsesorTersedia(res))
+            .catch(() =>
+                toast.error('Gagal memuat daftar asesor yang belum ber-SK')
+            )
+    }, [])
+
+    // Asesor yang sudah tercakup SK ini tetap dapat dipilih ketika mengubah SK.
+    const opsiAsesor = React.useMemo(() => {
+        const map = new Map<string, { value: string; label: string }>()
+        dataServer.Asesor.forEach((a) =>
+            map.set(a.AsesorId, {
+                value: a.AsesorId,
+                label: `${a.NamaAsesor} — ${a.NamaTipeAsesor}`,
+            })
+        )
+        asesorTersedia.forEach((a) =>
+            map.set(a.AsesorId, {
+                value: a.AsesorId,
+                label: `${a.NamaAsesor} — ${a.NamaTipeAsesor}`,
+            })
+        )
+        return Array.from(map.values())
+    }, [asesorTersedia, dataServer.Asesor])
 
     const onSubmit = async (data: SkRektorSkemaValidasiTipe) => {
-        setLoading(true)
+        if (asesorTerpilih.length === 0) {
+            toast.error('Pilih minimal satu asesor yang dicakup SK ini')
+            return
+        }
+        if (!dataServer.SkRektorId && !data.data) {
+            toast.error('Berkas SK wajib diunggah')
+            return
+        }
 
-        if (data.data) {
-            await setSkRektorAsesor(
+        setLoading(true)
+        try {
+            const res = await setSkRektorAsesor(
                 data.data,
                 data.NamaSk,
                 data.TahunSk,
                 data.NomorSk,
-                dataServer?.PendaftaranId ?? ''
+                asesorTerpilih,
+                dataServer.SkRektorId
             )
-                .then(async (res) => {
-                    toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                    let r = status.find(x => x.NamaStatus == 'Penerbitan SK Penugasan Asesor')
-                    if (r) {
-                        if (r.Aktif) {
-                            console.log('Hai')
-                            await setStatusAsessmenOlehAsesor(dataServer?.PendaftaranId ?? '')
-                        }
-                    }
-                })
-                .catch((err) => {
-                    toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
-                }).finally(() => {
-                    setLoading(false)
-                })
+            toast.success(
+                'SK Penugasan Asesor tersimpan dan menunggu persetujuan Wakil Rektor'
+            )
+            router.push('/asesor/sk-rektor')
+            router.refresh()
+            return res
+        } catch (err) {
+            toast.error(
+                err instanceof Error
+                    ? err.message
+                    : 'SK Penugasan Asesor gagal disimpan'
+            )
+        } finally {
+            setLoading(false)
         }
     }
 
-    React.useEffect(() => {
-        if (dataServer) getFileBlobByNamafile(dataServer.NamaFile).then(res => {
-            setPdfPreview(res)
-        }).catch(err => { })
-    }, [])
-
     return (
         <div className="w-full">
+            {terkunci && (
+                <Alert className="mb-4">
+                    <LockIcon className="w-4 h-4" />
+                    <AlertTitle>SK sudah disetujui</AlertTitle>
+                    <AlertDescription>
+                        SK ini sudah disetujui Wakil Rektor sehingga tidak dapat
+                        diubah lagi. Terbitkan SK baru bila ada perubahan
+                        penugasan asesor.
+                    </AlertDescription>
+                </Alert>
+            )}
+
             <div className="grid grid-cols-1 gap-2 mb-3">
                 {pdfPreview && (
                     <iframe
-                        src={pdfPreview || ''}
+                        src={pdfPreview}
                         title="PDF Preview"
                         width="100%"
                         height="500px"
@@ -113,46 +184,57 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
                 )}
             </div>
 
-            <div className="grid grid-cols-1 mt-5">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Informasi Asesor</CardTitle>
-                        <CardDescription>Informasi mengenai Mahasiswa dan Asesor</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableBody>
-                                <TableRow>
-                                    <TableHead>Nama Mahasiswa</TableHead>
-                                    <TableCell>{dataServer.NamaMahasiswa ?? ''}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHead>Program Studi</TableHead>
-                                    <TableCell>{dataServer.NamaProgramStudi ?? ''}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHead>Nama Asesor Pertama</TableHead>
-                                    <TableCell>{dataServer.NamaAsesorPertama}</TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableHead>Nama Asesor Kedua</TableHead>
-                                    <TableCell>{dataServer.NamaAsesorKedua}</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
-            </div>
+            {dataServer.Asesor.length > 0 && (
+                <div className="grid grid-cols-1 mt-5">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Asesor yang Dicakup SK Ini</CardTitle>
+                            <CardDescription>
+                                SK penugasan berlaku kontinu selama asesor
+                                bertugas.
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Nama Asesor</TableHead>
+                                        <TableHead>Tipe</TableHead>
+                                        <TableHead>Email</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {dataServer.Asesor.map((a) => (
+                                        <TableRow key={a.AsesorId}>
+                                            <TableCell>{a.NamaAsesor}</TableCell>
+                                            <TableCell>
+                                                <Badge variant="secondary">
+                                                    {a.NamaTipeAsesor}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell>{a.Email}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </CardContent>
+                    </Card>
+                </div>
+            )}
+
             <div className="grid grid-cols-1 mt-5">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
                         <Card>
                             <CardHeader>
-                                <CardTitle>Form Upload SK</CardTitle>
-                                <CardDescription>Informasi mengenai Mahasiswa dan Asesor</CardDescription>
+                                <CardTitle>Form SK Penugasan Asesor</CardTitle>
+                                <CardDescription>
+                                    SK diterbitkan saat asesor didaftarkan, lalu
+                                    diajukan ke Wakil Rektor untuk disetujui.
+                                </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-5'>
+                                <div className="grid grid-cols-1 gap-5 sm:grid-cols-1 md:grid-cols-2">
                                     <FormField
                                         control={form.control}
                                         name="TahunSk"
@@ -160,10 +242,15 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
                                             <FormItem>
                                                 <FormLabel>Tahun SK</FormLabel>
                                                 <FormControl>
-                                                    <Input readOnly={loading} {...field} />
+                                                    <Input
+                                                        readOnly={
+                                                            loading || terkunci
+                                                        }
+                                                        {...field}
+                                                    />
                                                 </FormControl>
                                                 <FormDescription>
-                                                    Tahun Surat Keterangan
+                                                    Tahun Surat Keputusan
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
@@ -176,10 +263,15 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
                                             <FormItem>
                                                 <FormLabel>Nama SK</FormLabel>
                                                 <FormControl>
-                                                    <Input readOnly={loading} {...field} />
+                                                    <Input
+                                                        readOnly={
+                                                            loading || terkunci
+                                                        }
+                                                        {...field}
+                                                    />
                                                 </FormControl>
                                                 <FormDescription>
-                                                    Nama Surat Keterangan
+                                                    Nama Surat Keputusan
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
@@ -192,10 +284,15 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
                                             <FormItem>
                                                 <FormLabel>Nomor SK</FormLabel>
                                                 <FormControl>
-                                                    <Input readOnly={loading} {...field} />
+                                                    <Input
+                                                        readOnly={
+                                                            loading || terkunci
+                                                        }
+                                                        {...field}
+                                                    />
                                                 </FormControl>
                                                 <FormDescription>
-                                                    Nomor Surat Keterangan
+                                                    Nomor Surat Keputusan
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
@@ -206,15 +303,24 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
                                         name="data"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Unggah SK Disini</FormLabel>
+                                                <FormLabel>
+                                                    Unggah SK Disini
+                                                </FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         type="file"
                                                         accept="application/pdf"
+                                                        disabled={
+                                                            loading || terkunci
+                                                        }
                                                         onChange={(e) => {
-                                                            const file = e.target.files?.[0]
+                                                            const file =
+                                                                e.target
+                                                                    .files?.[0]
                                                             if (file) {
-                                                                field.onChange(file)
+                                                                field.onChange(
+                                                                    file
+                                                                )
                                                                 setPdfPreview(
                                                                     URL.createObjectURL(
                                                                         file
@@ -225,20 +331,52 @@ const TambahSkRektorAsesorComponent = ({ status, dataServer }: {
                                                     />
                                                 </FormControl>
                                                 <FormDescription>
-                                                    Upload SK (PDF)
+                                                    {dataServer.SkRektorId
+                                                        ? 'Kosongkan bila tidak mengganti berkas'
+                                                        : 'Upload SK (PDF)'}
                                                 </FormDescription>
                                                 <FormMessage />
                                             </FormItem>
                                         )}
                                     />
+                                    <div className="md:col-span-2">
+                                        <FormLabel>
+                                            Asesor yang Dicakup SK
+                                        </FormLabel>
+                                        <div className="mt-2">
+                                            <MultiSelect
+                                                options={opsiAsesor}
+                                                selected={asesorTerpilih}
+                                                onChange={setAsesorTerpilih}
+                                                placeholder="Pilih asesor"
+                                                className={
+                                                    loading || terkunci
+                                                        ? 'pointer-events-none opacity-50'
+                                                        : ''
+                                                }
+                                            />
+                                        </div>
+                                        <p className="mt-2 text-sm text-muted-foreground">
+                                            Daftar berisi asesor yang belum
+                                            tercakup SK penugasan mana pun.
+                                        </p>
+                                    </div>
                                 </div>
                                 <div className="flex justify-center w-full mt-5">
                                     <Button
-                                        disabled={loading}
+                                        disabled={loading || terkunci}
                                         type="submit"
-                                        className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
+                                        className="w-2/3 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 md:w-1/2"
                                     >
-                                        <PenIcon /> Simpan
+                                        {loading ? (
+                                            <React.Fragment>
+                                                <TimerIcon /> Loading
+                                            </React.Fragment>
+                                        ) : (
+                                            <React.Fragment>
+                                                <PenIcon /> Simpan
+                                            </React.Fragment>
+                                        )}
                                     </Button>
                                 </div>
                             </CardContent>

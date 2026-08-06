@@ -49,7 +49,9 @@ import {
     getSkAsessmenAsesorRolePagination,
     getSkAsessmenMahasiswaPagination,
     getSkAsessmenPagination,
+    setPublikasiSkAsessmen,
 } from '@/services/Asessment/SkRektorAsessmenService'
+import Swal from '@/lib/swal'
 import { Badge } from '../ui/badge'
 import { useRouter } from 'next/navigation'
 import {
@@ -231,6 +233,51 @@ const SkRektorAsessmenComponent = () => {
     const detailData = (d: ResponseSkRektorAsessmenType) => {
         router.push('/asessment/sk-rektor/' + d.PendaftaranId)
     }
+    // SK yang sudah ditandatangani Rektor baru terlihat mahasiswa setelah
+    // Akademik mempublikasikannya; bisa ditahan lagi bila perlu.
+    const ubahPublikasi = async (
+        d: ResponseSkRektorAsessmenType,
+        publikasikan: boolean
+    ) => {
+        const konfirmasi = await Swal.fire({
+            title: publikasikan
+                ? 'Publikasikan SK ke mahasiswa ?'
+                : 'Tahan publikasi SK ?',
+            text: publikasikan
+                ? `SK ${d.Nama} akan dapat diunduh mahasiswa dan pemberitahuan WhatsApp dikirim.`
+                : `SK ${d.Nama} akan disembunyikan kembali dari mahasiswa.`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#f45f24',
+            cancelButtonColor: '#d33',
+            confirmButtonText: publikasikan ? 'Ya, Publikasikan!' : 'Ya, Tahan!',
+            cancelButtonText: 'Batalkan',
+        })
+
+        if (!konfirmasi.isConfirmed) return
+
+        try {
+            const res = await setPublikasiSkAsessmen(
+                d.PendaftaranId,
+                publikasikan
+            )
+            toast(res.message)
+            setData((prev) =>
+                prev.map((x) =>
+                    x.PendaftaranId === d.PendaftaranId
+                        ? { ...x, Dipublikasikan: publikasikan }
+                        : x
+                )
+            )
+        } catch (err) {
+            toast(
+                err instanceof Error
+                    ? err.message
+                    : 'Gagal mengubah publikasi SK'
+            )
+        }
+    }
+
     const unduhSk = (d: ResponseSkRektorAsessmenType) => {
         getFileSkAsessmenBlobByNamafile(d.NamaFile)
             .then((res) => {
@@ -344,19 +391,33 @@ const SkRektorAsessmenComponent = () => {
             ),
         },
         {
+            id: 'Publikasi',
+            header: 'Publikasi',
+            cell: ({ row }) =>
+                !row.original.SiapDipublikasikan ? (
+                    <Badge variant="secondary">Belum ditandatangani</Badge>
+                ) : row.original.Dipublikasikan ? (
+                    <Badge className="bg-green-600">Dipublikasikan</Badge>
+                ) : (
+                    <Badge variant="secondary">Ditahan</Badge>
+                ),
+        },
+        {
             accessorKey: 'SkRektor',
-            header: 'SkRektor',
+            header: 'Tahap',
             cell: ({ row }) => (
-                <div className="capitalize">
+                <div>
                     {row.original.Status == 'Hasil Final Asessmen' ? (
-                        <Badge variant={'default'}>Upload Sk</Badge>
-                    ) : row.original.Status == 'Persetujuan Hasil Final' ? (
-                        <Badge variant={'destructive'}>Persetujuan Warek</Badge>
+                        <Badge variant={'secondary'}>Penerbitan SK</Badge>
                     ) : row.original.Status == 'Penerbitan SK Asessmen' ? (
-                        <Badge variant={'destructive'}>Finalisasi Sk</Badge>
+                        <Badge variant={'secondary'}>Perlu Direvisi</Badge>
+                    ) : row.original.Status == 'Persetujuan SK Asessmen' ? (
+                        <Badge variant={'secondary'}>Menunggu Wakil Rektor</Badge>
+                    ) : row.original.Status == 'Penandatanganan SK' ? (
+                        <Badge variant={'secondary'}>Menunggu Rektor</Badge>
                     ) : row.original.Status == 'Sinkronisasi Hasil Asessmen' ? (
-                        <Badge variant={'destructive'}>Sk Terbit</Badge>
-                    ) : (<Badge variant={'destructive'}>Selesai</Badge>)}
+                        <Badge className="bg-green-600">Sudah Ditandatangani</Badge>
+                    ) : (<Badge className="bg-green-700">Selesai</Badge>)}
                 </div>
             ),
         },
@@ -407,11 +468,53 @@ const SkRektorAsessmenComponent = () => {
                                     </DropdownMenuItem>
                                 </>
                             }
-                            {jd.NamaFile !== '' && row.original.Status == 'Sinkronisasi Hasil Asessmen' ? (
-                                <DropdownMenuItem onClick={() => unduhSk(jd)}>
-                                    Unduh SK
-                                </DropdownMenuItem>
-                            ) : <></>}
+                            {role?.Name.match('Akademik') &&
+                                jd.SiapDipublikasikan && (
+                                    <React.Fragment>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem
+                                            onClick={() =>
+                                                ubahPublikasi(
+                                                    jd,
+                                                    !jd.Dipublikasikan
+                                                )
+                                            }
+                                        >
+                                            {jd.Dipublikasikan
+                                                ? 'Tahan Publikasi SK'
+                                                : 'Publikasikan SK ke Mahasiswa'}
+                                        </DropdownMenuItem>
+                                    </React.Fragment>
+                                )}
+                            {row.original.Status ==
+                                'Sinkronisasi Hasil Asessmen' &&
+                                (jd.DaftarSk && jd.DaftarSk.length > 0 ? (
+                                    // Satu mahasiswa dapat memiliki SK Perolehan
+                                    // dan/atau SK Transfer SKS.
+                                    jd.DaftarSk.map((sk) => (
+                                        <DropdownMenuItem
+                                            key={sk.SkRektorId}
+                                            onClick={() =>
+                                                unduhSk({
+                                                    ...jd,
+                                                    NamaFile: sk.NamaFile,
+                                                })
+                                            }
+                                        >
+                                            Unduh{' '}
+                                            {sk.JenisSkAsessmen ===
+                                                'TRANSFER_SKS'
+                                                ? 'SK Transfer SKS'
+                                                : 'SK Perolehan SKS'}
+                                        </DropdownMenuItem>
+                                    ))
+                                ) : jd.NamaFile !== '' ? (
+                                    <DropdownMenuItem onClick={() => unduhSk(jd)}>
+                                        Unduh SK
+                                    </DropdownMenuItem>
+                                ) : (
+                                    <></>
+                                ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -419,9 +522,22 @@ const SkRektorAsessmenComponent = () => {
         },
     ]
 
+    // Kolom "Publikasi" dan "Tahap" adalah urusan internal (Akademik/Asesor);
+    // mahasiswa cukup melihat identitas berkas dan dokumennya.
+    const kolomInternal = ['Publikasi', 'SkRektor']
+    const columnsTampil =
+        role?.Name === 'Mahasiswa'
+            ? columns.filter(
+                (c) =>
+                    !kolomInternal.includes(
+                        c.id ?? ('accessorKey' in c ? String(c.accessorKey) : '')
+                    )
+            )
+            : columns
+
     const table = useReactTable({
         data: data,
-        columns,
+        columns: columnsTampil,
         manualPagination: true,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
@@ -560,7 +676,7 @@ const SkRektorAsessmenComponent = () => {
                                     ) : (
                                         <TableRow>
                                             <TableCell
-                                                colSpan={columns.length}
+                                                colSpan={columnsTampil.length}
                                                 className="h-24 text-center"
                                             >
                                                 Tidak Ada Data.
@@ -795,7 +911,7 @@ const SkRektorAsessmenComponent = () => {
                                     ) : (
                                         <TableRow>
                                             <TableCell
-                                                colSpan={columns.length}
+                                                colSpan={columnsTampil.length}
                                                 className="h-24 text-center"
                                             >
                                                 Tidak Ada Data.

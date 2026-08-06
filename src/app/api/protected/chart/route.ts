@@ -229,18 +229,32 @@ app.get('/', async (c) => {
 
         // Chart 5 - Jumlah Asesor Belum dan Sudah di SK
         const [withRelationAsesor, withoutRelationAsesor] = await Promise.all([
-            prisma.assesorMahasiswa.count({
+            // SK penugasan kini melekat pada asesor, bukan pada penugasan per
+            // mahasiswa, sehingga dihitung per asesor.
+            prisma.asesor.count({
                 where: {
-                    Confirmation: true,
-                    SkRektorAssesor: { some: {} },
-                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                    DeletedAt: null,
+                    SkRektorAssesor: { some: { SkRektor: { Disetujui: true } } },
+                    ...(periode
+                        ? {
+                            AssesorMahasiswa: {
+                                some: { Pendaftaran: { Periode: periode } },
+                            },
+                        }
+                        : {}),
                 },
             }),
-            prisma.assesorMahasiswa.count({
+            prisma.asesor.count({
                 where: {
-                    Confirmation: true,
-                    SkRektorAssesor: { none: {} },
-                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                    DeletedAt: null,
+                    SkRektorAssesor: { none: { SkRektor: { Disetujui: true } } },
+                    ...(periode
+                        ? {
+                            AssesorMahasiswa: {
+                                some: { Pendaftaran: { Periode: periode } },
+                            },
+                        }
+                        : {}),
                 },
             }),
         ]);
@@ -912,18 +926,32 @@ app.get('/', async (c) => {
         let data = []
         // Chart 1
         const [withRelationAsesor, withoutRelationAsesor] = await Promise.all([
-            prisma.assesorMahasiswa.count({
+            // SK penugasan kini melekat pada asesor, bukan pada penugasan per
+            // mahasiswa, sehingga dihitung per asesor.
+            prisma.asesor.count({
                 where: {
-                    Confirmation: true,
-                    SkRektorAssesor: { some: {} },
-                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                    DeletedAt: null,
+                    SkRektorAssesor: { some: { SkRektor: { Disetujui: true } } },
+                    ...(periode
+                        ? {
+                            AssesorMahasiswa: {
+                                some: { Pendaftaran: { Periode: periode } },
+                            },
+                        }
+                        : {}),
                 },
             }),
-            prisma.assesorMahasiswa.count({
+            prisma.asesor.count({
                 where: {
-                    Confirmation: true,
-                    SkRektorAssesor: { none: {} },
-                    ...(periode ? { Pendaftaran: { Periode: periode } } : {}),
+                    DeletedAt: null,
+                    SkRektorAssesor: { none: { SkRektor: { Disetujui: true } } },
+                    ...(periode
+                        ? {
+                            AssesorMahasiswa: {
+                                some: { Pendaftaran: { Periode: periode } },
+                            },
+                        }
+                        : {}),
                 },
             }),
         ]);

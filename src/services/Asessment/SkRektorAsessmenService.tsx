@@ -1,4 +1,3 @@
-import { SkRektor } from '@/generated/prisma'
 import { ResponseSkRektorAsessmenType } from '@/types/FinalAsessmen'
 import { Pagination } from '@/types/Pagination'
 
@@ -120,26 +119,57 @@ export async function getSelesaiPagination(
     return res.json()
 }
 
-export async function setFile(
-    data: File,
-    PendaftaranId: string,
-    NamaSk: string,
-    TahunSk: string,
+export type SkAsessmenTerbitType = {
+    SkRektorId: string
+    JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS'
+    NamaSk: string
     NomorSk: string
-): Promise<{
-    status: string; message: string; data: SkRektor
-}> {
-    const formData = new FormData()
-    formData.append('files', data)
-    formData.append('PendaftaranId', PendaftaranId)
-    formData.append('NamaSk', NamaSk)
-    formData.append('TahunSk', TahunSk)
-    formData.append('NomorSk', NomorSk)
+    TahunSk: number
+    NamaFile: string
+    NamaDokumen: string
+    Disetujui: boolean
+    Catatan: string
+}
 
-    const res = await fetch(`${BASE_URL}/api/protected/asessment/sk-rektor`, {
-        method: 'POST',
-        body: formData,
-    })
-    if (!res.ok) throw new Error('Failed to fetch sk rektor')
-    return res.json()
+export async function terbitkanSkAsessmen(
+    PendaftaranId: string,
+    JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS',
+    NamaSk: string,
+    NomorSk: string,
+    TahunSk: string
+): Promise<{ status: string; message: string; data: SkAsessmenTerbitType }> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=terbitkan`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                PendaftaranId,
+                JenisSkAsessmen,
+                NamaSk,
+                NomorSk,
+                TahunSk,
+            }),
+        }
+    )
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.message ?? 'Gagal menerbitkan SK')
+    return json
+}
+
+export async function setPublikasiSkAsessmen(
+    PendaftaranId: string,
+    Publikasikan: boolean
+): Promise<{ status: string; message: string; data: { Dipublikasikan: boolean } }> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=publikasi`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ PendaftaranId, Publikasikan }),
+        }
+    )
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.message ?? 'Gagal mengubah publikasi SK')
+    return json
 }

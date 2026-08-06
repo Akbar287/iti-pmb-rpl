@@ -3,9 +3,10 @@ export function isGenerateSk(namaStatus: string) {
     return [
         'Hasil Asessmen',
         'Hasil Final Asessmen',
-        'Persetujuan Hasil Final',
         'SK. Rektor',
         'Penerbitan SK Asessmen',
+        'Persetujuan SK Asessmen',
+        'Penandatanganan SK',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)
@@ -19,9 +20,10 @@ export function isGenerateRekapitulasi(namaStatus: string) {
         'Sanggahan',
         'Hasil Asessmen',
         'Hasil Final Asessmen',
-        'Persetujuan Hasil Final',
         'SK. Rektor',
         'Penerbitan SK Asessmen',
+        'Persetujuan SK Asessmen',
+        'Penandatanganan SK',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)
@@ -32,9 +34,10 @@ export function isGenerateBeritaAcara(namaStatus: string) {
     return [
         'Hasil Asessmen',
         'Hasil Final Asessmen',
-        'Persetujuan Hasil Final',
         'SK. Rektor',
         'Penerbitan SK Asessmen',
+        'Persetujuan SK Asessmen',
+        'Penandatanganan SK',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)
@@ -51,9 +54,10 @@ export function isGenerateEvaluasiMandiri(namaStatus: string) {
         'Sanggahan',
         'Hasil Asessmen',
         'Hasil Final Asessmen',
-        'Persetujuan Hasil Final',
         'SK. Rektor',
         'Penerbitan SK Asessmen',
+        'Persetujuan SK Asessmen',
+        'Penandatanganan SK',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)

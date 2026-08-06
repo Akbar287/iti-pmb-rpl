@@ -250,6 +250,13 @@
     animation: fade-in 0.3s ease-out;
   }
 
+  /* Radix (Dialog/Sheet/DropdownMenu) mematikan pointer-events pada <body>
+     selama modal terbuka. SweetAlert2 dirender di luar portal Radix, sehingga
+     tombolnya ikut mati bila tidak dihidupkan kembali di sini. */
+  .swal2-container {
+    pointer-events: auto !important;
+  }
+
   /* ── SweetAlert2 glass effect ── */
   .swal-glass {
     backdrop-filter: blur(16px) !important;

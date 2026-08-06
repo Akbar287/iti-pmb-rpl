@@ -189,7 +189,7 @@ exports.Prisma.BuktiFormScalarFieldEnum = {
   PendaftaranId: 'PendaftaranId',
   JenisDokumenId: 'JenisDokumenId',
   NamaFile: 'NamaFile',
-  FileData: 'FileData',
+  PathFile: 'PathFile',
   NamaDokumen: 'NamaDokumen',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
@@ -570,16 +570,33 @@ exports.Prisma.SkRektorScalarFieldEnum = {
   TahunSk: 'TahunSk',
   NomorSk: 'NomorSk',
   NamaFile: 'NamaFile',
-  FileData: 'FileData',
+  PathFile: 'PathFile',
   NamaDokumen: 'NamaDokumen',
   Catatan: 'Catatan',
+  JenisSkAsessmen: 'JenisSkAsessmen',
+  Dipublikasikan: 'Dipublikasikan',
+  DipublikasikanPada: 'DipublikasikanPada',
+  NomorSuratSisurat: 'NomorSuratSisurat',
+  NomorSuratPada: 'NomorSuratPada',
+  Disetujui: 'Disetujui',
+  DisetujuiPada: 'DisetujuiPada',
+  DisetujuiOleh: 'DisetujuiOleh',
+  Ditandatangani: 'Ditandatangani',
+  TandaTanganPada: 'TandaTanganPada',
+  TandaTanganOleh: 'TandaTanganOleh',
+  QrToken: 'QrToken',
+  QrVerifyUrl: 'QrVerifyUrl',
+  QrDocumentId: 'QrDocumentId',
+  QrOfficialId: 'QrOfficialId',
+  QrOfficialNama: 'QrOfficialNama',
+  QrOfficialJabatan: 'QrOfficialJabatan',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
 };
 
 exports.Prisma.SkRektorAssesorScalarFieldEnum = {
   SkRektorId: 'SkRektorId',
-  AssesorMahasiswaId: 'AssesorMahasiswaId'
+  AsesorId: 'AsesorId'
 };
 
 exports.Prisma.SkRektorMahasiswaScalarFieldEnum = {
@@ -884,7 +901,7 @@ exports.Prisma.TicketsFileScalarFieldEnum = {
   TicketsFileId: 'TicketsFileId',
   TicketsId: 'TicketsId',
   NamaFile: 'NamaFile',
-  FileData: 'FileData',
+  PathFile: 'PathFile',
   NamaDokumen: 'NamaDokumen',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
@@ -997,6 +1014,11 @@ exports.StatusPekerjaan = exports.$Enums.StatusPekerjaan = {
 exports.SistemKuliah = exports.$Enums.SistemKuliah = {
   RPL: 'RPL',
   REGULER: 'REGULER'
+};
+
+exports.JenisSkAsessmen = exports.$Enums.JenisSkAsessmen = {
+  PEROLEHAN_SKS: 'PEROLEHAN_SKS',
+  TRANSFER_SKS: 'TRANSFER_SKS'
 };
 
 exports.JenisKelamin = exports.$Enums.JenisKelamin = {

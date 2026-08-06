@@ -3,6 +3,8 @@ export type ResponseAsesorFromProdi = {
     UserId: string
     Nama: string
     BebanKerja: number
+    /** True bila asesor punya SK penugasan yang sudah disetujui Wakil Rektor. */
+    SkDisetujui: boolean
     AssesorMahasiswa: {
         Confirmation: boolean
     }[]
@@ -62,20 +64,49 @@ export type ResponseSkRektorAsesor = {
     NomorSk: string
     NamaFile: string
     NamaDokumen: string
+    AsesorRelation?: number
+    Disetujui: boolean
+    DisetujuiPada: Date | null
+    Catatan: string
 }
 
+/** Asesor yang tercakup dalam satu SK penugasan. */
 export type ResponseSkRektorAsesorDetail = {
     SkRektorId: string
-    AsesorMahasiswaId: string
-    PendaftaranId: string
-    KodePendaftar: string
-    Asesor: {
-        AsesorId: string
-        NamaTipeAsesor: string
-        NamaAsesor: string
-        Urutan: number
-        Confirmation: boolean
-    }[]
+    AsesorId: string
+    NamaAsesor: string
+    NamaTipeAsesor: string
+    Email: string
+}
+
+/** Asesor yang belum tercakup SK penugasan mana pun. */
+export type ResponseAsesorTanpaSk = {
+    AsesorId: string
+    NamaAsesor: string
+    NamaTipeAsesor: string
+    Email: string
+}
+
+export type ResponseSkAsesorForWarek = {
+    SkRektorId: string
+    NamaSk: string
+    NomorSk: string
+    TahunSk: number
+    NamaFile: string
+    NamaDokumen: string
+    JumlahAsesor: number
+    Asesor: string[]
+}
+
+export const ResponseSkAsesorForWarekValue: ResponseSkAsesorForWarek = {
+    SkRektorId: '',
+    NamaSk: '',
+    NomorSk: '',
+    TahunSk: 0,
+    NamaFile: '',
+    NamaDokumen: '',
+    JumlahAsesor: 0,
+    Asesor: [],
 }
 
 export type ResponseAsesorMahasiswa = {
@@ -112,34 +143,4 @@ export const ResponsePenunjukanAsesorForWarekValue = {
     NamaProgramStudi: '',
     NamaMahasiswa: '',
     Status: '',
-}
-
-export type ResponseHasilAsessmenForWarek = {
-    PendaftaranId: string
-    KodePendaftar: string
-    NamaProgramStudi: string
-    NamaMahasiswa: string
-    TotalMk: number
-    Sk: {
-        NamaSk: string
-        NomorSk: string
-        TahunSk: number
-        NamaDokumen: string
-        NamaFile: string
-    }
-}
-    
-export const ResponseHasilAsessmenForWarekValue = {
-    PendaftaranId: '',
-    KodePendaftar: '',
-    NamaProgramStudi: '',
-    NamaMahasiswa: '',
-    TotalMk: 0,
-    Sk: {
-        NamaSk: '',
-        NomorSk: '',
-        TahunSk: 0,
-        NamaDokumen: '',
-        NamaFile: '',
-    }
 }

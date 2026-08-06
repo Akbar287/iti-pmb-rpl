@@ -131,6 +131,14 @@ export type ResponseFinalAsessmenAsesorDetailType = {
     }
 }
 
+export type SkAsessmenRingkasType = {
+    SkRektorId: string
+    JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS'
+    NomorSk: string
+    NamaFile: string
+    NamaDokumen: string
+}
+
 export type ResponseSkRektorAsessmenType = {
     Nama: string
     Email: string
@@ -142,6 +150,11 @@ export type ResponseSkRektorAsessmenType = {
     NomorSk: string
     SkRektor: boolean
     NamaFile: string
+    DaftarSk?: SkAsessmenRingkasType[]
+    /** Seluruh SK sudah ditandatangani Rektor sehingga siap dipublikasikan. */
+    SiapDipublikasikan?: boolean
+    /** Seluruh SK sudah dipublikasikan ke mahasiswa. */
+    Dipublikasikan?: boolean
     Status: string
 }
 
@@ -157,4 +170,34 @@ export const ResponseSkRektorAsessmenTypeValue = {
     SkRektor: false,
     NamaFile: '',
     Status: '',
+}
+
+export type ResponseSkHasilForWarek = {
+    SkRektorId: string
+    PendaftaranId: string
+    JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS'
+    NamaSk: string
+    NomorSk: string
+    TahunSk: number
+    NamaFile: string
+    NamaDokumen: string
+    Catatan: string
+    KodePendaftar: string
+    NamaMahasiswa: string
+    NamaProgramStudi: string
+}
+
+export const ResponseSkHasilForWarekValue: ResponseSkHasilForWarek = {
+    SkRektorId: '',
+    PendaftaranId: '',
+    JenisSkAsessmen: 'PEROLEHAN_SKS',
+    NamaSk: '',
+    NomorSk: '',
+    TahunSk: 0,
+    NamaFile: '',
+    NamaDokumen: '',
+    Catatan: '',
+    KodePendaftar: '',
+    NamaMahasiswa: '',
+    NamaProgramStudi: '',
 }

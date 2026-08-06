@@ -1,6 +1,6 @@
 import { Pagination } from '@/types/Pagination'
 import {
-    ResponseAsesorMahasiswa,
+    ResponseAsesorTanpaSk,
     ResponseSkRektorAsesor,
     ResponseSkRektorAsesorDetail,
 } from '@/types/PenunjukanAsesor'
@@ -41,19 +41,15 @@ export async function getSkRektorAsesorPaginationAsesorRole(
     return res.json()
 }
 
-export async function getAsesorMahasiswaPagination(
-    page: number,
-    limit: number,
-    search: string
-): Promise<Pagination<ResponseAsesorMahasiswa[]>> {
+export async function getAsesorTanpaSk(
+    search: string = ''
+): Promise<ResponseAsesorTanpaSk[]> {
     const params = new URLSearchParams()
-    params.append('page', String(page))
-    params.append('limit', String(limit))
-    params.append('search', search)
+    if (search) params.append('search', search)
     const res = await fetch(
-        `${BASE_URL}/api/protected/asesor/sk?jenis=get-page-mhs-asesor&${params.toString()}`
+        `${BASE_URL}/api/protected/asesor/sk?jenis=get-asesor-tanpa-sk&${params.toString()}`
     )
-    if (!res.ok) throw new Error('Failed to fetch relasi asesor mahasiswa')
+    if (!res.ok) throw new Error('Failed to fetch asesor tanpa sk')
     return res.json()
 }
 
@@ -69,7 +65,7 @@ export async function getSkRektorAsesorDetailPagination(
     params.append('search', search)
     params.append('sk-asesor-id', SkAsesorId)
     const res = await fetch(
-        `${BASE_URL}/api/protected/asesor/sk?jenis=get-page-mhs-from-sk-asesor-id&${params.toString()}`
+        `${BASE_URL}/api/protected/asesor/sk?jenis=get-asesor-from-sk-id&${params.toString()}`
     )
     if (!res.ok) throw new Error('Failed to fetch sk asesor mahasiswa detail')
     return res.json()
@@ -90,27 +86,30 @@ export async function getFileBlobByNamafile(NamaFile: string): Promise<string> {
 }
 
 export async function setSkRektorAsesor(
-    data: File,
+    data: File | undefined,
     NamaSk: string,
     TahunSk: string,
     NomorSk: string,
-    PendaftaranId: string
+    AsesorIds: string[],
+    SkRektorId: string = ''
 ): Promise<ResponseSkRektorAsesor> {
     const formData = new FormData()
-    formData.append('files', data)
+    if (data) formData.append('files', data)
     formData.append('NamaSk', NamaSk)
     formData.append('TahunSk', TahunSk)
     formData.append('NomorSk', NomorSk)
-    formData.append('PendaftaranId', PendaftaranId)
+    formData.append('AsesorIds', JSON.stringify(AsesorIds))
+    if (SkRektorId) formData.append('SkRektorId', SkRektorId)
 
     const res = await fetch(`${BASE_URL}/api/protected/asesor/sk`, {
         method: 'POST',
         body: formData,
     })
+    const json = await res.json()
     if (!res.ok) {
-        throw new Error('Failed to post sk asesor data')
+        throw new Error(json.message ?? 'Failed to post sk asesor data')
     }
-    return res.json()
+    return json
 }
 
 export async function deleteSkRektorAsesor(SkRektorId: string): Promise<{

@@ -31,7 +31,9 @@ import {
     MoreHorizontal,
     PenIcon,
     Timer,
+    TriangleAlertIcon,
 } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import Swal from '@/lib/swal'
 import { Input } from '../ui/input'
 import {
@@ -53,13 +55,13 @@ import {
     TableRow,
 } from '../ui/table'
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-} from '../ui/sheet'
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from '../ui/dialog'
 import {
     Form,
     FormControl,
@@ -839,7 +841,7 @@ const PenunjukanAsesorComponent = ({
                         </div>
                     </div>
                 )}
-                <SheetManageData
+                <DialogManageData
                     openDialog={openDialog}
                     setOpenDialog={setOpenDialog}
                     onSubmit={onSubmit}
@@ -1283,7 +1285,7 @@ const PenunjukanAsesorComponent = ({
 
 export default PenunjukanAsesorComponent
 
-export function SheetManageData({
+export function DialogManageData({
     openDialog,
     setOpenDialog,
     onSubmit,
@@ -1319,14 +1321,12 @@ export function SheetManageData({
     >
 }) {
     return (
-        <div className="grid grid-cols-2 gap-2">
-            <Sheet open={openDialog} onOpenChange={setOpenDialog}>
-                <SheetContent
-                    side="right"
-                    className="w-screen h-screen max-w-full overflow-scroll"
-                    onEscapeKeyDown={(event) => event.preventDefault()}
-                    onPointerDownOutside={(event) => event.preventDefault()}
-                >
+        <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogContent
+                className="sm:max-w-[720px] max-h-[85vh] overflow-y-auto"
+                onEscapeKeyDown={(event) => event.preventDefault()}
+                onPointerDownOutside={(event) => event.preventDefault()}
+            >
                     {loading ? (
                         <div className="flex justify-center mt-3 flex-col">
                             <Skeleton className="w-full my-2 h-20" />
@@ -1343,17 +1343,17 @@ export function SheetManageData({
                                     (err) => { }
                                 )}
                             >
-                                <SheetHeader>
-                                    <SheetTitle>
+                                <DialogHeader>
+                                    <DialogTitle>
                                         Atur Asesor Mahasiswa
-                                    </SheetTitle>
-                                    <SheetDescription>
+                                    </DialogTitle>
+                                    <DialogDescription>
                                         Manage Data Asesor untuk Mahasiswa{' '}
                                         {form.watch('NamaMahasiswa')}
-                                    </SheetDescription>
-                                </SheetHeader>
-                                <div className="w-full grid grid-cols-1 gap-3 px-4">
-                                    <div className="container mx-auto">
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <div className="grid w-full grid-cols-1 gap-3 py-2">
+                                    <div className="w-full">
                                         <div className="grid grid-cols-1 gap-3">
                                             <FormField
                                                 control={form.control}
@@ -1443,6 +1443,27 @@ export function SheetManageData({
                                                     </FormItem>
                                                 )}
                                             />
+                                            {dataAsesor.length > 0 &&
+                                                dataAsesor.every(
+                                                    (x) => !x.SkDisetujui
+                                                ) && (
+                                                    <Alert>
+                                                        <TriangleAlertIcon className="w-4 h-4" />
+                                                        <AlertTitle>
+                                                            Belum ada asesor ber-SK
+                                                        </AlertTitle>
+                                                        <AlertDescription>
+                                                            Seluruh asesor program studi ini
+                                                            belum memiliki SK Penugasan Asesor
+                                                            yang disetujui Wakil Rektor,
+                                                            sehingga belum dapat ditunjuk.
+                                                            Minta Akademik menerbitkan SK di
+                                                            menu Sk. Rektor, lalu Wakil Rektor
+                                                            menyetujuinya di Persetujuan SK
+                                                            Asesor.
+                                                        </AlertDescription>
+                                                    </Alert>
+                                                )}
                                             <FormField
                                                 control={form.control}
                                                 name="AsesorPertama"
@@ -1465,14 +1486,18 @@ export function SheetManageData({
                                                                 <SelectContent>
                                                                     <SelectGroup>
                                                                         {
+                                                                            // Asesor tanpa SK penugasan yang disetujui tetap
+                                                                            // ditampilkan agar jelas, tetapi belum bisa dipilih.
                                                                             dataAsesor.map(x => (
                                                                                 <SelectItem
                                                                                     key={x.AsesorId}
                                                                                     value={
                                                                                         x.AsesorId
                                                                                     }
+                                                                                    disabled={!x.SkDisetujui}
                                                                                 >
                                                                                     {x.Nama} ({x.BebanKerja} Asess)
+                                                                                    {!x.SkDisetujui && ' — SK belum disetujui'}
                                                                                 </SelectItem>
                                                                             ))
                                                                         }
@@ -1509,14 +1534,18 @@ export function SheetManageData({
                                                                 <SelectContent>
                                                                     <SelectGroup>
                                                                         {
+                                                                            // Asesor tanpa SK penugasan yang disetujui tetap
+                                                                            // ditampilkan agar jelas, tetapi belum bisa dipilih.
                                                                             dataAsesor.map(x => (
                                                                                 <SelectItem
                                                                                     key={x.AsesorId}
                                                                                     value={
                                                                                         x.AsesorId
                                                                                     }
+                                                                                    disabled={!x.SkDisetujui}
                                                                                 >
                                                                                     {x.Nama} ({x.BebanKerja} Asess)
+                                                                                    {!x.SkDisetujui && ' — SK belum disetujui'}
                                                                                 </SelectItem>
                                                                             ))
                                                                         }
@@ -1534,7 +1563,7 @@ export function SheetManageData({
                                         </div>
                                     </div>
                                 </div>
-                                <SheetFooter>
+                                <DialogFooter>
                                     <Button type="submit" className='bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 active:scale-90 transition-all duration-300 ease-in-out cursor-pointer' disabled={loading}>
                                         {loading ? (
                                             <>
@@ -1547,12 +1576,11 @@ export function SheetManageData({
                                             </>
                                         )}
                                     </Button>
-                                </SheetFooter>
+                                </DialogFooter>
                             </form>
                         </Form>
                     )}
-                </SheetContent>
-            </Sheet>
-        </div>
+            </DialogContent>
+        </Dialog>
     )
 }

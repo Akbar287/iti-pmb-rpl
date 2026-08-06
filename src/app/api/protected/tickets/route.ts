@@ -54,7 +54,6 @@ app.get('/', async (c) => {
                         TicketsFileId: true,
                         TicketsId: true,
                         NamaFile: true,
-                        FileData: true,
                         NamaDokumen: true,
                         CreatedAt: true,
                         UpdatedAt: true,

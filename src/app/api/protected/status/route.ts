@@ -32,19 +32,11 @@ app.get('/', async (c) => {
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor'
             ],
-            pspa: [
-                'Pengisian Data Diri',
-                'Asessmen Mandiri',
-                'Penunjukan Asesor',
-                'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor'
-            ],
             aoa: [
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor'
             ],
             ra: [
@@ -52,7 +44,6 @@ app.get('/', async (c) => {
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
             ],
@@ -61,7 +52,6 @@ app.get('/', async (c) => {
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
@@ -71,49 +61,59 @@ app.get('/', async (c) => {
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
                 'Hasil Final Asessmen',
-            ],
-            phfa: [
-                'Pengisian Data Diri',
-                'Asessmen Mandiri',
-                'Penunjukan Asesor',
-                'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
-                'Asessmen Oleh Asesor',
-                'Rekapitulasi Asessmen',
-                'Sanggahan',
-                'Hasil Final Asessmen',
-                'Persetujuan Hasil Final'
             ],
             psa: [
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
                 'Hasil Final Asessmen',
-                'Persetujuan Hasil Final',
                 'Penerbitan SK Asessmen',
+            ],
+            pska: [
+                'Pengisian Data Diri',
+                'Asessmen Mandiri',
+                'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Asessmen Oleh Asesor',
+                'Rekapitulasi Asessmen',
+                'Sanggahan',
+                'Hasil Final Asessmen',
+                'Penerbitan SK Asessmen',
+                'Persetujuan SK Asessmen',
+            ],
+            pts: [
+                'Pengisian Data Diri',
+                'Asessmen Mandiri',
+                'Penunjukan Asesor',
+                'Persetujuan Penunjukan Asesor',
+                'Asessmen Oleh Asesor',
+                'Rekapitulasi Asessmen',
+                'Sanggahan',
+                'Hasil Final Asessmen',
+                'Penerbitan SK Asessmen',
+                'Persetujuan SK Asessmen',
+                'Penandatanganan SK',
             ],
             sha: [
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
                 'Hasil Final Asessmen',
-                'Persetujuan Hasil Final',
                 'Penerbitan SK Asessmen',
+                'Persetujuan SK Asessmen',
+                'Penandatanganan SK',
                 'Sinkronisasi Hasil Asessmen'
             ],
             done: [
@@ -121,13 +121,13 @@ app.get('/', async (c) => {
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
                 'Persetujuan Penunjukan Asesor',
-                'Penerbitan SK Penugasan Asesor',
                 'Asessmen Oleh Asesor',
                 'Rekapitulasi Asessmen',
                 'Sanggahan',
                 'Hasil Final Asessmen',
-                'Persetujuan Hasil Final',
                 'Penerbitan SK Asessmen',
+                'Persetujuan SK Asessmen',
+                'Penandatanganan SK',
                 'Sinkronisasi Hasil Asessmen',
                 'Selesai'
             ]
@@ -142,13 +142,13 @@ app.get('/', async (c) => {
             'Asessmen Mandiri',
             'Penunjukan Asesor',
             'Persetujuan Penunjukan Asesor',
-            'Penerbitan SK Penugasan Asesor',
             'Asessmen Oleh Asesor',
             'Rekapitulasi Asessmen',
             'Sanggahan',
             'Hasil Final Asessmen',
-            'Persetujuan Hasil Final',
             'Penerbitan SK Asessmen',
+            'Persetujuan SK Asessmen',
+            'Penandatanganan SK',
             'Sinkronisasi Hasil Asessmen',
             'Selesai'
         ]
@@ -162,6 +162,20 @@ app.get('/', async (c) => {
                 NamaStatus: true,
             },
         })
+
+        // Status tujuan wajib ada di master. Tanpa penjagaan ini, status lama
+        // dinonaktifkan sementara status baru tidak pernah dibuat sehingga
+        // pendaftaran kehilangan status aktif.
+        if (!statusAll.some((x) => x.NamaStatus === lastStatus)) {
+            return c.json(
+                {
+                    status: 'error',
+                    data: [],
+                    message: `Status "${lastStatus}" belum terdaftar pada master status. Tambahkan lebih dulu di menu Manajemen Data > Status.`,
+                },
+                400
+            )
+        }
 
         const statusNow =
             await prisma.statusMahasiswaAssesmentHistory.findMany({
@@ -197,7 +211,10 @@ app.get('/', async (c) => {
             const nama = s.StatusMahasiswaAssesment.NamaStatus
             const index = orderedStatus.indexOf(nama)
 
-            if (index > maxAllowedIndex) {
+            // index === -1: status yang sudah tidak dipakai lagi pada alur
+            // (mis. "Penerbitan SK Penugasan Asesor" yang kini dipindah ke
+            // pendaftaran asesor) ikut dibersihkan dari riwayat.
+            if (index === -1 || index > maxAllowedIndex) {
                 toDelete.push(s.StatusMahasiswaAssesmentHistoryId)
             } else if (nama !== lastStatus && s.Aktif) {
                 updateToInactive.push(

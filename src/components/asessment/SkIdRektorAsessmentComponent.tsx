@@ -26,12 +26,13 @@ import {
 } from '@/validation/SkAsessmenValidation'
 import {
     getFileSkAsessmenBlobByNamafile,
-    sendWaHasilAsessmenToMahasiswa,
-    setFile,
+    setPublikasiSkAsessmen,
+    terbitkanSkAsessmen,
 } from '@/services/Asessment/SkRektorAsessmenService'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
-import { CloudUploadIcon, PenIcon, TimerIcon } from 'lucide-react'
+import { CheckCircle2Icon, CloudUploadIcon, PenIcon, TimerIcon } from 'lucide-react'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import {
     Form,
     FormControl,
@@ -42,15 +43,47 @@ import {
     FormMessage,
 } from '../ui/form'
 import { Input } from '../ui/input'
-import { setStatusSinkronisasiHasilAsessmen } from '@/services/Status/StatusService'
+import { setStatusPersetujuanSkAsessmen } from '@/services/Status/StatusService'
 import { formatDateToIndonesian } from '@/lib/utils'
 import { Textarea } from '../ui/textarea'
 import { Label } from '../ui/label'
 
+export type JenisSkAsessmenType = 'PEROLEHAN_SKS' | 'TRANSFER_SKS'
+
+export type SkAsessmenItem = {
+    SkRektorId: string
+    JenisSkAsessmen: JenisSkAsessmenType
+    NamaSk: string
+    NomorSk: string
+    TahunSk: string
+    NamaFile: string
+    NamaDokumen: string
+    Disetujui: boolean
+    Ditandatangani: boolean
+    Dipublikasikan?: boolean
+    Catatan: string
+}
+
+const LABEL_JENIS_SK: Record<JenisSkAsessmenType, string> = {
+    PEROLEHAN_SKS: 'SK Perolehan SKS',
+    TRANSFER_SKS: 'SK Transfer SKS',
+}
+
+/**
+ * Kedua jenis SK selalu ditawarkan; Akademik yang memutuskan menerbitkan salah
+ * satu atau keduanya sesuai kebutuhan mahasiswa.
+ */
+export const SEMUA_JENIS_SK: JenisSkAsessmenType[] = [
+    'PEROLEHAN_SKS',
+    'TRANSFER_SKS',
+]
+
 const SkIdRektorAsessmentComponent = ({
     dataServer,
     fileSkRektor,
-    stats
+    stats,
+    jumlahMkPerJenis,
+    skAsessmen,
 }: {
     dataServer: ResponseFinalAsessmenAsesorDetailType
     fileSkRektor: {
@@ -67,6 +100,9 @@ const SkIdRektorAsessmentComponent = ({
         }
     } | null
     stats: { StatusMahasiswaAssesmentId: string; NamaStatus: string }
+    /** Jumlah mata kuliah per jenis — dipakai sebagai keterangan di kartu. */
+    jumlahMkPerJenis: Record<JenisSkAsessmenType, number>
+    skAsessmen: SkAsessmenItem[]
 }) => {
     const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>({
         StatusMahasiswaAssesmentId: stats.StatusMahasiswaAssesmentId, NamaStatus: stats.NamaStatus
@@ -88,6 +124,8 @@ const SkIdRektorAsessmentComponent = ({
         },
     })
     const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
+    const [daftarSk, setDaftarSk] =
+        React.useState<SkAsessmenItem[]>(skAsessmen)
     React.useEffect(() => {
         if (!role) {
             const rolelogin = safeStorage.getItem('pmb.iti.role')
@@ -110,38 +148,53 @@ const SkIdRektorAsessmentComponent = ({
                 .catch((err) => { })
         }
     }, [])
-    const onSubmit = async (data: SkRektorAsessmenSkemaValidasiTipe) => {
-        setLoading(true)
-
-        if (!data.data) {
-            toast('Data SK Asesor Mahasiswa tidak boleh kosong')
-            setLoading(false)
-            return
-        }
-        await setFile(
-            data.data,
-            dataServer.PendaftaranId,
-            data.NamaSk,
-            data.TahunSk,
-            data.NomorSk
-        )
-            .then((res) => {
-                toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                setLoading(false)
+    // Seluruh SK yang diterbitkan diajukan ke Wakil Rektor. Setelah disetujui,
+    // berkas lanjut ke Rektor untuk ditandatangani.
+    const publication = async () => {
+        await setStatusPersetujuanSkAsessmen(dataServer.PendaftaranId)
+            .then(async () => {
+                toast('SK diajukan ke Wakil Rektor untuk disetujui')
+                setStatusServer({
+                    StatusMahasiswaAssesmentId:
+                        statusServer.StatusMahasiswaAssesmentId,
+                    NamaStatus: 'Persetujuan SK Asessmen',
+                })
             })
             .catch((err) => {
-                toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
-                setLoading(false)
+                toast('Gagal mengajukan SK ke Wakil Rektor. Error: ' + err)
             })
     }
-    const publication = async () => {
-        await setStatusSinkronisasiHasilAsessmen(dataServer.PendaftaranId).then(async res => {
-            toast('SK Hasil Asessmen dipublikasikan')
-            await sendWaHasilAsessmenToMahasiswa(dataServer.PendaftaranId)
-            setStatusServer({ StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40l', NamaStatus: 'Sinkronisasi Hasil Asessmen' })
-        }).catch(err => {
-            toast('Gagal mempublikasikan SK Hasil Asessmen. Error: ' + err)
-        })
+
+    // Cukup satu SK terbit agar berkas dapat diajukan ke Wakil Rektor.
+    const adaSkTerbit = daftarSk.length > 0
+
+    const semuaDitandatangani =
+        daftarSk.length > 0 && daftarSk.every((x) => x.Ditandatangani)
+    const sudahDipublikasikan =
+        daftarSk.length > 0 && daftarSk.every((x) => x.Dipublikasikan)
+
+    // SK yang sudah ditandatangani Rektor baru terlihat mahasiswa setelah
+    // dipublikasikan Akademik; bisa ditahan kembali bila perlu.
+    const ubahPublikasi = async (publikasikan: boolean) => {
+        setLoading(true)
+        try {
+            const res = await setPublikasiSkAsessmen(
+                dataServer.PendaftaranId,
+                publikasikan
+            )
+            toast(res.message)
+            setDaftarSk((prev) =>
+                prev.map((x) => ({ ...x, Dipublikasikan: publikasikan }))
+            )
+        } catch (err) {
+            toast(
+                err instanceof Error
+                    ? err.message
+                    : 'Gagal mengubah publikasi SK'
+            )
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -342,166 +395,150 @@ const SkIdRektorAsessmentComponent = ({
                 </div>
             )}
             {role?.Name.match('Akademik') && (
-                <div>
+                <div className="grid grid-cols-1 gap-3">
                     <Card className="w-full">
                         <CardHeader>
-                            <CardTitle>Surat Keputusan</CardTitle>
+                            <CardTitle>Penerbitan SK Hasil Asessmen</CardTitle>
                             <CardDescription>
-                                Surat Keputusan Asessmen Mahasiswa
+                                SK dibuat dari template sesuai jenis mata kuliah
+                                yang diajukan mahasiswa. Terbitkan setiap jenis
+                                yang diperlukan, lalu ajukan ke Wakil Rektor.
                             </CardDescription>
                             <CardAction></CardAction>
                         </CardHeader>
                         <CardContent>
-                            <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)}>
-                                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-1 md:gap-3">
-                                        <FormField
-                                            control={form.control}
-                                            name="TahunSk"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Tahun SK
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Tahun Surat Keterangan
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="NamaSk"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Nama SK
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Nama Surat Keterangan
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="NomorSk"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Nomor SK
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading}
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Nomor Surat Keterangan
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="data"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Unggah SK Disini
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            type="file"
-                                                            accept="application/pdf"
-                                                            onChange={(e) => {
-                                                                const file =
-                                                                    e.target
-                                                                        .files?.[0]
-                                                                if (file) {
-                                                                    field.onChange(
-                                                                        file
-                                                                    )
-                                                                    setPdfPreview(
-                                                                        URL.createObjectURL(
-                                                                            file
-                                                                        )
-                                                                    )
-                                                                }
-                                                            }}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Upload SK (PDF)
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                    {
-                                        dataServer.SkRektor.Catatan !== '' && (
-                                            <div className='grid grid-cols-1 gap-2 pt-3'>
-                                                <Label htmlFor='cat'>Catatan Dari Wakil Rektor</Label>
-                                                <Textarea readOnly id="cat" defaultValue={dataServer.SkRektor.Catatan} />
-                                            </div>
-                                        )
-                                    }
-                                    <div className="flex justify-center w-full my-5 gap-5">
-                                        {
-                                            statusServer.NamaStatus == 'Penerbitan SK Asessmen' || statusServer.NamaStatus == 'Hasil Final Asessmen' ? (
-                                                <Button
-                                                    type="submit"
-                                                    disabled={loading}
-                                                    className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-full lg:w-1/3 md:w-1/2"
-                                                >
-                                                    {
-                                                        loading ? <>
-                                                            <TimerIcon /> Loading
-                                                        </> : <>
-                                                            <PenIcon /> Simpan
-                                                        </>
-                                                    }
-                                                </Button>
-                                            ) : <></>
+                            <div className="grid grid-cols-1 gap-4">
+                                {SEMUA_JENIS_SK.map((jenis) => (
+                                    <KartuPenerbitanSk
+                                        key={jenis}
+                                        jenis={jenis}
+                                        PendaftaranId={dataServer.PendaftaranId}
+                                        jumlahMk={jumlahMkPerJenis[jenis]}
+                                        sk={daftarSk.find(
+                                            (x) => x.JenisSkAsessmen === jenis
+                                        )}
+                                        terkunci={
+                                            statusServer.NamaStatus !==
+                                            'Penerbitan SK Asessmen'
                                         }
-                                        {
-                                            statusServer.NamaStatus == 'Penerbitan SK Asessmen' && (
-                                                <Button
-                                                    type="button"
-                                                    onClick={() => publication()}
-                                                    disabled={loading}
-                                                    className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-full lg:w-1/3 md:w-1/2"
-                                                >
-                                                    {
-                                                        loading ? <>
-                                                            <TimerIcon /> Loading
-                                                        </> : <>
-                                                            <CloudUploadIcon /> Publikasikan
-                                                        </>
-                                                    }
-                                                </Button>
-                                            )
+                                        onTerbit={(item) =>
+                                            setDaftarSk((prev) => [
+                                                ...prev.filter(
+                                                    (x) =>
+                                                        x.JenisSkAsessmen !==
+                                                        item.JenisSkAsessmen
+                                                ),
+                                                item,
+                                            ])
                                         }
+                                    />
+                                ))}
+                            </div>
+
+                            {semuaDitandatangani && (
+                                <div className="p-4 mt-5 border rounded-lg bg-primary/5 border-primary/20">
+                                    <h4 className="font-semibold">
+                                        Publikasi ke Mahasiswa
+                                    </h4>
+                                    <p className="mt-1 text-sm text-muted-foreground">
+                                        Seluruh SK sudah ditandatangani Rektor.
+                                        {sudahDipublikasikan
+                                            ? ' SK sudah dapat diunduh mahasiswa.'
+                                            : ' SK masih ditahan dan belum terlihat mahasiswa.'}
+                                    </p>
+                                    <div className="flex flex-wrap gap-3 mt-3">
+                                        <Button
+                                            type="button"
+                                            disabled={loading}
+                                            variant={
+                                                sudahDipublikasikan
+                                                    ? 'outline'
+                                                    : 'default'
+                                            }
+                                            onClick={() =>
+                                                ubahPublikasi(
+                                                    !sudahDipublikasikan
+                                                )
+                                            }
+                                        >
+                                            {loading ? (
+                                                <React.Fragment>
+                                                    <TimerIcon /> Loading
+                                                </React.Fragment>
+                                            ) : sudahDipublikasikan ? (
+                                                <React.Fragment>
+                                                    <CloudUploadIcon /> Tahan
+                                                    Publikasi
+                                                </React.Fragment>
+                                            ) : (
+                                                <React.Fragment>
+                                                    <CloudUploadIcon />{' '}
+                                                    Publikasikan ke Mahasiswa
+                                                </React.Fragment>
+                                            )}
+                                        </Button>
+                                        <Badge
+                                            className={
+                                                sudahDipublikasikan
+                                                    ? 'bg-green-600'
+                                                    : ''
+                                            }
+                                            variant={
+                                                sudahDipublikasikan
+                                                    ? 'default'
+                                                    : 'secondary'
+                                            }
+                                        >
+                                            {sudahDipublikasikan
+                                                ? 'Dipublikasikan'
+                                                : 'Ditahan'}
+                                        </Badge>
                                     </div>
-                                </form>
-                            </Form>
+                                </div>
+                            )}
+
+                            {statusServer.NamaStatus ===
+                                'Persetujuan SK Asessmen' && (
+                                    <Alert className="mt-5">
+                                        <CheckCircle2Icon className="w-4 h-4" />
+                                        <AlertTitle>
+                                            Menunggu Persetujuan Wakil Rektor
+                                        </AlertTitle>
+                                        <AlertDescription>
+                                            SK sudah diajukan. Bila ada SK yang
+                                            ditolak, berkas kembali ke tahap
+                                            penerbitan untuk direvisi.
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+
+                            <div className="flex justify-center w-full my-5 gap-5">
+                                {statusServer.NamaStatus ===
+                                    'Penerbitan SK Asessmen' && (
+                                        <Button
+                                            type="button"
+                                            onClick={() => publication()}
+                                            disabled={loading || !adaSkTerbit}
+                                            title={
+                                                adaSkTerbit
+                                                    ? ''
+                                                    : 'Terbitkan minimal satu SK lebih dulu'
+                                            }
+                                            className="w-full transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 lg:w-1/3 md:w-1/2"
+                                        >
+                                            {loading ? (
+                                                <React.Fragment>
+                                                    <TimerIcon /> Loading
+                                                </React.Fragment>
+                                            ) : (
+                                                <React.Fragment>
+                                                    <CloudUploadIcon /> Ajukan ke
+                                                    Wakil Rektor
+                                                </React.Fragment>
+                                            )}
+                                        </Button>
+                                    )}
+                            </div>
                         </CardContent>
                     </Card>
                 </div>
@@ -511,3 +548,208 @@ const SkIdRektorAsessmentComponent = ({
 }
 
 export default SkIdRektorAsessmentComponent
+
+export function KartuPenerbitanSk({
+    jenis,
+    PendaftaranId,
+    sk,
+    terkunci,
+    jumlahMk,
+    onTerbit,
+}: {
+    jenis: JenisSkAsessmenType
+    PendaftaranId: string
+    sk?: SkAsessmenItem
+    terkunci: boolean
+    /** Jumlah mata kuliah mahasiswa berjenis ini — sekadar informasi. */
+    jumlahMk?: number
+    onTerbit: (item: SkAsessmenItem) => void
+}) {
+    const [loading, setLoading] = React.useState<boolean>(false)
+    const [preview, setPreview] = React.useState<string | null>(null)
+    const [formSk, setFormSk] = React.useState<{
+        NamaSk: string
+        NomorSk: string
+        TahunSk: string
+    }>({
+        NamaSk: sk?.NamaSk ?? LABEL_JENIS_SK[jenis],
+        NomorSk: sk?.NomorSk ?? '',
+        TahunSk: sk?.TahunSk ?? String(new Date().getFullYear()),
+    })
+
+    const terbitkan = async () => {
+        if (!formSk.NomorSk || !formSk.NamaSk || !formSk.TahunSk) {
+            toast('Nama, Nomor, dan Tahun SK perlu diisi')
+            return
+        }
+        setLoading(true)
+        try {
+            const res = await terbitkanSkAsessmen(
+                PendaftaranId,
+                jenis,
+                formSk.NamaSk,
+                formSk.NomorSk,
+                formSk.TahunSk
+            )
+            onTerbit({
+                SkRektorId: res.data.SkRektorId,
+                JenisSkAsessmen: jenis,
+                NamaSk: res.data.NamaSk,
+                NomorSk: res.data.NomorSk,
+                TahunSk: String(res.data.TahunSk),
+                NamaFile: res.data.NamaFile,
+                NamaDokumen: res.data.NamaDokumen,
+                Disetujui: false,
+                Ditandatangani: false,
+                Catatan: '',
+            })
+            toast(`${LABEL_JENIS_SK[jenis]} berhasil diterbitkan`)
+        } catch (err) {
+            toast(
+                err instanceof Error
+                    ? err.message
+                    : `Gagal menerbitkan ${LABEL_JENIS_SK[jenis]}`
+            )
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const lihatSk = async () => {
+        if (!sk) return
+        try {
+            const url = await getFileSkAsessmenBlobByNamafile(sk.NamaFile)
+            setPreview(url)
+        } catch {
+            toast('Gagal membuka dokumen SK')
+        }
+    }
+
+    const statusBadge = !sk ? (
+        <Badge variant="secondary">Belum diterbitkan</Badge>
+    ) : sk.Ditandatangani ? (
+        <Badge className="bg-green-700">Sudah ditandatangani</Badge>
+    ) : sk.Disetujui ? (
+        <Badge className="bg-green-600">Disetujui</Badge>
+    ) : (
+        <Badge variant="secondary">Menunggu persetujuan</Badge>
+    )
+
+    return (
+        <Card className="border-dashed">
+            <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                    {LABEL_JENIS_SK[jenis]} {statusBadge}
+                </CardTitle>
+                <CardDescription>
+                    Dirender dari template SK Hasil{' '}
+                    {jenis === 'TRANSFER_SKS' ? 'Transfer' : 'Perolehan'} SKS.
+                    {jumlahMk !== undefined && (
+                        <>
+                            {' '}
+                            Mahasiswa ini punya <b>{jumlahMk}</b> mata kuliah
+                            berjenis tersebut
+                            {jumlahMk === 0 &&
+                                ' — SK tetap boleh diterbitkan bila memang diperlukan'}
+                            .
+                        </>
+                    )}
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    <div className="grid gap-2">
+                        <Label htmlFor={`nama-${jenis}`}>Nama SK</Label>
+                        <Input
+                            id={`nama-${jenis}`}
+                            value={formSk.NamaSk}
+                            disabled={loading || terkunci}
+                            onChange={(e) =>
+                                setFormSk({ ...formSk, NamaSk: e.target.value })
+                            }
+                        />
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor={`nomor-${jenis}`}>
+                            Nomor SK sementara
+                        </Label>
+                        <Input
+                            id={`nomor-${jenis}`}
+                            value={formSk.NomorSk}
+                            disabled={loading || terkunci}
+                            onChange={(e) =>
+                                setFormSk({ ...formSk, NomorSk: e.target.value })
+                            }
+                        />
+                        <p className="text-xs text-muted-foreground">
+                            Nomor resmi diterbitkan Sisurat saat Rektor
+                            menandatangani, dan akan menggantikan nomor ini.
+                        </p>
+                    </div>
+                    <div className="grid gap-2">
+                        <Label htmlFor={`tahun-${jenis}`}>Tahun SK</Label>
+                        <Input
+                            id={`tahun-${jenis}`}
+                            value={formSk.TahunSk}
+                            disabled={loading || terkunci}
+                            onChange={(e) =>
+                                setFormSk({ ...formSk, TahunSk: e.target.value })
+                            }
+                        />
+                    </div>
+                </div>
+
+                {sk && sk.Catatan !== '' && (
+                    <div className="grid grid-cols-1 gap-2 pt-3">
+                        <Label htmlFor={`catatan-${jenis}`}>
+                            Catatan dari Wakil Rektor
+                        </Label>
+                        <Textarea
+                            readOnly
+                            id={`catatan-${jenis}`}
+                            value={sk.Catatan}
+                        />
+                    </div>
+                )}
+
+                <div className="flex flex-wrap gap-3 mt-4">
+                    <Button
+                        type="button"
+                        onClick={() => terbitkan()}
+                        disabled={loading || terkunci || sk?.Ditandatangani}
+                    >
+                        {loading ? (
+                            <React.Fragment>
+                                <TimerIcon /> Loading
+                            </React.Fragment>
+                        ) : (
+                            <React.Fragment>
+                                <PenIcon />{' '}
+                                {sk ? 'Terbitkan Ulang' : 'Terbitkan SK'}
+                            </React.Fragment>
+                        )}
+                    </Button>
+                    {sk && (
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => lihatSk()}
+                        >
+                            Lihat Dokumen
+                        </Button>
+                    )}
+                </div>
+
+                {preview && (
+                    <iframe
+                        src={preview}
+                        title={`Preview ${LABEL_JENIS_SK[jenis]}`}
+                        width="100%"
+                        height="500px"
+                        className="mt-4 border rounded"
+                    />
+                )}
+            </CardContent>
+        </Card>
+    )
+}

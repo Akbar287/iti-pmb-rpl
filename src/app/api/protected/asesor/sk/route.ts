@@ -1,10 +1,11 @@
 import { prisma } from '@/lib/prisma'
+import { bacaBerkas, berkasAda, simpanBerkas } from '@/lib/storage'
 import { withApiAuth } from '@/middlewares/api-auth'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import mime from 'mime'
 import { v4 as uuidv4 } from 'uuid'
-import { ResponseAsesorMahasiswa, ResponseSkRektorAsesor, ResponseSkRektorAsesorDetail } from '@/types/PenunjukanAsesor'
+import { ResponseAsesorTanpaSk, ResponseSkRektorAsesor, ResponseSkRektorAsesorDetail } from '@/types/PenunjukanAsesor'
 import { cookies } from 'next/headers'
 
 const app = new Hono().basePath('/api/protected/asesor/sk')
@@ -36,6 +37,9 @@ app.get('/', async (c) => {
                     NomorSk: true,
                     NamaDokumen: true,
                     NamaFile: true,
+                    Disetujui: true,
+                    DisetujuiPada: true,
+                    Catatan: true,
                     _count: {
                         select: {
                             SkRektorAssesor: true,
@@ -72,6 +76,9 @@ app.get('/', async (c) => {
             NamaFile: item.NamaFile,
             NamaDokumen: item.NamaDokumen,
             AsesorRelation: item._count.SkRektorAssesor,
+            Disetujui: item.Disetujui,
+            DisetujuiPada: item.DisetujuiPada,
+            Catatan: item.Catatan ?? '',
         }))
 
         return c.json<{
@@ -127,22 +134,19 @@ app.get('/', async (c) => {
                             SkRektorAssesor: true,
                         },
                     },
+                    Disetujui: true,
+                    DisetujuiPada: true,
+                    Catatan: true,
                     SkRektorAssesor: {
                         select: {
-                            AssesorMahasiswa: {
+                            Asesor: {
                                 select: {
-                                    Asesor: {
-                                        select: {
-                                            AsesorId: true,
-                                            User: {
-                                                select: { Nama: true },
-                                            },
-                                        },
-                                    }
+                                    AsesorId: true,
+                                    User: { select: { Nama: true } },
                                 },
                             },
-                        }
-                    }
+                        },
+                    },
                 },
                 where: {
                     NomorSk: {
@@ -158,12 +162,10 @@ app.get('/', async (c) => {
                         : undefined,
                     SkRektorAssesor: {
                         some: {
-                            AssesorMahasiswa: {
-                                Asesor: {
-                                    UserId: userId
-                                }
-                            }
-                        }
+                            Asesor: {
+                                UserId: userId,
+                            },
+                        },
                     },
                     TipeSkRektorId: tipeAsesor?.TipeSkRektorId,
                 },
@@ -190,6 +192,9 @@ app.get('/', async (c) => {
             NamaFile: item.NamaFile,
             NamaDokumen: item.NamaDokumen,
             AsesorRelation: item._count.SkRektorAssesor,
+            Disetujui: item.Disetujui,
+            DisetujuiPada: item.DisetujuiPada,
+            Catatan: item.Catatan ?? '',
         }))
 
         return c.json<{
@@ -229,14 +234,18 @@ app.get('/', async (c) => {
             const fileRecord = await prisma.skRektor.findFirst({
                 where: { NamaFile: filename },
                 select: {
-                    FileData: true,
+                    PathFile: true,
                     NamaDokumen: true,
                 },
             })
 
-            if (!fileRecord || !fileRecord.FileData) {
+            if (!fileRecord || !(await berkasAda(fileRecord.PathFile))) {
                 return c.json(
-                    { data: [], status: 'error', message: 'file not found in DB' },
+                    {
+                        data: [],
+                        status: 'error',
+                        message: 'file not found in storage',
+                    },
                     { status: 404 }
                 )
             }
@@ -245,7 +254,7 @@ app.get('/', async (c) => {
                 mime.getType(fileRecord.NamaDokumen || filename) ||
                 'application/octet-stream'
 
-            return c.body(fileRecord.FileData, 200, {
+            return c.body(await bacaBerkas(fileRecord.PathFile), 200, {
                 'Content-Type': contentType,
                 'Content-Disposition': `inline; filename="${filename}"`,
             })
@@ -259,7 +268,8 @@ app.get('/', async (c) => {
             )
         }
     }
-    if (jenis === 'get-page-mhs-from-sk-asesor-id') {
+    // Daftar asesor yang tercakup dalam satu SK penugasan.
+    if (jenis === 'get-asesor-from-sk-id') {
         const page = parseInt(c.req.query('page') || '1', 10)
         const limit = parseInt(c.req.query('limit') || '10', 10)
         const SkAsesorId = c.req.query('sk-asesor-id') || ''
@@ -268,94 +278,30 @@ app.get('/', async (c) => {
             prisma.skRektorAssesor.findMany({
                 select: {
                     SkRektorId: true,
-                    AssesorMahasiswa: {
+                    Asesor: {
                         select: {
-                            AssesorMahasiswaId: true,
-                            Pendaftaran: {
-                                select: {
-                                    KodePendaftar: true,
-                                    PendaftaranId: true,
-                                    Mahasiswa: {
-                                        select: {
-                                            User: {
-                                                select: {
-                                                    UserId: true,
-                                                    Nama: true,
-                                                },
-                                            },
-                                            MahasiswaId: true,
-                                        },
-                                    },
-                                    AssesorMahasiswa: {
-                                        select: {
-                                            AssesorMahasiswaId: true,
-                                            Urutan: true,
-                                            Confirmation: true,
-                                            Asesor: {
-                                                select: {
-                                                    AsesorId: true,
-                                                    TipeAsesor: {
-                                                        select: {
-                                                            TipeAsesorId: true,
-                                                            Nama: true,
-                                                        },
-                                                    },
-                                                    User: {
-                                                        select: {
-                                                            UserId: true,
-                                                            Nama: true,
-                                                        },
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                    DaftarUlang: {
-                                        select: {
-                                            ProgramStudi: {
-                                                select: {
-                                                    ProgramStudiId: true,
-                                                    Nama: true,
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                            },
+                            AsesorId: true,
+                            TipeAsesor: { select: { Nama: true } },
+                            User: { select: { Nama: true, Email: true } },
                         },
                     },
                 },
-                where: {
-                    SkRektorId: SkAsesorId,
-                },
+                where: { SkRektorId: SkAsesorId },
                 skip: (page - 1) * limit,
                 take: limit,
-                orderBy: {
-                    AssesorMahasiswa: { Pendaftaran: { KodePendaftar: 'asc' } },
-                },
+                orderBy: { Asesor: { User: { Nama: 'asc' } } },
             }),
-
             prisma.skRektorAssesor.count({
-                where: {
-                    SkRektorId: SkAsesorId,
-                },
+                where: { SkRektorId: SkAsesorId },
             }),
         ])
+
         const responses: ResponseSkRektorAsesorDetail[] = data.map((item) => ({
-            Asesor: item.AssesorMahasiswa.Pendaftaran.AssesorMahasiswa.map(
-                (asesor) => ({
-                    AssesorMahasiswaId: asesor.AssesorMahasiswaId,
-                    AsesorId: asesor.Asesor.AsesorId,
-                    NamaTipeAsesor: asesor.Asesor.TipeAsesor.Nama,
-                    NamaAsesor: asesor.Asesor.User.Nama,
-                    Urutan: asesor.Urutan,
-                    Confirmation: asesor.Confirmation,
-                })
-            ),
             SkRektorId: item.SkRektorId,
-            AsesorMahasiswaId: item.AssesorMahasiswa.AssesorMahasiswaId,
-            PendaftaranId: item.AssesorMahasiswa.Pendaftaran.PendaftaranId,
-            KodePendaftar: item.AssesorMahasiswa.Pendaftaran.KodePendaftar,
+            AsesorId: item.Asesor.AsesorId,
+            NamaAsesor: item.Asesor.User.Nama,
+            NamaTipeAsesor: item.Asesor.TipeAsesor.Nama,
+            Email: item.Asesor.User.Email,
         }))
 
         return c.json<{
@@ -382,80 +328,38 @@ app.get('/', async (c) => {
             hasPrevious: page > 1,
         })
     }
-    if (jenis === 'get-page-mhs-asesor') {
-        const page = parseInt(c.req.query('page') || '1', 10)
-        const limit = parseInt(c.req.query('limit') || '10', 10)
+    // Asesor yang belum tercakup SK penugasan mana pun — kandidat penerbitan SK.
+    if (jenis === 'get-asesor-tanpa-sk') {
         const search = c.req.query('search') || ''
 
-        const [data, total] = await Promise.all([
-            await prisma.assesorMahasiswa.findMany({
-                select: {
-                    AssesorMahasiswaId: true,
-                    Asesor: {
-                        select: {
-                            AsesorId: true,
-                            User: {
-                                select: { Nama: true },
-                            },
+        const data = await prisma.asesor.findMany({
+            select: {
+                AsesorId: true,
+                TipeAsesor: { select: { Nama: true } },
+                User: { select: { Nama: true, Email: true } },
+            },
+            where: {
+                DeletedAt: null,
+                SkRektorAssesor: { none: {} },
+                ...(search
+                    ? {
+                        User: {
+                            Nama: { contains: search, mode: 'insensitive' },
                         },
-                    },
-                    Pendaftaran: {
-                        select: {
-                            PendaftaranId: true,
-                            Mahasiswa: {
-                                select: { User: { select: { Nama: true } } },
-                            },
-                        },
-                    },
-                },
-                where: {
-                    SkRektorAssesor: {
-                        none: {},
-                    },
-                },
-                skip: (page - 1) * limit,
-                take: limit,
-                orderBy: { CreatedAt: 'desc' },
-            }),
-            await prisma.assesorMahasiswa.count({
-                where: {
-                    SkRektorAssesor: {
-                        none: {},
-                    },
-                },
-            }),
-        ])
-
-        const response: ResponseAsesorMahasiswa[] = data.map((x) => ({
-            AIM: x.AssesorMahasiswaId,
-            AI: x.Asesor.AsesorId,
-            PI: x.Pendaftaran.PendaftaranId,
-            NA: x.Asesor.User.Nama,
-            NM: x.Pendaftaran.Mahasiswa.User.Nama,
-        }))
-        return c.json<{
-            data: ResponseAsesorMahasiswa[]
-            page: number
-            limit: number
-            totalElement: number
-            totalPage: number
-            isFirst: boolean
-            isLast: boolean
-            hasNext: boolean
-            hasPrevious: boolean
-        }>({
-            page: page,
-            limit: limit,
-            data: response,
-            totalElement: total,
-            totalPage: Math.ceil(total / limit),
-            isFirst: page === 1,
-            isLast:
-                page === Math.ceil(total / limit) ||
-                Math.ceil(total / limit) === 0,
-            hasNext: page < Math.ceil(total / limit),
-            hasPrevious: page > 1,
+                    }
+                    : {}),
+            },
+            orderBy: { User: { Nama: 'asc' } },
         })
+
+        const response: ResponseAsesorTanpaSk[] = data.map((x) => ({
+            AsesorId: x.AsesorId,
+            NamaAsesor: x.User.Nama,
+            NamaTipeAsesor: x.TipeAsesor.Nama,
+            Email: x.User.Email,
+        }))
+
+        return c.json<ResponseAsesorTanpaSk[]>(response, 200)
     }
     return c.json({ error: 'Invalid query parameter' }, 400)
 })
@@ -466,8 +370,20 @@ app.post('/', async (c) => {
     const file = body.files
     const NamaSk: string = body.NamaSk as string
     const TahunSk: string = body.TahunSk as string
-    const NomorSk = body.NomorSk
-    const PendaftaranId: string = body.PendaftaranId as string
+    const NomorSk: string = body.NomorSk as string
+    const SkRektorId: string = (body.SkRektorId as string) ?? ''
+    // Daftar asesor yang dicakup SK, dikirim sebagai JSON array of AsesorId.
+    const AsesorIdsRaw: string = (body.AsesorIds as string) ?? '[]'
+
+    let AsesorIds: string[] = []
+    try {
+        AsesorIds = JSON.parse(AsesorIdsRaw)
+    } catch {
+        return c.json(
+            { status: 'error', message: 'Daftar asesor tidak valid', data: [] },
+            { status: 400 }
+        )
+    }
 
     const tipeAsesor = await prisma.tipeSkRektor.findFirst({
         where: { Nama: 'Asesor' },
@@ -478,23 +394,9 @@ app.post('/', async (c) => {
         return c.json({ error: 'Tipe Asesor not found' }, 404)
     }
 
-    if (!file || !(file instanceof File)) {
-        return c.json(
-            { status: 'error', message: 'File is required', data: [] },
-            { status: 400 }
-        )
-    }
-
     if (!NomorSk) {
         return c.json(
             { status: 'error', message: 'Nomor SK Perlu diisi', data: [] },
-            { status: 400 }
-        )
-    }
-
-    if (!PendaftaranId) {
-        return c.json(
-            { status: 'error', message: 'PendaftaranId Perlu diisi', data: [] },
             { status: 400 }
         )
     }
@@ -513,185 +415,210 @@ app.post('/', async (c) => {
         )
     }
 
-    const MAX_SIZE_MB = 10
-    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+    if (AsesorIds.length === 0) {
         return c.json(
             {
                 status: 'error',
-                message: 'Ukuran file melebihi 10MB',
+                message: 'Pilih minimal satu asesor yang dicakup SK ini',
                 data: [],
             },
             { status: 400 }
         )
     }
 
-    const allowedMimeTypes = [
-        'application/pdf',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    ]
-    const allowedExtensions = ['pdf', 'doc', 'docx']
+    const skLama = SkRektorId
+        ? await prisma.skRektor.findFirst({
+            where: { SkRektorId: SkRektorId },
+            select: { SkRektorId: true, Disetujui: true, NamaFile: true },
+        })
+        : null
 
-    const fileExt = mime.getExtension(file.type) || ''
-    if (
-        !allowedMimeTypes.includes(file.type) ||
-        !allowedExtensions.includes(fileExt)
-    ) {
+    if (SkRektorId && !skLama) {
+        return c.json(
+            { status: 'error', message: 'SK tidak ditemukan', data: [] },
+            { status: 404 }
+        )
+    }
+
+    // SK yang sudah disetujui Wakil Rektor dikunci.
+    if (skLama?.Disetujui) {
         return c.json(
             {
                 status: 'error',
                 message:
-                    'Format file tidak valid. Hanya PDF dan Word (doc/docx) yang diperbolehkan.',
+                    'SK ini sudah disetujui Wakil Rektor dan tidak dapat diubah lagi',
+                data: [],
+            },
+            { status: 409 }
+        )
+    }
+
+    // Berkas wajib pada penerbitan SK baru; pada perubahan boleh dikosongkan
+    // bila hanya mengganti data atau daftar asesor.
+    if (!skLama && (!file || !(file instanceof File))) {
+        return c.json(
+            { status: 'error', message: 'File is required', data: [] },
+            { status: 400 }
+        )
+    }
+
+    let filename = skLama?.NamaFile ?? ''
+    let originalFileName = ''
+    let buffer: Buffer<ArrayBuffer> | null = null
+
+    if (file && file instanceof File) {
+        const MAX_SIZE_MB = 10
+        if (file.size > MAX_SIZE_MB * 1024 * 1024) {
+            return c.json(
+                {
+                    status: 'error',
+                    message: 'Ukuran file melebihi 10MB',
+                    data: [],
+                },
+                { status: 400 }
+            )
+        }
+
+        const allowedMimeTypes = [
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ]
+        const allowedExtensions = ['pdf', 'doc', 'docx']
+
+        const fileExt = mime.getExtension(file.type) || ''
+        if (
+            !allowedMimeTypes.includes(file.type) ||
+            !allowedExtensions.includes(fileExt)
+        ) {
+            return c.json(
+                {
+                    status: 'error',
+                    message:
+                        'Format file tidak valid. Hanya PDF dan Word (doc/docx) yang diperbolehkan.',
+                    data: [],
+                },
+                { status: 400 }
+            )
+        }
+
+        buffer = Buffer.from(new Uint8Array(await file.arrayBuffer()))
+        originalFileName = file.name
+        filename = `${uuidv4()}.${fileExt}`
+    }
+
+    // SK penugasan asesor berlaku untuk banyak asesor sehingga tidak dimiliki
+    // satu pengguna — disimpan pada folder bersama <storage>/sk/.
+    const pathFile = buffer
+        ? await simpanBerkas(null, 'sk', filename, buffer)
+        : null
+
+    const asesor = await prisma.asesor.findMany({
+        where: { AsesorId: { in: AsesorIds } },
+        select: {
+            AsesorId: true,
+            User: { select: { Nama: true, NomorWa: true } },
+        },
+    })
+
+    if (asesor.length !== AsesorIds.length) {
+        return c.json(
+            {
+                status: 'error',
+                message: 'Ada asesor yang tidak ditemukan',
                 data: [],
             },
             { status: 400 }
         )
     }
 
-    const asessorMahasiswa = await prisma.assesorMahasiswa.findMany({
-        where: { PendaftaranId },
-        select: {
-            AssesorMahasiswaId: true,
-            Asesor: {
-                select: {
-                    User: {
-                        select: {
-                            Nama: true,
-                            NomorWa: true
+    const sk = await prisma.$transaction(async (tx) => {
+        const saved = skLama
+            ? await tx.skRektor.update({
+                where: { SkRektorId: skLama.SkRektorId },
+                data: {
+                    TipeSkRektorId: tipeAsesor.TipeSkRektorId,
+                    NamaSk: NamaSk,
+                    TahunSk: parseInt(TahunSk, 10),
+                    NomorSk: NomorSk,
+                    ...(pathFile
+                        ? {
+                            NamaFile: filename,
+                            PathFile: pathFile,
+                            NamaDokumen: originalFileName,
                         }
-                    }
-                }
-            },
-            Pendaftaran: {
-                select: {
-                    Mahasiswa: {
-                        select: {
-                            User: {
-                                select: {
-                                    Nama: true
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            PendaftaranId: true,
-            Urutan: true,
-            Confirmation: true,
-            SkRektorAssesor: {
-                select: {
-                    SkRektor: {
-                        select: {
-                            SkRektorId: true,
-                        },
-                    },
+                        : {}),
+                    UpdatedAt: new Date(),
                 },
-            },
-        },
-    });
+            })
+            : await tx.skRektor.create({
+                data: {
+                    TipeSkRektorId: tipeAsesor.TipeSkRektorId,
+                    NamaSk: NamaSk,
+                    TahunSk: parseInt(TahunSk, 10),
+                    NomorSk: NomorSk,
+                    NamaFile: filename,
+                    PathFile: pathFile as string,
+                    NamaDokumen: originalFileName,
+                    Disetujui: false,
+                    CreatedAt: new Date(),
+                    UpdatedAt: new Date(),
+                },
+            })
 
-    if (asessorMahasiswa.length === 0) {
-        return c.json(
-            {
-                status: "error",
-                message: "Asesor Mahasiswa belum ada relasi",
-                data: [],
-            },
-            { status: 400 },
-        );
-    }
+        await tx.skRektorAssesor.deleteMany({
+            where: { SkRektorId: saved.SkRektorId },
+        })
+        await tx.skRektorAssesor.createMany({
+            data: AsesorIds.map((AsesorId) => ({
+                SkRektorId: saved.SkRektorId,
+                AsesorId: AsesorId,
+            })),
+        })
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const originalFileName = file.name;
-    const filename = `${uuidv4()}.${fileExt}`;
+        return saved
+    })
 
-    // Kumpulkan semua SkRektorId dari relasi
-    const skRektorIds = asessorMahasiswa.flatMap((x) =>
-        x.SkRektorAssesor.map((y) => y.SkRektor.SkRektorId),
-    );
-
-    // Unikkan (jaga-jaga kalau duplicate)
-    const uniqueSkRektorIds = [...new Set(skRektorIds)];
-
-    if (uniqueSkRektorIds.length === 0) {
-        return c.json(
-            {
-                status: "error",
-                message: "Belum ada SK Rektor yang terkait dengan asesor mahasiswa ini",
-                data: [],
-            },
-            { status: 400 },
-        );
-    }
-
-    if (uniqueSkRektorIds.length > 1) {
-        console.warn(
-            "Peringatan: ditemukan lebih dari satu SkRektorId untuk satu Pendaftaran",
-            uniqueSkRektorIds,
-        );
-    }
-
-    const skRektorId = uniqueSkRektorIds[0];
-
-    const updatedSk = await prisma.skRektor.update({
-        where: {
-            SkRektorId: skRektorId,
-        },
-        data: {
-            TipeSkRektorId: tipeAsesor.TipeSkRektorId,
-            NamaSk: NamaSk as string,
-            TahunSk: parseInt(TahunSk as string, 10),
-            NomorSk: NomorSk as string,
-            NamaFile: filename,
-            FileData: buffer,
-            NamaDokumen: originalFileName,
-            UpdatedAt: new Date(),
-        },
-        select: {
-            SkRektorId: true,
-            NamaSk: true,
-            TahunSk: true,
-            NomorSk: true,
-            NamaFile: true,
-            NamaDokumen: true,
-            CreatedAt: true,
-            UpdatedAt: true,
-        },
-    });
-
-    // Wa ke Asessor
-    const cookieHeader = cookies().toString();
+    // Kabari asesor bahwa SK penugasan mereka sudah diterbitkan dan sedang
+    // menunggu persetujuan Wakil Rektor.
+    const cookieHeader = (await cookies()).toString()
 
     await Promise.all(
-        asessorMahasiswa.map(async (x) => {
-            const target = x.Asesor.User.NomorWa ?? x.Asesor.User.NomorWa ?? "";
-            if (!target) return;
+        asesor.map(async (x) => {
+            const target = x.User.NomorWa ?? ''
+            if (!target) return
 
             const params = new URLSearchParams({
                 target: String(target),
-                message: `Halo, ${x.Asesor.User.Nama}. Anda sudah ditunjuk untuk melakukan asessmen terhadap mahasiswa yang bernama ${x.Pendaftaran.Mahasiswa.User.Nama}. Selain itu, SK Rektor untuk asess mahasiswa tersebut sudah terbit dengan Nomor SK ${updatedSk.NomorSk} dengan Nama SK ${updatedSk.NamaSk}. Anda bisa unduh melalui Sistem Informasi RPL Terpadu ITI. Sekian, Terima Kasih.`,
-                jenis: "sendWaText",
-            });
+                message: `Halo, ${x.User.Nama}. SK Penugasan Asesor atas nama Anda sudah diterbitkan dengan Nomor SK ${sk.NomorSk} (${sk.NamaSk}) dan sedang menunggu persetujuan Wakil Rektor. Anda dapat memantau melalui Sistem Informasi RPL Terpadu ITI. Terima Kasih.`,
+                jenis: 'sendWaText',
+            })
 
-            await fetch(`${BASE_URL}/api/protected/whatsapp?${params.toString()}`, {
-                method: "POST",
-                headers: {
-                    cookie: cookieHeader,
-                    "Content-Type": "application/json",
-                },
-            });
-        }),
-    );
-
+            await fetch(
+                `${BASE_URL}/api/protected/whatsapp?${params.toString()}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        cookie: cookieHeader,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            )
+        })
+    )
 
     return c.json<ResponseSkRektorAsesor>({
-        SkRektorId: updatedSk.SkRektorId,
-        NamaSk: updatedSk.NamaSk,
-        TahunSk: updatedSk.TahunSk,
-        NomorSk: updatedSk.NomorSk,
-        NamaFile: updatedSk.NamaFile,
-        NamaDokumen: updatedSk.NamaDokumen,
-    });
+        SkRektorId: sk.SkRektorId,
+        NamaSk: sk.NamaSk,
+        TahunSk: sk.TahunSk,
+        NomorSk: sk.NomorSk,
+        NamaFile: sk.NamaFile,
+        NamaDokumen: sk.NamaDokumen,
+        AsesorRelation: AsesorIds.length,
+        Disetujui: sk.Disetujui,
+        DisetujuiPada: sk.DisetujuiPada,
+        Catatan: sk.Catatan ?? '',
+    })
 })
 
 app.delete('/', async (c) => {

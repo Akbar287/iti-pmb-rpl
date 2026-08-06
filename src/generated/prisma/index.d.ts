@@ -518,6 +518,14 @@ export const SistemKuliah: {
 
 export type SistemKuliah = (typeof SistemKuliah)[keyof typeof SistemKuliah]
 
+
+export const JenisSkAsessmen: {
+  PEROLEHAN_SKS: 'PEROLEHAN_SKS',
+  TRANSFER_SKS: 'TRANSFER_SKS'
+};
+
+export type JenisSkAsessmen = (typeof JenisSkAsessmen)[keyof typeof JenisSkAsessmen]
+
 }
 
 export type ProfiensiPengetahuan = $Enums.ProfiensiPengetahuan
@@ -563,6 +571,10 @@ export const StatusPekerjaan: typeof $Enums.StatusPekerjaan
 export type SistemKuliah = $Enums.SistemKuliah
 
 export const SistemKuliah: typeof $Enums.SistemKuliah
+
+export type JenisSkAsessmen = $Enums.JenisSkAsessmen
+
+export const JenisSkAsessmen: typeof $Enums.JenisSkAsessmen
 
 /**
  * ##  Prisma Client ʲˢ
@@ -8086,6 +8098,7 @@ export namespace Prisma {
     AsesorPraktisi: number
     AssesorMahasiswa: number
     AsesorProgramStudi: number
+    SkRektorAssesor: number
   }
 
   export type AsesorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8093,6 +8106,7 @@ export namespace Prisma {
     AsesorPraktisi?: boolean | AsesorCountOutputTypeCountAsesorPraktisiArgs
     AssesorMahasiswa?: boolean | AsesorCountOutputTypeCountAssesorMahasiswaArgs
     AsesorProgramStudi?: boolean | AsesorCountOutputTypeCountAsesorProgramStudiArgs
+    SkRektorAssesor?: boolean | AsesorCountOutputTypeCountSkRektorAssesorArgs
   }
 
   // Custom InputTypes
@@ -8134,6 +8148,13 @@ export namespace Prisma {
     where?: AsesorProgramStudiWhereInput
   }
 
+  /**
+   * AsesorCountOutputType without action
+   */
+  export type AsesorCountOutputTypeCountSkRektorAssesorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkRektorAssesorWhereInput
+  }
+
 
   /**
    * Count Type AsesorAkademikCountOutputType
@@ -8163,37 +8184,6 @@ export namespace Prisma {
    */
   export type AsesorAkademikCountOutputTypeCountAsesorAkademikKeanggotaanAsosiasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AsesorAkademikKeanggotaanAsosiasiWhereInput
-  }
-
-
-  /**
-   * Count Type AssesorMahasiswaCountOutputType
-   */
-
-  export type AssesorMahasiswaCountOutputType = {
-    SkRektorAssesor: number
-  }
-
-  export type AssesorMahasiswaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    SkRektorAssesor?: boolean | AssesorMahasiswaCountOutputTypeCountSkRektorAssesorArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AssesorMahasiswaCountOutputType without action
-   */
-  export type AssesorMahasiswaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AssesorMahasiswaCountOutputType
-     */
-    select?: AssesorMahasiswaCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * AssesorMahasiswaCountOutputType without action
-   */
-  export type AssesorMahasiswaCountOutputTypeCountSkRektorAssesorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SkRektorAssesorWhereInput
   }
 
 
@@ -10899,6 +10889,7 @@ export namespace Prisma {
     AsesorPraktisi?: boolean | Asesor$AsesorPraktisiArgs<ExtArgs>
     AssesorMahasiswa?: boolean | Asesor$AssesorMahasiswaArgs<ExtArgs>
     AsesorProgramStudi?: boolean | Asesor$AsesorProgramStudiArgs<ExtArgs>
+    SkRektorAssesor?: boolean | Asesor$SkRektorAssesorArgs<ExtArgs>
     _count?: boolean | AsesorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["asesor"]>
 
@@ -10941,6 +10932,7 @@ export namespace Prisma {
     AsesorPraktisi?: boolean | Asesor$AsesorPraktisiArgs<ExtArgs>
     AssesorMahasiswa?: boolean | Asesor$AssesorMahasiswaArgs<ExtArgs>
     AsesorProgramStudi?: boolean | Asesor$AsesorProgramStudiArgs<ExtArgs>
+    SkRektorAssesor?: boolean | Asesor$SkRektorAssesorArgs<ExtArgs>
     _count?: boolean | AsesorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AsesorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10961,6 +10953,7 @@ export namespace Prisma {
       AsesorPraktisi: Prisma.$AsesorPraktisiPayload<ExtArgs>[]
       AssesorMahasiswa: Prisma.$AssesorMahasiswaPayload<ExtArgs>[]
       AsesorProgramStudi: Prisma.$AsesorProgramStudiPayload<ExtArgs>[]
+      SkRektorAssesor: Prisma.$SkRektorAssesorPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       AsesorId: string
@@ -11369,6 +11362,7 @@ export namespace Prisma {
     AsesorPraktisi<T extends Asesor$AsesorPraktisiArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$AsesorPraktisiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorPraktisiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     AssesorMahasiswa<T extends Asesor$AssesorMahasiswaArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$AssesorMahasiswaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssesorMahasiswaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     AsesorProgramStudi<T extends Asesor$AsesorProgramStudiArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$AsesorProgramStudiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AsesorProgramStudiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    SkRektorAssesor<T extends Asesor$SkRektorAssesorArgs<ExtArgs> = {}>(args?: Subset<T, Asesor$SkRektorAssesorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkRektorAssesorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11898,6 +11892,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AsesorProgramStudiScalarFieldEnum | AsesorProgramStudiScalarFieldEnum[]
+  }
+
+  /**
+   * Asesor.SkRektorAssesor
+   */
+  export type Asesor$SkRektorAssesorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkRektorAssesor
+     */
+    select?: SkRektorAssesorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkRektorAssesor
+     */
+    omit?: SkRektorAssesorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkRektorAssesorInclude<ExtArgs> | null
+    where?: SkRektorAssesorWhereInput
+    orderBy?: SkRektorAssesorOrderByWithRelationInput | SkRektorAssesorOrderByWithRelationInput[]
+    cursor?: SkRektorAssesorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkRektorAssesorScalarFieldEnum | SkRektorAssesorScalarFieldEnum[]
   }
 
   /**
@@ -15536,8 +15554,6 @@ export namespace Prisma {
     UpdatedAt?: boolean
     Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    SkRektorAssesor?: boolean | AssesorMahasiswa$SkRektorAssesorArgs<ExtArgs>
-    _count?: boolean | AssesorMahasiswaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["assesorMahasiswa"]>
 
   export type AssesorMahasiswaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15578,8 +15594,6 @@ export namespace Prisma {
   export type AssesorMahasiswaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
-    SkRektorAssesor?: boolean | AssesorMahasiswa$SkRektorAssesorArgs<ExtArgs>
-    _count?: boolean | AssesorMahasiswaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AssesorMahasiswaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
@@ -15595,7 +15609,6 @@ export namespace Prisma {
     objects: {
       Asesor: Prisma.$AsesorPayload<ExtArgs>
       Pendaftaran: Prisma.$PendaftaranPayload<ExtArgs>
-      SkRektorAssesor: Prisma.$SkRektorAssesorPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       AssesorMahasiswaId: string
@@ -16001,7 +16014,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Asesor<T extends AsesorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AsesorDefaultArgs<ExtArgs>>): Prisma__AsesorClient<$Result.GetResult<Prisma.$AsesorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Pendaftaran<T extends PendaftaranDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PendaftaranDefaultArgs<ExtArgs>>): Prisma__PendaftaranClient<$Result.GetResult<Prisma.$PendaftaranPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    SkRektorAssesor<T extends AssesorMahasiswa$SkRektorAssesorArgs<ExtArgs> = {}>(args?: Subset<T, AssesorMahasiswa$SkRektorAssesorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkRektorAssesorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16439,30 +16451,6 @@ export namespace Prisma {
   }
 
   /**
-   * AssesorMahasiswa.SkRektorAssesor
-   */
-  export type AssesorMahasiswa$SkRektorAssesorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SkRektorAssesor
-     */
-    select?: SkRektorAssesorSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SkRektorAssesor
-     */
-    omit?: SkRektorAssesorOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SkRektorAssesorInclude<ExtArgs> | null
-    where?: SkRektorAssesorWhereInput
-    orderBy?: SkRektorAssesorOrderByWithRelationInput | SkRektorAssesorOrderByWithRelationInput[]
-    cursor?: SkRektorAssesorWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SkRektorAssesorScalarFieldEnum | SkRektorAssesorScalarFieldEnum[]
-  }
-
-  /**
    * AssesorMahasiswa without action
    */
   export type AssesorMahasiswaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16496,7 +16484,7 @@ export namespace Prisma {
     PendaftaranId: string | null
     JenisDokumenId: string | null
     NamaFile: string | null
-    FileData: Bytes | null
+    PathFile: string | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -16507,7 +16495,7 @@ export namespace Prisma {
     PendaftaranId: string | null
     JenisDokumenId: string | null
     NamaFile: string | null
-    FileData: Bytes | null
+    PathFile: string | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -16518,7 +16506,7 @@ export namespace Prisma {
     PendaftaranId: number
     JenisDokumenId: number
     NamaFile: number
-    FileData: number
+    PathFile: number
     NamaDokumen: number
     CreatedAt: number
     UpdatedAt: number
@@ -16531,7 +16519,7 @@ export namespace Prisma {
     PendaftaranId?: true
     JenisDokumenId?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -16542,7 +16530,7 @@ export namespace Prisma {
     PendaftaranId?: true
     JenisDokumenId?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -16553,7 +16541,7 @@ export namespace Prisma {
     PendaftaranId?: true
     JenisDokumenId?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -16637,7 +16625,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -16665,7 +16653,7 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -16681,7 +16669,7 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -16694,7 +16682,7 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -16707,13 +16695,13 @@ export namespace Prisma {
     PendaftaranId?: boolean
     JenisDokumenId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type BuktiFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"BuktiFormId" | "PendaftaranId" | "JenisDokumenId" | "NamaFile" | "FileData" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["buktiForm"]>
+  export type BuktiFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"BuktiFormId" | "PendaftaranId" | "JenisDokumenId" | "NamaFile" | "PathFile" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["buktiForm"]>
   export type BuktiFormInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
     JenisDokumen?: boolean | JenisDokumenDefaultArgs<ExtArgs>
@@ -16743,7 +16731,7 @@ export namespace Prisma {
       PendaftaranId: string
       JenisDokumenId: string
       NamaFile: string
-      FileData: Prisma.Bytes
+      PathFile: string
       NamaDokumen: string
       CreatedAt: Date | null
       UpdatedAt: Date | null
@@ -17178,7 +17166,7 @@ export namespace Prisma {
     readonly PendaftaranId: FieldRef<"BuktiForm", 'String'>
     readonly JenisDokumenId: FieldRef<"BuktiForm", 'String'>
     readonly NamaFile: FieldRef<"BuktiForm", 'String'>
-    readonly FileData: FieldRef<"BuktiForm", 'Bytes'>
+    readonly PathFile: FieldRef<"BuktiForm", 'String'>
     readonly NamaDokumen: FieldRef<"BuktiForm", 'String'>
     readonly CreatedAt: FieldRef<"BuktiForm", 'DateTime'>
     readonly UpdatedAt: FieldRef<"BuktiForm", 'DateTime'>
@@ -62477,10 +62465,14 @@ export namespace Prisma {
 
   export type SkRektorAvgAggregateOutputType = {
     TahunSk: number | null
+    QrDocumentId: number | null
+    QrOfficialId: number | null
   }
 
   export type SkRektorSumAggregateOutputType = {
     TahunSk: number | null
+    QrDocumentId: number | null
+    QrOfficialId: number | null
   }
 
   export type SkRektorMinAggregateOutputType = {
@@ -62490,9 +62482,26 @@ export namespace Prisma {
     TahunSk: number | null
     NomorSk: string | null
     NamaFile: string | null
-    FileData: Bytes | null
+    PathFile: string | null
     NamaDokumen: string | null
     Catatan: string | null
+    JenisSkAsessmen: $Enums.JenisSkAsessmen | null
+    Dipublikasikan: boolean | null
+    DipublikasikanPada: Date | null
+    NomorSuratSisurat: string | null
+    NomorSuratPada: Date | null
+    Disetujui: boolean | null
+    DisetujuiPada: Date | null
+    DisetujuiOleh: string | null
+    Ditandatangani: boolean | null
+    TandaTanganPada: Date | null
+    TandaTanganOleh: string | null
+    QrToken: string | null
+    QrVerifyUrl: string | null
+    QrDocumentId: number | null
+    QrOfficialId: number | null
+    QrOfficialNama: string | null
+    QrOfficialJabatan: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -62504,9 +62513,26 @@ export namespace Prisma {
     TahunSk: number | null
     NomorSk: string | null
     NamaFile: string | null
-    FileData: Bytes | null
+    PathFile: string | null
     NamaDokumen: string | null
     Catatan: string | null
+    JenisSkAsessmen: $Enums.JenisSkAsessmen | null
+    Dipublikasikan: boolean | null
+    DipublikasikanPada: Date | null
+    NomorSuratSisurat: string | null
+    NomorSuratPada: Date | null
+    Disetujui: boolean | null
+    DisetujuiPada: Date | null
+    DisetujuiOleh: string | null
+    Ditandatangani: boolean | null
+    TandaTanganPada: Date | null
+    TandaTanganOleh: string | null
+    QrToken: string | null
+    QrVerifyUrl: string | null
+    QrDocumentId: number | null
+    QrOfficialId: number | null
+    QrOfficialNama: string | null
+    QrOfficialJabatan: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -62518,9 +62544,26 @@ export namespace Prisma {
     TahunSk: number
     NomorSk: number
     NamaFile: number
-    FileData: number
+    PathFile: number
     NamaDokumen: number
     Catatan: number
+    JenisSkAsessmen: number
+    Dipublikasikan: number
+    DipublikasikanPada: number
+    NomorSuratSisurat: number
+    NomorSuratPada: number
+    Disetujui: number
+    DisetujuiPada: number
+    DisetujuiOleh: number
+    Ditandatangani: number
+    TandaTanganPada: number
+    TandaTanganOleh: number
+    QrToken: number
+    QrVerifyUrl: number
+    QrDocumentId: number
+    QrOfficialId: number
+    QrOfficialNama: number
+    QrOfficialJabatan: number
     CreatedAt: number
     UpdatedAt: number
     _all: number
@@ -62529,10 +62572,14 @@ export namespace Prisma {
 
   export type SkRektorAvgAggregateInputType = {
     TahunSk?: true
+    QrDocumentId?: true
+    QrOfficialId?: true
   }
 
   export type SkRektorSumAggregateInputType = {
     TahunSk?: true
+    QrDocumentId?: true
+    QrOfficialId?: true
   }
 
   export type SkRektorMinAggregateInputType = {
@@ -62542,9 +62589,26 @@ export namespace Prisma {
     TahunSk?: true
     NomorSk?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     Catatan?: true
+    JenisSkAsessmen?: true
+    Dipublikasikan?: true
+    DipublikasikanPada?: true
+    NomorSuratSisurat?: true
+    NomorSuratPada?: true
+    Disetujui?: true
+    DisetujuiPada?: true
+    DisetujuiOleh?: true
+    Ditandatangani?: true
+    TandaTanganPada?: true
+    TandaTanganOleh?: true
+    QrToken?: true
+    QrVerifyUrl?: true
+    QrDocumentId?: true
+    QrOfficialId?: true
+    QrOfficialNama?: true
+    QrOfficialJabatan?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -62556,9 +62620,26 @@ export namespace Prisma {
     TahunSk?: true
     NomorSk?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     Catatan?: true
+    JenisSkAsessmen?: true
+    Dipublikasikan?: true
+    DipublikasikanPada?: true
+    NomorSuratSisurat?: true
+    NomorSuratPada?: true
+    Disetujui?: true
+    DisetujuiPada?: true
+    DisetujuiOleh?: true
+    Ditandatangani?: true
+    TandaTanganPada?: true
+    TandaTanganOleh?: true
+    QrToken?: true
+    QrVerifyUrl?: true
+    QrDocumentId?: true
+    QrOfficialId?: true
+    QrOfficialNama?: true
+    QrOfficialJabatan?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -62570,9 +62651,26 @@ export namespace Prisma {
     TahunSk?: true
     NomorSk?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     Catatan?: true
+    JenisSkAsessmen?: true
+    Dipublikasikan?: true
+    DipublikasikanPada?: true
+    NomorSuratSisurat?: true
+    NomorSuratPada?: true
+    Disetujui?: true
+    DisetujuiPada?: true
+    DisetujuiOleh?: true
+    Ditandatangani?: true
+    TandaTanganPada?: true
+    TandaTanganOleh?: true
+    QrToken?: true
+    QrVerifyUrl?: true
+    QrDocumentId?: true
+    QrOfficialId?: true
+    QrOfficialNama?: true
+    QrOfficialJabatan?: true
     CreatedAt?: true
     UpdatedAt?: true
     _all?: true
@@ -62671,9 +62769,26 @@ export namespace Prisma {
     TahunSk: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan: string | null
+    JenisSkAsessmen: $Enums.JenisSkAsessmen | null
+    Dipublikasikan: boolean
+    DipublikasikanPada: Date | null
+    NomorSuratSisurat: string | null
+    NomorSuratPada: Date | null
+    Disetujui: boolean
+    DisetujuiPada: Date | null
+    DisetujuiOleh: string | null
+    Ditandatangani: boolean
+    TandaTanganPada: Date | null
+    TandaTanganOleh: string | null
+    QrToken: string | null
+    QrVerifyUrl: string | null
+    QrDocumentId: number | null
+    QrOfficialId: number | null
+    QrOfficialNama: string | null
+    QrOfficialJabatan: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
     _count: SkRektorCountAggregateOutputType | null
@@ -62704,9 +62819,26 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     Catatan?: boolean
+    JenisSkAsessmen?: boolean
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: boolean
+    NomorSuratSisurat?: boolean
+    NomorSuratPada?: boolean
+    Disetujui?: boolean
+    DisetujuiPada?: boolean
+    DisetujuiOleh?: boolean
+    Ditandatangani?: boolean
+    TandaTanganPada?: boolean
+    TandaTanganOleh?: boolean
+    QrToken?: boolean
+    QrVerifyUrl?: boolean
+    QrDocumentId?: boolean
+    QrOfficialId?: boolean
+    QrOfficialNama?: boolean
+    QrOfficialJabatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
@@ -62722,9 +62854,26 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     Catatan?: boolean
+    JenisSkAsessmen?: boolean
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: boolean
+    NomorSuratSisurat?: boolean
+    NomorSuratPada?: boolean
+    Disetujui?: boolean
+    DisetujuiPada?: boolean
+    DisetujuiOleh?: boolean
+    Ditandatangani?: boolean
+    TandaTanganPada?: boolean
+    TandaTanganOleh?: boolean
+    QrToken?: boolean
+    QrVerifyUrl?: boolean
+    QrDocumentId?: boolean
+    QrOfficialId?: boolean
+    QrOfficialNama?: boolean
+    QrOfficialJabatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
@@ -62737,9 +62886,26 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     Catatan?: boolean
+    JenisSkAsessmen?: boolean
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: boolean
+    NomorSuratSisurat?: boolean
+    NomorSuratPada?: boolean
+    Disetujui?: boolean
+    DisetujuiPada?: boolean
+    DisetujuiOleh?: boolean
+    Ditandatangani?: boolean
+    TandaTanganPada?: boolean
+    TandaTanganOleh?: boolean
+    QrToken?: boolean
+    QrVerifyUrl?: boolean
+    QrDocumentId?: boolean
+    QrOfficialId?: boolean
+    QrOfficialNama?: boolean
+    QrOfficialJabatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
@@ -62752,14 +62918,31 @@ export namespace Prisma {
     TahunSk?: boolean
     NomorSk?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     Catatan?: boolean
+    JenisSkAsessmen?: boolean
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: boolean
+    NomorSuratSisurat?: boolean
+    NomorSuratPada?: boolean
+    Disetujui?: boolean
+    DisetujuiPada?: boolean
+    DisetujuiOleh?: boolean
+    Ditandatangani?: boolean
+    TandaTanganPada?: boolean
+    TandaTanganOleh?: boolean
+    QrToken?: boolean
+    QrVerifyUrl?: boolean
+    QrDocumentId?: boolean
+    QrOfficialId?: boolean
+    QrOfficialNama?: boolean
+    QrOfficialJabatan?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "FileData" | "NamaDokumen" | "Catatan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
+  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "PathFile" | "NamaDokumen" | "Catatan" | "JenisSkAsessmen" | "Dipublikasikan" | "DipublikasikanPada" | "NomorSuratSisurat" | "NomorSuratPada" | "Disetujui" | "DisetujuiPada" | "DisetujuiOleh" | "Ditandatangani" | "TandaTanganPada" | "TandaTanganOleh" | "QrToken" | "QrVerifyUrl" | "QrDocumentId" | "QrOfficialId" | "QrOfficialNama" | "QrOfficialJabatan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
   export type SkRektorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
     SkRektorAssesor?: boolean | SkRektor$SkRektorAssesorArgs<ExtArgs>
@@ -62787,9 +62970,26 @@ export namespace Prisma {
       TahunSk: number
       NomorSk: string
       NamaFile: string
-      FileData: Prisma.Bytes
+      PathFile: string
       NamaDokumen: string
       Catatan: string | null
+      JenisSkAsessmen: $Enums.JenisSkAsessmen | null
+      Dipublikasikan: boolean
+      DipublikasikanPada: Date | null
+      NomorSuratSisurat: string | null
+      NomorSuratPada: Date | null
+      Disetujui: boolean
+      DisetujuiPada: Date | null
+      DisetujuiOleh: string | null
+      Ditandatangani: boolean
+      TandaTanganPada: Date | null
+      TandaTanganOleh: string | null
+      QrToken: string | null
+      QrVerifyUrl: string | null
+      QrDocumentId: number | null
+      QrOfficialId: number | null
+      QrOfficialNama: string | null
+      QrOfficialJabatan: string | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
     }, ExtArgs["result"]["skRektor"]>
@@ -63224,9 +63424,26 @@ export namespace Prisma {
     readonly TahunSk: FieldRef<"SkRektor", 'Int'>
     readonly NomorSk: FieldRef<"SkRektor", 'String'>
     readonly NamaFile: FieldRef<"SkRektor", 'String'>
-    readonly FileData: FieldRef<"SkRektor", 'Bytes'>
+    readonly PathFile: FieldRef<"SkRektor", 'String'>
     readonly NamaDokumen: FieldRef<"SkRektor", 'String'>
     readonly Catatan: FieldRef<"SkRektor", 'String'>
+    readonly JenisSkAsessmen: FieldRef<"SkRektor", 'JenisSkAsessmen'>
+    readonly Dipublikasikan: FieldRef<"SkRektor", 'Boolean'>
+    readonly DipublikasikanPada: FieldRef<"SkRektor", 'DateTime'>
+    readonly NomorSuratSisurat: FieldRef<"SkRektor", 'String'>
+    readonly NomorSuratPada: FieldRef<"SkRektor", 'DateTime'>
+    readonly Disetujui: FieldRef<"SkRektor", 'Boolean'>
+    readonly DisetujuiPada: FieldRef<"SkRektor", 'DateTime'>
+    readonly DisetujuiOleh: FieldRef<"SkRektor", 'String'>
+    readonly Ditandatangani: FieldRef<"SkRektor", 'Boolean'>
+    readonly TandaTanganPada: FieldRef<"SkRektor", 'DateTime'>
+    readonly TandaTanganOleh: FieldRef<"SkRektor", 'String'>
+    readonly QrToken: FieldRef<"SkRektor", 'String'>
+    readonly QrVerifyUrl: FieldRef<"SkRektor", 'String'>
+    readonly QrDocumentId: FieldRef<"SkRektor", 'Int'>
+    readonly QrOfficialId: FieldRef<"SkRektor", 'Int'>
+    readonly QrOfficialNama: FieldRef<"SkRektor", 'String'>
+    readonly QrOfficialJabatan: FieldRef<"SkRektor", 'String'>
     readonly CreatedAt: FieldRef<"SkRektor", 'DateTime'>
     readonly UpdatedAt: FieldRef<"SkRektor", 'DateTime'>
   }
@@ -63708,34 +63925,34 @@ export namespace Prisma {
 
   export type SkRektorAssesorMinAggregateOutputType = {
     SkRektorId: string | null
-    AssesorMahasiswaId: string | null
+    AsesorId: string | null
   }
 
   export type SkRektorAssesorMaxAggregateOutputType = {
     SkRektorId: string | null
-    AssesorMahasiswaId: string | null
+    AsesorId: string | null
   }
 
   export type SkRektorAssesorCountAggregateOutputType = {
     SkRektorId: number
-    AssesorMahasiswaId: number
+    AsesorId: number
     _all: number
   }
 
 
   export type SkRektorAssesorMinAggregateInputType = {
     SkRektorId?: true
-    AssesorMahasiswaId?: true
+    AsesorId?: true
   }
 
   export type SkRektorAssesorMaxAggregateInputType = {
     SkRektorId?: true
-    AssesorMahasiswaId?: true
+    AsesorId?: true
   }
 
   export type SkRektorAssesorCountAggregateInputType = {
     SkRektorId?: true
-    AssesorMahasiswaId?: true
+    AsesorId?: true
     _all?: true
   }
 
@@ -63813,7 +64030,7 @@ export namespace Prisma {
 
   export type SkRektorAssesorGroupByOutputType = {
     SkRektorId: string
-    AssesorMahasiswaId: string
+    AsesorId: string
     _count: SkRektorAssesorCountAggregateOutputType | null
     _min: SkRektorAssesorMinAggregateOutputType | null
     _max: SkRektorAssesorMaxAggregateOutputType | null
@@ -63835,53 +64052,53 @@ export namespace Prisma {
 
   export type SkRektorAssesorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkRektorId?: boolean
-    AssesorMahasiswaId?: boolean
+    AsesorId?: boolean
     SkRektor?: boolean | SkRektorDefaultArgs<ExtArgs>
-    AssesorMahasiswa?: boolean | AssesorMahasiswaDefaultArgs<ExtArgs>
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skRektorAssesor"]>
 
   export type SkRektorAssesorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkRektorId?: boolean
-    AssesorMahasiswaId?: boolean
+    AsesorId?: boolean
     SkRektor?: boolean | SkRektorDefaultArgs<ExtArgs>
-    AssesorMahasiswa?: boolean | AssesorMahasiswaDefaultArgs<ExtArgs>
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skRektorAssesor"]>
 
   export type SkRektorAssesorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     SkRektorId?: boolean
-    AssesorMahasiswaId?: boolean
+    AsesorId?: boolean
     SkRektor?: boolean | SkRektorDefaultArgs<ExtArgs>
-    AssesorMahasiswa?: boolean | AssesorMahasiswaDefaultArgs<ExtArgs>
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["skRektorAssesor"]>
 
   export type SkRektorAssesorSelectScalar = {
     SkRektorId?: boolean
-    AssesorMahasiswaId?: boolean
+    AsesorId?: boolean
   }
 
-  export type SkRektorAssesorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "AssesorMahasiswaId", ExtArgs["result"]["skRektorAssesor"]>
+  export type SkRektorAssesorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "AsesorId", ExtArgs["result"]["skRektorAssesor"]>
   export type SkRektorAssesorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     SkRektor?: boolean | SkRektorDefaultArgs<ExtArgs>
-    AssesorMahasiswa?: boolean | AssesorMahasiswaDefaultArgs<ExtArgs>
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
   }
   export type SkRektorAssesorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     SkRektor?: boolean | SkRektorDefaultArgs<ExtArgs>
-    AssesorMahasiswa?: boolean | AssesorMahasiswaDefaultArgs<ExtArgs>
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
   }
   export type SkRektorAssesorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     SkRektor?: boolean | SkRektorDefaultArgs<ExtArgs>
-    AssesorMahasiswa?: boolean | AssesorMahasiswaDefaultArgs<ExtArgs>
+    Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
   }
 
   export type $SkRektorAssesorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SkRektorAssesor"
     objects: {
       SkRektor: Prisma.$SkRektorPayload<ExtArgs>
-      AssesorMahasiswa: Prisma.$AssesorMahasiswaPayload<ExtArgs>
+      Asesor: Prisma.$AsesorPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       SkRektorId: string
-      AssesorMahasiswaId: string
+      AsesorId: string
     }, ExtArgs["result"]["skRektorAssesor"]>
     composites: {}
   }
@@ -64277,7 +64494,7 @@ export namespace Prisma {
   export interface Prisma__SkRektorAssesorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     SkRektor<T extends SkRektorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SkRektorDefaultArgs<ExtArgs>>): Prisma__SkRektorClient<$Result.GetResult<Prisma.$SkRektorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    AssesorMahasiswa<T extends AssesorMahasiswaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AssesorMahasiswaDefaultArgs<ExtArgs>>): Prisma__AssesorMahasiswaClient<$Result.GetResult<Prisma.$AssesorMahasiswaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Asesor<T extends AsesorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AsesorDefaultArgs<ExtArgs>>): Prisma__AsesorClient<$Result.GetResult<Prisma.$AsesorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -64308,7 +64525,7 @@ export namespace Prisma {
    */
   interface SkRektorAssesorFieldRefs {
     readonly SkRektorId: FieldRef<"SkRektorAssesor", 'String'>
-    readonly AssesorMahasiswaId: FieldRef<"SkRektorAssesor", 'String'>
+    readonly AsesorId: FieldRef<"SkRektorAssesor", 'String'>
   }
     
 
@@ -77984,7 +78201,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin | null
     PendidikanTerakhir: $Enums.Jenjang | null
-    Avatar: Bytes | null
+    Avatar: string | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -78005,7 +78222,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin | null
     PendidikanTerakhir: $Enums.Jenjang | null
-    Avatar: Bytes | null
+    Avatar: string | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -78185,7 +78402,7 @@ export namespace Prisma {
     TanggalLahir: Date | null
     JenisKelamin: $Enums.JenisKelamin
     PendidikanTerakhir: $Enums.Jenjang
-    Avatar: Bytes | null
+    Avatar: string | null
     Agama: string | null
     Telepon: string | null
     NomorWa: string | null
@@ -78349,7 +78566,7 @@ export namespace Prisma {
       TanggalLahir: Date | null
       JenisKelamin: $Enums.JenisKelamin
       PendidikanTerakhir: $Enums.Jenjang
-      Avatar: Prisma.Bytes | null
+      Avatar: string | null
       Agama: string | null
       Telepon: string | null
       NomorWa: string | null
@@ -78798,7 +79015,7 @@ export namespace Prisma {
     readonly TanggalLahir: FieldRef<"User", 'DateTime'>
     readonly JenisKelamin: FieldRef<"User", 'JenisKelamin'>
     readonly PendidikanTerakhir: FieldRef<"User", 'Jenjang'>
-    readonly Avatar: FieldRef<"User", 'Bytes'>
+    readonly Avatar: FieldRef<"User", 'String'>
     readonly Agama: FieldRef<"User", 'String'>
     readonly Telepon: FieldRef<"User", 'String'>
     readonly NomorWa: FieldRef<"User", 'String'>
@@ -94305,7 +94522,7 @@ export namespace Prisma {
     TicketsFileId: string | null
     TicketsId: string | null
     NamaFile: string | null
-    FileData: Bytes | null
+    PathFile: string | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -94315,7 +94532,7 @@ export namespace Prisma {
     TicketsFileId: string | null
     TicketsId: string | null
     NamaFile: string | null
-    FileData: Bytes | null
+    PathFile: string | null
     NamaDokumen: string | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
@@ -94325,7 +94542,7 @@ export namespace Prisma {
     TicketsFileId: number
     TicketsId: number
     NamaFile: number
-    FileData: number
+    PathFile: number
     NamaDokumen: number
     CreatedAt: number
     UpdatedAt: number
@@ -94337,7 +94554,7 @@ export namespace Prisma {
     TicketsFileId?: true
     TicketsId?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -94347,7 +94564,7 @@ export namespace Prisma {
     TicketsFileId?: true
     TicketsId?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -94357,7 +94574,7 @@ export namespace Prisma {
     TicketsFileId?: true
     TicketsId?: true
     NamaFile?: true
-    FileData?: true
+    PathFile?: true
     NamaDokumen?: true
     CreatedAt?: true
     UpdatedAt?: true
@@ -94440,7 +94657,7 @@ export namespace Prisma {
     TicketsFileId: string
     TicketsId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt: Date
     UpdatedAt: Date
@@ -94467,7 +94684,7 @@ export namespace Prisma {
     TicketsFileId?: boolean
     TicketsId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -94478,7 +94695,7 @@ export namespace Prisma {
     TicketsFileId?: boolean
     TicketsId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -94489,7 +94706,7 @@ export namespace Prisma {
     TicketsFileId?: boolean
     TicketsId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
@@ -94500,13 +94717,13 @@ export namespace Prisma {
     TicketsFileId?: boolean
     TicketsId?: boolean
     NamaFile?: boolean
-    FileData?: boolean
+    PathFile?: boolean
     NamaDokumen?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type TicketsFileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"TicketsFileId" | "TicketsId" | "NamaFile" | "FileData" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["ticketsFile"]>
+  export type TicketsFileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"TicketsFileId" | "TicketsId" | "NamaFile" | "PathFile" | "NamaDokumen" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["ticketsFile"]>
   export type TicketsFileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Tickets?: boolean | TicketsDefaultArgs<ExtArgs>
   }
@@ -94526,7 +94743,7 @@ export namespace Prisma {
       TicketsFileId: string
       TicketsId: string
       NamaFile: string
-      FileData: Prisma.Bytes
+      PathFile: string
       NamaDokumen: string
       CreatedAt: Date
       UpdatedAt: Date
@@ -94957,7 +95174,7 @@ export namespace Prisma {
     readonly TicketsFileId: FieldRef<"TicketsFile", 'String'>
     readonly TicketsId: FieldRef<"TicketsFile", 'String'>
     readonly NamaFile: FieldRef<"TicketsFile", 'String'>
-    readonly FileData: FieldRef<"TicketsFile", 'Bytes'>
+    readonly PathFile: FieldRef<"TicketsFile", 'String'>
     readonly NamaDokumen: FieldRef<"TicketsFile", 'String'>
     readonly CreatedAt: FieldRef<"TicketsFile", 'DateTime'>
     readonly UpdatedAt: FieldRef<"TicketsFile", 'DateTime'>
@@ -97705,7 +97922,7 @@ export namespace Prisma {
     PendaftaranId: 'PendaftaranId',
     JenisDokumenId: 'JenisDokumenId',
     NamaFile: 'NamaFile',
-    FileData: 'FileData',
+    PathFile: 'PathFile',
     NamaDokumen: 'NamaDokumen',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
@@ -98209,9 +98426,26 @@ export namespace Prisma {
     TahunSk: 'TahunSk',
     NomorSk: 'NomorSk',
     NamaFile: 'NamaFile',
-    FileData: 'FileData',
+    PathFile: 'PathFile',
     NamaDokumen: 'NamaDokumen',
     Catatan: 'Catatan',
+    JenisSkAsessmen: 'JenisSkAsessmen',
+    Dipublikasikan: 'Dipublikasikan',
+    DipublikasikanPada: 'DipublikasikanPada',
+    NomorSuratSisurat: 'NomorSuratSisurat',
+    NomorSuratPada: 'NomorSuratPada',
+    Disetujui: 'Disetujui',
+    DisetujuiPada: 'DisetujuiPada',
+    DisetujuiOleh: 'DisetujuiOleh',
+    Ditandatangani: 'Ditandatangani',
+    TandaTanganPada: 'TandaTanganPada',
+    TandaTanganOleh: 'TandaTanganOleh',
+    QrToken: 'QrToken',
+    QrVerifyUrl: 'QrVerifyUrl',
+    QrDocumentId: 'QrDocumentId',
+    QrOfficialId: 'QrOfficialId',
+    QrOfficialNama: 'QrOfficialNama',
+    QrOfficialJabatan: 'QrOfficialJabatan',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
   };
@@ -98221,7 +98455,7 @@ export namespace Prisma {
 
   export const SkRektorAssesorScalarFieldEnum: {
     SkRektorId: 'SkRektorId',
-    AssesorMahasiswaId: 'AssesorMahasiswaId'
+    AsesorId: 'AsesorId'
   };
 
   export type SkRektorAssesorScalarFieldEnum = (typeof SkRektorAssesorScalarFieldEnum)[keyof typeof SkRektorAssesorScalarFieldEnum]
@@ -98607,7 +98841,7 @@ export namespace Prisma {
     TicketsFileId: 'TicketsFileId',
     TicketsId: 'TicketsId',
     NamaFile: 'NamaFile',
-    FileData: 'FileData',
+    PathFile: 'PathFile',
     NamaDokumen: 'NamaDokumen',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
@@ -98739,20 +98973,6 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
-   * Reference to a field of type 'Bytes'
-   */
-  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
-    
-
-
-  /**
-   * Reference to a field of type 'Bytes[]'
-   */
-  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
     
 
 
@@ -98897,6 +99117,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'JenisSkAsessmen'
+   */
+  export type EnumJenisSkAsessmenFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JenisSkAsessmen'>
+    
+
+
+  /**
+   * Reference to a field of type 'JenisSkAsessmen[]'
+   */
+  export type ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JenisSkAsessmen[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Json'
    */
   export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -98935,6 +99169,20 @@ export namespace Prisma {
    * Reference to a field of type 'Decimal[]'
    */
   export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes'
+   */
+  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes[]'
+   */
+  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
     
 
 
@@ -99030,6 +99278,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiListRelationFilter
     AssesorMahasiswa?: AssesorMahasiswaListRelationFilter
     AsesorProgramStudi?: AsesorProgramStudiListRelationFilter
+    SkRektorAssesor?: SkRektorAssesorListRelationFilter
   }
 
   export type AsesorOrderByWithRelationInput = {
@@ -99045,6 +99294,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiOrderByRelationAggregateInput
     AssesorMahasiswa?: AssesorMahasiswaOrderByRelationAggregateInput
     AsesorProgramStudi?: AsesorProgramStudiOrderByRelationAggregateInput
+    SkRektorAssesor?: SkRektorAssesorOrderByRelationAggregateInput
   }
 
   export type AsesorWhereUniqueInput = Prisma.AtLeast<{
@@ -99063,6 +99313,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiListRelationFilter
     AssesorMahasiswa?: AssesorMahasiswaListRelationFilter
     AsesorProgramStudi?: AsesorProgramStudiListRelationFilter
+    SkRektorAssesor?: SkRektorAssesorListRelationFilter
   }, "AsesorId">
 
   export type AsesorOrderByWithAggregationInput = {
@@ -99340,7 +99591,6 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
-    SkRektorAssesor?: SkRektorAssesorListRelationFilter
   }
 
   export type AssesorMahasiswaOrderByWithRelationInput = {
@@ -99353,7 +99603,6 @@ export namespace Prisma {
     UpdatedAt?: SortOrderInput | SortOrder
     Asesor?: AsesorOrderByWithRelationInput
     Pendaftaran?: PendaftaranOrderByWithRelationInput
-    SkRektorAssesor?: SkRektorAssesorOrderByRelationAggregateInput
   }
 
   export type AssesorMahasiswaWhereUniqueInput = Prisma.AtLeast<{
@@ -99369,7 +99618,6 @@ export namespace Prisma {
     UpdatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
     Pendaftaran?: XOR<PendaftaranScalarRelationFilter, PendaftaranWhereInput>
-    SkRektorAssesor?: SkRektorAssesorListRelationFilter
   }, "AssesorMahasiswaId">
 
   export type AssesorMahasiswaOrderByWithAggregationInput = {
@@ -99408,7 +99656,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
-    FileData?: BytesFilter<"BuktiForm"> | Bytes
+    PathFile?: StringFilter<"BuktiForm"> | string
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -99423,7 +99671,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -99441,7 +99689,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
-    FileData?: BytesFilter<"BuktiForm"> | Bytes
+    PathFile?: StringFilter<"BuktiForm"> | string
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -99456,7 +99704,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
@@ -99473,7 +99721,7 @@ export namespace Prisma {
     PendaftaranId?: StringWithAggregatesFilter<"BuktiForm"> | string
     JenisDokumenId?: StringWithAggregatesFilter<"BuktiForm"> | string
     NamaFile?: StringWithAggregatesFilter<"BuktiForm"> | string
-    FileData?: BytesWithAggregatesFilter<"BuktiForm"> | Bytes
+    PathFile?: StringWithAggregatesFilter<"BuktiForm"> | string
     NamaDokumen?: StringWithAggregatesFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"BuktiForm"> | Date | string | null
@@ -102114,9 +102362,26 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
-    FileData?: BytesFilter<"SkRektor"> | Bytes
+    PathFile?: StringFilter<"SkRektor"> | string
     NamaDokumen?: StringFilter<"SkRektor"> | string
     Catatan?: StringNullableFilter<"SkRektor"> | string | null
+    JenisSkAsessmen?: EnumJenisSkAsessmenNullableFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFilter<"SkRektor"> | boolean
+    DipublikasikanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    NomorSuratSisurat?: StringNullableFilter<"SkRektor"> | string | null
+    NomorSuratPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    Disetujui?: BoolFilter<"SkRektor"> | boolean
+    DisetujuiPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    DisetujuiOleh?: StringNullableFilter<"SkRektor"> | string | null
+    Ditandatangani?: BoolFilter<"SkRektor"> | boolean
+    TandaTanganPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    TandaTanganOleh?: StringNullableFilter<"SkRektor"> | string | null
+    QrToken?: StringNullableFilter<"SkRektor"> | string | null
+    QrVerifyUrl?: StringNullableFilter<"SkRektor"> | string | null
+    QrDocumentId?: IntNullableFilter<"SkRektor"> | number | null
+    QrOfficialId?: IntNullableFilter<"SkRektor"> | number | null
+    QrOfficialNama?: StringNullableFilter<"SkRektor"> | string | null
+    QrOfficialJabatan?: StringNullableFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     TipeSkRektor?: XOR<TipeSkRektorScalarRelationFilter, TipeSkRektorWhereInput>
@@ -102131,9 +102396,26 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     Catatan?: SortOrderInput | SortOrder
+    JenisSkAsessmen?: SortOrderInput | SortOrder
+    Dipublikasikan?: SortOrder
+    DipublikasikanPada?: SortOrderInput | SortOrder
+    NomorSuratSisurat?: SortOrderInput | SortOrder
+    NomorSuratPada?: SortOrderInput | SortOrder
+    Disetujui?: SortOrder
+    DisetujuiPada?: SortOrderInput | SortOrder
+    DisetujuiOleh?: SortOrderInput | SortOrder
+    Ditandatangani?: SortOrder
+    TandaTanganPada?: SortOrderInput | SortOrder
+    TandaTanganOleh?: SortOrderInput | SortOrder
+    QrToken?: SortOrderInput | SortOrder
+    QrVerifyUrl?: SortOrderInput | SortOrder
+    QrDocumentId?: SortOrderInput | SortOrder
+    QrOfficialId?: SortOrderInput | SortOrder
+    QrOfficialNama?: SortOrderInput | SortOrder
+    QrOfficialJabatan?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     TipeSkRektor?: TipeSkRektorOrderByWithRelationInput
@@ -102151,9 +102433,26 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
-    FileData?: BytesFilter<"SkRektor"> | Bytes
+    PathFile?: StringFilter<"SkRektor"> | string
     NamaDokumen?: StringFilter<"SkRektor"> | string
     Catatan?: StringNullableFilter<"SkRektor"> | string | null
+    JenisSkAsessmen?: EnumJenisSkAsessmenNullableFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFilter<"SkRektor"> | boolean
+    DipublikasikanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    NomorSuratSisurat?: StringNullableFilter<"SkRektor"> | string | null
+    NomorSuratPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    Disetujui?: BoolFilter<"SkRektor"> | boolean
+    DisetujuiPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    DisetujuiOleh?: StringNullableFilter<"SkRektor"> | string | null
+    Ditandatangani?: BoolFilter<"SkRektor"> | boolean
+    TandaTanganPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    TandaTanganOleh?: StringNullableFilter<"SkRektor"> | string | null
+    QrToken?: StringNullableFilter<"SkRektor"> | string | null
+    QrVerifyUrl?: StringNullableFilter<"SkRektor"> | string | null
+    QrDocumentId?: IntNullableFilter<"SkRektor"> | number | null
+    QrOfficialId?: IntNullableFilter<"SkRektor"> | number | null
+    QrOfficialNama?: StringNullableFilter<"SkRektor"> | string | null
+    QrOfficialJabatan?: StringNullableFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     TipeSkRektor?: XOR<TipeSkRektorScalarRelationFilter, TipeSkRektorWhereInput>
@@ -102168,9 +102467,26 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     Catatan?: SortOrderInput | SortOrder
+    JenisSkAsessmen?: SortOrderInput | SortOrder
+    Dipublikasikan?: SortOrder
+    DipublikasikanPada?: SortOrderInput | SortOrder
+    NomorSuratSisurat?: SortOrderInput | SortOrder
+    NomorSuratPada?: SortOrderInput | SortOrder
+    Disetujui?: SortOrder
+    DisetujuiPada?: SortOrderInput | SortOrder
+    DisetujuiOleh?: SortOrderInput | SortOrder
+    Ditandatangani?: SortOrder
+    TandaTanganPada?: SortOrderInput | SortOrder
+    TandaTanganOleh?: SortOrderInput | SortOrder
+    QrToken?: SortOrderInput | SortOrder
+    QrVerifyUrl?: SortOrderInput | SortOrder
+    QrDocumentId?: SortOrderInput | SortOrder
+    QrOfficialId?: SortOrderInput | SortOrder
+    QrOfficialNama?: SortOrderInput | SortOrder
+    QrOfficialJabatan?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     _count?: SkRektorCountOrderByAggregateInput
@@ -102190,9 +102506,26 @@ export namespace Prisma {
     TahunSk?: IntWithAggregatesFilter<"SkRektor"> | number
     NomorSk?: StringWithAggregatesFilter<"SkRektor"> | string
     NamaFile?: StringWithAggregatesFilter<"SkRektor"> | string
-    FileData?: BytesWithAggregatesFilter<"SkRektor"> | Bytes
+    PathFile?: StringWithAggregatesFilter<"SkRektor"> | string
     NamaDokumen?: StringWithAggregatesFilter<"SkRektor"> | string
     Catatan?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    JenisSkAsessmen?: EnumJenisSkAsessmenNullableWithAggregatesFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolWithAggregatesFilter<"SkRektor"> | boolean
+    DipublikasikanPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
+    NomorSuratSisurat?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    NomorSuratPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
+    Disetujui?: BoolWithAggregatesFilter<"SkRektor"> | boolean
+    DisetujuiPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
+    DisetujuiOleh?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    Ditandatangani?: BoolWithAggregatesFilter<"SkRektor"> | boolean
+    TandaTanganPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
+    TandaTanganOleh?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    QrToken?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    QrVerifyUrl?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    QrDocumentId?: IntNullableWithAggregatesFilter<"SkRektor"> | number | null
+    QrOfficialId?: IntNullableWithAggregatesFilter<"SkRektor"> | number | null
+    QrOfficialNama?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    QrOfficialJabatan?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
   }
@@ -102202,32 +102535,32 @@ export namespace Prisma {
     OR?: SkRektorAssesorWhereInput[]
     NOT?: SkRektorAssesorWhereInput | SkRektorAssesorWhereInput[]
     SkRektorId?: StringFilter<"SkRektorAssesor"> | string
-    AssesorMahasiswaId?: StringFilter<"SkRektorAssesor"> | string
+    AsesorId?: StringFilter<"SkRektorAssesor"> | string
     SkRektor?: XOR<SkRektorScalarRelationFilter, SkRektorWhereInput>
-    AssesorMahasiswa?: XOR<AssesorMahasiswaScalarRelationFilter, AssesorMahasiswaWhereInput>
+    Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
   }
 
   export type SkRektorAssesorOrderByWithRelationInput = {
     SkRektorId?: SortOrder
-    AssesorMahasiswaId?: SortOrder
+    AsesorId?: SortOrder
     SkRektor?: SkRektorOrderByWithRelationInput
-    AssesorMahasiswa?: AssesorMahasiswaOrderByWithRelationInput
+    Asesor?: AsesorOrderByWithRelationInput
   }
 
   export type SkRektorAssesorWhereUniqueInput = Prisma.AtLeast<{
-    SkRektorId_AssesorMahasiswaId?: SkRektorAssesorSkRektorIdAssesorMahasiswaIdCompoundUniqueInput
+    SkRektorId_AsesorId?: SkRektorAssesorSkRektorIdAsesorIdCompoundUniqueInput
     AND?: SkRektorAssesorWhereInput | SkRektorAssesorWhereInput[]
     OR?: SkRektorAssesorWhereInput[]
     NOT?: SkRektorAssesorWhereInput | SkRektorAssesorWhereInput[]
     SkRektorId?: StringFilter<"SkRektorAssesor"> | string
-    AssesorMahasiswaId?: StringFilter<"SkRektorAssesor"> | string
+    AsesorId?: StringFilter<"SkRektorAssesor"> | string
     SkRektor?: XOR<SkRektorScalarRelationFilter, SkRektorWhereInput>
-    AssesorMahasiswa?: XOR<AssesorMahasiswaScalarRelationFilter, AssesorMahasiswaWhereInput>
-  }, "SkRektorId_AssesorMahasiswaId">
+    Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
+  }, "SkRektorId_AsesorId">
 
   export type SkRektorAssesorOrderByWithAggregationInput = {
     SkRektorId?: SortOrder
-    AssesorMahasiswaId?: SortOrder
+    AsesorId?: SortOrder
     _count?: SkRektorAssesorCountOrderByAggregateInput
     _max?: SkRektorAssesorMaxOrderByAggregateInput
     _min?: SkRektorAssesorMinOrderByAggregateInput
@@ -102238,7 +102571,7 @@ export namespace Prisma {
     OR?: SkRektorAssesorScalarWhereWithAggregatesInput[]
     NOT?: SkRektorAssesorScalarWhereWithAggregatesInput | SkRektorAssesorScalarWhereWithAggregatesInput[]
     SkRektorId?: StringWithAggregatesFilter<"SkRektorAssesor"> | string
-    AssesorMahasiswaId?: StringWithAggregatesFilter<"SkRektorAssesor"> | string
+    AsesorId?: StringWithAggregatesFilter<"SkRektorAssesor"> | string
   }
 
   export type SkRektorMahasiswaWhereInput = {
@@ -103028,7 +103361,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableFilter<"User"> | Bytes | null
+    Avatar?: StringNullableFilter<"User"> | string | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -103089,7 +103422,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableFilter<"User"> | Bytes | null
+    Avatar?: StringNullableFilter<"User"> | string | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -103145,7 +103478,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminWithAggregatesFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangWithAggregatesFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableWithAggregatesFilter<"User"> | Bytes | null
+    Avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
     Agama?: StringNullableWithAggregatesFilter<"User"> | string | null
     Telepon?: StringNullableWithAggregatesFilter<"User"> | string | null
     NomorWa?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -104210,7 +104543,7 @@ export namespace Prisma {
     TicketsFileId?: StringFilter<"TicketsFile"> | string
     TicketsId?: StringFilter<"TicketsFile"> | string
     NamaFile?: StringFilter<"TicketsFile"> | string
-    FileData?: BytesFilter<"TicketsFile"> | Bytes
+    PathFile?: StringFilter<"TicketsFile"> | string
     NamaDokumen?: StringFilter<"TicketsFile"> | string
     CreatedAt?: DateTimeFilter<"TicketsFile"> | Date | string
     UpdatedAt?: DateTimeFilter<"TicketsFile"> | Date | string
@@ -104221,7 +104554,7 @@ export namespace Prisma {
     TicketsFileId?: SortOrder
     TicketsId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -104235,7 +104568,7 @@ export namespace Prisma {
     NOT?: TicketsFileWhereInput | TicketsFileWhereInput[]
     TicketsId?: StringFilter<"TicketsFile"> | string
     NamaFile?: StringFilter<"TicketsFile"> | string
-    FileData?: BytesFilter<"TicketsFile"> | Bytes
+    PathFile?: StringFilter<"TicketsFile"> | string
     NamaDokumen?: StringFilter<"TicketsFile"> | string
     CreatedAt?: DateTimeFilter<"TicketsFile"> | Date | string
     UpdatedAt?: DateTimeFilter<"TicketsFile"> | Date | string
@@ -104246,7 +104579,7 @@ export namespace Prisma {
     TicketsFileId?: SortOrder
     TicketsId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -104262,7 +104595,7 @@ export namespace Prisma {
     TicketsFileId?: StringWithAggregatesFilter<"TicketsFile"> | string
     TicketsId?: StringWithAggregatesFilter<"TicketsFile"> | string
     NamaFile?: StringWithAggregatesFilter<"TicketsFile"> | string
-    FileData?: BytesWithAggregatesFilter<"TicketsFile"> | Bytes
+    PathFile?: StringWithAggregatesFilter<"TicketsFile"> | string
     NamaDokumen?: StringWithAggregatesFilter<"TicketsFile"> | string
     CreatedAt?: DateTimeWithAggregatesFilter<"TicketsFile"> | Date | string
     UpdatedAt?: DateTimeWithAggregatesFilter<"TicketsFile"> | Date | string
@@ -104468,6 +104801,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateInput = {
@@ -104481,6 +104815,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUpdateInput = {
@@ -104494,6 +104829,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateInput = {
@@ -104507,6 +104843,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorCreateManyInput = {
@@ -104809,7 +105146,6 @@ export namespace Prisma {
     UpdatedAt?: Date | string | null
     Asesor: AsesorCreateNestedOneWithoutAssesorMahasiswaInput
     Pendaftaran: PendaftaranCreateNestedOneWithoutAssesorMahasiswaInput
-    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAssesorMahasiswaInput
   }
 
   export type AssesorMahasiswaUncheckedCreateInput = {
@@ -104820,7 +105156,6 @@ export namespace Prisma {
     Confirmation?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAssesorMahasiswaInput
   }
 
   export type AssesorMahasiswaUpdateInput = {
@@ -104831,7 +105166,6 @@ export namespace Prisma {
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Asesor?: AsesorUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
-    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAssesorMahasiswaNestedInput
   }
 
   export type AssesorMahasiswaUncheckedUpdateInput = {
@@ -104842,7 +105176,6 @@ export namespace Prisma {
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAssesorMahasiswaNestedInput
   }
 
   export type AssesorMahasiswaCreateManyInput = {
@@ -104876,7 +105209,7 @@ export namespace Prisma {
   export type BuktiFormCreateInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -104891,7 +105224,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -104902,7 +105235,7 @@ export namespace Prisma {
   export type BuktiFormUpdateInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -104917,7 +105250,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -104930,7 +105263,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -104939,7 +105272,7 @@ export namespace Prisma {
   export type BuktiFormUpdateManyMutationInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -104950,7 +105283,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -107691,9 +108024,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
@@ -107708,9 +108058,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutSkRektorInput
@@ -107723,9 +108090,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
@@ -107740,9 +108124,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutSkRektorNestedInput
@@ -107756,9 +108157,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -107769,9 +108187,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -107783,36 +108218,53 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SkRektorAssesorCreateInput = {
     SkRektor: SkRektorCreateNestedOneWithoutSkRektorAssesorInput
-    AssesorMahasiswa: AssesorMahasiswaCreateNestedOneWithoutSkRektorAssesorInput
+    Asesor: AsesorCreateNestedOneWithoutSkRektorAssesorInput
   }
 
   export type SkRektorAssesorUncheckedCreateInput = {
     SkRektorId: string
-    AssesorMahasiswaId: string
+    AsesorId: string
   }
 
   export type SkRektorAssesorUpdateInput = {
     SkRektor?: SkRektorUpdateOneRequiredWithoutSkRektorAssesorNestedInput
-    AssesorMahasiswa?: AssesorMahasiswaUpdateOneRequiredWithoutSkRektorAssesorNestedInput
+    Asesor?: AsesorUpdateOneRequiredWithoutSkRektorAssesorNestedInput
   }
 
   export type SkRektorAssesorUncheckedUpdateInput = {
     SkRektorId?: StringFieldUpdateOperationsInput | string
-    AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
+    AsesorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SkRektorAssesorCreateManyInput = {
     SkRektorId: string
-    AssesorMahasiswaId: string
+    AsesorId: string
   }
 
   export type SkRektorAssesorUpdateManyMutationInput = {
@@ -107821,7 +108273,7 @@ export namespace Prisma {
 
   export type SkRektorAssesorUncheckedUpdateManyInput = {
     SkRektorId?: StringFieldUpdateOperationsInput | string
-    AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
+    AsesorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SkRektorMahasiswaCreateInput = {
@@ -108650,7 +109102,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -108679,7 +109131,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -108706,7 +109158,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -108735,7 +109187,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -108763,7 +109215,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -108783,7 +109235,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -108804,7 +109256,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -109988,7 +110440,7 @@ export namespace Prisma {
   export type TicketsFileCreateInput = {
     TicketsFileId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string
     UpdatedAt?: Date | string
@@ -109999,7 +110451,7 @@ export namespace Prisma {
     TicketsFileId?: string
     TicketsId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string
     UpdatedAt?: Date | string
@@ -110008,7 +110460,7 @@ export namespace Prisma {
   export type TicketsFileUpdateInput = {
     TicketsFileId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -110019,7 +110471,7 @@ export namespace Prisma {
     TicketsFileId?: StringFieldUpdateOperationsInput | string
     TicketsId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -110029,7 +110481,7 @@ export namespace Prisma {
     TicketsFileId?: string
     TicketsId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string
     UpdatedAt?: Date | string
@@ -110038,7 +110490,7 @@ export namespace Prisma {
   export type TicketsFileUpdateManyMutationInput = {
     TicketsFileId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -110048,7 +110500,7 @@ export namespace Prisma {
     TicketsFileId?: StringFieldUpdateOperationsInput | string
     TicketsId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -110315,6 +110767,12 @@ export namespace Prisma {
     none?: AsesorProgramStudiWhereInput
   }
 
+  export type SkRektorAssesorListRelationFilter = {
+    every?: SkRektorAssesorWhereInput
+    some?: SkRektorAssesorWhereInput
+    none?: SkRektorAssesorWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -110333,6 +110791,10 @@ export namespace Prisma {
   }
 
   export type AsesorProgramStudiOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SkRektorAssesorOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -110565,16 +111027,6 @@ export namespace Prisma {
     isNot?: PendaftaranWhereInput
   }
 
-  export type SkRektorAssesorListRelationFilter = {
-    every?: SkRektorAssesorWhereInput
-    some?: SkRektorAssesorWhereInput
-    none?: SkRektorAssesorWhereInput
-  }
-
-  export type SkRektorAssesorOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type AssesorMahasiswaCountOrderByAggregateInput = {
     AssesorMahasiswaId?: SortOrder
     PendaftaranId?: SortOrder
@@ -110637,13 +111089,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type BytesFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Bytes
-  }
-
   export type JenisDokumenScalarRelationFilter = {
     is?: JenisDokumenWhereInput
     isNot?: JenisDokumenWhereInput
@@ -110674,7 +111119,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -110685,7 +111130,7 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -110696,20 +111141,10 @@ export namespace Prisma {
     PendaftaranId?: SortOrder
     JenisDokumenId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
-  }
-
-  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBytesFilter<$PrismaModel>
-    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type BuktiFormScalarRelationFilter = {
@@ -112603,6 +113038,24 @@ export namespace Prisma {
     Nama?: SortOrder
   }
 
+  export type EnumJenisSkAsessmenNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.JenisSkAsessmen | EnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    in?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumJenisSkAsessmenNullableFilter<$PrismaModel> | $Enums.JenisSkAsessmen | null
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type TipeSkRektorScalarRelationFilter = {
     is?: TipeSkRektorWhereInput
     isNot?: TipeSkRektorWhereInput
@@ -112615,15 +113068,34 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     Catatan?: SortOrder
+    JenisSkAsessmen?: SortOrder
+    Dipublikasikan?: SortOrder
+    DipublikasikanPada?: SortOrder
+    NomorSuratSisurat?: SortOrder
+    NomorSuratPada?: SortOrder
+    Disetujui?: SortOrder
+    DisetujuiPada?: SortOrder
+    DisetujuiOleh?: SortOrder
+    Ditandatangani?: SortOrder
+    TandaTanganPada?: SortOrder
+    TandaTanganOleh?: SortOrder
+    QrToken?: SortOrder
+    QrVerifyUrl?: SortOrder
+    QrDocumentId?: SortOrder
+    QrOfficialId?: SortOrder
+    QrOfficialNama?: SortOrder
+    QrOfficialJabatan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
 
   export type SkRektorAvgOrderByAggregateInput = {
     TahunSk?: SortOrder
+    QrDocumentId?: SortOrder
+    QrOfficialId?: SortOrder
   }
 
   export type SkRektorMaxOrderByAggregateInput = {
@@ -112633,9 +113105,26 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     Catatan?: SortOrder
+    JenisSkAsessmen?: SortOrder
+    Dipublikasikan?: SortOrder
+    DipublikasikanPada?: SortOrder
+    NomorSuratSisurat?: SortOrder
+    NomorSuratPada?: SortOrder
+    Disetujui?: SortOrder
+    DisetujuiPada?: SortOrder
+    DisetujuiOleh?: SortOrder
+    Ditandatangani?: SortOrder
+    TandaTanganPada?: SortOrder
+    TandaTanganOleh?: SortOrder
+    QrToken?: SortOrder
+    QrVerifyUrl?: SortOrder
+    QrDocumentId?: SortOrder
+    QrOfficialId?: SortOrder
+    QrOfficialNama?: SortOrder
+    QrOfficialJabatan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -112647,15 +113136,60 @@ export namespace Prisma {
     TahunSk?: SortOrder
     NomorSk?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     Catatan?: SortOrder
+    JenisSkAsessmen?: SortOrder
+    Dipublikasikan?: SortOrder
+    DipublikasikanPada?: SortOrder
+    NomorSuratSisurat?: SortOrder
+    NomorSuratPada?: SortOrder
+    Disetujui?: SortOrder
+    DisetujuiPada?: SortOrder
+    DisetujuiOleh?: SortOrder
+    Ditandatangani?: SortOrder
+    TandaTanganPada?: SortOrder
+    TandaTanganOleh?: SortOrder
+    QrToken?: SortOrder
+    QrVerifyUrl?: SortOrder
+    QrDocumentId?: SortOrder
+    QrOfficialId?: SortOrder
+    QrOfficialNama?: SortOrder
+    QrOfficialJabatan?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
 
   export type SkRektorSumOrderByAggregateInput = {
     TahunSk?: SortOrder
+    QrDocumentId?: SortOrder
+    QrOfficialId?: SortOrder
+  }
+
+  export type EnumJenisSkAsessmenNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.JenisSkAsessmen | EnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    in?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumJenisSkAsessmenNullableWithAggregatesFilter<$PrismaModel> | $Enums.JenisSkAsessmen | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumJenisSkAsessmenNullableFilter<$PrismaModel>
+    _max?: NestedEnumJenisSkAsessmenNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type SkRektorScalarRelationFilter = {
@@ -112663,29 +113197,24 @@ export namespace Prisma {
     isNot?: SkRektorWhereInput
   }
 
-  export type AssesorMahasiswaScalarRelationFilter = {
-    is?: AssesorMahasiswaWhereInput
-    isNot?: AssesorMahasiswaWhereInput
-  }
-
-  export type SkRektorAssesorSkRektorIdAssesorMahasiswaIdCompoundUniqueInput = {
+  export type SkRektorAssesorSkRektorIdAsesorIdCompoundUniqueInput = {
     SkRektorId: string
-    AssesorMahasiswaId: string
+    AsesorId: string
   }
 
   export type SkRektorAssesorCountOrderByAggregateInput = {
     SkRektorId?: SortOrder
-    AssesorMahasiswaId?: SortOrder
+    AsesorId?: SortOrder
   }
 
   export type SkRektorAssesorMaxOrderByAggregateInput = {
     SkRektorId?: SortOrder
-    AssesorMahasiswaId?: SortOrder
+    AsesorId?: SortOrder
   }
 
   export type SkRektorAssesorMinOrderByAggregateInput = {
     SkRektorId?: SortOrder
-    AssesorMahasiswaId?: SortOrder
+    AsesorId?: SortOrder
   }
 
   export type SkRektorMahasiswaSkRektorIdPendaftaranIdCompoundUniqueInput = {
@@ -113210,13 +113739,6 @@ export namespace Prisma {
     not?: NestedEnumJenisKelaminFilter<$PrismaModel> | $Enums.JenisKelamin
   }
 
-  export type BytesNullableFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
-  }
-
   export type MahasiswaListRelationFilter = {
     every?: MahasiswaWhereInput
     some?: MahasiswaWhereInput
@@ -113320,16 +113842,6 @@ export namespace Prisma {
     _max?: NestedEnumJenisKelaminFilter<$PrismaModel>
   }
 
-  export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBytesNullableFilter<$PrismaModel>
-    _max?: NestedBytesNullableFilter<$PrismaModel>
-  }
-
   export type FloatNullableFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
@@ -113339,17 +113851,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type DecimalNullableFilter<$PrismaModel = never> = {
@@ -113582,22 +114083,6 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
   export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel> | null
@@ -113720,6 +114205,13 @@ export namespace Prisma {
     Color?: SortOrder
   }
 
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Bytes
+  }
+
   export type SettingCommunityListRelationFilter = {
     every?: SettingCommunityWhereInput
     some?: SettingCommunityWhereInput
@@ -113824,6 +114316,16 @@ export namespace Prisma {
     BeritaDeskripsi?: SortOrder
     TestomoniText?: SortOrder
     TestomoniDeskripsi?: SortOrder
+  }
+
+  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
 
   export type JenisKegiatanScalarRelationFilter = {
@@ -113968,6 +114470,13 @@ export namespace Prisma {
     Foto?: SortOrder
   }
 
+  export type BytesNullableFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
+  }
+
   export type KategoriBeritaScalarRelationFilter = {
     is?: KategoriBeritaWhereInput
     isNot?: KategoriBeritaWhereInput
@@ -114004,6 +114513,16 @@ export namespace Prisma {
     Gambar?: SortOrder
     Populer?: SortOrder
     Waktu?: SortOrder
+  }
+
+  export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBytesNullableFilter<$PrismaModel>
+    _max?: NestedBytesNullableFilter<$PrismaModel>
   }
 
   export type QuestionAndAskCountOrderByAggregateInput = {
@@ -114102,7 +114621,7 @@ export namespace Prisma {
     TicketsFileId?: SortOrder
     TicketsId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -114112,7 +114631,7 @@ export namespace Prisma {
     TicketsFileId?: SortOrder
     TicketsId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -114122,7 +114641,7 @@ export namespace Prisma {
     TicketsFileId?: SortOrder
     TicketsId?: SortOrder
     NamaFile?: SortOrder
-    FileData?: SortOrder
+    PathFile?: SortOrder
     NamaDokumen?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
@@ -114384,6 +114903,13 @@ export namespace Prisma {
     connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
   }
 
+  export type SkRektorAssesorCreateNestedManyWithoutAsesorInput = {
+    create?: XOR<SkRektorAssesorCreateWithoutAsesorInput, SkRektorAssesorUncheckedCreateWithoutAsesorInput> | SkRektorAssesorCreateWithoutAsesorInput[] | SkRektorAssesorUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAsesorInput | SkRektorAssesorCreateOrConnectWithoutAsesorInput[]
+    createMany?: SkRektorAssesorCreateManyAsesorInputEnvelope
+    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+  }
+
   export type AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput = {
     create?: XOR<AsesorAkademikCreateWithoutAsesorInput, AsesorAkademikUncheckedCreateWithoutAsesorInput> | AsesorAkademikCreateWithoutAsesorInput[] | AsesorAkademikUncheckedCreateWithoutAsesorInput[]
     connectOrCreate?: AsesorAkademikCreateOrConnectWithoutAsesorInput | AsesorAkademikCreateOrConnectWithoutAsesorInput[]
@@ -114410,6 +114936,13 @@ export namespace Prisma {
     connectOrCreate?: AsesorProgramStudiCreateOrConnectWithoutAsesorInput | AsesorProgramStudiCreateOrConnectWithoutAsesorInput[]
     createMany?: AsesorProgramStudiCreateManyAsesorInputEnvelope
     connect?: AsesorProgramStudiWhereUniqueInput | AsesorProgramStudiWhereUniqueInput[]
+  }
+
+  export type SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput = {
+    create?: XOR<SkRektorAssesorCreateWithoutAsesorInput, SkRektorAssesorUncheckedCreateWithoutAsesorInput> | SkRektorAssesorCreateWithoutAsesorInput[] | SkRektorAssesorUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAsesorInput | SkRektorAssesorCreateOrConnectWithoutAsesorInput[]
+    createMany?: SkRektorAssesorCreateManyAsesorInputEnvelope
+    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -114488,6 +115021,20 @@ export namespace Prisma {
     deleteMany?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
   }
 
+  export type SkRektorAssesorUpdateManyWithoutAsesorNestedInput = {
+    create?: XOR<SkRektorAssesorCreateWithoutAsesorInput, SkRektorAssesorUncheckedCreateWithoutAsesorInput> | SkRektorAssesorCreateWithoutAsesorInput[] | SkRektorAssesorUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAsesorInput | SkRektorAssesorCreateOrConnectWithoutAsesorInput[]
+    upsert?: SkRektorAssesorUpsertWithWhereUniqueWithoutAsesorInput | SkRektorAssesorUpsertWithWhereUniqueWithoutAsesorInput[]
+    createMany?: SkRektorAssesorCreateManyAsesorInputEnvelope
+    set?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    disconnect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    delete?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    update?: SkRektorAssesorUpdateWithWhereUniqueWithoutAsesorInput | SkRektorAssesorUpdateWithWhereUniqueWithoutAsesorInput[]
+    updateMany?: SkRektorAssesorUpdateManyWithWhereWithoutAsesorInput | SkRektorAssesorUpdateManyWithWhereWithoutAsesorInput[]
+    deleteMany?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
+  }
+
   export type AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput = {
     create?: XOR<AsesorAkademikCreateWithoutAsesorInput, AsesorAkademikUncheckedCreateWithoutAsesorInput> | AsesorAkademikCreateWithoutAsesorInput[] | AsesorAkademikUncheckedCreateWithoutAsesorInput[]
     connectOrCreate?: AsesorAkademikCreateOrConnectWithoutAsesorInput | AsesorAkademikCreateOrConnectWithoutAsesorInput[]
@@ -114542,6 +115089,20 @@ export namespace Prisma {
     update?: AsesorProgramStudiUpdateWithWhereUniqueWithoutAsesorInput | AsesorProgramStudiUpdateWithWhereUniqueWithoutAsesorInput[]
     updateMany?: AsesorProgramStudiUpdateManyWithWhereWithoutAsesorInput | AsesorProgramStudiUpdateManyWithWhereWithoutAsesorInput[]
     deleteMany?: AsesorProgramStudiScalarWhereInput | AsesorProgramStudiScalarWhereInput[]
+  }
+
+  export type SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput = {
+    create?: XOR<SkRektorAssesorCreateWithoutAsesorInput, SkRektorAssesorUncheckedCreateWithoutAsesorInput> | SkRektorAssesorCreateWithoutAsesorInput[] | SkRektorAssesorUncheckedCreateWithoutAsesorInput[]
+    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAsesorInput | SkRektorAssesorCreateOrConnectWithoutAsesorInput[]
+    upsert?: SkRektorAssesorUpsertWithWhereUniqueWithoutAsesorInput | SkRektorAssesorUpsertWithWhereUniqueWithoutAsesorInput[]
+    createMany?: SkRektorAssesorCreateManyAsesorInputEnvelope
+    set?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    disconnect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    delete?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
+    update?: SkRektorAssesorUpdateWithWhereUniqueWithoutAsesorInput | SkRektorAssesorUpdateWithWhereUniqueWithoutAsesorInput[]
+    updateMany?: SkRektorAssesorUpdateManyWithWhereWithoutAsesorInput | SkRektorAssesorUpdateManyWithWhereWithoutAsesorInput[]
+    deleteMany?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
   }
 
   export type AsesorCreateNestedOneWithoutAsesorAkademikInput = {
@@ -114644,20 +115205,6 @@ export namespace Prisma {
     connect?: PendaftaranWhereUniqueInput
   }
 
-  export type SkRektorAssesorCreateNestedManyWithoutAssesorMahasiswaInput = {
-    create?: XOR<SkRektorAssesorCreateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput> | SkRektorAssesorCreateWithoutAssesorMahasiswaInput[] | SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput[]
-    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput | SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput[]
-    createMany?: SkRektorAssesorCreateManyAssesorMahasiswaInputEnvelope
-    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-  }
-
-  export type SkRektorAssesorUncheckedCreateNestedManyWithoutAssesorMahasiswaInput = {
-    create?: XOR<SkRektorAssesorCreateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput> | SkRektorAssesorCreateWithoutAssesorMahasiswaInput[] | SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput[]
-    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput | SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput[]
-    createMany?: SkRektorAssesorCreateManyAssesorMahasiswaInputEnvelope
-    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-  }
-
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -114684,34 +115231,6 @@ export namespace Prisma {
     upsert?: PendaftaranUpsertWithoutAssesorMahasiswaInput
     connect?: PendaftaranWhereUniqueInput
     update?: XOR<XOR<PendaftaranUpdateToOneWithWhereWithoutAssesorMahasiswaInput, PendaftaranUpdateWithoutAssesorMahasiswaInput>, PendaftaranUncheckedUpdateWithoutAssesorMahasiswaInput>
-  }
-
-  export type SkRektorAssesorUpdateManyWithoutAssesorMahasiswaNestedInput = {
-    create?: XOR<SkRektorAssesorCreateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput> | SkRektorAssesorCreateWithoutAssesorMahasiswaInput[] | SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput[]
-    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput | SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput[]
-    upsert?: SkRektorAssesorUpsertWithWhereUniqueWithoutAssesorMahasiswaInput | SkRektorAssesorUpsertWithWhereUniqueWithoutAssesorMahasiswaInput[]
-    createMany?: SkRektorAssesorCreateManyAssesorMahasiswaInputEnvelope
-    set?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    disconnect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    delete?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    update?: SkRektorAssesorUpdateWithWhereUniqueWithoutAssesorMahasiswaInput | SkRektorAssesorUpdateWithWhereUniqueWithoutAssesorMahasiswaInput[]
-    updateMany?: SkRektorAssesorUpdateManyWithWhereWithoutAssesorMahasiswaInput | SkRektorAssesorUpdateManyWithWhereWithoutAssesorMahasiswaInput[]
-    deleteMany?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
-  }
-
-  export type SkRektorAssesorUncheckedUpdateManyWithoutAssesorMahasiswaNestedInput = {
-    create?: XOR<SkRektorAssesorCreateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput> | SkRektorAssesorCreateWithoutAssesorMahasiswaInput[] | SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput[]
-    connectOrCreate?: SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput | SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput[]
-    upsert?: SkRektorAssesorUpsertWithWhereUniqueWithoutAssesorMahasiswaInput | SkRektorAssesorUpsertWithWhereUniqueWithoutAssesorMahasiswaInput[]
-    createMany?: SkRektorAssesorCreateManyAssesorMahasiswaInputEnvelope
-    set?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    disconnect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    delete?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    connect?: SkRektorAssesorWhereUniqueInput | SkRektorAssesorWhereUniqueInput[]
-    update?: SkRektorAssesorUpdateWithWhereUniqueWithoutAssesorMahasiswaInput | SkRektorAssesorUpdateWithWhereUniqueWithoutAssesorMahasiswaInput[]
-    updateMany?: SkRektorAssesorUpdateManyWithWhereWithoutAssesorMahasiswaInput | SkRektorAssesorUpdateManyWithWhereWithoutAssesorMahasiswaInput[]
-    deleteMany?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
   }
 
   export type PendaftaranCreateNestedOneWithoutBuktiFormInput = {
@@ -114752,10 +115271,6 @@ export namespace Prisma {
     connectOrCreate?: BuktiFormPagesCreateOrConnectWithoutBuktiFormInput | BuktiFormPagesCreateOrConnectWithoutBuktiFormInput[]
     createMany?: BuktiFormPagesCreateManyBuktiFormInputEnvelope
     connect?: BuktiFormPagesWhereUniqueInput | BuktiFormPagesWhereUniqueInput[]
-  }
-
-  export type BytesFieldUpdateOperationsInput = {
-    set?: Bytes
   }
 
   export type PendaftaranUpdateOneRequiredWithoutBuktiFormNestedInput = {
@@ -117546,6 +118061,18 @@ export namespace Prisma {
     connect?: SkRektorMahasiswaWhereUniqueInput | SkRektorMahasiswaWhereUniqueInput[]
   }
 
+  export type NullableEnumJenisSkAsessmenFieldUpdateOperationsInput = {
+    set?: $Enums.JenisSkAsessmen | null
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput = {
     create?: XOR<TipeSkRektorCreateWithoutSkRektorInput, TipeSkRektorUncheckedCreateWithoutSkRektorInput>
     connectOrCreate?: TipeSkRektorCreateOrConnectWithoutSkRektorInput
@@ -117616,10 +118143,10 @@ export namespace Prisma {
     connect?: SkRektorWhereUniqueInput
   }
 
-  export type AssesorMahasiswaCreateNestedOneWithoutSkRektorAssesorInput = {
-    create?: XOR<AssesorMahasiswaCreateWithoutSkRektorAssesorInput, AssesorMahasiswaUncheckedCreateWithoutSkRektorAssesorInput>
-    connectOrCreate?: AssesorMahasiswaCreateOrConnectWithoutSkRektorAssesorInput
-    connect?: AssesorMahasiswaWhereUniqueInput
+  export type AsesorCreateNestedOneWithoutSkRektorAssesorInput = {
+    create?: XOR<AsesorCreateWithoutSkRektorAssesorInput, AsesorUncheckedCreateWithoutSkRektorAssesorInput>
+    connectOrCreate?: AsesorCreateOrConnectWithoutSkRektorAssesorInput
+    connect?: AsesorWhereUniqueInput
   }
 
   export type SkRektorUpdateOneRequiredWithoutSkRektorAssesorNestedInput = {
@@ -117630,12 +118157,12 @@ export namespace Prisma {
     update?: XOR<XOR<SkRektorUpdateToOneWithWhereWithoutSkRektorAssesorInput, SkRektorUpdateWithoutSkRektorAssesorInput>, SkRektorUncheckedUpdateWithoutSkRektorAssesorInput>
   }
 
-  export type AssesorMahasiswaUpdateOneRequiredWithoutSkRektorAssesorNestedInput = {
-    create?: XOR<AssesorMahasiswaCreateWithoutSkRektorAssesorInput, AssesorMahasiswaUncheckedCreateWithoutSkRektorAssesorInput>
-    connectOrCreate?: AssesorMahasiswaCreateOrConnectWithoutSkRektorAssesorInput
-    upsert?: AssesorMahasiswaUpsertWithoutSkRektorAssesorInput
-    connect?: AssesorMahasiswaWhereUniqueInput
-    update?: XOR<XOR<AssesorMahasiswaUpdateToOneWithWhereWithoutSkRektorAssesorInput, AssesorMahasiswaUpdateWithoutSkRektorAssesorInput>, AssesorMahasiswaUncheckedUpdateWithoutSkRektorAssesorInput>
+  export type AsesorUpdateOneRequiredWithoutSkRektorAssesorNestedInput = {
+    create?: XOR<AsesorCreateWithoutSkRektorAssesorInput, AsesorUncheckedCreateWithoutSkRektorAssesorInput>
+    connectOrCreate?: AsesorCreateOrConnectWithoutSkRektorAssesorInput
+    upsert?: AsesorUpsertWithoutSkRektorAssesorInput
+    connect?: AsesorWhereUniqueInput
+    update?: XOR<XOR<AsesorUpdateToOneWithWhereWithoutSkRektorAssesorInput, AsesorUpdateWithoutSkRektorAssesorInput>, AsesorUncheckedUpdateWithoutSkRektorAssesorInput>
   }
 
   export type SkRektorCreateNestedOneWithoutSkRektorMahasiswaInput = {
@@ -118278,10 +118805,6 @@ export namespace Prisma {
     set?: $Enums.JenisKelamin
   }
 
-  export type NullableBytesFieldUpdateOperationsInput = {
-    set?: Bytes | null
-  }
-
   export type AlamatUpdateOneRequiredWithoutUserNestedInput = {
     create?: XOR<AlamatCreateWithoutUserInput, AlamatUncheckedCreateWithoutUserInput>
     connectOrCreate?: AlamatCreateOrConnectWithoutUserInput
@@ -118500,14 +119023,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type NullableDecimalFieldUpdateOperationsInput = {
     set?: Decimal | DecimalJsLike | number | string | null
     increment?: Decimal | DecimalJsLike | number | string
@@ -118712,6 +119227,10 @@ export namespace Prisma {
     connectOrCreate?: SettingBeritaCreateOrConnectWithoutSettingMainPageInput | SettingBeritaCreateOrConnectWithoutSettingMainPageInput[]
     createMany?: SettingBeritaCreateManySettingMainPageInputEnvelope
     connect?: SettingBeritaWhereUniqueInput | SettingBeritaWhereUniqueInput[]
+  }
+
+  export type BytesFieldUpdateOperationsInput = {
+    set?: Bytes
   }
 
   export type UniversityUpdateOneRequiredWithoutSettingMainPageNestedInput = {
@@ -118984,6 +119503,10 @@ export namespace Prisma {
     create?: XOR<KategoriBeritaCreateWithoutSettingBeritaInput, KategoriBeritaUncheckedCreateWithoutSettingBeritaInput>
     connectOrCreate?: KategoriBeritaCreateOrConnectWithoutSettingBeritaInput
     connect?: KategoriBeritaWhereUniqueInput
+  }
+
+  export type NullableBytesFieldUpdateOperationsInput = {
+    set?: Bytes | null
   }
 
   export type SettingMainPageUpdateOneRequiredWithoutSettingBeritaNestedInput = {
@@ -119337,23 +119860,6 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedBytesFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesFilter<$PrismaModel> | Bytes
-  }
-
-  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
-    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBytesFilter<$PrismaModel>
-    _max?: NestedBytesFilter<$PrismaModel>
-  }
-
   export type NestedEnumProfiensiPengetahuanFilter<$PrismaModel = never> = {
     equals?: $Enums.ProfiensiPengetahuan | EnumProfiensiPengetahuanFieldRefInput<$PrismaModel>
     in?: $Enums.ProfiensiPengetahuan[] | ListEnumProfiensiPengetahuanFieldRefInput<$PrismaModel>
@@ -119547,6 +120053,50 @@ export namespace Prisma {
     _min?: NestedEnumSistemKuliahFilter<$PrismaModel>
     _max?: NestedEnumSistemKuliahFilter<$PrismaModel>
   }
+
+  export type NestedEnumJenisSkAsessmenNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.JenisSkAsessmen | EnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    in?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumJenisSkAsessmenNullableFilter<$PrismaModel> | $Enums.JenisSkAsessmen | null
+  }
+
+  export type NestedEnumJenisSkAsessmenNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.JenisSkAsessmen | EnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    in?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.JenisSkAsessmen[] | ListEnumJenisSkAsessmenFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumJenisSkAsessmenNullableWithAggregatesFilter<$PrismaModel> | $Enums.JenisSkAsessmen | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumJenisSkAsessmenNullableFilter<$PrismaModel>
+    _max?: NestedEnumJenisSkAsessmenNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -119578,13 +120128,6 @@ export namespace Prisma {
     not?: NestedEnumJenisKelaminFilter<$PrismaModel> | $Enums.JenisKelamin
   }
 
-  export type NestedBytesNullableFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
-  }
-
   export type NestedEnumJenisKelaminWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.JenisKelamin | EnumJenisKelaminFieldRefInput<$PrismaModel>
     in?: $Enums.JenisKelamin[] | ListEnumJenisKelaminFieldRefInput<$PrismaModel>
@@ -119593,27 +120136,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumJenisKelaminFilter<$PrismaModel>
     _max?: NestedEnumJenisKelaminFilter<$PrismaModel>
-  }
-
-  export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBytesNullableFilter<$PrismaModel>
-    _max?: NestedBytesNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDecimalNullableFilter<$PrismaModel = never> = {
@@ -119641,22 +120163,6 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -119696,6 +120202,40 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedBytesFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Bytes
+  }
+
+  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel>
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Bytes
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
+  }
+
+  export type NestedBytesNullableFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
+  }
+
+  export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Bytes | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBytesNullableFilter<$PrismaModel>
+    _max?: NestedBytesNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumStatusTiketBantuanFilter<$PrismaModel = never> = {
@@ -119819,7 +120359,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -119846,7 +120386,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -119990,7 +120530,7 @@ export namespace Prisma {
     TanggalLahir?: DateTimeNullableFilter<"User"> | Date | string | null
     JenisKelamin?: EnumJenisKelaminFilter<"User"> | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFilter<"User"> | $Enums.Jenjang
-    Avatar?: BytesNullableFilter<"User"> | Bytes | null
+    Avatar?: StringNullableFilter<"User"> | string | null
     Agama?: StringNullableFilter<"User"> | string | null
     Telepon?: StringNullableFilter<"User"> | string | null
     NomorWa?: StringNullableFilter<"User"> | string | null
@@ -120035,7 +120575,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -120063,7 +120603,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -120168,7 +120708,6 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutAssesorMahasiswaInput
-    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAssesorMahasiswaInput
   }
 
   export type AssesorMahasiswaUncheckedCreateWithoutAsesorInput = {
@@ -120178,7 +120717,6 @@ export namespace Prisma {
     Confirmation?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAssesorMahasiswaInput
   }
 
   export type AssesorMahasiswaCreateOrConnectWithoutAsesorInput = {
@@ -120206,6 +120744,24 @@ export namespace Prisma {
 
   export type AsesorProgramStudiCreateManyAsesorInputEnvelope = {
     data: AsesorProgramStudiCreateManyAsesorInput | AsesorProgramStudiCreateManyAsesorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SkRektorAssesorCreateWithoutAsesorInput = {
+    SkRektor: SkRektorCreateNestedOneWithoutSkRektorAssesorInput
+  }
+
+  export type SkRektorAssesorUncheckedCreateWithoutAsesorInput = {
+    SkRektorId: string
+  }
+
+  export type SkRektorAssesorCreateOrConnectWithoutAsesorInput = {
+    where: SkRektorAssesorWhereUniqueInput
+    create: XOR<SkRektorAssesorCreateWithoutAsesorInput, SkRektorAssesorUncheckedCreateWithoutAsesorInput>
+  }
+
+  export type SkRektorAssesorCreateManyAsesorInputEnvelope = {
+    data: SkRektorAssesorCreateManyAsesorInput | SkRektorAssesorCreateManyAsesorInput[]
     skipDuplicates?: boolean
   }
 
@@ -120260,7 +120816,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -120288,7 +120844,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -120425,6 +120981,30 @@ export namespace Prisma {
     ProgramStudiId?: StringFilter<"AsesorProgramStudi"> | string
   }
 
+  export type SkRektorAssesorUpsertWithWhereUniqueWithoutAsesorInput = {
+    where: SkRektorAssesorWhereUniqueInput
+    update: XOR<SkRektorAssesorUpdateWithoutAsesorInput, SkRektorAssesorUncheckedUpdateWithoutAsesorInput>
+    create: XOR<SkRektorAssesorCreateWithoutAsesorInput, SkRektorAssesorUncheckedCreateWithoutAsesorInput>
+  }
+
+  export type SkRektorAssesorUpdateWithWhereUniqueWithoutAsesorInput = {
+    where: SkRektorAssesorWhereUniqueInput
+    data: XOR<SkRektorAssesorUpdateWithoutAsesorInput, SkRektorAssesorUncheckedUpdateWithoutAsesorInput>
+  }
+
+  export type SkRektorAssesorUpdateManyWithWhereWithoutAsesorInput = {
+    where: SkRektorAssesorScalarWhereInput
+    data: XOR<SkRektorAssesorUpdateManyMutationInput, SkRektorAssesorUncheckedUpdateManyWithoutAsesorInput>
+  }
+
+  export type SkRektorAssesorScalarWhereInput = {
+    AND?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
+    OR?: SkRektorAssesorScalarWhereInput[]
+    NOT?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
+    SkRektorId?: StringFilter<"SkRektorAssesor"> | string
+    AsesorId?: StringFilter<"SkRektorAssesor"> | string
+  }
+
   export type AsesorCreateWithoutAsesorAkademikInput = {
     AsesorId?: string
     CreatedAt?: Date | string | null
@@ -120435,6 +121015,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutAsesorAkademikInput = {
@@ -120447,6 +121028,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutAsesorAkademikInput = {
@@ -120501,6 +121083,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutAsesorAkademikInput = {
@@ -120513,6 +121096,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorAkademikKeanggotaanAsosiasiUpsertWithWhereUniqueWithoutAsesorAkademikInput = {
@@ -120625,6 +121209,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutAsesorPraktisiInput = {
@@ -120637,6 +121222,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutAsesorPraktisiInput = {
@@ -120665,6 +121251,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutAsesorPraktisiInput = {
@@ -120677,6 +121264,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorCreateWithoutAssesorMahasiswaInput = {
@@ -120689,6 +121277,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutAssesorMahasiswaInput = {
@@ -120701,6 +121290,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutAssesorMahasiswaInput = {
@@ -120775,24 +121365,6 @@ export namespace Prisma {
     create: XOR<PendaftaranCreateWithoutAssesorMahasiswaInput, PendaftaranUncheckedCreateWithoutAssesorMahasiswaInput>
   }
 
-  export type SkRektorAssesorCreateWithoutAssesorMahasiswaInput = {
-    SkRektor: SkRektorCreateNestedOneWithoutSkRektorAssesorInput
-  }
-
-  export type SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput = {
-    SkRektorId: string
-  }
-
-  export type SkRektorAssesorCreateOrConnectWithoutAssesorMahasiswaInput = {
-    where: SkRektorAssesorWhereUniqueInput
-    create: XOR<SkRektorAssesorCreateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput>
-  }
-
-  export type SkRektorAssesorCreateManyAssesorMahasiswaInputEnvelope = {
-    data: SkRektorAssesorCreateManyAssesorMahasiswaInput | SkRektorAssesorCreateManyAssesorMahasiswaInput[]
-    skipDuplicates?: boolean
-  }
-
   export type AsesorUpsertWithoutAssesorMahasiswaInput = {
     update: XOR<AsesorUpdateWithoutAssesorMahasiswaInput, AsesorUncheckedUpdateWithoutAssesorMahasiswaInput>
     create: XOR<AsesorCreateWithoutAssesorMahasiswaInput, AsesorUncheckedCreateWithoutAssesorMahasiswaInput>
@@ -120814,6 +121386,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutAssesorMahasiswaInput = {
@@ -120826,6 +121399,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type PendaftaranUpsertWithoutAssesorMahasiswaInput = {
@@ -120899,30 +121473,6 @@ export namespace Prisma {
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
     StatusMahasiswaAssesmentHistory?: StatusMahasiswaAssesmentHistoryUncheckedUpdateManyWithoutPendaftaranNestedInput
     transkripNilais?: TranskripNilaiUncheckedUpdateManyWithoutPendaftaranNestedInput
-  }
-
-  export type SkRektorAssesorUpsertWithWhereUniqueWithoutAssesorMahasiswaInput = {
-    where: SkRektorAssesorWhereUniqueInput
-    update: XOR<SkRektorAssesorUpdateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedUpdateWithoutAssesorMahasiswaInput>
-    create: XOR<SkRektorAssesorCreateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedCreateWithoutAssesorMahasiswaInput>
-  }
-
-  export type SkRektorAssesorUpdateWithWhereUniqueWithoutAssesorMahasiswaInput = {
-    where: SkRektorAssesorWhereUniqueInput
-    data: XOR<SkRektorAssesorUpdateWithoutAssesorMahasiswaInput, SkRektorAssesorUncheckedUpdateWithoutAssesorMahasiswaInput>
-  }
-
-  export type SkRektorAssesorUpdateManyWithWhereWithoutAssesorMahasiswaInput = {
-    where: SkRektorAssesorScalarWhereInput
-    data: XOR<SkRektorAssesorUpdateManyMutationInput, SkRektorAssesorUncheckedUpdateManyWithoutAssesorMahasiswaInput>
-  }
-
-  export type SkRektorAssesorScalarWhereInput = {
-    AND?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
-    OR?: SkRektorAssesorScalarWhereInput[]
-    NOT?: SkRektorAssesorScalarWhereInput | SkRektorAssesorScalarWhereInput[]
-    SkRektorId?: StringFilter<"SkRektorAssesor"> | string
-    AssesorMahasiswaId?: StringFilter<"SkRektorAssesor"> | string
   }
 
   export type PendaftaranCreateWithoutBuktiFormInput = {
@@ -121205,7 +121755,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutBuktiFormPagesInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -121219,7 +121769,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -121245,7 +121795,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutBuktiFormPagesInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -121259,7 +121809,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -121269,7 +121819,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutBuktiFormEvaluasiDiriInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -121283,7 +121833,7 @@ export namespace Prisma {
     PendaftaranId: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -121336,7 +121886,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutBuktiFormEvaluasiDiriInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -121350,7 +121900,7 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -122643,7 +123193,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutJenisDokumenInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -122656,7 +123206,7 @@ export namespace Prisma {
     BuktiFormId?: string
     PendaftaranId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -122698,7 +123248,7 @@ export namespace Prisma {
     PendaftaranId?: StringFilter<"BuktiForm"> | string
     JenisDokumenId?: StringFilter<"BuktiForm"> | string
     NamaFile?: StringFilter<"BuktiForm"> | string
-    FileData?: BytesFilter<"BuktiForm"> | Bytes
+    PathFile?: StringFilter<"BuktiForm"> | string
     NamaDokumen?: StringFilter<"BuktiForm"> | string
     CreatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"BuktiForm"> | Date | string | null
@@ -122887,7 +123437,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -122915,7 +123465,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -123029,7 +123579,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -123057,7 +123607,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -124612,7 +125162,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -124640,7 +125190,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -124711,7 +125261,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -124739,7 +125289,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -124794,7 +125344,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -124822,7 +125372,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -124899,7 +125449,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -124927,7 +125477,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -124954,6 +125504,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutAsesorProgramStudiInput = {
@@ -124966,6 +125517,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutAsesorProgramStudiInput = {
@@ -125025,6 +125577,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutAsesorProgramStudiInput = {
@@ -125037,6 +125590,7 @@ export namespace Prisma {
     AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type ProgramStudiUpsertWithoutAsesorProgramStudiInput = {
@@ -125384,7 +125938,6 @@ export namespace Prisma {
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Asesor: AsesorCreateNestedOneWithoutAssesorMahasiswaInput
-    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAssesorMahasiswaInput
   }
 
   export type AssesorMahasiswaUncheckedCreateWithoutPendaftaranInput = {
@@ -125394,7 +125947,6 @@ export namespace Prisma {
     Confirmation?: boolean
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAssesorMahasiswaInput
   }
 
   export type AssesorMahasiswaCreateOrConnectWithoutPendaftaranInput = {
@@ -125410,7 +125962,7 @@ export namespace Prisma {
   export type BuktiFormCreateWithoutPendaftaranInput = {
     BuktiFormId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -125423,7 +125975,7 @@ export namespace Prisma {
     BuktiFormId?: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -127770,9 +128322,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutSkRektorInput
@@ -127785,9 +128354,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutSkRektorInput
@@ -127830,9 +128416,26 @@ export namespace Prisma {
     TahunSk?: IntFilter<"SkRektor"> | number
     NomorSk?: StringFilter<"SkRektor"> | string
     NamaFile?: StringFilter<"SkRektor"> | string
-    FileData?: BytesFilter<"SkRektor"> | Bytes
+    PathFile?: StringFilter<"SkRektor"> | string
     NamaDokumen?: StringFilter<"SkRektor"> | string
     Catatan?: StringNullableFilter<"SkRektor"> | string | null
+    JenisSkAsessmen?: EnumJenisSkAsessmenNullableFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFilter<"SkRektor"> | boolean
+    DipublikasikanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    NomorSuratSisurat?: StringNullableFilter<"SkRektor"> | string | null
+    NomorSuratPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    Disetujui?: BoolFilter<"SkRektor"> | boolean
+    DisetujuiPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    DisetujuiOleh?: StringNullableFilter<"SkRektor"> | string | null
+    Ditandatangani?: BoolFilter<"SkRektor"> | boolean
+    TandaTanganPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    TandaTanganOleh?: StringNullableFilter<"SkRektor"> | string | null
+    QrToken?: StringNullableFilter<"SkRektor"> | string | null
+    QrVerifyUrl?: StringNullableFilter<"SkRektor"> | string | null
+    QrDocumentId?: IntNullableFilter<"SkRektor"> | number | null
+    QrOfficialId?: IntNullableFilter<"SkRektor"> | number | null
+    QrOfficialNama?: StringNullableFilter<"SkRektor"> | string | null
+    QrOfficialJabatan?: StringNullableFilter<"SkRektor"> | string | null
     CreatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
   }
@@ -127853,11 +128456,11 @@ export namespace Prisma {
   }
 
   export type SkRektorAssesorCreateWithoutSkRektorInput = {
-    AssesorMahasiswa: AssesorMahasiswaCreateNestedOneWithoutSkRektorAssesorInput
+    Asesor: AsesorCreateNestedOneWithoutSkRektorAssesorInput
   }
 
   export type SkRektorAssesorUncheckedCreateWithoutSkRektorInput = {
-    AssesorMahasiswaId: string
+    AsesorId: string
   }
 
   export type SkRektorAssesorCreateOrConnectWithoutSkRektorInput = {
@@ -127947,9 +128550,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
@@ -127963,9 +128583,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedCreateNestedManyWithoutSkRektorInput
@@ -127976,29 +128613,35 @@ export namespace Prisma {
     create: XOR<SkRektorCreateWithoutSkRektorAssesorInput, SkRektorUncheckedCreateWithoutSkRektorAssesorInput>
   }
 
-  export type AssesorMahasiswaCreateWithoutSkRektorAssesorInput = {
-    AssesorMahasiswaId?: string
-    Urutan: number
-    Confirmation?: boolean
+  export type AsesorCreateWithoutSkRektorAssesorInput = {
+    AsesorId?: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
-    Asesor: AsesorCreateNestedOneWithoutAssesorMahasiswaInput
-    Pendaftaran: PendaftaranCreateNestedOneWithoutAssesorMahasiswaInput
+    DeletedAt?: Date | string | null
+    TipeAsesor: TipeAsesorCreateNestedOneWithoutAsesorInput
+    User: UserCreateNestedOneWithoutAsesorInput
+    AsesorAkademik?: AsesorAkademikCreateNestedManyWithoutAsesorInput
+    AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
+    AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
   }
 
-  export type AssesorMahasiswaUncheckedCreateWithoutSkRektorAssesorInput = {
-    AssesorMahasiswaId?: string
-    PendaftaranId: string
-    AsesorId: string
-    Urutan: number
-    Confirmation?: boolean
+  export type AsesorUncheckedCreateWithoutSkRektorAssesorInput = {
+    AsesorId?: string
+    TipeAsesorId: string
+    UserId: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
+    DeletedAt?: Date | string | null
+    AsesorAkademik?: AsesorAkademikUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
   }
 
-  export type AssesorMahasiswaCreateOrConnectWithoutSkRektorAssesorInput = {
-    where: AssesorMahasiswaWhereUniqueInput
-    create: XOR<AssesorMahasiswaCreateWithoutSkRektorAssesorInput, AssesorMahasiswaUncheckedCreateWithoutSkRektorAssesorInput>
+  export type AsesorCreateOrConnectWithoutSkRektorAssesorInput = {
+    where: AsesorWhereUniqueInput
+    create: XOR<AsesorCreateWithoutSkRektorAssesorInput, AsesorUncheckedCreateWithoutSkRektorAssesorInput>
   }
 
   export type SkRektorUpsertWithoutSkRektorAssesorInput = {
@@ -128018,9 +128661,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
@@ -128034,43 +128694,66 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorMahasiswa?: SkRektorMahasiswaUncheckedUpdateManyWithoutSkRektorNestedInput
   }
 
-  export type AssesorMahasiswaUpsertWithoutSkRektorAssesorInput = {
-    update: XOR<AssesorMahasiswaUpdateWithoutSkRektorAssesorInput, AssesorMahasiswaUncheckedUpdateWithoutSkRektorAssesorInput>
-    create: XOR<AssesorMahasiswaCreateWithoutSkRektorAssesorInput, AssesorMahasiswaUncheckedCreateWithoutSkRektorAssesorInput>
-    where?: AssesorMahasiswaWhereInput
+  export type AsesorUpsertWithoutSkRektorAssesorInput = {
+    update: XOR<AsesorUpdateWithoutSkRektorAssesorInput, AsesorUncheckedUpdateWithoutSkRektorAssesorInput>
+    create: XOR<AsesorCreateWithoutSkRektorAssesorInput, AsesorUncheckedCreateWithoutSkRektorAssesorInput>
+    where?: AsesorWhereInput
   }
 
-  export type AssesorMahasiswaUpdateToOneWithWhereWithoutSkRektorAssesorInput = {
-    where?: AssesorMahasiswaWhereInput
-    data: XOR<AssesorMahasiswaUpdateWithoutSkRektorAssesorInput, AssesorMahasiswaUncheckedUpdateWithoutSkRektorAssesorInput>
+  export type AsesorUpdateToOneWithWhereWithoutSkRektorAssesorInput = {
+    where?: AsesorWhereInput
+    data: XOR<AsesorUpdateWithoutSkRektorAssesorInput, AsesorUncheckedUpdateWithoutSkRektorAssesorInput>
   }
 
-  export type AssesorMahasiswaUpdateWithoutSkRektorAssesorInput = {
-    AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
-    Urutan?: IntFieldUpdateOperationsInput | number
-    Confirmation?: BoolFieldUpdateOperationsInput | boolean
-    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    Asesor?: AsesorUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
-    Pendaftaran?: PendaftaranUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
-  }
-
-  export type AssesorMahasiswaUncheckedUpdateWithoutSkRektorAssesorInput = {
-    AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
-    PendaftaranId?: StringFieldUpdateOperationsInput | string
+  export type AsesorUpdateWithoutSkRektorAssesorInput = {
     AsesorId?: StringFieldUpdateOperationsInput | string
-    Urutan?: IntFieldUpdateOperationsInput | number
-    Confirmation?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TipeAsesor?: TipeAsesorUpdateOneRequiredWithoutAsesorNestedInput
+    User?: UserUpdateOneRequiredWithoutAsesorNestedInput
+    AsesorAkademik?: AsesorAkademikUpdateManyWithoutAsesorNestedInput
+    AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
+    AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+  }
+
+  export type AsesorUncheckedUpdateWithoutSkRektorAssesorInput = {
+    AsesorId?: StringFieldUpdateOperationsInput | string
+    TipeAsesorId?: StringFieldUpdateOperationsInput | string
+    UserId?: StringFieldUpdateOperationsInput | string
+    CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DeletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    AsesorAkademik?: AsesorAkademikUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
+    AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
+    AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type SkRektorCreateWithoutSkRektorMahasiswaInput = {
@@ -128079,9 +128762,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     TipeSkRektor: TipeSkRektorCreateNestedOneWithoutSkRektorInput
@@ -128095,9 +128795,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutSkRektorInput
@@ -128192,9 +128909,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     TipeSkRektor?: TipeSkRektorUpdateOneRequiredWithoutSkRektorNestedInput
@@ -128208,9 +128942,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutSkRektorNestedInput
@@ -128740,6 +129491,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutTipeAsesorInput = {
@@ -128752,6 +129504,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutTipeAsesorInput = {
@@ -129621,6 +130374,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorUncheckedCreateWithoutUserInput = {
@@ -129633,6 +130387,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedCreateNestedManyWithoutAsesorInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutAsesorInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedCreateNestedManyWithoutAsesorInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedCreateNestedManyWithoutAsesorInput
   }
 
   export type AsesorCreateOrConnectWithoutUserInput = {
@@ -130003,7 +130758,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -130031,7 +130786,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -130073,7 +130828,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -130101,7 +130856,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -130127,7 +130882,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -130155,7 +130910,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -130197,7 +130952,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -130225,7 +130980,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -131566,7 +132321,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -131594,7 +132349,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -131677,7 +132432,7 @@ export namespace Prisma {
   export type TicketsFileCreateWithoutTicketsInput = {
     TicketsFileId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string
     UpdatedAt?: Date | string
@@ -131686,7 +132441,7 @@ export namespace Prisma {
   export type TicketsFileUncheckedCreateWithoutTicketsInput = {
     TicketsFileId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string
     UpdatedAt?: Date | string
@@ -131722,7 +132477,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -131750,7 +132505,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -131860,7 +132615,7 @@ export namespace Prisma {
     TicketsFileId?: StringFilter<"TicketsFile"> | string
     TicketsId?: StringFilter<"TicketsFile"> | string
     NamaFile?: StringFilter<"TicketsFile"> | string
-    FileData?: BytesFilter<"TicketsFile"> | Bytes
+    PathFile?: StringFilter<"TicketsFile"> | string
     NamaDokumen?: StringFilter<"TicketsFile"> | string
     CreatedAt?: DateTimeFilter<"TicketsFile"> | Date | string
     UpdatedAt?: DateTimeFilter<"TicketsFile"> | Date | string
@@ -132273,7 +133028,7 @@ export namespace Prisma {
     TanggalLahir?: Date | string | null
     JenisKelamin?: $Enums.JenisKelamin
     PendidikanTerakhir?: $Enums.Jenjang
-    Avatar?: Bytes | null
+    Avatar?: string | null
     Agama?: string | null
     Telepon?: string | null
     NomorWa?: string | null
@@ -132375,7 +133130,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -132402,7 +133157,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -132429,7 +133184,7 @@ export namespace Prisma {
     TanggalLahir?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     JenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
     PendidikanTerakhir?: EnumJenjangFieldUpdateOperationsInput | $Enums.Jenjang
-    Avatar?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    Avatar?: NullableStringFieldUpdateOperationsInput | string | null
     Agama?: NullableStringFieldUpdateOperationsInput | string | null
     Telepon?: NullableStringFieldUpdateOperationsInput | string | null
     NomorWa?: NullableStringFieldUpdateOperationsInput | string | null
@@ -132478,6 +133233,10 @@ export namespace Prisma {
 
   export type AsesorProgramStudiCreateManyAsesorInput = {
     ProgramStudiId: string
+  }
+
+  export type SkRektorAssesorCreateManyAsesorInput = {
+    SkRektorId: string
   }
 
   export type AsesorAkademikUpdateWithoutAsesorInput = {
@@ -132570,7 +133329,6 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
-    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAssesorMahasiswaNestedInput
   }
 
   export type AssesorMahasiswaUncheckedUpdateWithoutAsesorInput = {
@@ -132580,7 +133338,6 @@ export namespace Prisma {
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAssesorMahasiswaNestedInput
   }
 
   export type AssesorMahasiswaUncheckedUpdateManyWithoutAsesorInput = {
@@ -132602,6 +133359,18 @@ export namespace Prisma {
 
   export type AsesorProgramStudiUncheckedUpdateManyWithoutAsesorInput = {
     ProgramStudiId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkRektorAssesorUpdateWithoutAsesorInput = {
+    SkRektor?: SkRektorUpdateOneRequiredWithoutSkRektorAssesorNestedInput
+  }
+
+  export type SkRektorAssesorUncheckedUpdateWithoutAsesorInput = {
+    SkRektorId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkRektorAssesorUncheckedUpdateManyWithoutAsesorInput = {
+    SkRektorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AsesorAkademikKeanggotaanAsosiasiCreateManyAsesorAkademikInput = {
@@ -132634,22 +133403,6 @@ export namespace Prisma {
     NomorKeanggotaan?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type SkRektorAssesorCreateManyAssesorMahasiswaInput = {
-    SkRektorId: string
-  }
-
-  export type SkRektorAssesorUpdateWithoutAssesorMahasiswaInput = {
-    SkRektor?: SkRektorUpdateOneRequiredWithoutSkRektorAssesorNestedInput
-  }
-
-  export type SkRektorAssesorUncheckedUpdateWithoutAssesorMahasiswaInput = {
-    SkRektorId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type SkRektorAssesorUncheckedUpdateManyWithoutAssesorMahasiswaInput = {
-    SkRektorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type BuktiFormEvaluasiDiriCreateManyBuktiFormInput = {
@@ -132906,7 +133659,7 @@ export namespace Prisma {
     BuktiFormId?: string
     PendaftaranId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -132915,7 +133668,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutJenisDokumenInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -132928,7 +133681,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -132940,7 +133693,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -133333,7 +134086,7 @@ export namespace Prisma {
     BuktiFormId?: string
     JenisDokumenId: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
@@ -133514,7 +134267,6 @@ export namespace Prisma {
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Asesor?: AsesorUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
-    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAssesorMahasiswaNestedInput
   }
 
   export type AssesorMahasiswaUncheckedUpdateWithoutPendaftaranInput = {
@@ -133524,7 +134276,6 @@ export namespace Prisma {
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAssesorMahasiswaNestedInput
   }
 
   export type AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranInput = {
@@ -133539,7 +134290,7 @@ export namespace Prisma {
   export type BuktiFormUpdateWithoutPendaftaranInput = {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -133552,7 +134303,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -133564,7 +134315,7 @@ export namespace Prisma {
     BuktiFormId?: StringFieldUpdateOperationsInput | string
     JenisDokumenId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -134468,9 +135219,26 @@ export namespace Prisma {
     TahunSk?: number
     NomorSk: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     Catatan?: string | null
+    JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: boolean
+    DipublikasikanPada?: Date | string | null
+    NomorSuratSisurat?: string | null
+    NomorSuratPada?: Date | string | null
+    Disetujui?: boolean
+    DisetujuiPada?: Date | string | null
+    DisetujuiOleh?: string | null
+    Ditandatangani?: boolean
+    TandaTanganPada?: Date | string | null
+    TandaTanganOleh?: string | null
+    QrToken?: string | null
+    QrVerifyUrl?: string | null
+    QrDocumentId?: number | null
+    QrOfficialId?: number | null
+    QrOfficialNama?: string | null
+    QrOfficialJabatan?: string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -134481,9 +135249,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutSkRektorNestedInput
@@ -134496,9 +135281,26 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutSkRektorNestedInput
@@ -134511,15 +135313,32 @@ export namespace Prisma {
     TahunSk?: IntFieldUpdateOperationsInput | number
     NomorSk?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     Catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
+    Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
+    DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
+    NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    Disetujui?: BoolFieldUpdateOperationsInput | boolean
+    DisetujuiPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DisetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    Ditandatangani?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    TandaTanganOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    QrToken?: NullableStringFieldUpdateOperationsInput | string | null
+    QrVerifyUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    QrDocumentId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialId?: NullableIntFieldUpdateOperationsInput | number | null
+    QrOfficialNama?: NullableStringFieldUpdateOperationsInput | string | null
+    QrOfficialJabatan?: NullableStringFieldUpdateOperationsInput | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SkRektorAssesorCreateManySkRektorInput = {
-    AssesorMahasiswaId: string
+    AsesorId: string
   }
 
   export type SkRektorMahasiswaCreateManySkRektorInput = {
@@ -134527,15 +135346,15 @@ export namespace Prisma {
   }
 
   export type SkRektorAssesorUpdateWithoutSkRektorInput = {
-    AssesorMahasiswa?: AssesorMahasiswaUpdateOneRequiredWithoutSkRektorAssesorNestedInput
+    Asesor?: AsesorUpdateOneRequiredWithoutSkRektorAssesorNestedInput
   }
 
   export type SkRektorAssesorUncheckedUpdateWithoutSkRektorInput = {
-    AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
+    AsesorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SkRektorAssesorUncheckedUpdateManyWithoutSkRektorInput = {
-    AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
+    AsesorId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SkRektorMahasiswaUpdateWithoutSkRektorInput = {
@@ -134644,6 +135463,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutTipeAsesorInput = {
@@ -134656,6 +135476,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateManyWithoutTipeAsesorInput = {
@@ -135099,6 +135920,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateWithoutUserInput = {
@@ -135111,6 +135933,7 @@ export namespace Prisma {
     AsesorPraktisi?: AsesorPraktisiUncheckedUpdateManyWithoutAsesorNestedInput
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutAsesorNestedInput
     AsesorProgramStudi?: AsesorProgramStudiUncheckedUpdateManyWithoutAsesorNestedInput
+    SkRektorAssesor?: SkRektorAssesorUncheckedUpdateManyWithoutAsesorNestedInput
   }
 
   export type AsesorUncheckedUpdateManyWithoutUserInput = {
@@ -135573,7 +136396,7 @@ export namespace Prisma {
   export type TicketsFileCreateManyTicketsInput = {
     TicketsFileId?: string
     NamaFile: string
-    FileData: Bytes
+    PathFile: string
     NamaDokumen: string
     CreatedAt?: Date | string
     UpdatedAt?: Date | string
@@ -135582,7 +136405,7 @@ export namespace Prisma {
   export type TicketsFileUpdateWithoutTicketsInput = {
     TicketsFileId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -135591,7 +136414,7 @@ export namespace Prisma {
   export type TicketsFileUncheckedUpdateWithoutTicketsInput = {
     TicketsFileId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -135600,7 +136423,7 @@ export namespace Prisma {
   export type TicketsFileUncheckedUpdateManyWithoutTicketsInput = {
     TicketsFileId?: StringFieldUpdateOperationsInput | string
     NamaFile?: StringFieldUpdateOperationsInput | string
-    FileData?: BytesFieldUpdateOperationsInput | Bytes
+    PathFile?: StringFieldUpdateOperationsInput | string
     NamaDokumen?: StringFieldUpdateOperationsInput | string
     CreatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     UpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

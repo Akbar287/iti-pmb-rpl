@@ -20,6 +20,18 @@ import {
 
 const DIAGRAM = `
 flowchart TB
+    subgraph prasyarat["Pra-syarat: Pendaftaran Asesor (berlaku kontinu)"]
+        direction LR
+        A0(["●"])
+        a1["A1. Pendaftaran\\nAsesor"]
+        a2["A2. Penerbitan SK\\nPenugasan Asesor"]
+        a3{"Disetujui\\nWakil Rektor ?"}
+        a4["A3. Asesor Aktif\\n(siap ditunjuk)"]
+        A0 --> a1 --> a2 --> a3
+        a3 -->|Tidak| a2
+        a3 -->|Ya| a4
+    end
+
     subgraph pmb["PMB"]
         direction LR
         S(["●"])
@@ -33,8 +45,8 @@ flowchart TB
         n2b["2b. Upload\\nDokumen"]
         n3["3. Asesmen\\nMandiri"]
         gwD{"Disanggah ?"}
-        n9a["9a. Sanggahan"]
-        n10a["10a. Hasil Final\\nAsesmen"]
+        n9a["8a. Sanggahan"]
+        n10a["9. Hasil Final\\nAsesmen"]
         n2a --> n2b --> n3
         gwD -->|T| n10a
         gwD -->|Y| n9a
@@ -47,61 +59,68 @@ flowchart TB
 
     subgraph asesor["Asesor"]
         direction LR
-        n7["7. Asesmen\\nOleh Asesor"]
-        n8["8. Rekapitulasi\\nHasil Asesmen"]
-        n9b["9b. Perbaikan\\nAsesmen"]
+        n7["6. Asesmen\\nOleh Asesor"]
+        n8["7. Rekapitulasi\\nHasil Asesmen"]
+        n9b["8b. Perbaikan\\nAsesmen"]
         n7 --> n8
         n9b --> n8
     end
 
     subgraph akademik["Akademik"]
         direction LR
-        n6["6. Penerbitan SK\\nPenugasan Asesor"]
-        n10b["10b. Upload\\nDraft SK Final"]
-        n12["12. Penerbitan SK\\nHasil Asesmen"]
+        n12["10. Terbitkan SK dari Template\\n(Perolehan &/atau Transfer SKS)"]
         n13["13. Sinkronisasi\\nHasil Asesmen"]
         n14["14. Selesai"]
         E(["●"])
-        n12 --> n13 --> n14 --> E
+        n13 --> n14 --> E
+    end
+
+    subgraph rektor["Rektor"]
+        direction LR
+        n12b["12. Penandatanganan\\nSK (QR)"]
     end
 
     subgraph wakilrek["Wakil Rektor A"]
         direction LR
         n5["5. Persetujuan\\nPenunjukan Asesor"]
         gw1{"Disetujui ?"}
-        n11["11. Persetujuan\\nHasil Asesmen"]
-        gw2{"Disetujui ?"}
+        n11b["11. Persetujuan\\nSK Asesmen"]
+        gw3{"SK Disetujui ?"}
         n5 --> gw1
-        n11 --> gw2
+        n11b --> gw3
     end
 
     n1    --> n2a
     n3    --> n4
     n4    --> n5
     gw1   -->|Tidak| n4
-    gw1   -->|Ya| n6
-    n6    --> n7
+    gw1   -->|Ya| n7
+    a4    -.->|asesor ber-SK| n4
     n8    --> gwD
     n9a   --> n9b
-    n10a  --> n10b
-    n10b  --> n11
-    gw2   -->|Ya| n12
+    n10a  --> n12
+    n12   --> n11b
+    gw3   -->|Tidak| n12
+    gw3   -->|Ya| n12b
+    n12b  --> n13
 
     classDef task    fill:#bfdbfe,stroke:#3b82f6,color:#1e3a8a
     classDef gw      fill:#fef08a,stroke:#ca8a04,color:#78350f
     classDef startEv fill:#22c55e,stroke:#15803d,color:#fff
     classDef endEv   fill:#dc2626,stroke:#991b1b,color:#fff
 
-    class S startEv
+    class S,A0 startEv
     class E endEv
-    class n1,n2a,n2b,n3,n4,n5,n6,n7,n8,n9a,n9b,n10a,n10b,n11,n12,n13,n14 task
-    class gwD,gw1,gw2 gw
+    class n1,n2a,n2b,n3,n4,n5,n7,n8,n9a,n9b,n10a,n11b,n12,n12b,n13,n14,a1,a2,a4 task
+    class gwD,gw1,gw3,a3 gw
 
+    style prasyarat fill:#fff7ed,stroke:#fb923c,color:#7c2d12
     style pmb      fill:#f8fafc,stroke:#94a3b8,color:#1e293b
     style mhs      fill:#f8fafc,stroke:#94a3b8,color:#1e293b
     style kaprodi  fill:#f8fafc,stroke:#94a3b8,color:#1e293b
     style asesor   fill:#f8fafc,stroke:#94a3b8,color:#1e293b
     style akademik fill:#f8fafc,stroke:#94a3b8,color:#1e293b
+    style rektor   fill:#f8fafc,stroke:#94a3b8,color:#1e293b
     style wakilrek fill:#f8fafc,stroke:#94a3b8,color:#1e293b
 `
 

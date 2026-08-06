@@ -3,49 +3,87 @@ import { JenisKelamin, Jenjang, PrismaClient } from "../src/generated/prisma";
 const prisma = new PrismaClient();
 
 async function main() {
+  // Urutan & nama harus sama persis dengan orderedStatus di
+  // src/app/api/protected/status/route.ts
   await prisma.statusMahasiswaAssesment.createMany({
     data: [
       {
-        NamaStatus: "Kelengkapan Form",
-        Icon: `data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M14%206l7%207l-4%204%22%20%2F%3E%20%3Cpath%20d%3D%22M5.828%2018.172a2.828%202.828%200%200%200%204%200l10.586%20-10.586a2%202%200%200%200%200%20-2.829l-1.171%20-1.171a2%202%200%200%200%20-2.829%200l-10.586%2010.586a2.828%202.828%200%200%200%200%204z%22%20%2F%3E%20%3Cpath%20d%3D%22M4%2020l1.768%20-1.768%22%20%2F%3E%20%3C%2Fsvg%3E%20`,
+        NamaStatus: "Pengisian Data Diri",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%206l7%207l-4%204%22%20%2F%3E%3Cpath%20d%3D%22M5.828%2018.172a2.828%202.828%200%200%200%204%200l10.586%20-10.586a2%202%200%200%200%200%20-2.829l-1.171%20-1.171a2%202%200%200%200%20-2.829%200l-10.586%2010.586a2.828%202.828%200%200%200%200%204z%22%20%2F%3E%3Cpath%20d%3D%22M4%2020l1.768%20-1.768%22%20%2F%3E%3C%2Fsvg%3E`,
         Urutan: 1,
-        Keterangan: "Mahasiswa Melengkapi Form Asessment",
+        Keterangan: "",
+      },
+      {
+        NamaStatus: "Asessmen Mandiri",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2017v-12c0%20-1.121%20-.879%20-2%20-2%20-2s-2%20.879%20-2%202v12l2%202l2%20-2z%22%20%2F%3E%3Cpath%20d%3D%22M16%207h4%22%20%2F%3E%3Cpath%20d%3D%22M18%2019h-13a2%202%200%201%201%200%20-4h4a2%202%200%201%200%200%20-4h-3%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 2,
+        Keterangan: "",
       },
       {
         NamaStatus: "Penunjukan Asesor",
-        Icon: `data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M5%207a4%204%200%201%200%208%200a4%204%200%200%200%20-8%200%22%20%2F%3E%20%3Cpath%20d%3D%22M3%2021v-2a4%204%200%200%201%204%20-4h4c.96%200%201.84%20.338%202.53%20.901%22%20%2F%3E%20%3Cpath%20d%3D%22M16%203.13a4%204%200%200%201%200%207.75%22%20%2F%3E%20%3Cpath%20d%3D%22M16%2019h6%22%20%2F%3E%20%3Cpath%20d%3D%22M19%2016v6%22%20%2F%3E%20%3C%2Fsvg%3E%20`,
-        Urutan: 2,
-        Keterangan: "2 Asesor ditunjuk Kepala Prodi untuk Asessmen 1 Mahasiswa",
-      },
-      {
-        NamaStatus: "Evaluasi Mandiri",
-        Icon: `data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M12%2019h-7a2%202%200%200%201%20-2%20-2v-11a2%202%200%200%201%202%20-2h4l3%203h7a2%202%200%200%201%202%202v3.5%22%20%2F%3E%20%3Cpath%20d%3D%22M19%2016v6%22%20%2F%3E%20%3Cpath%20d%3D%22M22%2019l-3%203l-3%20-3%22%20%2F%3E%20%3C%2Fsvg%3E%20`,
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M9%207m-4%200a4%204%200%201%200%208%200a4%204%200%201%200%20-8%200%22%20%2F%3E%3Cpath%20d%3D%22M3%2021v-2a4%204%200%200%201%204%20-4h4a4%204%200%200%201%204%204v2%22%20%2F%3E%3Cpath%20d%3D%22M16%203.13a4%204%200%200%201%200%207.75%22%20%2F%3E%3Cpath%20d%3D%22M21%2021v-2a4%204%200%200%200%20-3%20-3.85%22%20%2F%3E%3C%2Fsvg%3E`,
         Urutan: 3,
-        Keterangan: "Mahasiswa Melengkapi Evaluasi Mandiri",
+        Keterangan: "",
       },
       {
-        NamaStatus: "Hasil Asessmen",
-        Icon: `data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M10%2019h-6a1%201%200%200%201%20-1%20-1v-14a1%201%200%200%201%201%20-1h6a2%202%200%200%201%202%202a2%202%200%200%201%202%20-2h6a1%201%200%200%201%201%201v14a1%201%200%200%201%20-1%201h-6a2%202%200%200%200%20-2%202a2%202%200%200%200%20-2%20-2z%22%20%2F%3E%20%3Cpath%20d%3D%22M12%205v16%22%20%2F%3E%20%3Cpath%20d%3D%22M7%207h1%22%20%2F%3E%20%3Cpath%20d%3D%22M7%2011h1%22%20%2F%3E%20%3Cpath%20d%3D%22M16%207h1%22%20%2F%3E%20%3Cpath%20d%3D%22M16%2011h1%22%20%2F%3E%20%3Cpath%20d%3D%22M16%2015h1%22%20%2F%3E%20%3C%2Fsvg%3E%20`,
+        NamaStatus: "Persetujuan Penunjukan Asesor",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%2019a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M12%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M21%206l0%2013%22%20%2F%3E%3C%2Fsvg%3E`,
         Urutan: 4,
-        Keterangan: "Hasil Asessmen Sudah Selesai",
+        Keterangan: "",
+      },
+      {
+        NamaStatus: "Asessmen Oleh Asesor",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%2015m-4%200a4%204%200%201%200%208%200a4%204%200%201%200%20-8%200%22%20%2F%3E%3Cpath%20d%3D%22M18.5%2018.5l2.5%202.5%22%20%2F%3E%3Cpath%20d%3D%22M4%206h16%22%20%2F%3E%3Cpath%20d%3D%22M4%2012h4%22%20%2F%3E%3Cpath%20d%3D%22M4%2018h4%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 5,
+        Keterangan: "",
+      },
+      {
+        NamaStatus: "Rekapitulasi Asessmen",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M14%2020h-8a2%202%200%200%201%20-2%20-2v-12a2%202%200%200%201%202%20-2h12v5%22%20%2F%3E%3Cpath%20d%3D%22M11%2016h-5a2%202%200%200%200%20-2%202%22%20%2F%3E%3Cpath%20d%3D%22M15%2016l3%20-3l3%203%22%20%2F%3E%3Cpath%20d%3D%22M18%2013v9%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 6,
+        Keterangan: "",
       },
       {
         NamaStatus: "Sanggahan",
-        Icon: `data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M7%203h10a2%202%200%200%201%202%202v10m0%204a2%202%200%200%201%20-2%202h-10a2%202%200%200%201%20-2%20-2v-14%22%20%2F%3E%20%3Cpath%20d%3D%22M11%207h4%22%20%2F%3E%20%3Cpath%20d%3D%22M9%2011h2%22%20%2F%3E%20%3Cpath%20d%3D%22M9%2015h4%22%20%2F%3E%20%3Cpath%20d%3D%22M3%203l18%2018%22%20%2F%3E%20%3C%2Fsvg%3E%20`,
-        Urutan: 5,
-        Keterangan: "Mahasiswa Menyanggah Hasil Asessmen",
-      },
-      {
-        NamaStatus: "Rekapitulasi Hasil",
-        Icon: `data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M15%208h.01%22%20%2F%3E%20%3Cpath%20d%3D%22M11.5%2021h-5.5a3%203%200%200%201%20-3%20-3v-12a3%203%200%200%201%203%20-3h12a3%203%200%200%201%203%203v7%22%20%2F%3E%20%3Cpath%20d%3D%22M3%2016l5%20-5c.928%20-.893%202.072%20-.893%203%200l4%204%22%20%2F%3E%20%3Cpath%20d%3D%22M14%2014l1%20-1c.928%20-.893%202.072%20-.893%203%200l.5%20.5%22%20%2F%3E%20%3Cpath%20d%3D%22M15%2019l2%202l4%20-4%22%20%2F%3E%20%3C%2Fsvg%3E%20`,
-        Urutan: 6,
-        Keterangan: "Akademik Menyiapkan Sk. Rektor",
-      },
-      {
-        NamaStatus: "SK. Rektor",
-        Icon: `data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M15%2015m-3%200a3%203%200%201%200%206%200a3%203%200%201%200%20-6%200%22%20%2F%3E%20%3Cpath%20d%3D%22M13%2017.5v4.5l2%20-1.5l2%201.5v-4.5%22%20%2F%3E%20%3Cpath%20d%3D%22M10%2019h-5a2%202%200%200%201%20-2%20-2v-10c0%20-1.1%20.9%20-2%202%20-2h14a2%202%200%200%201%202%202v10a2%202%200%200%201%20-1%201.73%22%20%2F%3E%20%3Cpath%20d%3D%22M6%209l12%200%22%20%2F%3E%20%3Cpath%20d%3D%22M6%2012l3%200%22%20%2F%3E%20%3Cpath%20d%3D%22M6%2015l2%200%22%20%2F%3E%20%3C%2Fsvg%3E%20`,
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M10%2010m-7%200a7%207%200%201%200%2014%200a7%207%200%201%200%20-14%200%22%20%2F%3E%3Cpath%20d%3D%22M8%208l4%204%22%20%2F%3E%3Cpath%20d%3D%22M12%208l-4%204%22%20%2F%3E%3Cpath%20d%3D%22M21%2021l-6%20-6%22%20%2F%3E%3C%2Fsvg%3E`,
         Urutan: 7,
-        Keterangan: "Akademik Unggah Dokumen Sk. Rektor",
+        Keterangan: "",
+      },
+      {
+        NamaStatus: "Hasil Final Asessmen",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%206v12a2%202%200%200%201%20-2%202h-10a2%202%200%200%201%20-2%20-2v-12a2%202%200%200%201%202%20-2h10a2%202%200%200%201%202%202z%22%20%2F%3E%3Cpath%20d%3D%22M10%2016h6%22%20%2F%3E%3Cpath%20d%3D%22M13%2011m-2%200a2%202%200%201%200%204%200a2%202%200%201%200%20-4%200%22%20%2F%3E%3Cpath%20d%3D%22M4%208h3%22%20%2F%3E%3Cpath%20d%3D%22M4%2012h3%22%20%2F%3E%3Cpath%20d%3D%22M4%2016h3%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 8,
+        Keterangan: "",
+      },
+      {
+        NamaStatus: "Penerbitan SK Asessmen",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%2019a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M12%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M21%206l0%2013%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 9,
+        Keterangan: "",
+      },
+      {
+        NamaStatus: "Persetujuan SK Asessmen",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%2019a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M12%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M21%206l0%2013%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 10,
+        Keterangan: "Wakil Rektor Menyetujui SK Hasil Asessmen yang Diterbitkan Akademik",
+      },
+      {
+        NamaStatus: "Penandatanganan SK",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%2019a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M12%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M21%206l0%2013%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 11,
+        Keterangan: "Rektor Menandatangani SK Hasil Asessmen",
+      },
+      {
+        NamaStatus: "Sinkronisasi Hasil Asessmen",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%2019a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M12%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M21%206l0%2013%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 12,
+        Keterangan: "",
+      },
+      {
+        NamaStatus: "Selesai",
+        Icon: `data:image/svg+xml,%3Csvg%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%20width%3D%2232%22%20%20height%3D%2232%22%20%20viewBox%3D%220%200%2024%2024%22%20%20fill%3D%22none%22%20%20stroke%3D%22%23000000%22%20%20stroke-width%3D%221%22%20%20stroke-linecap%3D%22round%22%20%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%2019a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206a9%209%200%200%201%209%200a9%209%200%200%201%209%200%22%20%2F%3E%3Cpath%20d%3D%22M3%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M12%206l0%2013%22%20%2F%3E%3Cpath%20d%3D%22M21%206l0%2013%22%20%2F%3E%3C%2Fsvg%3E`,
+        Urutan: 13,
+        Keterangan: "",
       },
     ],
   });
@@ -53,43 +91,49 @@ async function main() {
   await prisma.role.createMany({
     data: [
       {
-        Name: "admin",
+        Name: "Admin",
         GuardName: "web",
         CreatedAt: new Date(),
         UpdatedAt: new Date()
       },
       {
-        Name: "pmb",
+        Name: "PMB",
         GuardName: "web",
         CreatedAt: new Date(),
         UpdatedAt: new Date()
       },
       {
-        Name: "akademik",
+        Name: "Akademik",
         GuardName: "web",
         CreatedAt: new Date(),
         UpdatedAt: new Date()
       },
       {
-        Name: "kaprodi",
+        Name: "Kaprodi",
         GuardName: "web",
         CreatedAt: new Date(),
         UpdatedAt: new Date()
       },
       {
-        Name: "asesor",
+        Name: "Asesor",
         GuardName: "web",
         CreatedAt: new Date(),
         UpdatedAt: new Date()
       },
       {
-        Name: "mahasiswa",
+        Name: "Mahasiswa",
         GuardName: "web",
         CreatedAt: new Date(),
         UpdatedAt: new Date()
       },
       {
-        Name: "rektor",
+        Name: "Rektor",
+        GuardName: "web",
+        CreatedAt: new Date(),
+        UpdatedAt: new Date()
+      },
+      {
+        Name: "Wakil Rektor",
         GuardName: "web",
         CreatedAt: new Date(),
         UpdatedAt: new Date()
@@ -400,11 +444,11 @@ async function main() {
 
   const relationRolePermission = [
     {
-      role: "admin",
+      role: "Admin",
       permission: ["all"],
     },
     {
-      role: "pmb",
+      role: "PMB",
       permission: [
         "mahasiswa.create",
         "mahasiswa.update",
@@ -416,7 +460,7 @@ async function main() {
       ],
     },
     {
-      role: "akademik",
+      role: "Akademik",
       permission: [
         "asesmen.lock",
         "rekapitulasi.view",
@@ -426,7 +470,7 @@ async function main() {
       ],
     },
     {
-      role: "kaprodi",
+      role: "Kaprodi",
       permission: [
         "asesor.create",
         "asesor.update",
@@ -437,7 +481,7 @@ async function main() {
       ],
     },
     {
-      role: "asesor",
+      role: "Asesor",
       permission: [
         "sanggahan.view",
         "sanggahan.respond",
@@ -448,7 +492,7 @@ async function main() {
       ],
     },
     {
-      role: "mahasiswa",
+      role: "Mahasiswa",
       permission: [
         "form.create",
         "form.update",
@@ -464,7 +508,11 @@ async function main() {
       ],
     },
     {
-      role: "rektor",
+      role: "Rektor",
+      permission: ["dashboard.view"],
+    },
+    {
+      role: "Wakil Rektor",
       permission: ["dashboard.view"],
     },
   ];
@@ -2465,7 +2513,7 @@ async function main() {
       Telepon: "08123456789876",
       NomorWa: "08123456789876",
       NomorHp: "08123456789876",
-      Role: "admin",
+      Role: "Admin",
       Username: "admin123",
       Password: "admin123"
     },
@@ -2481,7 +2529,7 @@ async function main() {
       Telepon: "08123456789876",
       NomorWa: "08123456789876",
       NomorHp: "08123456789876",
-      Role: "pmb",
+      Role: "PMB",
       Username: "pmb123",
       Password: "pmb123"
     },
@@ -2497,7 +2545,7 @@ async function main() {
       Telepon: "08123456789876",
       NomorWa: "08123456789876",
       NomorHp: "08123456789876",
-      Role: "akademik",
+      Role: "Akademik",
       Username: "akademik123",
       Password: "akademik123"
     },
@@ -2513,7 +2561,7 @@ async function main() {
       Telepon: "08123456789876",
       NomorWa: "08123456789876",
       NomorHp: "08123456789876",
-      Role: "kaprodi",
+      Role: "Kaprodi",
       Username: "kaprodi123",
       Password: "kaprodi123"
     },
@@ -2529,7 +2577,7 @@ async function main() {
       Telepon: "08123456789876",
       NomorWa: "08123456789876",
       NomorHp: "08123456789876",
-      Role: "asesor",
+      Role: "Asesor",
       Username: "asesor123",
       Password: "asesor123"
     },
@@ -2545,7 +2593,7 @@ async function main() {
       Telepon: "08123456789876",
       NomorWa: "08123456789876",
       NomorHp: "08123456789876",
-      Role: "mahasiswa",
+      Role: "Mahasiswa",
       Username: "mahasiswa123",
       Password: "mahasiswa123"
     },
@@ -2561,7 +2609,7 @@ async function main() {
       Telepon: "08123456789876",
       NomorWa: "08123456789876",
       NomorHp: "08123456789876",
-      Role: "rektor",
+      Role: "Rektor",
       Username: "rektor123",
       Password: "rektor123"
     },

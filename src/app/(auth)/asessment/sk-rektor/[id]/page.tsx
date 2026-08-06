@@ -387,6 +387,41 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
         })),
     }
 
+    // Kedua jenis SK selalu ditawarkan; jumlah mata kuliah per jenis hanya
+    // ditampilkan sebagai keterangan agar Akademik dapat memutuskan.
+    const [mkPerolehan, mkTransfer] = await Promise.all([
+        prisma.mataKuliahMahasiswa.count({
+            where: { PendaftaranId: id, Keterangan: 'Perolehan_SKS' },
+        }),
+        prisma.mataKuliahMahasiswa.count({
+            where: { PendaftaranId: id, Keterangan: 'Transfer_SKS' },
+        }),
+    ])
+
+    const skAsessmen = await prisma.skRektorMahasiswa.findMany({
+        where: {
+            PendaftaranId: id,
+            SkRektor: { JenisSkAsessmen: { not: null } },
+        },
+        select: {
+            SkRektor: {
+                select: {
+                    SkRektorId: true,
+                    JenisSkAsessmen: true,
+                    NamaSk: true,
+                    NomorSk: true,
+                    TahunSk: true,
+                    NamaFile: true,
+                    NamaDokumen: true,
+                    Disetujui: true,
+                    Ditandatangani: true,
+                    Dipublikasikan: true,
+                    Catatan: true,
+                },
+            },
+        },
+    })
+
     const res = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
     const stats: {
         StatusMahasiswaAssesmentId: string; NamaStatus: string
@@ -401,6 +436,23 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                 dataServer={dataServer}
                 fileSkRektor={fileSkRektor}
                 stats={stats}
+                jumlahMkPerJenis={{
+                    PEROLEHAN_SKS: mkPerolehan,
+                    TRANSFER_SKS: mkTransfer,
+                }}
+                skAsessmen={skAsessmen.map((x) => ({
+                    SkRektorId: x.SkRektor.SkRektorId,
+                    JenisSkAsessmen: x.SkRektor.JenisSkAsessmen!,
+                    NamaSk: x.SkRektor.NamaSk,
+                    NomorSk: x.SkRektor.NomorSk,
+                    TahunSk: String(x.SkRektor.TahunSk),
+                    NamaFile: x.SkRektor.NamaFile,
+                    NamaDokumen: x.SkRektor.NamaDokumen,
+                    Disetujui: x.SkRektor.Disetujui,
+                    Ditandatangani: x.SkRektor.Ditandatangani,
+                    Dipublikasikan: x.SkRektor.Dipublikasikan,
+                    Catatan: x.SkRektor.Catatan ?? '',
+                }))}
             />
         </div>
     )

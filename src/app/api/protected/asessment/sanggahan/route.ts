@@ -510,7 +510,7 @@ app.post('/', async (c) => {
     })
 
     // Kirim Pemberitahuan Sanggahan by WA ke Asesor
-    const cookieHeader = cookies().toString();
+    const cookieHeader = (await cookies()).toString();
     
         await Promise.all(
             sanggahan.Pendaftaran.AssesorMahasiswa.map(async (x) => {

@@ -16,15 +16,6 @@ import {
     useReactTable,
     VisibilityState,
 } from '@tanstack/react-table'
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '../ui/form'
 import { Input } from '../ui/input'
 import {
     Select,
@@ -73,7 +64,7 @@ import {
     X,
 } from 'lucide-react'
 import { Skeleton } from '../ui/skeleton'
-import { truncateText } from '@/lib/utils'
+import { formatDateToIndonesian, truncateText } from '@/lib/utils'
 import { toast } from 'sonner'
 import {
     Sheet,
@@ -95,19 +86,23 @@ import { Loader2 } from 'lucide-react'
 import { Separator } from '../ui/separator'
 import { KeteranganMataKuliah, Role } from '@/generated/prisma'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
-import { useForm } from 'react-hook-form'
-import { SkRektorAsessmenSkemaValidasi, SkRektorAsessmenSkemaValidasiTipe } from '@/validation/SkAsessmenValidation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { setStatusPersetujuanHasilFinalAsessmen } from '@/services/Status/StatusService'
-import { getFileSkAsessmenBlobByNamafile, setFile } from '@/services/Asessment/SkRektorAsessmenService'
+import { setStatusPersetujuanSkAsessmen } from '@/services/Status/StatusService'
+import {
+    KartuPenerbitanSk,
+    SEMUA_JENIS_SK,
+    type JenisSkAsessmenType,
+    type SkAsessmenItem,
+} from '@/components/asessment/SkIdRektorAsessmentComponent'
 import { GenerateSkPdf } from '@/services/GeneratePdfService'
 import { isGenerateSk } from '@/config/checkGenerateSkStats'
 
 const HasilAsessmenIdComponent = ({
-    dataServer, stats
+    dataServer, stats, jumlahMkPerJenis, skAsessmen
 }: {
     dataServer: ResponseFinalAsessmenAsesorDetailType
     stats: { StatusMahasiswaAssesmentId: string; NamaStatus: string }
+    jumlahMkPerJenis: Record<JenisSkAsessmenType, number>
+    skAsessmen: SkAsessmenItem[]
 }) => {
     const [dataPage, setDataPage] = React.useState<
         ResponseFinalAsessmenAsesorDetailMKMType[]
@@ -117,18 +112,10 @@ const HasilAsessmenIdComponent = ({
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({})
     const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>(stats)
-    const [formGenerate, setFormGenerate] = React.useState<{
-        NomorSk: string
-        JenisSk: string
-    }>({
-        NomorSk: '',
-        JenisSk: '',
-    })
-    const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
+    const [daftarSk, setDaftarSk] = React.useState<SkAsessmenItem[]>(skAsessmen)
     const [loading, setLoading] = React.useState<boolean>(false)
     const [role, setRole] = React.useState<Role | null>(null)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
-    const [openDialogGenerateSk, setOpenDialogGenerateSk] = React.useState<boolean>(false)
     const [paginationState, setPaginationState] = React.useState<{
         page: number
         limit: number
@@ -149,40 +136,30 @@ const HasilAsessmenIdComponent = ({
         hasPrevious: false,
     })
 
-    const form = useForm<SkRektorAsessmenSkemaValidasiTipe>({
-        resolver: zodResolver(SkRektorAsessmenSkemaValidasi),
-        defaultValues: {
-            data: undefined,
-            NamaSk: '',
-            TahunSk: '',
-            NomorSk: '',
-        },
-    })
 
-    const onSubmit = async (data: SkRektorAsessmenSkemaValidasiTipe) => {
+    // Akademik boleh menerbitkan/merevisi SK selama berkas masih di tangannya:
+    // sesudah hasil final, maupun setelah SK dikembalikan Wakil Rektor.
+    const dalamTanganAkademik = [
+        'Hasil Final Asessmen',
+        'Penerbitan SK Asessmen',
+    ].includes(statusServer.NamaStatus)
+
+    // SK yang sudah diterbitkan langsung diajukan ke Wakil Rektor — tidak ada
+    // langkah Akademik tambahan di antaranya.
+    const ajukanKeWarek = async () => {
         setLoading(true)
-        if (data.data) {
-            await setFile(
-                data.data,
-                dataServer.PendaftaranId,
-                data.NamaSk,
-                data.TahunSk,
-                data.NomorSk
-            )
-                .then((res) => {
-                    setStatusPersetujuanHasilFinalAsessmen(dataServer.PendaftaranId).then(
-                        (res) => {
-                            toast('Data SK Asesor Mahasiswa berhasil disimpan')
-                            setStatusServer({ StatusMahasiswaAssesmentId: '3b610de5-9c8b-4f98-8214-29e1d954d40k', NamaStatus: 'Persetujuan Hasil Final' })
-                            setLoading(false)
-                        }
-                    )
-                    setLoading(false)
-                })
-                .catch((err) => {
-                    toast('Data SK Asesor Mahasiswa gagal disimpan. Error: ' + err)
-                    setLoading(false)
-                })
+        try {
+            await setStatusPersetujuanSkAsessmen(dataServer.PendaftaranId)
+            toast('SK diajukan ke Wakil Rektor untuk disetujui')
+            setStatusServer({
+                StatusMahasiswaAssesmentId:
+                    statusServer.StatusMahasiswaAssesmentId,
+                NamaStatus: 'Persetujuan SK Asessmen',
+            })
+        } catch (err) {
+            toast('Gagal mengajukan ke Wakil Rektor. Error: ' + err)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -193,19 +170,6 @@ const HasilAsessmenIdComponent = ({
             if (r) {
                 setRole(JSON.parse(r))
                 setLoading(false)
-                if (dataServer.SkRektor.SkRektorId !== '') {
-                    getFileSkAsessmenBlobByNamafile(dataServer.SkRektor.NamaFile)
-                        .then((res) => {
-                            setPdfPreview(res)
-                            form.setValue('NamaSk', dataServer.SkRektor.NamaSk)
-                            form.setValue(
-                                'TahunSk',
-                                String(dataServer.SkRektor.TahunSk)
-                            )
-                            form.setValue('NomorSk', dataServer.SkRektor.NomorSk)
-                        })
-                        .catch((err) => { })
-                }
             }
             setLoading(false)
         }
@@ -435,29 +399,8 @@ const HasilAsessmenIdComponent = ({
         },
     })
 
-    async function generateSk(): Promise<string | null> {
-        try {
-            const previewUrl = await GenerateSkPdf(dataServer.PendaftaranId, formGenerate.NomorSk, formGenerate.JenisSk)
-            return previewUrl
-        } catch (err) {
-            console.error('Error generating SK PDF:', err)
-            toast('Gagal membuat SK PDF. Error: ' + err)
-            return null
-        }
-    }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-3">
-            {
-                role?.Name === 'Akademik' && statusServer.NamaStatus == 'Persetujuan Hasil Final' ? (
-                    <Alert>
-                        <CheckCircle2Icon />
-                        <AlertTitle>Sedang Menunggu Approval Wakil Rektor</AlertTitle>
-                        <AlertDescription>
-                            Saat ini Proses sedang Menunggu Approval Wakil Rektor
-                        </AlertDescription>
-                    </Alert>
-                ) : <></>
-            }
             <Card className="w-full">
                 <CardHeader>
                     <CardTitle>Informasi Pendaftaran Mahasiswa</CardTitle>
@@ -484,8 +427,11 @@ const HasilAsessmenIdComponent = ({
                                 <TableRow>
                                     <TableCell>Tanggal Lahir</TableCell>
                                     <TableCell>
-                                        {dataServer.TanggalLahir?.toString() ??
-                                            '-'}
+                                        {dataServer.TanggalLahir
+                                            ? formatDateToIndonesian(
+                                                dataServer.TanggalLahir.toString()
+                                            )
+                                            : '-'}
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -823,340 +769,90 @@ const HasilAsessmenIdComponent = ({
                     </div>
                 </CardContent>
             </Card>
-            {role?.Name === 'Akademik' && pdfPreview ? (
-                <div>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Dokumen Draft SK</CardTitle>
-                            <CardDescription>
-                                Dokumen Surat Keputusan
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="grid grid-cols-1 gap-2 mb-3">
-                                <iframe
-                                    src={pdfPreview || ''}
-                                    title="PDF Preview"
-                                    width="100%"
-                                    height="500px"
-                                    className="border rounded"
-                                ></iframe>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
-            ) : <></>}
-            {
-                role?.Name === 'Akademik' && (
-                    <Card className="w-full">
-                        <CardHeader>
-                            <CardTitle>Draft Surat Keputusan</CardTitle>
-                            <CardDescription>
-                                Draft Surat Keputusan Asessmen Mahasiswa
-                            </CardDescription>
-                            {
-                                isGenerateSk(stats?.NamaStatus ?? '') ? (
-                                    <CardAction>
-                                        <Button
-                                            type="button"
-                                            size="sm"
-                                            className='bg-primary transition-all duration-100 hover:scale-105 active:scale-95'
-                                            onClick={() => {
-                                                setOpenDialogGenerateSk(true)
-                                            }}
-                                        >
-                                            Generate SK
-                                        </Button>
-                                    </CardAction>
-                                ) : (<></>)
-                            }
-                        </CardHeader>
-                        <CardContent>
-                            <Form {...form}>
-                                <form onSubmit={form.handleSubmit(onSubmit)}>
-                                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-1 md:gap-3">
-                                        <FormField
-                                            control={form.control}
-                                            name="TahunSk"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Tahun SK
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Tahun Surat Keterangan
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="NamaSk"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Nama SK
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Nama Surat Keterangan
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="NomorSk"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Nomor SK
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            readOnly={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Nomor Surat Keterangan
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="data"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>
-                                                        Unggah SK Disini
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            type="file"
-                                                            disabled={loading || statusServer.NamaStatus == 'Persetujuan Hasil Final'}
-                                                            accept="application/pdf"
-                                                            onChange={(e) => {
-                                                                const file =
-                                                                    e.target
-                                                                        .files?.[0]
-                                                                if (file) {
-                                                                    field.onChange(
-                                                                        file
-                                                                    )
-                                                                    setPdfPreview(
-                                                                        URL.createObjectURL(
-                                                                            file
-                                                                        )
-                                                                    )
-                                                                }
-                                                            }}
-                                                        />
-                                                    </FormControl>
-                                                    <FormDescription>
-                                                        Upload SK (PDF)
-                                                    </FormDescription>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                    {
-                                        statusServer.NamaStatus == 'Hasil Final Asessmen' && (
-                                            <div className="flex justify-center w-full my-5">
-                                                <Button
-                                                    type="submit"
-                                                    className="hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer w-2/3 md:w-1/2"
-                                                    disabled={loading}
-                                                >
-                                                    {
-                                                        loading ? (
-                                                            <>
-                                                                <TimerIcon /> Loading
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                <PenIcon /> Simpan
-                                                            </>
-                                                        )
-                                                    }
-                                                </Button>
-                                            </div>
-                                        )
+            {role?.Name === 'Akademik' && (
+                <Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Surat Keputusan Hasil Asessmen</CardTitle>
+                        <CardDescription>
+                            SK dibuat dari template. Terbitkan SK Perolehan SKS,
+                            SK Transfer SKS, atau keduanya sesuai kebutuhan
+                            mahasiswa ini, lalu ajukan ke Wakil Rektor untuk
+                            disetujui.
+                        </CardDescription>
+                        <CardAction></CardAction>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 gap-4">
+                            {SEMUA_JENIS_SK.map((jenis) => (
+                                <KartuPenerbitanSk
+                                    key={jenis}
+                                    jenis={jenis}
+                                    PendaftaranId={dataServer.PendaftaranId}
+                                    jumlahMk={jumlahMkPerJenis[jenis]}
+                                    sk={daftarSk.find(
+                                        (x) => x.JenisSkAsessmen === jenis
+                                    )}
+                                    terkunci={!dalamTanganAkademik}
+                                    onTerbit={(item) =>
+                                        setDaftarSk((prev) => [
+                                            ...prev.filter(
+                                                (x) =>
+                                                    x.JenisSkAsessmen !==
+                                                    item.JenisSkAsessmen
+                                            ),
+                                            item,
+                                        ])
                                     }
-                                </form>
-                            </Form>
-                        </CardContent>
-                    </Card>
-                )
-            }
+                                />
+                            ))}
+                        </div>
+
+                        {dalamTanganAkademik ? (
+                            <div className="flex justify-center w-full my-2">
+                                <Button
+                                    type="button"
+                                    onClick={() => ajukanKeWarek()}
+                                    disabled={loading || daftarSk.length === 0}
+                                    title={
+                                        daftarSk.length === 0
+                                            ? 'Terbitkan minimal satu SK lebih dulu'
+                                            : ''
+                                    }
+                                    className="w-2/3 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 md:w-1/2"
+                                >
+                                    {loading ? (
+                                        <React.Fragment>
+                                            <TimerIcon /> Loading
+                                        </React.Fragment>
+                                    ) : (
+                                        <React.Fragment>
+                                            <PenIcon /> Ajukan ke Wakil Rektor
+                                        </React.Fragment>
+                                    )}
+                                </Button>
+                            </div>
+                        ) : (
+                            <p className="text-sm text-muted-foreground">
+                                {statusServer.NamaStatus ===
+                                    'Persetujuan SK Asessmen'
+                                    ? 'SK sudah diajukan dan sedang menunggu persetujuan Wakil Rektor.'
+                                    : `Berkas ini sudah melewati tahap hasil final — status saat ini: ${statusServer.NamaStatus}.`}
+                            </p>
+                        )}
+                    </CardContent>
+                </Card>
+            )}
             <SheetManageData
                 openDialog={openDialog}
                 setOpenDialog={setOpenDialog}
                 loading={loading}
                 dataDetail={detailData}
             />
-            <DialogGenerateSk
-                openDialog={openDialogGenerateSk}
-                setOpenDialog={setOpenDialogGenerateSk}
-                formGenerate={formGenerate}
-                setFormGenerate={setFormGenerate}
-                generateSk={generateSk}
-            />
         </div>
     )
 }
 
 export default HasilAsessmenIdComponent
-
-export function DialogGenerateSk({
-    openDialog,
-    setOpenDialog,
-    formGenerate,
-    setFormGenerate,
-    generateSk
-}: {
-    openDialog: boolean
-    setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>
-    formGenerate: {
-        NomorSk: string
-        JenisSk: string
-    }
-    setFormGenerate: React.Dispatch<React.SetStateAction<{
-        NomorSk: string
-        JenisSk: string
-    }>>
-    generateSk: () => Promise<string | null>
-}) {
-    const [loading, setLoading] = React.useState<boolean>(false)
-    const [pdfUrl, setPdfUrl] = React.useState<string | null>(null)
-
-    const handleSubmit = async () => {
-        if (!formGenerate.NomorSk || !formGenerate.JenisSk) {
-            toast('Nomor SK dan Jenis SK harus diisi')
-            return
-        }
-        setLoading(true)
-        setPdfUrl(null)
-        const url = await generateSk()
-        if (url) {
-            setPdfUrl(url)
-        }
-        setLoading(false)
-    }
-
-    const handleClose = () => {
-        setOpenDialog(false)
-        setPdfUrl(null)
-        setFormGenerate({ NomorSk: '', JenisSk: '' })
-    }
-
-    return (
-        <Dialog open={openDialog} onOpenChange={(open) => {
-            if (!open) handleClose()
-            else setOpenDialog(open)
-        }}>
-            <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                    <DialogTitle>Generate SK</DialogTitle>
-                    <DialogDescription>
-                        Formulir untuk generate SK. Isi data kemudian klik Generate.
-                    </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                            <label htmlFor="nomorSk" className="text-sm font-medium leading-none">
-                                Nomor SK
-                            </label>
-                            <Input
-                                id="nomorSk"
-                                placeholder="Masukkan Nomor SK"
-                                value={formGenerate.NomorSk}
-                                onChange={(e) => setFormGenerate(prev => ({ ...prev, NomorSk: e.target.value }))}
-                                disabled={loading}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label htmlFor="jenisSk" className="text-sm font-medium leading-none">
-                                Jenis SK
-                            </label>
-                            <Select
-                                value={formGenerate.JenisSk}
-                                onValueChange={(value) => setFormGenerate(prev => ({ ...prev, JenisSk: value }))}
-                                disabled={loading}
-                            >
-                                <SelectTrigger id="jenisSk">
-                                    <SelectValue placeholder="Pilih Jenis SK" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectLabel>Jenis SK</SelectLabel>
-                                        <SelectItem value="TRANSFER KREDIT">TRANSFER SKS</SelectItem>
-                                        <SelectItem value="PEROLEHAN KREDIT">PEROLEHAN SKS</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-                    {pdfUrl && (
-                        <div className="mt-4">
-                            <label className="text-sm font-medium leading-none mb-2 block">
-                                Hasil Generate SK
-                            </label>
-                            <iframe
-                                src={pdfUrl}
-                                title="PDF Preview"
-                                width="100%"
-                                height="400px"
-                                className="border rounded"
-                            />
-                        </div>
-                    )}
-                </div>
-                <DialogFooter>
-                    <Button
-                        type="button"
-                        variant="outline"
-                        onClick={handleClose}
-                        disabled={loading}
-                    >
-                        Tutup
-                    </Button>
-                    <Button
-                        type="button"
-                        onClick={handleSubmit}
-                        disabled={loading}
-                    >
-                        {loading ? (
-                            <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Loading...
-                            </>
-                        ) : (
-                            'Generate SK'
-                        )}
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    )
-}
 
 export function SheetManageData({
     openDialog,

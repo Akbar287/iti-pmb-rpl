@@ -201,15 +201,6 @@ app.post('/', async (c) => {
                     AsesorId: true,
                     Urutan: true,
                     Confirmation: true,
-                    SkRektorAssesor: {
-                        select: {
-                            SkRektor: {
-                                select: {
-                                    SkRektorId: true
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }

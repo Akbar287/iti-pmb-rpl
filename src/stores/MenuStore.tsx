@@ -6,6 +6,7 @@ import {
     Database,
     FileArchiveIcon,
     Home,
+    SignatureIcon,
     SquareTerminal,
     University,
     WholeWordIcon,
@@ -156,8 +157,10 @@ const menu: MenuStoreProps[] = [
         ],
     },
     {
-        namaRole: ['Kaprodi', 'Wakil Rektor'],
-        // namaRole: ['Kaprodi', 'Asesor', 'Akademik', 'Wakil Rektor'],
+        // Menu induk harus memuat semua peran yang punya submenu di bawahnya —
+        // getMenuByRole menyaring induk lebih dulu, sehingga Akademik tidak
+        // pernah melihat "Sk. Rektor" ketika perannya tidak dicantumkan di sini.
+        namaRole: ['Kaprodi', 'Asesor', 'Akademik', 'Wakil Rektor'],
         title: 'Asesor',
         url: '/asesor',
         icon: BookTextIcon,
@@ -182,13 +185,18 @@ const menu: MenuStoreProps[] = [
         items: [
             {
                 namaRole: ['Wakil Rektor'],
+                title: 'Persetujuan SK Asesor',
+                url: '/approval/sk-asesor',
+            },
+            {
+                namaRole: ['Wakil Rektor'],
                 title: 'Persetujuan Asesor',
                 url: '/approval/asesor',
             },
             {
                 namaRole: ['Wakil Rektor'],
-                title: 'Persetujuan Hasil',
-                url: '/approval/hasil',
+                title: 'Persetujuan SK Hasil',
+                url: '/approval/sk-hasil',
             }
         ],
     },
@@ -393,6 +401,13 @@ const menu: MenuStoreProps[] = [
                 url: '/template-builder/sk-hasil',
             }
         ],
+    },
+    {
+        namaRole: ['Rektor'],
+        title: 'Tanda Tangan',
+        url: '/tanda-tangan',
+        icon: SignatureIcon,
+        items: null,
     },
     {
         namaRole: ['Mahasiswa', 'Asesor', 'Akademik'],

@@ -13,7 +13,15 @@ app.get('/', async (c) => {
     const jenis = c.req.query('jenis')
     if (jenis === 'get-all-asesor') {
         const data = await prisma.asesor.findMany({
+            where: { DeletedAt: null },
             select: {
+                // Status SK penugasan ikut dikirim supaya UI dapat menandai
+                // asesor yang belum boleh ditunjuk, bukan menyembunyikannya.
+                SkRektorAssesor: {
+                    where: { SkRektor: { Disetujui: true } },
+                    select: { SkRektorId: true },
+                    take: 1,
+                },
                 AsesorId: true,
                 TipeAsesor: {
                     select: {
@@ -47,6 +55,7 @@ app.get('/', async (c) => {
                     Nama: item.TipeAsesor.Nama,
                     TipeAsesorId: item.TipeAsesor.TipeAsesorId,
                 },
+                SkDisetujui: item.SkRektorAssesor.length > 0,
                 BebanKerja: item.AssesorMahasiswa.length
             })) ?? []
         return c.json<ResponseAsesorFromProdi[]>(response, 200)
@@ -58,10 +67,18 @@ app.get('/', async (c) => {
             where: { ProgramStudiId: prodiId },
             select: {
                 AsesorProgramStudi: {
+                    where: { Asesor: { DeletedAt: null } },
                     select: {
                         Asesor: {
                             select: {
                                 AsesorId: true,
+                                // Dipakai untuk menandai asesor yang SK
+                                // penugasannya belum disetujui Wakil Rektor.
+                                SkRektorAssesor: {
+                                    where: { SkRektor: { Disetujui: true } },
+                                    select: { SkRektorId: true },
+                                    take: 1,
+                                },
                                 TipeAsesor: {
                                     select: {
                                         TipeAsesorId: true,
@@ -98,6 +115,7 @@ app.get('/', async (c) => {
                     Nama: item.Asesor.TipeAsesor.Nama,
                     TipeAsesorId: item.Asesor.TipeAsesor.TipeAsesorId,
                 },
+                SkDisetujui: item.Asesor.SkRektorAssesor.length > 0,
                 BebanKerja: item.Asesor.AssesorMahasiswa.length
             })) ?? []
         return c.json<ResponseAsesorFromProdi[]>(response, 200)
@@ -112,7 +130,6 @@ app.get('/', async (c) => {
             UserId: userId,
             AssesorMahasiswa: {
                 some: {
-                    SkRektorAssesor: { none: {} },
                     OR: [
                         {
                             Asesor: {
@@ -152,8 +169,7 @@ app.get('/', async (c) => {
                 UserId: userId,
                 AssesorMahasiswa: {
                     some: {
-                        SkRektorAssesor: { none: {} },
-                    }
+                        }
                 }
             }
 
@@ -275,24 +291,16 @@ app.get('/', async (c) => {
         const page = parseInt(c.req.query('page') || '1', 10)
         const limit = parseInt(c.req.query('limit') || '10', 10)
         const search = c.req.query('search') || ''
-        const emptyBuffer = Buffer.alloc(0);
 
         let where: Prisma.PendaftaranWhereInput = search ? {
             AssesorMahasiswa: {
                 some: {
-                    SkRektorAssesor: {
-                        some: {
-                            SkRektor: {
-                                FileData: emptyBuffer
-                            }
-                        }
-                    },
                     Pendaftaran: {
                         StatusMahasiswaAssesmentHistory: {
                             some: {
                                 Aktif: true,
                                 StatusMahasiswaAssesment: {
-                                    NamaStatus: "Penerbitan SK Penugasan Asesor",
+                                    NamaStatus: "Asessmen Oleh Asesor",
                                 },
                             },
                         },
@@ -335,19 +343,12 @@ app.get('/', async (c) => {
             : {
                 AssesorMahasiswa: {
                     some: {
-                        SkRektorAssesor: {
-                            some: {
-                                SkRektor: {
-                                    FileData: emptyBuffer
-                                }
-                            }
-                        },
                         Pendaftaran: {
                             StatusMahasiswaAssesmentHistory: {
                                 some: {
                                     Aktif: true,
                                     StatusMahasiswaAssesment: {
-                                        NamaStatus: "Penerbitan SK Penugasan Asesor",
+                                        NamaStatus: "Asessmen Oleh Asesor",
                                     },
                                 },
                             },
@@ -539,7 +540,12 @@ app.get('/', async (c) => {
                             select: {
                                 AssesorMahasiswaId: true
                             }
-                        }
+                        },
+                        SkRektorAssesor: {
+                            where: { SkRektor: { Disetujui: true } },
+                            select: { SkRektorId: true },
+                            take: 1,
+                        },
                     },
                 },
                 Confirmation: true,
@@ -555,6 +561,7 @@ app.get('/', async (c) => {
                 TipeAsesorId: item.Asesor.TipeAsesor.TipeAsesorId,
                 Nama: item.Asesor.TipeAsesor.Nama,
             },
+            SkDisetujui: item.Asesor.SkRektorAssesor.length > 0,
             BebanKerja: item.Asesor.AssesorMahasiswa.length
         }))
 
@@ -829,6 +836,23 @@ app.post('/', async (c) => {
         return c.json({ error: 'Data not found' }, 404)
     }
 
+    // Asesor hanya boleh ditunjuk bila SK penugasannya sudah disetujui.
+    const asesorBerSk = await prisma.asesor.count({
+        where: {
+            AsesorId: { in: [body.AsesorPertamaId, body.AsesorKeduaId] },
+            SkRektorAssesor: { some: { SkRektor: { Disetujui: true } } },
+        },
+    })
+
+    if (asesorBerSk < 2) {
+        return c.json(
+            {
+                error: 'Asesor yang dipilih belum memiliki SK Penugasan Asesor yang disetujui Wakil Rektor',
+            },
+            400
+        )
+    }
+
     const temp = [{
         AsesorId: body.AsesorPertamaId,
         PendaftaranId: dataMhs.Pendaftaran.PendaftaranId,
@@ -908,6 +932,23 @@ app.put('/', async (c) => {
 
     if (!dataMhs) {
         return c.json({ error: 'Data mahasiswa not found' }, 404)
+    }
+
+    // Asesor hanya boleh ditunjuk bila SK penugasannya sudah disetujui.
+    const asesorBerSk = await prisma.asesor.count({
+        where: {
+            AsesorId: { in: [body.AsesorPertamaId, body.AsesorKeduaId] },
+            SkRektorAssesor: { some: { SkRektor: { Disetujui: true } } },
+        },
+    })
+
+    if (asesorBerSk < 2) {
+        return c.json(
+            {
+                error: 'Asesor yang dipilih belum memiliki SK Penugasan Asesor yang disetujui Wakil Rektor',
+            },
+            400
+        )
     }
 
     await prisma.assesorMahasiswa.deleteMany({

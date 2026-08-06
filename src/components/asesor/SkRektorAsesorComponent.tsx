@@ -23,7 +23,8 @@ import {
     DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
-import { ChevronLeft, ChevronRight, MoreHorizontal, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, MoreHorizontal, PlusIcon, X } from 'lucide-react'
+import { Badge } from '../ui/badge'
 import Swal from '@/lib/swal'
 import { Input } from '../ui/input'
 import {
@@ -173,7 +174,7 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
             confirmButtonText: 'Ya, Ubah!',
         }).then((result) => {
             if (result.isConfirmed) {
-                router.push('/asesor/penunjukan-asesor/' + jd.SkRektorId)
+                router.push('/asesor/sk-rektor/' + jd.SkRektorId)
             }
         })
     }
@@ -209,12 +210,22 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
         },
         {
             accessorKey: 'AsesorRelation',
-            header: 'Relasi',
+            header: 'Jumlah Asesor',
             cell: ({ row }) => (
                 <div className="capitalize">
                     {row.getValue('AsesorRelation')}
                 </div>
             ),
+        },
+        {
+            id: 'Disetujui',
+            header: 'Status',
+            cell: ({ row }) =>
+                row.original.Disetujui ? (
+                    <Badge className="bg-green-600">Disetujui</Badge>
+                ) : (
+                    <Badge variant="secondary">Menunggu Persetujuan</Badge>
+                ),
         },
         {
             id: 'actions',
@@ -242,16 +253,17 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                             <DropdownMenuItem onClick={() => unduhSk(jd)}>
                                 Unduh SK
                             </DropdownMenuItem>
-                            {role?.Name.match('Akademik') && (
-                                <React.Fragment>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem
-                                        onClick={() => editData(jd)}
-                                    >
-                                        Ubah SK Asesor
-                                    </DropdownMenuItem>
-                                </React.Fragment>
-                            )}
+                            {role?.Name.match('Akademik') &&
+                                !jd.Disetujui && (
+                                    <React.Fragment>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem
+                                            onClick={() => editData(jd)}
+                                        >
+                                            Ubah SK Asesor
+                                        </DropdownMenuItem>
+                                    </React.Fragment>
+                                )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -284,7 +296,18 @@ const SkRektorAsesorComponent = ({ session }: { session: Session | null }) => {
                     onChange={(event) => setSearch(event.target.value)}
                     className="max-w-sm"
                 />
-                <div className="w-full justify-end flex">
+                <div className="w-full justify-end flex gap-2">
+                    {role?.Name.match('Akademik') && (
+                        <Button
+                            type="button"
+                            onClick={() =>
+                                router.push('/asesor/sk-rektor/baru')
+                            }
+                        >
+                            <PlusIcon className="w-4 h-4" />
+                            Terbitkan SK
+                        </Button>
+                    )}
                     <Select
                         value={String(paginationState.limit)}
                         onValueChange={(value) =>

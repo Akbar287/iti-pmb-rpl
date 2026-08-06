@@ -1,15 +1,25 @@
-import { Prisma, SkRektor } from '@/generated/prisma'
+import { JenisSkAsessmen, Prisma, SkRektor } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
+import { bacaBerkas, berkasAda, simpanBerkas } from '@/lib/storage'
 import { withApiAuth } from '@/middlewares/api-auth'
 import { getSession } from '@/provider/api'
 import { ResponseSkRektorAsessmenType } from '@/types/FinalAsessmen'
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
-import fs from 'fs'
-import path from 'path'
 import mime from 'mime'
 import { v4 as uuidv4 } from 'uuid'
 import { cookies } from 'next/headers'
+
+// Tahap-tahap yang masih menjadi tanggung jawab / pantauan Akademik pada menu
+// Sk. Rektor: menyiapkan & merevisi SK, memantau persetujuan dan tanda tangan,
+// lalu mempublikasikan SK yang sudah ditandatangani Rektor.
+const STATUS_SK_AKADEMIK = [
+    'Penerbitan SK Asessmen',
+    'Persetujuan SK Asessmen',
+    'Penandatanganan SK',
+    'Sinkronisasi Hasil Asessmen',
+    'Selesai',
+]
 
 const app = new Hono().basePath('/api/protected/asessment/sk-rektor')
 const BASE_URL = process.env.BACKEND_API_BASE_URL
@@ -37,14 +47,21 @@ app.get('/', async (c) => {
                 const fileRecord = await prisma.skRektor.findFirst({
                     where: { NamaFile: filename },
                     select: {
-                        FileData: true,
+                        PathFile: true,
                         NamaDokumen: true,
                     },
                 })
 
-                if (!fileRecord || !fileRecord.FileData) {
+                if (
+                    !fileRecord ||
+                    !(await berkasAda(fileRecord.PathFile))
+                ) {
                     return c.json(
-                        { data: [], status: 'error', message: 'file not found in DB' },
+                        {
+                            data: [],
+                            status: 'error',
+                            message: 'file not found in storage',
+                        },
                         { status: 404 }
                     )
                 }
@@ -53,7 +70,7 @@ app.get('/', async (c) => {
                     mime.getType(fileRecord.NamaDokumen || filename) ||
                     'application/octet-stream'
 
-                return c.body(fileRecord.FileData, 200, {
+                return c.body(await bacaBerkas(fileRecord.PathFile), 200, {
                     'Content-Type': contentType,
                     'Content-Disposition': `inline; filename="${filename}"`,
                 })
@@ -77,28 +94,12 @@ app.get('/', async (c) => {
                                 Mahasiswa: { UserId: session.user.id }
                             },
                             {
-                                OR: [
-                                    {
-                                        StatusMahasiswaAssesmentHistory: {
-                                            some: {
-                                                Aktif: true,
-                                                StatusMahasiswaAssesment: {
-                                                    NamaStatus: "Sinkronisasi Hasil Asessmen",
-                                                },
-                                            },
-                                        },
-                                    },
-                                    {
-                                        StatusMahasiswaAssesmentHistory: {
-                                            some: {
-                                                Aktif: true,
-                                                StatusMahasiswaAssesment: {
-                                                    NamaStatus: "Selesai",
-                                                },
-                                            },
-                                        },
-                                    }
-                                ]
+                                // Mahasiswa hanya melihat berkasnya di menu ini
+                                // setelah SK dipublikasikan Akademik; sebelum
+                                // itu berkas ada di menu Hasil Asessmen.
+                                SkRektorMahasiswa: {
+                                    some: { SkRektor: { Dipublikasikan: true } },
+                                },
                             },
                             {
                                 OR: [
@@ -150,28 +151,12 @@ app.get('/', async (c) => {
                                 Mahasiswa: { UserId: session.user.id }
                             },
                             {
-                                OR: [
-                                    {
-                                        StatusMahasiswaAssesmentHistory: {
-                                            some: {
-                                                Aktif: true,
-                                                StatusMahasiswaAssesment: {
-                                                    NamaStatus: "Sinkronisasi Hasil Asessmen",
-                                                },
-                                            },
-                                        },
-                                    },
-                                    {
-                                        StatusMahasiswaAssesmentHistory: {
-                                            some: {
-                                                Aktif: true,
-                                                StatusMahasiswaAssesment: {
-                                                    NamaStatus: "Selesai",
-                                                },
-                                            },
-                                        },
-                                    }
-                                ]
+                                // Mahasiswa hanya melihat berkasnya di menu ini
+                                // setelah SK dipublikasikan Akademik; sebelum
+                                // itu berkas ada di menu Hasil Asessmen.
+                                SkRektorMahasiswa: {
+                                    some: { SkRektor: { Dipublikasikan: true } },
+                                },
                             },
                         ],
                     }
@@ -196,10 +181,15 @@ app.get('/', async (c) => {
                                 },
                             },
                             SkRektorMahasiswa: {
+                                // Mahasiswa & asesor hanya melihat SK yang sudah dipublikasikan Akademik.
+                                where: { SkRektor: { Dipublikasikan: true } },
                                 select: {
                                     SkRektor: {
                                         select: {
+                                            SkRektorId: true,
+                                            JenisSkAsessmen: true,
                                             NamaFile: true,
+                                            NamaDokumen: true,
                                             NomorSk: true,
                                         },
                                     },
@@ -248,6 +238,15 @@ app.get('/', async (c) => {
                                 ? ''
                                 : am.DaftarUlang[0].Nim ?? '',
                         SkRektor: am.SkRektorMahasiswa.length > 0 ? true : false,
+                        DaftarSk: am.SkRektorMahasiswa.filter(
+                            (x) => x.SkRektor.JenisSkAsessmen !== null
+                        ).map((x) => ({
+                            SkRektorId: x.SkRektor.SkRektorId,
+                            JenisSkAsessmen: x.SkRektor.JenisSkAsessmen!,
+                            NomorSk: x.SkRektor.NomorSk,
+                            NamaFile: x.SkRektor.NamaFile,
+                            NamaDokumen: x.SkRektor.NamaDokumen,
+                        })),
                         NamaFile:
                             am.SkRektorMahasiswa.length > 0
                                 ? am.SkRektorMahasiswa[0].SkRektor.NamaFile ?? ''
@@ -404,10 +403,15 @@ app.get('/', async (c) => {
                                 select: {
                                     KodePendaftar: true,
                                     SkRektorMahasiswa: {
+                                        // Mahasiswa & asesor hanya melihat SK yang sudah dipublikasikan Akademik.
+                                        where: { SkRektor: { Dipublikasikan: true } },
                                         select: {
                                             SkRektor: {
                                                 select: {
+                                                    SkRektorId: true,
+                                                    JenisSkAsessmen: true,
                                                     NamaFile: true,
+                                                    NamaDokumen: true,
                                                     NomorSk: true,
                                                 },
                                             },
@@ -461,6 +465,15 @@ app.get('/', async (c) => {
                         ProgramStudi: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama ?? '',
                         NomorSk: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? am.Pendaftaran.SkRektorMahasiswa[0].SkRektor.NomorSk ?? '' : '',
                         NamaFile: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? am.Pendaftaran.SkRektorMahasiswa[0].SkRektor.NamaFile ?? '' : '',
+                        DaftarSk: am.Pendaftaran.SkRektorMahasiswa.filter(
+                            (x) => x.SkRektor.JenisSkAsessmen !== null
+                        ).map((x) => ({
+                            SkRektorId: x.SkRektor.SkRektorId,
+                            JenisSkAsessmen: x.SkRektor.JenisSkAsessmen!,
+                            NomorSk: x.SkRektor.NomorSk,
+                            NamaFile: x.SkRektor.NamaFile,
+                            NamaDokumen: x.SkRektor.NamaDokumen,
+                        })),
                         NomorHp: am.Pendaftaran.Mahasiswa.User.NomorHp ?? '',
                         PendaftaranId: am.PendaftaranId,
                         KodePendaftar: am.Pendaftaran.KodePendaftar,
@@ -503,7 +516,9 @@ app.get('/', async (c) => {
                                                 some: {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Penerbitan SK Asessmen",
+                                                        NamaStatus: {
+                                                            in: STATUS_SK_AKADEMIK,
+                                                        },
                                                     },
                                                 },
                                             },
@@ -560,7 +575,9 @@ app.get('/', async (c) => {
                                                 some: {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Penerbitan SK Asessmen",
+                                                        NamaStatus: {
+                                                            in: STATUS_SK_AKADEMIK,
+                                                        },
                                                     },
                                                 },
                                             },
@@ -586,8 +603,13 @@ app.get('/', async (c) => {
                                         select: {
                                             SkRektor: {
                                                 select: {
+                                                    SkRektorId: true,
+                                                    JenisSkAsessmen: true,
                                                     NamaFile: true,
+                                                    NamaDokumen: true,
                                                     NomorSk: true,
+                                                    Ditandatangani: true,
+                                                    Dipublikasikan: true,
                                                 },
                                             },
                                         },
@@ -640,11 +662,30 @@ app.get('/', async (c) => {
                         ProgramStudi: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].ProgramStudi.Nama ?? '',
                         NomorSk: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? am.Pendaftaran.SkRektorMahasiswa[0].SkRektor.NomorSk ?? '' : '',
                         NamaFile: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? am.Pendaftaran.SkRektorMahasiswa[0].SkRektor.NamaFile ?? '' : '',
+                        DaftarSk: am.Pendaftaran.SkRektorMahasiswa.filter(
+                            (x) => x.SkRektor.JenisSkAsessmen !== null
+                        ).map((x) => ({
+                            SkRektorId: x.SkRektor.SkRektorId,
+                            JenisSkAsessmen: x.SkRektor.JenisSkAsessmen!,
+                            NomorSk: x.SkRektor.NomorSk,
+                            NamaFile: x.SkRektor.NamaFile,
+                            NamaDokumen: x.SkRektor.NamaDokumen,
+                        })),
                         NomorHp: am.Pendaftaran.Mahasiswa.User.NomorHp ?? '',
                         PendaftaranId: am.PendaftaranId,
                         KodePendaftar: am.Pendaftaran.KodePendaftar,
                         Nim: am.Pendaftaran.DaftarUlang.length === 0 ? '' : am.Pendaftaran.DaftarUlang[0].Nim ?? '',
                         SkRektor: am.Pendaftaran.SkRektorMahasiswa.length > 0 ? true : false,
+                        SiapDipublikasikan:
+                            am.Pendaftaran.SkRektorMahasiswa.length > 0 &&
+                            am.Pendaftaran.SkRektorMahasiswa.every(
+                                (x) => x.SkRektor.Ditandatangani
+                            ),
+                        Dipublikasikan:
+                            am.Pendaftaran.SkRektorMahasiswa.length > 0 &&
+                            am.Pendaftaran.SkRektorMahasiswa.every(
+                                (x) => x.SkRektor.Dipublikasikan
+                            ),
                     })) ?? []
 
                 return c.json<{
@@ -790,8 +831,13 @@ app.get('/', async (c) => {
                                 select: {
                                     SkRektor: {
                                         select: {
+                                            SkRektorId: true,
+                                            JenisSkAsessmen: true,
                                             NamaFile: true,
-                                            NomorSk: true
+                                            NamaDokumen: true,
+                                            NomorSk: true,
+                                            Ditandatangani: true,
+                                            Dipublikasikan: true,
                                         },
                                     },
                                 },
@@ -848,6 +894,25 @@ app.get('/', async (c) => {
                                 ? ''
                                 : am.DaftarUlang[0].Nim ?? '',
                         SkRektor: am.SkRektorMahasiswa.length > 0 ? true : false,
+                        DaftarSk: am.SkRektorMahasiswa.filter(
+                            (x) => x.SkRektor.JenisSkAsessmen !== null
+                        ).map((x) => ({
+                            SkRektorId: x.SkRektor.SkRektorId,
+                            JenisSkAsessmen: x.SkRektor.JenisSkAsessmen!,
+                            NomorSk: x.SkRektor.NomorSk,
+                            NamaFile: x.SkRektor.NamaFile,
+                            NamaDokumen: x.SkRektor.NamaDokumen,
+                        })),
+                        SiapDipublikasikan:
+                            am.SkRektorMahasiswa.length > 0 &&
+                            am.SkRektorMahasiswa.every(
+                                (x) => x.SkRektor.Ditandatangani
+                            ),
+                        Dipublikasikan:
+                            am.SkRektorMahasiswa.length > 0 &&
+                            am.SkRektorMahasiswa.every(
+                                (x) => x.SkRektor.Dipublikasikan
+                            ),
                         NamaFile:
                             am.SkRektorMahasiswa.length > 0
                                 ? am.SkRektorMahasiswa[0].SkRektor.NamaFile ?? ''
@@ -953,169 +1018,318 @@ app.get('/', async (c) => {
 })
 
 app.post('/', async (c) => {
-    const body = await c.req.parseBody()
+    const jenisAksi = c.req.query('jenis')
 
-    const file = body.files
-    const PendaftaranId = body.PendaftaranId as unknown as string
-    const NamaSk = body.NamaSk as unknown as string
-    const TahunSk = body.TahunSk as unknown as string
-    const NomorSk = body.NomorSk as unknown as string
-    const TipeSk = await prisma.tipeSkRektor.findFirst({
-        where: {
-            Nama: "RPL"
+    // Penerbitan SK hasil asesmen dari template. Akademik memilih jenis SK
+    // (Perolehan SKS / Transfer SKS) mengikuti mata kuliah yang diajukan
+    // mahasiswa; satu mahasiswa bisa memerlukan salah satu atau keduanya.
+    if (jenisAksi === 'terbitkan') {
+        const body: {
+            PendaftaranId: string
+            JenisSkAsessmen: JenisSkAsessmen
+            NamaSk: string
+            NomorSk: string
+            TahunSk: string
+        } = await c.req.json()
+
+        if (!body.PendaftaranId) {
+            return c.json(
+                { status: 'error', message: 'PendaftaranId perlu diisi', data: [] },
+                { status: 400 }
+            )
         }
-    })
-
-    if (!file || !(file instanceof File)) {
-        return c.json(
-            { status: 'error', message: 'File is required', data: [] },
-            { status: 400 }
-        )
-    }
-    if (!NamaSk) {
-        return c.json(
-            { status: 'error', message: 'NamaSk Perlu diisi', data: [] },
-            { status: 400 }
-        )
-    }
-    if (!TahunSk) {
-        return c.json(
-            { status: 'error', message: 'TahunSk Perlu diisi', data: [] },
-            { status: 400 }
-        )
-    }
-    if (!NomorSk) {
-        return c.json(
-            { status: 'error', message: 'NomorSk Perlu diisi', data: [] },
-            { status: 400 }
-        )
-    }
-    if (!PendaftaranId) {
-        return c.json(
-            { status: 'error', message: 'Id Pendaftaran Perlu diisi', data: [] },
-            { status: 400 }
-        )
-    }
-    if (!TipeSk) {
-        return c.json(
-            { status: 'error', message: 'Tipe SK Perlu diisi', data: [] },
-            { status: 400 }
-        )
-    }
-
-    const avatarDir = path.join(process.cwd(), 'uploads', 'files')
-
-    const skAvail = await prisma.skRektorMahasiswa.findFirst({ select: { SkRektorId: true, SkRektor: { select: { NamaFile: true } } }, where: { PendaftaranId: PendaftaranId } });
-
-    if (skAvail) {
-        if (file !== null) {
-            const oldPath = path.join(avatarDir, skAvail.SkRektor.NamaFile)
-            if (fs.existsSync(oldPath)) {
-                try {
-                    fs.unlinkSync(oldPath)
-                } catch (err) {
-                    console.error('Failed to delete file :', err)
-                }
-            }
+        if (
+            body.JenisSkAsessmen !== 'PEROLEHAN_SKS' &&
+            body.JenisSkAsessmen !== 'TRANSFER_SKS'
+        ) {
+            return c.json(
+                { status: 'error', message: 'Jenis SK tidak dikenal', data: [] },
+                { status: 400 }
+            )
         }
-    }
-
-    const MAX_SIZE_MB = 10
-    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-        return c.json(
-            {
-                status: 'error',
-                message: 'Ukuran file melebihi 10MB',
-                data: [],
-            },
-            { status: 400 }
-        )
-    }
-
-    const allowedMimeTypes = [
-        'application/pdf',
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    ]
-    const allowedExtensions = ['pdf', 'doc', 'docx']
-
-    const fileExt = mime.getExtension(file.type) || ''
-    if (
-        !allowedMimeTypes.includes(file.type) ||
-        !allowedExtensions.includes(fileExt)
-    ) {
-        return c.json(
-            {
-                status: 'error',
-                message:
-                    'Format file tidak valid. Hanya PDF dan Word (doc/docx) yang diperbolehkan.',
-                data: [],
-            },
-            { status: 400 }
-        )
-    }
-
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const originalFileName = file.name
-    const filename = `${uuidv4()}.${fileExt}`
-
-    const check = await prisma.skRektorMahasiswa.findFirst({
-        where: {
-            PendaftaranId: PendaftaranId
-        }, select: {
-            SkRektor: {
-                select: {
-                    SkRektorId: true
-                }
-            }
+        if (!body.NomorSk || !body.NamaSk || !body.TahunSk) {
+            return c.json(
+                {
+                    status: 'error',
+                    message: 'Nama, Nomor, dan Tahun SK perlu diisi',
+                    data: [],
+                },
+                { status: 400 }
+            )
         }
-    })
 
-    let data: SkRektor;
-    if (check === null) {
-        data = await prisma.skRektor.create({
-            data: {
-                NamaDokumen: originalFileName,
-                NamaFile: filename,
-                NamaSk: NamaSk,
-                FileData: buffer,
-                TahunSk: parseInt(TahunSk),
-                NomorSk: NomorSk,
-                TipeSkRektorId: TipeSk.TipeSkRektorId,
-                CreatedAt: new Date(),
-                UpdatedAt: new Date(),
-            },
-        });
+        // Jenis SK yang diterbitkan sepenuhnya keputusan Akademik: boleh salah
+        // satu, boleh keduanya. Jumlah mata kuliah per jenis hanya dipakai
+        // sebagai informasi di layar, bukan sebagai pembatas.
 
-        await prisma.skRektorMahasiswa.create({
-            data: {
-                SkRektorId: data.SkRektorId,
-                PendaftaranId: PendaftaranId
-            }
-        })
-    } else {
-        data = await prisma.skRektor.update({
-            data: {
-                NamaDokumen: originalFileName,
-                NamaFile: filename,
-                NamaSk: NamaSk,
-                FileData: buffer,
-                TahunSk: parseInt(TahunSk),
-                NomorSk: NomorSk,
-                TipeSkRektorId: TipeSk.TipeSkRektorId,
-                UpdatedAt: new Date(),
-            },
+        const skLama = await prisma.skRektorMahasiswa.findFirst({
             where: {
-                SkRektorId: check.SkRektor.SkRektorId
+                PendaftaranId: body.PendaftaranId,
+                SkRektor: { JenisSkAsessmen: body.JenisSkAsessmen },
+            },
+            select: {
+                SkRektor: {
+                    select: {
+                        SkRektorId: true,
+                        Disetujui: true,
+                        Ditandatangani: true,
+                    },
+                },
+            },
+        })
+
+        if (skLama?.SkRektor.Ditandatangani) {
+            return c.json(
+                {
+                    status: 'error',
+                    message: 'SK ini sudah ditandatangani dan tidak dapat diterbitkan ulang',
+                    data: [],
+                },
+                { status: 409 }
+            )
+        }
+
+        const tipeSk = await prisma.tipeSkRektor.findFirst({
+            where: { Nama: 'RPL' },
+            select: { TipeSkRektorId: true },
+        })
+
+        if (!tipeSk) {
+            return c.json(
+                {
+                    status: 'error',
+                    message: "Tipe SK Rektor 'RPL' belum tersedia",
+                    data: [],
+                },
+                { status: 400 }
+            )
+        }
+
+        // Render SK dari template lewat endpoint generate-pdf agar isinya
+        // selalu mengikuti data asesmen yang tersimpan.
+        const cookieHeader = (await cookies()).toString()
+        const params = new URLSearchParams({
+            _id: body.PendaftaranId,
+            _t: 'sk',
+            _n: body.NomorSk,
+            _j:
+                body.JenisSkAsessmen === 'TRANSFER_SKS'
+                    ? 'TRANSFER KREDIT'
+                    : 'PEROLEHAN KREDIT',
+        })
+
+        const pdfRes = await fetch(
+            `${BASE_URL}/api/protected/generate-pdf?${params.toString()}`,
+            { headers: { cookie: cookieHeader } }
+        )
+
+        if (!pdfRes.ok) {
+            return c.json(
+                {
+                    status: 'error',
+                    message: 'Gagal merender SK dari template',
+                    data: [],
+                },
+                { status: 502 }
+            )
+        }
+
+        const buffer = Buffer.from(new Uint8Array(await pdfRes.arrayBuffer()))
+        const filename = `${uuidv4()}.pdf`
+        const namaDokumen = `${body.NamaSk}.pdf`
+
+        // SK hasil asesmen mengikuti folder mahasiswa pemiliknya.
+        const pemilik = await prisma.pendaftaran.findFirst({
+            where: { PendaftaranId: body.PendaftaranId },
+            select: { Mahasiswa: { select: { UserId: true } } },
+        })
+
+        const pathFile = await simpanBerkas(
+            pemilik?.Mahasiswa.UserId ?? null,
+            'sk',
+            filename,
+            buffer
+        )
+
+        const sk = await prisma.$transaction(async (tx) => {
+            if (skLama) {
+                return tx.skRektor.update({
+                    where: { SkRektorId: skLama.SkRektor.SkRektorId },
+                    data: {
+                        NamaSk: body.NamaSk,
+                        NomorSk: body.NomorSk,
+                        TahunSk: parseInt(body.TahunSk, 10),
+                        NamaFile: filename,
+                        NamaDokumen: namaDokumen,
+                        PathFile: pathFile,
+                        // Penerbitan ulang membatalkan persetujuan sebelumnya.
+                        Disetujui: false,
+                        DisetujuiPada: null,
+                        DisetujuiOleh: null,
+                        UpdatedAt: new Date(),
+                    },
+                })
             }
-        });
+
+            const dibuat = await tx.skRektor.create({
+                data: {
+                    TipeSkRektorId: tipeSk.TipeSkRektorId,
+                    JenisSkAsessmen: body.JenisSkAsessmen,
+                    NamaSk: body.NamaSk,
+                    NomorSk: body.NomorSk,
+                    TahunSk: parseInt(body.TahunSk, 10),
+                    NamaFile: filename,
+                    NamaDokumen: namaDokumen,
+                    PathFile: pathFile,
+                    Disetujui: false,
+                    CreatedAt: new Date(),
+                    UpdatedAt: new Date(),
+                },
+            })
+
+            await tx.skRektorMahasiswa.create({
+                data: {
+                    SkRektorId: dibuat.SkRektorId,
+                    PendaftaranId: body.PendaftaranId,
+                },
+            })
+
+            return dibuat
+        })
+
+        return c.json({
+            status: 'success',
+            message: 'SK berhasil diterbitkan dari template',
+            data: {
+                SkRektorId: sk.SkRektorId,
+                JenisSkAsessmen: sk.JenisSkAsessmen,
+                NamaSk: sk.NamaSk,
+                NomorSk: sk.NomorSk,
+                TahunSk: sk.TahunSk,
+                NamaFile: sk.NamaFile,
+                NamaDokumen: sk.NamaDokumen,
+                Disetujui: sk.Disetujui,
+                Catatan: sk.Catatan ?? '',
+            },
+        })
     }
 
-    return c.json({
-        status: 'success',
-        message: 'File uploaded successfully',
-        data: data
-    })
+    // Publikasi SK ke mahasiswa. SK yang sudah ditandatangani Rektor baru
+    // terlihat mahasiswa setelah Akademik mempublikasikannya; sebelum itu
+    // berkas ditahan.
+    if (jenisAksi === 'publikasi') {
+        const body: { PendaftaranId: string; Publikasikan: boolean } =
+            await c.req.json()
+
+        if (!body.PendaftaranId) {
+            return c.json(
+                { status: 'error', message: 'PendaftaranId perlu diisi', data: [] },
+                { status: 400 }
+            )
+        }
+
+        const skMahasiswa = await prisma.skRektorMahasiswa.findMany({
+            where: {
+                PendaftaranId: body.PendaftaranId,
+                SkRektor: { JenisSkAsessmen: { not: null } },
+            },
+            select: {
+                SkRektor: {
+                    select: { SkRektorId: true, Ditandatangani: true },
+                },
+            },
+        })
+
+        if (skMahasiswa.length === 0) {
+            return c.json(
+                {
+                    status: 'error',
+                    message: 'Belum ada SK hasil asesmen untuk pendaftaran ini',
+                    data: [],
+                },
+                { status: 404 }
+            )
+        }
+
+        const belumDitandatangani = skMahasiswa.filter(
+            (x) => !x.SkRektor.Ditandatangani
+        )
+
+        if (body.Publikasikan && belumDitandatangani.length > 0) {
+            return c.json(
+                {
+                    status: 'error',
+                    message: `Masih ada ${belumDitandatangani.length} SK yang belum ditandatangani Rektor`,
+                    data: [],
+                },
+                { status: 409 }
+            )
+        }
+
+        await prisma.skRektor.updateMany({
+            where: {
+                SkRektorId: {
+                    in: skMahasiswa.map((x) => x.SkRektor.SkRektorId),
+                },
+            },
+            data: {
+                Dipublikasikan: body.Publikasikan,
+                DipublikasikanPada: body.Publikasikan ? new Date() : null,
+                UpdatedAt: new Date(),
+            },
+        })
+
+        // Mahasiswa hanya dikabari ketika SK benar-benar dipublikasikan.
+        if (body.Publikasikan) {
+            const cookieHeader = (await cookies()).toString()
+            const mhs = await prisma.pendaftaran.findFirst({
+                where: { PendaftaranId: body.PendaftaranId },
+                select: {
+                    Mahasiswa: {
+                        select: { User: { select: { Nama: true, NomorWa: true } } },
+                    },
+                },
+            })
+
+            const target = mhs?.Mahasiswa.User.NomorWa ?? ''
+            if (target) {
+                const params = new URLSearchParams({
+                    target: String(target),
+                    message: `Halo, ${mhs?.Mahasiswa.User.Nama}. SK Penetapan Hasil Asessmen anda sudah diterbitkan dan dapat diunduh melalui Sistem Informasi RPL Terpadu ITI. Terima Kasih.`,
+                    jenis: 'sendWaText',
+                })
+
+                await fetch(
+                    `${BASE_URL}/api/protected/whatsapp?${params.toString()}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            cookie: cookieHeader,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                ).catch(() => undefined)
+            }
+        }
+
+        return c.json({
+            status: 'success',
+            message: body.Publikasikan
+                ? 'SK dipublikasikan ke mahasiswa'
+                : 'Publikasi SK ditahan',
+            data: { Dipublikasikan: body.Publikasikan },
+        })
+    }
+
+    return c.json(
+        {
+            status: 'error',
+            message:
+                'Unggah SK manual tidak lagi didukung. Terbitkan SK dari template.',
+            data: [],
+        },
+        { status: 400 }
+    )
 })
 
 export const GET = handle(app)

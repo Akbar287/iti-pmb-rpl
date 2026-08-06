@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# berkas unggahan pengguna (dokumen, SK, avatar, lampiran tiket)
+/storage/*
+!/storage/.gitkeep

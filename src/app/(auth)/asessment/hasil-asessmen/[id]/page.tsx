@@ -381,6 +381,40 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
     }
 
     const res = data?.StatusMahasiswaAssesmentHistory.find(x => x.Aktif);
+    // Kedua jenis SK selalu ditawarkan ke Akademik; jumlah mata kuliah per jenis
+    // hanya jadi keterangan.
+    const [mkPerolehan, mkTransfer] = await Promise.all([
+        prisma.mataKuliahMahasiswa.count({
+            where: { PendaftaranId: id, Keterangan: 'Perolehan_SKS' },
+        }),
+        prisma.mataKuliahMahasiswa.count({
+            where: { PendaftaranId: id, Keterangan: 'Transfer_SKS' },
+        }),
+    ])
+
+    const skAsessmen = await prisma.skRektorMahasiswa.findMany({
+        where: {
+            PendaftaranId: id,
+            SkRektor: { JenisSkAsessmen: { not: null } },
+        },
+        select: {
+            SkRektor: {
+                select: {
+                    SkRektorId: true,
+                    JenisSkAsessmen: true,
+                    NamaSk: true,
+                    NomorSk: true,
+                    TahunSk: true,
+                    NamaFile: true,
+                    NamaDokumen: true,
+                    Disetujui: true,
+                    Ditandatangani: true,
+                    Catatan: true,
+                },
+            },
+        },
+    })
+
     const stats: {
         StatusMahasiswaAssesmentId: string; NamaStatus: string
     } = res ? { StatusMahasiswaAssesmentId: res.StatusMahasiswaAssesmentId, NamaStatus: res.StatusMahasiswaAssesment.NamaStatus } : { StatusMahasiswaAssesmentId: '', NamaStatus: '' };
@@ -390,7 +424,26 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             <h1 className="text-2xl font-bold mb-4">
                 Detail Hasil Final Asessmen Mahasiswa
             </h1>
-            <HasilAsessmenIdComponent stats={stats} dataServer={dataServer} />
+            <HasilAsessmenIdComponent
+                stats={stats}
+                dataServer={dataServer}
+                jumlahMkPerJenis={{
+                    PEROLEHAN_SKS: mkPerolehan,
+                    TRANSFER_SKS: mkTransfer,
+                }}
+                skAsessmen={skAsessmen.map((x) => ({
+                    SkRektorId: x.SkRektor.SkRektorId,
+                    JenisSkAsessmen: x.SkRektor.JenisSkAsessmen!,
+                    NamaSk: x.SkRektor.NamaSk,
+                    NomorSk: x.SkRektor.NomorSk,
+                    TahunSk: String(x.SkRektor.TahunSk),
+                    NamaFile: x.SkRektor.NamaFile,
+                    NamaDokumen: x.SkRektor.NamaDokumen,
+                    Disetujui: x.SkRektor.Disetujui,
+                    Ditandatangani: x.SkRektor.Ditandatangani,
+                    Catatan: x.SkRektor.Catatan ?? '',
+                }))}
+            />
         </div>
     )
 }
