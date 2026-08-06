@@ -1,31 +1,31 @@
 name: Build & Push Docker Image
 
 on:
-  push:
-    branches: [ "main" ]
+    push:
+        branches: ['main']
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_API_BASE_URL: https://rpl.seni.asia
-      BACKEND_API_BASE_URL: https://rpl.seni.asia
+    build:
+        runs-on: ubuntu-latest
+        env:
+            NEXT_PUBLIC_API_BASE_URL: https://rpl.iti.ac.id
+            BACKEND_API_BASE_URL: https://rpl.iti.ac.id
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+            - name: Login to Docker Hub
+              uses: docker/login-action@v3
+              with:
+                  username: ${{ secrets.DOCKERHUB_USERNAME }}
+                  password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          build-args: |
-            NEXT_PUBLIC_API_BASE_URL=${{ env.NEXT_PUBLIC_API_BASE_URL }}
-          tags: interpidsquid/iti-pmb-rpl:latest
+            - name: Build and Push Docker Image
+              uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  push: true
+                  build-args: |
+                      NEXT_PUBLIC_API_BASE_URL=${{ env.NEXT_PUBLIC_API_BASE_URL }}
+                  tags: interpidsquid/iti-pmb-rpl:latest
