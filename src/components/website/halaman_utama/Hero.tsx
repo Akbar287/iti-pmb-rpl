@@ -1,6 +1,6 @@
 'use client'
-import Foto1 from '@/assets/images/foto-1.png'
 import { Separator } from '@radix-ui/react-separator'
+import HeroAnimatedBackground from './HeroAnimatedBackground'
 
 const Hero = ({
     data,
@@ -14,26 +14,7 @@ const Hero = ({
 }) => {
     return (
         <div className="relative min-h-screen w-full">
-            <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{
-                    backgroundImage: `url(${
-                        process.env.NEXT_PUBLIC_API_BASE_URL +
-                        '/api/img?_t=_m&_id=' +
-                        (data ? data.SettingMainPageId : Foto1.src)
-                    })`,
-                    filter: 'blur(10px)',
-                    zIndex: -1,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    opacity: 0.8,
-                    transition: 'opacity 0.5s ease-in-out',
-                }}
-            >
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-50 to-white mix-blend-multiply" />
-                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-white via-white/70 to-transparent" />
-            </div>
+            <HeroAnimatedBackground />
 
             {/* Content */}
             <div className="relative container mx-auto flex flex-col items-center justify-center min-h-screen text-center px-4 pt-20">
