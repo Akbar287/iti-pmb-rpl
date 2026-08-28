@@ -18,7 +18,7 @@ export default function Error({
             <h1 className="text-4xl font-bold mb-4">500 - Ada Kesalahan</h1>
             <p className="mb-6">
                 Sedang terjadi kesalahan dalam proses data. Mohon Coba lagi
-                nanti ya..
+                nanti ya...
             </p>
             <button
                 onClick={() => reset()}
