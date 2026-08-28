@@ -12,7 +12,7 @@ import path from 'path'
 export const STORAGE_ROOT =
     process.env.STORAGE_ROOT ?? path.join(process.cwd(), 'storage')
 
-export type JenisBerkas = 'dokumen' | 'sk' | 'avatar' | 'tiket'
+export type JenisBerkas = 'dokumen' | 'sk' | 'avatar' | 'tiket' | 'ttd'
 
 /** Membuat path relatif yang tersimpan di kolom basis data. */
 export function buatPathBerkas(

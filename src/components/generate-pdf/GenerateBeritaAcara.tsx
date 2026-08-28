@@ -29,6 +29,13 @@ export const GenerateBeritaAcara = ({
 }) => {
     const placeholders = getBeritaAcaraPlaceholderValues(data)
 
+    // Tanda tangan penilai memakai gambar yang sama dengan Form 03 dan Form 05.
+    // Ketua Tim Komite sementara dikosongkan — belum ada sumber tanda tangannya.
+    const tandaTangan = {
+        penilai1: (data.Penilai ?? []).find((p) => p.Urutan === 1)?.TandaTangan ?? null,
+        penilai2: (data.Penilai ?? []).find((p) => p.Urutan === 2)?.TandaTangan ?? null,
+    }
+
     return (
         <Document>
             {template.pages
@@ -44,6 +51,7 @@ export const GenerateBeritaAcara = ({
                             blocks={page.blocks}
                             placeholders={placeholders}
                             logoPath={logoPath}
+                            tandaTangan={tandaTangan}
                         />
                     </Page>
                 ))}

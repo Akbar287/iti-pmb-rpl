@@ -52,6 +52,7 @@ export interface EkuivalenCheckAsessmenType {
         TranskripNilai: {
             NilaiAsessment: string
             Diakui: boolean
+            Catatan: string
             TranskripNilaiId: string
             PendaftaranId: string
             KodeMataKuliah: string
@@ -107,4 +108,6 @@ export interface UpdateEkuivalenCheckType {
     MataKuliahMahasiswaIdSetelah: string
     NilaiAsessment: string
     Diakui: boolean
+    /** Catatan asesor atas keputusan ekuivalensi ini. */
+    Catatan?: string
 }

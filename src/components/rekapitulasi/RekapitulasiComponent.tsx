@@ -48,6 +48,7 @@ import { ResponseMhsFromAsesorSession } from '@/types/PenunjukanAsesor'
 import { useRouter } from 'next/navigation'
 import Swal from '@/lib/swal'
 import { setStatusSanggahan } from '@/services/Status/StatusService'
+import { getStatusTandaTanganAsesor } from '@/services/TandaTanganAsesor/TandaTanganAsesorService'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 
 const RekapitulasiComponent = () => {
@@ -91,13 +92,42 @@ const RekapitulasiComponent = () => {
         router.push('/asessment/rekapitulasi/' + PendaftaranId)
     }
 
-    const continueSanggahan = (dt: ResponseMhsFromAsesorSession) => {
+    const continueSanggahan = async (dt: ResponseMhsFromAsesorSession) => {
+        // Hasil rekapitulasi wajib disahkan Penilai 1 dan Penilai 2 lebih dulu;
+        // tanda tangannya ikut tercetak pada Form 03 dan Form 05.
+        try {
+            const ttd = await getStatusTandaTanganAsesor(dt.PendaftaranId)
+            if (!ttd.SemuaSudahTandaTangan) {
+                const belum = ttd.Daftar.filter((x) => !x.SudahTandaTangan)
+                    .map((x) => `Penilai ${x.Urutan}`)
+                    .join(' dan ')
+                Swal.fire({
+                    title: 'Belum dapat dilanjutkan',
+                    text: belum
+                        ? `${belum} belum menandatangani hasil rekapitulasi. Tanda tangan dibubuhkan pada halaman rekapitulasi mahasiswa ini.`
+                        : 'Asesor pada berkas ini belum ditetapkan.',
+                    icon: 'warning',
+                })
+                return
+            }
+        } catch (err) {
+            Swal.fire({
+                title: 'Gagal memeriksa tanda tangan',
+                text:
+                    err instanceof Error
+                        ? err.message
+                        : 'Status tanda tangan asesor tidak dapat dibaca.',
+                icon: 'error',
+            })
+            return
+        }
+
         Swal.fire({
             title: 'Lanjutkan ke Proses Sanggahan ?',
             text:
                 'Lanjutkan Asessmen Calon Mahasiswa ' +
                 dt.Nama +
-                ' ke Proses Sanggahan. Aksi ini tidak dapat di undo',
+                ' ke Proses Sanggahan. Kedua penilai sudah menandatangani hasil rekapitulasi. Aksi ini tidak dapat di undo',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#f45f24',

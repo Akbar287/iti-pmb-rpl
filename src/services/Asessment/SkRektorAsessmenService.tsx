@@ -131,6 +131,192 @@ export type SkAsessmenTerbitType = {
     Catatan: string
 }
 
+export type FieldTemplateSisurat = {
+    key: string
+    label?: string | null
+    dataType?: string | null
+    required?: boolean
+    diisiSisurat?: boolean
+    fallback?: string | null
+}
+
+export type TemplateSisurat = {
+    templateVersionId: string
+    kode?: string | null
+    nama: string
+    letterType: string
+    versionNumber: number
+    placeholders: string[]
+    /** Tersedia pada Sisurat versi baru; kosong pada versi lama. */
+    fields?: FieldTemplateSisurat[] | null
+}
+
+/** Daftar template plus hasil pencocokan template SK RPL per skema. */
+export type DaftarTemplateSisurat = {
+    Daftar: TemplateSisurat[]
+    Rpl: Record<
+        'PEROLEHAN_SKS' | 'TRANSFER_SKS',
+        TemplateSisurat | null
+    >
+}
+
+export async function getTemplateSisurat(): Promise<DaftarTemplateSisurat> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=template-sisurat`
+    )
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.message ?? 'Gagal memuat template Sisurat')
+    return {
+        Daftar: json.data ?? [],
+        Rpl: json.rpl ?? { PEROLEHAN_SKS: null, TRANSFER_SKS: null },
+    }
+}
+
+/**
+ * Meminta Sisurat merender pratinjau surat dari isian saat ini.
+ * Membalas galat 501 bila server Sisurat belum mendukung pratinjau.
+ */
+export async function pratinjauSkSisurat(payload: {
+    PendaftaranId: string
+    JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS'
+    templateVersionId?: string
+    Semester?: string
+    TanggalAsesmen?: string
+    Menimbang?: string[]
+    Mengingat?: string[]
+    Memperhatikan?: string[]
+    Menetapkan?: string[]
+}): Promise<{
+    status: string
+    message: string
+    data: { Html: string; BelumTerisi: string[]; Template: string }
+}> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=pratinjau-sisurat`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        }
+    )
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.message ?? 'Gagal membuat pratinjau')
+    return json
+}
+
+/**
+ * Mendorong inisialisasi SK ke Sisurat.
+ *
+ * Template dipilih server berdasarkan kode (TPL-SK-RPL-PEROLEHAN/TRANSFER) dan
+ * identitas mahasiswa diisi dari basis data; dari sini hanya dikirim bagian yang
+ * memang disunting Akademik. Setelah ini, persetujuan Wakil Rektor, tanda tangan
+ * Rektor, dan penomoran berjalan di Sisurat.
+ */
+export async function kirimSkKeSisurat(payload: {
+    PendaftaranId: string
+    JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS'
+    NamaSk: string
+    TahunSk: string
+    /** Diisi hanya bila Akademik memilih template secara manual. */
+    templateVersionId?: string
+    Perihal?: string
+    Semester?: string
+    TanggalAsesmen?: string
+    Menimbang?: string[]
+    Mengingat?: string[]
+    Memperhatikan?: string[]
+    Menetapkan?: string[]
+}): Promise<{
+    status: string
+    message: string
+    data: SkAsessmenTerbitType & {
+        SisuratLetterId: string
+        SisuratStatus: string
+        SisuratStepKey: string | null
+        Template: string
+        Warnings: string[]
+    }
+}> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=kirim-sisurat`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        }
+    )
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.message ?? 'Gagal mengirim SK ke Sisurat')
+    return json
+}
+
+export type StatusSkSisurat = {
+    SkRektorId: string
+    JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS' | null
+    SisuratStatus: string
+    SisuratStepKey: string | null
+    NomorSk: string
+    Ditandatangani: boolean
+    PerluRevisi: boolean
+    Catatan: string
+}
+
+export async function perbaruiStatusSisurat(PendaftaranId: string): Promise<{
+    status: string
+    message: string
+    data: {
+        Daftar: StatusSkSisurat[]
+        SemuaDitandatangani: boolean
+        AdaPerluRevisi: boolean
+        Galat: string[]
+    }
+}> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=perbarui-status`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ PendaftaranId }),
+        }
+    )
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.message ?? 'Gagal memperbarui status')
+    return json
+}
+
+/**
+ * Membuka kembali SK agar dapat dikirim ulang ke Sisurat.
+ *
+ * `paksa` diperlukan bila suratnya masih berjalan di Sisurat — surat di sana
+ * tidak ikut terhapus, jadi harus dibatalkan dari Sisurat agar tidak berganda.
+ */
+export async function resetSkSisurat(
+    SkRektorId: string,
+    paksa = false
+): Promise<{
+    status: string
+    message: string
+    data: {
+        SkRektorId: string
+        LetterIdDitinggalkan?: string | null
+        PendaftaranId?: string | null
+        /** true bila tak ada lagi SK pendaftaran ini yang tertaut Sisurat. */
+        TidakAdaLagiTerkirim?: boolean
+    }
+}> {
+    const res = await fetch(
+        `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=reset-sisurat`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ SkRektorId, Paksa: paksa }),
+        }
+    )
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.message ?? 'Gagal membuka kembali SK')
+    return json
+}
+
 export async function terbitkanSkAsessmen(
     PendaftaranId: string,
     JenisSkAsessmen: 'PEROLEHAN_SKS' | 'TRANSFER_SKS',
@@ -160,7 +346,15 @@ export async function terbitkanSkAsessmen(
 export async function setPublikasiSkAsessmen(
     PendaftaranId: string,
     Publikasikan: boolean
-): Promise<{ status: string; message: string; data: { Dipublikasikan: boolean } }> {
+): Promise<{
+    status: string
+    message: string
+    data: {
+        Dipublikasikan: boolean
+        /** Status berkas setelah publikasi; null bila gagal dimajukan. */
+        Status?: string | null
+    }
+}> {
     const res = await fetch(
         `${BASE_URL}/api/protected/asessment/sk-rektor?jenis=publikasi`,
         {

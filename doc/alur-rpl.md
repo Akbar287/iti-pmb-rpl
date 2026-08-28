@@ -80,24 +80,27 @@ flowchart TB
     end
 
     subgraph akademik["Akademik"]
-        n12["10. Terbitkan SK dari Template — Perolehan &/atau Transfer SKS"]
-        n13["13. Sinkronisasi Hasil"]
-        n14["14. Selesai"]
+        n12["10. Susun lampiran SK — Perolehan &/atau Transfer SKS"]
+        n12c["Kirim inisialisasi surat ke Sisurat"]
+        n13["12. Publikasi & Sinkronisasi Hasil"]
+        n14["13. Selesai"]
         E(["akhir"])
+        n12 --> n12c
         n13 --> n14 --> E
     end
 
-    subgraph rektor["Rektor"]
-        n12b["12. Penandatanganan SK (QR)"]
+    subgraph sisurat["Sisurat ITI — alur WF-SK-RPL (6 tahap)"]
+        s1["11. SUBMIT → Persetujuan Wakil Rektor A
+        → Persetujuan Rektor → Penomoran
+        → Tanda tangan QR → Arsip"]
+        gw3{"Tanda tangan terbit?"}
+        s1 --> gw3
     end
 
     subgraph warek["Wakil Rektor"]
         n5["5. Persetujuan Penunjukan Asesor"]
         gw1{"Disetujui?"}
-        n11b["11. Persetujuan SK Asesmen"]
-        gw3{"SK disetujui?"}
         n5 --> gw1
-        n11b --> gw3
     end
 
     n1 --> n2a
@@ -109,10 +112,9 @@ flowchart TB
     n8 --> gwD
     n9a --> n9b
     n10a --> n12
-    n12 --> n11b
-    gw3 -->|Tidak| n12
-    gw3 -->|Ya| n12b
-    n12b --> n13
+    n12c --> s1
+    gw3 -->|Belum / ditolak, tarik status lagi| s1
+    gw3 -->|Ya| n13
 ```
 
 ---
@@ -132,7 +134,7 @@ Perilakunya (lihat `src/app/api/protected/status/route.ts`):
 4. Status yang tidak lagi ada pada daftar urutan (mis. "Penerbitan SK Penugasan Asesor" yang
    kini dipindah ke pendaftaran asesor) ikut dibersihkan dari riwayat berkas lama.
 
-Ke-13 status dan pemicunya:
+Ke-12 status dan pemicunya:
 
 | # | Status | Kode `j` | Dipicu oleh | Dari halaman |
 |---|---|---|---|---|
@@ -144,11 +146,10 @@ Ke-13 status dan pemicunya:
 | 6 | Rekapitulasi Asessmen | `ra` | Asesor menekan "Lanjutkan ke Rekapitulasi" | `/asessment/asessmen-mahasiswa` |
 | 7 | Sanggahan | `s` | Asesor menekan "Lanjutkan ke Sanggahan" | `/asessment/rekapitulasi` |
 | 8 | Hasil Final Asessmen | `hfa` | Sanggahan ditutup | `/asessment/sanggahan-mahasiswa/[id]` |
-| 9 | Penerbitan SK Asessmen | `psa` | Wakil Rektor menolak SK sehingga kembali ke Akademik untuk direvisi | `/approval/sk-hasil` |
-| 10 | Persetujuan SK Asessmen | `pska` | Akademik menekan "Ajukan ke Wakil Rektor" setelah SK terbit | `/asessment/hasil-asessmen/[id]`, `/asessment/sk-rektor/[id]` |
-| 11 | Penandatanganan SK | `pts` | Wakil Rektor menyetujui **seluruh** SK mahasiswa itu | `/approval/sk-hasil` |
-| 12 | Sinkronisasi Hasil Asessmen | `sha` | Rektor menandatangani **seluruh** SK mahasiswa itu | `/tanda-tangan` |
-| 13 | Selesai | `done` | Akademik menjalankan sinkronisasi | `/asessment/sinkronisasi` |
+| 9 | Penerbitan SK Asessmen | `psa` | Berkas masuk ke Akademik untuk disiapkan SK-nya | `/asessment/hasil-asessmen/[id]` |
+| 10 | Proses SK di Sisurat | `pss` | Akademik menekan "Tandai Diproses di Sisurat" setelah SK diinisialisasi | `/asessment/hasil-asessmen/[id]`, `/asessment/sk-rektor/[id]` |
+| 11 | Sinkronisasi Hasil Asessmen | `sha` | Seluruh SK sudah bernomor resmi dari Sisurat dan dipublikasikan Akademik | `/asessment/sk-rektor/[id]` |
+| 12 | Selesai | `done` | Akademik menjalankan sinkronisasi | `/asessment/sinkronisasi` |
 
 Setiap perubahan status otomatis menjadi notifikasi bagi mahasiswa
 (`/api/protected/notifikasi` membaca `status_mahasiswa_assesment_history`).
@@ -274,115 +275,104 @@ Status mata kuliah (`StatusMataKuliahMahasiswa`) bergerak antara `DALAM_ASESSMEN
 `DISANGGAH` → `PERLU_DIREVISI` → `SELESAI`. Asesor memperbaiki penilaian lalu kembali ke
 rekapitulasi. Bila tidak ada (atau selesai) sanggahan, status menjadi **Hasil Final Asessmen**.
 
-### Tahap 9 — Hasil Final & Penerbitan SK (Akademik)
+### Tahap 9 — Hasil Final & Penyusunan SK (Akademik)
 
 Halaman `/asessment/hasil-asessmen/[id]`. Akademik memeriksa rekap hasil asesmen, lalu
-menerbitkan SK dari template. **Kedua jenis SK selalu ditawarkan** — SK Perolehan SKS dan
-SK Transfer SKS — dan Akademik bebas menerbitkan salah satu atau keduanya sesuai kebutuhan
-mahasiswa. Tiap kartu menampilkan jumlah mata kuliah mahasiswa untuk jenis tersebut sebagai
-keterangan, bukan sebagai pembatas.
+menyiapkan SK. **Kedua jenis SK selalu ditawarkan** — SK Perolehan SKS dan SK Transfer SKS —
+dan Akademik bebas mengirim salah satu atau keduanya sesuai kebutuhan mahasiswa. Tiap kartu
+menampilkan jumlah mata kuliah mahasiswa untuk jenis tersebut sebagai keterangan, bukan
+sebagai pembatas.
 
-Tombol **"Ajukan ke Wakil Rektor"** aktif setelah minimal satu SK terbit dan memindahkan
-status langsung ke **Persetujuan SK Asessmen** — tidak ada langkah Akademik tambahan di
-antaranya. Kartu penerbitan tetap terbuka selama berkas ada di tangan Akademik, yaitu pada
-status *Hasil Final Asessmen* maupun *Penerbitan SK Asessmen* (keadaan setelah SK ditolak
-Wakil Rektor).
+Tombol **"Tandai Diproses di Sisurat"** aktif setelah minimal satu SK diinisialisasi ke
+Sisurat dan memindahkan status ke **Proses SK di Sisurat**.
 
-### Tahap 10 — Penerbitan SK Hasil Asesmen (Akademik)
+### Tahap 10 — Inisialisasi SK ke Sisurat (Akademik)
 
-Halaman `/asessment/sk-rektor/[id]`. SK **dibuat dari template**, bukan diunggah manual.
-Endpoint unggah berkas SK sudah dicabut: `POST /api/protected/asessment/sk-rektor` tanpa
-`?jenis=terbitkan` membalas HTTP 400.
+Halaman `/asessment/sk-rektor/[id]`. **Pembuatan surat tidak lagi dikerjakan di aplikasi
+ini.** Akademik, Wakil Rektor, dan Rektor bekerja pada **Sisurat ITI**; aplikasi RPL hanya
+mendorong satu panggilan inisialisasi, mengikuti `doc/integrasi-rpl-sisurat.md`.
 
-Ada dua jenis SK — **SK Perolehan SKS** dan **SK Transfer SKS** — dan keduanya selalu
-tersedia untuk diterbitkan. Akademik yang memutuskan: salah satu saja, atau keduanya.
-Jumlah `MataKuliahMahasiswa` per `Keterangan` (`Perolehan_SKS` / `Transfer_SKS`) ditampilkan
-sebagai keterangan di tiap kartu, tetapi tidak membatasi — server tidak menolak penerbitan
-untuk jenis yang mata kuliahnya nol.
+Alurnya per jenis SK:
 
-Halaman ini dan halaman hasil asesmen (Tahap 9) memakai kartu penerbitan yang sama dan
-endpoint yang sama; menerbitkan ulang menimpa SK jenis tersebut, bukan membuat SK baru.
-Halaman ini dipakai terutama ketika SK **dikembalikan** Wakil Rektor untuk direvisi —
-berkas dengan status *Penerbitan SK Asessmen* muncul di daftarnya.
+1. Server mencocokkan **template Sisurat lewat kode yang stabil** —
+   `TPL-SK-RPL-PEROLEHAN` atau `TPL-SK-RPL-TRANSFER` — dari `GET /api/external/v1/templates`.
+   `templateVersionId` tidak pernah disimpan di kode karena berganti setiap template
+   diterbitkan ulang.
+2. `fieldValues` disusun di server: nama mahasiswa, program studi, semester, tanggal
+   asesmen, tempat penetapan, serta **nama Rektor** (dari data jabatan universitas) diisi
+   otomatis. Empat butir keputusan — *Menimbang*, *Mengingat*, *Memperhatikan*,
+   *Menetapkan* — dapat disunting Akademik, satu butir per baris, dan dikirim sebagai
+   **JSON array yang di-*stringify*** sesuai ketentuan placeholder bertipe LIST.
+   `letter.number` **tidak pernah dikirim** — nomor adalah kewenangan Sisurat.
+3. Aplikasi merender **lampiran PDF** hasil asesmen dari Template Builder
+   (`/api/protected/generate-pdf?_t=sk`), menyimpannya ke `/storage` (`SkRektor.PathFile`),
+   lalu mengirimnya sebagai `attachment` pada `POST /api/external/v1/surat` (multipart)
+   bersama `payload` JSON. `externalReference` diisi `RPL-<PendaftaranId>-<JenisSk>`.
+4. Respons Sisurat disimpan: `SisuratLetterId`, `SisuratStatus`, `SisuratStepKey`,
+   `SisuratDiajukanPada`. `NomorSk` sengaja dikosongkan.
+5. Inisialisasi ulang ditolak selama `SisuratLetterId` terisi — Sisurat sendiri tidak
+   menolak inisialisasi kedua dengan `externalReference` yang sama, jadi idempotensi
+   ditegakkan di sini.
 
-Nomor SK yang diisi Akademik di tahap ini bersifat **sementara** — nomor resmi baru terbit
-dari Sisurat saat Rektor menandatangani (lihat Tahap 12).
+### Tahap 11 — Alur `WF-SK-RPL` di Sisurat
 
-Setiap penerbitan mengisi Nama/Nomor/Tahun SK, lalu sistem merender PDF lewat
-`/api/protected/generate-pdf?_t=sk` memakai template SK Hasil (Perolehan/Transfer) dari
-**Template Builder**, dan menyimpannya sebagai `SkRektor` (`JenisSkAsessmen` terisi) yang
-ditautkan ke pendaftaran lewat `SkRektorMahasiswa`. Menerbitkan ulang menimpa berkas dan
-membatalkan persetujuan sebelumnya.
+Seluruh tahap ini **di luar aplikasi RPL**. Alurnya enam tahap — **tanpa peninjauan unit
+dan tanpa distribusi**:
 
-Tombol **"Ajukan ke Wakil Rektor"** aktif setelah minimal satu SK terbit, dan memindahkan
-status ke **Persetujuan SK Asessmen**.
+| # | StepKey | Pelaksana | Status surat |
+|---|---|---|---|
+| 1 | `SUBMIT` | otomatis (service user API) | `SUBMITTED` |
+| 2 | `WAREK_APPROVAL` | Wakil Rektor A | `PENDING_VICE_RECTOR_APPROVALS` |
+| 3 | `RECTOR_APPROVAL` | Rektor | `PENDING_RECTOR_APPROVAL` |
+| 4 | `ADMINISTRATION` | Admin Tata Usaha | `PENDING_ADMINISTRATION` |
+| 5 | `SIGNING` | Admin Tata Usaha | `PENDING_SIGNATURE` |
+| 6 | `ARCHIVE` | Admin Tata Usaha | `COMPLETED` |
 
-### Tahap 11 — Persetujuan SK Asesmen (Wakil Rektor)
+Sisurat tidak mengirim notifikasi balik, jadi status **ditarik manual**: tombol
+**"Perbarui Status"** memanggil `POST /api/protected/asessment/sk-rektor?jenis=perbarui-status`,
+yang untuk tiap SK memanggil `GET /api/external/v1/surat/{letterId}`.
 
-Halaman `/approval/sk-hasil`. Setiap SK dinilai **satu per satu**:
+**Nomor surat bukan tanda selesai** — nomor terbit pada tahap 4, satu tahap sebelum tanda
+tangan. Yang menentukan SK siap dipublikasikan adalah **`signature` sudah terisi**.
 
-- **Disetujui** → `SkRektor.Disetujui = true`. Bila seluruh SK milik mahasiswa itu sudah
-  disetujui, status maju ke **Penandatanganan SK**; bila masih ada yang menunggu, berkas
-  tetap di tahap ini.
-- **Tidak disetujui** → catatan tersimpan di `SkRektor.Catatan` dan status dikembalikan ke
-  **Penerbitan SK Asessmen** agar Akademik merevisi lalu menerbitkan ulang.
+Begitu tanda tangan terbaca pertama kali, aplikasi:
 
-### Tahap 12 — Penandatanganan SK (Rektor)
+1. menarik ulang status dengan `?qr=1` untuk mengambil `signature.qrBase64`;
+2. merender ulang lampiran SK memakai **nomor surat resmi** (menggantikan penanda
+   "menunggu nomor Sisurat");
+3. menempelkan QR pada blok "Ditetapkan di … / Pada Tanggal …" lewat
+   `src/lib/sk-stempel-qr.ts`, lalu menimpa berkas di `/storage`;
+4. mencatat `Ditandatangani`, `TandaTanganPada`, `TandaTanganOleh`, `QrVerifyUrl`,
+   `QrOfficialNama`, `QrOfficialJabatan`, `NomorSuratSisurat`, `NomorSuratPada`.
 
-Halaman `/tanda-tangan`, hanya dapat diakses peran **Rektor** (dijaga di UI lewat menu dan
-di server lewat pemeriksaan peran pada `/api/protected/tanda-tangan`).
+Bila status berubah menjadi `REJECTED` / `REVISION_REQUESTED` / `CANCELLED`,
+`lastDecision.note` disimpan ke `SkRektor.Catatan` dan ditampilkan apa adanya kepada
+Akademik, status pendaftaran mundur ke **Penerbitan SK Asessmen**, dan tombol
+**"Perbaiki & Kirim Ulang"** mengosongkan `SisuratLetterId` agar surat baru dapat
+diinisialisasi.
 
-Daftar berisi **tiap SK** (bukan tiap mahasiswa) yang sudah disetujui Wakil Rektor dan
-berstatus **Penandatanganan SK**, sehingga mahasiswa dengan dua SK muncul dua baris.
-Rektor membuka detail,
-melakukan pratinjau dokumen SK yang diunggah Akademik, memilih pejabat penandatangan, lalu
-menekan **Tandatangani**. Yang terjadi kemudian (`POST /api/protected/tanda-tangan`):
+Modul internal lama (`/approval/sk-hasil` untuk Wakil Rektor dan `/tanda-tangan` untuk
+Rektor) **dinonaktifkan**: menunya dicabut dan endpointnya membalas **HTTP 410** supaya
+tidak dapat dipanggil lewat URL. Penomoran mandiri lewat `sisuratApi.mintNomorSurat()`
+juga dikunci di belakang `SISURAT_IZINKAN_NOMOR_MANUAL`.
 
-1. **Nomor surat resmi diminta lebih dulu ke Sisurat ITI**
-   (`POST /api/external/v1/nomor-surat`, `letterType: SURAT_KEPUTUSAN`, `unitKode: Rek`),
-   mengikuti `doc/panduan-api-nomor-surat.md`. Kredensial `clientId`/`clientSecret` dibaca
-   dari environment di sisi server, token JWT berlaku 24 jam dan di-*cache* per proses.
-   Nomor yang terbit **langsung disimpan** ke `SkRektor.NomorSuratSisurat` sebelum langkah
-   berikutnya, karena deret Sisurat tidak dapat dibatalkan — bila penandatanganan diulang,
-   nomor yang sama dipakai kembali, bukan menerbitkan nomor baru.
-2. SK **dirender ulang dari template** memakai nomor resmi tersebut, sehingga nomor tercetak
-   pada badan dokumen (bukan tempelan) menggantikan nomor sementara dari Akademik.
-3. Baru setelah itu sistem memanggil **QR Code Generator ITI** (`POST /api/documents.php`)
-   dengan `official_id`, `doc_number` = nomor Sisurat, `doc_title` (Nama SK), dan `doc_date`.
-   Integrasi mengikuti `doc/panduan-integrasi-nextjs.md`: seluruh pemanggilan dilakukan di
-   sisi server, kredensial diambil dari `QR_API_BASE_URL`, `QR_API_USERNAME`,
-   `QR_API_PASSWORD`, dan token login (berlaku 24 jam) di-*cache* per proses.
-4. `qrcode_base64` yang dikembalikan ditempel ke **pojok kanan bawah halaman terakhir** PDF
-   SK, lengkap dengan keterangan nama pejabat, nomor surat, dan URL verifikasi
-   (`src/lib/sk-signature.ts`).
-5. Berkas hasil menimpa `SkRektor.FileData` sehingga PDF bernomor resmi + ber-QR menjadi
-   versi baku yang dibaca semua peran (Mahasiswa, Asesor, Akademik).
-6. Data tanda tangan dicatat: `NomorSk` (nomor resmi), `NomorSuratSisurat`,
-   `NomorSuratPada`, `Ditandatangani`, `TandaTanganPada`, `TandaTanganOleh`, `QrToken`,
-   `QrVerifyUrl`, `QrDocumentId`, `QrOfficialId`, `QrOfficialNama`, `QrOfficialJabatan`.
-7. Setelah **seluruh** SK milik mahasiswa itu ditandatangani, status berpindah ke
-   **Sinkronisasi Hasil Asessmen**. Mahasiswa **belum** dikabari di titik ini — SK masih
-   ditahan sampai Akademik mempublikasikannya (lihat Tahap 13).
+### Tahap 12 — Publikasi SK ke Mahasiswa (Akademik)
 
-**Penguncian.** Setelah `Ditandatangani = true`, `POST /api/protected/asessment/sk-rektor`
-menolak penggantian berkas (HTTP 409) dan endpoint tanda tangan menolak penandatanganan
-ulang. Isian formulir PDF juga di-*flatten* agar nilainya tidak dapat diubah lagi.
-Keaslian SK dapat dicek publik lewat `verify_url` pada QR.
-
-### Tahap 13 — Publikasi SK ke Mahasiswa (Akademik)
-
-Halaman `/asessment/sk-rektor`. SK yang sudah ditandatangani Rektor **tidak otomatis
-terlihat mahasiswa**; Akademik yang memutuskan kapan dipublikasikan.
+Halaman `/asessment/sk-rektor`. SK yang sudah bernomor dan bertanda tangan **tidak
+otomatis terlihat mahasiswa**; Akademik yang memutuskan kapan dipublikasikan.
 
 - Kolom **Publikasi** menampilkan `Belum ditandatangani` / `Ditahan` / `Dipublikasikan`.
 - Aksi **Publikasikan SK ke Mahasiswa** menandai seluruh SK pendaftaran itu
   (`SkRektor.Dipublikasikan`) dan mengirim pemberitahuan WhatsApp ke mahasiswa.
 - Aksi **Tahan Publikasi SK** mengembalikannya agar tersembunyi lagi.
-- Server menolak publikasi bila masih ada SK yang belum ditandatangani Rektor (HTTP 409).
+- Server menolak publikasi bila masih ada SK yang **belum ditandatangani** di Sisurat
+  (HTTP 409) — bukan sekadar belum bernomor.
 
-Mahasiswa dan asesor hanya melihat serta mengunduh SK yang sudah dipublikasikan.
+Mahasiswa dan asesor hanya melihat serta mengunduh SK yang sudah dipublikasikan. Khusus
+mahasiswa: sebelum dipublikasikan data tampil di menu **Hasil Asessmen**, setelah
+dipublikasikan berpindah ke menu **Sk. Rektor**.
 
-### Tahap 14 — Sinkronisasi & Selesai (Akademik)
+### Tahap 13 — Sinkronisasi & Selesai (Akademik)
 
 Halaman `/asessment/sinkronisasi`. Akademik memilih beberapa pendaftaran sekaligus dan
 menjalankan proses (dengan indikator progres); tiap pendaftaran ditandai **Selesai**.
@@ -397,7 +387,7 @@ Daftar berkas yang tuntas ada di `/asessment/selesai`.
 | Wakil Rektor menolak SK penugasan asesor | — (di luar alur RPL) | Akademik memperbaiki SK; asesor belum bisa ditunjuk |
 | Wakil Rektor menolak penunjukan asesor | Penunjukan Asesor | Kaprodi menunjuk ulang |
 | Mahasiswa mengajukan sanggahan | Sanggahan | Asesor memperbaiki lalu rekapitulasi ulang |
-| Wakil Rektor menolak salah satu SK | Penerbitan SK Asessmen | Akademik merevisi lalu menerbitkan ulang SK tersebut |
+| SK ditolak di Sisurat | — (di luar alur RPL) | Perbaikan mengikuti alur Sisurat; bila surat harus diulang, hapus `SisuratLetterId` agar Akademik dapat menginisialisasi ulang |
 
 Karena endpoint status menghapus semua riwayat di atas tahap target, mundurnya status juga
 menghapus jejak tahap-tahap sesudahnya.
@@ -465,10 +455,10 @@ Pendaftaran (1 berkas RPL)
 |---|---|
 | Mahasiswa | Kelengkapan Informasi, Upload Dokumen, Mata Kuliah, Asessment (asesmen, rekapitulasi, sanggahan, hasil, SK) |
 | Kaprodi | Manajemen Data (pengguna, asesor), Manajemen Pembelajaran, Asesor (penunjukan, SK) |
-| Wakil Rektor | Asesor, Approval (persetujuan SK asesor, persetujuan asesor, persetujuan SK hasil) |
+| Wakil Rektor | Asesor, Approval (persetujuan SK asesor, persetujuan asesor) |
 | Asesor | Asessment (asesmen, rekapitulasi, sanggahan, hasil, SK) |
 | Akademik | Asessment (hasil, SK Rektor, sinkronisasi, selesai) |
-| Rektor | Tanda Tangan (`/tanda-tangan`) |
+| Rektor | — (tanda tangan SK dilakukan di Sisurat) |
 | PMB | Manajemen Data (mahasiswa, pengguna), Manajemen Area, Manajemen Pembelajaran |
 | Admin | Seluruh master data, Website, Manajemen Sistem, Template Builder |
 
@@ -482,7 +472,7 @@ ditukar lewat *switcher* di sidebar (tersimpan di `localStorage` kunci `pmb.iti.
 Beberapa hal yang ditemukan saat menelusuri kode — perlu diketahui sebelum dokumen ini
 dijadikan acuan operasional:
 
-1. **Seed sudah disamakan dengan alur.** `prisma/seed.ts` kini mengisi ke-14 status sesuai
+1. **Seed sudah disamakan dengan alur.** `prisma/seed.ts` kini mengisi status sesuai
    `orderedStatus` di `src/app/api/protected/status/route.ts` (sebelumnya 7 status usang),
    lengkap dengan ikon dan urutannya.
 2. **Nama role di seed sudah berkapital** (`Admin`, `PMB`, `Kaprodi`, …) agar cocok dengan
@@ -506,22 +496,25 @@ dijadikan acuan operasional:
 7. **Status "Penerbitan SK Penugasan Asesor" sudah dipensiunkan** dan baris masternya sudah
    dihapus dari basis data (2 baris riwayat ikut terhapus, tidak ada berkas yang kehilangan
    status aktif).
-8. **Dua status baru sudah ada di basis data**: `Persetujuan SK Asessmen` (urutan 11) dan
-   `Penandatanganan SK` (urutan 12); seluruh 14 status kini bernomor 1–14 sesuai alur. Tahap ini baru dan
-   belum ada di basis data lama. Tambahkan satu baris di `/manajemen-data/status` dengan
-   nama persis **`Penandatanganan SK`** dan `Urutan` di antara "Penerbitan SK Asessmen" dan
-   "Sinkronisasi Hasil Asessmen". Tanpa baris ini, endpoint status akan menolak permintaan
-   dengan pesan yang jelas (penjagaan baru) alih-alih membuat pendaftaran kehilangan status
-   aktif.
+8. **Status master perlu disesuaikan untuk Sisurat.** Tambahkan satu baris di
+   `/manajemen-data/status` dengan nama persis **`Proses SK di Sisurat`** dan `Urutan` di
+   antara "Penerbitan SK Asessmen" dan "Sinkronisasi Hasil Asessmen". Baris lama
+   `Persetujuan SK Asessmen` dan `Penandatanganan SK` tidak lagi dipakai dan boleh dihapus;
+   riwayat yang masih memakainya dibersihkan sendiri oleh endpoint status. Tanpa baris baru
+   tersebut, endpoint status menolak permintaan dengan pesan yang jelas alih-alih membuat
+   pendaftaran kehilangan status aktif.
 9. **SK Penugasan Asesor masih diunggah manual.** Template Builder baru memuat template
    Form Asessmen, Berita Acara, Rekapitulasi, dan SK Hasil (Perolehan/Transfer), sehingga
    SK penugasan asesor di `/asesor/sk-rektor` belum bisa dirender dari template.
-10. **Penandatanganan hanya menerima PDF.** Unggahan SK masih mengizinkan doc/docx, tetapi
-   penempelan QR hanya bekerja pada PDF; permintaan tanda tangan atas berkas non-PDF ditolak
-   dengan pesan agar Akademik mengunggah ulang dalam bentuk PDF.
-11. **`pdf-lib` tidak mendukung enkripsi/permission PDF.** "Terkunci" karena itu ditegakkan di
-   aplikasi (berkas tidak dapat diganti setelah ditandatangani) plus *flatten* formulir,
-   bukan lewat proteksi bawaan PDF.
+10. **Modul tanda tangan internal dinonaktifkan, bukan dihapus.** `/approval/sk-hasil` dan
+   `/tanda-tangan` membalas HTTP 410, `src/lib/sk-signature.ts` tinggal pembungkus usang di
+   atas `src/lib/sk-stempel-qr.ts`, dan `sisuratApi.mintNomorSurat()` menolak berjalan
+   kecuali `SISURAT_IZINKAN_NOMOR_MANUAL=true`. Penomoran dan tanda tangan adalah tanggung
+   jawab Sisurat.
+11. **Kredensial Sisurat harus ber-scope `letter.initiate`.** Klien lama hanya memiliki scope
+   `numbering` sehingga `POST /auth/token` untuk inisialisasi surat membalas HTTP 401
+   "Kredensial klien tidak valid". Minta klien baru ke admin Sisurat sebelum pengujian
+   ujung-ke-ujung.
 12. **Ada `StatusMahasiswaAssesmentId` bernilai dummy** yang di-*hardcode* di beberapa
    komponen (mis. `3b610de5-…-29e1d954d40f`) untuk memutakhirkan tampilan lokal setelah
    aksi. Nilai ini tidak dipakai untuk penulisan basis data, tetapi menyesatkan bila dibaca

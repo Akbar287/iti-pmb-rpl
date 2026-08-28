@@ -6,7 +6,6 @@ import {
     Database,
     FileArchiveIcon,
     Home,
-    SignatureIcon,
     SquareTerminal,
     University,
     WholeWordIcon,
@@ -193,11 +192,8 @@ const menu: MenuStoreProps[] = [
                 title: 'Persetujuan Asesor',
                 url: '/approval/asesor',
             },
-            {
-                namaRole: ['Wakil Rektor'],
-                title: 'Persetujuan SK Hasil',
-                url: '/approval/sk-hasil',
-            }
+            // 'Persetujuan SK Hasil' (/approval/sk-hasil) dinonaktifkan:
+            // persetujuan SK hasil asessmen kini berjalan di Sisurat.
         ],
     },
     {
@@ -402,13 +398,8 @@ const menu: MenuStoreProps[] = [
             }
         ],
     },
-    {
-        namaRole: ['Rektor'],
-        title: 'Tanda Tangan',
-        url: '/tanda-tangan',
-        icon: SignatureIcon,
-        items: null,
-    },
+    // Menu 'Tanda Tangan' (/tanda-tangan) dinonaktifkan: penandatanganan SK
+    // hasil asessmen kini dilakukan Rektor di Sisurat.
     {
         namaRole: ['Mahasiswa', 'Asesor', 'Akademik'],
         title: 'Asessment',

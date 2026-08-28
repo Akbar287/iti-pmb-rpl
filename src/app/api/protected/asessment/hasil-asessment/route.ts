@@ -17,8 +17,7 @@ app.use('*', withApiAuth)
 const STATUS_HASIL_BELUM_TERBIT = [
     'Hasil Final Asessmen',
     'Penerbitan SK Asessmen',
-    'Persetujuan SK Asessmen',
-    'Penandatanganan SK',
+    'Proses SK di Sisurat',
     'Sinkronisasi Hasil Asessmen',
     'Selesai',
 ]
@@ -26,8 +25,26 @@ const STATUS_HASIL_BELUM_TERBIT = [
 const STATUS_AKADEMIK = [
     'Hasil Final Asessmen',
     'Penerbitan SK Asessmen',
-    'Persetujuan SK Asessmen',
+    'Proses SK di Sisurat',
 ]
+
+/**
+ * Berkas yang seluruh SK-nya sudah bertanda tangan berpindah dari menu Hasil
+ * Asessmen ke menu Sk. Rektor: pekerjaan Akademik di sini sudah selesai, yang
+ * tersisa adalah mempublikasikan SK final dari Sisurat.
+ */
+const BELUM_TERBIT_SEMUA: Prisma.PendaftaranWhereInput = {
+    NOT: {
+        AND: [
+            { SkRektorMahasiswa: { some: {} } },
+            {
+                SkRektorMahasiswa: {
+                    every: { SkRektor: { Ditandatangani: true } },
+                },
+            },
+        ],
+    },
+}
 
 app.get('/', async (c) => {
     const session = await getSession()
@@ -271,7 +288,7 @@ app.get('/', async (c) => {
                                                 some: {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Persetujuan SK Asessmen",
+                                                        NamaStatus: "Proses SK di Sisurat",
                                                     },
                                                 },
                                             },
@@ -353,7 +370,7 @@ app.get('/', async (c) => {
                                                 some: {
                                                     Aktif: true,
                                                     StatusMahasiswaAssesment: {
-                                                        NamaStatus: "Persetujuan SK Asessmen",
+                                                        NamaStatus: "Proses SK di Sisurat",
                                                     },
                                                 },
                                             },
@@ -479,6 +496,7 @@ app.get('/', async (c) => {
                     ? {
                         Pendaftaran: {
                             AND: [
+                                BELUM_TERBIT_SEMUA,
                                 {
                                     StatusMahasiswaAssesmentHistory: {
                                         some: {
@@ -530,16 +548,21 @@ app.get('/', async (c) => {
                     }
                     : {
                         Pendaftaran: {
-                            StatusMahasiswaAssesmentHistory: {
-                                some: {
-                                    Aktif: true,
-                                    StatusMahasiswaAssesment: {
-                                        NamaStatus: {
-                                            in: STATUS_AKADEMIK,
+                            AND: [
+                                BELUM_TERBIT_SEMUA,
+                                {
+                                    StatusMahasiswaAssesmentHistory: {
+                                        some: {
+                                            Aktif: true,
+                                            StatusMahasiswaAssesment: {
+                                                NamaStatus: {
+                                                    in: STATUS_AKADEMIK,
+                                                },
+                                            },
                                         },
                                     },
                                 },
-                            }
+                            ],
                         }
                     }
 

@@ -96,6 +96,7 @@ app.get('/', async (c) => {
                         SkRektor: {
                             select: {
                                 NamaFile: true,
+                                NamaFileFinal: true,
                                 NomorSk: true,
                             },
                         },
@@ -146,7 +147,9 @@ app.get('/', async (c) => {
             Status: am.StatusMahasiswaAssesmentHistory.find(x => x.Aktif) ? am.StatusMahasiswaAssesmentHistory.find(x => x.Aktif)?.StatusMahasiswaAssesment.NamaStatus ?? '' : '',
             ProgramStudi: am.DaftarUlang.length === 0 ? '' : am.DaftarUlang[0].ProgramStudi.Nama ?? '',
             NomorSk: am.SkRektorMahasiswa.length > 0 ? am.SkRektorMahasiswa[0].SkRektor.NomorSk ?? '' : '',
-            NamaFile: am.SkRektorMahasiswa.length > 0 ? am.SkRektorMahasiswa[0].SkRektor.NamaFile ?? '' : '',
+            // Yang diunduh adalah SK final dari Sisurat bila sudah diterima;
+            // lampiran hasil asesmen hanya dipakai bila berkas final belum ada.
+            NamaFile: am.SkRektorMahasiswa.length > 0 ? (am.SkRektorMahasiswa[0].SkRektor.NamaFileFinal || am.SkRektorMahasiswa[0].SkRektor.NamaFile) ?? '' : '',
             NomorHp: am.Mahasiswa.User.NomorHp ?? '',
             PendaftaranId: am.PendaftaranId,
             KodePendaftar: am.KodePendaftar,

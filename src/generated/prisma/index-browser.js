@@ -180,6 +180,8 @@ exports.Prisma.AssesorMahasiswaScalarFieldEnum = {
   AsesorId: 'AsesorId',
   Urutan: 'Urutan',
   Confirmation: 'Confirmation',
+  TandaTanganPath: 'TandaTanganPath',
+  TandaTanganPada: 'TandaTanganPada',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
 };
@@ -478,6 +480,8 @@ exports.Prisma.PendaftaranScalarFieldEnum = {
   Gelombang: 'Gelombang',
   SistemKuliah: 'SistemKuliah',
   JalurPendaftaran: 'JalurPendaftaran',
+  TandaTanganPath: 'TandaTanganPath',
+  TandaTanganPada: 'TandaTanganPada',
   CreatedAt: 'CreatedAt',
   UpdatedAt: 'UpdatedAt'
 };
@@ -576,6 +580,13 @@ exports.Prisma.SkRektorScalarFieldEnum = {
   JenisSkAsessmen: 'JenisSkAsessmen',
   Dipublikasikan: 'Dipublikasikan',
   DipublikasikanPada: 'DipublikasikanPada',
+  PathFileFinal: 'PathFileFinal',
+  NamaFileFinal: 'NamaFileFinal',
+  SkFinalDiterimaPada: 'SkFinalDiterimaPada',
+  SisuratLetterId: 'SisuratLetterId',
+  SisuratStatus: 'SisuratStatus',
+  SisuratStepKey: 'SisuratStepKey',
+  SisuratDiajukanPada: 'SisuratDiajukanPada',
   NomorSuratSisurat: 'NomorSuratSisurat',
   NomorSuratPada: 'NomorSuratPada',
   Disetujui: 'Disetujui',
@@ -922,7 +933,8 @@ exports.Prisma.TranskripNilaiRelationScalarFieldEnum = {
   TranskripNilaiId: 'TranskripNilaiId',
   MataKuliahMahasiswaId: 'MataKuliahMahasiswaId',
   Nilai: 'Nilai',
-  Diakui: 'Diakui'
+  Diakui: 'Diakui',
+  Catatan: 'Catatan'
 };
 
 exports.Prisma.SortOrder = {

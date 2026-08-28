@@ -10,7 +10,7 @@ app.use('*', withApiAuth)
 
 app.post('/', async (c) => {
     const body: UpdateEkuivalenCheckType = await c.req.json()
-    const { TranskripNilaiIdSebelum, MataKuliahMahasiswaIdSebelum, TranskripNilaiIdSetelah, MataKuliahMahasiswaIdSetelah, NilaiAsessment, Diakui } = body
+    const { TranskripNilaiIdSebelum, MataKuliahMahasiswaIdSebelum, TranskripNilaiIdSetelah, MataKuliahMahasiswaIdSetelah, NilaiAsessment, Diakui, Catatan } = body
 
     // Check if relation already exists
     const existing = await prisma.transkripNilaiRelation.findFirst({
@@ -34,6 +34,7 @@ app.post('/', async (c) => {
             MataKuliahMahasiswaId: MataKuliahMahasiswaIdSetelah,
             Nilai: NilaiAsessment,
             Diakui: Diakui,
+            Catatan: Catatan?.trim() ? Catatan.trim() : null,
         }
     })
 

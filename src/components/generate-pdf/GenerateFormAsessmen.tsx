@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import { GenerateFormAsessmenType } from '@/types/GeneratePdfTypes';
 import { ProfiensiPengetahuan } from '@/generated/prisma';
 import path from 'path';
@@ -254,6 +254,10 @@ const styles = StyleSheet.create({
     },
     signText: { fontSize: 10 },
     signName: { fontSize: 10, marginTop: 54 },
+    // Saat tanda tangan mahasiswa tersedia, ruang kosong 54pt di atas nama
+    // dipakai gambarnya sehingga tata letak halaman tidak bergeser.
+    signImage: { width: 120, height: 48, marginTop: 4, objectFit: 'contain', flexShrink: 0 },
+    signNameTtd: { fontSize: 10, marginTop: 2 },
     komentarBox: {
         borderWidth: 1,
         borderColor: '#000000',
@@ -272,6 +276,15 @@ const styles = StyleSheet.create({
     },
     validasiBlock: { width: '45%' },
     validasiTitle: { fontSize: 9, marginBottom: 44 },
+    // Saat penilai sudah menandatangani, ruang kosong 44pt dipakai gambarnya.
+    validasiTitleTtd: { fontSize: 9, marginBottom: 2 },
+    validasiImage: {
+        width: 110,
+        height: 42,
+        marginBottom: 2,
+        objectFit: 'contain',
+        flexShrink: 0,
+    },
     validasiName: { fontSize: 9, fontFamily: 'Helvetica-Bold' },
     // Tabel referensi profisiensi
     profRefTable: {
@@ -555,7 +568,21 @@ export const GenerateFormAsessmen = ({
                             <View style={styles.signRight}>
                                 <Text style={styles.signText}>Tangerang Selatan, {formatDate(now)}</Text>
                                 <Text style={styles.signText}>Tanda Tangan Calon Mahasiswa</Text>
-                                <Text style={styles.signName}>({safeText(data.Nama, '.................................')})</Text>
+                                {data.TandaTanganMahasiswa ? (
+                                    <Image
+                                        src={data.TandaTanganMahasiswa}
+                                        style={styles.signImage}
+                                    />
+                                ) : null}
+                                <Text
+                                    style={
+                                        data.TandaTanganMahasiswa
+                                            ? styles.signNameTtd
+                                            : styles.signName
+                                    }
+                                >
+                                    ({safeText(data.Nama, '.................................')})
+                                </Text>
                             </View>
 
                             {/* Komentar penilai */}
@@ -571,18 +598,33 @@ export const GenerateFormAsessmen = ({
                                 </Text>
                                 <Text style={styles.validasiDate}>Validasi oleh :</Text>
                                 <View style={styles.validasiRow}>
-                                    <View style={styles.validasiBlock}>
-                                        <Text style={styles.validasiTitle}>Penilai 1</Text>
-                                        <Text style={styles.validasiName}>
-                                            {safeText((data.Asesor ?? []).find(a => a.Urutan === 1)?.Nama, '.................................')}
-                                        </Text>
-                                    </View>
-                                    <View style={styles.validasiBlock}>
-                                        <Text style={styles.validasiTitle}>Penilai 2</Text>
-                                        <Text style={styles.validasiName}>
-                                            {safeText((data.Asesor ?? []).find(a => a.Urutan === 2)?.Nama, '.................................')}
-                                        </Text>
-                                    </View>
+                                    {[1, 2].map((urutan) => {
+                                        const penilai = (data.Asesor ?? []).find(
+                                            a => a.Urutan === urutan
+                                        )
+                                        return (
+                                            <View style={styles.validasiBlock} key={urutan}>
+                                                <Text
+                                                    style={
+                                                        penilai?.TandaTangan
+                                                            ? styles.validasiTitleTtd
+                                                            : styles.validasiTitle
+                                                    }
+                                                >
+                                                    Penilai {urutan}
+                                                </Text>
+                                                {penilai?.TandaTangan ? (
+                                                    <Image
+                                                        src={penilai.TandaTangan}
+                                                        style={styles.validasiImage}
+                                                    />
+                                                ) : null}
+                                                <Text style={styles.validasiName}>
+                                                    {safeText(penilai?.Nama, '.................................')}
+                                                </Text>
+                                            </View>
+                                        )
+                                    })}
                                 </View>
                             </View>
                         </Page>

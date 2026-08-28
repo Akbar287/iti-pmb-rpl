@@ -406,10 +406,13 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     NomorSk: true,
                     TahunSk: true,
                     NamaFile: true,
+                    NamaFileFinal: true,
                     NamaDokumen: true,
                     Disetujui: true,
                     Ditandatangani: true,
                     Catatan: true,
+                    SisuratLetterId: true,
+                    SisuratStatus: true,
                 },
             },
         },
@@ -438,10 +441,13 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     NomorSk: x.SkRektor.NomorSk,
                     TahunSk: String(x.SkRektor.TahunSk),
                     NamaFile: x.SkRektor.NamaFile,
+                    NamaFileFinal: x.SkRektor.NamaFileFinal,
                     NamaDokumen: x.SkRektor.NamaDokumen,
                     Disetujui: x.SkRektor.Disetujui,
                     Ditandatangani: x.SkRektor.Ditandatangani,
                     Catatan: x.SkRektor.Catatan ?? '',
+                    SisuratLetterId: x.SkRektor.SisuratLetterId,
+                    SisuratStatus: x.SkRektor.SisuratStatus,
                 }))}
             />
         </div>

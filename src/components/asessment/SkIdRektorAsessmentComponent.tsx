@@ -18,37 +18,52 @@ import {
 } from '../ui/table'
 import { Badge } from '../ui/badge'
 import { ResponseFinalAsessmenAsesorDetailType } from '@/types/FinalAsessmen'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-    SkRektorAsessmenSkemaValidasi,
-    SkRektorAsessmenSkemaValidasiTipe,
-} from '@/validation/SkAsessmenValidation'
 import {
     getFileSkAsessmenBlobByNamafile,
+    kirimSkKeSisurat,
+    perbaruiStatusSisurat,
+    getTemplateSisurat,
+    resetSkSisurat,
     setPublikasiSkAsessmen,
-    terbitkanSkAsessmen,
+    type DaftarTemplateSisurat,
 } from '@/services/Asessment/SkRektorAsessmenService'
 import { toast } from 'sonner'
+import Swal from '@/lib/swal'
 import { Button } from '../ui/button'
-import { CheckCircle2Icon, CloudUploadIcon, PenIcon, TimerIcon } from 'lucide-react'
+import {
+    CheckCircle2Icon,
+    CloudUploadIcon,
+    RefreshCwIcon,
+    ScanEyeIcon,
+    TimerIcon,
+} from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '../ui/form'
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '../ui/select'
 import { Input } from '../ui/input'
-import { setStatusPersetujuanSkAsessmen } from '@/services/Status/StatusService'
+import {
+    setStatusPenerbitanSKAsessmen,
+    setStatusProsesSkSisurat,
+} from '@/services/Status/StatusService'
 import { formatDateToIndonesian } from '@/lib/utils'
-import { Textarea } from '../ui/textarea'
+import { pratinjauSkSisurat } from '@/services/Asessment/SkRektorAsessmenService'
+import EditorButirSk, {
+    butirTerkirim,
+    penandaButir,
+    type GayaNomor,
+} from './EditorButirSk'
+import { diktumBakuSk } from '@/lib/diktum-sk-rpl'
 import { Label } from '../ui/label'
 
 export type JenisSkAsessmenType = 'PEROLEHAN_SKS' | 'TRANSFER_SKS'
+
+/** Empat diktum SK yang isinya disusun Akademik. */
+type KunciDiktum = 'Menimbang' | 'Mengingat' | 'Memperhatikan' | 'Menetapkan'
 
 export type SkAsessmenItem = {
     SkRektorId: string
@@ -57,11 +72,41 @@ export type SkAsessmenItem = {
     NomorSk: string
     TahunSk: string
     NamaFile: string
+    /** Berkas SK final dari Sisurat; kosong bila belum dikirim balik. */
+    NamaFileFinal?: string | null
     NamaDokumen: string
     Disetujui: boolean
     Ditandatangani: boolean
     Dipublikasikan?: boolean
     Catatan: string
+    /** Identitas surat di Sisurat; kosong bila belum diinisialisasi ke sana. */
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+}
+
+/**
+ * Kode template SK RPL di Sisurat. Server yang mencocokkannya; di sini hanya
+ * dipakai untuk menampilkan template mana yang terpakai.
+ */
+const KODE_TEMPLATE: Record<JenisSkAsessmenType, string> = {
+    PEROLEHAN_SKS: 'TPL-SK-RPL-PEROLEHAN',
+    TRANSFER_SKS: 'TPL-SK-RPL-TRANSFER',
+}
+
+/** Status Sisurat yang menuntut perbaikan dari Akademik. */
+const STATUS_PERLU_REVISI = ['REJECTED', 'REVISION_REQUESTED', 'CANCELLED']
+
+/** Alur WF-SK-RPL: 6 tahap, tanpa peninjauan unit maupun distribusi. */
+const LABEL_STATUS_SISURAT: Record<string, string> = {
+    SUBMITTED: 'Masuk alur Sisurat',
+    PENDING_VICE_RECTOR_APPROVALS: 'Menunggu Wakil Rektor A',
+    PENDING_RECTOR_APPROVAL: 'Menunggu Rektor',
+    PENDING_ADMINISTRATION: 'Menunggu penomoran Tata Usaha',
+    PENDING_SIGNATURE: 'Bernomor, menunggu tanda tangan',
+    COMPLETED: 'Selesai & diarsipkan',
+    REVISION_REQUESTED: 'Diminta perbaikan',
+    REJECTED: 'Ditolak',
+    CANCELLED: 'Dibatalkan',
 }
 
 const LABEL_JENIS_SK: Record<JenisSkAsessmenType, string> = {
@@ -80,28 +125,11 @@ export const SEMUA_JENIS_SK: JenisSkAsessmenType[] = [
 
 const SkIdRektorAsessmentComponent = ({
     dataServer,
-    fileSkRektor,
     stats,
-    jumlahMkPerJenis,
     skAsessmen,
 }: {
     dataServer: ResponseFinalAsessmenAsesorDetailType
-    fileSkRektor: {
-        SkRektor: {
-            CreatedAt: Date | null
-            UpdatedAt: Date | null
-            SkRektorId: string
-            TipeSkRektorId: string
-            NamaSk: string
-            TahunSk: number
-            NomorSk: string
-            NamaFile: string
-            NamaDokumen: string
-        }
-    } | null
     stats: { StatusMahasiswaAssesmentId: string; NamaStatus: string }
-    /** Jumlah mata kuliah per jenis — dipakai sebagai keterangan di kartu. */
-    jumlahMkPerJenis: Record<JenisSkAsessmenType, number>
     skAsessmen: SkAsessmenItem[]
 }) => {
     const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>({
@@ -114,18 +142,14 @@ const SkIdRektorAsessmentComponent = ({
         RoleId: string
     } | null>(null)
     const [loading, setLoading] = React.useState<boolean>(false)
-    const form = useForm<SkRektorAsessmenSkemaValidasiTipe>({
-        resolver: zodResolver(SkRektorAsessmenSkemaValidasi),
-        defaultValues: {
-            data: undefined,
-            NamaSk: '',
-            TahunSk: '',
-            NomorSk: '',
-        },
-    })
-    const [pdfPreview, setPdfPreview] = React.useState<string | null>(null)
+    // Satu pratinjau per SK: berkasnya adalah PDF final dari Sisurat begitu
+    // surat terbit, menggantikan lampiran yang dirender aplikasi ini.
+    const [pratinjauSk, setPratinjauSk] = React.useState<
+        Record<string, string>
+    >({})
     const [daftarSk, setDaftarSk] =
         React.useState<SkAsessmenItem[]>(skAsessmen)
+
     React.useEffect(() => {
         if (!role) {
             const rolelogin = safeStorage.getItem('pmb.iti.role')
@@ -134,46 +158,118 @@ const SkIdRektorAsessmentComponent = ({
                 setRole(temp)
             }
         }
-        if (fileSkRektor) {
-            getFileSkAsessmenBlobByNamafile(fileSkRektor.SkRektor.NamaFile)
-                .then((res) => {
-                    setPdfPreview(res)
-                    form.setValue('NamaSk', fileSkRektor.SkRektor.NamaSk)
-                    form.setValue(
-                        'TahunSk',
-                        String(fileSkRektor.SkRektor.TahunSk)
-                    )
-                    form.setValue('NomorSk', fileSkRektor.SkRektor.NomorSk)
-                })
-                .catch((err) => { })
-        }
     }, [])
-    // Seluruh SK yang diterbitkan diajukan ke Wakil Rektor. Setelah disetujui,
-    // berkas lanjut ke Rektor untuk ditandatangani.
-    const publication = async () => {
-        await setStatusPersetujuanSkAsessmen(dataServer.PendaftaranId)
-            .then(async () => {
-                toast('SK diajukan ke Wakil Rektor untuk disetujui')
-                setStatusServer({
-                    StatusMahasiswaAssesmentId:
-                        statusServer.StatusMahasiswaAssesmentId,
-                    NamaStatus: 'Persetujuan SK Asessmen',
+
+    // Berkas tiap SK dimuat sebagai blob supaya dapat ditampilkan langsung di
+    // halaman, tanpa perlu menekan tombol satu per satu.
+    React.useEffect(() => {
+        let batal = false
+        Promise.all(
+            daftarSk
+                .map((x) => ({ sk: x, berkas: x.NamaFileFinal || x.NamaFile }))
+                .filter((x) => !!x.berkas)
+                .map(async ({ sk, berkas }) => {
+                    try {
+                        return [
+                            sk.SkRektorId,
+                            await getFileSkAsessmenBlobByNamafile(berkas),
+                        ] as const
+                    } catch {
+                        return null
+                    }
                 })
-            })
-            .catch((err) => {
-                toast('Gagal mengajukan SK ke Wakil Rektor. Error: ' + err)
-            })
-    }
+        ).then((hasil) => {
+            if (batal) return
+            setPratinjauSk(
+                Object.fromEntries(hasil.filter((x) => x !== null))
+            )
+        })
+        return () => {
+            batal = true
+        }
+    }, [daftarSk])
 
-    // Cukup satu SK terbit agar berkas dapat diajukan ke Wakil Rektor.
-    const adaSkTerbit = daftarSk.length > 0
 
+    // Setelah didorong ke Sisurat, persetujuan Wakil Rektor A, persetujuan
+    // Rektor, penomoran, dan tanda tangan berjalan di sana. Aplikasi hanya
+    // menandai bahwa berkas sedang diproses lalu menarik statusnya.
+    const adaSkDikirim = daftarSk.some((x) => !!x.SisuratLetterId)
+    // Nomor surat terbit satu tahap sebelum tanda tangan, jadi yang menentukan
+    // boleh-tidaknya publikasi adalah tanda tangan QR dari Sisurat.
     const semuaDitandatangani =
         daftarSk.length > 0 && daftarSk.every((x) => x.Ditandatangani)
+    const adaPerluRevisi = daftarSk.some(
+        (x) => !!x.SisuratStatus && STATUS_PERLU_REVISI.includes(x.SisuratStatus)
+    )
     const sudahDipublikasikan =
         daftarSk.length > 0 && daftarSk.every((x) => x.Dipublikasikan)
 
-    // SK yang sudah ditandatangani Rektor baru terlihat mahasiswa setelah
+    const lanjutkanKeSisurat = async () => {
+        setLoading(true)
+        try {
+            await setStatusProsesSkSisurat(dataServer.PendaftaranId)
+            toast('Berkas ditandai sedang diproses di Sisurat')
+            setStatusServer({
+                StatusMahasiswaAssesmentId:
+                    statusServer.StatusMahasiswaAssesmentId,
+                NamaStatus: 'Proses SK di Sisurat',
+            })
+        } catch (err) {
+            toast(
+                err instanceof Error
+                    ? err.message
+                    : 'Gagal memperbarui status pendaftaran'
+            )
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    // Sisurat tidak mengirim notifikasi balik, jadi status ditarik manual.
+    const perbaruiStatus = async () => {
+        setLoading(true)
+        try {
+            const res = await perbaruiStatusSisurat(dataServer.PendaftaranId)
+            toast(res.message)
+            res.data.Galat.forEach((g) => toast(g))
+            setDaftarSk((prev) =>
+                prev.map((x) => {
+                    const terbaru = res.data.Daftar.find(
+                        (d) => d.SkRektorId === x.SkRektorId
+                    )
+                    return terbaru
+                        ? {
+                            ...x,
+                            SisuratStatus: terbaru.SisuratStatus,
+                            NomorSk: terbaru.NomorSk,
+                            Ditandatangani: terbaru.Ditandatangani,
+                            Catatan: terbaru.Catatan || x.Catatan,
+                        }
+                        : x
+                })
+            )
+
+            // SK yang ditolak Sisurat mengembalikan berkas ke tangan Akademik.
+            if (res.data.AdaPerluRevisi) {
+                await setStatusPenerbitanSKAsessmen(dataServer.PendaftaranId)
+                setStatusServer({
+                    StatusMahasiswaAssesmentId:
+                        statusServer.StatusMahasiswaAssesmentId,
+                    NamaStatus: 'Penerbitan SK Asessmen',
+                })
+            }
+        } catch (err) {
+            toast(
+                err instanceof Error
+                    ? err.message
+                    : 'Gagal memperbarui status dari Sisurat'
+            )
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    // SK yang sudah bernomor resmi baru terlihat mahasiswa setelah
     // dipublikasikan Akademik; bisa ditahan kembali bila perlu.
     const ubahPublikasi = async (publikasikan: boolean) => {
         setLoading(true)
@@ -186,6 +282,13 @@ const SkIdRektorAsessmentComponent = ({
             setDaftarSk((prev) =>
                 prev.map((x) => ({ ...x, Dipublikasikan: publikasikan }))
             )
+            if (res.data.Status) {
+                setStatusServer({
+                    StatusMahasiswaAssesmentId:
+                        statusServer.StatusMahasiswaAssesmentId,
+                    NamaStatus: res.data.Status,
+                })
+            }
         } catch (err) {
             toast(
                 err instanceof Error
@@ -371,24 +474,52 @@ const SkIdRektorAsessmentComponent = ({
                     </CardContent>
                 </Card>
             </div>
-            {pdfPreview && (
+            {daftarSk.length > 0 && (
                 <div>
                     <Card>
                         <CardHeader>
                             <CardTitle>Dokumen SK</CardTitle>
                             <CardDescription>
-                                Dokumen Surat Keputusan
+                                Berkas yang sudah ditandatangani adalah SK final
+                                dari Sisurat — itulah yang diunduh mahasiswa.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="grid grid-cols-1 gap-2 mb-3">
-                                <iframe
-                                    src={pdfPreview || ''}
-                                    title="PDF Preview"
-                                    width="100%"
-                                    height="500px"
-                                    className="border rounded"
-                                ></iframe>
+                            <div className="grid grid-cols-1 gap-6">
+                                {daftarSk.map((x) => (
+                                    <div key={x.SkRektorId}>
+                                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                                            <span className="font-semibold">
+                                                {LABEL_JENIS_SK[x.JenisSkAsessmen]}
+                                            </span>
+                                            {x.NamaFileFinal ? (
+                                                <Badge className="bg-green-600">
+                                                    SK final dari Sisurat —{' '}
+                                                    {x.NomorSk || 'tanpa nomor'}
+                                                </Badge>
+                                            ) : (
+                                                <Badge variant="secondary">
+                                                    Lampiran hasil asesmen —
+                                                    SK final dari Sisurat belum
+                                                    diterima
+                                                </Badge>
+                                            )}
+                                        </div>
+                                        {pratinjauSk[x.SkRektorId] ? (
+                                            <iframe
+                                                src={pratinjauSk[x.SkRektorId]}
+                                                title={`Dokumen ${LABEL_JENIS_SK[x.JenisSkAsessmen]}`}
+                                                width="100%"
+                                                height="500px"
+                                                className="border rounded"
+                                            />
+                                        ) : (
+                                            <p className="text-sm text-muted-foreground">
+                                                Berkas belum dapat dimuat.
+                                            </p>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </CardContent>
                     </Card>
@@ -398,42 +529,107 @@ const SkIdRektorAsessmentComponent = ({
                 <div className="grid grid-cols-1 gap-3">
                     <Card className="w-full">
                         <CardHeader>
-                            <CardTitle>Penerbitan SK Hasil Asessmen</CardTitle>
+                            <CardTitle>Status & Publikasi SK</CardTitle>
                             <CardDescription>
-                                SK dibuat dari template sesuai jenis mata kuliah
-                                yang diajukan mahasiswa. Terbitkan setiap jenis
-                                yang diperlukan, lalu ajukan ke Wakil Rektor.
+                                Penyusunan dan pengiriman SK dilakukan di menu
+                                Hasil Asessmen. Halaman ini untuk memantau
+                                prosesnya di Sisurat, membaca SK final yang
+                                sudah terbit, lalu mempublikasikannya ke
+                                mahasiswa.
                             </CardDescription>
                             <CardAction></CardAction>
                         </CardHeader>
                         <CardContent>
-                            <div className="grid grid-cols-1 gap-4">
-                                {SEMUA_JENIS_SK.map((jenis) => (
-                                    <KartuPenerbitanSk
-                                        key={jenis}
-                                        jenis={jenis}
-                                        PendaftaranId={dataServer.PendaftaranId}
-                                        jumlahMk={jumlahMkPerJenis[jenis]}
-                                        sk={daftarSk.find(
-                                            (x) => x.JenisSkAsessmen === jenis
-                                        )}
-                                        terkunci={
-                                            statusServer.NamaStatus !==
-                                            'Penerbitan SK Asessmen'
-                                        }
-                                        onTerbit={(item) =>
-                                            setDaftarSk((prev) => [
-                                                ...prev.filter(
-                                                    (x) =>
-                                                        x.JenisSkAsessmen !==
-                                                        item.JenisSkAsessmen
-                                                ),
-                                                item,
-                                            ])
-                                        }
-                                    />
-                                ))}
-                            </div>
+                            {adaSkDikirim && (
+                                <div className="p-4 mt-5 border rounded-lg bg-muted/40">
+                                    <div className="flex flex-wrap items-center justify-between gap-3">
+                                        <div>
+                                            <h4 className="font-semibold">
+                                                Status di Sisurat
+                                            </h4>
+                                            <p className="mt-1 text-sm text-muted-foreground">
+                                                Nomor surat terbit pada tahap
+                                                penomoran, tanda tangan QR pada
+                                                tahap sesudahnya. SK baru boleh
+                                                dipublikasikan setelah
+                                                ditandatangani.
+                                            </p>
+                                        </div>
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            disabled={loading}
+                                            onClick={() => perbaruiStatus()}
+                                        >
+                                            {loading ? (
+                                                <React.Fragment>
+                                                    <TimerIcon /> Loading
+                                                </React.Fragment>
+                                            ) : (
+                                                <React.Fragment>
+                                                    <RefreshCwIcon /> Perbarui
+                                                    Status
+                                                </React.Fragment>
+                                            )}
+                                        </Button>
+                                    </div>
+                                    <Table className="mt-3">
+                                        <TableBody>
+                                            {daftarSk
+                                                .filter(
+                                                    (x) => !!x.SisuratLetterId
+                                                )
+                                                .map((x) => (
+                                                    <TableRow key={x.SkRektorId}>
+                                                        <TableCell>
+                                                            {
+                                                                LABEL_JENIS_SK[
+                                                                x
+                                                                    .JenisSkAsessmen
+                                                                ]
+                                                            }
+                                                        </TableCell>
+                                                        <TableCell className="font-mono text-xs">
+                                                            {x.SisuratLetterId}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {LABEL_STATUS_SISURAT[
+                                                                x.SisuratStatus ??
+                                                                ''
+                                                            ] ??
+                                                                x.SisuratStatus ??
+                                                                '-'}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {x.NomorSk !== '' ? (
+                                                                <Badge variant="outline">
+                                                                    {x.NomorSk}
+                                                                </Badge>
+                                                            ) : (
+                                                                <Badge variant="secondary">
+                                                                    Belum
+                                                                    bernomor
+                                                                </Badge>
+                                                            )}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {x.Ditandatangani ? (
+                                                                <Badge className="bg-green-600">
+                                                                    Ditandatangani
+                                                                </Badge>
+                                                            ) : (
+                                                                <Badge variant="secondary">
+                                                                    Belum
+                                                                    ditandatangani
+                                                                </Badge>
+                                                            )}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
+                            )}
 
                             {semuaDitandatangani && (
                                 <div className="p-4 mt-5 border rounded-lg bg-primary/5 border-primary/20">
@@ -441,7 +637,9 @@ const SkIdRektorAsessmentComponent = ({
                                         Publikasi ke Mahasiswa
                                     </h4>
                                     <p className="mt-1 text-sm text-muted-foreground">
-                                        Seluruh SK sudah ditandatangani Rektor.
+                                        Seluruh SK sudah bernomor dan
+                                        ditandatangani di Sisurat; QR verifikasi
+                                        sudah ditempel pada berkas.
                                         {sudahDipublikasikan
                                             ? ' SK sudah dapat diunduh mahasiswa.'
                                             : ' SK masih ditahan dan belum terlihat mahasiswa.'}
@@ -497,17 +695,35 @@ const SkIdRektorAsessmentComponent = ({
                                 </div>
                             )}
 
-                            {statusServer.NamaStatus ===
-                                'Persetujuan SK Asessmen' && (
+                            {adaPerluRevisi && (
+                                <Alert variant="destructive" className="mt-5">
+                                    <AlertTitle>
+                                        Sisurat meminta perbaikan
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        Baca catatan pada kartu SK terkait,
+                                        perbaiki isinya, lalu tekan{' '}
+                                        <b>Perbaiki &amp; Kirim Ulang</b> untuk
+                                        menginisialisasi surat baru di Sisurat.
+                                    </AlertDescription>
+                                </Alert>
+                            )}
+
+                            {!adaPerluRevisi &&
+                                statusServer.NamaStatus ===
+                                'Proses SK di Sisurat' && (
                                     <Alert className="mt-5">
                                         <CheckCircle2Icon className="w-4 h-4" />
                                         <AlertTitle>
-                                            Menunggu Persetujuan Wakil Rektor
+                                            Sedang Diproses di Sisurat
                                         </AlertTitle>
                                         <AlertDescription>
-                                            SK sudah diajukan. Bila ada SK yang
-                                            ditolak, berkas kembali ke tahap
-                                            penerbitan untuk direvisi.
+                                            Persetujuan Wakil Rektor A,
+                                            persetujuan Rektor, penomoran, dan
+                                            tanda tangan QR dikerjakan di
+                                            Sisurat. Aplikasi ini menunggu tanda
+                                            tangan terbit sebelum SK dapat
+                                            dipublikasikan ke mahasiswa.
                                         </AlertDescription>
                                     </Alert>
                                 )}
@@ -517,12 +733,12 @@ const SkIdRektorAsessmentComponent = ({
                                     'Penerbitan SK Asessmen' && (
                                         <Button
                                             type="button"
-                                            onClick={() => publication()}
-                                            disabled={loading || !adaSkTerbit}
+                                            onClick={() => lanjutkanKeSisurat()}
+                                            disabled={loading || !adaSkDikirim}
                                             title={
-                                                adaSkTerbit
+                                                adaSkDikirim
                                                     ? ''
-                                                    : 'Terbitkan minimal satu SK lebih dulu'
+                                                    : 'Kirim minimal satu SK ke Sisurat lebih dulu'
                                             }
                                             className="w-full transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 lg:w-1/3 md:w-1/2"
                                         >
@@ -532,8 +748,8 @@ const SkIdRektorAsessmentComponent = ({
                                                 </React.Fragment>
                                             ) : (
                                                 <React.Fragment>
-                                                    <CloudUploadIcon /> Ajukan ke
-                                                    Wakil Rektor
+                                                    <CloudUploadIcon /> Tandai
+                                                    Diproses di Sisurat
                                                 </React.Fragment>
                                             )}
                                         </Button>
@@ -552,45 +768,132 @@ export default SkIdRektorAsessmentComponent
 export function KartuPenerbitanSk({
     jenis,
     PendaftaranId,
+    namaMahasiswa,
+    programStudi,
+    periode,
     sk,
     terkunci,
     jumlahMk,
+    template,
+    memuatTemplate,
+    galatTemplate,
+    onMuatUlangTemplate,
     onTerbit,
+    onReset,
 }: {
     jenis: JenisSkAsessmenType
     PendaftaranId: string
+    /** Dipakai menyusun butir baku diktum sesuai SK yang berlaku. */
+    namaMahasiswa: string
+    programStudi: string
+    /** Periode pendaftaran; dipakai sebagai semester bawaan pada diktum. */
+    periode?: string
     sk?: SkAsessmenItem
     terkunci: boolean
     /** Jumlah mata kuliah mahasiswa berjenis ini — sekadar informasi. */
     jumlahMk?: number
+    /** Daftar template Sisurat beserta hasil pencocokan template SK RPL. */
+    template: DaftarTemplateSisurat
+    /** Sedang menarik daftar template dari Sisurat. */
+    memuatTemplate?: boolean
+    /** Pesan galat saat menarik template; kosong bila berhasil. */
+    galatTemplate?: string | null
+    /** Mencoba menarik ulang daftar template. */
+    onMuatUlangTemplate?: () => void
     onTerbit: (item: SkAsessmenItem) => void
+    /** `bersih` = tidak ada lagi SK pendaftaran ini yang tertaut Sisurat. */
+    onReset?: (SkRektorId: string, bersih: boolean) => void
 }) {
     const [loading, setLoading] = React.useState<boolean>(false)
     const [preview, setPreview] = React.useState<string | null>(null)
-    const [formSk, setFormSk] = React.useState<{
+
+    // Nilai awal semester dan tanggal penilaian dipakai bersama oleh formulir
+    // dan butir baku, supaya keduanya konsisten sejak kartu dibuka.
+    const tahunIni = new Date().getFullYear()
+    const semesterAwal = periode?.trim() || `Ganjil ${tahunIni}/${tahunIni + 1}`
+    const tanggalAwal = new Date().toISOString().slice(0, 10)
+
+    const [form, setForm] = React.useState<{
         NamaSk: string
-        NomorSk: string
         TahunSk: string
+        Perihal: string
+        Semester: string
+        TanggalAsesmen: string
     }>({
         NamaSk: sk?.NamaSk ?? LABEL_JENIS_SK[jenis],
-        NomorSk: sk?.NomorSk ?? '',
         TahunSk: sk?.TahunSk ?? String(new Date().getFullYear()),
+        Perihal: `${LABEL_JENIS_SK[jenis]} a.n. ${namaMahasiswa} — Rekognisi Pembelajaran Lampau`,
+        Semester: semesterAwal,
+        TanggalAsesmen: tanggalAwal,
     })
 
-    const terbitkan = async () => {
-        if (!formSk.NomorSk || !formSk.NamaSk || !formSk.TahunSk) {
-            toast('Nama, Nomor, dan Tahun SK perlu diisi')
+    // Diktum SK disusun sebagai daftar butir yang dapat ditambah, dihapus, dan
+    // diurutkan. Isi awalnya mengikuti SK yang berlaku di ITI (lihat
+    // src/lib/diktum-sk-rpl.ts); butir kosong berarti "pakai butir baku server".
+    const susunBaku = React.useCallback(
+        (semester: string, tanggalAsesmen: string) => {
+            const baku = diktumBakuSk(jenis, {
+                Nama: namaMahasiswa,
+                ProgramStudi: programStudi,
+                Semester: semester,
+                TanggalPenilaian: tanggalAsesmen
+                    ? formatDateToIndonesian(tanggalAsesmen)
+                    : '',
+            })
+            return {
+                Menimbang: { butir: baku.Menimbang, gaya: 'tanpa' as GayaNomor },
+                Mengingat: { butir: baku.Mengingat, gaya: 'tanpa' as GayaNomor },
+                Memperhatikan: {
+                    butir: baku.Memperhatikan,
+                    gaya: 'tanpa' as GayaNomor,
+                },
+                Menetapkan: { butir: baku.Menetapkan, gaya: 'tanpa' as GayaNomor },
+            }
+        },
+        [jenis, namaMahasiswa, programStudi]
+    )
+
+    const [diktum, setDiktum] = React.useState<
+        Record<KunciDiktum, { butir: string[]; gaya: GayaNomor }>
+    >(() => susunBaku(semesterAwal, tanggalAwal))
+
+    // Template SK RPL dicocokkan server lewat kode atau nama "SK Hasil Asesmen
+    // RPL". Akademik tetap dapat menunjuk template lain bila belum ketemu.
+    const [pilihanTemplate, setPilihanTemplate] = React.useState<string>('')
+    const templateOtomatis = template.Rpl[jenis]
+    const templateRpl =
+        template.Daftar.find(
+            (t) => t.templateVersionId === pilihanTemplate
+        ) ?? templateOtomatis
+    const sudahDikirim = !!sk?.SisuratLetterId
+    const perluRevisi =
+        !!sk?.SisuratStatus && STATUS_PERLU_REVISI.includes(sk.SisuratStatus)
+
+    /** Butir siap kirim beserta penandanya; kosong berarti pakai butir baku. */
+    const kirimButir = (kunci: KunciDiktum) =>
+        butirTerkirim(diktum[kunci].butir, diktum[kunci].gaya)
+
+    const kirim = async () => {
+        if (!form.NamaSk || !form.TahunSk || form.Perihal.trim().length < 3) {
+            toast('Nama SK, Tahun SK, dan Perihal perlu diisi')
             return
         }
         setLoading(true)
         try {
-            const res = await terbitkanSkAsessmen(
+            const res = await kirimSkKeSisurat({
                 PendaftaranId,
-                jenis,
-                formSk.NamaSk,
-                formSk.NomorSk,
-                formSk.TahunSk
-            )
+                JenisSkAsessmen: jenis,
+                templateVersionId: pilihanTemplate || undefined,
+                NamaSk: form.NamaSk,
+                TahunSk: form.TahunSk,
+                Perihal: form.Perihal,
+                Semester: form.Semester,
+                TanggalAsesmen: form.TanggalAsesmen,
+                Menimbang: kirimButir('Menimbang'),
+                Mengingat: kirimButir('Mengingat'),
+                Memperhatikan: kirimButir('Memperhatikan'),
+                Menetapkan: kirimButir('Menetapkan'),
+            })
             onTerbit({
                 SkRektorId: res.data.SkRektorId,
                 JenisSkAsessmen: jenis,
@@ -602,13 +905,75 @@ export function KartuPenerbitanSk({
                 Disetujui: false,
                 Ditandatangani: false,
                 Catatan: '',
+                SisuratLetterId: res.data.SisuratLetterId,
+                SisuratStatus: res.data.SisuratStatus,
             })
-            toast(`${LABEL_JENIS_SK[jenis]} berhasil diterbitkan`)
+            toast(`${res.message} — ${res.data.Template}`)
+            if (res.data.Warnings?.length) {
+                toast(`Catatan Sisurat: ${res.data.Warnings.join('; ')}`)
+            }
         } catch (err) {
             toast(
                 err instanceof Error
                     ? err.message
-                    : `Gagal menerbitkan ${LABEL_JENIS_SK[jenis]}`
+                    : `Gagal mengirim ${LABEL_JENIS_SK[jenis]} ke Sisurat`
+            )
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    // Pratinjau dirender Sisurat sendiri supaya persis sama dengan surat yang
+    // nanti terbit (integrasi-rpl-sisurat §6.4).
+    const [pratinjau, setPratinjau] = React.useState<{
+        Html: string
+        BelumTerisi: string[]
+        Template: string
+    } | null>(null)
+    const [memuatPratinjau, setMemuatPratinjau] = React.useState<boolean>(false)
+
+    const bukaPratinjau = async () => {
+        setMemuatPratinjau(true)
+        try {
+            const res = await pratinjauSkSisurat({
+                PendaftaranId,
+                JenisSkAsessmen: jenis,
+                templateVersionId:
+                    pilihanTemplate ||
+                    templateOtomatis?.templateVersionId ||
+                    undefined,
+                Semester: form.Semester,
+                TanggalAsesmen: form.TanggalAsesmen,
+                Menimbang: kirimButir('Menimbang'),
+                Mengingat: kirimButir('Mengingat'),
+                Memperhatikan: kirimButir('Memperhatikan'),
+                Menetapkan: kirimButir('Menetapkan'),
+            })
+            setPratinjau(res.data)
+            if (res.data.BelumTerisi.length > 0) {
+                toast(
+                    `Placeholder wajib belum terisi: ${res.data.BelumTerisi.join(', ')}`
+                )
+            }
+        } catch (err) {
+            toast(
+                err instanceof Error ? err.message : 'Gagal membuat pratinjau'
+            )
+        } finally {
+            setMemuatPratinjau(false)
+        }
+    }
+
+    const kirimUlang = async (paksa = false) => {
+        if (!sk) return
+        setLoading(true)
+        try {
+            const res = await resetSkSisurat(sk.SkRektorId, paksa)
+            toast(res.message)
+            onReset?.(sk.SkRektorId, !!res.data.TidakAdaLagiTerkirim)
+        } catch (err) {
+            toast(
+                err instanceof Error ? err.message : 'Gagal membuka kembali SK'
             )
         } finally {
             setLoading(false)
@@ -625,110 +990,490 @@ export function KartuPenerbitanSk({
         }
     }
 
-    const statusBadge = !sk ? (
-        <Badge variant="secondary">Belum diterbitkan</Badge>
+    const statusBadge = !sk?.SisuratLetterId ? (
+        <Badge variant="secondary">Belum dikirim</Badge>
+    ) : perluRevisi ? (
+        <Badge variant="destructive">Perlu diperbaiki</Badge>
     ) : sk.Ditandatangani ? (
-        <Badge className="bg-green-700">Sudah ditandatangani</Badge>
-    ) : sk.Disetujui ? (
-        <Badge className="bg-green-600">Disetujui</Badge>
+        <Badge className="bg-green-600">Ditandatangani — {sk.NomorSk}</Badge>
     ) : (
-        <Badge variant="secondary">Menunggu persetujuan</Badge>
+        <Badge variant="secondary">
+            {LABEL_STATUS_SISURAT[sk.SisuratStatus ?? ''] ??
+                sk.SisuratStatus ??
+                'Diproses Sisurat'}
+        </Badge>
     )
+
+    const isianDiktum: [KunciDiktum, string][] = [
+        [
+            'Menimbang',
+            'Alasan penetapan. Kosongkan seluruhnya untuk memakai butir baku.',
+        ],
+        ['Mengingat', 'Dasar hukum yang menjadi rujukan.'],
+        [
+            'Memperhatikan',
+            'Kosongkan bila cukup merujuk berita acara asesmen.',
+        ],
+        ['Menetapkan', 'Diktum penetapan yang diputuskan.'],
+    ]
 
     return (
         <Card className="border-dashed">
             <CardHeader>
-                <CardTitle className="flex items-center gap-3">
+                <CardTitle className="flex flex-wrap items-center gap-3">
                     {LABEL_JENIS_SK[jenis]} {statusBadge}
                 </CardTitle>
                 <CardDescription>
-                    Dirender dari template SK Hasil{' '}
-                    {jenis === 'TRANSFER_SKS' ? 'Transfer' : 'Perolehan'} SKS.
+                    Surat disusun dari template{' '}
+                    <span className="font-mono text-xs">
+                        {templateRpl
+                            ? `${KODE_TEMPLATE[jenis]} v${templateRpl.versionNumber}`
+                            : KODE_TEMPLATE[jenis]}
+                    </span>{' '}
+                    di Sisurat. Nama mahasiswa, program studi, jumlah SKS, dan
+                    nama Rektor diisi otomatis dari data pendaftaran; nomor surat
+                    dan tanda tangan diterbitkan Sisurat.
                     {jumlahMk !== undefined && (
                         <>
                             {' '}
                             Mahasiswa ini punya <b>{jumlahMk}</b> mata kuliah
                             berjenis tersebut
                             {jumlahMk === 0 &&
-                                ' — SK tetap boleh diterbitkan bila memang diperlukan'}
+                                ' — SK tetap boleh diajukan bila memang diperlukan'}
                             .
                         </>
                     )}
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                    <div className="grid gap-2">
-                        <Label htmlFor={`nama-${jenis}`}>Nama SK</Label>
-                        <Input
-                            id={`nama-${jenis}`}
-                            value={formSk.NamaSk}
-                            disabled={loading || terkunci}
-                            onChange={(e) =>
-                                setFormSk({ ...formSk, NamaSk: e.target.value })
-                            }
-                        />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor={`nomor-${jenis}`}>
-                            Nomor SK sementara
-                        </Label>
-                        <Input
-                            id={`nomor-${jenis}`}
-                            value={formSk.NomorSk}
-                            disabled={loading || terkunci}
-                            onChange={(e) =>
-                                setFormSk({ ...formSk, NomorSk: e.target.value })
-                            }
-                        />
-                        <p className="text-xs text-muted-foreground">
-                            Nomor resmi diterbitkan Sisurat saat Rektor
-                            menandatangani, dan akan menggantikan nomor ini.
+                {sudahDikirim ? (
+                    <div className="grid grid-cols-1 gap-2 text-sm">
+                        <p className="text-muted-foreground">
+                            Surat Sisurat{' '}
+                            <span className="font-mono text-xs">
+                                {sk?.SisuratLetterId}
+                            </span>
+                            {sk?.NomorSk
+                                ? ` — nomor ${sk.NomorSk}.`
+                                : ' — belum bernomor.'}{' '}
+                            {sk?.Ditandatangani
+                                ? 'Sudah ditandatangani; QR sudah ditempel pada berkas dan SK siap dipublikasikan.'
+                                : 'Tekan Perbarui Status untuk menarik perkembangan terbaru dari Sisurat.'}
                         </p>
                     </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor={`tahun-${jenis}`}>Tahun SK</Label>
-                        <Input
-                            id={`tahun-${jenis}`}
-                            value={formSk.TahunSk}
-                            disabled={loading || terkunci}
-                            onChange={(e) =>
-                                setFormSk({ ...formSk, TahunSk: e.target.value })
-                            }
-                        />
-                    </div>
-                </div>
+                ) : (
+                    <React.Fragment>
+                        {memuatTemplate && (
+                            <Alert className="mb-4">
+                                <TimerIcon className="w-4 h-4" />
+                                <AlertTitle>Memuat template Sisurat…</AlertTitle>
+                                <AlertDescription>
+                                    Tombol kirim aktif setelah daftar template
+                                    berhasil ditarik.
+                                </AlertDescription>
+                            </Alert>
+                        )}
+
+                        {!memuatTemplate && galatTemplate && (
+                            <Alert variant="destructive" className="mb-4">
+                                <AlertTitle>
+                                    Daftar template Sisurat gagal dimuat
+                                </AlertTitle>
+                                <AlertDescription>
+                                    <p>{galatTemplate}</p>
+                                    {/* Kekurangan scope bukan salah kredensial —
+                                        arahannya berbeda, jadi dibedakan. */}
+                                    {/scope|403/i.test(galatTemplate) ? (
+                                        <p className="mt-1">
+                                            Kredensialnya sudah diterima Sisurat,
+                                            tetapi klien API-nya belum diberi izin
+                                            menginisialisasi surat. Minta admin
+                                            Sisurat menambahkan scope{' '}
+                                            <span className="font-mono">
+                                                letter.initiate
+                                            </span>
+                                            , mengikat klien ke service user +
+                                            peran pembuat surat, dan memataknya ke
+                                            konteks alur{' '}
+                                            <span className="font-mono">RPL</span>.
+                                        </p>
+                                    ) : (
+                                        <p className="mt-1">
+                                            SK belum dapat dikirim sampai sambungan
+                                            ke Sisurat berhasil. Periksa{' '}
+                                            <span className="font-mono">
+                                                clientId
+                                            </span>{' '}
+                                            /{' '}
+                                            <span className="font-mono">
+                                                clientSecret
+                                            </span>{' '}
+                                            pada environment.
+                                        </p>
+                                    )}
+                                    {onMuatUlangTemplate && (
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="sm"
+                                            className="mt-2"
+                                            onClick={onMuatUlangTemplate}
+                                        >
+                                            <RefreshCwIcon /> Coba Muat Ulang
+                                        </Button>
+                                    )}
+                                </AlertDescription>
+                            </Alert>
+                        )}
+
+                        {!memuatTemplate &&
+                            !galatTemplate &&
+                            template.Daftar.length > 0 &&
+                            !templateRpl && (
+                                <Alert variant="destructive" className="mb-4">
+                                    <AlertTitle>
+                                        Template SK RPL belum tersedia
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        Template berkode{' '}
+                                        <span className="font-mono">
+                                            {KODE_TEMPLATE[jenis]}
+                                        </span>{' '}
+                                        maupun yang bernama &ldquo;SK Hasil
+                                        Asesmen RPL&rdquo; tidak ada di antara{' '}
+                                        {template.Daftar.length} template Sisurat.
+                                        Minta admin Sisurat menerbitkannya, atau
+                                        pilih template lain di bawah ini.
+                                    </AlertDescription>
+                                </Alert>
+                            )}
+
+                        {/* Pemilihan template dari Sisurat. Terisi otomatis
+                            dengan template SK RPL; dapat diganti bila perlu. */}
+                        {template.Daftar.length > 0 && (
+                            <div className="grid gap-2 mb-4">
+                                <Label htmlFor={`tpl-${jenis}`}>
+                                    Template Sisurat
+                                </Label>
+                                <Select
+                                    value={
+                                        pilihanTemplate ||
+                                        templateOtomatis?.templateVersionId ||
+                                        ''
+                                    }
+                                    onValueChange={(v) => setPilihanTemplate(v)}
+                                    disabled={loading || terkunci}
+                                >
+                                    <SelectTrigger
+                                        id={`tpl-${jenis}`}
+                                        className="w-full"
+                                    >
+                                        <SelectValue placeholder="Pilih template surat" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {template.Daftar.map((t) => (
+                                            <SelectItem
+                                                key={t.templateVersionId}
+                                                value={t.templateVersionId}
+                                            >
+                                                {t.nama}
+                                                {t.kode ? ` — ${t.kode}` : ''} (v
+                                                {t.versionNumber})
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <p className="text-xs text-muted-foreground">
+                                    {templateOtomatis
+                                        ? `Terdeteksi otomatis untuk ${LABEL_JENIS_SK[jenis]}: ${templateOtomatis.nama}.`
+                                        : 'Template SK RPL belum terdeteksi; pilih sendiri templatenya.'}
+                                    {templateRpl?.fields?.length
+                                        ? ` Template ini memerlukan ${templateRpl.fields.length} isian.`
+                                        : templateRpl
+                                            ? ` Template ini memerlukan ${templateRpl.placeholders.length} placeholder.`
+                                            : ''}
+                                </p>
+                            </div>
+                        )}
+
+                        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                            <div className="grid gap-2 md:col-span-2">
+                                <Label htmlFor={`perihal-${jenis}`}>Perihal</Label>
+                                <Input
+                                    id={`perihal-${jenis}`}
+                                    value={form.Perihal}
+                                    disabled={loading || terkunci}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            Perihal: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor={`nama-${jenis}`}>
+                                    Nama berkas SK
+                                </Label>
+                                <Input
+                                    id={`nama-${jenis}`}
+                                    value={form.NamaSk}
+                                    disabled={loading || terkunci}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            NamaSk: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor={`tahun-${jenis}`}>Tahun SK</Label>
+                                <Input
+                                    id={`tahun-${jenis}`}
+                                    value={form.TahunSk}
+                                    disabled={loading || terkunci}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            TahunSk: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor={`semester-${jenis}`}>
+                                    Semester akademik
+                                </Label>
+                                <Input
+                                    id={`semester-${jenis}`}
+                                    placeholder="mis. Ganjil 2026/2027"
+                                    value={form.Semester}
+                                    disabled={loading || terkunci}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            Semester: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor={`tgl-${jenis}`}>
+                                    Tanggal asesmen
+                                </Label>
+                                <Input
+                                    id={`tgl-${jenis}`}
+                                    type="date"
+                                    value={form.TanggalAsesmen}
+                                    disabled={loading || terkunci}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            TanggalAsesmen: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center justify-between gap-2 mt-4">
+                            <p className="text-sm font-semibold">
+                                Diktum Keputusan
+                            </p>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                disabled={loading || terkunci}
+                                title="Susun ulang seluruh butir mengikuti SK baku, memakai semester dan tanggal asesmen yang terisi sekarang"
+                                onClick={() =>
+                                    setDiktum(
+                                        susunBaku(
+                                            form.Semester,
+                                            form.TanggalAsesmen
+                                        )
+                                    )
+                                }
+                            >
+                                <RefreshCwIcon /> Muat Ulang Butir Baku
+                            </Button>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 mt-2">
+                            {isianDiktum.map(([kunci, bantuan]) => (
+                                <EditorButirSk
+                                    key={kunci}
+                                    judul={kunci}
+                                    bantuan={bantuan}
+                                    butir={diktum[kunci].butir}
+                                    gaya={diktum[kunci].gaya}
+                                    nonaktif={loading || terkunci}
+                                    onUbah={(butir) =>
+                                        setDiktum((p) => ({
+                                            ...p,
+                                            [kunci]: { ...p[kunci], butir },
+                                        }))
+                                    }
+                                    onUbahGaya={(gaya) =>
+                                        setDiktum((p) => ({
+                                            ...p,
+                                            [kunci]: { ...p[kunci], gaya },
+                                        }))
+                                    }
+                                />
+                            ))}
+                        </div>
+
+                        {/* Pratinjau susunan diktum persis seperti yang dikirim
+                            ke Sisurat. Sisurat tidak menyediakan endpoint
+                            pratinjau, jadi yang ditampilkan di sini adalah isi
+                            fieldValues-nya, bukan hasil render suratnya. */}
+                        <div className="p-3 mt-4 border rounded-lg bg-muted/40">
+                            <p className="text-sm font-semibold">
+                                Pratinjau diktum yang dikirim
+                            </p>
+                            <p className="mb-2 text-xs text-muted-foreground">
+                                Susunan butir ini yang masuk ke{' '}
+                                <span className="font-mono">fieldValues</span>{' '}
+                                template{' '}
+                                <span className="font-mono">
+                                    {KODE_TEMPLATE[jenis]}
+                                </span>
+                                . Badan suratnya sendiri dirender Sisurat.
+                            </p>
+                            <div className="grid gap-2 text-sm">
+                                {isianDiktum.map(([kunci]) => {
+                                    const isi = butirTerkirim(
+                                        diktum[kunci].butir,
+                                        diktum[kunci].gaya
+                                    )
+                                    return (
+                                        <div key={kunci}>
+                                            <span className="font-semibold">
+                                                {kunci}:
+                                            </span>{' '}
+                                            {isi.length === 0 ? (
+                                                <span className="text-muted-foreground">
+                                                    (memakai butir baku)
+                                                </span>
+                                            ) : (
+                                                <ul className="mt-1 ml-4 space-y-0.5">
+                                                    {isi.map((b, i) => (
+                                                        <li key={i}>
+                                                            {diktum[kunci].gaya ===
+                                                                'tanpa' && (
+                                                                    <span className="mr-1 text-muted-foreground">
+                                                                        {penandaButir(
+                                                                            'angka',
+                                                                            i
+                                                                        )}
+                                                                    </span>
+                                                                )}
+                                                            {b}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </React.Fragment>
+                )}
 
                 {sk && sk.Catatan !== '' && (
-                    <div className="grid grid-cols-1 gap-2 pt-3">
-                        <Label htmlFor={`catatan-${jenis}`}>
-                            Catatan dari Wakil Rektor
-                        </Label>
-                        <Textarea
-                            readOnly
-                            id={`catatan-${jenis}`}
-                            value={sk.Catatan}
-                        />
-                    </div>
+                    <Alert variant="destructive" className="mt-4">
+                        <AlertTitle>Catatan dari Sisurat</AlertTitle>
+                        <AlertDescription>{sk.Catatan}</AlertDescription>
+                    </Alert>
                 )}
 
                 <div className="flex flex-wrap gap-3 mt-4">
-                    <Button
-                        type="button"
-                        onClick={() => terbitkan()}
-                        disabled={loading || terkunci || sk?.Ditandatangani}
-                    >
-                        {loading ? (
-                            <React.Fragment>
-                                <TimerIcon /> Loading
-                            </React.Fragment>
-                        ) : (
-                            <React.Fragment>
-                                <PenIcon />{' '}
-                                {sk ? 'Terbitkan Ulang' : 'Terbitkan SK'}
-                            </React.Fragment>
-                        )}
-                    </Button>
+                    {!sudahDikirim && (
+                        <Button
+                            type="button"
+                            onClick={() => kirim()}
+                            disabled={loading || terkunci || !templateRpl}
+                            title={
+                                terkunci
+                                    ? 'Berkas sedang tidak berada di tahap penerbitan SK'
+                                    : memuatTemplate
+                                        ? 'Menunggu daftar template Sisurat'
+                                        : !templateRpl
+                                            ? `Template ${KODE_TEMPLATE[jenis]} belum tersedia dari Sisurat`
+                                            : ''
+                            }
+                        >
+                            {loading ? (
+                                <React.Fragment>
+                                    <TimerIcon /> Loading
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    <CloudUploadIcon /> Kirim ke Sisurat
+                                </React.Fragment>
+                            )}
+                        </Button>
+                    )}
+                    {!sudahDikirim && (
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => bukaPratinjau()}
+                            disabled={
+                                memuatPratinjau || terkunci || !templateRpl
+                            }
+                            title={
+                                templateRpl
+                                    ? 'Sisurat merender pratinjau dari isian saat ini'
+                                    : 'Pilih template lebih dulu'
+                            }
+                        >
+                            {memuatPratinjau ? (
+                                <React.Fragment>
+                                    <TimerIcon /> Memuat
+                                </React.Fragment>
+                            ) : (
+                                <React.Fragment>
+                                    <ScanEyeIcon /> Pratinjau Surat
+                                </React.Fragment>
+                            )}
+                        </Button>
+                    )}
+                    {sudahDikirim && perluRevisi && (
+                        <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={() => kirimUlang()}
+                            disabled={loading}
+                        >
+                            <RefreshCwIcon /> Perbaiki & Kirim Ulang
+                        </Button>
+                    )}
+                    {sudahDikirim && !perluRevisi && !sk?.Ditandatangani && (
+                        <Button
+                            type="button"
+                            variant="outline"
+                            disabled={loading}
+                            onClick={async () => {
+                                const konfirmasi = await Swal.fire({
+                                    title: 'Batalkan pengiriman?',
+                                    html: `Surat <b>${sk?.SisuratLetterId}</b> tetap ada di Sisurat dan <b>tidak ikut terhapus</b>.${sk?.NomorSk ? ` Nomor <b>${sk.NomorSk}</b> yang sudah terbit tidak dapat dipakai ulang.` : ''}<br/><br/>Batalkan juga surat itu di Sisurat agar tidak berganda, lalu kirim ulang dari sini.`,
+                                    icon: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonText: 'Ya, batalkan',
+                                    cancelButtonText: 'Batal',
+                                    confirmButtonColor: '#f45f24',
+                                })
+                                if (konfirmasi.isConfirmed) kirimUlang(true)
+                            }}
+                        >
+                            <RefreshCwIcon /> Batalkan Pengiriman
+                        </Button>
+                    )}
                     {sk && (
                         <Button
                             type="button"
@@ -739,6 +1484,43 @@ export function KartuPenerbitanSk({
                         </Button>
                     )}
                 </div>
+
+                {pratinjau && (
+                    <div className="mt-4">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                            <p className="text-sm font-semibold">
+                                Pratinjau dari Sisurat — {pratinjau.Template}
+                            </p>
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setPratinjau(null)}
+                            >
+                                Tutup
+                            </Button>
+                        </div>
+                        {pratinjau.BelumTerisi.length > 0 && (
+                            <Alert className="mt-2">
+                                <AlertTitle>
+                                    Placeholder wajib belum terisi
+                                </AlertTitle>
+                                <AlertDescription>
+                                    <span className="font-mono text-xs">
+                                        {pratinjau.BelumTerisi.join(', ')}
+                                    </span>
+                                </AlertDescription>
+                            </Alert>
+                        )}
+                        <iframe
+                            srcDoc={pratinjau.Html}
+                            title={`Pratinjau ${LABEL_JENIS_SK[jenis]}`}
+                            width="100%"
+                            height="600px"
+                            className="mt-2 bg-white border rounded"
+                        />
+                    </div>
+                )}
 
                 {preview && (
                     <iframe

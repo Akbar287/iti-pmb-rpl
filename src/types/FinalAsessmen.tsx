@@ -155,6 +155,8 @@ export type ResponseSkRektorAsessmenType = {
     SiapDipublikasikan?: boolean
     /** Seluruh SK sudah dipublikasikan ke mahasiswa. */
     Dipublikasikan?: boolean
+    /** Status terakhir surat pada alur Sisurat. */
+    SisuratStatus?: string
     Status: string
 }
 

@@ -15364,6 +15364,8 @@ export namespace Prisma {
     AsesorId: string | null
     Urutan: number | null
     Confirmation: boolean | null
+    TandaTanganPath: string | null
+    TandaTanganPada: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -15374,6 +15376,8 @@ export namespace Prisma {
     AsesorId: string | null
     Urutan: number | null
     Confirmation: boolean | null
+    TandaTanganPath: string | null
+    TandaTanganPada: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -15384,6 +15388,8 @@ export namespace Prisma {
     AsesorId: number
     Urutan: number
     Confirmation: number
+    TandaTanganPath: number
+    TandaTanganPada: number
     CreatedAt: number
     UpdatedAt: number
     _all: number
@@ -15404,6 +15410,8 @@ export namespace Prisma {
     AsesorId?: true
     Urutan?: true
     Confirmation?: true
+    TandaTanganPath?: true
+    TandaTanganPada?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -15414,6 +15422,8 @@ export namespace Prisma {
     AsesorId?: true
     Urutan?: true
     Confirmation?: true
+    TandaTanganPath?: true
+    TandaTanganPada?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -15424,6 +15434,8 @@ export namespace Prisma {
     AsesorId?: true
     Urutan?: true
     Confirmation?: true
+    TandaTanganPath?: true
+    TandaTanganPada?: true
     CreatedAt?: true
     UpdatedAt?: true
     _all?: true
@@ -15521,6 +15533,8 @@ export namespace Prisma {
     AsesorId: string
     Urutan: number
     Confirmation: boolean
+    TandaTanganPath: string | null
+    TandaTanganPada: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
     _count: AssesorMahasiswaCountAggregateOutputType | null
@@ -15550,6 +15564,8 @@ export namespace Prisma {
     AsesorId?: boolean
     Urutan?: boolean
     Confirmation?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
@@ -15562,6 +15578,8 @@ export namespace Prisma {
     AsesorId?: boolean
     Urutan?: boolean
     Confirmation?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
@@ -15574,6 +15592,8 @@ export namespace Prisma {
     AsesorId?: boolean
     Urutan?: boolean
     Confirmation?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
@@ -15586,11 +15606,13 @@ export namespace Prisma {
     AsesorId?: boolean
     Urutan?: boolean
     Confirmation?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type AssesorMahasiswaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"AssesorMahasiswaId" | "PendaftaranId" | "AsesorId" | "Urutan" | "Confirmation" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["assesorMahasiswa"]>
+  export type AssesorMahasiswaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"AssesorMahasiswaId" | "PendaftaranId" | "AsesorId" | "Urutan" | "Confirmation" | "TandaTanganPath" | "TandaTanganPada" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["assesorMahasiswa"]>
   export type AssesorMahasiswaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Asesor?: boolean | AsesorDefaultArgs<ExtArgs>
     Pendaftaran?: boolean | PendaftaranDefaultArgs<ExtArgs>
@@ -15616,6 +15638,8 @@ export namespace Prisma {
       AsesorId: string
       Urutan: number
       Confirmation: boolean
+      TandaTanganPath: string | null
+      TandaTanganPada: Date | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
     }, ExtArgs["result"]["assesorMahasiswa"]>
@@ -16048,6 +16072,8 @@ export namespace Prisma {
     readonly AsesorId: FieldRef<"AssesorMahasiswa", 'String'>
     readonly Urutan: FieldRef<"AssesorMahasiswa", 'Int'>
     readonly Confirmation: FieldRef<"AssesorMahasiswa", 'Boolean'>
+    readonly TandaTanganPath: FieldRef<"AssesorMahasiswa", 'String'>
+    readonly TandaTanganPada: FieldRef<"AssesorMahasiswa", 'DateTime'>
     readonly CreatedAt: FieldRef<"AssesorMahasiswa", 'DateTime'>
     readonly UpdatedAt: FieldRef<"AssesorMahasiswa", 'DateTime'>
   }
@@ -49827,6 +49853,8 @@ export namespace Prisma {
     Gelombang: string | null
     SistemKuliah: $Enums.SistemKuliah | null
     JalurPendaftaran: string | null
+    TandaTanganPath: string | null
+    TandaTanganPada: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -49840,6 +49868,8 @@ export namespace Prisma {
     Gelombang: string | null
     SistemKuliah: $Enums.SistemKuliah | null
     JalurPendaftaran: string | null
+    TandaTanganPath: string | null
+    TandaTanganPada: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
   }
@@ -49853,6 +49883,8 @@ export namespace Prisma {
     Gelombang: number
     SistemKuliah: number
     JalurPendaftaran: number
+    TandaTanganPath: number
+    TandaTanganPada: number
     CreatedAt: number
     UpdatedAt: number
     _all: number
@@ -49868,6 +49900,8 @@ export namespace Prisma {
     Gelombang?: true
     SistemKuliah?: true
     JalurPendaftaran?: true
+    TandaTanganPath?: true
+    TandaTanganPada?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -49881,6 +49915,8 @@ export namespace Prisma {
     Gelombang?: true
     SistemKuliah?: true
     JalurPendaftaran?: true
+    TandaTanganPath?: true
+    TandaTanganPada?: true
     CreatedAt?: true
     UpdatedAt?: true
   }
@@ -49894,6 +49930,8 @@ export namespace Prisma {
     Gelombang?: true
     SistemKuliah?: true
     JalurPendaftaran?: true
+    TandaTanganPath?: true
+    TandaTanganPada?: true
     CreatedAt?: true
     UpdatedAt?: true
     _all?: true
@@ -49980,6 +50018,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath: string | null
+    TandaTanganPada: Date | null
     CreatedAt: Date | null
     UpdatedAt: Date | null
     _count: PendaftaranCountAggregateOutputType | null
@@ -50010,6 +50050,8 @@ export namespace Prisma {
     Gelombang?: boolean
     SistemKuliah?: boolean
     JalurPendaftaran?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Mahasiswa?: boolean | MahasiswaDefaultArgs<ExtArgs>
@@ -50044,6 +50086,8 @@ export namespace Prisma {
     Gelombang?: boolean
     SistemKuliah?: boolean
     JalurPendaftaran?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Mahasiswa?: boolean | MahasiswaDefaultArgs<ExtArgs>
@@ -50058,6 +50102,8 @@ export namespace Prisma {
     Gelombang?: boolean
     SistemKuliah?: boolean
     JalurPendaftaran?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
     Mahasiswa?: boolean | MahasiswaDefaultArgs<ExtArgs>
@@ -50072,11 +50118,13 @@ export namespace Prisma {
     Gelombang?: boolean
     SistemKuliah?: boolean
     JalurPendaftaran?: boolean
+    TandaTanganPath?: boolean
+    TandaTanganPada?: boolean
     CreatedAt?: boolean
     UpdatedAt?: boolean
   }
 
-  export type PendaftaranOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"PendaftaranId" | "MahasiswaId" | "KodePendaftar" | "NoUjian" | "Periode" | "Gelombang" | "SistemKuliah" | "JalurPendaftaran" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["pendaftaran"]>
+  export type PendaftaranOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"PendaftaranId" | "MahasiswaId" | "KodePendaftar" | "NoUjian" | "Periode" | "Gelombang" | "SistemKuliah" | "JalurPendaftaran" | "TandaTanganPath" | "TandaTanganPada" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["pendaftaran"]>
   export type PendaftaranInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Mahasiswa?: boolean | MahasiswaDefaultArgs<ExtArgs>
     AssesorMahasiswa?: boolean | Pendaftaran$AssesorMahasiswaArgs<ExtArgs>
@@ -50140,6 +50188,8 @@ export namespace Prisma {
       Gelombang: string
       SistemKuliah: $Enums.SistemKuliah
       JalurPendaftaran: string
+      TandaTanganPath: string | null
+      TandaTanganPada: Date | null
       CreatedAt: Date | null
       UpdatedAt: Date | null
     }, ExtArgs["result"]["pendaftaran"]>
@@ -50593,6 +50643,8 @@ export namespace Prisma {
     readonly Gelombang: FieldRef<"Pendaftaran", 'String'>
     readonly SistemKuliah: FieldRef<"Pendaftaran", 'SistemKuliah'>
     readonly JalurPendaftaran: FieldRef<"Pendaftaran", 'String'>
+    readonly TandaTanganPath: FieldRef<"Pendaftaran", 'String'>
+    readonly TandaTanganPada: FieldRef<"Pendaftaran", 'DateTime'>
     readonly CreatedAt: FieldRef<"Pendaftaran", 'DateTime'>
     readonly UpdatedAt: FieldRef<"Pendaftaran", 'DateTime'>
   }
@@ -62488,6 +62540,13 @@ export namespace Prisma {
     JenisSkAsessmen: $Enums.JenisSkAsessmen | null
     Dipublikasikan: boolean | null
     DipublikasikanPada: Date | null
+    PathFileFinal: string | null
+    NamaFileFinal: string | null
+    SkFinalDiterimaPada: Date | null
+    SisuratLetterId: string | null
+    SisuratStatus: string | null
+    SisuratStepKey: string | null
+    SisuratDiajukanPada: Date | null
     NomorSuratSisurat: string | null
     NomorSuratPada: Date | null
     Disetujui: boolean | null
@@ -62519,6 +62578,13 @@ export namespace Prisma {
     JenisSkAsessmen: $Enums.JenisSkAsessmen | null
     Dipublikasikan: boolean | null
     DipublikasikanPada: Date | null
+    PathFileFinal: string | null
+    NamaFileFinal: string | null
+    SkFinalDiterimaPada: Date | null
+    SisuratLetterId: string | null
+    SisuratStatus: string | null
+    SisuratStepKey: string | null
+    SisuratDiajukanPada: Date | null
     NomorSuratSisurat: string | null
     NomorSuratPada: Date | null
     Disetujui: boolean | null
@@ -62550,6 +62616,13 @@ export namespace Prisma {
     JenisSkAsessmen: number
     Dipublikasikan: number
     DipublikasikanPada: number
+    PathFileFinal: number
+    NamaFileFinal: number
+    SkFinalDiterimaPada: number
+    SisuratLetterId: number
+    SisuratStatus: number
+    SisuratStepKey: number
+    SisuratDiajukanPada: number
     NomorSuratSisurat: number
     NomorSuratPada: number
     Disetujui: number
@@ -62595,6 +62668,13 @@ export namespace Prisma {
     JenisSkAsessmen?: true
     Dipublikasikan?: true
     DipublikasikanPada?: true
+    PathFileFinal?: true
+    NamaFileFinal?: true
+    SkFinalDiterimaPada?: true
+    SisuratLetterId?: true
+    SisuratStatus?: true
+    SisuratStepKey?: true
+    SisuratDiajukanPada?: true
     NomorSuratSisurat?: true
     NomorSuratPada?: true
     Disetujui?: true
@@ -62626,6 +62706,13 @@ export namespace Prisma {
     JenisSkAsessmen?: true
     Dipublikasikan?: true
     DipublikasikanPada?: true
+    PathFileFinal?: true
+    NamaFileFinal?: true
+    SkFinalDiterimaPada?: true
+    SisuratLetterId?: true
+    SisuratStatus?: true
+    SisuratStepKey?: true
+    SisuratDiajukanPada?: true
     NomorSuratSisurat?: true
     NomorSuratPada?: true
     Disetujui?: true
@@ -62657,6 +62744,13 @@ export namespace Prisma {
     JenisSkAsessmen?: true
     Dipublikasikan?: true
     DipublikasikanPada?: true
+    PathFileFinal?: true
+    NamaFileFinal?: true
+    SkFinalDiterimaPada?: true
+    SisuratLetterId?: true
+    SisuratStatus?: true
+    SisuratStepKey?: true
+    SisuratDiajukanPada?: true
     NomorSuratSisurat?: true
     NomorSuratPada?: true
     Disetujui?: true
@@ -62775,6 +62869,13 @@ export namespace Prisma {
     JenisSkAsessmen: $Enums.JenisSkAsessmen | null
     Dipublikasikan: boolean
     DipublikasikanPada: Date | null
+    PathFileFinal: string | null
+    NamaFileFinal: string | null
+    SkFinalDiterimaPada: Date | null
+    SisuratLetterId: string | null
+    SisuratStatus: string | null
+    SisuratStepKey: string | null
+    SisuratDiajukanPada: Date | null
     NomorSuratSisurat: string | null
     NomorSuratPada: Date | null
     Disetujui: boolean
@@ -62825,6 +62926,13 @@ export namespace Prisma {
     JenisSkAsessmen?: boolean
     Dipublikasikan?: boolean
     DipublikasikanPada?: boolean
+    PathFileFinal?: boolean
+    NamaFileFinal?: boolean
+    SkFinalDiterimaPada?: boolean
+    SisuratLetterId?: boolean
+    SisuratStatus?: boolean
+    SisuratStepKey?: boolean
+    SisuratDiajukanPada?: boolean
     NomorSuratSisurat?: boolean
     NomorSuratPada?: boolean
     Disetujui?: boolean
@@ -62860,6 +62968,13 @@ export namespace Prisma {
     JenisSkAsessmen?: boolean
     Dipublikasikan?: boolean
     DipublikasikanPada?: boolean
+    PathFileFinal?: boolean
+    NamaFileFinal?: boolean
+    SkFinalDiterimaPada?: boolean
+    SisuratLetterId?: boolean
+    SisuratStatus?: boolean
+    SisuratStepKey?: boolean
+    SisuratDiajukanPada?: boolean
     NomorSuratSisurat?: boolean
     NomorSuratPada?: boolean
     Disetujui?: boolean
@@ -62892,6 +63007,13 @@ export namespace Prisma {
     JenisSkAsessmen?: boolean
     Dipublikasikan?: boolean
     DipublikasikanPada?: boolean
+    PathFileFinal?: boolean
+    NamaFileFinal?: boolean
+    SkFinalDiterimaPada?: boolean
+    SisuratLetterId?: boolean
+    SisuratStatus?: boolean
+    SisuratStepKey?: boolean
+    SisuratDiajukanPada?: boolean
     NomorSuratSisurat?: boolean
     NomorSuratPada?: boolean
     Disetujui?: boolean
@@ -62924,6 +63046,13 @@ export namespace Prisma {
     JenisSkAsessmen?: boolean
     Dipublikasikan?: boolean
     DipublikasikanPada?: boolean
+    PathFileFinal?: boolean
+    NamaFileFinal?: boolean
+    SkFinalDiterimaPada?: boolean
+    SisuratLetterId?: boolean
+    SisuratStatus?: boolean
+    SisuratStepKey?: boolean
+    SisuratDiajukanPada?: boolean
     NomorSuratSisurat?: boolean
     NomorSuratPada?: boolean
     Disetujui?: boolean
@@ -62942,7 +63071,7 @@ export namespace Prisma {
     UpdatedAt?: boolean
   }
 
-  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "PathFile" | "NamaDokumen" | "Catatan" | "JenisSkAsessmen" | "Dipublikasikan" | "DipublikasikanPada" | "NomorSuratSisurat" | "NomorSuratPada" | "Disetujui" | "DisetujuiPada" | "DisetujuiOleh" | "Ditandatangani" | "TandaTanganPada" | "TandaTanganOleh" | "QrToken" | "QrVerifyUrl" | "QrDocumentId" | "QrOfficialId" | "QrOfficialNama" | "QrOfficialJabatan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
+  export type SkRektorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"SkRektorId" | "TipeSkRektorId" | "NamaSk" | "TahunSk" | "NomorSk" | "NamaFile" | "PathFile" | "NamaDokumen" | "Catatan" | "JenisSkAsessmen" | "Dipublikasikan" | "DipublikasikanPada" | "PathFileFinal" | "NamaFileFinal" | "SkFinalDiterimaPada" | "SisuratLetterId" | "SisuratStatus" | "SisuratStepKey" | "SisuratDiajukanPada" | "NomorSuratSisurat" | "NomorSuratPada" | "Disetujui" | "DisetujuiPada" | "DisetujuiOleh" | "Ditandatangani" | "TandaTanganPada" | "TandaTanganOleh" | "QrToken" | "QrVerifyUrl" | "QrDocumentId" | "QrOfficialId" | "QrOfficialNama" | "QrOfficialJabatan" | "CreatedAt" | "UpdatedAt", ExtArgs["result"]["skRektor"]>
   export type SkRektorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TipeSkRektor?: boolean | TipeSkRektorDefaultArgs<ExtArgs>
     SkRektorAssesor?: boolean | SkRektor$SkRektorAssesorArgs<ExtArgs>
@@ -62976,6 +63105,13 @@ export namespace Prisma {
       JenisSkAsessmen: $Enums.JenisSkAsessmen | null
       Dipublikasikan: boolean
       DipublikasikanPada: Date | null
+      PathFileFinal: string | null
+      NamaFileFinal: string | null
+      SkFinalDiterimaPada: Date | null
+      SisuratLetterId: string | null
+      SisuratStatus: string | null
+      SisuratStepKey: string | null
+      SisuratDiajukanPada: Date | null
       NomorSuratSisurat: string | null
       NomorSuratPada: Date | null
       Disetujui: boolean
@@ -63430,6 +63566,13 @@ export namespace Prisma {
     readonly JenisSkAsessmen: FieldRef<"SkRektor", 'JenisSkAsessmen'>
     readonly Dipublikasikan: FieldRef<"SkRektor", 'Boolean'>
     readonly DipublikasikanPada: FieldRef<"SkRektor", 'DateTime'>
+    readonly PathFileFinal: FieldRef<"SkRektor", 'String'>
+    readonly NamaFileFinal: FieldRef<"SkRektor", 'String'>
+    readonly SkFinalDiterimaPada: FieldRef<"SkRektor", 'DateTime'>
+    readonly SisuratLetterId: FieldRef<"SkRektor", 'String'>
+    readonly SisuratStatus: FieldRef<"SkRektor", 'String'>
+    readonly SisuratStepKey: FieldRef<"SkRektor", 'String'>
+    readonly SisuratDiajukanPada: FieldRef<"SkRektor", 'DateTime'>
     readonly NomorSuratSisurat: FieldRef<"SkRektor", 'String'>
     readonly NomorSuratPada: FieldRef<"SkRektor", 'DateTime'>
     readonly Disetujui: FieldRef<"SkRektor", 'Boolean'>
@@ -96778,6 +96921,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId: string | null
     Nilai: string | null
     Diakui: boolean | null
+    Catatan: string | null
   }
 
   export type TranskripNilaiRelationMaxAggregateOutputType = {
@@ -96785,6 +96929,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId: string | null
     Nilai: string | null
     Diakui: boolean | null
+    Catatan: string | null
   }
 
   export type TranskripNilaiRelationCountAggregateOutputType = {
@@ -96792,6 +96937,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId: number
     Nilai: number
     Diakui: number
+    Catatan: number
     _all: number
   }
 
@@ -96801,6 +96947,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: true
     Nilai?: true
     Diakui?: true
+    Catatan?: true
   }
 
   export type TranskripNilaiRelationMaxAggregateInputType = {
@@ -96808,6 +96955,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: true
     Nilai?: true
     Diakui?: true
+    Catatan?: true
   }
 
   export type TranskripNilaiRelationCountAggregateInputType = {
@@ -96815,6 +96963,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: true
     Nilai?: true
     Diakui?: true
+    Catatan?: true
     _all?: true
   }
 
@@ -96895,6 +97044,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId: string
     Nilai: string
     Diakui: boolean
+    Catatan: string | null
     _count: TranskripNilaiRelationCountAggregateOutputType | null
     _min: TranskripNilaiRelationMinAggregateOutputType | null
     _max: TranskripNilaiRelationMaxAggregateOutputType | null
@@ -96919,6 +97069,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: boolean
     Nilai?: boolean
     Diakui?: boolean
+    Catatan?: boolean
     TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transkripNilaiRelation"]>
@@ -96928,6 +97079,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: boolean
     Nilai?: boolean
     Diakui?: boolean
+    Catatan?: boolean
     TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transkripNilaiRelation"]>
@@ -96937,6 +97089,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: boolean
     Nilai?: boolean
     Diakui?: boolean
+    Catatan?: boolean
     TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transkripNilaiRelation"]>
@@ -96946,9 +97099,10 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: boolean
     Nilai?: boolean
     Diakui?: boolean
+    Catatan?: boolean
   }
 
-  export type TranskripNilaiRelationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"TranskripNilaiId" | "MataKuliahMahasiswaId" | "Nilai" | "Diakui", ExtArgs["result"]["transkripNilaiRelation"]>
+  export type TranskripNilaiRelationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"TranskripNilaiId" | "MataKuliahMahasiswaId" | "Nilai" | "Diakui" | "Catatan", ExtArgs["result"]["transkripNilaiRelation"]>
   export type TranskripNilaiRelationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     TranskripNilai?: boolean | TranskripNilaiDefaultArgs<ExtArgs>
     MataKuliahMahasiswa?: boolean | MataKuliahMahasiswaDefaultArgs<ExtArgs>
@@ -96973,6 +97127,7 @@ export namespace Prisma {
       MataKuliahMahasiswaId: string
       Nilai: string
       Diakui: boolean
+      Catatan: string | null
     }, ExtArgs["result"]["transkripNilaiRelation"]>
     composites: {}
   }
@@ -97402,6 +97557,7 @@ export namespace Prisma {
     readonly MataKuliahMahasiswaId: FieldRef<"TranskripNilaiRelation", 'String'>
     readonly Nilai: FieldRef<"TranskripNilaiRelation", 'String'>
     readonly Diakui: FieldRef<"TranskripNilaiRelation", 'Boolean'>
+    readonly Catatan: FieldRef<"TranskripNilaiRelation", 'String'>
   }
     
 
@@ -97910,6 +98066,8 @@ export namespace Prisma {
     AsesorId: 'AsesorId',
     Urutan: 'Urutan',
     Confirmation: 'Confirmation',
+    TandaTanganPath: 'TandaTanganPath',
+    TandaTanganPada: 'TandaTanganPada',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
   };
@@ -98301,6 +98459,8 @@ export namespace Prisma {
     Gelombang: 'Gelombang',
     SistemKuliah: 'SistemKuliah',
     JalurPendaftaran: 'JalurPendaftaran',
+    TandaTanganPath: 'TandaTanganPath',
+    TandaTanganPada: 'TandaTanganPada',
     CreatedAt: 'CreatedAt',
     UpdatedAt: 'UpdatedAt'
   };
@@ -98432,6 +98592,13 @@ export namespace Prisma {
     JenisSkAsessmen: 'JenisSkAsessmen',
     Dipublikasikan: 'Dipublikasikan',
     DipublikasikanPada: 'DipublikasikanPada',
+    PathFileFinal: 'PathFileFinal',
+    NamaFileFinal: 'NamaFileFinal',
+    SkFinalDiterimaPada: 'SkFinalDiterimaPada',
+    SisuratLetterId: 'SisuratLetterId',
+    SisuratStatus: 'SisuratStatus',
+    SisuratStepKey: 'SisuratStepKey',
+    SisuratDiajukanPada: 'SisuratDiajukanPada',
     NomorSuratSisurat: 'NomorSuratSisurat',
     NomorSuratPada: 'NomorSuratPada',
     Disetujui: 'Disetujui',
@@ -98868,7 +99035,8 @@ export namespace Prisma {
     TranskripNilaiId: 'TranskripNilaiId',
     MataKuliahMahasiswaId: 'MataKuliahMahasiswaId',
     Nilai: 'Nilai',
-    Diakui: 'Diakui'
+    Diakui: 'Diakui',
+    Catatan: 'Catatan'
   };
 
   export type TranskripNilaiRelationScalarFieldEnum = (typeof TranskripNilaiRelationScalarFieldEnum)[keyof typeof TranskripNilaiRelationScalarFieldEnum]
@@ -99587,6 +99755,8 @@ export namespace Prisma {
     AsesorId?: StringFilter<"AssesorMahasiswa"> | string
     Urutan?: IntFilter<"AssesorMahasiswa"> | number
     Confirmation?: BoolFilter<"AssesorMahasiswa"> | boolean
+    TandaTanganPath?: StringNullableFilter<"AssesorMahasiswa"> | string | null
+    TandaTanganPada?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
@@ -99599,6 +99769,8 @@ export namespace Prisma {
     AsesorId?: SortOrder
     Urutan?: SortOrder
     Confirmation?: SortOrder
+    TandaTanganPath?: SortOrderInput | SortOrder
+    TandaTanganPada?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     Asesor?: AsesorOrderByWithRelationInput
@@ -99614,6 +99786,8 @@ export namespace Prisma {
     AsesorId?: StringFilter<"AssesorMahasiswa"> | string
     Urutan?: IntFilter<"AssesorMahasiswa"> | number
     Confirmation?: BoolFilter<"AssesorMahasiswa"> | boolean
+    TandaTanganPath?: StringNullableFilter<"AssesorMahasiswa"> | string | null
+    TandaTanganPada?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     Asesor?: XOR<AsesorScalarRelationFilter, AsesorWhereInput>
@@ -99626,6 +99800,8 @@ export namespace Prisma {
     AsesorId?: SortOrder
     Urutan?: SortOrder
     Confirmation?: SortOrder
+    TandaTanganPath?: SortOrderInput | SortOrder
+    TandaTanganPada?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     _count?: AssesorMahasiswaCountOrderByAggregateInput
@@ -99644,6 +99820,8 @@ export namespace Prisma {
     AsesorId?: StringWithAggregatesFilter<"AssesorMahasiswa"> | string
     Urutan?: IntWithAggregatesFilter<"AssesorMahasiswa"> | number
     Confirmation?: BoolWithAggregatesFilter<"AssesorMahasiswa"> | boolean
+    TandaTanganPath?: StringNullableWithAggregatesFilter<"AssesorMahasiswa"> | string | null
+    TandaTanganPada?: DateTimeNullableWithAggregatesFilter<"AssesorMahasiswa"> | Date | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"AssesorMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"AssesorMahasiswa"> | Date | string | null
   }
@@ -101633,6 +101811,8 @@ export namespace Prisma {
     Gelombang?: StringFilter<"Pendaftaran"> | string
     SistemKuliah?: EnumSistemKuliahFilter<"Pendaftaran"> | $Enums.SistemKuliah
     JalurPendaftaran?: StringFilter<"Pendaftaran"> | string
+    TandaTanganPath?: StringNullableFilter<"Pendaftaran"> | string | null
+    TandaTanganPada?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     Mahasiswa?: XOR<MahasiswaScalarRelationFilter, MahasiswaWhereInput>
@@ -101666,6 +101846,8 @@ export namespace Prisma {
     Gelombang?: SortOrder
     SistemKuliah?: SortOrder
     JalurPendaftaran?: SortOrder
+    TandaTanganPath?: SortOrderInput | SortOrder
+    TandaTanganPada?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     Mahasiswa?: MahasiswaOrderByWithRelationInput
@@ -101702,6 +101884,8 @@ export namespace Prisma {
     Gelombang?: StringFilter<"Pendaftaran"> | string
     SistemKuliah?: EnumSistemKuliahFilter<"Pendaftaran"> | $Enums.SistemKuliah
     JalurPendaftaran?: StringFilter<"Pendaftaran"> | string
+    TandaTanganPath?: StringNullableFilter<"Pendaftaran"> | string | null
+    TandaTanganPada?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     Mahasiswa?: XOR<MahasiswaScalarRelationFilter, MahasiswaWhereInput>
@@ -101735,6 +101919,8 @@ export namespace Prisma {
     Gelombang?: SortOrder
     SistemKuliah?: SortOrder
     JalurPendaftaran?: SortOrder
+    TandaTanganPath?: SortOrderInput | SortOrder
+    TandaTanganPada?: SortOrderInput | SortOrder
     CreatedAt?: SortOrderInput | SortOrder
     UpdatedAt?: SortOrderInput | SortOrder
     _count?: PendaftaranCountOrderByAggregateInput
@@ -101754,6 +101940,8 @@ export namespace Prisma {
     Gelombang?: StringWithAggregatesFilter<"Pendaftaran"> | string
     SistemKuliah?: EnumSistemKuliahWithAggregatesFilter<"Pendaftaran"> | $Enums.SistemKuliah
     JalurPendaftaran?: StringWithAggregatesFilter<"Pendaftaran"> | string
+    TandaTanganPath?: StringNullableWithAggregatesFilter<"Pendaftaran"> | string | null
+    TandaTanganPada?: DateTimeNullableWithAggregatesFilter<"Pendaftaran"> | Date | string | null
     CreatedAt?: DateTimeNullableWithAggregatesFilter<"Pendaftaran"> | Date | string | null
     UpdatedAt?: DateTimeNullableWithAggregatesFilter<"Pendaftaran"> | Date | string | null
   }
@@ -102368,6 +102556,13 @@ export namespace Prisma {
     JenisSkAsessmen?: EnumJenisSkAsessmenNullableFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFilter<"SkRektor"> | boolean
     DipublikasikanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    PathFileFinal?: StringNullableFilter<"SkRektor"> | string | null
+    NamaFileFinal?: StringNullableFilter<"SkRektor"> | string | null
+    SkFinalDiterimaPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    SisuratLetterId?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratStatus?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratStepKey?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratDiajukanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     NomorSuratSisurat?: StringNullableFilter<"SkRektor"> | string | null
     NomorSuratPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     Disetujui?: BoolFilter<"SkRektor"> | boolean
@@ -102402,6 +102597,13 @@ export namespace Prisma {
     JenisSkAsessmen?: SortOrderInput | SortOrder
     Dipublikasikan?: SortOrder
     DipublikasikanPada?: SortOrderInput | SortOrder
+    PathFileFinal?: SortOrderInput | SortOrder
+    NamaFileFinal?: SortOrderInput | SortOrder
+    SkFinalDiterimaPada?: SortOrderInput | SortOrder
+    SisuratLetterId?: SortOrderInput | SortOrder
+    SisuratStatus?: SortOrderInput | SortOrder
+    SisuratStepKey?: SortOrderInput | SortOrder
+    SisuratDiajukanPada?: SortOrderInput | SortOrder
     NomorSuratSisurat?: SortOrderInput | SortOrder
     NomorSuratPada?: SortOrderInput | SortOrder
     Disetujui?: SortOrder
@@ -102439,6 +102641,13 @@ export namespace Prisma {
     JenisSkAsessmen?: EnumJenisSkAsessmenNullableFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFilter<"SkRektor"> | boolean
     DipublikasikanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    PathFileFinal?: StringNullableFilter<"SkRektor"> | string | null
+    NamaFileFinal?: StringNullableFilter<"SkRektor"> | string | null
+    SkFinalDiterimaPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    SisuratLetterId?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratStatus?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratStepKey?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratDiajukanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     NomorSuratSisurat?: StringNullableFilter<"SkRektor"> | string | null
     NomorSuratPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     Disetujui?: BoolFilter<"SkRektor"> | boolean
@@ -102473,6 +102682,13 @@ export namespace Prisma {
     JenisSkAsessmen?: SortOrderInput | SortOrder
     Dipublikasikan?: SortOrder
     DipublikasikanPada?: SortOrderInput | SortOrder
+    PathFileFinal?: SortOrderInput | SortOrder
+    NamaFileFinal?: SortOrderInput | SortOrder
+    SkFinalDiterimaPada?: SortOrderInput | SortOrder
+    SisuratLetterId?: SortOrderInput | SortOrder
+    SisuratStatus?: SortOrderInput | SortOrder
+    SisuratStepKey?: SortOrderInput | SortOrder
+    SisuratDiajukanPada?: SortOrderInput | SortOrder
     NomorSuratSisurat?: SortOrderInput | SortOrder
     NomorSuratPada?: SortOrderInput | SortOrder
     Disetujui?: SortOrder
@@ -102512,6 +102728,13 @@ export namespace Prisma {
     JenisSkAsessmen?: EnumJenisSkAsessmenNullableWithAggregatesFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolWithAggregatesFilter<"SkRektor"> | boolean
     DipublikasikanPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
+    PathFileFinal?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    NamaFileFinal?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    SkFinalDiterimaPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
+    SisuratLetterId?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    SisuratStatus?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    SisuratStepKey?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
+    SisuratDiajukanPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
     NomorSuratSisurat?: StringNullableWithAggregatesFilter<"SkRektor"> | string | null
     NomorSuratPada?: DateTimeNullableWithAggregatesFilter<"SkRektor"> | Date | string | null
     Disetujui?: BoolWithAggregatesFilter<"SkRektor"> | boolean
@@ -104684,6 +104907,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFilter<"TranskripNilaiRelation"> | string
     Nilai?: StringFilter<"TranskripNilaiRelation"> | string
     Diakui?: BoolFilter<"TranskripNilaiRelation"> | boolean
+    Catatan?: StringNullableFilter<"TranskripNilaiRelation"> | string | null
     TranskripNilai?: XOR<TranskripNilaiScalarRelationFilter, TranskripNilaiWhereInput>
     MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
   }
@@ -104693,6 +104917,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: SortOrder
     Nilai?: SortOrder
     Diakui?: SortOrder
+    Catatan?: SortOrderInput | SortOrder
     TranskripNilai?: TranskripNilaiOrderByWithRelationInput
     MataKuliahMahasiswa?: MataKuliahMahasiswaOrderByWithRelationInput
   }
@@ -104706,6 +104931,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFilter<"TranskripNilaiRelation"> | string
     Nilai?: StringFilter<"TranskripNilaiRelation"> | string
     Diakui?: BoolFilter<"TranskripNilaiRelation"> | boolean
+    Catatan?: StringNullableFilter<"TranskripNilaiRelation"> | string | null
     TranskripNilai?: XOR<TranskripNilaiScalarRelationFilter, TranskripNilaiWhereInput>
     MataKuliahMahasiswa?: XOR<MataKuliahMahasiswaScalarRelationFilter, MataKuliahMahasiswaWhereInput>
   }, "TranskripNilaiId_MataKuliahMahasiswaId">
@@ -104715,6 +104941,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: SortOrder
     Nilai?: SortOrder
     Diakui?: SortOrder
+    Catatan?: SortOrderInput | SortOrder
     _count?: TranskripNilaiRelationCountOrderByAggregateInput
     _max?: TranskripNilaiRelationMaxOrderByAggregateInput
     _min?: TranskripNilaiRelationMinOrderByAggregateInput
@@ -104728,6 +104955,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringWithAggregatesFilter<"TranskripNilaiRelation"> | string
     Nilai?: StringWithAggregatesFilter<"TranskripNilaiRelation"> | string
     Diakui?: BoolWithAggregatesFilter<"TranskripNilaiRelation"> | boolean
+    Catatan?: StringNullableWithAggregatesFilter<"TranskripNilaiRelation"> | string | null
   }
 
   export type AlamatCreateInput = {
@@ -105142,6 +105370,8 @@ export namespace Prisma {
     AssesorMahasiswaId?: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Asesor: AsesorCreateNestedOneWithoutAssesorMahasiswaInput
@@ -105154,6 +105384,8 @@ export namespace Prisma {
     AsesorId: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -105162,6 +105394,8 @@ export namespace Prisma {
     AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Asesor?: AsesorUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
@@ -105174,6 +105408,8 @@ export namespace Prisma {
     AsesorId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -105184,6 +105420,8 @@ export namespace Prisma {
     AsesorId: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -105192,6 +105430,8 @@ export namespace Prisma {
     AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -105202,6 +105442,8 @@ export namespace Prisma {
     AsesorId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -107249,6 +107491,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -107282,6 +107526,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -107313,6 +107559,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -107346,6 +107594,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -107378,6 +107628,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -107390,6 +107642,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -107403,6 +107657,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -108030,6 +108286,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -108064,6 +108327,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -108096,6 +108366,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -108130,6 +108407,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -108163,6 +108447,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -108193,6 +108484,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -108224,6 +108522,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -110589,6 +110894,7 @@ export namespace Prisma {
   export type TranskripNilaiRelationCreateInput = {
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
     TranskripNilai: TranskripNilaiCreateNestedOneWithoutTranskripNilaiRelationsInput
     MataKuliahMahasiswa: MataKuliahMahasiswaCreateNestedOneWithoutTranskripNilaiRelationsInput
   }
@@ -110598,11 +110904,13 @@ export namespace Prisma {
     MataKuliahMahasiswaId: string
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
   }
 
   export type TranskripNilaiRelationUpdateInput = {
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     TranskripNilai?: TranskripNilaiUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
     MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
   }
@@ -110612,6 +110920,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TranskripNilaiRelationCreateManyInput = {
@@ -110619,11 +110928,13 @@ export namespace Prisma {
     MataKuliahMahasiswaId: string
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
   }
 
   export type TranskripNilaiRelationUpdateManyMutationInput = {
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TranskripNilaiRelationUncheckedUpdateManyInput = {
@@ -110631,6 +110942,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -111033,6 +111345,8 @@ export namespace Prisma {
     AsesorId?: SortOrder
     Urutan?: SortOrder
     Confirmation?: SortOrder
+    TandaTanganPath?: SortOrder
+    TandaTanganPada?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -111047,6 +111361,8 @@ export namespace Prisma {
     AsesorId?: SortOrder
     Urutan?: SortOrder
     Confirmation?: SortOrder
+    TandaTanganPath?: SortOrder
+    TandaTanganPada?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -111057,6 +111373,8 @@ export namespace Prisma {
     AsesorId?: SortOrder
     Urutan?: SortOrder
     Confirmation?: SortOrder
+    TandaTanganPath?: SortOrder
+    TandaTanganPada?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -112645,6 +112963,8 @@ export namespace Prisma {
     Gelombang?: SortOrder
     SistemKuliah?: SortOrder
     JalurPendaftaran?: SortOrder
+    TandaTanganPath?: SortOrder
+    TandaTanganPada?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -112658,6 +112978,8 @@ export namespace Prisma {
     Gelombang?: SortOrder
     SistemKuliah?: SortOrder
     JalurPendaftaran?: SortOrder
+    TandaTanganPath?: SortOrder
+    TandaTanganPada?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -112671,6 +112993,8 @@ export namespace Prisma {
     Gelombang?: SortOrder
     SistemKuliah?: SortOrder
     JalurPendaftaran?: SortOrder
+    TandaTanganPath?: SortOrder
+    TandaTanganPada?: SortOrder
     CreatedAt?: SortOrder
     UpdatedAt?: SortOrder
   }
@@ -113074,6 +113398,13 @@ export namespace Prisma {
     JenisSkAsessmen?: SortOrder
     Dipublikasikan?: SortOrder
     DipublikasikanPada?: SortOrder
+    PathFileFinal?: SortOrder
+    NamaFileFinal?: SortOrder
+    SkFinalDiterimaPada?: SortOrder
+    SisuratLetterId?: SortOrder
+    SisuratStatus?: SortOrder
+    SisuratStepKey?: SortOrder
+    SisuratDiajukanPada?: SortOrder
     NomorSuratSisurat?: SortOrder
     NomorSuratPada?: SortOrder
     Disetujui?: SortOrder
@@ -113111,6 +113442,13 @@ export namespace Prisma {
     JenisSkAsessmen?: SortOrder
     Dipublikasikan?: SortOrder
     DipublikasikanPada?: SortOrder
+    PathFileFinal?: SortOrder
+    NamaFileFinal?: SortOrder
+    SkFinalDiterimaPada?: SortOrder
+    SisuratLetterId?: SortOrder
+    SisuratStatus?: SortOrder
+    SisuratStepKey?: SortOrder
+    SisuratDiajukanPada?: SortOrder
     NomorSuratSisurat?: SortOrder
     NomorSuratPada?: SortOrder
     Disetujui?: SortOrder
@@ -113142,6 +113480,13 @@ export namespace Prisma {
     JenisSkAsessmen?: SortOrder
     Dipublikasikan?: SortOrder
     DipublikasikanPada?: SortOrder
+    PathFileFinal?: SortOrder
+    NamaFileFinal?: SortOrder
+    SkFinalDiterimaPada?: SortOrder
+    SisuratLetterId?: SortOrder
+    SisuratStatus?: SortOrder
+    SisuratStepKey?: SortOrder
+    SisuratDiajukanPada?: SortOrder
     NomorSuratSisurat?: SortOrder
     NomorSuratPada?: SortOrder
     Disetujui?: SortOrder
@@ -114703,6 +115048,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: SortOrder
     Nilai?: SortOrder
     Diakui?: SortOrder
+    Catatan?: SortOrder
   }
 
   export type TranskripNilaiRelationMaxOrderByAggregateInput = {
@@ -114710,6 +115056,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: SortOrder
     Nilai?: SortOrder
     Diakui?: SortOrder
+    Catatan?: SortOrder
   }
 
   export type TranskripNilaiRelationMinOrderByAggregateInput = {
@@ -114717,6 +115064,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: SortOrder
     Nilai?: SortOrder
     Diakui?: SortOrder
+    Catatan?: SortOrder
   }
 
   export type DesaCreateNestedOneWithoutAlamatInput = {
@@ -120705,6 +121053,8 @@ export namespace Prisma {
     AssesorMahasiswaId?: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Pendaftaran: PendaftaranCreateNestedOneWithoutAssesorMahasiswaInput
@@ -120715,6 +121065,8 @@ export namespace Prisma {
     PendaftaranId: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -120953,6 +121305,8 @@ export namespace Prisma {
     AsesorId?: StringFilter<"AssesorMahasiswa"> | string
     Urutan?: IntFilter<"AssesorMahasiswa"> | number
     Confirmation?: BoolFilter<"AssesorMahasiswa"> | boolean
+    TandaTanganPath?: StringNullableFilter<"AssesorMahasiswa"> | string | null
+    TandaTanganPada?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"AssesorMahasiswa"> | Date | string | null
   }
@@ -121306,6 +121660,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -121338,6 +121694,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     BuktiForm?: BuktiFormUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -121421,6 +121779,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -121453,6 +121813,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     BuktiForm?: BuktiFormUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -121483,6 +121845,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -121515,6 +121879,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -121622,6 +121988,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -121654,6 +122022,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -122128,6 +122498,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -122160,6 +122532,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -122237,6 +122611,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -122269,6 +122645,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -122866,6 +123244,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -122898,6 +123278,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -122944,6 +123326,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -122976,6 +123360,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -123006,6 +123392,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -123038,6 +123426,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -123107,6 +123497,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -123139,6 +123531,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -123495,6 +123889,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaCreateNestedManyWithoutPendaftaranInput
@@ -123526,6 +123922,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -123652,6 +124050,8 @@ export namespace Prisma {
     Gelombang?: StringFilter<"Pendaftaran"> | string
     SistemKuliah?: EnumSistemKuliahFilter<"Pendaftaran"> | $Enums.SistemKuliah
     JalurPendaftaran?: StringFilter<"Pendaftaran"> | string
+    TandaTanganPath?: StringNullableFilter<"Pendaftaran"> | string | null
+    TandaTanganPada?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     CreatedAt?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
     UpdatedAt?: DateTimeNullableFilter<"Pendaftaran"> | Date | string | null
   }
@@ -123664,6 +124064,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -123696,6 +124098,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -123742,6 +124146,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -123774,6 +124180,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -123804,6 +124212,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -123836,6 +124246,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -123882,6 +124294,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -123914,6 +124328,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -123944,6 +124360,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -123976,6 +124394,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -124022,6 +124442,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -124054,6 +124476,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -124084,6 +124508,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -124116,6 +124542,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -124162,6 +124590,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -124194,6 +124624,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -124224,6 +124656,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -124256,6 +124690,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -124302,6 +124738,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -124334,6 +124772,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -124364,6 +124804,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -124396,6 +124838,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -124442,6 +124886,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -124474,6 +124920,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -124702,6 +125150,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -124734,6 +125184,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -124895,6 +125347,7 @@ export namespace Prisma {
   export type TranskripNilaiRelationCreateWithoutMataKuliahMahasiswaInput = {
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
     TranskripNilai: TranskripNilaiCreateNestedOneWithoutTranskripNilaiRelationsInput
   }
 
@@ -124902,6 +125355,7 @@ export namespace Prisma {
     TranskripNilaiId: string
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
   }
 
   export type TranskripNilaiRelationCreateOrConnectWithoutMataKuliahMahasiswaInput = {
@@ -124933,6 +125387,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -124965,6 +125421,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -125128,6 +125586,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFilter<"TranskripNilaiRelation"> | string
     Nilai?: StringFilter<"TranskripNilaiRelation"> | string
     Diakui?: BoolFilter<"TranskripNilaiRelation"> | boolean
+    Catatan?: StringNullableFilter<"TranskripNilaiRelation"> | string | null
   }
 
   export type PermissionCreateWithoutUserHasPermissionsInput = {
@@ -125638,6 +126097,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -125670,6 +126131,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -125716,6 +126179,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -125748,6 +126213,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -125778,6 +126245,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -125810,6 +126279,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -125856,6 +126327,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -125888,6 +126361,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -125935,6 +126410,8 @@ export namespace Prisma {
     AssesorMahasiswaId?: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Asesor: AsesorCreateNestedOneWithoutAssesorMahasiswaInput
@@ -125945,6 +126422,8 @@ export namespace Prisma {
     AsesorId: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -127139,6 +127618,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -127171,6 +127652,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -127217,6 +127700,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -127249,6 +127734,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -127901,6 +128388,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -127933,6 +128422,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -128033,6 +128524,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -128065,6 +128558,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -128328,6 +128823,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -128360,6 +128862,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -128422,6 +128931,13 @@ export namespace Prisma {
     JenisSkAsessmen?: EnumJenisSkAsessmenNullableFilter<"SkRektor"> | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFilter<"SkRektor"> | boolean
     DipublikasikanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    PathFileFinal?: StringNullableFilter<"SkRektor"> | string | null
+    NamaFileFinal?: StringNullableFilter<"SkRektor"> | string | null
+    SkFinalDiterimaPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
+    SisuratLetterId?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratStatus?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratStepKey?: StringNullableFilter<"SkRektor"> | string | null
+    SisuratDiajukanPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     NomorSuratSisurat?: StringNullableFilter<"SkRektor"> | string | null
     NomorSuratPada?: DateTimeNullableFilter<"SkRektor"> | Date | string | null
     Disetujui?: BoolFilter<"SkRektor"> | boolean
@@ -128556,6 +129072,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -128589,6 +129112,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -128667,6 +129197,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -128700,6 +129237,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -128768,6 +129312,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -128801,6 +129352,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -128833,6 +129391,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -128865,6 +129425,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -128915,6 +129477,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -128948,6 +129517,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -128986,6 +129562,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -129018,6 +129596,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -129322,6 +129902,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -129354,6 +129936,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -129427,6 +130011,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -129459,6 +130045,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -132693,6 +133281,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     Mahasiswa: MahasiswaCreateNestedOneWithoutPendaftaranInput
@@ -132725,6 +133315,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedCreateNestedManyWithoutPendaftaranInput
@@ -132755,6 +133347,7 @@ export namespace Prisma {
   export type TranskripNilaiRelationCreateWithoutTranskripNilaiInput = {
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
     MataKuliahMahasiswa: MataKuliahMahasiswaCreateNestedOneWithoutTranskripNilaiRelationsInput
   }
 
@@ -132762,6 +133355,7 @@ export namespace Prisma {
     MataKuliahMahasiswaId: string
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
   }
 
   export type TranskripNilaiRelationCreateOrConnectWithoutTranskripNilaiInput = {
@@ -132793,6 +133387,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Mahasiswa?: MahasiswaUpdateOneRequiredWithoutPendaftaranNestedInput
@@ -132825,6 +133421,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -133227,6 +133825,8 @@ export namespace Prisma {
     PendaftaranId: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -133326,6 +133926,8 @@ export namespace Prisma {
     AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Pendaftaran?: PendaftaranUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
@@ -133336,6 +133938,8 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -133345,6 +133949,8 @@ export namespace Prisma {
     PendaftaranId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -133751,6 +134357,8 @@ export namespace Prisma {
     Gelombang: string
     SistemKuliah?: $Enums.SistemKuliah
     JalurPendaftaran: string
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -133763,6 +134371,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUpdateManyWithoutPendaftaranNestedInput
@@ -133794,6 +134404,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     AssesorMahasiswa?: AssesorMahasiswaUncheckedUpdateManyWithoutPendaftaranNestedInput
@@ -133825,6 +134437,8 @@ export namespace Prisma {
     Gelombang?: StringFieldUpdateOperationsInput | string
     SistemKuliah?: EnumSistemKuliahFieldUpdateOperationsInput | $Enums.SistemKuliah
     JalurPendaftaran?: StringFieldUpdateOperationsInput | string
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -133954,6 +134568,7 @@ export namespace Prisma {
     TranskripNilaiId: string
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
   }
 
   export type EvaluasiDiriUpdateWithoutMataKuliahMahasiswaInput = {
@@ -134058,6 +134673,7 @@ export namespace Prisma {
   export type TranskripNilaiRelationUpdateWithoutMataKuliahMahasiswaInput = {
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     TranskripNilai?: TranskripNilaiUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
   }
 
@@ -134065,12 +134681,14 @@ export namespace Prisma {
     TranskripNilaiId?: StringFieldUpdateOperationsInput | string
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TranskripNilaiRelationUncheckedUpdateManyWithoutMataKuliahMahasiswaInput = {
     TranskripNilaiId?: StringFieldUpdateOperationsInput | string
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AssesorMahasiswaCreateManyPendaftaranInput = {
@@ -134078,6 +134696,8 @@ export namespace Prisma {
     AsesorId: string
     Urutan: number
     Confirmation?: boolean
+    TandaTanganPath?: string | null
+    TandaTanganPada?: Date | string | null
     CreatedAt?: Date | string | null
     UpdatedAt?: Date | string | null
   }
@@ -134264,6 +134884,8 @@ export namespace Prisma {
     AssesorMahasiswaId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Asesor?: AsesorUpdateOneRequiredWithoutAssesorMahasiswaNestedInput
@@ -134274,6 +134896,8 @@ export namespace Prisma {
     AsesorId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -134283,6 +134907,8 @@ export namespace Prisma {
     AsesorId?: StringFieldUpdateOperationsInput | string
     Urutan?: IntFieldUpdateOperationsInput | number
     Confirmation?: BoolFieldUpdateOperationsInput | boolean
+    TandaTanganPath?: NullableStringFieldUpdateOperationsInput | string | null
+    TandaTanganPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     CreatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     UpdatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -135225,6 +135851,13 @@ export namespace Prisma {
     JenisSkAsessmen?: $Enums.JenisSkAsessmen | null
     Dipublikasikan?: boolean
     DipublikasikanPada?: Date | string | null
+    PathFileFinal?: string | null
+    NamaFileFinal?: string | null
+    SkFinalDiterimaPada?: Date | string | null
+    SisuratLetterId?: string | null
+    SisuratStatus?: string | null
+    SisuratStepKey?: string | null
+    SisuratDiajukanPada?: Date | string | null
     NomorSuratSisurat?: string | null
     NomorSuratPada?: Date | string | null
     Disetujui?: boolean
@@ -135255,6 +135888,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -135287,6 +135927,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -135319,6 +135966,13 @@ export namespace Prisma {
     JenisSkAsessmen?: NullableEnumJenisSkAsessmenFieldUpdateOperationsInput | $Enums.JenisSkAsessmen | null
     Dipublikasikan?: BoolFieldUpdateOperationsInput | boolean
     DipublikasikanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    PathFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    NamaFileFinal?: NullableStringFieldUpdateOperationsInput | string | null
+    SkFinalDiterimaPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    SisuratLetterId?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratStepKey?: NullableStringFieldUpdateOperationsInput | string | null
+    SisuratDiajukanPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     NomorSuratSisurat?: NullableStringFieldUpdateOperationsInput | string | null
     NomorSuratPada?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     Disetujui?: BoolFieldUpdateOperationsInput | boolean
@@ -136433,11 +137087,13 @@ export namespace Prisma {
     MataKuliahMahasiswaId: string
     Nilai: string
     Diakui?: boolean
+    Catatan?: string | null
   }
 
   export type TranskripNilaiRelationUpdateWithoutTranskripNilaiInput = {
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
     MataKuliahMahasiswa?: MataKuliahMahasiswaUpdateOneRequiredWithoutTranskripNilaiRelationsNestedInput
   }
 
@@ -136445,12 +137101,14 @@ export namespace Prisma {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TranskripNilaiRelationUncheckedUpdateManyWithoutTranskripNilaiInput = {
     MataKuliahMahasiswaId?: StringFieldUpdateOperationsInput | string
     Nilai?: StringFieldUpdateOperationsInput | string
     Diakui?: BoolFieldUpdateOperationsInput | boolean
+    Catatan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

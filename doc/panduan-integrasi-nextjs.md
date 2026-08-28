@@ -65,10 +65,10 @@ QR_API_PASSWORD=password
 
 ```json
 {
-    "official_id": 30,
-    "doc_number": "123/ITI.R/Rek/VI/2026",
-    "doc_title": "SK Pengangkatan Rektor",
-    "doc_date": "2026-07-31"
+  "official_id": 30,
+  "doc_number": "123/ITI.R/Rek/VI/2026",
+  "doc_title": "SK Pengangkatan Rektor",
+  "doc_date": "2026-07-31"
 }
 ```
 
@@ -76,22 +76,22 @@ QR_API_PASSWORD=password
 
 ```json
 {
-    "success": true,
-    "message": "Dokumen dan QR Code berhasil dibuat.",
-    "data": {
-        "id": 6,
-        "official_id": 30,
-        "official_name": "Dr. Ir. Iyus Hendrawan, ...",
-        "official_position": "Kepala Biro Kerjasama Dan Humas",
-        "official_unit": "Biro Kerjasama Dan Humas",
-        "token": "5cea...08",
-        "doc_number": "123/ITI.R/Rek/VI/2026",
-        "doc_title": "SK Pengangkatan Rektor",
-        "doc_date": "2026-07-31",
-        "qrcode_url": "https://pdsi.iti.ac.id/qrcodegenerator/uploads/qrcodes/dok_5cea...08.png",
-        "qrcode_base64": "data:image/png;base64,iVBORw0KG...",
-        "verify_url": "https://pdsi.iti.ac.id/qrcodegenerator/verify.php?t=5cea...08"
-    }
+  "success": true,
+  "message": "Dokumen dan QR Code berhasil dibuat.",
+  "data": {
+    "id": 6,
+    "official_id": 30,
+    "official_name": "Dr. Ir. Iyus Hendrawan, ...",
+    "official_position": "Kepala Biro Kerjasama Dan Humas",
+    "official_unit": "Biro Kerjasama Dan Humas",
+    "token": "5cea...08",
+    "doc_number": "123/ITI.R/Rek/VI/2026",
+    "doc_title": "SK Pengangkatan Rektor",
+    "doc_date": "2026-07-31",
+    "qrcode_url": "http://localhost/qrcodegenerator/uploads/qrcodes/dok_5cea...08.png",
+    "qrcode_base64": "data:image/png;base64,iVBORw0KG...",
+    "verify_url": "http://localhost/qrcodegenerator/verify.php?t=5cea...08"
+  }
 }
 ```
 
@@ -102,81 +102,81 @@ Buat satu file helper yang membungkus seluruh pemanggilan API. Token login di-ca
 ```ts
 // lib/qrcode-api.ts
 const API_BASE =
-    process.env.QR_API_BASE_URL ?? 'https://pdsi.iti.ac.id/qrcodegenerator'
+  process.env.QR_API_BASE_URL ?? "https://pdsi.iti.ac.id/qrcodegenerator";
 
 type CreateDocumentPayload = {
-    official_id: number
-    doc_number: string
-    doc_title?: string
-    doc_date?: string
-}
+  official_id: number;
+  doc_number: string;
+  doc_title?: string;
+  doc_date?: string;
+};
 
 async function call(path: string, init?: RequestInit): Promise<any> {
-    const res = await fetch(API_BASE + path, {
-        ...init,
-        headers: {
-            'Content-Type': 'application/json',
-            ...(init?.headers ?? {}),
-        },
-        cache: 'no-store',
-    })
+  const res = await fetch(API_BASE + path, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...(init?.headers ?? {}),
+    },
+    cache: "no-store",
+  });
 
-    const json = await res.json()
+  const json = await res.json();
 
-    if (!res.ok || json.success === false) {
-        throw new Error(json.message ?? 'HTTP ' + res.status)
-    }
+  if (!res.ok || json.success === false) {
+    throw new Error(json.message ?? "HTTP " + res.status);
+  }
 
-    return json
+  return json;
 }
 
-let cachedToken: string | null = null
+let cachedToken: string | null = null;
 
 async function getToken(): Promise<string> {
-    if (cachedToken) return cachedToken
+  if (cachedToken) return cachedToken;
 
-    const data = await call('/api/login.php', {
-        method: 'POST',
-        body: JSON.stringify({
-            username: process.env.QR_API_USERNAME,
-            password: process.env.QR_API_PASSWORD,
-        }),
-    })
+  const data = await call("/api/login.php", {
+    method: "POST",
+    body: JSON.stringify({
+      username: process.env.QR_API_USERNAME,
+      password: process.env.QR_API_PASSWORD,
+    }),
+  });
 
-    cachedToken = data.token
-    return cachedToken
+  cachedToken = data.token;
+  return cachedToken;
 }
 
 export const qrApi = {
-    async officials(params?: Record<string, string>) {
-        const qs = new URLSearchParams(params ?? {}).toString()
-        return call('/api/officials.php' + (qs ? '?' + qs : ''))
-    },
+  async officials(params?: Record<string, string>) {
+    const qs = new URLSearchParams(params ?? {}).toString();
+    return call("/api/officials.php" + (qs ? "?" + qs : ""));
+  },
 
-    async units() {
-        return call('/api/units.php')
-    },
+  async units() {
+    return call("/api/units.php");
+  },
 
-    async documents() {
-        const token = await getToken()
-        return call('/api/documents.php', {
-            headers: { Authorization: 'Bearer ' + token },
-        })
-    },
+  async documents() {
+    const token = await getToken();
+    return call("/api/documents.php", {
+      headers: { Authorization: "Bearer " + token },
+    });
+  },
 
-    async createDocument(payload: CreateDocumentPayload) {
-        const token = await getToken()
-        return call('/api/documents.php', {
-            method: 'POST',
-            headers: { Authorization: 'Bearer ' + token },
-            body: JSON.stringify(payload),
-        })
-    },
+  async createDocument(payload: CreateDocumentPayload) {
+    const token = await getToken();
+    return call("/api/documents.php", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token },
+      body: JSON.stringify(payload),
+    });
+  },
 
-    async verify(token: string) {
-        return call('/api/verify.php?t=' + encodeURIComponent(token))
-    },
-}
+  async verify(token: string) {
+    return call("/api/verify.php?t=" + encodeURIComponent(token));
+  },
+};
 ```
 
 ## 6. Route Handler (`app/api/qrcode/route.ts`)
@@ -185,38 +185,38 @@ Untuk klien browser, jangan panggil `qrApi` secara langsung. Bungkus dengan Rout
 
 ```ts
 // app/api/qrcode/route.ts
-import { NextRequest, NextResponse } from 'next/server'
-import { qrApi } from '@/lib/qrcode-api'
+import { NextRequest, NextResponse } from "next/server";
+import { qrApi } from "@/lib/qrcode-api";
 
 export async function GET() {
-    try {
-        const result = await qrApi.documents()
-        return NextResponse.json(result)
-    } catch (e) {
-        return NextResponse.json(
-            { success: false, message: (e as Error).message },
-            { status: 500 }
-        )
-    }
+  try {
+    const result = await qrApi.documents();
+    return NextResponse.json(result);
+  } catch (e) {
+    return NextResponse.json(
+      { success: false, message: (e as Error).message },
+      { status: 500 },
+    );
+  }
 }
 
 export async function POST(req: NextRequest) {
-    try {
-        const body = await req.json()
-        const result = await qrApi.createDocument({
-            official_id: Number(body.official_id),
-            doc_number: String(body.doc_number ?? ''),
-            doc_title: body.doc_title ?? undefined,
-            doc_date: body.doc_date ?? undefined,
-        })
+  try {
+    const body = await req.json();
+    const result = await qrApi.createDocument({
+      official_id: Number(body.official_id),
+      doc_number: String(body.doc_number ?? ""),
+      doc_title: body.doc_title ?? undefined,
+      doc_date: body.doc_date ?? undefined,
+    });
 
-        return NextResponse.json(result, { status: 201 })
-    } catch (e) {
-        return NextResponse.json(
-            { success: false, message: (e as Error).message },
-            { status: 400 }
-        )
-    }
+    return NextResponse.json(result, { status: 201 });
+  } catch (e) {
+    return NextResponse.json(
+      { success: false, message: (e as Error).message },
+      { status: 400 },
+    );
+  }
 }
 ```
 
@@ -226,43 +226,43 @@ Alternatif yang lebih sederhana untuk formulir: gunakan Server Action dengan atr
 
 ```ts
 // app/actions.ts
-'use server'
+"use server";
 
-import { revalidatePath } from 'next/cache'
-import { qrApi } from '@/lib/qrcode-api'
+import { revalidatePath } from "next/cache";
+import { qrApi } from "@/lib/qrcode-api";
 
 export type CreateDocumentState =
-    | {
-          ok: true
-          message: string
-          verifyUrl: string
-          qrcodeBase64: string
-      }
-    | { ok: false; message: string }
+  | {
+      ok: true;
+      message: string;
+      verifyUrl: string;
+      qrcodeBase64: string;
+    }
+  | { ok: false; message: string };
 
 export async function createDocumentAction(
-    _prev: CreateDocumentState | null,
-    formData: FormData
+  _prev: CreateDocumentState | null,
+  formData: FormData,
 ): Promise<CreateDocumentState> {
-    try {
-        const result = await qrApi.createDocument({
-            official_id: Number(formData.get('official_id')),
-            doc_number: String(formData.get('doc_number') ?? ''),
-            doc_title: (formData.get('doc_title') as string) || undefined,
-            doc_date: (formData.get('doc_date') as string) || undefined,
-        })
+  try {
+    const result = await qrApi.createDocument({
+      official_id: Number(formData.get("official_id")),
+      doc_number: String(formData.get("doc_number") ?? ""),
+      doc_title: (formData.get("doc_title") as string) || undefined,
+      doc_date: (formData.get("doc_date") as string) || undefined,
+    });
 
-        revalidatePath('/documents')
+    revalidatePath("/documents");
 
-        return {
-            ok: true,
-            message: result.message,
-            verifyUrl: result.data.verify_url,
-            qrcodeBase64: result.data.qrcode_base64,
-        }
-    } catch (e) {
-        return { ok: false, message: (e as Error).message }
-    }
+    return {
+      ok: true,
+      message: result.message,
+      verifyUrl: result.data.verify_url,
+      qrcodeBase64: result.data.qrcode_base64,
+    };
+  } catch (e) {
+    return { ok: false, message: (e as Error).message };
+  }
 }
 ```
 
@@ -272,62 +272,62 @@ export async function createDocumentAction(
 
 ```tsx
 // app/documents/create/page.tsx
-'use client'
+"use client";
 
-import { useActionState } from 'react'
-import { createDocumentAction, type CreateDocumentState } from '@/app/actions'
+import { useActionState } from "react";
+import { createDocumentAction, type CreateDocumentState } from "@/app/actions";
 
-const initial: CreateDocumentState = { ok: false, message: '' }
+const initial: CreateDocumentState = { ok: false, message: "" };
 
 export default function CreateDocumentPage() {
-    const [state, action, pending] = useActionState(
-        createDocumentAction,
-        initial
-    )
+  const [state, action, pending] = useActionState(
+    createDocumentAction,
+    initial,
+  );
 
-    return (
-        <form action={action}>
-            <label>
-                Official ID
-                <input name="official_id" type="number" required />
-            </label>
+  return (
+    <form action={action}>
+      <label>
+        Official ID
+        <input name="official_id" type="number" required />
+      </label>
 
-            <label>
-                Nomor Dokumen
-                <input
-                    name="doc_number"
-                    type="text"
-                    required
-                    placeholder="123/ITI.R/Rek/VI/2026"
-                />
-            </label>
+      <label>
+        Nomor Dokumen
+        <input
+          name="doc_number"
+          type="text"
+          required
+          placeholder="123/ITI.R/Rek/VI/2026"
+        />
+      </label>
 
-            <label>
-                Judul Dokumen (opsional)
-                <input name="doc_title" type="text" />
-            </label>
+      <label>
+        Judul Dokumen (opsional)
+        <input name="doc_title" type="text" />
+      </label>
 
-            <label>
-                Tanggal (opsional, YYYY-MM-DD)
-                <input name="doc_date" type="date" />
-            </label>
+      <label>
+        Tanggal (opsional, YYYY-MM-DD)
+        <input name="doc_date" type="date" />
+      </label>
 
-            <button disabled={pending}>
-                {pending ? 'Memproses...' : 'Buat Dokumen + QR'}
-            </button>
+      <button disabled={pending}>
+        {pending ? "Memproses..." : "Buat Dokumen + QR"}
+      </button>
 
-            {state.message && <p>{state.message}</p>}
+      {state.message && <p>{state.message}</p>}
 
-            {state.ok && (
-                <img
-                    src={state.qrcodeBase64}
-                    alt="QR Dokumen"
-                    width={200}
-                    height={200}
-                />
-            )}
-        </form>
-    )
+      {state.ok && (
+        <img
+          src={state.qrcodeBase64}
+          alt="QR Dokumen"
+          width={200}
+          height={200}
+        />
+      )}
+    </form>
+  );
 }
 ```
 
@@ -338,34 +338,34 @@ export default function CreateDocumentPage() {
 
 ```tsx
 // app/documents/page.tsx
-import { qrApi } from '@/lib/qrcode-api'
+import { qrApi } from "@/lib/qrcode-api";
 
 type DocumentItem = {
-    id: number
-    doc_number: string
-    doc_title: string | null
-    official_name: string
-    official_position: string
-    qrcode_url: string
-    verify_url: string
-    created_at: string
-}
+  id: number;
+  doc_number: string;
+  doc_title: string | null;
+  official_name: string;
+  official_position: string;
+  qrcode_url: string;
+  verify_url: string;
+  created_at: string;
+};
 
 export default async function DocumentsPage() {
-    const { data } = await qrApi.documents()
+  const { data } = await qrApi.documents();
 
-    return (
-        <ul>
-            {(data as DocumentItem[]).map((d) => (
-                <li key={d.id}>
-                    <strong>{d.doc_number}</strong> - {d.official_name}
-                    <br />
-                    <img src={d.qrcode_url} alt="QR" width={120} height={120} />
-                    <a href={d.verify_url}>Lihat verifikasi</a>
-                </li>
-            ))}
-        </ul>
-    )
+  return (
+    <ul>
+      {(data as DocumentItem[]).map((d) => (
+        <li key={d.id}>
+          <strong>{d.doc_number}</strong> - {d.official_name}
+          <br />
+          <img src={d.qrcode_url} alt="QR" width={120} height={120} />
+          <a href={d.verify_url}>Lihat verifikasi</a>
+        </li>
+      ))}
+    </ul>
+  );
 }
 ```
 
@@ -375,38 +375,38 @@ Halaman ini meniru `verify.php` milik QR Code Generator: menerima token dari URL
 
 ```tsx
 // app/verify/[token]/page.tsx
-import { qrApi } from '@/lib/qrcode-api'
+import { qrApi } from "@/lib/qrcode-api";
 
-type Params = { params: Promise<{ token: string }> }
+type Params = { params: Promise<{ token: string }> };
 
 export default async function VerifyPage({ params }: Params) {
-    const { token } = await params
-    const { data } = await qrApi.verify(token)
-    const official = data.official
+  const { token } = await params;
+  const { data } = await qrApi.verify(token);
+  const official = data.official;
 
-    return (
-        <main>
-            <h1>Verifikasi Dokumen</h1>
-            <dl>
-                <dt>Nomor Dokumen</dt>
-                <dd>{data.doc_number}</dd>
+  return (
+    <main>
+      <h1>Verifikasi Dokumen</h1>
+      <dl>
+        <dt>Nomor Dokumen</dt>
+        <dd>{data.doc_number}</dd>
 
-                <dt>Judul</dt>
-                <dd>{data.doc_title ?? '-'}</dd>
+        <dt>Judul</dt>
+        <dd>{data.doc_title ?? "-"}</dd>
 
-                <dt>Tanggal</dt>
-                <dd>{data.doc_date ?? '-'}</dd>
+        <dt>Tanggal</dt>
+        <dd>{data.doc_date ?? "-"}</dd>
 
-                <dt>Ditandatangani oleh</dt>
-                <dd>
-                    {official.name} ({official.position})
-                </dd>
+        <dt>Ditandatangani oleh</dt>
+        <dd>
+          {official.name} ({official.position})
+        </dd>
 
-                <dt>Unit</dt>
-                <dd>{official.unit}</dd>
-            </dl>
-        </main>
-    )
+        <dt>Unit</dt>
+        <dd>{official.unit}</dd>
+      </dl>
+    </main>
+  );
 }
 ```
 

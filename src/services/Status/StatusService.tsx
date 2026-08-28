@@ -154,6 +154,23 @@ export async function setStatusPenerbitanSKAsessmen(
     if (!res.ok) throw new Error('Failed to change status')
     return res.json()
 }
+export async function setStatusProsesSkSisurat(
+    PendaftaranId: string
+): Promise<{
+    status: string
+    data: any
+    message: string
+}> {
+    const params = new URLSearchParams({
+        p: String(PendaftaranId),
+        j: String('pss'),
+    })
+    const res = await fetch(
+        `${BASE_URL}/api/protected/status?${params.toString()}`
+    )
+    if (!res.ok) throw new Error('Failed to change status')
+    return res.json()
+}
 export async function setStatusPersetujuanSkAsessmen(
     PendaftaranId: string
 ): Promise<{

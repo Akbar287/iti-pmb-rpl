@@ -86,13 +86,20 @@ import { Loader2 } from 'lucide-react'
 import { Separator } from '../ui/separator'
 import { KeteranganMataKuliah, Role } from '@/generated/prisma'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
-import { setStatusPersetujuanSkAsessmen } from '@/services/Status/StatusService'
+import {
+    setStatusPenerbitanSKAsessmen,
+    setStatusProsesSkSisurat,
+} from '@/services/Status/StatusService'
 import {
     KartuPenerbitanSk,
     SEMUA_JENIS_SK,
     type JenisSkAsessmenType,
     type SkAsessmenItem,
 } from '@/components/asessment/SkIdRektorAsessmentComponent'
+import {
+    getTemplateSisurat,
+    type DaftarTemplateSisurat,
+} from '@/services/Asessment/SkRektorAsessmenService'
 import { GenerateSkPdf } from '@/services/GeneratePdfService'
 import { isGenerateSk } from '@/config/checkGenerateSkStats'
 
@@ -113,6 +120,30 @@ const HasilAsessmenIdComponent = ({
         React.useState<VisibilityState>({})
     const [statusServer, setStatusServer] = React.useState<{ StatusMahasiswaAssesmentId: string; NamaStatus: string }>(stats)
     const [daftarSk, setDaftarSk] = React.useState<SkAsessmenItem[]>(skAsessmen)
+    const [template, setTemplate] = React.useState<DaftarTemplateSisurat>({
+        Daftar: [],
+        Rpl: { PEROLEHAN_SKS: null, TRANSFER_SKS: null },
+    })
+    const [memuatTemplate, setMemuatTemplate] = React.useState<boolean>(false)
+    const [galatTemplate, setGalatTemplate] = React.useState<string | null>(null)
+
+    // Daftar template Sisurat menentukan boleh-tidaknya SK dikirim, jadi
+    // kegagalannya perlu terlihat di kartu — bukan sekadar lewat toast.
+    const muatTemplate = React.useCallback(() => {
+        setMemuatTemplate(true)
+        setGalatTemplate(null)
+        getTemplateSisurat()
+            .then((res) => setTemplate(res))
+            .catch((err) => {
+                const pesan =
+                    err instanceof Error
+                        ? err.message
+                        : 'Gagal memuat template Sisurat'
+                setGalatTemplate(pesan)
+                toast(pesan)
+            })
+            .finally(() => setMemuatTemplate(false))
+    }, [])
     const [loading, setLoading] = React.useState<boolean>(false)
     const [role, setRole] = React.useState<Role | null>(null)
     const [openDialog, setOpenDialog] = React.useState<boolean>(false)
@@ -144,20 +175,20 @@ const HasilAsessmenIdComponent = ({
         'Penerbitan SK Asessmen',
     ].includes(statusServer.NamaStatus)
 
-    // SK yang sudah diterbitkan langsung diajukan ke Wakil Rektor — tidak ada
-    // langkah Akademik tambahan di antaranya.
-    const ajukanKeWarek = async () => {
+    // Setelah SK didorong ke Sisurat, berkas ditandai sedang diproses di sana.
+    // Persetujuan Wakil Rektor dan tanda tangan Rektor tidak lagi di aplikasi ini.
+    const tandaiDiprosesSisurat = async () => {
         setLoading(true)
         try {
-            await setStatusPersetujuanSkAsessmen(dataServer.PendaftaranId)
-            toast('SK diajukan ke Wakil Rektor untuk disetujui')
+            await setStatusProsesSkSisurat(dataServer.PendaftaranId)
+            toast('Berkas ditandai sedang diproses di Sisurat')
             setStatusServer({
                 StatusMahasiswaAssesmentId:
                     statusServer.StatusMahasiswaAssesmentId,
-                NamaStatus: 'Persetujuan SK Asessmen',
+                NamaStatus: 'Proses SK di Sisurat',
             })
         } catch (err) {
-            toast('Gagal mengajukan ke Wakil Rektor. Error: ' + err)
+            toast('Gagal memperbarui status pendaftaran. Error: ' + err)
         } finally {
             setLoading(false)
         }
@@ -174,6 +205,12 @@ const HasilAsessmenIdComponent = ({
             setLoading(false)
         }
     }, [])
+
+    // Template Sisurat hanya dibutuhkan Akademik saat menginisialisasi surat.
+    React.useEffect(() => {
+        if (role?.Name !== 'Akademik') return
+        muatTemplate()
+    }, [role, muatTemplate])
 
     React.useEffect(() => {
         const startIndex2 = (paginationState.page - 1) * paginationState.limit
@@ -774,10 +811,10 @@ const HasilAsessmenIdComponent = ({
                     <CardHeader>
                         <CardTitle>Surat Keputusan Hasil Asessmen</CardTitle>
                         <CardDescription>
-                            SK dibuat dari template. Terbitkan SK Perolehan SKS,
-                            SK Transfer SKS, atau keduanya sesuai kebutuhan
-                            mahasiswa ini, lalu ajukan ke Wakil Rektor untuk
-                            disetujui.
+                            SK diinisialisasi ke Sisurat memakai template di
+                            sana. Kirim SK Perolehan SKS, SK Transfer SKS, atau
+                            keduanya sesuai kebutuhan mahasiswa ini; peninjauan
+                            hingga penandatanganan berjalan di Sisurat.
                         </CardDescription>
                         <CardAction></CardAction>
                     </CardHeader>
@@ -789,6 +826,13 @@ const HasilAsessmenIdComponent = ({
                                     jenis={jenis}
                                     PendaftaranId={dataServer.PendaftaranId}
                                     jumlahMk={jumlahMkPerJenis[jenis]}
+                                    namaMahasiswa={dataServer.Nama}
+                                    programStudi={dataServer.ProgramStudi.Nama}
+                                    periode={dataServer.Periode}
+                                    template={template}
+                                    memuatTemplate={memuatTemplate}
+                                    galatTemplate={galatTemplate}
+                                    onMuatUlangTemplate={muatTemplate}
                                     sk={daftarSk.find(
                                         (x) => x.JenisSkAsessmen === jenis
                                     )}
@@ -803,6 +847,32 @@ const HasilAsessmenIdComponent = ({
                                             item,
                                         ])
                                     }
+                                    onReset={async (id, bersih) => {
+                                        setDaftarSk((prev) =>
+                                            prev.filter(
+                                                (x) => x.SkRektorId !== id
+                                            )
+                                        )
+                                        // Tanpa surat yang berjalan, berkas
+                                        // kembali ke tahap penerbitan SK agar
+                                        // kartunya terbuka lagi.
+                                        if (!bersih) return
+                                        try {
+                                            await setStatusPenerbitanSKAsessmen(
+                                                dataServer.PendaftaranId
+                                            )
+                                            setStatusServer({
+                                                StatusMahasiswaAssesmentId:
+                                                    statusServer.StatusMahasiswaAssesmentId,
+                                                NamaStatus:
+                                                    'Penerbitan SK Asessmen',
+                                            })
+                                        } catch {
+                                            toast.error(
+                                                'Gagal mengembalikan status ke penerbitan SK'
+                                            )
+                                        }
+                                    }}
                                 />
                             ))}
                         </div>
@@ -811,12 +881,15 @@ const HasilAsessmenIdComponent = ({
                             <div className="flex justify-center w-full my-2">
                                 <Button
                                     type="button"
-                                    onClick={() => ajukanKeWarek()}
-                                    disabled={loading || daftarSk.length === 0}
+                                    onClick={() => tandaiDiprosesSisurat()}
+                                    disabled={
+                                        loading ||
+                                        !daftarSk.some((x) => !!x.SisuratLetterId)
+                                    }
                                     title={
-                                        daftarSk.length === 0
-                                            ? 'Terbitkan minimal satu SK lebih dulu'
-                                            : ''
+                                        daftarSk.some((x) => !!x.SisuratLetterId)
+                                            ? ''
+                                            : 'Kirim minimal satu SK ke Sisurat lebih dulu'
                                     }
                                     className="w-2/3 transition-all duration-100 cursor-pointer hover:scale-110 active:scale-90 md:w-1/2"
                                 >
@@ -826,7 +899,8 @@ const HasilAsessmenIdComponent = ({
                                         </React.Fragment>
                                     ) : (
                                         <React.Fragment>
-                                            <PenIcon /> Ajukan ke Wakil Rektor
+                                            <PenIcon /> Tandai Diproses di
+                                            Sisurat
                                         </React.Fragment>
                                     )}
                                 </Button>
@@ -834,8 +908,8 @@ const HasilAsessmenIdComponent = ({
                         ) : (
                             <p className="text-sm text-muted-foreground">
                                 {statusServer.NamaStatus ===
-                                    'Persetujuan SK Asessmen'
-                                    ? 'SK sudah diajukan dan sedang menunggu persetujuan Wakil Rektor.'
+                                    'Proses SK di Sisurat'
+                                    ? 'SK sudah dikirim dan sedang diproses di Sisurat.'
                                     : `Berkas ini sudah melewati tahap hasil final — status saat ini: ${statusServer.NamaStatus}.`}
                             </p>
                         )}

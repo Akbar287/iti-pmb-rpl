@@ -10,6 +10,17 @@ import { Jenjang } from '@/generated/prisma'
 import { isGenerateBeritaAcara, isGenerateEvaluasiMandiri, isGenerateRekapitulasi, isGenerateSk } from '@/config/checkGenerateSkStats'
 import { GenerateRekapitulasiPdf } from '@/components/generate-pdf/GenerateRekapitulasiPdf'
 import { renderPdfToStream } from '@/lib/pdf-renderer'
+import { bacaBerkas, berkasAda } from '@/lib/storage'
+
+/**
+ * Membaca berkas tanda tangan dari /storage lalu mengubahnya menjadi data URI
+ * agar dapat digambar @react-pdf/renderer. Mengembalikan null bila belum ada.
+ */
+async function tandaTanganDataUri(pathFile: string | null): Promise<string | null> {
+    if (!pathFile || !(await berkasAda(pathFile))) return null
+    const isi = await bacaBerkas(pathFile)
+    return 'data:image/png;base64,' + Buffer.from(isi).toString('base64')
+}
 import {
     cloneDefaultFormAssessmentTemplate,
     FORM_ASSESSMENT_TEMPLATE_TYPE,
@@ -301,6 +312,7 @@ app.get('/', async (c) => {
                 PendaftaranId: true,
                 KodePendaftar: true,
                 Periode: true,
+                TandaTanganPath: true,
                 StatusMahasiswaAssesmentHistory: {
                     select: {
                         Aktif: true,
@@ -315,6 +327,7 @@ app.get('/', async (c) => {
                 AssesorMahasiswa: {
                     select: {
                         Urutan: true,
+                        TandaTanganPath: true,
                         Asesor: {
                             select: {
                                 AsesorId: true,
@@ -463,8 +476,13 @@ app.get('/', async (c) => {
         const universitas = programStudi?.University
         const user = response.Mahasiswa.User
 
+        // Tanda tangan mahasiswa dibaca dari /storage lalu disematkan sebagai
+        // data URI supaya @react-pdf/renderer dapat menggambarnya.
+        const tandaTangan = await tandaTanganDataUri(response.TandaTanganPath)
+
         const data: GenerateFormAsessmenType = {
             PendaftaranId: response.PendaftaranId,
+            TandaTanganMahasiswa: tandaTangan,
             KodePendaftar: response.KodePendaftar || '',
             Periode: response.Periode || '',
             Nama: user.Nama || '',
@@ -490,11 +508,14 @@ app.get('/', async (c) => {
                     Icon: sm.Icon || ''
                 })) || [],
             },
-            Asesor: response.AssesorMahasiswa.map(a => ({
-                AsesorId: a.Asesor.AsesorId,
-                Nama: a.Asesor.User.Nama || '',
-                Urutan: a.Urutan,
-            })),
+            Asesor: await Promise.all(
+                response.AssesorMahasiswa.map(async a => ({
+                    AsesorId: a.Asesor.AsesorId,
+                    Nama: a.Asesor.User.Nama || '',
+                    Urutan: a.Urutan,
+                    TandaTangan: await tandaTanganDataUri(a.TandaTanganPath),
+                }))
+            ),
             MataKuliah: response.MataKuliahMahasiswa.map(mkm => {
                 const skor = mkm.SkorAssesmen[0]
                 const diakui = mkm.Keterangan === 'Transfer_SKS' ? mkm.transkripNilaiRelations.length == 0 ? false : mkm.transkripNilaiRelations[0].Diakui : skor?.Diakui ?? false
@@ -587,6 +608,7 @@ app.get('/', async (c) => {
                 AssesorMahasiswa: {
                     select: {
                         Urutan: true,
+                        TandaTanganPath: true,
                         Asesor: { select: { User: { select: { Nama: true } } } }
                     }
                 },
@@ -685,10 +707,13 @@ app.get('/', async (c) => {
             },
             SksDiakui: sksDiakui,
             SksHarusDiambil: sksHarusDiambil,
-            Penilai: response.AssesorMahasiswa.map(a => ({
-                Nama: a.Asesor.User.Nama || '',
-                Urutan: a.Urutan,
-            })),
+            Penilai: await Promise.all(
+                response.AssesorMahasiswa.map(async a => ({
+                    Nama: a.Asesor.User.Nama || '',
+                    Urutan: a.Urutan,
+                    TandaTangan: await tandaTanganDataUri(a.TandaTanganPath),
+                }))
+            ),
             Kaprodi: findJabatan(['program studi', 'kaprodi', 'ketua program']),
             KetuaKomite: findJabatan(['komite']),
         }
@@ -722,10 +747,12 @@ app.get('/', async (c) => {
                 PendaftaranId
             },
             select: {
+                TandaTanganPath: true,
                 AssesorMahasiswa: {
                     select: {
                         Urutan: true,
                         Confirmation: true,
+                        TandaTanganPath: true,
                         Asesor: {
                             select: {
                                 AsesorId: true,
@@ -901,11 +928,17 @@ app.get('/', async (c) => {
                 KodePos: user.Alamat?.KodePos || '',
                 NomorHp: user.NomorHp || '-',
                 Email: user.Email || '',
-                Asesor: response.AssesorMahasiswa.map(a => ({
-                    AsesorId: a.Asesor.AsesorId,
-                    Nama: a.Asesor.User.Nama || '',
-                    Urutan: a.Urutan,
-                })),
+                TandaTanganMahasiswa: await tandaTanganDataUri(
+                    response.TandaTanganPath
+                ),
+                Asesor: await Promise.all(
+                    response.AssesorMahasiswa.map(async a => ({
+                        AsesorId: a.Asesor.AsesorId,
+                        Nama: a.Asesor.User.Nama || '',
+                        Urutan: a.Urutan,
+                        TandaTangan: await tandaTanganDataUri(a.TandaTanganPath),
+                    }))
+                ),
                 ProgramStudi: {
                     ProgramStudiId: programStudi?.ProgramStudiId || '',
                     Nama: programStudi?.Nama || '',

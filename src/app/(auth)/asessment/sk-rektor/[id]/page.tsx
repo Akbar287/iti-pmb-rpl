@@ -5,14 +5,6 @@ import { prisma } from '@/lib/prisma'
 
 export default async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
-    const fileSkRektor = await prisma.skRektorMahasiswa.findFirst({
-        select: {
-            SkRektor: true,
-        },
-        where: {
-            PendaftaranId: id,
-        },
-    })
     const data = await prisma.pendaftaran.findFirst({
         select: {
             PendaftaranId: true,
@@ -412,11 +404,14 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     NomorSk: true,
                     TahunSk: true,
                     NamaFile: true,
+                    NamaFileFinal: true,
                     NamaDokumen: true,
                     Disetujui: true,
                     Ditandatangani: true,
                     Dipublikasikan: true,
                     Catatan: true,
+                    SisuratLetterId: true,
+                    SisuratStatus: true,
                 },
             },
         },
@@ -434,12 +429,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
             </h1>
             <SkIdRektorAsessmentComponent
                 dataServer={dataServer}
-                fileSkRektor={fileSkRektor}
                 stats={stats}
-                jumlahMkPerJenis={{
-                    PEROLEHAN_SKS: mkPerolehan,
-                    TRANSFER_SKS: mkTransfer,
-                }}
                 skAsessmen={skAsessmen.map((x) => ({
                     SkRektorId: x.SkRektor.SkRektorId,
                     JenisSkAsessmen: x.SkRektor.JenisSkAsessmen!,
@@ -447,11 +437,14 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                     NomorSk: x.SkRektor.NomorSk,
                     TahunSk: String(x.SkRektor.TahunSk),
                     NamaFile: x.SkRektor.NamaFile,
+                    NamaFileFinal: x.SkRektor.NamaFileFinal,
                     NamaDokumen: x.SkRektor.NamaDokumen,
                     Disetujui: x.SkRektor.Disetujui,
                     Ditandatangani: x.SkRektor.Ditandatangani,
                     Dipublikasikan: x.SkRektor.Dipublikasikan,
                     Catatan: x.SkRektor.Catatan ?? '',
+                    SisuratLetterId: x.SkRektor.SisuratLetterId,
+                    SisuratStatus: x.SkRektor.SisuratStatus,
                 }))}
             />
         </div>

@@ -11,6 +11,25 @@ const app = new Hono().basePath('/api/protected/approval/sk-hasil')
 
 app.use('*', withApiAuth)
 
+/**
+ * MODUL DINONAKTIFKAN.
+ *
+ * Persetujuan SK hasil asesmen kini dilakukan Wakil Rektor A di Sisurat
+ * (doc/integrasi-rpl-sisurat.md §1 & §3). Kode dipertahankan sebagai rujukan,
+ * tetapi seluruh permintaan ditolak 410.
+ */
+app.use('*', async (c) =>
+    c.json(
+        {
+            data: [],
+            status: 'error',
+            message:
+                'Persetujuan SK hasil asesmen dipindahkan ke Sisurat ITI.',
+        },
+        { status: 410 }
+    )
+)
+
 const STATUS_MENUNGGU = 'Persetujuan SK Asessmen'
 
 app.get('/', async (c) => {

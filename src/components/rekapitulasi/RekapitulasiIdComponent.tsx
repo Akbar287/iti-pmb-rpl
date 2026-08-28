@@ -48,6 +48,7 @@ import { ScrollArea } from '../ui/scroll-area'
 import { Textarea } from '../ui/textarea'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { ChatMessageDTO, streamChatRekapitulasi } from '@/services/Ai/AiServices'
+import KartuTandaTanganAsesor from '@/components/tanda-tangan/KartuTandaTanganAsesor'
 type WindowSize = 'medium' | 'large' | 'fullscreen'
 
 const RekapitulasiIdComponent = ({
@@ -768,6 +769,15 @@ const RekapitulasiIdComponent = ({
                             </Card>
                         </form>
                     </Form>
+
+                    {/* Pengesahan hasil rekapitulasi oleh kedua penilai. Berkas
+                        baru boleh lanjut ke sanggahan setelah keduanya
+                        menandatangani. */}
+                    <div className="mt-4">
+                        <KartuTandaTanganAsesor
+                            PendaftaranId={data.PendaftaranId}
+                        />
+                    </div>
                 </div>
             </SidebarInset>
             <Sidebar

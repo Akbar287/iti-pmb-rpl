@@ -38,6 +38,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog'
+import KartuTandaTangan from './KartuTandaTangan'
 
 export default function FinalisasiMataKuliah({
     dataMahasiswa
@@ -62,9 +63,21 @@ export default function FinalisasiMataKuliah({
     const [loadingPdf, setLoadingPdf] = React.useState<boolean>(false)
     const [openDialogPdf, setOpenDialogPdf] = React.useState<boolean>(false)
     const [pdfPreviewUrl, setPdfPreviewUrl] = React.useState<string | null>(null)
+    // Form 03 baru sah setelah ditandatangani mahasiswa, jadi tombol lanjut
+    // dikunci sampai tanda tangannya tersimpan.
+    const [sudahTandaTangan, setSudahTandaTangan] =
+        React.useState<boolean>(false)
 
     const lihatFormAsessmen = async () => {
         if (!dataDaftarUlang) return
+
+        // Form 03 memuat tanda tangan mahasiswa; tanpa itu dokumennya belum utuh.
+        if (!sudahTandaTangan) {
+            toast.error(
+                'Simpan tanda tangan Anda lebih dulu — Form 03 memuat tanda tangan mahasiswa'
+            )
+            return
+        }
 
         setLoadingPdf(true)
         setOpenDialogPdf(true)
@@ -98,6 +111,7 @@ export default function FinalisasiMataKuliah({
     React.useEffect(() => {
         if (!selectableMahasiswa) return
 
+        setSudahTandaTangan(false)
         setLoadingAwal(true)
         getEvaluasiMandiri(selectableMahasiswa)
             .then(async (res) => {
@@ -110,6 +124,12 @@ export default function FinalisasiMataKuliah({
     }, [selectableMahasiswa])
 
     const continueToAsesor = () => {
+        if (!sudahTandaTangan) {
+            toast.error(
+                'Tanda tangani Formulir Evaluasi Diri (Form 03) lebih dulu'
+            )
+            return
+        }
         Swal.fire({
             title: 'Lanjutkan ke Asesor ?',
             text: 'Pastikan anda yakin terhadap penilaian evaluasi mandiri anda. Lampiran di Upload Dokumen jangan sampai salah.',
@@ -258,16 +278,38 @@ export default function FinalisasiMataKuliah({
 
                             {canProceed ? (
                                 <>
+                                    {/* Tanda tangan lebih dulu: Form 03 memuat
+                                        tanda tangan mahasiswa, jadi dokumennya
+                                        baru utuh setelah ditandatangani. */}
+                                    <KartuTandaTangan
+                                        PendaftaranId={
+                                            dataDaftarUlang.PendaftaranId
+                                        }
+                                        onBerubah={(st) =>
+                                            setSudahTandaTangan(
+                                                st.SudahTandaTangan
+                                            )
+                                        }
+                                    />
                                     <Alert className="border-green-500 bg-green-50 dark:bg-green-950">
                                         <FileEditIcon className="h-4 w-4 text-green-600" />
                                         <AlertTitle className="text-green-700 dark:text-green-400">Form Asessmen!</AlertTitle>
                                         <AlertDescription className="text-green-600 dark:text-green-300">
-                                            <span>Lihat Form Evaluasi Diri (Form 03) Anda.</span>
+                                            <span>
+                                                {sudahTandaTangan
+                                                    ? 'Lihat Form Evaluasi Diri (Form 03) Anda — tanda tangan Anda sudah tercetak di dalamnya.'
+                                                    : 'Form 03 memuat tanda tangan Anda. Simpan tanda tangan lebih dulu agar dokumennya utuh saat dilihat.'}
+                                            </span>
                                             <Button
                                                 className="mt-2 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer"
                                                 type="button"
                                                 variant="outline"
-                                                disabled={loadingPdf}
+                                                disabled={loadingPdf || !sudahTandaTangan}
+                                                title={
+                                                    sudahTandaTangan
+                                                        ? ''
+                                                        : 'Simpan tanda tangan Anda lebih dulu'
+                                                }
                                                 onClick={() => lihatFormAsessmen()}
                                             >
                                                 {loadingPdf ? (
@@ -288,13 +330,21 @@ export default function FinalisasiMataKuliah({
                                         <CheckCircle2Icon className="h-4 w-4 text-green-600" />
                                         <AlertTitle className="text-green-700 dark:text-green-400">Evaluasi Mandiri Selesai!</AlertTitle>
                                         <AlertDescription className="text-green-600 dark:text-green-300">
-                                            Anda telah menyelesaikan semua evaluasi mandiri. Silakan lanjutkan ke proses penunjukan asesor.
+                                            Anda telah menyelesaikan semua evaluasi mandiri.
+                                            {sudahTandaTangan
+                                                ? ' Form 03 sudah Anda tandatangani — silakan lanjutkan ke proses penunjukan asesor.'
+                                                : ' Tanda tangani Form 03 di kotak di atas sebelum melihat dokumennya dan melanjutkan ke penunjukan asesor.'}
                                         </AlertDescription>
                                     </Alert>
                                     <Button
                                         className="mt-5 hover:scale-110 active:scale-90 transition-all duration-100 cursor-pointer"
                                         type="button"
-                                        disabled={loading}
+                                        disabled={loading || !sudahTandaTangan}
+                                        title={
+                                            sudahTandaTangan
+                                                ? ''
+                                                : 'Tanda tangani Form 03 lebih dulu'
+                                        }
                                         onClick={() => continueToAsesor()}
                                     >
                                         Lanjutkan Ke Asesor
@@ -302,18 +352,34 @@ export default function FinalisasiMataKuliah({
                                     </Button>
                                 </>
                             ) : (
-                                <Alert className={getStatusAlertStyle(dataDaftarUlang.Status)}>
-                                    <InfoIcon className="h-4 w-4" />
-                                    <AlertTitle>Keterangan Status</AlertTitle>
-                                    <AlertDescription>
-                                        {getStatusMessage(dataDaftarUlang.Status)}
-                                        {(dataDaftarUlang.Status === 'Asessmen Mandiri' || dataDaftarUlang.Status === 'Pengisian Data Diri') && (
-                                            <>
-                                                {'. '}Silakan kembali ke halaman <Link href="/mata-kuliah/evaluasi-mandiri" className="underline font-medium">Evaluasi Mandiri</Link>.
-                                            </>
-                                        )}
-                                    </AlertDescription>
-                                </Alert>
+                                <>
+                                    <Alert className={getStatusAlertStyle(dataDaftarUlang.Status)}>
+                                        <InfoIcon className="h-4 w-4" />
+                                        <AlertTitle>Keterangan Status</AlertTitle>
+                                        <AlertDescription>
+                                            {getStatusMessage(dataDaftarUlang.Status)}
+                                            {(dataDaftarUlang.Status === 'Asessmen Mandiri' || dataDaftarUlang.Status === 'Pengisian Data Diri') && (
+                                                <>
+                                                    {'. '}Silakan kembali ke halaman <Link href="/mata-kuliah/evaluasi-mandiri" className="underline font-medium">Evaluasi Mandiri</Link>.
+                                                </>
+                                            )}
+                                        </AlertDescription>
+                                    </Alert>
+
+                                    {/* Berkas yang terlanjur maju tanpa tanda
+                                        tangan tetap dapat ditandatangani di sini
+                                        supaya Form 03-nya utuh. */}
+                                    <KartuTandaTangan
+                                        PendaftaranId={
+                                            dataDaftarUlang.PendaftaranId
+                                        }
+                                        onBerubah={(st) =>
+                                            setSudahTandaTangan(
+                                                st.SudahTandaTangan
+                                            )
+                                        }
+                                    />
+                                </>
                             )}
                         </div>
                     )}

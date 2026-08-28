@@ -77,7 +77,7 @@ app.get('/', async (c) => {
                 'Hasil Final Asessmen',
                 'Penerbitan SK Asessmen',
             ],
-            pska: [
+            pss: [
                 'Pengisian Data Diri',
                 'Asessmen Mandiri',
                 'Penunjukan Asesor',
@@ -87,20 +87,7 @@ app.get('/', async (c) => {
                 'Sanggahan',
                 'Hasil Final Asessmen',
                 'Penerbitan SK Asessmen',
-                'Persetujuan SK Asessmen',
-            ],
-            pts: [
-                'Pengisian Data Diri',
-                'Asessmen Mandiri',
-                'Penunjukan Asesor',
-                'Persetujuan Penunjukan Asesor',
-                'Asessmen Oleh Asesor',
-                'Rekapitulasi Asessmen',
-                'Sanggahan',
-                'Hasil Final Asessmen',
-                'Penerbitan SK Asessmen',
-                'Persetujuan SK Asessmen',
-                'Penandatanganan SK',
+                'Proses SK di Sisurat',
             ],
             sha: [
                 'Pengisian Data Diri',
@@ -112,8 +99,7 @@ app.get('/', async (c) => {
                 'Sanggahan',
                 'Hasil Final Asessmen',
                 'Penerbitan SK Asessmen',
-                'Persetujuan SK Asessmen',
-                'Penandatanganan SK',
+                'Proses SK di Sisurat',
                 'Sinkronisasi Hasil Asessmen'
             ],
             done: [
@@ -126,8 +112,7 @@ app.get('/', async (c) => {
                 'Sanggahan',
                 'Hasil Final Asessmen',
                 'Penerbitan SK Asessmen',
-                'Persetujuan SK Asessmen',
-                'Penandatanganan SK',
+                'Proses SK di Sisurat',
                 'Sinkronisasi Hasil Asessmen',
                 'Selesai'
             ]
@@ -147,8 +132,7 @@ app.get('/', async (c) => {
             'Sanggahan',
             'Hasil Final Asessmen',
             'Penerbitan SK Asessmen',
-            'Persetujuan SK Asessmen',
-            'Penandatanganan SK',
+            'Proses SK di Sisurat',
             'Sinkronisasi Hasil Asessmen',
             'Selesai'
         ]

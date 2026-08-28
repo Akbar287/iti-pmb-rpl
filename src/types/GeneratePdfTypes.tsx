@@ -2,6 +2,8 @@ import { Jenjang, ProfiensiPengetahuan } from "@/generated/prisma"
 
 export interface GenerateFormAsessmenType {
     PendaftaranId: string
+    /** Data URI PNG tanda tangan mahasiswa; null bila belum menandatangani. */
+    TandaTanganMahasiswa?: string | null
     KodePendaftar: string
     Periode: string
     Nama: string
@@ -31,6 +33,8 @@ export interface GenerateFormAsessmenType {
         AsesorId: string
         Nama: string
         Urutan: number
+        /** Data URI PNG tanda tangan penilai; null bila belum menandatangani. */
+        TandaTangan?: string | null
     }[]
     MataKuliah: {
         MataKuliahMahasiswaId: string
@@ -133,6 +137,8 @@ export interface GenerateSkType {
 
 export interface GenerateRekapitulasiType {
     PendaftaranId: string
+    /** Data URI PNG tanda tangan mahasiswa (baris Pemohon). */
+    TandaTanganMahasiswa?: string | null
     Nama: string
     Alamat: string
     KodePos: string
@@ -142,6 +148,8 @@ export interface GenerateRekapitulasiType {
         AsesorId: string
         Nama: string
         Urutan: number
+        /** Data URI PNG tanda tangan penilai; null bila belum menandatangani. */
+        TandaTangan?: string | null
     }[]
     ProgramStudi: {
         ProgramStudiId: string
@@ -233,6 +241,8 @@ export interface GenerateBeritaAcaraType {
     Penilai: {
         Nama: string
         Urutan: number
+        /** Data URI PNG tanda tangan penilai; null bila belum menandatangani. */
+        TandaTangan?: string | null
     }[]
     Kaprodi: string
     KetuaKomite: string

@@ -184,6 +184,8 @@ model AssesorMahasiswa {
   AsesorId           String            @map("asesor_id")
   Urutan             Int               @map("urutan")
   Confirmation       Boolean           @default(false) @map("confirmation")
+  TandaTanganPath    String?           @map("tanda_tangan_path")
+  TandaTanganPada    DateTime?         @map("tanda_tangan_pada")
   CreatedAt          DateTime?         @map("created_at")
   UpdatedAt          DateTime?         @map("updated_at")
   Asesor             Asesor            @relation(fields: [AsesorId], references: [AsesorId], onDelete: Cascade)
@@ -609,6 +611,8 @@ model Pendaftaran {
   Gelombang                       String                            @map("gelombang")
   SistemKuliah                    SistemKuliah                      @default(REGULER) @map("sistem_kuliah")
   JalurPendaftaran                String                            @map("jalur_pendaftaran")
+  TandaTanganPath                 String?                           @map("tanda_tangan_path")
+  TandaTanganPada                 DateTime?                         @map("tanda_tangan_pada")
   CreatedAt                       DateTime?                         @map("created_at")
   UpdatedAt                       DateTime?                         @map("updated_at")
   Mahasiswa                       Mahasiswa                         @relation(fields: [MahasiswaId], references: [MahasiswaId], onDelete: Cascade)
@@ -775,6 +779,16 @@ model SkRektor {
   JenisSkAsessmen   JenisSkAsessmen?    @map("jenis_sk_asessmen")
   Dipublikasikan    Boolean             @default(false) @map("dipublikasikan")
   DipublikasikanPada DateTime?          @map("dipublikasikan_pada")
+  // Berkas SK final yang dikirim balik Sisurat. Disimpan terpisah dari
+  // lampiran hasil asesmen (PathFile) karena bentuk dokumennya berbeda jauh:
+  // yang satu lampiran buatan RPL, yang satu surat resmi buatan Sisurat.
+  PathFileFinal     String?             @map("path_file_final")
+  NamaFileFinal     String?             @map("nama_file_final")
+  SkFinalDiterimaPada DateTime?         @map("sk_final_diterima_pada")
+  SisuratLetterId   String?             @map("sisurat_letter_id")
+  SisuratStatus     String?             @map("sisurat_status")
+  SisuratStepKey    String?             @map("sisurat_step_key")
+  SisuratDiajukanPada DateTime?         @map("sisurat_diajukan_pada")
   NomorSuratSisurat String?             @map("nomor_surat_sisurat")
   NomorSuratPada    DateTime?           @map("nomor_surat_pada")
   Disetujui         Boolean             @default(false) @map("disetujui")
@@ -1264,8 +1278,9 @@ model TranskripNilaiRelation {
   MataKuliahMahasiswaId String              @map("mata_kuliah_mahasiswa_id")
   MataKuliahMahasiswa   MataKuliahMahasiswa @relation(fields: [MataKuliahMahasiswaId], references: [MataKuliahMahasiswaId], onDelete: Cascade)
 
-  Nilai  String  @map("nilai")
-  Diakui Boolean @default(false) @map("diakui")
+  Nilai   String  @map("nilai")
+  Diakui  Boolean @default(false) @map("diakui")
+  Catatan String? @map("catatan")
 
   @@id([TranskripNilaiId, MataKuliahMahasiswaId])
   @@map("transkrip_nilai_relation")

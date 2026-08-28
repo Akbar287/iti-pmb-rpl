@@ -29,6 +29,7 @@ import {
     SelectValue,
 } from '../ui/select'
 import { Checkbox } from '../ui/checkbox'
+import { Textarea } from '../ui/textarea'
 import { Separator } from '../ui/separator'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import {
@@ -88,10 +89,12 @@ export default function EkuivalentCheckComponent({
         TranskripNilaiId: string
         NilaiAsessment: string
         Diakui: boolean
+        Catatan: string
     }>({
         TranskripNilaiId: data[index]?.TranskripNilai?.TranskripNilaiId || '',
         NilaiAsessment: data[index]?.TranskripNilai?.NilaiAsessment || '',
         Diakui: data[index]?.TranskripNilai?.Diakui || false,
+        Catatan: data[index]?.TranskripNilai?.Catatan || '',
     })
 
     // State untuk menyimpan ID sebelumnya (untuk update/replace)
@@ -106,6 +109,30 @@ export default function EkuivalentCheckComponent({
     const currentMataKuliah = data[index]
     const hasExistingRelation = currentMataKuliah?.TranskripNilai?.TranskripNilaiId !== ''
 
+    // Pembanding SKS: yang tercatat di sistem (kurikulum prodi) versus yang
+    // tertulis pada transkrip perguruan tinggi asal. Selisihnya perlu terlihat
+    // sebelum asesor memutuskan pengakuan.
+    const transkripTerpilih = dataServer.TranskripNilai.find(
+        (t) => t.TranskripNilaiId === form.TranskripNilaiId
+    )
+    const sksSistem = currentMataKuliah?.MataKuliah.Sks ?? 0
+    const sksTranskrip = transkripTerpilih?.Sks ?? 0
+    const selisihSks = transkripTerpilih ? sksTranskrip - sksSistem : 0
+    const sksKurang = !!transkripTerpilih && selisihSks < 0
+    const sksLebih = !!transkripTerpilih && selisihSks > 0
+
+    // Rekap seluruh mata kuliah transfer yang sudah dipasangkan.
+    const rekapSks = data.reduce(
+        (acc, d) => {
+            if (!d.TranskripNilai.TranskripNilaiId) return acc
+            acc.sistem += d.MataKuliah.Sks ?? 0
+            acc.transkrip += d.TranskripNilai.Sks ?? 0
+            if ((d.TranskripNilai.Sks ?? 0) < (d.MataKuliah.Sks ?? 0)) acc.kurang += 1
+            return acc
+        },
+        { sistem: 0, transkrip: 0, kurang: 0 }
+    )
+
     const nextActiveItem = () => {
         if (index + 1 < data.length) {
             const nextIndex = index + 1
@@ -114,6 +141,7 @@ export default function EkuivalentCheckComponent({
                 TranskripNilaiId: data[nextIndex]?.TranskripNilai?.TranskripNilaiId || '',
                 NilaiAsessment: data[nextIndex]?.TranskripNilai?.NilaiAsessment || '',
                 Diakui: data[nextIndex]?.TranskripNilai?.Diakui || false,
+                Catatan: data[nextIndex]?.TranskripNilai?.Catatan || '',
             })
             // Update previousIds untuk mata kuliah berikutnya
             setPreviousIds({
@@ -131,6 +159,7 @@ export default function EkuivalentCheckComponent({
                 TranskripNilaiId: data[prevIndex]?.TranskripNilai?.TranskripNilaiId || '',
                 NilaiAsessment: data[prevIndex]?.TranskripNilai?.NilaiAsessment || '',
                 Diakui: data[prevIndex]?.TranskripNilai?.Diakui || false,
+                Catatan: data[prevIndex]?.TranskripNilai?.Catatan || '',
             })
             // Update previousIds untuk mata kuliah sebelumnya
             setPreviousIds({
@@ -166,6 +195,7 @@ export default function EkuivalentCheckComponent({
                 MataKuliahMahasiswaIdSetelah: currentMataKuliah.MataKuliahMahasiswaId,
                 NilaiAsessment: form.NilaiAsessment,
                 Diakui: form.Diakui,
+                Catatan: form.Catatan,
             })
 
             // Update local state
@@ -179,6 +209,7 @@ export default function EkuivalentCheckComponent({
                         ...selectedTranskrip,
                         NilaiAsessment: form.NilaiAsessment,
                         Diakui: form.Diakui,
+                        Catatan: form.Catatan,
                     }
                 }
                 setData(replaceItemAtIndex(data, index, updatedMataKuliah))
@@ -217,6 +248,7 @@ export default function EkuivalentCheckComponent({
                 TranskripNilai: {
                     NilaiAsessment: '',
                     Diakui: false,
+                    Catatan: '',
                     TranskripNilaiId: '',
                     PendaftaranId: '',
                     KodeMataKuliah: '',
@@ -232,6 +264,7 @@ export default function EkuivalentCheckComponent({
                 TranskripNilaiId: '',
                 NilaiAsessment: '',
                 Diakui: false,
+                Catatan: '',
             })
 
             // Reset previousIds setelah delete
@@ -254,6 +287,7 @@ export default function EkuivalentCheckComponent({
             TranskripNilaiId: data[idx]?.TranskripNilai?.TranskripNilaiId || '',
             NilaiAsessment: data[idx]?.TranskripNilai?.NilaiAsessment || '',
             Diakui: data[idx]?.TranskripNilai?.Diakui || false,
+            Catatan: data[idx]?.TranskripNilai?.Catatan || '',
         })
         // Update previousIds ketika memilih mata kuliah
         setPreviousIds({
@@ -426,6 +460,65 @@ export default function EkuivalentCheckComponent({
                                 </Select>
                             </div>
 
+                            {/* Peringatan selisih SKS */}
+                            {transkripTerpilih && (
+                                <Alert
+                                    className={
+                                        sksKurang
+                                            ? 'border-amber-500 bg-amber-50 dark:bg-amber-950'
+                                            : sksLebih
+                                                ? 'border-sky-500 bg-sky-50 dark:bg-sky-950'
+                                                : 'border-green-500 bg-green-50 dark:bg-green-950'
+                                    }
+                                >
+                                    <InfoIcon className="w-4 h-4" />
+                                    <AlertTitle>
+                                        {sksKurang
+                                            ? 'SKS transkrip lebih kecil dari SKS sistem'
+                                            : sksLebih
+                                                ? 'SKS transkrip lebih besar dari SKS sistem'
+                                                : 'SKS transkrip sama dengan SKS sistem'}
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <Badge variant="outline">
+                                                Sistem: {sksSistem} SKS
+                                            </Badge>
+                                            <Badge variant="outline">
+                                                Transkrip: {sksTranskrip} SKS
+                                            </Badge>
+                                            <Badge
+                                                className={
+                                                    selisihSks === 0
+                                                        ? 'bg-green-600'
+                                                        : sksKurang
+                                                            ? 'bg-amber-600'
+                                                            : 'bg-sky-600'
+                                                }
+                                            >
+                                                Selisih: {selisihSks > 0 ? '+' : ''}
+                                                {selisihSks} SKS
+                                            </Badge>
+                                        </div>
+                                        {sksKurang && (
+                                            <p className="mt-2">
+                                                Bobot mata kuliah asal belum
+                                                menutup bobot mata kuliah tujuan.
+                                                Bila tetap diakui, tuliskan
+                                                alasannya pada catatan asesor.
+                                            </p>
+                                        )}
+                                        {sksLebih && (
+                                            <p className="mt-2">
+                                                Bobot mata kuliah asal melebihi
+                                                mata kuliah tujuan; kelebihannya
+                                                tidak menambah SKS yang diakui.
+                                            </p>
+                                        )}
+                                    </AlertDescription>
+                                </Alert>
+                            )}
+
                             {/* Diakui Checkbox */}
                             <div className="flex items-center space-x-2">
                                 <Checkbox
@@ -439,6 +532,33 @@ export default function EkuivalentCheckComponent({
                                 <Label htmlFor="diakui" className="cursor-pointer">
                                     Diakui sebagai Transfer SKS
                                 </Label>
+                            </div>
+
+                            {/* Catatan Asesor */}
+                            <div className="space-y-2">
+                                <Label htmlFor="catatanAsesor">
+                                    Catatan Asesor
+                                    {sksKurang && (
+                                        <span className="ml-2 text-xs font-normal text-amber-600">
+                                            (disarankan diisi karena SKS berbeda)
+                                        </span>
+                                    )}
+                                </Label>
+                                <Textarea
+                                    id="catatanAsesor"
+                                    rows={3}
+                                    placeholder="mis. Materi setara meski SKS transkrip lebih kecil; capaian pembelajaran terpenuhi lewat pengalaman kerja."
+                                    value={form.Catatan}
+                                    disabled={loading}
+                                    onChange={(e) =>
+                                        setForm({ ...form, Catatan: e.target.value })
+                                    }
+                                />
+                                <p className="text-xs text-muted-foreground">
+                                    Catatan ini tersimpan bersama keputusan
+                                    ekuivalensi dan menjadi rujukan saat
+                                    rekapitulasi.
+                                </p>
                             </div>
 
                             {/* Selected Transkrip Preview */}
@@ -506,6 +626,37 @@ export default function EkuivalentCheckComponent({
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
+                            {/* Rekap SKS seluruh pasangan yang sudah dibuat */}
+                            {rekapSks.sistem > 0 && (
+                                <Alert
+                                    className={
+                                        rekapSks.kurang > 0
+                                            ? 'mb-4 border-amber-500 bg-amber-50 dark:bg-amber-950'
+                                            : 'mb-4'
+                                    }
+                                >
+                                    <InfoIcon className="w-4 h-4" />
+                                    <AlertTitle>
+                                        Rekap SKS mata kuliah yang sudah dipasangkan
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <Badge variant="outline">
+                                                Sistem: {rekapSks.sistem} SKS
+                                            </Badge>
+                                            <Badge variant="outline">
+                                                Transkrip: {rekapSks.transkrip} SKS
+                                            </Badge>
+                                            {rekapSks.kurang > 0 && (
+                                                <Badge className="bg-amber-600">
+                                                    {rekapSks.kurang} mata kuliah
+                                                    ber-SKS lebih kecil
+                                                </Badge>
+                                            )}
+                                        </div>
+                                    </AlertDescription>
+                                </Alert>
+                            )}
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -523,7 +674,17 @@ export default function EkuivalentCheckComponent({
                                         >
                                             <TableCell className="font-mono">{tn.KodeMataKuliah}</TableCell>
                                             <TableCell>{tn.NamaMataKuliah}</TableCell>
-                                            <TableCell className="text-center">{tn.Sks}</TableCell>
+                                            <TableCell className="text-center">
+                                                {tn.Sks}
+                                                {tn.Sks < sksSistem && (
+                                                    <span
+                                                        className="ml-1 text-xs text-amber-600"
+                                                        title={`Lebih kecil dari SKS mata kuliah tujuan (${sksSistem} SKS)`}
+                                                    >
+                                                        ▼
+                                                    </span>
+                                                )}
+                                            </TableCell>
                                             <TableCell className="text-center">
                                                 <Badge variant="outline">{tn.Nilai}</Badge>
                                             </TableCell>
@@ -608,9 +769,21 @@ export default function EkuivalentCheckComponent({
                                         {mk.MataKuliah.Sks} SKS - Semester {mk.MataKuliah.Semester || '-'}
                                     </div>
                                     {mk.TranskripNilai?.TranskripNilaiId && (
-                                        <div className="text-xs">
-                                            → {mk.TranskripNilai.NamaMataKuliah} ({mk.TranskripNilai.NilaiAsessment})
-                                            {mk.TranskripNilai.Diakui && <Badge className="ml-1 bg-blue-500 text-xs">Diakui</Badge>}
+                                        <div className="text-xs space-y-1">
+                                            <div className="whitespace-normal">
+                                                → {mk.TranskripNilai.NamaMataKuliah} ({mk.TranskripNilai.NilaiAsessment})
+                                                {mk.TranskripNilai.Diakui && <Badge className="ml-1 bg-blue-500 text-xs">Diakui</Badge>}
+                                            </div>
+                                            {mk.TranskripNilai.Sks < mk.MataKuliah.Sks && (
+                                                <div className="text-amber-600">
+                                                    SKS transkrip {mk.TranskripNilai.Sks} &lt; sistem {mk.MataKuliah.Sks}
+                                                </div>
+                                            )}
+                                            {mk.TranskripNilai.Catatan && (
+                                                <div className="text-muted-foreground whitespace-normal">
+                                                    Catatan: {truncateText(mk.TranskripNilai.Catatan, 40)}
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </a>
@@ -692,8 +865,34 @@ export default function EkuivalentCheckComponent({
                                     </Badge>
                                 </div>
                                 {mk.TranskripNilai?.TranskripNilaiId && (
-                                    <div className="mt-2 text-sm text-muted-foreground">
-                                        Ekuivalen dengan: {mk.TranskripNilai.NamaMataKuliah} (Nilai: {mk.TranskripNilai.NilaiAsessment})
+                                    <div className="mt-2 space-y-1 text-sm text-muted-foreground">
+                                        <div>
+                                            Ekuivalen dengan: {mk.TranskripNilai.NamaMataKuliah} (Nilai: {mk.TranskripNilai.NilaiAsessment})
+                                        </div>
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <Badge variant="outline">
+                                                Sistem: {mk.MataKuliah.Sks} SKS
+                                            </Badge>
+                                            <Badge variant="outline">
+                                                Transkrip: {mk.TranskripNilai.Sks} SKS
+                                            </Badge>
+                                            {mk.TranskripNilai.Sks !== mk.MataKuliah.Sks && (
+                                                <Badge
+                                                    className={
+                                                        mk.TranskripNilai.Sks < mk.MataKuliah.Sks
+                                                            ? 'bg-amber-600'
+                                                            : 'bg-sky-600'
+                                                    }
+                                                >
+                                                    Selisih{' '}
+                                                    {mk.TranskripNilai.Sks > mk.MataKuliah.Sks ? '+' : ''}
+                                                    {mk.TranskripNilai.Sks - mk.MataKuliah.Sks} SKS
+                                                </Badge>
+                                            )}
+                                        </div>
+                                        {mk.TranskripNilai.Catatan && (
+                                            <div>Catatan asesor: {mk.TranskripNilai.Catatan}</div>
+                                        )}
                                     </div>
                                 )}
                             </div>

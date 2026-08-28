@@ -141,20 +141,21 @@ export const DEFAULT_BERITA_ACARA_TEMPLATE: FormAssessmentPortraitTemplate = {
                     id: 'ba-signatures',
                     type: 'table',
                     showBorders: false,
-                    headers: ['Penilai I', 'Penilai II', 'Ketua Program Studi'],
-                    headerAlignments: ['center', 'center', 'center'],
+                    // Pengesahan cukup tiga tanda tangan: kedua penilai dan
+                    // Ketua Tim Komite. Kolom Ketua Program Studi dihapus.
+                    headers: ['Penilai I', 'Penilai II'],
+                    headerAlignments: ['center', 'center'],
                     rows: [
                         {
                             values: [
                                 '\n\n\n( {penilai_1} )',
                                 '\n\n\n( {penilai_2} )',
-                                '{program_studi}\n\n\n( {kaprodi} )',
                             ],
-                            alignments: ['center', 'center', 'center'],
+                            alignments: ['center', 'center'],
                         },
                     ],
                     fontSize: 11,
-                    columnWidths: [33, 33, 34],
+                    columnWidths: [50, 50],
                     marginBottom: 0,
                 },
                 {

@@ -30,6 +30,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                         select: {
                             Nilai: true,
                             Diakui: true,
+                            Catatan: true,
                             TranskripNilai: {
                                 select: {
                                     TranskripNilaiId: true,
@@ -129,6 +130,7 @@ export default async ({ params }: { params: Promise<{ id: string }> }) => {
                 TranskripNilai: {
                     NilaiAsessment: item.transkripNilaiRelations.length > 0 ? item.transkripNilaiRelations[0].Nilai : '',
                     Diakui: item.transkripNilaiRelations.length > 0 ? item.transkripNilaiRelations[0].Diakui : false,
+                    Catatan: item.transkripNilaiRelations.length > 0 ? item.transkripNilaiRelations[0].Catatan ?? '' : '',
                     TranskripNilaiId: item.transkripNilaiRelations.length > 0 ? item.transkripNilaiRelations[0].TranskripNilai.TranskripNilaiId : '',
                     PendaftaranId: item.transkripNilaiRelations.length > 0 ? item.transkripNilaiRelations[0].TranskripNilai.PendaftaranId : '',
                     KodeMataKuliah: item.transkripNilaiRelations.length > 0 ? item.transkripNilaiRelations[0].TranskripNilai.KodeMataKuliah : '',

@@ -39,6 +39,74 @@ export function FormAssessmentPortrait({
 
                 if (block.type === 'text') {
                     const content = resolve(block.content, placeholders)
+
+                    // Blok penetapan tanda tangan mahasiswa: gambar tanda
+                    // tangannya disisipkan di ruang kosong antara baris
+                    // "Tanda Tangan Calon Mahasiswa" dan baris nama di bawahnya.
+                    // Dikenali lewat isi teksnya supaya seluruh blok bertanda
+                    // tangan mahasiswa ikut terisi — termasuk bila admin
+                    // menggandakan bloknya di Template Builder dengan id lain.
+                    const blokTtdMahasiswa =
+                        !!data.TandaTanganMahasiswa &&
+                        (block.id === 'closing-signature-place' ||
+                            /tanda\s+tangan\s+calon\s+mahasiswa/i.test(content))
+
+                    if (blokTtdMahasiswa) {
+                        return (
+                            // Ruang kosong bawaan blok dipakai gambar tanda
+                            // tangan, jadi marginnya dikurangi setinggi gambar.
+                            <View
+                                key={key}
+                                style={{
+                                    marginBottom: Math.max(
+                                        block.marginBottom - 52,
+                                        4
+                                    ),
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        fontFamily: block.bold
+                                            ? block.italic
+                                                ? 'Times-BoldItalic'
+                                                : 'Times-Bold'
+                                            : block.italic
+                                                ? 'Times-Italic'
+                                                : 'Times-Roman',
+                                        fontSize: block.fontSize,
+                                        textAlign: block.align,
+                                        lineHeight: block.lineHeight,
+                                        textTransform: block.uppercase
+                                            ? 'uppercase'
+                                            : 'none',
+                                    }}
+                                >
+                                    {content}
+                                </Text>
+                                <View
+                                    style={{
+                                        alignItems:
+                                            block.align === 'left'
+                                                ? 'flex-start'
+                                                : block.align === 'center'
+                                                    ? 'center'
+                                                    : 'flex-end',
+                                        marginTop: 4,
+                                    }}
+                                >
+                                    <Image
+                                        src={data.TandaTanganMahasiswa as string}
+                                        style={{
+                                            width: 120,
+                                            height: 48,
+                                            objectFit: 'contain',
+                                        }}
+                                    />
+                                </View>
+                            </View>
+                        )
+                    }
+
                     return (
                         <Text
                             key={key}

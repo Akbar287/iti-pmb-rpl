@@ -7,6 +7,7 @@ export function isGenerateSk(namaStatus: string) {
         'Penerbitan SK Asessmen',
         'Persetujuan SK Asessmen',
         'Penandatanganan SK',
+        'Proses SK di Sisurat',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)
@@ -24,6 +25,7 @@ export function isGenerateRekapitulasi(namaStatus: string) {
         'Penerbitan SK Asessmen',
         'Persetujuan SK Asessmen',
         'Penandatanganan SK',
+        'Proses SK di Sisurat',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)
@@ -38,6 +40,7 @@ export function isGenerateBeritaAcara(namaStatus: string) {
         'Penerbitan SK Asessmen',
         'Persetujuan SK Asessmen',
         'Penandatanganan SK',
+        'Proses SK di Sisurat',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)
@@ -58,6 +61,7 @@ export function isGenerateEvaluasiMandiri(namaStatus: string) {
         'Penerbitan SK Asessmen',
         'Persetujuan SK Asessmen',
         'Penandatanganan SK',
+        'Proses SK di Sisurat',
         'Sinkronisasi Hasil Asessmen',
         'Selesai'
     ].includes(namaStatus)

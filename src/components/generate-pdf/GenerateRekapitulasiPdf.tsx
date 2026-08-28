@@ -371,6 +371,13 @@ export const GenerateRekapitulasiPdf = ({
     const mataKuliah = data.MataKuliah ?? [];
     const mataKuliahMahasiswa = data.MataKuliahMahasiswa ?? [];
     const placeholders = getRekapitulasiPlaceholderValues(data);
+
+    // Tanda tangan pengesahan Form 05: kedua penilai dan pemohon.
+    const tandaTangan = {
+        penilai1: (data.Asesor ?? []).find((a) => a.Urutan === 1)?.TandaTangan ?? null,
+        penilai2: (data.Asesor ?? []).find((a) => a.Urutan === 2)?.TandaTangan ?? null,
+        pemohon: data.TandaTanganMahasiswa ?? null,
+    };
     const beforeTableBlocks = template.pages
         .filter(page => page.placement === 'before_table')
         .flatMap(page => page.blocks);
@@ -513,6 +520,7 @@ export const GenerateRekapitulasiPdf = ({
                     blocks={beforeTableBlocks}
                     placeholders={placeholders}
                     logoPath={logoPath}
+                    tandaTangan={tandaTangan}
                 />
 
                 {/* Table */}
@@ -580,6 +588,7 @@ export const GenerateRekapitulasiPdf = ({
                 placeholders={placeholders}
                 logoPath={logoPath}
                 pageStyle={styles.page}
+                tandaTangan={tandaTangan}
             />
         </Document>
     );

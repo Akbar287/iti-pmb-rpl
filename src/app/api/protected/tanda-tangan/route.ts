@@ -20,6 +20,26 @@ const BASE_URL = process.env.BACKEND_API_BASE_URL
 
 app.use('*', withApiAuth)
 
+/**
+ * MODUL DINONAKTIFKAN.
+ *
+ * Penandatanganan SK hasil asesmen adalah kewenangan Sisurat: nomor surat dan
+ * QR terbit dari sana (doc/integrasi-rpl-sisurat.md §1). Kode di bawah
+ * dipertahankan sebagai rujukan, tetapi seluruh permintaan ditolak 410 supaya
+ * alur lama tidak dapat dipanggil lewat URL sekalipun menunya sudah dicabut.
+ */
+app.use('*', async (c) =>
+    c.json(
+        {
+            data: [],
+            status: 'error',
+            message:
+                'Penandatanganan SK dipindahkan ke Sisurat ITI. Pantau statusnya dari menu Sk. Rektor.',
+        },
+        { status: 410 }
+    )
+)
+
 const STATUS_MENUNGGU = 'Penandatanganan SK'
 
 // Penandatanganan SK hanya boleh dilakukan oleh Rektor.

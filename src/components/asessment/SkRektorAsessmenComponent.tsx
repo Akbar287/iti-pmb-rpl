@@ -265,7 +265,11 @@ const SkRektorAsessmenComponent = () => {
             setData((prev) =>
                 prev.map((x) =>
                     x.PendaftaranId === d.PendaftaranId
-                        ? { ...x, Dipublikasikan: publikasikan }
+                        ? {
+                            ...x,
+                            Dipublikasikan: publikasikan,
+                            Status: res.data.Status ?? x.Status,
+                        }
                         : x
                 )
             )
@@ -410,13 +414,11 @@ const SkRektorAsessmenComponent = () => {
                     {row.original.Status == 'Hasil Final Asessmen' ? (
                         <Badge variant={'secondary'}>Penerbitan SK</Badge>
                     ) : row.original.Status == 'Penerbitan SK Asessmen' ? (
-                        <Badge variant={'secondary'}>Perlu Direvisi</Badge>
-                    ) : row.original.Status == 'Persetujuan SK Asessmen' ? (
-                        <Badge variant={'secondary'}>Menunggu Wakil Rektor</Badge>
-                    ) : row.original.Status == 'Penandatanganan SK' ? (
-                        <Badge variant={'secondary'}>Menunggu Rektor</Badge>
+                        <Badge variant={'secondary'}>Disiapkan Akademik</Badge>
+                    ) : row.original.Status == 'Proses SK di Sisurat' ? (
+                        <Badge variant={'secondary'}>Diproses di Sisurat</Badge>
                     ) : row.original.Status == 'Sinkronisasi Hasil Asessmen' ? (
-                        <Badge className="bg-green-600">Sudah Ditandatangani</Badge>
+                        <Badge className="bg-green-600">SK Terbit</Badge>
                     ) : (<Badge className="bg-green-700">Selesai</Badge>)}
                 </div>
             ),
